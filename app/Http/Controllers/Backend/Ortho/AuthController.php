@@ -18,23 +18,15 @@ use Input;
 use Validator;
 use URL;
 use Config;
+use LaravelLocalization;
 
 class AuthController extends Controller
 {
-
-    private $Rules = array(
-            'u_login'   => 'required',
-            'password'  => 'required',
-        );
-    private $Messages = array(
-            'u_login.required'   => 'このフィールドに記入してください。',
-            'password.required'  => 'このフィールドに記入してください。',
-        );
-
-
     public function __construct()
     {
         parent::__construct();
+
+        LaravelLocalization::setLocale('ja');
 
         $configs = Config::get('constants.DEFINE');
         foreach($configs as $key => $value)
@@ -60,7 +52,16 @@ class AuthController extends Controller
     {
         $inputs = Input::all();
 
-        $validator = Validator::make($inputs, $this->Rules, $this->Messages);
+        $Rules = array(
+            'u_login'   => 'required',
+            'password'  => 'required',
+        );
+        $Messages = array(
+            'u_login.required'   => trans('validation.error_u_login_required'),
+            'password.required'  => trans('validation.error_password_required')
+        );
+
+        $validator = Validator::make($inputs, $Rules, $Messages);
         if ($validator->fails()) {
             return redirect()->route('ortho.login')->withErrors($validator)->withInput();
         }
@@ -81,7 +82,7 @@ class AuthController extends Controller
         } elseif(Auth::attempt($login2, false)) {
             return redirect()->route('ortho.menus.index');
         } else {
-            Session::flash('error', 'User id or password invalid.');
+            Session::flash('error', trans('common.message_login_fail'));
             return redirect()->route('ortho.login')->withErrors($validator)->withInput();
         }
     }

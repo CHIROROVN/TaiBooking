@@ -102,7 +102,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('insurances/orderby-up', ['as' => 'ortho.insurances.orderby.up', 'uses' => 'InsuranceController@orderby_up']);
 	Route::get('insurances/orderby-down', ['as' => 'ortho.insurances.orderby.down', 'uses' => 'InsuranceController@orderby_down']);
     
-    	//Services
+    //Services
 	Route::get('services', ['as' => 'ortho.services.index', 'uses' => 'ServiceController@index']);
 	Route::get('services/regist', ['as' => 'ortho.services.regist', 'uses' => 'ServiceController@getRegist']);
 	Route::post('services/regist', ['as' => 'ortho.services.regist', 'uses' => 'ServiceController@postRegist']);

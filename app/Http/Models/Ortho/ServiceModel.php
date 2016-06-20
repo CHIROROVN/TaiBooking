@@ -6,6 +6,7 @@ class ServiceModel
 {
     protected $table = 'm_service';
 
+
     public function Rules()
     {
         return array(

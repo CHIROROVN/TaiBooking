@@ -57,9 +57,11 @@ class EquipmentController extends BackendController
         $dataInsert = array(
             'equipment_name'         => Input::get('equipment_name'),
             'equipment_sort_no'      => $max + 1,
-            'last_kind'            => INSERT,
-            'last_ipadrs'          => CLIENT_IP_ADRS,
-            'last_user'            => Auth::user()->id
+            'last_kind'              => INSERT,
+            'last_ipadrs'            => CLIENT_IP_ADRS,
+            'last_user'              => Auth::user()->id,
+            'last_date'              => date('y-m-d H:i:s'),
+
         );
 
         if ( $clsEquipment->insert($dataInsert) ) {
@@ -93,10 +95,11 @@ class EquipmentController extends BackendController
             return redirect()->route('ortho.equipments.edit', $id)->withErrors($validator)->withInput();
         }
         $dataUpdate = array(
-            'equipment_name'          => Input::get('equipment_name'),
-            'last_kind'             => UPDATE,
-            'last_ipadrs'           => CLIENT_IP_ADRS,
-            'last_user'             => Auth::user()->id
+            'equipment_name'            => Input::get('equipment_name'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id,
+            'last_date'                 => date('y-m-d H:i:s'),
         );
         if ( $clsEquipment->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_edit_success'));
@@ -114,9 +117,10 @@ class EquipmentController extends BackendController
     {
         $clsEquipment = new EquipmentModel();
         $dataDelete = array(
-            'last_kind'         => DELETE,
-            'last_ipadrs'       => CLIENT_IP_ADRS,
-            'last_user'         => Auth::user()->id
+            'last_kind'             => DELETE,
+            'last_ipadrs'           => CLIENT_IP_ADRS,
+            'last_user'             => Auth::user()->id,
+            'last_date'             => date('y-m-d H:i:s'),
         );
 
         if ( $clsEquipment->update($id, $dataDelete) ) {

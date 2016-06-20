@@ -59,6 +59,7 @@ class ServiceController extends BackendController
             'service_sort_no'      => $max + 1,
             'last_kind'            => INSERT,
             'last_ipadrs'          => CLIENT_IP_ADRS,
+            'last_date'            => date('y-m-d H:i:s'),
             'last_user'            => Auth::user()->id
         );
 
@@ -96,7 +97,8 @@ class ServiceController extends BackendController
             'service_name'          => Input::get('service_name'),
             'last_kind'             => UPDATE,
             'last_ipadrs'           => CLIENT_IP_ADRS,
-            'last_user'             => Auth::user()->id
+            'last_user'             => Auth::user()->id,
+            'last_date'             => date('y-m-d H:i:s'),
         );
         if ( $clsService->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_edit_success'));
@@ -116,7 +118,8 @@ class ServiceController extends BackendController
         $dataDelete = array(
             'last_kind'         => DELETE,
             'last_ipadrs'       => CLIENT_IP_ADRS,
-            'last_user'         => Auth::user()->id
+            'last_user'         => Auth::user()->id,
+            'last_date'         => date('y-m-d H:i:s'),
         );
 
         if ( $clsService->update($id, $dataDelete) ) {

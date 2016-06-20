@@ -101,6 +101,30 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('insurances/orderby-last', ['as' => 'ortho.insurances.orderby.last', 'uses' => 'InsuranceController@orderby_last']);
 	Route::get('insurances/orderby-up', ['as' => 'ortho.insurances.orderby.up', 'uses' => 'InsuranceController@orderby_up']);
 	Route::get('insurances/orderby-down', ['as' => 'ortho.insurances.orderby.down', 'uses' => 'InsuranceController@orderby_down']);
+    
+    	//Services
+	Route::get('services', ['as' => 'ortho.services.index', 'uses' => 'ServiceController@index']);
+	Route::get('services/regist', ['as' => 'ortho.services.regist', 'uses' => 'ServiceController@getRegist']);
+	Route::post('services/regist', ['as' => 'ortho.services.regist', 'uses' => 'ServiceController@postRegist']);
+	Route::get('services/edit/{id}', ['as' => 'ortho.services.edit', 'uses' => 'ServiceController@getEdit']);
+	Route::post('services/edit/{id}', ['as' => 'ortho.services.edit', 'uses' => 'ServiceController@postEdit']);
+	Route::get('services/delete/{id}', ['as' => 'ortho.services.delete', 'uses' => 'ServiceController@delete']);
+	Route::get('services/orderby-top', ['as' => 'ortho.services.orderby.top', 'uses' => 'ServiceController@orderby_top']);
+	Route::get('services/orderby-last', ['as' => 'ortho.services.orderby.last', 'uses' => 'ServiceController@orderby_last']);
+	Route::get('services/orderby-up', ['as' => 'ortho.services.orderby.up', 'uses' => 'ServiceController@orderby_up']);
+	Route::get('services/orderby-down', ['as' => 'ortho.services.orderby.down', 'uses' => 'ServiceController@orderby_down']);
+
+	//Equipments
+	Route::get('equipments', ['as' => 'ortho.equipments.index', 'uses' => 'EquipmentController@index']);
+	Route::get('equipments/regist', ['as' => 'ortho.equipments.regist', 'uses' => 'EquipmentController@getRegist']);
+	Route::post('equipments/regist', ['as' => 'ortho.equipments.regist', 'uses' => 'EquipmentController@postRegist']);
+	Route::get('equipments/edit/{id}', ['as' => 'ortho.equipments.edit', 'uses' => 'EquipmentController@getEdit']);
+	Route::post('equipments/edit/{id}', ['as' => 'ortho.equipments.edit', 'uses' => 'EquipmentController@postEdit']);
+	Route::get('equipments/delete/{id}', ['as' => 'ortho.equipments.delete', 'uses' => 'EquipmentController@delete']);
+	Route::get('equipments/orderby-top', ['as' => 'ortho.equipments.orderby.top', 'uses' => 'EquipmentController@orderby_top']);
+	Route::get('equipments/orderby-last', ['as' => 'ortho.equipments.orderby.last', 'uses' => 'EquipmentController@orderby_last']);
+	Route::get('equipments/orderby-up', ['as' => 'ortho.equipments.orderby.up', 'uses' => 'EquipmentController@orderby_up']);
+	Route::get('equipments/orderby-down', ['as' => 'ortho.equipments.orderby.down', 'uses' => 'EquipmentController@orderby_down']);
 
 
 	// auth

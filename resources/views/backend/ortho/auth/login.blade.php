@@ -11,14 +11,14 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link href="{{ asset('') }}public/ortho/common/css/import.css" rel="stylesheet">
+<link href="{{ asset('') }}public/backend/ortho/common/css/import.css" rel="stylesheet">
 </head>
 <body class="body-login">
   <!-- Header -->
     <header>
       <div class="container-fluid">
         <div class="row">
-          <h1><img src="{{ asset('') }}public/ortho/common/image/logo.png" /></h1>
+          <h1><img src="{{ asset('') }}public/backend/ortho/common/image/logo.png" /></h1>
         </div>
       </div>
     </header>

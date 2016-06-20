@@ -91,8 +91,8 @@
             <h2>共通マスタ管理</h2>
             <ul>
               <li><a href="{{ route('ortho.areas.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「地域」項目の新規登録・一覧・変更・削除</a></li>
-              <li><a href="service_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「業務名」項目の新規登録・一覧・変更・削除</a></li>
-              <li><a href="equipment_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「装置」項目の新規登録・一覧・変更・削除</a></li>
+              <li><a href="{{route('ortho.services.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「業務名」項目の新規登録・一覧・変更・削除</a></li>
+              <li><a href="{{route('ortho.equipments.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「装置」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="treatment1_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「処置内容1」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="treatment2_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「処置内容2」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="inspection_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「検査」項目の新規登録・一覧・変更・削除</a></li>

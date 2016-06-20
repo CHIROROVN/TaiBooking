@@ -19,7 +19,7 @@
       <div class="container-fulid">
         <div class="row">
           <div class="col-md-6">
-            <span class="mar-right"><img src="{{ asset('') }}public/ortho/common/image/logo.png" /></span>
+            <span class="mar-right"><img src="{{ asset('') }}public/backend/ortho/common/image/logo.png" /></span>
             <span>ようこそ、@if(Auth::check()) {{ Auth::user()->u_name_display }} @endif (<a href="{{ route('ortho.logout') }}" class="text-orange">パスワード変更</a>）</span>
           </div>
           <div class="col-md-6 page-right mar-top">

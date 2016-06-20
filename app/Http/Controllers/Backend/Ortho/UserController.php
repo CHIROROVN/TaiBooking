@@ -16,6 +16,7 @@ use Html;
 use Input;
 use Validator;
 use URL;
+use Session;
 
 class UserController extends BackendController
 {

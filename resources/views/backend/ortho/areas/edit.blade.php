@@ -1,7 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-    {!! Form::open(array('url' => 'ortho/areas/edit/' . $area->area_id, 'method' => 'post')) !!}
+    {!! Form::open(array('route' => ['ortho.areas.edit', $area->area_id], 'method' => 'post')) !!}
       <section id="page">
         <div class="container">
           <div class="row content-page">
@@ -50,18 +50,18 @@
                       <p>Are you sure to delete?</p>
                     </div>
                     <div class="modal-footer">
-                      <a href="{{ asset('ortho/areas/delete/' . $area->area_id) }}" class="btn btn-sm btn-page">Yes</a>
+                      <a href="{{ route('ortho.areas.delete', [$area->area_id]) }}" class="btn btn-sm btn-page">Yes</a>
                       <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">No</button>
                     </div>
                   </div>
                 </div>
               </div>
-
+              <!-- end modal -->
             </div>
           </div>
           <div class="row margin-bottom">
             <div class="col-md-12 text-center">
-              <a href="{{ asset('ortho/areas') }}" class="btn btn-sm btn-page">登録済み地域一覧に戻る</a>
+              <a href="{{ route('ortho.areas.index') }}" class="btn btn-sm btn-page">登録済み地域一覧に戻る</a>
             </div>
           </div>
         </div>

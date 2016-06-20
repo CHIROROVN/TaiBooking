@@ -54,7 +54,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('belongs/edit/{id}', ['as' => 'ortho.belongs.edit', 'uses' => 'BelongController@postEdit']);
 	Route::get('belongs/delete/{id}', ['as' => 'ortho.belongs.delete', 'uses' => 'BelongController@getDelete']);
 	Route::get('belongs/orderby-top', ['as' => 'ortho.belongs.orderby.top', 'uses' => 'BelongController@orderby_top']);
-	Route::get('belongs/orderby-last', ['as' => 'ortho.belongs.orderby.top', 'uses' => 'BelongController@orderby_last']);
+	Route::get('belongs/orderby-last', ['as' => 'ortho.belongs.orderby.last', 'uses' => 'BelongController@orderby_last']);
 	Route::get('belongs/orderby-up', ['as' => 'ortho.belongs.orderby.up', 'uses' => 'BelongController@orderby_up']);
 	Route::get('belongs/orderby-down', ['as' => 'ortho.belongs.orderby.down', 'uses' => 'BelongController@orderby_down']);
 
@@ -66,7 +66,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('areas/edit/{id}', ['as' => 'ortho.areas.edit', 'uses' => 'AreaController@postEdit']);
 	Route::get('areas/delete/{id}', ['as' => 'ortho.areas.delete', 'uses' => 'AreaController@getDelete']);
 	Route::get('areas/orderby-top', ['as' => 'ortho.areas.orderby.top', 'uses' => 'AreaController@orderby_top']);
-	Route::get('areas/orderby-last', ['as' => 'ortho.areas.orderby.top', 'uses' => 'AreaController@orderby_last']);
+	Route::get('areas/orderby-last', ['as' => 'ortho.areas.orderby.last', 'uses' => 'AreaController@orderby_last']);
 	Route::get('areas/orderby-up', ['as' => 'ortho.areas.orderby.up', 'uses' => 'AreaController@orderby_up']);
 	Route::get('areas/orderby-down', ['as' => 'ortho.areas.orderby.down', 'uses' => 'AreaController@orderby_down']);
 
@@ -77,6 +77,30 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('clinics/edit/{id}', ['as' => 'ortho.clinics.edit', 'uses' => 'ClinicController@getEdit']);
 	Route::post('clinics/edit/{id}', ['as' => 'ortho.clinics.edit', 'uses' => 'ClinicController@postEdit']);
 	Route::get('clinics/delete/{id}', ['as' => 'ortho.clinics.delete', 'uses' => 'ClinicController@getDelete']);
+
+	// inspections
+	Route::get('inspections', ['as' => 'ortho.inspections.index', 'uses' => 'InspectionController@index']);
+	Route::get('inspections/regist', ['as' => 'ortho.inspections.regist', 'uses' => 'InspectionController@getRegist']);
+	Route::post('inspections/regist', ['as' => 'ortho.inspections.regist', 'uses' => 'InspectionController@postRegist']);
+	Route::get('inspections/edit/{id}', ['as' => 'ortho.inspections.edit', 'uses' => 'InspectionController@getEdit']);
+	Route::post('inspections/edit/{id}', ['as' => 'ortho.inspections.edit', 'uses' => 'InspectionController@postEdit']);
+	Route::get('inspections/delete/{id}', ['as' => 'ortho.inspections.delete', 'uses' => 'InspectionController@getDelete']);
+	Route::get('inspections/orderby-top', ['as' => 'ortho.inspections.orderby.top', 'uses' => 'InspectionController@orderby_top']);
+	Route::get('inspections/orderby-last', ['as' => 'ortho.inspections.orderby.last', 'uses' => 'InspectionController@orderby_last']);
+	Route::get('inspections/orderby-up', ['as' => 'ortho.inspections.orderby.up', 'uses' => 'InspectionController@orderby_up']);
+	Route::get('inspections/orderby-down', ['as' => 'ortho.inspections.orderby.down', 'uses' => 'InspectionController@orderby_down']);
+
+	// insurances
+	Route::get('insurances', ['as' => 'ortho.insurances.index', 'uses' => 'InsuranceController@index']);
+	Route::get('insurances/regist', ['as' => 'ortho.insurances.regist', 'uses' => 'InsuranceController@getRegist']);
+	Route::post('insurances/regist', ['as' => 'ortho.insurances.regist', 'uses' => 'InsuranceController@postRegist']);
+	Route::get('insurances/edit/{id}', ['as' => 'ortho.insurances.edit', 'uses' => 'InsuranceController@getEdit']);
+	Route::post('insurances/edit/{id}', ['as' => 'ortho.insurances.edit', 'uses' => 'InsuranceController@postEdit']);
+	Route::get('insurances/delete/{id}', ['as' => 'ortho.insurances.delete', 'uses' => 'InsuranceController@getDelete']);
+	Route::get('insurances/orderby-top', ['as' => 'ortho.insurances.orderby.top', 'uses' => 'InsuranceController@orderby_top']);
+	Route::get('insurances/orderby-last', ['as' => 'ortho.insurances.orderby.last', 'uses' => 'InsuranceController@orderby_last']);
+	Route::get('insurances/orderby-up', ['as' => 'ortho.insurances.orderby.up', 'uses' => 'InsuranceController@orderby_up']);
+	Route::get('insurances/orderby-down', ['as' => 'ortho.insurances.orderby.down', 'uses' => 'InsuranceController@orderby_down']);
 
 
 	// auth

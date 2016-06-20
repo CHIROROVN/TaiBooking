@@ -35,14 +35,11 @@ class ClinicController extends Controller
         $clsClinic          = new ClinicModel();
 
         // search
-        $keyword = Input::get('keyword');
-        $data['keyword'] = $keyword;
-        if(Input::get('search') && !empty($keyword))
-        { 
+        $keyword            = Input::get('keyword');
+        $data['keyword']    = $keyword;
+        if( Input::get('search') && !empty($keyword) ) { 
             $data['clinics']    = $clsClinic->get_all(true, $keyword);
-        }
-        else
-        {
+        } else {
             $data['clinics']    = $clsClinic->get_all(true);
         }
 
@@ -75,7 +72,7 @@ class ClinicController extends Controller
         $validator              = Validator::make($inputs, $clsClinic->Rules(), $clsClinic->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/clinics/regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.clinics.regist')->withErrors($validator)->withInput();
         }
 
         // insert
@@ -169,6 +166,7 @@ class ClinicController extends Controller
             'clinic_sat_pm_end_h'       => Input::get('clinic_sat_pm_end_h'),
             'clinic_sat_pm_end_m'       => Input::get('clinic_sat_pm_end_m'),
 
+            'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => INSERT,
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
             'last_user'                 => Auth::user()->id,
@@ -182,6 +180,8 @@ class ClinicController extends Controller
             $dataInsert = array(
                 'area_id'           => $areas,
                 'clinic_id'         => $clinic_id,
+
+                'last_date'         => date('y-m-d H:i:s'),
                 'last_kind'         => INSERT,
                 'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                 'last_user'         => Auth::user()->id
@@ -230,7 +230,7 @@ class ClinicController extends Controller
         $validator              = Validator::make($inputs, $clsClinic->Rules(), $clsClinic->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/clinics/edit/' . $clinic->id)->withErrors($validator)->withInput();
+            return redirect()->route('ortho.clinics.edit', [$id])->withErrors($validator)->withInput();
         }
 
         // update
@@ -324,6 +324,7 @@ class ClinicController extends Controller
             'clinic_sat_pm_end_h'       => Input::get('clinic_sat_pm_end_h'),
             'clinic_sat_pm_end_m'       => Input::get('clinic_sat_pm_end_m'),
 
+            'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => UPDATE,
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
             'last_user'                 => Auth::user()->id,
@@ -337,6 +338,8 @@ class ClinicController extends Controller
             $dataInsert = array(
                 'area_id'           => $areas,
                 'clinic_id'         => $id,
+
+                'last_date'         => date('y-m-d H:i:s'),
                 'last_kind'         => UPDATE,
                 'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                 'last_user'         => Auth::user()->id
@@ -357,6 +360,7 @@ class ClinicController extends Controller
 
         // update
         $dataUpdate = array(
+            'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => DELETE,
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
             'last_user'                 => Auth::user()->id,
@@ -366,6 +370,8 @@ class ClinicController extends Controller
         // update to table clinic_area
         $dataInsert = array(
             'clinic_id'         => $id,
+
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id

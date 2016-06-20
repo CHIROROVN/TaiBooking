@@ -59,13 +59,15 @@ class AreaController extends Controller
         $validator      = Validator::make($inputs, $clsArea->Rules(), $clsArea->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/areas/regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.areas.regist')->withErrors($validator)->withInput();
         }
 
         // insert
         $max = $clsArea->get_max();
         $dataInsert = array(
             'area_name'         => Input::get('area_name'),
+
+            'last_date'         => date('y-m-d H:i:s'),
             'area_sort_no'      => $max + 1,
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
@@ -84,6 +86,8 @@ class AreaController extends Controller
                     $dataInsert = array(
                         'area_id'           => $id_area,
                         'clinic_id'         => $clinic,
+
+                        'last_date'         => date('y-m-d H:i:s'),
                         'last_kind'         => INSERT,
                         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                         'last_user'         => Auth::user()->id
@@ -129,12 +133,14 @@ class AreaController extends Controller
         $validator              = Validator::make($inputs, $clsArea->Rules(), $clsArea->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/areas/edit')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.areas.edit', [$id])->withErrors($validator)->withInput();
         }
 
         // update table area
         $dataUpdate = array(
             'area_name'         => Input::get('area_name'),
+
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
@@ -153,6 +159,8 @@ class AreaController extends Controller
                     $data = array(
                         'area_id'           => $id,
                         'clinic_id'         => $clinic,
+
+                        'last_date'         => date('y-m-d H:i:s'),
                         'last_kind'         => UPDATE,
                         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                         'last_user'         => Auth::user()->id
@@ -165,6 +173,8 @@ class AreaController extends Controller
                     $dataInsert = array(
                         'area_id'           => $id,
                         'clinic_id'         => $clinic,
+
+                        'last_date'         => date('y-m-d H:i:s'),
                         'last_kind'         => INSERT,
                         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                         'last_user'         => Auth::user()->id
@@ -187,6 +197,7 @@ class AreaController extends Controller
 
         // update table area
         $dataUpdate = array(
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
@@ -195,6 +206,7 @@ class AreaController extends Controller
 
         // update to table clinic_area
         $dataUpdate = array(
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id

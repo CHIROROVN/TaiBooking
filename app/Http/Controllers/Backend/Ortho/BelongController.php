@@ -29,8 +29,8 @@ class BelongController extends Controller
      */
     public function index()
     {
-        $clsBelong = new BelongModel();
-        $data['belongs'] = $clsBelong->get_all();
+        $clsBelong          = new BelongModel();
+        $data['belongs']    = $clsBelong->get_all();
 
         return view('backend.ortho.belongs.index', $data);
     }
@@ -48,19 +48,21 @@ class BelongController extends Controller
      */
     public function postRegist()
     {
-        $clsBelong = new BelongModel();
-        $inputs = Input::all();
-        $validator = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
+        $clsBelong      = new BelongModel();
+        $inputs         = Input::all();
+        $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/belongs/regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.belongs.regist')->withErrors($validator)->withInput();
         }
 
         // insert
         $max = $clsBelong->get_max();
-        $dataInsert = array(
+        $dataInsert             = array(
             'belong_name'       => Input::get('belong_name'),
             'belong_sort_no'    => $max + 1,
+
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
@@ -75,8 +77,8 @@ class BelongController extends Controller
      */
     public function getEdit($id)
     {
-        $clsBelong = new BelongModel();
-        $data['belong'] = $clsBelong->get_by_id($id);
+        $clsBelong          = new BelongModel();
+        $data['belong']     = $clsBelong->get_by_id($id);
 
         return view('backend.ortho.belongs.edit', $data);
     }
@@ -86,17 +88,19 @@ class BelongController extends Controller
      */
     public function postEdit($id)
     {
-        $clsBelong = new BelongModel();
-        $inputs = Input::all();
-        $validator = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
+        $clsBelong      = new BelongModel();
+        $inputs         = Input::all();
+        $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/belongs/edit')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.belongs.edit', [$id])->withErrors($validator)->withInput();
         }
 
         // update
         $dataUpdate = array(
             'belong_name'       => Input::get('belong_name'),
+
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
@@ -111,10 +115,11 @@ class BelongController extends Controller
      */
     public function getDelete($id)
     {
-        $clsBelong = new BelongModel();
+        $clsBelong              = new BelongModel();
 
          // update
-        $dataUpdate = array(
+        $dataUpdate             = array(
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
@@ -129,8 +134,8 @@ class BelongController extends Controller
      */
     public function orderby_top()
     {
-        $clsBelong = new BelongModel();
-        $id = Input::get('id');
+        $clsBelong      = new BelongModel();
+        $id             = Input::get('id');
 
         $this->top($clsBelong, $id, 'belong_sort_no');
 
@@ -142,8 +147,8 @@ class BelongController extends Controller
      */
     public function orderby_last()
     {
-        $clsBelong = new BelongModel();
-        $id = Input::get('id');
+        $clsBelong      = new BelongModel();
+        $id             = Input::get('id');
         
         $this->last($clsBelong, $id, 'belong_sort_no');
 
@@ -155,9 +160,9 @@ class BelongController extends Controller
      */
     public function orderby_up()
     {
-        $clsBelong = new BelongModel();
-        $id = Input::get('id');
-        $belongs = $clsBelong->get_all();
+        $clsBelong      = new BelongModel();
+        $id             = Input::get('id');
+        $belongs        = $clsBelong->get_all();
         
         $this->up($clsBelong, $id, $belongs, 'belong_id', 'belong_sort_no');
 
@@ -169,9 +174,9 @@ class BelongController extends Controller
      */
     public function orderby_down()
     {
-        $clsBelong = new BelongModel();
-        $id = Input::get('id');
-        $belongs = $clsBelong->get_all();
+        $clsBelong      = new BelongModel();
+        $id             = Input::get('id');
+        $belongs        = $clsBelong->get_all();
         
         $this->down($clsBelong, $id, $belongs, 'belong_id', 'belong_sort_no');
 

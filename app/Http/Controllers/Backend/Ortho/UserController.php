@@ -46,8 +46,8 @@ class UserController extends Controller
      */
     public function getRegist()
     {
-        $clsBelong = new BelongModel();
-        $data['belongs'] = $clsBelong->get_all();
+        $clsBelong          = new BelongModel();
+        $data['belongs']    = $clsBelong->get_all();
 
         return view('backend.ortho.users.regist', $data);
     }
@@ -57,12 +57,12 @@ class UserController extends Controller
      */
     public function postRegist()
     {
-        $clsUser = new UserModel();
-        $inputs = Input::all();
-        $validator = Validator::make($inputs, $clsUser->Rules(), $clsUser->Messages());
+        $clsUser        = new UserModel();
+        $inputs         = Input::all();
+        $validator      = Validator::make($inputs, $clsUser->Rules(), $clsUser->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/users/regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.users.regist')->withErrors($validator)->withInput();
         }
 
         // insert
@@ -85,6 +85,7 @@ class UserController extends Controller
             'u_power10'         => Input::get('u_power10'),
             'u_human_flg'       => Input::get('u_human_flg'),
 
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
@@ -127,7 +128,7 @@ class UserController extends Controller
         $validator = Validator::make($inputs, $rules, $clsUser->Messages());
 
         if ($validator->fails()) {
-            return redirect('ortho/users/edit/' . $user->id)->withErrors($validator)->withInput();
+            return redirect()->route('ortho.users.edit', [$id])->withErrors($validator)->withInput();
         }
 
         // update
@@ -150,6 +151,7 @@ class UserController extends Controller
             'u_power10'         => Input::get('u_power10'),
             'u_human_flg'       => Input::get('u_human_flg'),
 
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
@@ -171,6 +173,7 @@ class UserController extends Controller
 
         // update
         $dataUpdate = array(
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
@@ -212,6 +215,7 @@ class UserController extends Controller
             'u_power10'         => 1,
             'u_human_flg'       => '',
 
+            'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => 1,

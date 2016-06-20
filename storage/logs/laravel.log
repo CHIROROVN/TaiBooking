@@ -4910,3 +4910,6 @@ Stack trace:
 [2016-06-20 10:06:15] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\Backend\Ortho\Session' not found' in D:\xampp\htdocs\tai-booking\app\Http\Controllers\Backend\Ortho\AreaController.php:206
 Stack trace:
 #0 {main}  
+[2016-06-20 10:40:48] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected ',', expecting ')'' in D:\xampp\htdocs\tai-booking\app\Http\Models\Ortho\InsuranceModel.php:20
+Stack trace:
+#0 {main}  

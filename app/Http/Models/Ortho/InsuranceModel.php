@@ -17,7 +17,7 @@ class InsuranceModel
     public function Messages()
     {
     	return array(
-            'insurance_name.required' => trans('validation.error_insurance_name_required'),,
+            'insurance_name.required' => trans('validation.error_insurance_name_required'),
 		);
     }
 

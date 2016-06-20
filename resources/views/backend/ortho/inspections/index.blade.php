@@ -5,12 +5,6 @@
   <div class="container content-page">
     <h3>共通マスタ管理　＞　登録済み検査の一覧</h3>
 
-    <div class="row">
-      <div class="col-md-12 text-right">
-        <a href="{{ route('ortho.inspections.regist') }}" class="btn btn-sm btn-page">検査の新規登録</a>
-      </div>
-    </div>
-
     <div class="msg-alert-action margin-top-15">
       @if ($message = Session::get('success'))
         <div class="alert alert-success  alert-dismissible fade in" role="alert">
@@ -27,6 +21,12 @@
           <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
         </div>
       @endif
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <a href="{{ route('ortho.inspections.regist') }}" class="btn btn-sm btn-page">検査の新規登録</a>
+      </div>
     </div>
     
     <table class="table table-bordered treatment2-list">

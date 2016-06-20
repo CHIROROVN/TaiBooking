@@ -24,12 +24,6 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12 text-right">
-            <a href="{{ asset('ortho/clinics/regist') }}" class="btn btn-sm btn-page">医院の新規登録</a>
-          </div>
-        </div>
-
         <div class="msg-alert-action margin-top-15">
           @if ($message = Session::get('success'))
             <div class="alert alert-success  alert-dismissible fade in" role="alert">
@@ -46,6 +40,12 @@
               <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
             </div>
           @endif
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <a href="{{ asset('ortho/clinics/regist') }}" class="btn btn-sm btn-page">医院の新規登録</a>
+          </div>
         </div>
         
         <table class="table table-bordered table-striped ">

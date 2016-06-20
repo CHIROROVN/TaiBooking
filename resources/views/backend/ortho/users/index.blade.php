@@ -4,12 +4,6 @@
     <div class="content-page">
       <h3>ユーザー管理　＞　登録済みユーザーの一覧</h3>
 
-      <div class="row">
-          <div class="col-md-12 text-right">
-            <a href="{{ asset('ortho/users/regist') }}" class="btn btn-sm btn-page">ユーザーの新規登録</a>
-          </div>
-      </div>
-
       <div class="msg-alert-action margin-top-15">
         @if ($message = Session::get('success'))
           <div class="alert alert-success  alert-dismissible fade in" role="alert">
@@ -26,6 +20,12 @@
             <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
           </div>
         @endif
+      </div>
+
+      <div class="row">
+          <div class="col-md-12 text-right">
+            <a href="{{ asset('ortho/users/regist') }}" class="btn btn-sm btn-page">ユーザーの新規登録</a>
+          </div>
       </div>
       
       <table class="table table-bordered user-list">

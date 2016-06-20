@@ -5,12 +5,6 @@
     <div class="content-page">
       <h3>共通マスタ管理　＞　登録済み装置の一覧</h3>
 
-      <div class="row">
-          <div class="col-md-12 text-right">
-            <input type="button" name="button" value="業務名の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
-          </div>
-      </div>
-
       <div class="msg-alert-action margin-top-15">
         @if ($message = Session::get('success'))
           <div class="alert alert-success  alert-dismissible fade in" role="alert">
@@ -27,6 +21,12 @@
             <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
           </div>
         @endif
+      </div>
+
+      <div class="row">
+          <div class="col-md-12 text-right">
+            <input type="button" name="button" value="業務名の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
+          </div>
       </div>
       
       <table class="table table-bordered table-striped treatment2-list">

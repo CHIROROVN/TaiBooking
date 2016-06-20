@@ -29,6 +29,7 @@
             <input type="button" name="button" value="業務名の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.services.regist')}}'">
           </div>
       </div>
+      
       <table class="table table-bordered table-striped treatment2-list">
         <tbody>
           <tr>

@@ -460,6 +460,6 @@ textarea {
   width: 90px !important;
 }
 
-
-
-
+span.note_required{
+  color:#d41010;
+}

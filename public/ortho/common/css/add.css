@@ -1,0 +1,119 @@
+@charset "utf-8";
+
+
+/*reset-------------------------------------------------*/
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+} 
+
+
+/*-------------------------------------------------reset*/
+
+
+.content-page .table.user-list .col-edit{
+  text-align: center;
+  width: 1%;
+}
+.content-page .table.user-list .btn-edit,
+.content-page .table.treatment2-list .btn-edit{
+  color: #257272 !important;
+}
+.content-page .table.user-list .col-affiliation{
+  width: 5%;
+}
+.content-page .table td{
+  vertical-align: middle;
+}
+.content-page .table.user-list{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.text-right{
+  text-align: right;
+}
+
+.content-page .table.treatment2-list{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.content-page .table.treatment2-list .col-edit{
+  width: 1%;
+}
+.content-page .table.treatment2-list .col-action{
+  width: 1%;
+}
+.error-input{
+  display: block;
+}
+.content-page .table.interview-regist input[type="text"] {
+    display: inline-block;
+    // width: 85%;
+}
+.error-input.margin-left{
+  margin-left: 45px;
+}
+.person-charge{
+  width: 200px;
+}
+textarea{
+  resize: vertical;
+}
+.content-page .table.interview-regist .col-title{
+  vertical-align: middle;
+  text-align: center;
+}
+.content-page .table.interview-regist select{
+  display: inline-block;
+}
+.margin-top-5{
+  margin-top: 5px;
+}
+.content-page .table .date{
+  width: 65px !important;
+}
+.font-weight-nomal{
+  font-weight: normal;
+}
+.content-page .table.interview-regist .group-q{
+  margin-top: 20px;
+}
+.content-page .table.interview-regist .group-q-child{
+  margin-top: 5px;
+}
+.margin-left-33{
+  margin-left: 33px;
+}
+.col-width-5{
+  width: 5% !important;
+}
+
+.hidden{
+  display: none;
+}
+.float-left{
+  float: left;
+  width: 100%;
+}
+.span-q{
+  font-weight: bold;
+  color: #257272;
+}
+.zip-code-1{
+  width: 60px !important;
+}
+.zip-code-2{
+  width: 110px !important;
+}
+.content-page .table.interview-regist input[type="text"] {
+    width: 100%;
+}
+
+
+@media all and (max-width: 768px) {
+  /* .content-page .table input[type="text"]{
+    width: 99%;
+  } */
+}

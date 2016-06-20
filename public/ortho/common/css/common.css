@@ -1,0 +1,315 @@
+
+/*--------------------------------------------------------------------------------------------------
+
+   page
+         - header
+
+
+--------------------------------------------------------------------------------------------------*/
+
+
+/*reset-------------------------------------------------*/
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+} 
+
+body,div,h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ul,header,section,article,aside,footer,nav,li {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+ border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img {
+  border: none;
+  vertical-align: top;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+header,section,article,aside,footer,nav {
+ display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+label {
+  margin-bottom:0px;
+}
+/*-------------------------------------------------reset*/
+
+
+/*common-------------------------------------------------*/
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  line-height: 1.4;
+  color: #257272;
+  background:#fbf9f9;
+  height:600px;
+}
+
+a {
+  text-decoration:none;
+  cursor:pointer;
+  color:#257272;
+}
+a:link {
+  /*color: #F10000;*/
+}
+
+a:visited {
+  /*color: #F10000;*/
+}
+
+a:hover, a:active {
+  color: #555;
+}
+
+.clear:after {
+ content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clear {
+  clear:both;
+}
+
+input {
+  border-color:#fff;
+}
+
+table {
+  margin-top:40px;
+}
+
+h1 {
+  font-size:25px;
+  font-weight:bold;
+}
+
+/*-------------------------------------------------common*/
+
+
+/*------------------------------------------------------------------------------------------------
+  header
+--------------------------------------------------------------------------------------------------*/
+
+header {
+  background:#03a6a6;
+  padding:20px;
+  opacity:0.8;
+  filter: alpha(opacity=80); /* For IE8 and earlier */
+  border-bottom:2px solid #d7d6d5;
+  -webkit-box-shadow: 2px 2px 2px 4px #d7d6d5;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    2px 2px 2px 4px #d7d6d5;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         2px 2px 2px 4px #d7d6d5;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  width:100%;
+  color:#fff;
+}
+
+header h1 {
+  font-size:18px;
+  text-transform: uppercase;
+  font-weight:bold;
+}
+
+/*------------------------------------------------------------------------------------------------
+  content
+--------------------------------------------------------------------------------------------------*/
+
+.container {
+  width:100%;
+  padding:0px 20px;
+}
+
+.btn {
+  color:#fff;
+}
+
+.btn:hover {
+  color:#fff;
+}
+
+.btn-login {
+  background-color: #066e6e;
+  border-color: #025c5c;
+}
+
+.btn-login:hover {
+  background-color: #055959;
+  border-color: #044e4e;
+}
+
+.btn-page {
+  background-color: #34a1a1;
+  border-color: #199797;
+}
+
+.btn-page:hover {
+  background-color: #158b8b;
+  border-color: #097a7a;
+}
+
+.btn-header {
+  background-color: #54cfcf;
+  border-color: #1fc2c2;
+}
+
+.btn-header:hover {
+  background-color: #4ec2c2;
+  border-color: #20b8b8;
+}
+
+.btn-mar-right {
+  margin-right:20px;
+}
+
+.page-right {
+  text-align:right;
+}
+
+.form-control--default {
+  display: inline;
+  width: 250px;
+  height: 30px;
+  padding: 5px;
+  border-radius:3px;
+}
+
+.form-control--small {
+  display: inline;
+  width: 125px!important;
+  height: 30px;
+  padding: 5px;
+  border-radius:3px;
+  color:#257272;
+}
+
+.form-control--smaller {
+  display: inline;
+  width: 90px;
+  height: 30px;
+  padding: 5px;
+  border-radius:3px;
+}
+
+.form-control--small-xs {
+  display: inline;
+  width: 60px;
+  height: 25px;
+  padding: 3px;
+  border-radius:3px;
+}
+
+.form-control--mar-right {
+  margin-right:10px;
+}
+
+.form-control {
+  height:30px;
+}
+
+.fl-right {
+  float:right;
+}
+
+.mar-bottom {
+  margin-bottom:10px;
+}
+
+.mar-right {
+  margin-right:20px;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #eff9f9;
+}
+
+.text-orange {
+  color:#d25c11;
+}
+
+.with-errors {
+  color:#d41010;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  vertical-align:top;
+}
+
+
+/* phu add 27/4 */
+.mar-both {
+  margin: 0 20px;
+}
+
+.my-pagination > li {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.my-pagination>.disabled>span, 
+.my-pagination>.disabled>span:hover, 
+.my-pagination>.disabled>span:focus, 
+.my-pagination>.disabled>a, 
+.my-pagination>.disabled>a:hover, 
+.my-pagination>.disabled>a:focus {
+  color: white;
+  background-color: #158b8b;
+  border-color: #158b8b;
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.my-pagination>li>a, 
+.my-pagination>li>span {
+  color: white;
+  background-color: #158b8b;
+  border: 1px solid #158b8b;
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
+.my-pagination>li>a, 
+.my-pagination>li>span {
+  color: white;
+  background-color: #158b8b;
+  border: 1px solid #158b8b;
+  font-size: 12px;
+}
+
+.my-pagination>li:last-child>a, 
+.my-pagination>li:last-child>span {
+  border-radius: 4px;
+  border- radius: 4px;
+  max-height: 31px;
+  font-size: 12px;
+}
+
+.my-pagination>li:first-child>a, 
+.my-pagination>li:first-child>span {
+  border-radius: 4px;
+  border- radius: 4px;
+  max-height: 31px;
+  font-size: 12px;
+}
+.my-pagination > li > a:hover {
+  text-decoration: none;
+}

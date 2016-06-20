@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1">
+    <title>キッズ業務管理システム</title>
+
+    <!-- Bootstrap -->
+    <link href="common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="common/css/page.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="common/js/enscroll-0.6.2.min.js"></script>
+
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="fl-left">キッズコーポレーション業務管理システム</h1>
+            <h1 class="fl-right">大学情報の新規登録</h1>
+          </div>
+          <div class="col-md-6">
+            <div class="fl-right mar-left40">
+              <input type="button" class="btn btn-sm btn-info  btn-mar-right" name="button2" value="メニューへ" onclick="location.href='menu.html'"/><input type="button" class="btn btn-sm btn-info" name="button" value="ログアウト" onclick="location.href='login.html'"/>
+            </div>
+            <div class="fl-right mar-top5">ようこそ、山田花子さん（<a href="change_pass.html" class="text-orange">パスワード変更</a>）</div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+    <!-- content baitai regist -->
+    <section id="page">
+      <div class="container">
+        <div class="row content">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td class="col-title"><label for="textUniversityCode">大学コード</label></td>
+                <td>
+                  <input name="txtUniversityCode" id="textUniversityCode" type="text" class="form-control form-control--small">
+                </td>
+                <td class="col-title"><label for="textUniName">大学名</label></td>
+                <td><input name="txtUniName" id="textUniName" type="text" class="form-control form-control--default"></td>
+                <td class="col-title"><label for="textUniNameKana">大学名かな</label></td>
+                <td><input name="txtUniNameKana" id="textUniNameKana" type="text" class="form-control form-control--default"></td>
+              </tr>
+              <tr>
+                <td class="col-title"><label for="cbPrefectures">都道府県</label></td>
+                <td colspan="5">
+                  <select name="cbPrefectures" id="cbPrefectures" class="form-control form-control--small">
+                    <option value="1" selected="selected">北海道</option>
+                    <option value="2">青森県</option>
+                    <option value="3">岩手県</option>
+                    <option value="4">宮城県</option>
+                    <option value="5">秋田県</option>
+                    <option value="6">山形県</option>
+                    <option value="7">福島県</option>
+                    <option value="8">茨城県</option>
+                    <option value="9">栃木県</option>
+                    <option value="10">群馬県</option>
+                    <option value="11">埼玉県</option>
+                    <option value="12">千葉県</option>
+                    <option value="13">東京都</option>
+                    <option value="14">神奈川県</option>
+                    <option value="15">新潟県</option>
+                    <option value="16">富山県</option>
+                    <option value="17">石川県</option>
+                    <option value="18">福井県</option>
+                    <option value="19">山梨県</option>
+                    <option value="20">長野県</option>
+                    <option value="21">岐阜県</option>
+                    <option value="22">静岡県</option>
+                    <option value="23">愛知県</option>
+                    <option value="24">三重県</option>
+                    <option value="25">滋賀県</option>
+                    <option value="26">京都府</option>
+                    <option value="27">大阪府</option>
+                    <option value="28">兵庫県</option>
+                    <option value="29">奈良県</option>
+                    <option value="30">和歌山県</option>
+                    <option value="31">鳥取県</option>
+                    <option value="32">島根県</option>
+                    <option value="33">岡山県</option>
+                    <option value="34">広島県</option>
+                    <option value="35">山口県</option>
+                    <option value="36">徳島県</option>
+                    <option value="37">香川県</option>
+                    <option value="38">愛媛県</option>
+                    <option value="39">高知県</option>
+                    <option value="40">福岡県</option>
+                    <option value="41">佐賀県</option>
+                    <option value="42">長崎県</option>
+                    <option value="43">熊本県</option>
+                    <option value="44">大分県</option>
+                    <option value="45">宮崎県</option>
+                    <option value="46">鹿児島県</option>
+                    <option value="47">沖縄県</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row mar-bottom30">
+          <div class="col-md-12 text-center">
+            <input name="button4" id="button4" value="登録する" type="submit" class="btn btn-sm btn-primary">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <input onclick="history.back()" value="前の画面に戻る" type="button" class="btn btn-sm btn-primary">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End content baitai regist -->
+
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1">
+    <title>キッズ業務管理システム</title>
+
+    <!-- Bootstrap -->
+    <link href="common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="common/css/page.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="common/js/enscroll-0.6.2.min.js"></script>
+
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="fl-left">キッズコーポレーション業務管理システム</h1>
+            <h1 class="fl-right">一括資料請求番号の検索</h1>
+          </div>
+          <div class="col-md-6">
+            <div class="fl-right mar-left40">
+              <input type="button" class="btn btn-sm btn-info  btn-mar-right" name="button2" value="メニューへ" onclick="location.href='menu.html'"/><input type="button" class="btn btn-sm btn-info" name="button" value="ログアウト" onclick="location.href='login.html'"/>
+            </div>
+            <div class="fl-right mar-top5">ようこそ、山田花子さん（<a href="change_pass.html" class="text-orange">パスワード変更</a>）</div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+    <!-- content g-pamphlet regist -->
+    <section id="page">
+      <div class="container">
+        <div class="row content">
+          <div class="row fl-right mar-bottom">
+            <div class="col-md-12">
+              <input onclick="location.href='g-pamphlet_regist.html'" value="一括資料請求番号の新規登録" class="btn btn-sm btn-primary" type="button">
+            </div>
+          </div>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td class="col-title"><label for="textBulkNumber">一括資料請求番号</label></td>
+                <td>
+                  <input name="txtBulkNumber" id="textBulkNumber" type="text" class="form-control form-control--small">
+                </td>
+                <td class="col-title"><label for="textRequestNumber">資料請求番号</label></td>
+                <td>
+                  <input name="txtRequestNumber" id="textRequestNumber" type="text" class="form-control form-control--small">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <input onclick="location.href='g-pamphlet_list.html'" value="検索開始（OR検索）" type="button" class="btn btn-sm btn-primary form-control--mar-right">
+            <input name="button5" id="button5" value="クリア（全消し）" type="reset" class="btn btn-sm btn-primary">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End content g-pamphlet regist -->
+
+  </body>
+</html>

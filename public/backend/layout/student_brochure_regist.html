@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1">
+    <title>キッズ業務管理システム</title>
+
+    <!-- Bootstrap -->
+    <link href="common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="common/css/page.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <h1>キッズコーポレーション業務管理システム</h1>
+          </div>
+          <div class="col-md-4">ようこそ、山田花子さん（<a href="change_pass.html" class="text-orange">パスワード変更</a>）</div>
+          <div class="col-md-4 page-right">
+            <input type="button" class="btn btn-sm btn-info  btn-mar-right" name="button2" value="メニューへ" onclick="location.href='menu.html'"/><input type="button" class="btn btn-sm btn-info" name="button" value="ログアウト" onclick="location.href='login.html'"/>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+    <!-- content student brochure edit -->
+    <section id="page">
+      <div class="container">
+        <div class="row content content--list">
+          <h3>資料請求管理　＞　資料請求情報の新規登録</h3>
+          <table class="table table-bordered table-striped">
+            <tr>
+              <td class="col-title" align="center">日付</td>
+              <td class="col-title" align="center">媒体番号</td>
+              <td class="col-title" align="center">資料請求番号</td>
+            </tr>
+            <tr>
+              <td><label for="textbirthday">西暦</label>
+                <input name="txtyearbirth" id="textbirthday" class="form-control form-control--small-xs" type="text"> 年 
+                <input name="txtmontdbirth" class="form-control form-control--small-xs" type="text"> 月 
+                <input name="txtyearbirth" class="form-control form-control--small-xs" type="text"> 日 
+                <input name="button4" id="button4" value="今日" type="submit" class="btn btn-xs btn-primary">
+              </td>
+              <td><input name="txtmednumber" id="textmednumber" class="form-control form-control--default" type="text"> →</td>
+              <td>
+                <div class="mar-bottom">
+                  <input name="txtreqnumber" id="textreqnumber" class="form-control form-control--small-xs  form-control--mar-right" type="text"> 
+                  <input name="txtreqnumber2" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber3" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber4" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber5" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber6" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber7" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber8" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                </div>
+                <div>
+                  <input name="txtreqnumber9" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber10" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber5" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber6" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber7" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber8" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber9" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                  <input name="txtreqnumber10" class="form-control form-control--small-xs form-control--mar-right" type="text">
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="row mar-bottom30">
+          <div class="col-md-12 text-center">
+            <input type="submit" name="button3" value="登録する" class="btn btn-sm btn-primary mar-right">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <input type="button" onClick="location.href='student_brochure_list.html'" value="資料請求情報一覧に戻る" class="btn btn-sm btn-primary">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End content student brochure edit -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="common/js/bootstrap.min.js"></script>
+  </body>
+</html>

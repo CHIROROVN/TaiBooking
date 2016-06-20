@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1">
+    <title>キッズ業務管理システム</title>
+
+    <!-- Bootstrap -->
+    <link href="common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="common/css/page.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="fl-left">キッズコーポレーション業務管理システム</h1>
+            <h1 class="fl-right">登録済み個人情報の削除</h1>
+          </div>
+          <div class="col-md-6">
+            <div class="fl-right mar-left40">
+              <input type="button" class="btn btn-sm btn-info  btn-mar-right" name="button2" value="メニューへ" onclick="location.href='menu.html'"/><input type="button" class="btn btn-sm btn-info" name="button" value="ログアウト" onclick="location.href='login.html'"/>
+            </div>
+            <div class="fl-right mar-top5">ようこそ、山田花子さん（<a href="change_pass.html" class="text-orange">パスワード変更</a>）</div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- End Header -->
+    <!-- content student delete cnf -->
+    <section id="page">
+      <div class="container">
+        <div class="row content content--list">
+          <p class="note">このデータを削除しますか？　この操作は元に戻すことができません。</p>
+          <table class="table table-bordered">
+            <tr>
+              <td class="col-title">氏名</td>
+              <td>山田　太郎</td>
+              <td class="col-title">ふりがな</td>
+              <td>やまだ　たろう</td>
+              <td class="col-title">誕生日</td>
+              <td>西暦 1980 年 12 月 25 日</td>
+            </tr>
+            <tr>
+              <td class="col-title">性別</td>
+              <td>男</td>
+              <td class="col-title">高校</td>
+              <td>岡山高等学校</td>
+              <td class="col-title">学年</td>
+              <td>3 年生（4/1現在）</td>
+            </tr>
+            <tr>
+              <td class="col-title">郵便番号</td>
+              <td>700-0001</td>
+              <td class="col-title">住所</td>
+              <td colspan="3">岡山県　倉敷市　福井125-7　スギモトマンション1101</td>
+            </tr>
+            <tr>
+              <td class="col-title">電話番号</td>
+              <td>086-111-1111</td>
+              <td class="col-title">メールアドレス</td>
+              <td>sugimoto@chiroro.co.jp</td>
+              <td class="col-title">ステータス</td>
+              <td>本登録</td>
+            </tr>
+          </table>
+          
+        </div>
+        <div class="row mar-bottom30">
+          <div class="col-md-12 text-center">
+            <input name="button4" id="button4" value="削除する（確認済）" type="submit" class="btn btn-sm btn-primary btn-mar-right">
+            <input onclick="location.href='student_detail.html'" value="やめる" type="button" class="btn btn-sm btn-primary">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <input onclick="location.href='student_detail.html'" value="詳細表示に戻る" type="button" class="btn btn-sm btn-primary">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End content student delete cnf -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="common/js/bootstrap.min.js"></script>
+  </body>
+</html>

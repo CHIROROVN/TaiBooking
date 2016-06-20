@@ -18,6 +18,7 @@ use Input;
 use Validator;
 use URL;
 use Config;
+use Session;
 
 class ClinicController extends BackendController
 {
@@ -186,7 +187,12 @@ class ClinicController extends BackendController
                 'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                 'last_user'         => Auth::user()->id
             );
-            $clsClinicArea->insert($dataInsert);
+            
+            if ( $clsClinicArea->insert($dataInsert) ) {
+                Session::flash('success', trans('common.message_regist_success'));
+            } else {
+                Session::flash('danger', trans('common.message_regist_danger'));
+            }
         }
 
         return redirect()->route('ortho.clinics.index');
@@ -329,7 +335,12 @@ class ClinicController extends BackendController
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
             'last_user'                 => Auth::user()->id,
         );
-        $clsClinic->update($id, $dataUpdate);
+        
+        if ( $clsClinic->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         // update to table clinic_area
         $areas = Input::get('area');
@@ -376,7 +387,12 @@ class ClinicController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        $clsClinicArea->update_by_clinic($id, $dataInsert);
+        
+        if ( $clsClinicArea->update_by_clinic($id, $dataInsert) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.clinics.index');
     }

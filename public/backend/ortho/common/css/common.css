@@ -313,3 +313,7 @@ header h1 {
 .my-pagination > li > a:hover {
   text-decoration: none;
 }
+
+.margin-top-15 {
+  margin-top: 15px;
+}

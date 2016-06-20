@@ -15,6 +15,7 @@ use Html;
 use Input;
 use Validator;
 use URL;
+use Session;
 
 class InspectionController extends BackendController
 {
@@ -69,7 +70,11 @@ class InspectionController extends BackendController
             'last_user'                 => Auth::user()->id
         );
 
-        $clsInspection->insert($dataInsert);
+        if ( $clsInspection->insert($dataInsert) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.inspections.index');
     }
@@ -110,7 +115,12 @@ class InspectionController extends BackendController
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
             'last_user'                 => Auth::user()->id
         );
-        $clsInspection->update($id, $dataUpdate);
+        
+        if ( $clsInspection->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.inspections.index');
     }
@@ -130,7 +140,12 @@ class InspectionController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        $clsInspection->update($id, $dataUpdate);
+        
+        if ( $clsInspection->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.inspections.index');
     }

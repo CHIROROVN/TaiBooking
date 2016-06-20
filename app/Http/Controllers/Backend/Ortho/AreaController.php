@@ -17,6 +17,7 @@ use Html;
 use Input;
 use Validator;
 use URL;
+use Session;
 
 class AreaController extends BackendController
 {
@@ -79,6 +80,7 @@ class AreaController extends BackendController
         $clinics = Input::get('clinic');
         if(!empty($clinics))
         {
+            $status_insert = false;
             foreach($clinics as $clinic)
             {
                 if(!$clsClinicArea->exist_area_clinic($id_area, $clinic)) // && !$clsClinicArea->exist_clinic($clinic)
@@ -92,9 +94,18 @@ class AreaController extends BackendController
                         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                         'last_user'         => Auth::user()->id
                     );
-                    $clsClinicArea->insert($dataInsert);   
+                    if ( $clsClinicArea->insert($dataInsert) ) {
+                        $status_insert = true;
+                    } else {
+                        $status_insert = false;
+                    }
                 }
             }
+        }
+        if ( $status_insert ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
         }
 
         return redirect()->route('ortho.areas.index');
@@ -151,6 +162,7 @@ class AreaController extends BackendController
         $clinics = Input::get('clinic');
         if(!empty($clinics))
         {
+            $status_insert = false;
             foreach($clinics as $clinic)
             {
                 if($clsClinicArea->exist_clinic($clinic))
@@ -165,7 +177,11 @@ class AreaController extends BackendController
                         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                         'last_user'         => Auth::user()->id
                     );
-                    $clsClinicArea->update_by_clinic($clinic, $data);
+                    if ( $clsClinicArea->update_by_clinic($clinic, $data) ) {
+                        $status_insert = true;
+                    } else {
+                        $status_insert = false;
+                    }
                 }
                 else
                 {
@@ -179,9 +195,18 @@ class AreaController extends BackendController
                         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
                         'last_user'         => Auth::user()->id
                     );
-                    $clsClinicArea->insert($dataInsert); 
+                    if ( $clsClinicArea->insert($dataInsert) ) {
+                        $status_insert = true;
+                    } else {
+                        $status_insert = false;
+                    }
                 }
             } 
+        }
+        if ( $status_insert ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
         }
 
         return redirect()->route('ortho.areas.index');
@@ -211,7 +236,12 @@ class AreaController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        $clsClinicArea->update_by_area($id, $dataUpdate);
+        
+        if ( $clsClinicArea->update_by_area($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
 
         return redirect()->route('ortho.areas.index');

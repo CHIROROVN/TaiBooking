@@ -15,6 +15,7 @@ use Html;
 use Input;
 use Validator;
 use URL;
+use Session;
 
 class BelongController extends BackendController
 {
@@ -67,7 +68,12 @@ class BelongController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        $clsBelong->insert($dataInsert);
+        
+        if ( $clsBelong->insert($dataInsert) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.belongs.index');
     }
@@ -105,7 +111,12 @@ class BelongController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        $clsBelong->update($id, $dataUpdate);
+        
+        if ( $clsBelong->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.belongs.index');
     }
@@ -124,7 +135,12 @@ class BelongController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        $clsBelong->update($id, $dataUpdate);
+        
+        if ( $clsBelong->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.belongs.index');
     }

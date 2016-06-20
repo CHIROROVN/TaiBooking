@@ -4,11 +4,31 @@
 <section id="page">
   <div class="container content-page">
     <h3>共通マスタ管理　＞　登録済み地域の一覧</h3>
+
     <div class="row">
       <div class="col-md-12 text-right">
         <a href="{{ asset('ortho/areas/regist') }}" class="btn btn-sm btn-page">地域の新規登録</a>
       </div>
     </div>
+
+    <div class="msg-alert-action margin-top-15">
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success  alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+        </div>
+      @elseif($message = Session::get('danger'))
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+        </div>
+      @endif
+    </div>
+    
     <table class="table table-bordered treatment2-list">
       <tbody>
         <tr>

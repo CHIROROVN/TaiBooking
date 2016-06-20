@@ -93,7 +93,12 @@ class UserController extends BackendController
             // 'created_at'        => date('Y-m-d H:i:s'),
             // 'updated_at'        => date('Y-m-d H:i:s'),
         );
-        $clsUser->insert($dataInsert);
+        
+        if ( $clsUser->insert($dataInsert) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.users.index');
     }
@@ -159,7 +164,12 @@ class UserController extends BackendController
             'created_at'        => $user->created_at,
             'updated_at'        => date('Y-m-d H:i:s'),
         );
-        $clsUser->update($id, $dataUpdate);
+        
+        if ( $clsUser->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.users.index');
     }
@@ -180,7 +190,12 @@ class UserController extends BackendController
 
             // 'updated_at'        => date('Y-m-d H:i:s'),
         );
-        $clsUser->update($id, $dataUpdate);
+        
+        if ( $clsUser->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
         return redirect()->route('ortho.users.index');
     }

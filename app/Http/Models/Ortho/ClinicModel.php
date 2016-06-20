@@ -26,17 +26,17 @@ class ClinicModel
     public function Messages()
     {
     	return array(
-            'clinic_name.required'          => '※必須',
-            'clinic_name_yomi.required'     => '※必須',
-            'clinic_name_yomi.regex'        => '※Hiragana',
-            'clinic_display_name.required'  => '※必須',
-            'clinic_zip3.required'          => '※必須',
-            'clinic_zip4.required'          => '※必須',
-            'clinic_address1.required'      => '※必須',
-            'clinic_address2.required'      => '※必須',
-            'clinic_ownername.required'     => '※必須',
-            'clinic_tel.required'           => '※必須',
-            'clinic_email.required'         => '※必須',
+            'clinic_name.required'          => trans('validation.error_area_name_required'),
+            'clinic_name_yomi.required'     => trans('validation.error_clinic_name_yomi_required'),
+            'clinic_name_yomi.regex'        => trans('validation.error_clinic_name_yomi_regex'),
+            'clinic_display_name.required'  => trans('validation.error_clinic_display_name_required'),
+            'clinic_zip3.required'          => trans('validation.error_clinic_zip3_required'),
+            'clinic_zip4.required'          => trans('validation.error_clinic_zip4_required'),
+            'clinic_address1.required'      => trans('validation.error_clinic_address1_required'),
+            'clinic_address2.required'      => trans('validation.error_clinic_address2_required'),
+            'clinic_ownername.required'     => trans('validation.error_clinic_ownername_required'),
+            'clinic_tel.required'           => trans('validation.error_clinic_tel_required'),
+            'clinic_email.required'         => trans('validation.error_clinic_email_required'),
 		);
     }
 

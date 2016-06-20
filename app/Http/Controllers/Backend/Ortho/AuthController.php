@@ -17,6 +17,7 @@ use Html;
 use Input;
 use Validator;
 use URL;
+use Config;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,12 @@ class AuthController extends Controller
     public function __construct()
     {
         parent::__construct();
+
+        $configs = Config::get('constants.DEFINE');
+        foreach($configs as $key => $value)
+        {
+            define($key, $value);
+        }
     }
 
 

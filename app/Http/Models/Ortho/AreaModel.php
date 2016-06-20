@@ -17,7 +17,7 @@ class AreaModel
     public function Messages()
     {
     	return array(
-            'area_name.required' => '※必須',
+            'area_name.required' => trans('validation.error_area_name_required'),
 		);
     }
 

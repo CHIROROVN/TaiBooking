@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BackendController;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ use Validator;
 use URL;
 use Config;
 
-class ClinicController extends Controller
+class ClinicController extends BackendController
 {
     public function __construct()
     {

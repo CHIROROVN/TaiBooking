@@ -14,19 +14,20 @@ class UserModel
             'u_name_yomi'       => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'u_name_display'    => 'required',
             'u_login'           => 'required|unique:m_users,u_login,NULL,id,last_kind,<>' . DELETE,
-            'password'          => 'required|min:6',
+            'password'          => 'required',
 		);
     }
 
     public function Messages()
     {
     	return array(
-            'u_name.required'           => '※必須',
-            'u_name_yomi.required'      => '※必須',
-            'u_name_yomi.regex'         => '※Hiragana',
-            'u_name_display.required'   => '※必須',
-            'u_login.required'          => '※必須',
-            'password.required'         => '※必須',
+            'u_name.required'           => trans('validation.error_u_name_required'),
+            'u_name_yomi.required'      => trans('validation.error_u_name_yomi_required'),
+            'u_name_yomi.regex'         => trans('validation.error_u_name_yomi_regex'),
+            'u_name_display.required'   => trans('validation.error_u_name_display_required'),
+            'u_login.required'          => trans('validation.error_u_login_required'),
+            'u_login.unique'            => trans('validation.error_u_login_unique'),
+            'password.required'         => trans('validation.error_password_required'),
 		);
     }
 

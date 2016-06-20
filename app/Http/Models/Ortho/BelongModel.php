@@ -17,7 +17,7 @@ class BelongModel
     public function Messages()
     {
     	return array(
-    		'belong_name.required'  => '※必須',
+    		'belong_name.required'  => trans('validation.error_belong_name_required'),
             // 'belong_name.min'       => 'Min belong_name'
 		);
     }

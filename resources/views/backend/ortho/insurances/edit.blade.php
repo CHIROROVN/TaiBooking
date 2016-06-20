@@ -33,14 +33,14 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Delete confirm</h4>
+              <h4 class="modal-title">{{ trans('common.modal_header_delete') }}</h4>
             </div>
             <div class="modal-body">
-              <p>Are you sure to delete?</p>
+              <p>{{ trans('common.modal_content_delete') }}</p>
             </div>
             <div class="modal-footer">
-              <a href="{{ route('ortho.insurances.delete', [$insurance->insurance_id]) }}" class="btn btn-sm btn-page">Yes</a>
-              <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">No</button>
+              <a href="{{ route('ortho.insurances.delete', [$insurance->insurance_id]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+              <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
             </div>
           </div>
         </div>

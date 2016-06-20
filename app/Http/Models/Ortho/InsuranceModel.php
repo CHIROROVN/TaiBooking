@@ -17,7 +17,7 @@ class InsuranceModel
     public function Messages()
     {
     	return array(
-            'insurance_name.required' => '保険診療名を入力してください。',
+            'insurance_name.required' => trans('validation.error_insurance_name_required'),,
 		);
     }
 

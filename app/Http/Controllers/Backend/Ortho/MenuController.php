@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BackendController;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Input;
 use Validator;
 use URL;
 
-class MenuController extends Controller
+class MenuController extends BackendController
 {
     public function __construct()
     {

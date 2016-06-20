@@ -17,7 +17,7 @@ class InspectionModel
     public function Messages()
     {
     	return array(
-            'inspection_name.required' => '検査名を入力してください。',
+            'inspection_name.required' => trans('validation.error_inspection_name_required'),
 		);
     }
 

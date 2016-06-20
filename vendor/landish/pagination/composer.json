@@ -1,0 +1,16 @@
+{
+  "name": "landish/pagination",
+  "description": "Laravel 5 Custom Pagination Presenter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lado Lomidze",
+      "email": "lado.lomidze@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Landish\\Pagination\\": "src/"
+    }
+  }
+}

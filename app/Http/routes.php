@@ -131,4 +131,6 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);
 	Route::post('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@postLogin']);
 	Route::get('/logout', ['as' => 'ortho.logout', 'uses' => 'AuthController@getLogout']);
+	Route::get('/change-password/{id}', ['as' => 'ortho.change.password', 'uses' => 'AuthController@getChangePassword']);
+	Route::post('/change-password/{id}', ['as' => 'ortho.change.password', 'uses' => 'AuthController@postChangePassword']);
 });

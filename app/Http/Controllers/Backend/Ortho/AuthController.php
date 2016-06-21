@@ -9,7 +9,7 @@ use Auth;
 use Hash;
 use Session;
 // use App\User;
-// use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\UserModel;
 // use App\Http\Models\Ortho\BelongModel;
 
 use Form;
@@ -95,5 +95,71 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('ortho.login');
+    }
+
+
+    /**
+     * get view change password
+     * $id: ID user logining
+     */
+    public function getChangePassword($id)
+    {
+        if ( !Auth::check() ) {
+            return redirect()->route('ortho.login');
+        }
+
+        return view('backend.ortho.auth.change_pass');
+    }
+
+
+    /**
+     * update new password
+     * $id: ID user logining
+     */
+    public function postChangePassword($id)
+    {
+        $clsUser                    = new UserModel();
+        $user                       = $clsUser->get_by_id($id);
+        $inputs                     = Input::all();
+
+        $Rules = array(
+            'password'                          => 'required',
+            'new_password'                      => 'required',
+            'confim_new_password'               => 'required|same:new_password',
+        );
+        $Messages = array(
+            'password.required'                 => trans('validation.error_password_required'),
+            'new_password.required'             => trans('validation.error_new_password_required'),
+            'confim_new_password.required'      => trans('validation.error_confim_new_password_required'),
+            'confim_new_password.same'          => trans('validation.error_confim_new_password_same'),
+        );
+
+        $validator      = Validator::make($inputs, $Rules, $Messages);
+
+        if ($validator->fails()) {
+            return redirect()->route('ortho.change.password', [$id])->withErrors($validator)->withInput();
+        }
+
+        if ( !Hash::check(Input::get('password'), $user->password) ) {
+            Session::flash('password-wrong', trans('common.message_change_password_wrong'));
+            return redirect()->route('ortho.change.password', [$id])->withErrors($validator)->withInput();
+        }
+
+        $dataUpdate = array(
+            'password'          => Hash::make(Input::get('new_password')),
+
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => UPDATE,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => (Auth::check()) ? Auth::user()->id : 0
+        );
+
+        if ( $clsUser->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_edit_success'));
+            return redirect()->route('ortho.change.password', [$id]);
+        } else {
+            Session::flash('danger', trans('common.message_edit_danger'));
+            return redirect()->route('ortho.change.password', [$id])->withErrors($validator)->withInput();
+        }
     }
 }

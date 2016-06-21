@@ -29,18 +29,18 @@
         <div class="content-login">
           <div class="col-xs-12 col-sm-12 col-md-12">
             <h1>ログイン</h1>
-            {!! Form::open(array('route' => 'ortho.login', 'method' => 'post', 'class' => 'form-horizontal')) !!}
+            {!! Form::open(array('route' => 'ortho.login', 'method' => 'post', 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data')) !!}
               <div class="form-group">
-                <label class="col-xs-12 col-md-4 control-label" for="iputid">ログインID</label>
+                <label class="col-xs-12 col-md-4 control-label" for=" u_login">ログインID</label>
                 <div class="col-xs-12 col-md-6">
                   <input type="text" class="form-control" id="iputid" name="u_login" value="{{ old('u_login') }}" >
                   <div class="help-block with-errors"><ul class="list-unstyled"><li>@if ($errors->first('u_login')) {!! $errors->first('u_login') !!} @endif</li></ul></div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-xs-12 col-md-4 control-label" for="passinput" >パスワード</label>
+                <label class="col-xs-12 col-md-4 control-label" for="password" >パスワード</label>
                 <div class="col-xs-12 col-md-6">
-                  <input type="password" class="form-control" id="passinput" name="password" value="" >
+                  <input type="password" class="form-control" id="password" name="password" value="" >
                   <div class="help-block with-errors"><ul class="list-unstyled"><li>@if ($errors->first('password')) {!! $errors->first('password') !!} @endif</li></ul></div>
                   @if (Session::has('error'))
                     <div class="alert alert-info">{{ Session::get('error') }}</div>

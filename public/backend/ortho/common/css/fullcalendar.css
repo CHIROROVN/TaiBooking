@@ -71,7 +71,7 @@ body .fc { /* extra precedence to overcome jqui */
 --------------------------------------------------------------------------------------------------*/
 
 .fc-icon {
-	display: inline-block;
+	/*display: inline-block;
 	width: 1em;
 	height: 1em;
 	line-height: 1em;
@@ -81,12 +81,12 @@ body .fc { /* extra precedence to overcome jqui */
 	font-family: "Courier New", Courier, monospace;
 
 	/* don't allow browser text-selection */
-	-webkit-touch-callout: none;
+	/*-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none;
+	user-select: none;*/
 	}
 
 /*
@@ -103,19 +103,39 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 .fc-icon-left-single-arrow:after {
-	content: "\02039";
-	font-weight: bold;
-	font-size: 200%;
-	top: -7%;
-	left: 3%;
+	content: "<< 前月";
+  top:5px;
+  padding: 0px 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  height:30px;
 }
 
 .fc-icon-right-single-arrow:after {
-	content: "\0203A";
-	font-weight: bold;
-	font-size: 200%;
-	top: -7%;
-	left: -3%;
+	content: "翌月 >>";
+  top:5px;
+  padding: 0px 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  height:30px;
 }
 
 .fc-icon-left-double-arrow:after {
@@ -197,10 +217,10 @@ NOTE: use percentage font sizes or else old IE chokes
 /* icons in buttons */
 
 .fc button .fc-icon { /* non-theme */
-	position: relative;
+	/*position: relative;
 	top: -0.05em; /* seems to be a good adjustment across browsers */
-	margin: 0 .2em;
-	vertical-align: middle;
+	/*margin: 0 .2em;
+	vertical-align: middle;*/
 }
 	
 /*
@@ -512,9 +532,10 @@ temporary rendered events).
 	font-size: .85em;
 	line-height: 1.3;
 	border-radius: 3px;
-	border: 1px solid #3a87ad; /* default BORDER color */
-	background-color: #3a87ad; /* default BACKGROUND color */
+	border: 1px solid #59b6b6; /* default BORDER color */
+	background-color: #66cccc; /* default BACKGROUND color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
+  line-height:20px;
 }
 
 /* overpower some of bootstrap's and jqui's styles on <a> tags */
@@ -690,7 +711,7 @@ a.fc-more:hover {
 }
 
 .fc-toolbar .fc-left {
-	float: left;
+	text-align:left;
 }
 
 .fc-toolbar .fc-right {
@@ -698,13 +719,18 @@ a.fc-more:hover {
 }
 
 .fc-toolbar .fc-center {
-	display: inline-block;
+  display: block;
+  width: 100%;
+}
+
+.fc-toolbar .fc-center h3{
+  width: 100%!important;
 }
 
 /* the things within each left/right/center section */
 .fc .fc-toolbar > * > * { /* extra precedence to override button border margins */
 	float: left;
-	margin-left: .75em;
+	margin-left:7px;
 }
 
 /* the first thing within each left/center/right section */
@@ -776,6 +802,7 @@ a.fc-more:hover {
 
 .fc-basic-view .fc-body .fc-row {
 	min-height: 4em; /* ensure that all rows are at least this tall */
+  height:152px !important;
 }
 
 /* a "rigid" row will take up a constant amount of height because content-skeleton is absolute */
@@ -800,8 +827,7 @@ a.fc-more:hover {
 
 .fc-basic-view td.fc-week-number span,
 .fc-basic-view td.fc-day-number {
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding:15px 10px;
 }
 
 .fc-basic-view .fc-week-number {

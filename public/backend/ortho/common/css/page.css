@@ -79,7 +79,7 @@
   margin-bottom:40px;
 }
 
-#page .content h3 {
+#page h3 {
   font-size:18px;
   padding-bottom:10px;
 }
@@ -118,7 +118,6 @@
   background: #88c9c9;
   color: #257272;
   font-weight: bold;
-  min-width: 60px;
 }
 
 #page .content--list table {
@@ -163,16 +162,29 @@
 }
 
 #calendar table thead th {
-    background-color: #88c9c9;
-    color: #257272;
-    font-weight: bold;
-    padding: 8px;
+  background-color: #88c9c9;
+  color: #257272;
+  font-weight: bold;
+  padding: 8px;
 }
 
 #calendar .fc-left button {
-    background-color: #34a1a1;
-    border-color: #199797;
-    border: none;
+  background-color: #34a1a1;
+  border-color: #199797;
+  border: none;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  height:30px;
 }
 
 .fc-event {
@@ -194,14 +206,13 @@
 .fillter {
   float: left;
   margin-bottom: 50px;
-  background-color: #ddd;
+  background-color: #eee;
   padding: 5px 0;
   width: 100%;
 }
 
 .fillter select,.fillter input {
   height: 30px;
-  color: black;
 }
 .fillter input {
   position: relative;
@@ -209,28 +220,28 @@
 }
 
 .fc-icon-left-single-arrow:after {
-    content: "<< 前月";
-    font-weight: bold;
-    font-size: 12px;
-    top: 0;
-    left: 3%;
-    height: 24px;
+  content: "<< 前月";
+  font-weight: bold;
+  font-size: 12px;
+  top: 0;
+  left: 3%;
+  height: 24px;
 }
 
 .fc-icon-right-single-arrow:after {
-    content: "翌月 >>";
-    font-weight: bold;
-    font-size: 12px;
-    top: 0;
-    left: 3%;
-    height: 24px;
+  content: "翌月 >>";
+  font-weight: bold;
+  font-size: 12px;
+  top: 0;
+  left: 3%;
+  height: 24px;
 }
 
 #calendar .fc-icon {
-  width: 50px;
+  /*width: 50px;
   height: 24px;
   font-size: 5px;
-  line-height: 24px;
+  line-height: 24px;*/
 }
 
 #calendar .fc .fc-icon {
@@ -244,10 +255,6 @@
   text-shadow: none;
 }
 
-.fc-content {
-  padding: 5px 10px 3px 10px;
-}
-
 .fc-content .fc-title img {
   position: relative;
   top: -1px;
@@ -256,6 +263,7 @@
 .btn-sm.btn-page.no-border {
   border: 0 !important;
   color: white;
+  margin-top:-3px;
 }
 
 .content-page {
@@ -264,7 +272,6 @@
 
 .content-page > h3 {
   margin-top: 70px;
-  font-size: 18px;
 }
 
 .breadcrumbs {
@@ -297,7 +304,7 @@
   color: red;
 }
 
-.content-page .table input[type="text"],.content-page .table input[type="password"],.content-page .table select,.content-page .table textarea {
+.content-page .table input[type="text"],.content-page .table select,.content-page .table textarea {
   width: 60%;
 }
 
@@ -456,10 +463,131 @@ textarea {
   display:inline-block;
 }
 
-.clinic .form-control--smaller{
-  width: 90px !important;
+.form-control {
+  color:#257272;
 }
 
-span.note_required{
-  color:#d41010;
+.form-control--sm {
+  width:30%!important;
+  display:inline-block!important;
 }
+
+.form-control--xs {
+  display:inline-block!important;
+  height:25px!important;
+  padding: 2px 6px !important;
+  width:60px!important;
+}
+
+.mar-top20 {
+  margin-top:20px;
+}
+.table--indiagram {
+  font-size:12px;
+}
+
+.table--indiagram > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  padding:5px;
+}
+
+.col-pspec {
+  width:70px; 
+  background-color: #158b8b;
+  border-color: #097a7a;
+  color:#fff;
+  text-align:center!important;
+  padding: 3px 10px;
+  line-height: 1.5;
+  border-radius: 3px;
+  margin-top:10px;
+  margin:10px auto 0 auto;
+  font-size:12px;
+}
+
+.table--calendar td {
+  height:162px;
+  width:165px;
+}
+
+.table--calendar td.col-title {
+  height:auto;
+}
+
+.fc-event {
+	position: relative; /* for resize handle and other inner positioning */
+	display: block; /* make the <a> tag block */
+	font-size: .85em;
+	line-height: 1.3;
+	border-radius: 3px;
+	border: 1px solid #59b6b6; /* default BORDER color */
+	background-color: #66cccc; /* default BACKGROUND color */
+	font-weight: normal; /* undo jqui's ui-widget-header bold */
+  color:#fff;
+  margin-bottom:1px;
+  line-height:20px;
+}
+
+.fc-event img {
+  height:10px;
+  margin:5px 3px;
+}
+
+#page .input-group {
+  width:50%;
+}
+
+#page .input-group input[type="text"] {
+  width:100%;
+  height:34px;
+}
+
+#page .table--calendar .link-shift-template-set {
+  width:100%;
+  height:162px;
+  display:block;
+  text-align:right;
+}
+
+#page .table--calendar .td-disabled {
+  color:#ccc;
+  text-align:right;
+  display:block;
+}
+
+#page .table--calendar .link-shift-set {
+  width:100%;
+  display:block;
+  text-align:right;
+}
+
+#page .table-shift-set {
+  color:#555;
+  margin-top:0px!important;
+}
+
+.table-shift-set > thead > tr > th, .table-shift-set > tbody > tr > th, .table-shift-set > tfoot > tr > th, .table-shift-set > thead > tr > td, .table-shift-set > tbody > tr > td, .table-shift-set > tfoot > tr > td {
+  vertical-align:middle;
+}
+
+#page .table-shift-set tr:first-child {
+  font-weight:bold;
+  border-bottom:2px solid #555;
+}
+
+#page .table-shift-set td.col-brown {
+  background:#ccc;
+}
+
+#page .table-shift-set td.col-green {
+  background:#89e6c4;
+}
+
+#page .table-shift-set td.col-blue {
+  background:#6a9ee4;
+}
+
+
+
+
+
+

@@ -25,7 +25,7 @@
 
       <div class="row">
           <div class="col-md-12 text-right">
-            <input type="button" name="button" value="業務名の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
+            <input type="button" name="button" value="装置の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
           </div>
       </div>
       
@@ -68,7 +68,7 @@
       </table>
       <div class="row">
         <div class="col-md-12 text-right">
-          <input type="button" name="button" value="業務名の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
+          <input type="button" name="button" value="装置の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
         </div>
       </div>
     </div>

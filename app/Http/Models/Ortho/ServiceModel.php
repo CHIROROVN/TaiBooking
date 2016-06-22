@@ -5,7 +5,8 @@ use DB;
 class ServiceModel
 {
     protected $table = 'm_service';
-
+    protected $primaryKey = 'service_id';
+    public $timestamps  = false;
 
     public function Rules()
     {

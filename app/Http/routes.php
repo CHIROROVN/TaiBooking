@@ -126,6 +126,11 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('equipments/orderby-up', ['as' => 'ortho.equipments.orderby.up', 'uses' => 'EquipmentController@orderby_up']);
 	Route::get('equipments/orderby-down', ['as' => 'ortho.equipments.orderby.down', 'uses' => 'EquipmentController@orderby_down']);
 
+	//3dct
+	Route::get('xray_3dct/regist', ['as' => 'ortho.xrays.x3dct.regist', 'uses' => 'X3dctController@getRegist']);
+	Route::post('xray_3dct/regist', ['as' => 'ortho.xrays.x3dct.regist', 'uses' => 'X3dctController@postRegist']);
+	Route::get('xray_3dct/edit', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@getRegist']);
+	Route::post('xray_3dct/edit', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@postRegist']);
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

@@ -5,7 +5,9 @@ use DB;
 class EquipmentModel
 {
     protected $table = 'm_equipment';
-
+    protected $primaryKey = 'equipment_id';
+    public $timestamps  = false;
+    
     public function Rules()
     {
         return array(

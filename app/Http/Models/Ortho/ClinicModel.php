@@ -62,6 +62,14 @@ class ClinicModel
         return $results;
     }
 
+
+    public function get_for_select()
+    {
+        $db = DB::table($this->table)->select('clinic_id', 'clinic_name')->where('last_kind', '<>', DELETE)->get();
+        return $db;
+    }
+
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

@@ -132,6 +132,17 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('xray_3dct/edit', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@getRegist']);
 	Route::post('xray_3dct/edit', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@postRegist']);
 
+	// xrays
+	Route::any('xrays', ['as' => 'ortho.xrays.index', 'uses' => 'XrayController@index']);
+	Route::get('xrays/regist', ['as' => 'ortho.xrays.regist', 'uses' => 'XrayController@getRegist']);
+	Route::post('xrays/regist', ['as' => 'ortho.xrays.regist', 'uses' => 'XrayController@postRegist']);
+	Route::get('xrays/edit/{id}', ['as' => 'ortho.xrays.edit', 'uses' => 'XrayController@getEdit']);
+	Route::post('xrays/edit/{id}', ['as' => 'ortho.xrays.edit', 'uses' => 'XrayController@postEdit']);
+	Route::get('xrays/delete/{id}', ['as' => 'ortho.xrays.delete', 'uses' => 'XrayController@getDelete']);
+	Route::get('xrays/detail/{id}', ['as' => 'ortho.xrays.detail', 'uses' => 'XrayController@getDetail']);
+	Route::get('xrays/search', ['as' => 'ortho.xrays.search', 'uses' => 'XrayController@getSearch']);
+	Route::get('xrays/get-day', ['as' => 'ortho.xrays.get.day', 'uses' => 'XrayController@getDay']);
+
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);
 	Route::post('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@postLogin']);

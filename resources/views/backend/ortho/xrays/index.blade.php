@@ -23,13 +23,7 @@
       @endif
     </div>
 
-    <div class="row">
-      <div class="col-md-12 text-right">
-        <a href="{{ route('ortho.xrays.regist') }}" class="btn btn-sm btn-page">レントゲン新規入力</a>
-      </div>
-    </div>
-
-    <table class="table table-bordered table-striped" style="margin-top: 10px;">
+    <table class="table table-bordered table-striped">
       <tbody>
         <tr>
           <td class="col-title" align="center">撮影日</td>

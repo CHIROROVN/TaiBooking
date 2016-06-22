@@ -3,9 +3,9 @@
 @section('content')
 
 <script>
-  function getVal(val, select_day, old_day) {
+  function getVal(val, select_day, old_day_value) {
     var month = '';
-    var old_day = old_day;
+    var old_day = old_day_value;
     $('#' + select_day).find('option').remove();
 
     if ( $.isNumeric( val ) ) {

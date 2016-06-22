@@ -12,6 +12,9 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 <link href="{{ asset('') }}public/backend/ortho/common/css/import.css" rel="stylesheet">
+
+<script src="{{ asset('') }}public/backend/ortho/common/js/jquery.min.js"></script>
+<script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap.min.js"></script>
 </head>
 <body>
   <!-- Header -->
@@ -37,8 +40,5 @@
   <!-- Content belong regist -->
     @yield('content')
   <!-- End content belong regist -->
-
-  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.min.js"></script>
-  <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap.min.js"></script>
 </body>
 </html>

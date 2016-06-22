@@ -48,9 +48,7 @@ class XrayController extends BackendController
         $data['s_xray_date_year_to']            = Input::get('s_xray_date_year_to');
         $data['s_xray_date_month_to']           = Input::get('s_xray_date_month_to');
         $data['s_xray_date_day_to']             = Input::get('s_xray_date_day_to');
-echo '<pre>';
-print_r($data);
-echo '</pre>';
+
         $clsXray            = new XrayModel();
         $data['xrays']      = $clsXray->get_all(false);
 

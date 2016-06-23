@@ -25,7 +25,10 @@ class X3dctController extends BackendController
      */
     public function getRegist()
     {
-        return view('backend.ortho.xrays.x3dct.regist');
+        $data['prevYear']           = (int)date("Y")-1;
+        $data['currYear']           = (int)date("Y");
+        $data['nextYear']           = (int)date("Y")+1;
+        return view('backend.ortho.xrays.x3dct.regist', $data);
     }
 
     /**

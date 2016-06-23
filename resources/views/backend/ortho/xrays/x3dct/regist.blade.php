@@ -3,6 +3,7 @@
 @section('content')
 <!-- Content xray_3dct_regist -->
   <section id="page">
+  {!! Form::open( ['id' => 'frmX3dctRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => 'ortho.xrays.x3dct.regist', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
     <div class="container">
       <div class="row content-page">
         <h3>放射線照射録管理　＞　3D-CTの入力</h3>
@@ -24,16 +25,19 @@
           <tr>
             <td class="col-title">撮影日</td>
             <td>
-              <select name="select3" class="form-control form-control--small">
-                <option>----年</option>
+              <select style="text-align: center;" name="year" id="year" class="form-control form-control--small">
+                <option value="">----年</option>
+                <option value="{{$prevYear}}">{{$prevYear}}年</option>
+                <option value="{{$currYear}}">{{$currYear}}年</option>
+                <option value="{{$nextYear}}">{{$nextYear}}年</option>
               </select>
-              <select name="select3" class="form-control form-control--small">
-                <option>--月</option>
+              <select style="text-align: center;" name="month" id="month" class="form-control form-control--small">
+                <option value="">--月</option>
               </select>
-              <select name="select3" class="form-control form-control--small">
-                <option>--日</option>
+              <select style="text-align: center;" name="day" id="day" class="form-control form-control--small">
+                <option value="">--日</option>               
               </select>
-              <img src="common/image/dummy-calendar.png" height="23" width="27">
+              <img src="{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}" height="23" width="27">
             </td>
           </tr>
           <tr>
@@ -175,10 +179,62 @@
       </div>
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">
-          <input name="button" id="button" value="登録する" type="submit" class="btn btn-sm btn-page">
+          <input name="btnSave" id="btnSave" value="登録する" type="submit" class="btn btn-sm btn-page">
         </div>
       </div>
     </div>
+    {!! Form::close() !!}
   </section>
   <!-- End content xray_3dct_regist -->
+<script type="text/javascript">
+  $('#year').change(function() {
+    var curr_year = $(this).val();
+    var optionMonth = "<option value=''>--月</option>";
+      for(m=1; m<=12; m++){
+        optionMonth += "<option value="+num2digit(m)+">" + num2digit(m) + '月' + "</option>";
+      }
+      $('#month').html(optionMonth);
+      var now_month = (new Date).getMonth() + 1;
+      $('#month option:eq(' + now_month + ')').prop('selected', true);
+
+      var curr_month = $('#month option:selected').val();
+      var getDays = getDaysInMonth(curr_year, curr_month);
+      var optionYDay = "<option value=''>--日</option>";
+          for(y = 1; y <= getDays; y++){
+              optionYDay += "<option value="+num2digit(y)+">" + num2digit(y) + '日' + "</option>";
+          }
+      $('#day').html(optionYDay);
+      $('#day option:eq(' + (new Date).getDate() + ')').prop('selected', true);
+
+      if(curr_year == ''){
+        $('#month').html("<option value=''>--月</option>");
+        $('#day option:eq(' + '' + ')').prop('selected', true);
+        $('#day').html("<option value=''>--日</option>");
+      }
+   });
+
+  $('#month').change(function() {
+    var year = $('#year option:selected').val();
+    var month = num2digit($(this).val());
+    var getDays = getDaysInMonth(year, month);
+    var optionDay = "<option value=''>--日</option>";
+    for(d = 1; d <= getDays; d++){
+        optionDay += "<option value="+num2digit(d)+">" + num2digit(d) + '日' + "</option>";
+    }
+    $('#day').html(optionDay);
+    if(month == '0'){
+      $('#day').html("<option value=''>--日</option>");
+    }
+    $('#day option:eq(' + (new Date).getDate() + ')').prop('selected', true);
+  });
+
+  function getDaysInMonth(year,month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function num2digit(n){
+    return n > 9 ? "" + n: "0" + n;
+  }
+</script>  
+
 @endsection

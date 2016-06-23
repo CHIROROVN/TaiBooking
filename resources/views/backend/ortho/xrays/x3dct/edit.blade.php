@@ -180,5 +180,56 @@
       </div>
     </div>
   </section>
+  <script type="text/javascript">
+
+  $('#year').change(function() {
+    var curr_year = $(this).val();
+    var optionMonth = "<option value=''>--月</option>";
+      for(m=1; m<=12; m++){
+        optionMonth += "<option value="+num2digit(m)+">" + num2digit(m) + '月' + "</option>";
+      }
+      $('#month').html(optionMonth);
+      var now_month = (new Date).getMonth() + 1;
+      $('#month option:eq(' + now_month + ')').prop('selected', true);
+
+      var curr_month = $('#month option:selected').val();
+      var getDays = getDaysInMonth(curr_year, curr_month);
+      var optionYDay = "<option value=''>--日</option>";
+          for(y = 1; y <= getDays; y++){
+              optionYDay += "<option value="+num2digit(y)+">" + num2digit(y) + '日' + "</option>";
+          }
+      $('#day').html(optionYDay);
+      $('#day option:eq(' + (new Date).getDate() + ')').prop('selected', true);
+
+      if(curr_year == ''){
+        $('#month').html("<option value=''>--月</option>");
+        $('#day option:eq(' + '' + ')').prop('selected', true);
+        $('#day').html("<option value=''>--日</option>");
+      }
+   });
+
+  $('#month').change(function() {
+    var year = $('#year option:selected').val();
+    var month = num2digit($(this).val());
+    var getDays = getDaysInMonth(year, month);
+    var optionDay = "<option value=''>--日</option>";
+    for(d = 1; d <= getDays; d++){
+        optionDay += "<option value="+num2digit(d)+">" + num2digit(d) + '日' + "</option>";
+    }
+    $('#day').html(optionDay);
+    if(month == '0'){
+      $('#day').html("<option value=''>--日</option>");
+    }
+    $('#day option:eq(' + (new Date).getDate() + ')').prop('selected', true);
+  });
+
+  function getDaysInMonth(year,month) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function num2digit(n){
+    return n > 9 ? "" + n: "0" + n;
+  }
+</script> 
   <!-- End content xray_3dct_regist -->
 @endsection

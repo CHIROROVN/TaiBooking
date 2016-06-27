@@ -90,9 +90,6 @@ class UserController extends BackendController
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
-
-            // 'created_at'        => date('Y-m-d H:i:s'),
-            // 'updated_at'        => date('Y-m-d H:i:s'),
         );
         
         if ( $clsUser->insert($dataInsert) ) {
@@ -161,9 +158,6 @@ class UserController extends BackendController
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
-
-            'created_at'        => $user->created_at,
-            'updated_at'        => date('Y-m-d H:i:s'),
         );
         
         if ( $clsUser->update($id, $dataUpdate) ) {
@@ -188,8 +182,6 @@ class UserController extends BackendController
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
-
-            // 'updated_at'        => date('Y-m-d H:i:s'),
         );
         
         if ( $clsUser->update($id, $dataUpdate) ) {
@@ -235,9 +227,6 @@ class UserController extends BackendController
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => 1,
-
-            // 'created_at'        => date('Y-m-d H:i:s'),
-            // 'updated_at'        => date('Y-m-d H:i:s'),
         );
 
         $clsUser->insert($dataInsert);

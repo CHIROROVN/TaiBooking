@@ -4,8 +4,8 @@ use DB;
 
 class UserModel
 {
-
     protected $table = 'm_users';
+    public $timestamps  = false;
 
     public function Rules()
     {

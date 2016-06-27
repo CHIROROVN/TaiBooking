@@ -171,6 +171,13 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('patients/communications/delete/{id}/{patient_id}', ['as' => 'ortho.patients.communications.delete', 'uses' => 'CommunicationController@getDelete']);
 	Route::get('patients/communications/detail/{id}/{patient_id}', ['as' => 'ortho.patients.communications.detail', 'uses' => 'CommunicationController@getDetail']);
 
+	//treatment1
+	Route::get('treatment1', ['as' => 'ortho.treatments.treatment1.index', 'uses' => 'treatment1Controller@index']);
+	Route::get('treatment1/regist', ['as' => 'ortho.treatments.treatment1.regist', 'uses' => 'treatment1Controller@getRegist']);
+	Route::post('treatment1/regist', ['as' => 'ortho.treatments.treatment1.regist', 'uses' => 'treatment1Controller@postRegist']);
+	Route::get('treatment1/edit/{id}', ['as' => 'ortho.treatments.treatment1.edit', 'uses' => 'treatment1Controller@getEdit']);
+	Route::post('treatment1/edit/{id}', ['as' => 'ortho.treatments.treatment1.edit', 'uses' => 'treatment1Controller@postEdit']);
+
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);
 	Route::post('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@postLogin']);

@@ -35,6 +35,12 @@
               <li><a href="ddr-calendar.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>院長予定のカレンダー表示・新規登録・変更・削除</a></li>
             </ul>
             @endif
+
+            <h2>メモ管理</h2>
+            <ul>
+              <li><a href="memo_calendar.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>カレンダー表示・メモの新規登録・変更・削除</a></li>
+            </ul>
+
           </div>
           <div class="col-md-4 col-lg-4">
 
@@ -81,8 +87,7 @@
             @if(!empty(Auth::user()->u_power4))
             <h2>放射線照射録管理</h2>
             <ul>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>放射線照射の登録・表示（患者ごと）</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>放射線照射録の表示（日ごと）</a></li>
+              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>放射線照射の検索・登録・表示</a></li>
             </ul>
             @endif
 
@@ -93,8 +98,7 @@
               <li><a href="{{ route('ortho.areas.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「地域」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{route('ortho.services.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「業務名」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{route('ortho.equipments.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「装置」項目の新規登録・一覧・変更・削除</a></li>
-              <li><a href="treatment1_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「処置内容1」項目の新規登録・一覧・変更・削除</a></li>
-              <li><a href="treatment2_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「処置内容2」項目の新規登録・一覧・変更・削除</a></li>
+              <li><a href="treatment1_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「治療内容」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{ route('ortho.inspections.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「検査」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{ route('ortho.insurances.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「保険診療」項目の新規登録・一覧・変更・削除</a></li>
             </ul>

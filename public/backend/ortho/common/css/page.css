@@ -586,7 +586,10 @@ textarea {
   background:#6a9ee4;
 }
 
-
+.modal-title,
+.modal-body {
+  text-align: center;
+}
 
 
 

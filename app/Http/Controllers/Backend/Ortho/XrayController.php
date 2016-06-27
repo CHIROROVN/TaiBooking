@@ -10,6 +10,8 @@ use Hash;
 use App\clinic;
 use App\Http\Models\Ortho\XrayModel;
 use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\PatientModel;
 
 use Form;
 use Html;
@@ -60,8 +62,14 @@ class XrayController extends BackendController
      */
     public function getRegist()
     {
-        $clsClinic          = new ClinicModel();
-        $data['clinics']    = $clsClinic->get_for_select();
+        $clsXray                    = new XrayModel();
+        $clsUser                    = new UserModel();
+        $clsClinic                  = new ClinicModel();
+        $clsPatient                 = new PatientModel();
+        $data['clinics']            = $clsClinic->get_for_select();
+        $data['patients']           = $clsPatient->get_for_select();
+        $data['xray']               = $clsXray->get_by_id(Input::get('patient_id', null));
+        $data['users']              = $clsUser->get_for_select();
 
         return view('backend.ortho.xrays.regist', $data);
     }
@@ -75,9 +83,9 @@ class XrayController extends BackendController
         $dataInsert                     = array(
             'xray_date'                 => '',
             'xray_place'                => (Input::get('xray_place') != 0) ? Input::get('xray_place') : '',
-            'p_id'                      => (Input::get('p_id') != 0) ? Input::get('p_id') : 0, // 0 => ''
+            'p_id'                      => (Input::get('p_id') != 0) ? Input::get('p_id') : '', // 0 => ''
             'xray_memo'                 => Input::get('xray_memo'),
-            'u_id'                      => '',
+            'u_id'                      => Auth::user()->id,
 
             // xray_cats
             'xray_cat_1'                => (Input::get('xray_cat_1') == 1) ? 1 : 0,
@@ -310,35 +318,23 @@ class XrayController extends BackendController
      */
     public function getDelete($id)
     {
-        // $clsXray              = new XrayModel();
-        // $clsXrayArea          = new ClinicAreaModel();
+        $clsXray                        = new XrayModel();
 
-        // // update
-        // $dataUpdate = array(
-        //     'last_date'                 => date('y-m-d H:i:s'),
-        //     'last_kind'                 => DELETE,
-        //     'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'                 => Auth::user()->id,
-        // );
-        // $clsXray->update($id, $dataUpdate);
-
-        // // update to table clinic_area
-        // $dataInsert = array(
-        //     'clinic_id'         => $id,
-
-        //     'last_date'         => date('y-m-d H:i:s'),
-        //     'last_kind'         => DELETE,
-        //     'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'         => Auth::user()->id
-        // );
+        // update
+        $dataUpdate = array(
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => DELETE,
+            'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
+            'last_user'                 => Auth::user()->id,
+        );
         
-        // if ( $clsXrayArea->update_by_clinic($id, $dataInsert) ) {
-        //     Session::flash('success', trans('common.message_regist_success'));
-        // } else {
-        //     Session::flash('danger', trans('common.message_regist_danger'));
-        // }
+        if ( $clsXray->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_edit_success'));
+        } else {
+            Session::flash('danger', trans('common.message_edit_danger'));
+        }
 
-        // return redirect()->route('ortho.xrays.index');
+        return redirect()->route('ortho.xrays.detail', [ $id ]);
     }
 
 
@@ -348,8 +344,12 @@ class XrayController extends BackendController
      */
     public function getDetail($id)
     {
-        $clsXray            = new XrayModel();
-        $data['xray']       = $clsXray->get_by_id($id);
+        $clsXray                    = new XrayModel();
+        $clsUser                    = new UserModel();
+        $data['xray']               = $clsXray->get_by_id($id);
+        $data['users']              = $clsUser->get_for_select();
+        $data['patient_xrays']      = $clsXray->get_by_patient_id($data['xray']->p_id);
+        $data['patient_id']         = $id;
 
         return view('backend.ortho.xrays.detail', $data);
     }

@@ -65,7 +65,7 @@
             </tr>
             @if(empty($clinics) || count($clinics) < 1)
             <tr>
-              <td colspan="11" align="center">該当するデータがありません。</td>
+              <td colspan="11" align="center">{{ trans('common.no_data_correspond') }}</td>
             </tr>
             @else
               @foreach($clinics as $clinic)

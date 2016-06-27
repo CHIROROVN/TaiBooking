@@ -29,7 +29,10 @@ class XrayModel
 
     public function get_all($pagination = false, $where = array())
     {
-        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+        $db = DB::table($this->table)
+                    ->leftJoin('t_patient', 't_xray.p_id', '=', 't_patient.p_id')
+                    ->select('t_xray.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
+                    ->where('t_xray.last_kind', '<>', DELETE);
 
         // if(!empty($keyword))
         // {
@@ -44,6 +47,20 @@ class XrayModel
         }
         
         return $results;
+    }
+
+
+    public function get_by_patient_id($id_patient)
+    {
+        $db = DB::table($this->table)
+                    ->leftJoin('t_patient', 't_xray.p_id', '=', 't_patient.p_id')
+                    ->leftJoin('m_clinic', 't_xray.xray_place', '=', 'm_clinic.clinic_id')
+                    ->select('t_xray.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday', 'm_clinic.clinic_name')
+                    ->where('t_xray.p_id', $id_patient)
+                    ->where('t_xray.last_kind', '<>', DELETE)
+                    ->get();
+
+        return $db;
     }
 
 
@@ -63,7 +80,12 @@ class XrayModel
 
     public function get_by_id($id)
     {
-        $results = DB::table($this->table)->where('xray_id', $id)->first();
+        $results = DB::table($this->table)
+                        ->leftJoin('t_patient', 't_xray.p_id', '=', 't_patient.p_id')
+                        ->select('t_xray.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday', 't_patient.p_dr')
+                        ->where('xray_id', $id)
+                        ->first();
+
         return $results;
     }
 

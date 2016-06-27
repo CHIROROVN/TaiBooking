@@ -143,6 +143,34 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('xrays/search', ['as' => 'ortho.xrays.search', 'uses' => 'XrayController@getSearch']);
 	Route::get('xrays/get-day', ['as' => 'ortho.xrays.get.day', 'uses' => 'XrayController@getDay']);
 
+	// patients
+	Route::any('patients', ['as' => 'ortho.patients.index', 'uses' => 'PatientController@index']);
+	Route::get('patients/regist', ['as' => 'ortho.patients.regist', 'uses' => 'PatientController@getRegist']);
+	Route::post('patients/regist', ['as' => 'ortho.patients.regist', 'uses' => 'PatientController@postRegist']);
+	Route::get('patients/edit/{id}', ['as' => 'ortho.patients.edit', 'uses' => 'PatientController@getEdit']);
+	Route::post('patients/edit/{id}', ['as' => 'ortho.patients.edit', 'uses' => 'PatientController@postEdit']);
+	Route::get('patients/delete/{id}', ['as' => 'ortho.patients.delete', 'uses' => 'PatientController@getDelete']);
+	Route::get('patients/detail/{id}', ['as' => 'ortho.patients.detail', 'uses' => 'PatientController@getDetail']);
+	Route::get('patients/ajax/autocomplete-patient', ['as' => 'ortho.patients.autocomplete.patient', 'uses' => 'PatientController@AutoCompletePatient']);
+
+	// brothers patient
+	Route::any('patients/brothers/{patient_id}', ['as' => 'ortho.patients.brothers.index', 'uses' => 'BrotherController@index']);
+	Route::get('patients/brothers/regist/{patient_id}', ['as' => 'ortho.patients.brothers.regist', 'uses' => 'BrotherController@getRegist']);
+	Route::post('patients/brothers/regist/{patient_id}', ['as' => 'ortho.patients.brothers.regist', 'uses' => 'BrotherController@postRegist']);
+	Route::get('patients/brothers/edit/{id}/{patient_id}', ['as' => 'ortho.patients.brothers.edit', 'uses' => 'BrotherController@getEdit']);
+	Route::post('patients/brothers/edit/{id}/{patient_id}', ['as' => 'ortho.patients.brothers.edit', 'uses' => 'BrotherController@postEdit']);
+	Route::get('patients/brothers/delete/{id}/{patient_id}', ['as' => 'ortho.patients.brothers.delete', 'uses' => 'BrotherController@getDelete']);
+	Route::get('patients/brothers/ajax/autocomplete-patient', ['as' => 'ortho.patients.brothers.autocomplete.patient', 'uses' => 'BrotherController@AutoCompletePatient']);
+
+	// communications patient (com)
+	Route::any('patients/communications/{patient_id}', ['as' => 'ortho.patients.communications.index', 'uses' => 'CommunicationController@index']);
+	Route::get('patients/communications/regist/{patient_id}', ['as' => 'ortho.patients.communications.regist', 'uses' => 'CommunicationController@getRegist']);
+	Route::post('patients/communications/regist/{patient_id}', ['as' => 'ortho.patients.communications.regist', 'uses' => 'CommunicationController@postRegist']);
+	Route::get('patients/communications/edit/{id}/{patient_id}', ['as' => 'ortho.patients.communications.edit', 'uses' => 'CommunicationController@getEdit']);
+	Route::post('patients/communications/edit/{id}/{patient_id}', ['as' => 'ortho.patients.communications.edit', 'uses' => 'CommunicationController@postEdit']);
+	Route::get('patients/communications/delete/{id}/{patient_id}', ['as' => 'ortho.patients.communications.delete', 'uses' => 'CommunicationController@getDelete']);
+	Route::get('patients/communications/detail/{id}/{patient_id}', ['as' => 'ortho.patients.communications.detail', 'uses' => 'CommunicationController@getDetail']);
+
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);
 	Route::post('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@postLogin']);

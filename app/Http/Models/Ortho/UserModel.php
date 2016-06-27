@@ -37,6 +37,25 @@ class UserModel
         return $results;
     }
 
+
+    public function get_for_select()
+    {
+        $db = DB::table($this->table)->select('id', 'u_name')->where('last_kind', '<>', DELETE)->get();
+        return $db;
+    }
+
+
+    public function get_by_belong($belong_kind)
+    {
+        $db = DB::table($this->table)
+                    ->leftJoin('m_belong', 'm_users.u_belong', '=', 'm_belong.belong_id')
+                    ->select('id', 'u_name')
+                    ->where('m_belong.belong_kind', '=', $belong_kind)
+                    ->where('m_users.last_kind', '<>', DELETE)
+                    ->get();
+        return $db;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

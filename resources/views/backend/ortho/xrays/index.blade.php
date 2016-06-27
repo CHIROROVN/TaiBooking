@@ -44,11 +44,11 @@
           @foreach ( $xrays as $xray )
           <tr>
             <td>{{ date('Y/m/d', strtotime($xray->xray_date)) }}</td>
-            <td>123456</td>
-            <td>杉元　俊彦</td>
-            <td>すぎもと　としひこ</td>
-            <td>男</td>
-            <td>1980/11/27</td>
+            <td>{{ $xray->p_no }}</td>
+            <td>{{ $xray->p_name }}</td>
+            <td>{{ $xray->p_name_kana }}</td>
+            <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
+            <td>{{ date('Y/m/d', strtotime($xray->p_birthday)) }}</td>
             <td align="center">
               <input onclick="location.href='{{ route('ortho.xrays.detail', $xray->xray_id) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
             </td>

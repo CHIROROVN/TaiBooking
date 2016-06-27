@@ -60,4 +60,4 @@ class SimplePagination extends BasePagination
 
 // using in view
 // {!! (new App\Pagination\SimplePagination($items))->render() !!}
-//{!! $items->appends(['key' => 'value'])->render(new App\Pagination\SimplePagination($items))  !!}
+//{!! $items->appends(['key' => 'value'])->render(new App\Pagination\SimplePagination($items)) !!}

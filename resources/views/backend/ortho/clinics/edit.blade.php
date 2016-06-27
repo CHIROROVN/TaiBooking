@@ -596,7 +596,7 @@
                 </div>
               </div>
             </div>
-
+            <!-- end Modal -->
         </div>
         </div>
         <div class="row margin-bottom">

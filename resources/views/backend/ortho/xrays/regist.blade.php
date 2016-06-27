@@ -38,19 +38,28 @@
   <div class="container">
     <div class="row content-page">
       <h3>放射線照射録管理　＞　レントゲンの入力</h3>
+      
       <table class="table table-bordered">
-        <tr>
-          <td class="col-title">名前</td>
-          <td>123456　杉元　俊彦（すぎもと　としひこ）</td>
-          <td class="col-title">担当</td>
-          <td>田井Dr</td>
-        </tr>
-        <tr>
-          <td class="col-title">生年月日</td>
-          <td>1980年11月27日</td>
-          <td class="col-title">性別</td>
-          <td>男</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td class="col-title">名前</td>
+            <td>{{ $xray->p_no }}　{{ $xray->p_name }}（{{ $xray->p_name_kana }}）</td>
+            <td class="col-title">担当</td>
+            <td>
+              @foreach ( $users as $user )
+                @if ( $user->id == $xray->p_dr )
+                {{ $user->u_name }}
+                @endif
+              @endforeach
+            </td>
+          </tr>
+          <tr>
+            <td class="col-title">生年月日</td>
+            <td>1980年11月27日</td>
+            <td class="col-title">性別</td>
+            <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
+          </tr>
+        </tbody>
       </table>
 
       <table class="table table-bordered">
@@ -104,6 +113,9 @@
           <td>
             <select name="p_id" class="form-control form-control--small">
               <option value="0">----</option>
+              @foreach ( $patients as $patient )
+              <option value="{{ $patient->p_id }}">{{ $patient->p_name }}</option>
+              @endforeach
             </select>
             <span class="error-input">@if ($errors->first('p_id')) {!! $errors->first('p_id') !!} @endif</span>
           </td>

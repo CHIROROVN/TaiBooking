@@ -100,4 +100,61 @@ return [
     'error_p_id_required'                                   => '撮影日を選択してください。',
     'error_xray_date_required'                              => '撮影場所を選択してください。',
     'error_xray_place_required'                             => '撮影者を選択してください。',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Patient
+    |--------------------------------------------------------------------------
+    */
+    'error_p_no_required'                                   => 'カルテNoを入力してください。',
+    'error_p_dr_required'                                   => '担当を選択してください。',
+    'error_p_hos_memo_required'                             => 'HOSを入力してください。',
+    'error_p_hos_required'                                  => 'HOSを選択してください。',
+    'error_p_name_required'                                 => '氏名を入力してください。',
+    'error_p_name_kana_required'                            => '氏名（よみ）を入力してください。',
+    'error_p_name_kana_regex'                               => 'ひらがなで入力してください。',
+    'error_p_sex_required'                                  => '性別を選択してください。',
+    'error_p_birthday_required'                             => '生年月日を入力してください。',
+    'error_p_family_dr_required'                            => 'かかりつけを入力してください。',
+    'error_p_introduce_required'                            => '紹介先を入力してください。',
+    'error_p_start_required'                                => '治療開始を入力してください。',
+    'error_p_start2_required'                               => '2期開始を入力してください。',
+    'error_p_place_required'                                => '撮影場所を選択してください。',
+    'error_p_xray_required'                                 => 'xrayを入力してください。',
+    'error_p_clinic_memo_required'                          => '医院関連メモを入力してください。',
+    'error_p_personal_memo_required'                        => '個人情報メモを入力してください。',
+    'error_p_used_required'                                 => '使用装置を入力してください。',
+    'error_p_payment_required'                              => '入金状況を入力してください。',
+    'error_p_amount_required'                               => '契約金を入力してください。',
+    'error_p_zip_required'                                  => '住所を入力してください。',
+    'error_p_pref_required'                                 => '都道府県を選択してください。',
+    'error_p_address1_required'                             => 'Address1を入力してください。',
+    'error_p_address_2_required'                            => 'Address2を入力してください。',
+    'error_p_tel_required'                                  => 'TELを入力してください。',
+    'error_p_fax_required'                                  => 'FAXを入力してください。',
+    'error_p_mobile_required'                               => '携帯電話を入力してください。',
+    'error_p_mobile_owner_required'                         => '携帯電話所有者を選択してください。',
+    'error_p_email_required'                                => 'e-mailを入力してください。',
+    'error_p_email_email'                                   => 'e-mailのメールアドレスを正しく入力してください。',
+    'error_p_company_required'                              => '学校・勤務先を入力してください。',
+    'error_p_parent_name_required'                          => '保護者氏名を入力してください。',
+    'error_p_parent_company_required'                       => '保護者勤務先を入力してください。',
+    'error_p_parent_tel_required'                           => '保護者連絡先を入力してください。',
+    'error_p_parent_kind_required'                          => '保護者連絡先種別を選択してください。',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Brother
+    |--------------------------------------------------------------------------
+    */
+    'error_p_relation_id_required'                          => '対象者の名前を入力してください。',
+    'error_brother_relation_required'                       => '関係を選択してください。',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Communication
+    |--------------------------------------------------------------------------
+    */
+    'error_com_title_required'                          => 'タイトルを入力してください。',
+    'error_com_contents_required'                       => '詳細を入力してください。',
 ];

@@ -172,11 +172,18 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('patients/communications/detail/{id}/{patient_id}', ['as' => 'ortho.patients.communications.detail', 'uses' => 'CommunicationController@getDetail']);
 
 	//treatment1
-	Route::get('treatment1', ['as' => 'ortho.treatments.treatment1.index', 'uses' => 'treatment1Controller@index']);
-	Route::get('treatment1/regist', ['as' => 'ortho.treatments.treatment1.regist', 'uses' => 'treatment1Controller@getRegist']);
-	Route::post('treatment1/regist', ['as' => 'ortho.treatments.treatment1.regist', 'uses' => 'treatment1Controller@postRegist']);
-	Route::get('treatment1/edit/{id}', ['as' => 'ortho.treatments.treatment1.edit', 'uses' => 'treatment1Controller@getEdit']);
-	Route::post('treatment1/edit/{id}', ['as' => 'ortho.treatments.treatment1.edit', 'uses' => 'treatment1Controller@postEdit']);
+	Route::get('treatment1', ['as' => 'ortho.treatments.treatment1.index', 'uses' => 'Treatment1Controller@index']);
+	Route::get('treatment1/regist', ['as' => 'ortho.treatments.treatment1.regist', 'uses' => 'Treatment1Controller@getRegist']);
+	Route::post('treatment1/regist', ['as' => 'ortho.treatments.treatment1.regist', 'uses' => 'Treatment1Controller@postRegist']);
+	Route::get('treatment1/edit/{id}', ['as' => 'ortho.treatments.treatment1.edit', 'uses' => 'Treatment1Controller@getEdit']);
+	Route::post('treatment1/edit/{id}', ['as' => 'ortho.treatments.treatment1.edit', 'uses' => 'Treatment1Controller@postEdit']);
+	Route::get('treatment1/delete/{id}', ['as' => 'ortho.treatments.treatment1.delete', 'uses' => 'Treatment1Controller@delete']);
+
+	Route::get('treatment1/orderby-top', ['as' => 'ortho.treatments.treatment1.orderby.top', 'uses' => 'Treatment1Controller@orderby_top']);
+	Route::get('treatment1/orderby-last', ['as' => 'ortho.treatments.treatment1.orderby.last', 'uses' => 'Treatment1Controller@orderby_last']);
+	Route::get('treatment1/orderby-up', ['as' => 'ortho.treatments.treatment1.orderby.up', 'uses' => 'Treatment1Controller@orderby_up']);
+	Route::get('treatment1/orderby-down', ['as' => 'ortho.treatments.treatment1.orderby.down', 'uses' => 'Treatment1Controller@orderby_down']);
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

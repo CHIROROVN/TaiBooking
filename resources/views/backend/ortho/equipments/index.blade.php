@@ -58,7 +58,6 @@
                   <td align="center" class="">
                     <button onclick="location.href='{{ url('ortho/equipments/orderby-last?id=' . $equipment->equipment_id) }}'" class="@if($i == $max) {{'hidden'}} @endif">LAST</button>
                   </td>
-
                 </tr>
               @endforeach
             @else

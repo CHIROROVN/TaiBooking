@@ -33,7 +33,7 @@ class Treatment1Controller extends BackendController
 
     /**
      * 
-     */
+    */
     public function getRegist()
     {
         return view('backend.ortho.treatments.treatment1.regist');
@@ -55,17 +55,18 @@ class Treatment1Controller extends BackendController
         // insert
         $max = $clsTreatment1->get_max();
         $dataInsert = array(
-            'service_name'         => Input::get('service_name'),
-            'service_sort_no'      => $max + 1,
-            'last_kind'            => INSERT,
-            'last_ipadrs'          => CLIENT_IP_ADRS,
-            'last_date'            => date('y-m-d H:i:s'),
-            'last_user'            => Auth::user()->id
+            'treatment_name'            => Input::get('treatment_name'),
+            'treatment_time'            => Input::get('treatment_time'),
+            'treatment_sort_no'         => $max + 1,
+            'last_kind'                 => INSERT,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_user'                 => Auth::user()->id
         );
 
         if ( $clsTreatment1->insert($dataInsert) ) {
             Session::flash('success', trans('common.message_regist_success'));
-            return redirect()->route('ortho.services.index');
+            return redirect()->route('ortho.treatments.treatment1.index');
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
             return redirect()->route('backend.services.regist');
@@ -91,21 +92,22 @@ class Treatment1Controller extends BackendController
         $inputs                 = Input::all();
         $validator              = Validator::make($inputs, $clsTreatment1->Rules(), $clsTreatment1->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.services.edit', $id)->withErrors($validator)->withInput();
+            return redirect()->route('ortho.treatments.treatment1.edit', $id)->withErrors($validator)->withInput();
         }
         $dataUpdate = array(
-            'service_name'          => Input::get('service_name'),
-            'last_kind'             => UPDATE,
-            'last_ipadrs'           => CLIENT_IP_ADRS,
-            'last_user'             => Auth::user()->id,
-            'last_date'             => date('y-m-d H:i:s'),
+            'treatment_name'            => Input::get('treatment_name'),
+            'treatment_time'            => Input::get('treatment_time'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_user'                 => Auth::user()->id
         );
         if ( $clsTreatment1->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.services.index');
+            return redirect()->route('ortho.treatments.treatment1.index');
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.services.edit', $id);
+            return redirect()->route('ortho.treatments.treatment1.edit', $id);
         }
     }
 
@@ -124,10 +126,10 @@ class Treatment1Controller extends BackendController
 
         if ( $clsTreatment1->update($id, $dataDelete) ) {
             Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.services.index');
+            return redirect()->route('ortho.treatments.treatment1.index');
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
-            return redirect()->route('ortho.services.edit',$id);
+            return redirect()->route('ortho.treatments.treatment1.edit',$id);
         }
     }
 
@@ -138,8 +140,8 @@ class Treatment1Controller extends BackendController
     {
         $clsTreatment1 = new Treatment1Model();
         $id = Input::get('id');
-        $this->top($clsTreatment1, $id, 'service_sort_no');
-        return redirect()->route('ortho.services.index');
+        $this->top($clsTreatment1, $id, 'treatment_sort_no');
+        return redirect()->route('ortho.treatments.treatment1.index');
     }
 
     /**
@@ -149,8 +151,8 @@ class Treatment1Controller extends BackendController
     {
         $clsTreatment1 = new Treatment1Model();
         $id = Input::get('id');        
-        $this->last($clsTreatment1, $id, 'service_sort_no');
-        return redirect()->route('ortho.services.index');
+        $this->last($clsTreatment1, $id, 'treatment_sort_no');
+        return redirect()->route('ortho.treatments.treatment1.index');
     }
 
     /**
@@ -160,11 +162,11 @@ class Treatment1Controller extends BackendController
     {
         $clsTreatment1 = new Treatment1Model();
         $id = Input::get('id');
-        $services = $clsTreatment1->get_all();
+        $treatment1s = $clsTreatment1->get_all();
         
-        $this->up($clsTreatment1, $id, $services, 'service_id', 'service_sort_no');
+        $this->up($clsTreatment1, $id, $treatment1s, 'treatment_id', 'treatment_sort_no');
 
-        return redirect()->route('ortho.services.index');
+        return redirect()->route('ortho.treatments.treatment1.index');
     }
 
     /**
@@ -174,8 +176,8 @@ class Treatment1Controller extends BackendController
     {
         $clsTreatment1 = new Treatment1Model();
         $id = Input::get('id');
-        $services = $clsTreatment1->get_all();        
-        $this->down($clsTreatment1, $id, $services, 'service_id', 'service_sort_no');
-        return redirect()->route('ortho.services.index');
+        $treatment1s = $clsTreatment1->get_all();
+        $this->down($clsTreatment1, $id, $treatment1s, 'treatment_id', 'treatment_sort_no');
+        return redirect()->route('ortho.treatments.treatment1.index');
     }
 }

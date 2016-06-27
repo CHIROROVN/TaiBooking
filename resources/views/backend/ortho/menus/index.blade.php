@@ -98,7 +98,7 @@
               <li><a href="{{ route('ortho.areas.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「地域」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{route('ortho.services.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「業務名」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{route('ortho.equipments.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「装置」項目の新規登録・一覧・変更・削除</a></li>
-              <li><a href="treatment1_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「治療内容」項目の新規登録・一覧・変更・削除</a></li>
+              <li><a href="{{route('ortho.treatments.treatment1.index')}}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「治療内容」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{ route('ortho.inspections.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「検査」項目の新規登録・一覧・変更・削除</a></li>
               <li><a href="{{ route('ortho.insurances.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「保険診療」項目の新規登録・一覧・変更・削除</a></li>
             </ul>

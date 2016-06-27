@@ -11,7 +11,8 @@ class Treatment1Model
     public function Rules()
     {
         return array(
-            'treatment_name' => 'required',
+            'treatment_name'        => 'required',
+            'treatment_time'        => 'required',
         );
     }
 
@@ -19,6 +20,7 @@ class Treatment1Model
     {
         return array(
             'treatment_name.required' => trans('validation.error_treatment_name_required'),
+            'treatment_time.required' => trans('validation.error_treatment_time_required'),
         );
     }
 

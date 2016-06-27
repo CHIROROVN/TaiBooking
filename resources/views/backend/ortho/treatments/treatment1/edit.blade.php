@@ -3,7 +3,7 @@
 @section('content')
 	<!-- Content treatment1 regist -->
     <div class="content-page">
-      <h3>共通マスタ管理　＞　治療内容の新規登録</h3>
+      <h3>共通マスタ管理　＞　治療内容の編集</h3>
     {!! Form::open(array('route' => ['ortho.treatments.treatment1.edit', $treatment1->treatment_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
       <table class="table table-bordered">
         <tbody>

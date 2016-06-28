@@ -174,4 +174,13 @@ return [
     */
     'error_ct_date_required'                                => '撮影日を選択してください。',
     'error_ct_u_id_required'                                => '撮影者を選択してください。',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Facility
+    |--------------------------------------------------------------------------
+    */
+    'error_facility_name_required'                          => '施設名を入力してください。',
+    'error_facility_kind_required'                          => 'Please choose treatment kind.',
+
 ];

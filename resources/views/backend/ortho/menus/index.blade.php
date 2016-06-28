@@ -48,7 +48,7 @@
             @if(!empty(Auth::user()->u_power5))
             <h2>月1回の予約業務前処理</h2>
             <ul>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>シフトの新規登録・一覧・変更・削除</a></li>
+              <li><a href="{{route('ortho.shifts.list_edit')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>シフトの新規登録・一覧・変更・削除</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿テンプレートの適用・個別編集</a></li>
             </ul>
             @endif

@@ -110,7 +110,7 @@
                     ×
                   @endif
                 </td>
-                <td><input type="button" onClick="location.href='clinic_facility_list.html'" value="「設備」管理" class="btn btn-xs btn-page"/></td>
+                <td><input type="button" onClick="location.href='{{route('ortho.facilities.index', $clinic->clinic_id)}}'" value="「設備」管理" class="btn btn-xs btn-page"/></td>
                 <td><input type="button" onClick="location.href='clinic_service_list.html'" value="「業務枠」管理" class="btn btn-xs btn-page"/></td>
                 <td><input type="button" onClick="location.href='clinic_booking-template_list.html'" value="「予約雛形」管理" class="btn btn-xs btn-page"/></td>
                 <td>

@@ -186,6 +186,31 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('treatment1/orderby-up', ['as' => 'ortho.treatments.treatment1.orderby.up', 'uses' => 'Treatment1Controller@orderby_up']);
 	Route::get('treatment1/orderby-down', ['as' => 'ortho.treatments.treatment1.orderby.down', 'uses' => 'Treatment1Controller@orderby_down']);
 
+	//Shifts
+	Route::get('shifts', ['as' => 'ortho.shifts.index', 'uses' => 'ShiftController@index']);
+	Route::get('shifts/edit/{id}', ['as' => 'ortho.shifts.edit', 'uses' => 'ShiftController@getEdit']);
+	Route::post('shifts/edit/{id}', ['as' => 'ortho.shifts.edit', 'uses' => 'ShiftController@postEdit']);
+	Route::get('shifts/setting', ['as' => 'ortho.shifts.setting', 'uses' => 'ShiftController@getSetting']);
+	Route::post('shifts/setting', ['as' => 'ortho.shifts.setting', 'uses' => 'ShiftController@postSetting']);
+	Route::get('shifts/search', ['as' => 'ortho.shifts.search', 'uses' => 'ShiftController@search']);
+	
+	Route::get('shifts/list_edit', ['as' => 'ortho.shifts.list_edit', 'uses' => 'ShiftController@getSListEdit']);
+	Route::post('shifts/list_edit', ['as' => 'ortho.shifts.list_edit', 'uses' => 'ShiftController@postSListEdit']);
+
+	//Facility
+	Route::get('clinics/{clinic_id}/facility', ['as' => 'ortho.facilities.index', 'uses' => 'FacilityController@index']);
+	Route::get('clinics/{clinic_id}/facility/regist', ['as' => 'ortho.facilities.regist', 'uses' => 'FacilityController@getRegist']);
+	Route::post('clinics/{clinic_id}/facility/regist', ['as' => 'ortho.facilities.regist', 'uses' => 'FacilityController@postRegist']);
+	Route::get('clinics/{clinic_id}/facility/edit/{id}', ['as' => 'ortho.facilities.edit', 'uses' => 'FacilityController@getEdit']);
+	Route::post('clinics/{clinic_id}/facility/edit/{id}', ['as' => 'ortho.facilities.edit', 'uses' => 'FacilityController@postEdit']);
+	Route::get('clinics/{clinic_id}/facility/delete/{id}', ['as' => 'ortho.facilities.delete', 'uses' => 'FacilityController@delete']);
+
+	Route::get('clinics/{clinic_id}/facility/orderby-top', ['as' => 'ortho.facilities.orderby.top', 'uses' => 'FacilityController@orderby_top']);
+	Route::get('clinics/{clinic_id}/facility/orderby-last', ['as' => 'ortho.facilities.orderby.last', 'uses' => 'FacilityController@orderby_last']);
+	Route::get('clinics/{clinic_id}/facility/orderby-up', ['as' => 'ortho.facilities.orderby.up', 'uses' => 'FacilityController@orderby_up']);
+	Route::get('clinics/{clinic_id}/facility/orderby-down', ['as' => 'ortho.facilities.orderby.down', 'uses' => 'FacilityController@orderby_down']);
+
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

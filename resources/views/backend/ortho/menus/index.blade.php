@@ -10,7 +10,7 @@
             @if(!empty(Auth::user()->u_power1))
             <h2>患者管理</h2>
             <ul>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>患者の新規登録・一覧・変更・削除・予約表示・来院履歴・コミュニケーションノート</a></li>
+              <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>患者の新規登録・一覧・変更・削除・予約表示・来院履歴・コミュニケーションノート</a></li>
             </ul>
             @endif
 
@@ -20,7 +20,7 @@
             <ul>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>新患の予約を取る</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>次回の予約を取る</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
+              <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>TEL待ちリストから予約を取る</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>急患の予約を取る</a></li>
               <li><a href="booking-monthly.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
@@ -87,7 +87,7 @@
             @if(!empty(Auth::user()->u_power4))
             <h2>放射線照射録管理</h2>
             <ul>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>放射線照射の検索・登録・表示</a></li>
+              <li><a href="{{ route('ortho.xrays.search') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>放射線照射の検索・登録・表示</a></li>
             </ul>
             @endif
 

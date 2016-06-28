@@ -62,6 +62,7 @@ class BelongController extends BackendController
         $dataInsert             = array(
             'belong_name'       => Input::get('belong_name'),
             'belong_sort_no'    => $max + 1,
+            'belong_kind'       => Input::get('belong_kind'),
 
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
@@ -105,6 +106,7 @@ class BelongController extends BackendController
         // update
         $dataUpdate = array(
             'belong_name'       => Input::get('belong_name'),
+            'belong_kind'       => Input::get('belong_kind'),
 
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,

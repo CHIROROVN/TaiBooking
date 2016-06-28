@@ -24,9 +24,9 @@
       $('#day').append('<option value="0">--日</option>');
       $.each( msg, function( key, value ) {
         if ( old_day == value ) {
-          $('#day').append('<option value="' + value + '" selected>' + value + '</option>');
+          $('#day').append('<option value="' + value + '" selected>' + value + '日</option>');
         } else {
-          $('#day').append('<option value="' + value + '">' + value + '</option>');
+          $('#day').append('<option value="' + value + '">' + value + '日</option>');
         }
       });
     });
@@ -55,7 +55,7 @@
           </tr>
           <tr>
             <td class="col-title">生年月日</td>
-            <td>1980年11月27日</td>
+            <td>{{ date('Y', strtotime($patient->p_birthday)) }}年{{ date('m', strtotime($patient->p_birthday)) }}月{{ date('d', strtotime($patient->p_birthday)) }}日</td>
             <td class="col-title">性別</td>
             <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
           </tr>
@@ -63,6 +63,9 @@
       </table>
 
       <table class="table table-bordered">
+
+        <!-- p_id -->
+        <input type="hidden" name="p_id" value="{{ $patient->p_id }}">
 
         <!-- xray_date -->
         <?php
@@ -75,14 +78,14 @@
           <td>
             <select name="xray_date_year" class="form-control form-control--small">
               <option value="0">----年</option>
-              <option value="{{ $year_prev }}" @if(old('xray_date_year') == $year_prev) selected="" @endif>{{ $year_prev }}</option>
-              <option value="{{ $year_now }}" @if(old('xray_date_year') == $year_now) selected="" @endif>{{ $year_now }}</option>
-              <option value="{{ $year_next }}" @if(old('xray_date_year') == $year_next) selected="" @endif>{{ $year_next }}</option>
+              <option value="{{ $year_prev }}" @if(old('xray_date_year') == $year_prev) selected="" @endif>{{ $year_prev }}年</option>
+              <option value="{{ $year_now }}" @if(old('xray_date_year') == $year_now) selected="" @endif>{{ $year_now }}年</option>
+              <option value="{{ $year_next }}" @if(old('xray_date_year') == $year_next) selected="" @endif>{{ $year_next }}年</option>
             </select>
             <select name="xray_date_month" class="form-control form-control--small" id="month" onchange="getVal(this);">
               <option value="0">--月</option>
               @for ( $i = 1; $i <= 12; $i++ )
-              <option value="{{ $i }}" @if(old('xray_date_month') == $i) selected="" @endif>{{ $i }}</option>
+              <option value="{{ $i }}" @if(old('xray_date_month') == $i) selected="" @endif>{{ $i }}月</option>
               @endfor
             </select>
             <select name="xray_date_day" class="form-control form-control--small" id="day">
@@ -107,17 +110,17 @@
           </td>
         </tr>
 
-        <!-- p_id -->
+        <!-- u_id -->
         <tr>
           <td class="col-title">撮影者</td>
           <td>
-            <select name="p_id" class="form-control form-control--small">
+            <select name="u_id" class="form-control form-control--small">
               <option value="0">----</option>
-              @foreach ( $patients as $patient )
-              <option value="{{ $patient->p_id }}">{{ $patient->p_name }}</option>
+              @foreach ( $users as $user )
+              <option value="{{ $user->id }}" @if(old('u_id') == $user->id) selected="" @endif>{{ $user->u_name }}</option>
               @endforeach
             </select>
-            <span class="error-input">@if ($errors->first('p_id')) {!! $errors->first('p_id') !!} @endif</span>
+            <span class="error-input">@if ($errors->first('u_id')) {!! $errors->first('u_id') !!} @endif</span>
           </td>
         </tr>
 

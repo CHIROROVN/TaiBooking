@@ -43,7 +43,10 @@
         <!-- p_no or p_name -->
         <tr>
           <td class="col-title"><label for="s_p_name">患者名</label></td>
-          <td><input name="s_p_name" id="s_p_name" type="text"  class="form-control form-control--small" value="{{ $s_p_name }}"></td>
+          <td>
+            <input name="s_p_name" id="s_p_id" type="text"  class="form-control form-control--small" value="{{ $s_p_name }}">
+            <input name="s_p_id" type="hidden" id="s_p_id-id" value="{{ $s_p_id }}">
+          </td>
         </tr>
 
         <!-- p_birthday -->
@@ -199,6 +202,46 @@
       if ( val3 != 0) {
         getVal(val3, 's_xray_date_day_to', '{{ $s_xray_date_day_to }}');
       }
+
+
+      // s_p_id
+      $( "#s_p_id" ).autocomplete({
+        minLength: 0,
+        // source: pamphlets,
+        source: function(request, response){
+            var key = $('#s_p_id').val();
+            $.ajax({
+                url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
+                beforeSend: function(){
+                    // console.log(response);
+                },
+                async:    true,
+                data: { key: key },
+                dataType: "json",
+                method: "get",
+                // success: response
+                success: function(data) {
+                  // console.log(data);
+                  response(data);
+                },
+            });
+        },
+        focus: function( event, ui ) {
+          $( "#s_p_id" ).val( ui.item.label );
+          return false;
+        },
+        select: function( event, ui ) {
+          $( "#s_p_id" ).val( ui.item.label );
+          $( "#s_p_id-id" ).val( ui.item.value );
+          // $( "#p_relation_id-description" ).html( ui.item.desc );
+          return false;
+        }
+      }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+            .append( "<a>" + item.desc + "</a>" )
+            .appendTo( ul );
+      };
   });
 </script>
 

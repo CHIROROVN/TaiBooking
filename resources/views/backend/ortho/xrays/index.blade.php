@@ -62,6 +62,7 @@
       <div class="col-md-12 text-center">
         <input onclick="location.href='{{ route('ortho.xrays.search', [
           's_p_name'                => $s_p_name,
+          's_p_id'                  => $s_p_id,
           's_p_birthday_year_from'  => $s_p_birthday_year_from,
           's_p_birthday_month_from' => $s_p_birthday_month_from,
           's_p_birthday_day_from'   => $s_p_birthday_day_from,

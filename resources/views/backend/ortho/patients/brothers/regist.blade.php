@@ -82,7 +82,7 @@
               method: "get",
               // success: response
               success: function(data) {
-                console.log(data);
+                // console.log(data);
                 response(data);
               },
           });

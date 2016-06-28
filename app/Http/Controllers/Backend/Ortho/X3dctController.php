@@ -4,6 +4,11 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\Ortho\X3dctModel;
+use App\Http\Models\Ortho\XrayModel;
+use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\PatientModel;
+
 use Auth;
 use Form;
 use Html;
@@ -25,9 +30,16 @@ class X3dctController extends BackendController
      */
     public function getRegist()
     {
+        // $clsXray                    = new XrayModel();
+        $clsUser                    = new UserModel();
+        $clsPatient                 = new PatientModel();
+        $data['users']              = $clsUser->get_for_select();
+        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id'));
+
         $data['prevYear']           = (int)date("Y")-1;
         $data['currYear']           = (int)date("Y");
         $data['nextYear']           = (int)date("Y")+1;
+
         return view('backend.ortho.xrays.x3dct.regist', $data);
     }
 
@@ -36,30 +48,60 @@ class X3dctController extends BackendController
      */
     public function postRegist()
     {
-        $clsX3dct = new X3dctModel();
-        $inputs         = Input::all();
-        $validator      = Validator::make($inputs, $clsX3dct->Rules(), $clsX3dct->Messages());
+        $clsX3dct                  = new X3dctModel();
 
-        if ($validator->fails()) {
-            return redirect()->route('backend.ortho.xrays.x3dct.regist')->withErrors($validator)->withInput();
-        }
+        $dataInsert                = array(
+            'p_id'                 => Input::get('p_id'),
+            'ct_date'              => '', //after
+            'u_id'                 => Input::get('u_id'),
 
-        // insert
-        $max = $clsX3dct->get_max();
-        $dataInsert = array(
-            'x3dct_date'         => Input::get('x3dct_date'),
+            'ct_cat_1'             => Input::get('ct_cat_1'),
+            'ct_cat_2'             => Input::get('ct_cat_2'),
+            'ct_cat_3'             => Input::get('ct_cat_3'),
+            'ct_cat_4'             => Input::get('ct_cat_4'),
+            'ct_cat_5'             => Input::get('ct_cat_5'),
+            'ct_cat_6'             => Input::get('ct_cat_6'),
+            'ct_cat_7'             => Input::get('ct_cat_7'),
+            
+            'ct_mode_1'            => Input::get('ct_mode_1'),
+            'ct_mode_2'            => Input::get('ct_mode_2'),
+            'ct_mode_3'            => Input::get('ct_mode_3'),
+
+            'ct_condition_1'       => Input::get('ct_condition_1'),
+            'ct_condition_2'       => Input::get('ct_condition_2'),
+            'ct_condition_3'       => Input::get('ct_condition_3'),
+            'ct_condition_4'       => Input::get('ct_condition_4'),
+            'ct_condition_5'       => Input::get('ct_condition_5'),
+
+            'ct_memo_1'            => Input::get('ct_memo_1'),
+            'ct_memo_2'            => Input::get('ct_memo_2'),
+            'ct_memo_3'            => Input::get('ct_memo_3'),
+            'ct_memo_4'            => Input::get('ct_memo_4'),
+            'ct_memo_5'            => Input::get('ct_memo_5'),
+            'ct_memo_6'            => Input::get('ct_memo_6'),
+            'ct_memo_7'            => Input::get('ct_memo_7'),
+            'ct_memo'              => Input::get('ct_memo'),
+
             'last_kind'            => INSERT,
             'last_ipadrs'          => CLIENT_IP_ADRS,
             'last_date'            => date('y-m-d H:i:s'),
             'last_user'            => Auth::user()->id
         );
+        if ( !empty(Input::get('year')) && !empty(Input::get('month')) && !empty(Input::get('day')) ) {
+            $dataInsert['ct_date'] = Input::get('year') . '-' . Input::get('month') . '-' . Input::get('day');
+        }
+
+        $validator      = Validator::make($dataInsert, $clsX3dct->Rules(), $clsX3dct->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.xrays.x3dct.regist', [ 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+        }
 
         if ( $clsX3dct->insert($dataInsert) ) {
             Session::flash('success', trans('common.message_regist_success'));
-            return redirect()->route('backend.ortho.xrays.x3dct.regist');
+            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
-            return redirect()->route('backend.ortho.xrays.x3dct.regist');
+            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
         }
     }
 
@@ -68,8 +110,17 @@ class X3dctController extends BackendController
      */
     public function getEdit($id)
     {
-        $clsX3dct = new X3dctModel();
-        $data['service']           = $clsX3dct->get_by_id($id);
+        $clsX3dct                   = new X3dctModel();
+        $clsPatient                 = new PatientModel();
+        $clsUser                    = new UserModel();
+        $data['users']              = $clsUser->get_for_select();
+        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id'));
+        $data['ct']                 = $clsX3dct->get_by_id($id);
+
+        $data['prevYear']           = (int)date("Y")-1;
+        $data['currYear']           = (int)date("Y");
+        $data['nextYear']           = (int)date("Y")+1;
+
         return view('backend.ortho.xrays.x3dct.edit', $data);
     }
 
@@ -78,26 +129,80 @@ class X3dctController extends BackendController
      */
     public function postEdit($id)
     {
-        $clsX3dct = new X3dctModel();
-        $inputs                 = Input::all();
-        $validator              = Validator::make($inputs, $clsX3dct->Rules(), $clsX3dct->Messages());
-        if ($validator->fails()) {
-            return redirect()->route('backend.ortho.xrays.x3dct.edit', $id)->withErrors($validator)->withInput();
-        }
-        $dataUpdate = array(
-            'service_name'          => Input::get('service_name'),
-            'last_kind'             => UPDATE,
-            'last_ipadrs'           => CLIENT_IP_ADRS,
-            'last_user'             => Auth::user()->id,
-            'last_date'             => date('y-m-d H:i:s'),
+        $clsX3dct                  = new X3dctModel();
+
+        $dataInsert                = array(
+            'p_id'                 => Input::get('p_id'),
+            'ct_date'              => '', //after
+            'u_id'                 => Input::get('u_id'),
+
+            'ct_cat_1'             => Input::get('ct_cat_1'),
+            'ct_cat_2'             => Input::get('ct_cat_2'),
+            'ct_cat_3'             => Input::get('ct_cat_3'),
+            'ct_cat_4'             => Input::get('ct_cat_4'),
+            'ct_cat_5'             => Input::get('ct_cat_5'),
+            'ct_cat_6'             => Input::get('ct_cat_6'),
+            'ct_cat_7'             => Input::get('ct_cat_7'),
+            
+            'ct_mode_1'            => Input::get('ct_mode_1'),
+            'ct_mode_2'            => Input::get('ct_mode_2'),
+            'ct_mode_3'            => Input::get('ct_mode_3'),
+
+            'ct_condition_1'       => Input::get('ct_condition_1'),
+            'ct_condition_2'       => Input::get('ct_condition_2'),
+            'ct_condition_3'       => Input::get('ct_condition_3'),
+            'ct_condition_4'       => Input::get('ct_condition_4'),
+            'ct_condition_5'       => Input::get('ct_condition_5'),
+
+            'ct_memo_1'            => Input::get('ct_memo_1'),
+            'ct_memo_2'            => Input::get('ct_memo_2'),
+            'ct_memo_3'            => Input::get('ct_memo_3'),
+            'ct_memo_4'            => Input::get('ct_memo_4'),
+            'ct_memo_5'            => Input::get('ct_memo_5'),
+            'ct_memo_6'            => Input::get('ct_memo_6'),
+            'ct_memo_7'            => Input::get('ct_memo_7'),
+            'ct_memo'              => Input::get('ct_memo'),
+
+            'last_kind'            => UPDATE,
+            'last_ipadrs'          => CLIENT_IP_ADRS,
+            'last_date'            => date('y-m-d H:i:s'),
+            'last_user'            => Auth::user()->id
         );
-        if ( $clsX3dct->update($id, $dataUpdate) ) {
+        if ( !empty(Input::get('year')) && !empty(Input::get('month')) && !empty(Input::get('day')) ) {
+            $dataInsert['ct_date'] = Input::get('year') . '-' . Input::get('month') . '-' . Input::get('day');
+        }
+
+        $validator      = Validator::make($dataInsert, $clsX3dct->Rules(), $clsX3dct->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.xrays.x3dct.edit', [ $id, 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+        }
+
+        if ( $clsX3dct->update($id, $dataInsert) ) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('backend.ortho.xrays.x3dct.edit');
+            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('backend.ortho.xrays.x3dct.edit', $id);
+            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
         }
     }
 
+
+    public function getDelete($id)
+    {
+        $clsX3dct                  = new X3dctModel();
+        $dataInsert                = array(
+            'last_kind'            => DELETE,
+            'last_ipadrs'          => CLIENT_IP_ADRS,
+            'last_date'            => date('y-m-d H:i:s'),
+            'last_user'            => Auth::user()->id
+        );
+
+        if ( $clsX3dct->update($id, $dataInsert) ) {
+            Session::flash('success', trans('common.message_delete_success'));
+            return redirect()->route('ortho.xrays.detail', [ Input::get('patient_id') ]);
+        } else {
+            Session::flash('danger', trans('common.message_delete_danger'));
+            return redirect()->route('ortho.xrays.detail', [ Input::get('patient_id') ]);
+        }
+    }
 }

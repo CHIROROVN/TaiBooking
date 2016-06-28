@@ -12,6 +12,7 @@ use App\Http\Models\Ortho\XrayModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\PatientModel;
+use App\Http\Models\Ortho\X3dctModel;
 
 use Form;
 use Html;
@@ -36,6 +37,10 @@ class XrayController extends BackendController
     {
         // search
         $data['s_p_name']                       = Input::get('s_p_name');
+        $data['s_p_id']                         = Input::get('s_p_id');
+        if ( empty($data['s_p_name']) ) {
+            $data['s_p_id'] = '';
+        }
         $data['s_p_birthday_year_from']         = Input::get('s_p_birthday_year_from');
         $data['s_p_birthday_month_from']        = Input::get('s_p_birthday_month_from');
         $data['s_p_birthday_day_from']          = Input::get('s_p_birthday_day_from');
@@ -52,7 +57,7 @@ class XrayController extends BackendController
         $data['s_xray_date_day_to']             = Input::get('s_xray_date_day_to');
 
         $clsXray            = new XrayModel();
-        $data['xrays']      = $clsXray->get_all(false);
+        $data['xrays']      = $clsXray->get_all(false, $data);
 
         return view('backend.ortho.xrays.index', $data);
     }
@@ -70,6 +75,7 @@ class XrayController extends BackendController
         $data['patients']           = $clsPatient->get_for_select();
         $data['xray']               = $clsXray->get_by_id(Input::get('patient_id', null));
         $data['users']              = $clsUser->get_for_select();
+        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id', 0));
 
         return view('backend.ortho.xrays.regist', $data);
     }
@@ -83,9 +89,9 @@ class XrayController extends BackendController
         $dataInsert                     = array(
             'xray_date'                 => '',
             'xray_place'                => (Input::get('xray_place') != 0) ? Input::get('xray_place') : '',
-            'p_id'                      => (Input::get('p_id') != 0) ? Input::get('p_id') : '', // 0 => ''
+            'p_id'                      => (Input::get('p_id') != 0) ? Input::get('p_id') : 0, // 0 => ''
             'xray_memo'                 => Input::get('xray_memo'),
-            'u_id'                      => Auth::user()->id,
+            'u_id'                      => Input::get('u_id'),
 
             // xray_cats
             'xray_cat_1'                => (Input::get('xray_cat_1') == 1) ? 1 : 0,
@@ -147,7 +153,7 @@ class XrayController extends BackendController
             Session::flash('danger', trans('common.message_regist_danger'));
         }
 
-        return redirect()->route('ortho.xrays.index');
+        return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
     }
 
     /**
@@ -155,24 +161,17 @@ class XrayController extends BackendController
      */
     public function getEdit($id)
     {
-        // $clsXray                   = new XrayModel();
-        // $clsArea                     = new AreaModel();
-        // $clsXrayArea               = new ClinicAreaModel();
-        // $data['clinic']              = $clsXray->get_by_id($id);
-        // $data['areas']               = $clsArea->get_all();
-        // $data['clinic_am_starts']    = Config::get('constants.CLINIC_AM_START');
-        // $data['clinic_am_ends']      = Config::get('constants.CLINIC_AM_END');
-        // $data['clinic_pms']          = Config::get('constants.CLINIC_PM');
-        // $data['clinic_ms']           = Config::get('constants.CLINIC_M');
-        // $area_xrays                = $clsXrayArea->get_by_clinic($id);
-        // $tmp                         = array();
-        // foreach($area_xrays as $area_clinic)
-        // {
-        //     $tmp[$area_clinic->area_id] = $area_clinic->area_id;
-        // }
-        // $data['area_xrays']   = $tmp;
+        $clsXray                    = new XrayModel();
+        $clsUser                    = new UserModel();
+        $clsClinic                  = new ClinicModel();
+        $clsPatient                 = new PatientModel();
+        $data['clinics']            = $clsClinic->get_for_select();
+        $data['patients']           = $clsPatient->get_for_select();
+        $data['xray']               = $clsXray->get_by_id($id);
+        $data['users']              = $clsUser->get_for_select();
+        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id', 0));
 
-        // return view('backend.ortho.xrays.edit', $data);
+        return view('backend.ortho.xrays.edit', $data);
     }
 
     /**
@@ -180,137 +179,75 @@ class XrayController extends BackendController
      */
     public function postEdit($id)
     {
-        // $clsXray              = new XrayModel();
-        // $clsXrayArea          = new ClinicAreaModel();
-        // $clinic                 = $clsXray->get_by_id($id);
-        // $inputs                 = Input::all();
+        $clsXray                        = new XrayModel();
+        $dataInsert                     = array(
+            'xray_date'                 => '',
+            'xray_place'                => (Input::get('xray_place') != 0) ? Input::get('xray_place') : '',
+            'p_id'                      => (Input::get('p_id') != 0) ? Input::get('p_id') : 0, // 0 => ''
+            'xray_memo'                 => Input::get('xray_memo'),
+            'u_id'                      => Input::get('u_id'),
 
-        // $validator              = Validator::make($inputs, $clsXray->Rules(), $clsXray->Messages());
+            // xray_cats
+            'xray_cat_1'                => (Input::get('xray_cat_1') == 1) ? 1 : 0,
+            'xray_cat_2'                => (Input::get('xray_cat_2') == 1) ? 1 : 0,
+            'xray_cat_3'                => (Input::get('xray_cat_3') == 1) ? 1 : 0,
+            'xray_cat_4'                => (Input::get('xray_cat_4') == 1) ? 1 : 0,
+            'xray_cat_5'                => (Input::get('xray_cat_5') == 1) ? 1 : 0,
+            'xray_cat_6'                => (Input::get('xray_cat_6') == 1) ? 1 : 0,
+            'xray_cat_7'                => (Input::get('xray_cat_7') == 1) ? 1 : 0,
+            'xray_cat_8'                => (Input::get('xray_cat_8') == 1) ? 1 : 0,
+            'xray_cat_9'                => (Input::get('xray_cat_9') == 1) ? 1 : 0,
+            'xray_cat_10'               => (Input::get('xray_cat_10') == 1) ? 1 : 0,
+            'xray_cat_11'               => (Input::get('xray_cat_11') == 1) ? 1 : 0,
+            'xray_cat_12'               => (Input::get('xray_cat_12') == 1) ? 1 : 0,
+            'xray_cat_13'               => (Input::get('xray_cat_13') == 1) ? 1 : 0,
+            'xray_cat_14'               => (Input::get('xray_cat_14') == 1) ? 1 : 0,
+            'xray_cat_15'               => (Input::get('xray_cat_15') == 1) ? 1 : 0,
+            'xray_cat_16'               => (Input::get('xray_cat_16') == 1) ? 1 : 0,
 
-        // if ($validator->fails()) {
-        //     return redirect()->route('ortho.xrays.edit', [$id])->withErrors($validator)->withInput();
-        // }
+            // xray_kinds
+            'xray_kind_1'               => (Input::get('xray_kind_1') == 1) ? 1 : 0,
+            'xray_kind_2'               => (Input::get('xray_kind_2') == 1) ? 1 : 0,
+            'xray_kind_3'               => (Input::get('xray_kind_3') == 1) ? 1 : 0,
+            'xray_kind_4'               => (Input::get('xray_kind_4') == 1) ? 1 : 0,
+            'xray_kind_5'               => (Input::get('xray_kind_5') == 1) ? 1 : 0,
+            'xray_kind_6'               => (Input::get('xray_kind_6') == 1) ? 1 : 0,
+            'xray_kind_7'               => (Input::get('xray_kind_7') == 1) ? 1 : 0,
+            'xray_kind_8'               => (Input::get('xray_kind_8') == 1) ? 1 : 0,
+            'xray_kind_9'               => (Input::get('xray_kind_9') == 1) ? 1 : 0,
 
-        // // update
-        // $dataUpdate = array(
-        //     'clinic_name'               => Input::get('clinic_name'),
-        //     'clinic_name_yomi'          => Input::get('clinic_name_yomi'),
-        //     'clinic_display_name'       => Input::get('clinic_display_name'),
-        //     'clinic_status1'            => (Input::get('clinic_status1') == 1) ? 1 : NULL,
-        //     'clinic_status2'            => (Input::get('clinic_status2') == 1) ? 1 : NULL,
-        //     'clinic_status3'            => (Input::get('clinic_status3') == 1) ? 1 : NULL,
-        //     'clinic_status4'            => (Input::get('clinic_status4') == 1) ? 1 : NULL,
-        //     'clinic_status5'            => (Input::get('clinic_status5') == 1) ? 1 : NULL,
-        //     'clinic_zip3'               => Input::get('clinic_zip3'),
-        //     'clinic_zip4'               => Input::get('clinic_zip4'),
-        //     'clinic_address1'           => Input::get('clinic_address1'),
-        //     'clinic_address2'           => Input::get('clinic_address2'),
-        //     'clinic_ownername'          => Input::get('clinic_ownername'),
-        //     'clinic_tel'                => Input::get('clinic_tel'),
-        //     'clinic_tel_ip'             => Input::get('clinic_tel_ip'),
-        //     'clinic_fax'                => Input::get('clinic_fax'),
-        //     'clinic_email'              => Input::get('clinic_email'),
-        //     'clinic_memo'               => Input::get('clinic_memo'),
-        //     // sunday
-        //     'clinic_sun_work'           => (Input::get('clinic_sun_work') == 1) ? 1 : NULL,
-        //     'clinic_sun_am_start_h'     => Input::get('clinic_sun_am_start_h'),
-        //     'clinic_sun_am_start_m'     => Input::get('clinic_sun_am_start_m'),
-        //     'clinic_sun_am_end_h'       => Input::get('clinic_sun_am_end_h'),
-        //     'clinic_sun_am_end_m'       => Input::get('clinic_sun_am_end_m'),
-        //     'clinic_sun_pm_start_h'     => Input::get('clinic_sun_pm_start_h'),
-        //     'clinic_sun_pm_start_m'     => Input::get('clinic_sun_pm_start_m'),
-        //     'clinic_sun_pm_end_h'       => Input::get('clinic_sun_pm_end_h'),
-        //     'clinic_sun_pm_end_m'       => Input::get('clinic_sun_pm_end_m'),
-        //     // monday
-        //     'clinic_mon_work'           => (Input::get('clinic_mon_work') == 1) ? 1 : NULL,
-        //     'clinic_mon_am_start_h'     => Input::get('clinic_mon_am_start_h'),
-        //     'clinic_mon_am_start_m'     => Input::get('clinic_mon_am_start_m'),
-        //     'clinic_mon_am_end_h'       => Input::get('clinic_mon_am_end_h'),
-        //     'clinic_mon_am_end_m'       => Input::get('clinic_mon_am_end_m'),
-        //     'clinic_mon_pm_start_h'     => Input::get('clinic_mon_pm_start_h'),
-        //     'clinic_mon_pm_start_m'     => Input::get('clinic_mon_pm_start_m'),
-        //     'clinic_mon_pm_end_h'       => Input::get('clinic_mon_pm_end_h'),
-        //     'clinic_mon_pm_end_m'       => Input::get('clinic_mon_pm_end_m'),
-        //     // tueday
-        //     'clinic_tue_work'           => (Input::get('clinic_tue_work') == 1) ? 1 : NULL,
-        //     'clinic_tue_am_start_h'     => Input::get('clinic_tue_am_start_h'),
-        //     'clinic_tue_am_start_m'     => Input::get('clinic_tue_am_start_m'),
-        //     'clinic_tue_am_end_h'       => Input::get('clinic_tue_am_end_h'),
-        //     'clinic_tue_am_end_m'       => Input::get('clinic_tue_am_end_m'),
-        //     'clinic_tue_pm_start_h'     => Input::get('clinic_tue_pm_start_h'),
-        //     'clinic_tue_pm_start_m'     => Input::get('clinic_tue_pm_start_m'),
-        //     'clinic_tue_pm_end_h'       => Input::get('clinic_tue_pm_end_h'),
-        //     'clinic_tue_pm_end_m'       => Input::get('clinic_tue_pm_end_m'),
-        //     // wednesday
-        //     'clinic_wed_work'           => (Input::get('clinic_wed_work') == 1) ? 1 : NULL,
-        //     'clinic_wed_am_start_h'     => Input::get('clinic_wed_am_start_h'),
-        //     'clinic_wed_am_start_m'     => Input::get('clinic_wed_am_start_m'),
-        //     'clinic_wed_am_end_h'       => Input::get('clinic_wed_am_end_h'),
-        //     'clinic_wed_am_end_m'       => Input::get('clinic_wed_am_end_m'),
-        //     'clinic_wed_pm_start_h'     => Input::get('clinic_wed_pm_start_h'),
-        //     'clinic_wed_pm_start_m'     => Input::get('clinic_wed_pm_start_m'),
-        //     'clinic_wed_pm_end_h'       => Input::get('clinic_wed_pm_end_h'),
-        //     'clinic_wed_pm_end_m'       => Input::get('clinic_wed_pm_end_m'),
-        //     // thurday
-        //     'clinic_thu_work'           => (Input::get('clinic_thu_work') == 1) ? 1 : NULL,
-        //     'clinic_thu_am_start_h'     => Input::get('clinic_thu_am_start_h'),
-        //     'clinic_thu_am_start_m'     => Input::get('clinic_thu_am_start_m'),
-        //     'clinic_thu_am_end_h'       => Input::get('clinic_thu_am_end_h'),
-        //     'clinic_thu_am_end_m'       => Input::get('clinic_thu_am_end_m'),
-        //     'clinic_thu_pm_start_h'     => Input::get('clinic_thu_pm_start_h'),
-        //     'clinic_thu_pm_start_m'     => Input::get('clinic_thu_pm_start_m'),
-        //     'clinic_thu_pm_end_h'       => Input::get('clinic_thu_pm_end_h'),
-        //     'clinic_thu_pm_end_m'       => Input::get('clinic_thu_pm_end_m'),
-        //     // friday
-        //     'clinic_fri_work'           => (Input::get('clinic_fri_work') == 1) ? 1 : NULL,
-        //     'clinic_fri_am_start_h'     => Input::get('clinic_fri_am_start_h'),
-        //     'clinic_fri_am_start_m'     => Input::get('clinic_fri_am_start_m'),
-        //     'clinic_fri_am_end_h'       => Input::get('clinic_fri_am_end_h'),
-        //     'clinic_fri_am_end_m'       => Input::get('clinic_fri_am_end_m'),
-        //     'clinic_fri_pm_start_h'     => Input::get('clinic_fri_pm_start_h'),
-        //     'clinic_fri_pm_start_m'     => Input::get('clinic_fri_pm_start_m'),
-        //     'clinic_fri_pm_end_h'       => Input::get('clinic_fri_pm_end_h'),
-        //     'clinic_fri_pm_end_m'       => Input::get('clinic_fri_pm_end_m'),
-        //     // satuday
-        //     'clinic_sat_work'           => (Input::get('clinic_sat_work') == 1) ? 1 : NULL,
-        //     'clinic_sat_am_start_h'     => Input::get('clinic_sat_am_start_h'),
-        //     'clinic_sat_am_start_m'     => Input::get('clinic_sat_am_start_m'),
-        //     'clinic_sat_am_end_h'       => Input::get('clinic_sat_am_end_h'),
-        //     'clinic_sat_am_end_m'       => Input::get('clinic_sat_am_end_m'),
-        //     'clinic_sat_pm_start_h'     => Input::get('clinic_sat_pm_start_h'),
-        //     'clinic_sat_pm_start_m'     => Input::get('clinic_sat_pm_start_m'),
-        //     'clinic_sat_pm_end_h'       => Input::get('clinic_sat_pm_end_h'),
-        //     'clinic_sat_pm_end_m'       => Input::get('clinic_sat_pm_end_m'),
+            // xray_memos
+            'xray_memo_1'               => (Input::get('xray_memo_1') == 1) ? 1 : 0,
+            'xray_memo_2'               => (Input::get('xray_memo_2') == 1) ? 1 : 0,
+            'xray_memo_3'               => (Input::get('xray_memo_3') == 1) ? 1 : 0,
+            'xray_memo_4'               => (Input::get('xray_memo_4') == 1) ? 1 : 0,
+            'xray_memo_5'               => (Input::get('xray_memo_5') == 1) ? 1 : 0,
+            'xray_memo_6'               => (Input::get('xray_memo_6') == 1) ? 1 : 0,
+            'xray_memo_7'               => (Input::get('xray_memo_7') == 1) ? 1 : 0,
 
-        //     'last_date'                 => date('y-m-d H:i:s'),
-        //     'last_kind'                 => UPDATE,
-        //     'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'                 => Auth::user()->id,
-        // );
-        
-        // if ( $clsXray->update($id, $dataUpdate) ) {
-        //     Session::flash('success', trans('common.message_regist_success'));
-        // } else {
-        //     Session::flash('danger', trans('common.message_regist_danger'));
-        // }
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
+            'last_user'                 => Auth::user()->id,
+        );
 
-        // // update to table clinic_area
-        // $areas = Input::get('area');
-        // if(!$clsXrayArea->exist_area_clinic($areas, $id))
-        // {
-        //     $dataInsert = array(
-        //         'area_id'           => $areas,
-        //         'clinic_id'         => $id,
+        if ( Input::get('xray_date_year') != 0 && Input::get('xray_date_month') != 0 && Input::get('xray_date_day') != 0 ) {
+            $dataInsert['xray_date'] = Input::get('xray_date_year') . '-' . Input::get('xray_date_month') . '-' . Input::get('xray_date_day');
+        }
 
-        //         'last_date'         => date('y-m-d H:i:s'),
-        //         'last_kind'         => UPDATE,
-        //         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-        //         'last_user'         => Auth::user()->id
-        //     );
-        //     $clsXrayArea->update_by_clinic($id, $dataInsert);
-        // }
+        $validator              = Validator::make($dataInsert, $clsXray->Rules(), $clsXray->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.xrays.edit', [ $id ])->withErrors($validator)->withInput();
+        }
 
-        // return redirect()->route('ortho.xrays.index');
+        // update
+        if ( $clsXray->update($id, $dataInsert) ) {
+            Session::flash('success', trans('common.message_edit_success'));
+        } else {
+            Session::flash('danger', trans('common.message_edit_danger'));
+        }
+
+        return redirect()->route('ortho.xrays.detail', [ $id ]);
     }
 
     /**
@@ -346,10 +283,13 @@ class XrayController extends BackendController
     {
         $clsXray                    = new XrayModel();
         $clsUser                    = new UserModel();
+        $clsPatient                 = new PatientModel();
+        $cls3dct                    = new X3dctModel();
         $data['xray']               = $clsXray->get_by_id($id);
         $data['users']              = $clsUser->get_for_select();
         $data['patient_xrays']      = $clsXray->get_by_patient_id($data['xray']->p_id);
-        $data['patient_id']         = $id;
+        $data['patient']            = $clsPatient->get_by_id($data['xray']->p_id);
+        $data['patient_3dcts']      = $cls3dct->get_by_patient_id($data['xray']->p_id);
 
         return view('backend.ortho.xrays.detail', $data);
     }
@@ -359,6 +299,10 @@ class XrayController extends BackendController
     {
         // search
         $data['s_p_name']                       = Input::get('s_p_name');
+        $data['s_p_id']                         = Input::get('s_p_id');
+        if ( empty($data['s_p_name']) ) {
+            $data['s_p_id'] = '';
+        }
         $data['s_p_birthday_year_from']         = Input::get('s_p_birthday_year_from');
         $data['s_p_birthday_month_from']        = Input::get('s_p_birthday_month_from');
         $data['s_p_birthday_day_from']          = Input::get('s_p_birthday_day_from');
@@ -394,5 +338,24 @@ class XrayController extends BackendController
         }
 
         echo json_encode($day_arr);
+    }
+
+
+    // autocomplete patient
+    public function AutoCompletePatient()
+    {
+        $key            = Input::get('key', '');
+        $id_not_me      = Input::get('id_not_me', 0);
+        $clsPatient     = new PatientModel();
+        $patients       = $clsPatient->get_for_autocomplate($key, $id_not_me);
+        $tmp = array();
+        foreach ( $patients as $patient ) {
+            $tmp[] = (object)array(
+                'value'     => $patient->p_id,
+                'label'     => $patient->p_no . ' ' . $patient->p_name . '(' . $patient->p_name_kana . ')',
+                'desc'      => $patient->p_no . ' ' . $patient->p_name . '(' . $patient->p_name_kana . ')',
+            );
+        }
+        echo json_encode($tmp);
     }
 }

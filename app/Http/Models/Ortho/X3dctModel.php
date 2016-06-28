@@ -5,27 +5,41 @@ use DB;
 class X3dctModel
 {
     protected $table = 't_3dct';
-    protected $primaryKey = '3dct_id';
+    protected $primaryKey = 'ct_id';
     public $timestamps  = false;
 
     public function Rules()
     {
         return array(
-            '' => 'required',
+            'ct_date'   => 'required',
+            'u_id'      => 'required',
         );
     }
 
     public function Messages()
     {
         return array(
-            '.required' => trans('validation.error_service_name_required'),
+            'ct_date.required'      => trans('validation.error_ct_date_required'),
+            'u_id.required'         => trans('validation.error_ct_u_id_required'),
         );
     }
 
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('3dct_id', 'asc')->get();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('ct_id', 'asc')->get();
         return $results;
+    }
+
+    public function get_by_patient_id($id_patient)
+    {
+        $db = DB::table($this->table)
+                    ->leftJoin('t_patient', 't_3dct.p_id', '=', 't_patient.p_id')
+                    ->select('t_3dct.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
+                    ->where('t_3dct.p_id', $id_patient)
+                    ->where('t_3dct.last_kind', '<>', DELETE)
+                    ->get();
+
+        return $db;
     }
 
     public function insert($data)
@@ -41,13 +55,13 @@ class X3dctModel
 
     public function get_by_id($id)
     {
-        $results = DB::table($this->table)->where('3dct_id', $id)->first();
+        $results = DB::table($this->table)->where('ct_id', $id)->first();
         return $results;
     }
 
     public function update($id, $data)
     {
-        return DB::table($this->table)->where('3dct_id', $id)->update($data);
+        return DB::table($this->table)->where('ct_id', $id)->update($data);
     }
 
 }

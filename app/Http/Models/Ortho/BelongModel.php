@@ -11,6 +11,7 @@ class BelongModel
     {
     	return array(
     		'belong_name' => 'required',
+            'belong_kind' => 'required',
 		);
     }
 
@@ -18,7 +19,7 @@ class BelongModel
     {
     	return array(
     		'belong_name.required'  => trans('validation.error_belong_name_required'),
-            // 'belong_name.min'       => 'Min belong_name'
+            'belong_kind.required'  => trans('validation.error_belong_kind_required'),
 		);
     }
 

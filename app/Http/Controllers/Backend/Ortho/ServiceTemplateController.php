@@ -161,70 +161,24 @@ class ServiceTemplateController extends BackendController
     /**
      * 
      */
-    public function delete($clinic_id, $service_id, $id)
-    {
-        $clsTreatment1 = new ServiceTemplateModel();
-        $dataDelete = array(
-            'last_kind'         => DELETE,
-            'last_ipadrs'       => CLIENT_IP_ADRS,
-            'last_user'         => Auth::user()->id,
-            'last_date'         => date('y-m-d H:i:s'),
-        );
+    // public function delete($clinic_id, $service_id, $id)
+    // {
+    //     $clsTreatment1 = new ServiceTemplateModel();
+    //     $dataDelete = array(
+    //         'last_kind'         => DELETE,
+    //         'last_ipadrs'       => CLIENT_IP_ADRS,
+    //         'last_user'         => Auth::user()->id,
+    //         'last_date'         => date('y-m-d H:i:s'),
+    //     );
 
-        if ( $clsTreatment1->update($id, $dataDelete) ) {
-            Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.treatments.treatment1.index');
-        } else {
-            Session::flash('danger', trans('common.message_delete_danger'));
-            return redirect()->route('ortho.treatments.treatment1.edit',$clinic_id, $service_id, $id);
-        }
-    }
+    //     if ( $clsTreatment1->update($id, $dataDelete) ) {
+    //         Session::flash('success', trans('common.message_delete_success'));
+    //         return redirect()->route('ortho.treatments.treatment1.index');
+    //     } else {
+    //         Session::flash('danger', trans('common.message_delete_danger'));
+    //         return redirect()->route('ortho.treatments.treatment1.edit',$clinic_id, $service_id, $id);
+    //     }
+    // }
 
-    /**
-     * 
-     */
-    public function orderby_top($clinic_id, $service_id)
-    {
-        $clsTreatment1 = new ServiceTemplateModel();
-        $id = Input::get('id');
-        $this->top($clsTreatment1, $id, 'treatment_sort_no');
-        return redirect()->route('ortho.treatments.treatment1.index',$clinic_id, $service_id);
-    }
 
-    /**
-     * 
-     */
-    public function orderby_last($clinic_id, $service_id)
-    {
-        $clsTreatment1 = new ServiceTemplateModel();
-        $id = Input::get('id');        
-        $this->last($clsTreatment1, $id, 'treatment_sort_no');
-        return redirect()->route('ortho.treatments.treatment1.index');
-    }
-
-    /**
-     * 
-     */
-    public function orderby_up($clinic_id, $service_id)
-    {
-        $clsTreatment1 = new ServiceTemplateModel();
-        $id = Input::get('id');
-        $treatment1s = $clsTreatment1->get_all();
-        
-        $this->up($clsTreatment1, $id, $treatment1s, 'treatment_id', 'treatment_sort_no');
-
-        return redirect()->route('ortho.treatments.treatment1.index',$clinic_id, $service_id);
-    }
-
-    /**
-     * 
-     */
-    public function orderby_down($clinic_id, $service_id)
-    {
-        $clsTreatment1 = new ServiceTemplateModel();
-        $id = Input::get('id');
-        $treatment1s = $clsTreatment1->get_all();
-        $this->down($clsTreatment1, $id, $treatment1s, 'treatment_id', 'treatment_sort_no');
-        return redirect()->route('ortho.treatments.treatment1.index',$clinic_id, $service_id);
-    }
 }

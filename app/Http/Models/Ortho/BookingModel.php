@@ -45,6 +45,18 @@ class BookingModel
         return $results;
     }
 
+    public function get_by_today()
+    {
+        $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->select('t_booking.*', 't1.p_name')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.booking_date', date('Y-m-d'))
+                        ->orderBy('t_booking.booking_id', 'asc')
+                        ->get();
+        return $results;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

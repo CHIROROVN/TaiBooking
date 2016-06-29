@@ -23,7 +23,7 @@
               <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>TEL待ちリストから予約を取る</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>急患の予約を取る</a></li>
-              <li><a href="booking-monthly.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
+              <li><a href="{{ route('ortho.bookings.booking.monthly') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約状況の模式図</a></li>
             </ul>
             @endif
@@ -77,7 +77,7 @@
             @if(!empty(Auth::user()->u_power10))
             <h2>初診業務</h2>
             <ul>
-              <li><a href="interview_list.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>初診リスト表示・問診票の入力</a></li>
+              <li><a href="{{ route('ortho.interviews.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>初診リスト表示・問診票の入力</a></li>
             </ul>
             @endif
           </div>

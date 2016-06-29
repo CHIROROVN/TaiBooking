@@ -11,16 +11,22 @@ class ServiceTemplateModel
     public function Rules()
     {
         return array(
-            // 'clinic_service_name'        => 'required',
-            // 'clinic_service_kind'        => 'required',
+            'service_facility_1'        => 'required',
+            'service_facility_2'        => 'required',
+            'service_facility_3'        => 'required',
+            'service_facility_4'        => 'required',
+            'service_facility_5'        => 'required',
         );
     }
 
     public function Messages()
     {
         return array(
-            'clinic_service_name.required' => trans('validation.error_clinic_service_name_required'),
-            'clinic_service_kind.required' => trans('validation.error_clinic_service_kind_required'),
+            'service_facility_1.required' => trans('validation.error_service_facility_1_required'),
+            'service_facility_2.required' => trans('validation.error_service_facility_2_required'),
+            'service_facility_3.required' => trans('validation.error_service_facility_3_required'),
+            'service_facility_4.required' => trans('validation.error_service_facility_4_required'),
+            'service_facility_5.required' => trans('validation.error_service_facility_5_required'),
         );
     }
 
@@ -54,13 +60,4 @@ class ServiceTemplateModel
         return DB::table($this->table)->where('clinic_service_id', $id)->update($data);
     }
 
-    // public function get_min()
-    // {
-    //     return DB::table($this->table)->min('clinic_service_id_sort_no');
-    // }
-
-    // public function get_max()
-    // {
-    //     return DB::table($this->table)->max('clinic_service_id_sort_no');
-    // }
 }

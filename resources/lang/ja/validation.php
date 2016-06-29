@@ -198,4 +198,15 @@ return [
     'error_q1_9_required'                                   => 'メールアドレスを入力してください。',
     'error_q1_9_email'                                      => 'メールアドレスのメールアドレスを正しく入力してください。',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model ServiceTemplate
+    |--------------------------------------------------------------------------
+    */
+    'error_service_facility_1_required'                     => 'Please choose service_facility_1.',
+    'error_service_facility_2_required'                     => 'Please choose service_facility_2.',
+    'error_service_facility_3_required'                     => 'Please choose service_facility_3.',
+    'error_service_facility_4_required'                     => 'Please choose service_facility_4.',
+    'error_service_facility_5_required'                     => 'Please choose service_facility_5.',
+
 ];

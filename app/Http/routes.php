@@ -216,11 +216,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	//Clinic Service Template
 	Route::get('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.regist', 'uses' => 'ServiceTemplateController@getRegist']);
 	Route::post('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.regist', 'uses' => 'ServiceTemplateController@postRegist']);
-	
 	Route::get('clinics/{clinic_id}/services/{service_id}/edit/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@getEdit']);
-	
 	Route::post('clinics/{clinic_id}/services/{service_id}/edit/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@postEdit']);
-	
 	Route::get('clinics/{clinic_id}/services/{service_id}/delete/{id}', ['as' => 'ortho.clinics.services.delete', 'uses' => 'ServiceTemplateController@delete']);
 
 	// interviews (1st)

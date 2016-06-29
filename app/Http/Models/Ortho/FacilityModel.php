@@ -64,4 +64,22 @@ class FacilityModel
         $results = DB::table($this->table)->max('facility_sort_no');
         return $results;
     }
+
+    public function get_list($clinic_id, $facility_kind = null)
+    {
+        if(!empty($facility_kind)){
+            return DB::table($this->table)
+                                ->where('last_kind', '<>', DELETE)
+                                ->where('clinic_id', '=', $clinic_id)
+                                ->where('facility_kind', '=', $facility_kind)
+                                ->orderBy('facility_sort_no', 'asc')
+                                ->lists('facility_name', 'facility_id');
+        }else{
+            return DB::table($this->table)
+                                ->where('last_kind', '<>', DELETE)
+                                ->where('clinic_id', '=', $clinic_id)
+                                ->orderBy('facility_sort_no', 'asc')
+                                ->lists('facility_name', 'facility_id');
+        }
+    }
 }

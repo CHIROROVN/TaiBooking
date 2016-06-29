@@ -63,4 +63,12 @@ class ServiceModel
         $results = DB::table($this->table)->max('service_sort_no');
         return $results;
     }
+
+    public function get_list()
+    {
+        return DB::table($this->table)
+                            ->where('last_kind', '<>', DELETE)
+                            ->orderBy('service_sort_no', 'asc')
+                            ->lists('service_name', 'service_id');
+    }
 }

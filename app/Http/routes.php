@@ -210,6 +210,16 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('clinics/{clinic_id}/facility/orderby-up', ['as' => 'ortho.facilities.orderby.up', 'uses' => 'FacilityController@orderby_up']);
 	Route::get('clinics/{clinic_id}/facility/orderby-down', ['as' => 'ortho.facilities.orderby.down', 'uses' => 'FacilityController@orderby_down']);
 
+	// interviews (1st)
+	Route::any('interviews', ['as' => 'ortho.interviews.index', 'uses' => 'InterviewController@index']);
+	Route::get('interviews/set', ['as' => 'ortho.interviews.set', 'uses' => 'InterviewController@getSet']);
+	Route::post('interviews/set', ['as' => 'ortho.interviews.set', 'uses' => 'InterviewController@postSet']);
+	Route::get('interviews/regist', ['as' => 'ortho.interviews.regist', 'uses' => 'InterviewController@getRegist']);
+	Route::post('interviews/regist', ['as' => 'ortho.interviews.regist', 'uses' => 'InterviewController@postRegist']);
+	Route::get('interviews/edit/{id}', ['as' => 'ortho.interviews.edit', 'uses' => 'InterviewController@getEdit']);
+	Route::post('interviews/edit/{id}', ['as' => 'ortho.interviews.edit', 'uses' => 'InterviewController@postEdit']);
+	Route::get('interviews/delete/{id}', ['as' => 'ortho.interviews.delete', 'uses' => 'InterviewController@getDelete']);
+
 
 
 	// auth

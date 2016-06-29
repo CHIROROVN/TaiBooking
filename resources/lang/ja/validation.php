@@ -183,4 +183,19 @@ return [
     'error_facility_name_required'                          => '施設名を入力してください。',
     'error_facility_kind_required'                          => 'Please choose treatment kind.',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model Interview
+    |--------------------------------------------------------------------------
+    */
+    'error_q1_1_sei_required'                               => 'せいを入力してください。',
+    'error_q1_1_sei_regex'                                  => 'ひらがなで入力してください。',
+    'error_q1_1_mei_required'                               => 'めいを入力してください。',
+    'error_q1_1_mei_regex'                                  => 'ひらがなで入力してください。',
+    'error_q1_2_sei_required'                               => '姓を入力してください。',
+    'error_q1_2_mei_required'                               => '名を入力してください。',
+    'error_q1_6_required'                                   => '電話番号を入力してください。',
+    'error_q1_9_required'                                   => 'メールアドレスを入力してください。',
+    'error_q1_9_email'                                      => 'メールアドレスのメールアドレスを正しく入力してください。',
+
 ];

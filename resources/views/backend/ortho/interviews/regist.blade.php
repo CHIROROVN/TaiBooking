@@ -652,7 +652,7 @@
                 <select class="form-control person-charge" name="q1_5_pref" id="q1_5_pref">
                   <option data-hidden="true"></option>
                   @foreach ( $prefs as $prefKey => $prefValue )
-                  <option value="{{ $prefKey }}" @if(old('q1_5_pref') == $prefKey) {{selected}} @endif >{{ $prefValue }}</option>
+                  <option value="{{ $prefKey }}" @if(old('q1_5_pref') == $prefKey) selected @endif >{{ $prefValue }}</option>
                   @endforeach
                 </select>
               </div>

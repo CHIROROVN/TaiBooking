@@ -36,23 +36,23 @@
           <td class="col-title" align="center">問診票の入力</td>
           <td class="col-title" align="center">取消</td>
         </tr>
-        @if ( empty($interviews) || count($interviews) == 0 )
+        @if ( empty($bookings) || count($bookings) == 0 )
         <tr>
           <td colspan="3">
             <h3 align="center" style="padding-bottom: 0;">{{ trans('common.no_data_correspond') }}</h3>
           </td>
         </tr>
         @else
-          @foreach ( $interviews as $interview )
+          @foreach ( $bookings as $booking )
           <tr>
-            <td>{{ $interview->p_name }}</td>
-            <td align="center"><a href="{{ route('ortho.interviews.regist', [ 'patient_id' => $interview->patient_id, 'booking_id' => 'xxx' ]) }}" class="btn btn-xs btn-page" target="_blank">問診票の入力</a></td>
+            <td>{{ $booking->p_name }}</td>
+            <td align="center"><a href="{{ route('ortho.interviews.regist', [ 'patient_id' => $booking->patient_id, 'booking_id' => $booking->booking_id, 'clinic_id' => $booking->clinic_id ]) }}" class="btn btn-xs btn-page" target="_blank">問診票の入力</a></td>
             <td align="center">
               <!-- <a href="interview_cancel.html" class="btn btn-xs btn-page" target="_blank">取消</a> -->
               <!-- delete -->
-              <input type="button" value="取消" class="btn btn-xs btn-page" data-toggle="modal" data-target="#myModal-{{ $interview->first_id }}"/>
+              <input type="button" value="取消" class="btn btn-xs btn-page" data-toggle="modal" data-target="#myModal-{{ $booking->booking_id }}"/>
                 <!-- Modal -->
-                <div class="modal fade" id="myModal-{{ $interview->first_id }}" role="dialog">
+                <div class="modal fade" id="myModal-{{ $booking->booking_id }}" role="dialog">
                   <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -63,7 +63,7 @@
                         <p>{{ trans('common.modal_content_delete') }}</p>
                       </div>
                       <div class="modal-footer">
-                        <a href="{{ route('ortho.interviews.delete', [ $interview->first_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+                        <a href="{{ route('ortho.interviews.delete', [ $booking->booking_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
                         <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
                       </div>
                     </div>

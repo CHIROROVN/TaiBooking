@@ -233,6 +233,18 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('interviews/edit/{id}', ['as' => 'ortho.interviews.edit', 'uses' => 'InterviewController@postEdit']);
 	Route::get('interviews/delete/{id}', ['as' => 'ortho.interviews.delete', 'uses' => 'InterviewController@getDelete']);
 
+	// bookings
+	Route::any('bookings/booking-monthly', ['as' => 'ortho.bookings.booking.monthly', 'uses' => 'BookingController@bookingMonthly']);
+	Route::any('bookings/booking-result-calendar', ['as' => 'ortho.bookings.booking.result.calendar', 'uses' => 'BookingController@bookingResultCalendar']);
+	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
+	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);
+	// Route::post('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@postSet']);
+	// Route::get('bookings/regist', ['as' => 'ortho.bookings.regist', 'uses' => 'BookingController@getRegist']);
+	// Route::post('bookings/regist', ['as' => 'ortho.bookings.regist', 'uses' => 'BookingController@postRegist']);
+	// Route::get('bookings/edit/{id}', ['as' => 'ortho.bookings.edit', 'uses' => 'BookingController@getEdit']);
+	// Route::post('bookings/edit/{id}', ['as' => 'ortho.bookings.edit', 'uses' => 'BookingController@postEdit']);
+	// Route::get('bookings/delete/{id}', ['as' => 'ortho.bookings.delete', 'uses' => 'BookingController@getDelete']);
+
 
 
 	// auth

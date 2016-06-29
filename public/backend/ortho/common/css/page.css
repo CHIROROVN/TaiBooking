@@ -596,4 +596,6 @@ textarea {
   background-image: none !important;
 }
 
-
+.fc-basic-view .fc-body .fc-row {
+  overflow: overlay;
+}

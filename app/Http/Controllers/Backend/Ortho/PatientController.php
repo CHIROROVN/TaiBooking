@@ -61,7 +61,7 @@ class PatientController extends BackendController
         $clsUser                    = new UserModel();
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_for_select();
-        $data['user_doctors']       = $clsUser->get_by_belong(1); // belong_kind = 1 = doctor
+        $data['user_doctors']       = $clsUser->get_by_belong([1]); // belong_kind = 1 = doctor
         $data['prefs']              = Config::get('constants.PREF');
 
         return view('backend.ortho.patients.regist', $data);

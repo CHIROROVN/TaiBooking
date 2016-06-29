@@ -45,13 +45,13 @@ class UserModel
     }
 
 
-    public function get_by_belong($belong_kind)
+    public function get_by_belong($belong_kind = array())
     {
         $db = DB::table($this->table)
-                    ->leftJoin('m_belong', 'm_users.u_belong', '=', 'm_belong.belong_id')
+                    ->leftJoin('m_belong as t1', 'm_users.u_belong', '=', 't1.belong_id')
                     ->select('id', 'u_name')
-                    ->where('m_belong.belong_kind', '=', $belong_kind)
                     ->where('m_users.last_kind', '<>', DELETE)
+                    ->whereIn('t1.belong_kind', $belong_kind)
                     ->get();
         return $db;
     }

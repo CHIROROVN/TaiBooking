@@ -32,7 +32,7 @@
         <div class="row">
           <div class="col-md-6">
             <span class="mar-right"><img src="{{ asset('') }}public/backend/ortho/common/image/logo.png" /></span>
-            <span>ようこそ、@if(Auth::check()) {{ Auth::user()->u_name_display }} @endif (<a href="{{ route('ortho.change.password', [Auth::user()->id]) }}" class="text-orange">パスワード変更</a>）</span>
+            <span>ようこそ、@if(Auth::check()) {{ Auth::user()->u_name_display }}@endifさん (<a href="{{ route('ortho.change.password', [Auth::user()->id]) }}" class="text-orange">パスワード変更</a>）</span>
           </div>
           <div class="col-md-6 page-right mar-top">
             <input type="button" class="btn btn-sm btn-header" name="button2" onclick="location.href='mycalendar.html'" value="院長・自分カレンダー" />

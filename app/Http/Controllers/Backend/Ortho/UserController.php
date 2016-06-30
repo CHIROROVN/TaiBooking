@@ -127,6 +127,8 @@ class UserController extends BackendController
         if($user->u_login == Input::get('u_login'))
         {
             unset($rules['u_login']);
+        }
+        if ( empty(Input::get('password')) ) {
             unset($rules['password']);
         }
         $validator = Validator::make($inputs, $rules, $clsUser->Messages());
@@ -159,11 +161,10 @@ class UserController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
         );
-        if($user->u_login == Input::get('u_login'))
-        {
+        if ( empty(Input::get('password')) ) {
             unset($dataUpdate['password']);
         }
-        
+
         if ( $clsUser->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {

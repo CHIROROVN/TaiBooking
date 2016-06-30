@@ -123,13 +123,13 @@ class UserController extends BackendController
         $user       = $clsUser->get_by_id($id);
         $inputs     = Input::all();
         $rules      = $clsUser->Rules();
+
         if($user->u_login == Input::get('u_login'))
         {
             unset($rules['u_login']);
             unset($rules['password']);
         }
         $validator = Validator::make($inputs, $rules, $clsUser->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.users.edit', [$id])->withErrors($validator)->withInput();
         }
@@ -159,6 +159,10 @@ class UserController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id,
         );
+        if($user->u_login == Input::get('u_login'))
+        {
+            unset($dataUpdate['password']);
+        }
         
         if ( $clsUser->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_regist_success'));

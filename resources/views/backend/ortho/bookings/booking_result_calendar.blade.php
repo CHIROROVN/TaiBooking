@@ -51,7 +51,7 @@
           <input type="submit" name="" id="button3" value="翌月 &gt;&gt;"  class="btn btn-sm btn-page"/>
           </form>
 
-          <h3 class="text-center mar-top20">{{ date('Y', strtotime($date_current)) }}年{{ date('m', strtotime($date_current)) }}月{{ date('d', strtotime($date_current)) }}日（土）</h3>
+          <h3 class="text-center mar-top20">{{ date('Y', strtotime($date_current)) }}年{{ $month_current }}月{{ date('d', strtotime($date_current)) }}日（土）</h3>
 
           <p>たい矯正歯科</p>
         </div>
@@ -105,9 +105,15 @@
             </tr>
             <?php $count_facilitys = count($facilitys); ?>
             @foreach ( $times as $time )
+            <?php
+              $tmp_arr = explode(':', $time);
+              $hour = $tmp_arr[0]; // printf( "%02d", $tmp_arr[0] );
+              $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
+
+            ?>
             <tr>
               <td align="center">{{ $time }}～</td>
-              @for ( $i = 1; $i <= $count_facilitys; $i++ )
+                <!-- {{ $count_facilitys }} <br> -->
                 @foreach ( $bookings as $booking )
                   @if ( empty($booking->patient_id) )
                   <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
@@ -115,123 +121,9 @@
                   <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />{{ $booking->p_name }}</td>
                   @endif
                 @endforeach
-              @endfor
             </tr>
             @endforeach
-            <!-- <tr>
-              <td align="center">09:00～</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-blue">末<br />設<br />定</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-            </tr>
-            <tr>
-              <td align="center">09:15～</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-blue">末<br />設<br />定</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-            </tr>
-            <tr>
-              <td align="center">09:30～</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-blue">末<br />設<br />定</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-            </tr>
-            <tr>
-              <td align="center">09:45～</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-blue">末<br />設<br />定</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-            </tr>
-            <tr>
-              <td align="center">10:00～</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-blue">末<br />設<br />定</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-            </tr>
-            <tr>
-              <td align="center">10:10～</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-green"><img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />末設1</td>
-              <td align="center" class="col-blue">末<br />設<br />定</td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-              <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
-            </tr> -->
+            
           </table>
         </div>
     </div>

@@ -220,6 +220,20 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('clinics/{clinic_id}/services/{service_id}/edit/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@postEdit']);
 	Route::get('clinics/{clinic_id}/services/{service_id}/delete/{id}', ['as' => 'ortho.clinics.services.template_delete', 'uses' => 'ServiceTemplateController@delete']);
 
+	//Clinic Booking Template
+	 Route::get('clinics/{clinic_id}/booking/templates', ['as' => 'ortho.clinics.booking.templates.index', 'uses' => 'BookingTemplateController@index']);
+	  Route::get('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@getRegist']);
+	 Route::post('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@postRegist']);
+	 Route::get('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@getEdit']);
+	 Route::post('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@postEdit']);
+	 Route::get('clinics/{clinic_id}/booking/templates/delete/{id}', ['as' => 'ortho.clinics.booking.templates.delete', 'uses' => 'BookingTemplateController@delete']);
+
+	Route::get('clinics/{clinic_id}/booking/templates/orderby-top/{id?}', ['as' => 'ortho.booking.templates.orderby.top', 'uses' => 'BookingTemplateController@orderby_top']);
+	Route::get('clinics/{clinic_id}/booking/templates/orderby-last/{id?}', ['as' => 'ortho.booking.templates.orderby.last', 'uses' => 'BookingTemplateController@orderby_last']);
+	Route::get('clinics/{clinic_id}/booking/templates/orderby-up/{id?}', ['as' => 'ortho.booking.templates.orderby.up', 'uses' => 'BookingTemplateController@orderby_up']);
+	Route::get('clinics/{clinic_id}/booking/templates/orderby-down/{id?}', ['as' => 'ortho.booking.templates.orderby.down', 'uses' => 'BookingTemplateController@orderby_down']);
+
+
 	// interviews (1st)
 	Route::any('interviews', ['as' => 'ortho.interviews.index', 'uses' => 'InterviewController@index']);
 	Route::get('interviews/set', ['as' => 'ortho.interviews.set', 'uses' => 'InterviewController@getSet']);

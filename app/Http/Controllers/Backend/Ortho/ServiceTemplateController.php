@@ -90,7 +90,7 @@ class ServiceTemplateController extends BackendController
             'service_time_4'                => Input::get('service_time_4'),
             'service_facility_5'            => (Input::get('service_facility_5_chair') == -1) ? '-1' : Input::get('service_facility_5'),
             'service_time_5'                => Input::get('service_time_5'),
-            'last_kind'                     => UPDATE,
+            'last_kind'                     => INSERT,
             'last_ipadrs'                   => CLIENT_IP_ADRS,
             'last_date'                     => date('y-m-d H:i:s'),
             'last_user'                     => Auth::user()->id

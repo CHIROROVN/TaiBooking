@@ -81,17 +81,17 @@ class ServiceTemplateController extends BackendController
         $dataInsert = array(
             'clinic_id'                     => $clinic_id,
             'service_id'                    => $service_id,
-            'service_facility_1'            => Input::get('service_facility_1'),
+            'service_facility_1'            => (Input::get('service_facility_1_chair') == -1) ? '-1' : Input::get('service_facility_1'),
             'service_time_1'                => Input::get('service_time_1'),
-            'service_facility_2'            => Input::get('service_facility_2'),
+            'service_facility_2'            => (Input::get('service_facility_2_chair') == -1) ? '-1' : Input::get('service_facility_2'),
             'service_time_2'                => Input::get('service_time_2'),
-            'service_facility_3'            => Input::get('service_facility_3'),
+            'service_facility_3'            => (Input::get('service_facility_3_chair') == -1) ? '-1' : Input::get('service_facility_3'),
             'service_time_3'                => Input::get('service_time_3'),
-            'service_facility_4'            => Input::get('service_facility_4'),
+            'service_facility_4'            => (Input::get('service_facility_4_chair') == -1) ? '-1' : Input::get('service_facility_4'),
             'service_time_4'                => Input::get('service_time_4'),
-            'service_facility_5'            => Input::get('service_facility_5'),
+            'service_facility_5'            => (Input::get('service_facility_5_chair') == -1) ? '-1' : Input::get('service_facility_5'),
             'service_time_5'                => Input::get('service_time_5'),
-            'last_kind'                     => INSERT,
+            'last_kind'                     => UPDATE,
             'last_ipadrs'                   => CLIENT_IP_ADRS,
             'last_date'                     => date('y-m-d H:i:s'),
             'last_user'                     => Auth::user()->id
@@ -126,29 +126,47 @@ class ServiceTemplateController extends BackendController
     public function postEdit($clinic_id, $service_id, $id)
     {
         $clsServiceTemp           = new ServiceTemplateModel();
+        $rules = $clsServiceTemp->Rules();
+       
+        $sf1_chair  = Input::get('service_facility_1_chair');
+        if($sf1_chair != '1') unset($rules['service_facility_1']);
+       
+        $sf2_chair  = Input::get('service_facility_2_chair');
+        if($sf2_chair != '1') unset($rules['service_facility_2']);
+       
+        $sf3_chair  = Input::get('service_facility_3_chair');
+        if($sf3_chair != '1') unset($rules['service_facility_3']);
+       
+        $sf4_chair  = Input::get('service_facility_4_chair');
+        if($sf4_chair != '1') unset($rules['service_facility_4']);
+        
+        $sf5_chair  = Input::get('service_facility_5_chair');
+        if($sf5_chair != '1') unset($rules['service_facility_5']);
         $inputs                   = Input::all();
-        $validator                = Validator::make($inputs, $clsServiceTemp->Rules(), $clsServiceTemp->Messages());
+        $validator                = Validator::make($inputs, $rules, $clsServiceTemp->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.clinics.services.template_edit', $clinic_id, $service_id, $id)->withErrors($validator)->withInput();
         }
+
         $dataUpdate = array(
             'clinic_id'                     => $clinic_id,
             'service_id'                    => $service_id,
-            'service_facility_1'            => Input::get('service_facility_1'),
+            'service_facility_1'            => (Input::get('service_facility_1_chair') == -1) ? '-1' : Input::get('service_facility_1'),
             'service_time_1'                => Input::get('service_time_1'),
-            'service_facility_2'            => Input::get('service_facility_2'),
+            'service_facility_2'            => (Input::get('service_facility_2_chair') == -1) ? '-1' : Input::get('service_facility_2'),
             'service_time_2'                => Input::get('service_time_2'),
-            'service_facility_3'            => Input::get('service_facility_3'),
+            'service_facility_3'            => (Input::get('service_facility_3_chair') == -1) ? '-1' : Input::get('service_facility_3'),
             'service_time_3'                => Input::get('service_time_3'),
-            'service_facility_4'            => Input::get('service_facility_4'),
+            'service_facility_4'            => (Input::get('service_facility_4_chair') == -1) ? '-1' : Input::get('service_facility_4'),
             'service_time_4'                => Input::get('service_time_4'),
-            'service_facility_5'            => Input::get('service_facility_5'),
+            'service_facility_5'            => (Input::get('service_facility_5_chair') == -1) ? '-1' : Input::get('service_facility_5'),
             'service_time_5'                => Input::get('service_time_5'),
             'last_kind'                     => UPDATE,
             'last_ipadrs'                   => CLIENT_IP_ADRS,
             'last_date'                     => date('y-m-d H:i:s'),
             'last_user'                     => Auth::user()->id
         );
+        echo "<pre>";print_r($dataUpdate);die;
         if ( $clsServiceTemp->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.clinics.services.index',$clinic_id);

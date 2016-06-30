@@ -16,7 +16,7 @@
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_other" value="1" @if(old('service_facility_1_chair') == '1') checked @endif >
                 治療以外→
-                <select name="service_facility_1" id="service_facility_1" class="form-control form-control--small">
+                <select name="service_facility_1" id="service_facility_1" class="form-control form-control--small sf1">
                   <option value="">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key1 => $facility1)
@@ -54,7 +54,7 @@
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_other" value="1" @if(old('service_facility_2_chair') == '1') checked @endif >
                 治療以外→
-                <select name="service_facility_2" id="service_facility_2" class="form-control form-control--small">
+                <select name="service_facility_2" id="service_facility_2" class="form-control form-control--small sf2">
                   <option value="">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key2 => $facility2)
@@ -92,7 +92,7 @@
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_other" value="1" @if(old('service_facility_3_chair') == '1') checked @endif >
                 治療以外→
-                <select name="service_facility_3" id="service_facility_3" class="form-control form-control--small">
+                <select name="service_facility_3" id="service_facility_3" class="form-control form-control--small sf3">
                   <option value="">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key3 => $facility3)
@@ -130,7 +130,7 @@
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_other" value="1" @if(old('service_facility_4_chair') == '1') checked @endif>
                 治療以外→
-                <select name="service_facility_4" id="service_facility_4" class="form-control form-control--small">
+                <select name="service_facility_4" id="service_facility_4" class="form-control form-control--small sf4">
                   <option value="">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key4 => $facility4)
@@ -168,7 +168,7 @@
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_other" value="1" @if(old('service_facility_5_chair') == '1') checked @endif >
                 治療以外→
-                <select name="service_facility_5" id="service_facility_5" class="form-control form-control--small">
+                <select name="service_facility_5" id="service_facility_5" class="form-control form-control--small sf5">
                   <option value="">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key5 => $facility5)
@@ -214,4 +214,22 @@
       </div>
     </section>
   <!-- End content clinic service regist -->
+
+  <script type="text/javascript">
+    $('.sf1').click(function(event) {
+      $("#service_facility_1_other").prop("checked", true); 
+    });
+    $('.sf2').click(function(event) {
+      $("#service_facility_2_other").prop("checked", true); 
+    });
+    $('.sf3').click(function(event) {
+      $("#service_facility_3_other").prop("checked", true); 
+    });
+    $('.sf4').click(function(event) {
+      $("#service_facility_4_other").prop("checked", true); 
+    });
+    $('.sf5').click(function(event) {
+      $("#service_facility_5_other").prop("checked", true); 
+    });
+  </script>
 @endsection

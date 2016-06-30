@@ -11,6 +11,7 @@
             <td class="col-title"><label for="txtTemName">雛形名</label></td>
             <td>
               <input name="txtTemName" id="txtTemName" value="ひながた" type="text" class="form-control form-control--default">
+              <!-- <input type="button" class="btn btn-sm btn-page no-border" name="button" value="保存する"> -->
             </td>
           </tr>
         </table>

@@ -142,8 +142,6 @@ class ServiceTemplateController extends BackendController
         $sf5_chair  = Input::get('service_facility_5_chair');
         if($sf5_chair != '1') unset($rules['service_facility_5']);
         $inputs                   = Input::all();
-
-
         $validator                = Validator::make($inputs, $rules, $clsServiceTemp->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.clinics.services.template_edit', [$clinic_id, $service_id, $id])->withErrors($validator)->withInput();

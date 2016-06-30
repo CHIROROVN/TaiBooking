@@ -179,24 +179,22 @@ class ServiceTemplateController extends BackendController
     /**
      * 
      */
-    // public function delete($clinic_id, $service_id, $id)
-    // {
-    //     $clsTreatment1 = new ServiceTemplateModel();
-    //     $dataDelete = array(
-    //         'last_kind'         => DELETE,
-    //         'last_ipadrs'       => CLIENT_IP_ADRS,
-    //         'last_user'         => Auth::user()->id,
-    //         'last_date'         => date('y-m-d H:i:s'),
-    //     );
+    public function delete($clinic_id, $service_id, $id)
+    {
+        $clsServiceTemp = new ServiceTemplateModel();
+        $dataDelete = array(
+            'last_kind'         => DELETE,
+            'last_ipadrs'       => CLIENT_IP_ADRS,
+            'last_user'         => Auth::user()->id,
+            'last_date'         => date('y-m-d H:i:s'),
+        );
 
-    //     if ( $clsTreatment1->update($id, $dataDelete) ) {
-    //         Session::flash('success', trans('common.message_delete_success'));
-    //         return redirect()->route('ortho.treatments.treatment1.index');
-    //     } else {
-    //         Session::flash('danger', trans('common.message_delete_danger'));
-    //         return redirect()->route('ortho.treatments.treatment1.edit',$clinic_id, $service_id, $id);
-    //     }
-    // }
-
-
+        if ( $clsServiceTemp->update($id, $dataDelete) ) {
+            Session::flash('success', trans('common.message_delete_success'));
+            return redirect()->route('ortho.clinics.services.index',$clinic_id);
+        } else {
+            Session::flash('danger', trans('common.message_delete_danger'));
+            return redirect()->route('ortho.clinics.services.template_edit', [$clinic_id, $service_id, $id]);
+        }
+    }
 }

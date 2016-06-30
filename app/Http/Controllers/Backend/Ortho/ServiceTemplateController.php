@@ -69,7 +69,6 @@ class ServiceTemplateController extends BackendController
         if($sf5_chair != '1') unset($rules['service_facility_5']);
 
         $inputs         = Input::all();
-
         $validator      = Validator::make($inputs, $rules, $clsServiceTemp->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.clinics.services.template_regist',[$clinic_id, $service_id])
@@ -143,9 +142,11 @@ class ServiceTemplateController extends BackendController
         $sf5_chair  = Input::get('service_facility_5_chair');
         if($sf5_chair != '1') unset($rules['service_facility_5']);
         $inputs                   = Input::all();
+
+
         $validator                = Validator::make($inputs, $rules, $clsServiceTemp->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.clinics.services.template_edit', $clinic_id, $service_id, $id)->withErrors($validator)->withInput();
+            return redirect()->route('ortho.clinics.services.template_edit', [$clinic_id, $service_id, $id])->withErrors($validator)->withInput();
         }
 
         $dataUpdate = array(
@@ -166,13 +167,12 @@ class ServiceTemplateController extends BackendController
             'last_date'                     => date('y-m-d H:i:s'),
             'last_user'                     => Auth::user()->id
         );
-        echo "<pre>";print_r($dataUpdate);die;
         if ( $clsServiceTemp->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.clinics.services.index',$clinic_id);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.clinics.services.template_edit', $clinic_id, $service_id, $id);
+            return redirect()->route('ortho.clinics.services.template_edit', [$clinic_id, $service_id, $id]);
         }
     }
 

@@ -24,13 +24,16 @@
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_other" value="1" {{$sf1}}>
                 治療以外→
                 <select name="service_facility_1" id="service_facility_1" class="form-control form-control--small sf1">
-                  <option value="">▼選択</option>
+                  <option value="" selected="selected">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key1 => $facility1)
                       <option value="{{$key1}}" @if($clinic_service->service_facility_1 == $key1) selected="selected" @endif>{{$facility1}}</option>
                     @endforeach
                   @endif
                 </select>
+                @if ($errors->first('service_facility_1'))
+                    <span class="error-input">※ {!! $errors->first('service_facility_1') !!}</span>
+                @endif
               </td>
             </tr>
             <tr>
@@ -66,13 +69,16 @@
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_other" value="1" {{$sf2}}>
                 治療以外→
                 <select name="service_facility_2" id="service_facility_2" class="form-control form-control--small sf2">
-                  <option value="">▼選択</option>
+                  <option value="" selected="selected">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key2 => $facility2)
                       <option value="{{$key2}}" @if($clinic_service->service_facility_2 == $key2) selected="selected" @endif>{{$facility2}}</option>
                     @endforeach
                   @endif
                 </select>
+                @if ($errors->first('service_facility_2'))
+                    <span class="error-input">※ {!! $errors->first('service_facility_2') !!}</span>
+                @endif
               </td>
             </tr>
             <tr>
@@ -108,13 +114,16 @@
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_other" value="1" {{$sf3}}>
                 治療以外→
                 <select name="service_facility_3" id="service_facility_3" class="form-control form-control--small sf3">
-                  <option value="">▼選択</option>
+                  <option value="" selected="selected">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key3 => $facility3)
                       <option value="{{$key3}}" @if($clinic_service->service_facility_3 == $key3) selected="selected" @endif>{{$facility3}}</option>
                     @endforeach
                   @endif
                 </select>
+                @if ($errors->first('service_facility_3'))
+                    <span class="error-input">※ {!! $errors->first('service_facility_3') !!}</span>
+                @endif
               </td>
             </tr>
             <tr>
@@ -150,13 +159,16 @@
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_other" value="1" {{$sf4}}>
                 治療以外→
                 <select name="service_facility_4" id="service_facility_4" class="form-control form-control--small sf4">
-                  <option value="">▼選択</option>
+                  <option value="" selected="selected">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key4 => $facility4)
                       <option value="{{$key4}}" @if($clinic_service->service_facility_4 == $key4) selected="selected" @endif>{{$facility4}}</option>
                     @endforeach
                   @endif
                 </select>
+                @if ($errors->first('service_facility_4'))
+                    <span class="error-input">※ {!! $errors->first('service_facility_4') !!}</span>
+                @endif
               </td>
             </tr>
             <tr>
@@ -192,13 +204,16 @@
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_other" value="1" {{$sf5}}>
                 治療以外→
                 <select name="service_facility_5" id="service_facility_5" class="form-control form-control--small sf5">
-                  <option value="">▼選択</option>
+                  <option value="" selected="selected">▼選択</option>
                   @if($facilities)
                     @foreach($facilities as $key5 => $facility5)
                       <option value="{{$key5}}" @if($clinic_service->service_facility_5 == $key5) selected="selected" @endif>{{$facility5}}</option>
                     @endforeach
                   @endif
                 </select>
+                @if ($errors->first('service_facility_5'))
+                    <span class="error-input">※ {!! $errors->first('service_facility_5') !!}</span>
+                @endif
               </td>
             </tr>
             <tr>

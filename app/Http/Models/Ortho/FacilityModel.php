@@ -24,6 +24,11 @@ class FacilityModel
         );
     }
 
+    public function getAll()
+    {
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('facility_sort_no', 'asc')->get();
+    }
+
     public function get_all($clinic_id)
     {
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('clinic_id', '=', $clinic_id)->orderBy('facility_sort_no', 'asc')->get();

@@ -134,7 +134,8 @@
         // var title = prompt('Event Title:');
         // var url = prompt('Type Event url, if exits:');
         // if (title) {
-          var start = moment(start).format('YYYY-MM-DD HH:mm:ss'); 
+          // var start = moment(start).format('YYYY-MM-DD HH:mm:ss'); 
+          var start = moment(start).format('YYYY-MM-DD');
           var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
         //  $.ajax({
         //    url: 'http://demo_fullcalendar/add_events.php',
@@ -158,7 +159,7 @@
         calendar.fullCalendar('unselect');
 
         //window.location.href = 'http://demo_fullcalendar/create-news?start=' + start + '&end=' + end + '&allDay=' + allDay;
-        window.location.href = "{{ route('ortho.bookings.booking.result.calendar') }}";
+        window.location.href = "{{ route('ortho.bookings.booking.result.calendar') }}?start=" + start;
       },
 
       editable: true,

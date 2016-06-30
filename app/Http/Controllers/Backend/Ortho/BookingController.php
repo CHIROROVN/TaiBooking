@@ -9,7 +9,8 @@ use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
-use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\ShiftModel;
+use App\Http\Models\Ortho\FacilityModel;
 
 use Form;
 use Html;
@@ -17,6 +18,7 @@ use Input;
 use Validator;
 use URL;
 use Session;
+use Config;
 
 class BookingController extends BackendController
 {
@@ -41,10 +43,26 @@ class BookingController extends BackendController
      */
     public function bookingResultCalendar()
     {
-        $clsUser                = new UserModel();
+        $start                  = Input::get('start');
+        $month_current          = date('m');
+        if ( Input::get('month_cur') && Input::get('month_cur') >= 1 && Input::get('month_cur') <= 12 ) {
+            $month_current = Input::get('month_cur');
+        }
+
+        $clsShift               = new ShiftModel();
+        $clsBooking             = new BookingModel();
+        $clsFacility            = new FacilityModel();
         $data                   = array();
-        $data['doctors']        = $clsUser->get_by_belong([1]);
-        $data['hygienists']     = $clsUser->get_by_belong([2,3]);
+        $data['doctors']        = $clsShift->get_by_belong([1]);
+        $data['hygienists']     = $clsShift->get_by_belong([2,3]);
+        $data['bookings']       = $clsBooking->get_all();
+        $data['facilitys']      = $clsFacility->getAll();
+
+        $data['date_current']   = date('Y-m-d');
+        $data['start']          = $start;
+        $data['month_current']  = $month_current;
+        $data['times']          = Config::get('constants.TIME');
+
 
         return view('backend.ortho.bookings.booking_result_calendar', $data);
     }

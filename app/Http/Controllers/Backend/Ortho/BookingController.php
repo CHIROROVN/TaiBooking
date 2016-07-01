@@ -68,6 +68,15 @@ class BookingController extends BackendController
     }
 
     /**
+     * List1 list
+     */
+    public function list1_list(){
+        $clsBooking             = new BookingModel();
+        $data['list1']          = $clsBooking->get_list1_list();
+        return view('backend.ortho.bookings.list1_list', $data);
+    }
+
+    /**
      * 
      */
     // public function index()

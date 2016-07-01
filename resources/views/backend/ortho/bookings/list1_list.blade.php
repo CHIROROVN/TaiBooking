@@ -1,7 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-<?php //echo "<pre>";print_r($list1);die; ?>
 	<!-- content list1 list -->
     <section id="page">
       <div class="container content-page">
@@ -17,7 +16,7 @@
                 <td class="col-title" align="center">電話番号</td>
                 <td class="col-title" align="center">業務内容-1-2</td>
                 <td class="col-title" align="center">備考</td>
-                <td class="col-title" align="center">予約情報の編集</td>
+                <td class="col-title" align="center" style="min-width:110px">予約情報の編集</td>
               </tr>
               @if(!count($list1))
               	<tr><td colspan="8" style="text-align: center;">該当するデータがありません。</td></tr>

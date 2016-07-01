@@ -3,7 +3,7 @@
 use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-// use Auth;
+use Auth;
 // use Hash;
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
@@ -145,7 +145,31 @@ class BookingController extends BackendController
 
     public function postEdit($id)
     {
+        $clsBooking                 = new BookingModel();
 
+        $dataInput = array(
+            'booking_status'        => Input::get('booking_status'),
+            'booking_recall_ym'     => Input::get('booking_recall_ym'),
+            'booking_memo'          => Input::get('booking_memo'),
+
+            'last_date'             => date('y-m-d H:i:s'),
+            'last_kind'             => INSERT,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->id
+        );
+
+        $validator                  = Validator::make($dataInput, $clsBooking->Rules(), $clsBooking->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.bookings.booking.edit', [ $id ])->withErrors($validator)->withInput();
+        }
+
+        if ( $clsBooking->update($id, $dataInput) ) {
+            Session::flash('success', trans('common.message_edit_success'));
+        } else {
+            Session::flash('danger', trans('common.message_edit_danger'));
+        }
+
+        return redirect()->route('ortho.bookings.booking.detail', [ $id ]);
     }
 
     /**

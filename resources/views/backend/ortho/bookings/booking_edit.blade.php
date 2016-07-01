@@ -2,6 +2,7 @@
 
 @section('content')
 
+{!! Form::open(array('route' => ['ortho.bookings.booking.edit', $booking->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">
@@ -118,6 +119,21 @@
               <label>
                 <input name="booking_status" value="3" type="radio" @if($booking->booking_status == 3) checked="" @endif>「リコール」です→
                 <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs">
+                  @if ( $booking->booking_status == 3 )
+                  <option value="0">▼選択</option>
+                  <option value="01" @if($booking->booking_recall_ym == 01) selected="" @endif
+                  >1ヶ月後</option>
+                  <option value="02" @if($booking->booking_recall_ym == 02) selected="" @endif
+                  >2ヶ月後</option>
+                  <option value="03" @if($booking->booking_recall_ym == 03) selected="" @endif
+                  >3ヶ月後</option>
+                  <option value="04" @if($booking->booking_recall_ym == 04) selected="" @endif
+                  >4ヶ月後</option>
+                  <option value="05" @if($booking->booking_recall_ym == 05) selected="" @endif
+                  >5ヶ月後</option>
+                  <option value="06" @if($booking->booking_recall_ym == 06) selected="" @endif
+                  >6ヶ月後</option>
+                  @else
                   <option value="0">▼選択</option>
                   <option value="01">1ヶ月後</option>
                   <option value="02">2ヶ月後</option>
@@ -125,6 +141,7 @@
                   <option value="04">4ヶ月後</option>
                   <option value="05">5ヶ月後</option>
                   <option value="06">6ヶ月後</option>
+                  @endif
                 </select>
               </label>
             </div>
@@ -155,5 +172,6 @@
     </div>
   </div>
 </section>
+</form>
 
 @endsection

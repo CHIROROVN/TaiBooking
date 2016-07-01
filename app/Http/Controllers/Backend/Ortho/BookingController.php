@@ -10,6 +10,11 @@ use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ShiftModel;
 use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\ServiceModel;
+use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\ClinicServiceModel;
+use App\Http\Models\Ortho\Treatment1Model;
+
 use Form;
 use Html;
 use Input;

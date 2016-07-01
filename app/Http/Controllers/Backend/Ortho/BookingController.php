@@ -32,7 +32,30 @@ class BookingController extends BackendController
      */
     public function bookingMonthly()
     {
-        return view('backend.ortho.bookings.booking_monthly');
+        $data                   = array();
+        $data['s_clinic_id']    = Input::get('s_clinic_id', 0);
+        $data['s_u_id']         = Input::get('s_u_id', 0);
+        // $clsShift            = new ShiftModel();
+        // $shifts              = $clsShift->get_all();
+        $clsBooking             = new BookingModel();
+        $clsUser                = new UserModel();
+        $clsClinic              = new ClinicModel();
+        $data['users']          = $clsUser->get_all();
+        $data['clinics']        = $clsClinic->get_all();
+        $bookings               = $clsBooking->get_all($data);
+
+        $tmp_arr            = array();
+        foreach ( $bookings as $booking ) {
+            $tmp_arr[] = array(
+                'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
+                'start' => $booking->booking_date,
+                'end' => $booking->booking_date + 1,
+                'url' => route('ortho.bookings.booking.result.calendar', [ 'start_date' => $booking->booking_date ]),
+            );
+        }
+        $data['bookings'] = json_encode($tmp_arr);
+
+        return view('backend.ortho.bookings.booking_monthly', $data);
     }
 
 
@@ -41,7 +64,7 @@ class BookingController extends BackendController
      */
     public function bookingResultCalendar()
     {
-        $start                  = Input::get('start');
+        $start_date             = Input::get('start_date');
         $month_current          = date('m');
         if ( Input::get('month_cur') && Input::get('month_cur') >= 1 && Input::get('month_cur') <= 12 ) {
             $month_current = Input::get('month_cur');
@@ -51,18 +74,73 @@ class BookingController extends BackendController
         $clsBooking             = new BookingModel();
         $clsFacility            = new FacilityModel();
         $data                   = array();
-        $data['doctors']        = $clsShift->get_by_belong([1]);
-        $data['hygienists']     = $clsShift->get_by_belong([2,3]);
-        $data['bookings']       = $clsBooking->get_all();
+        $data['doctors']        = $clsShift->get_by_belong([1], $start_date);
+        $data['hygienists']     = $clsShift->get_by_belong([2,3], $start_date);
         $data['facilitys']      = $clsFacility->getAll();
 
         $data['date_current']   = date('Y-m-d');
-        $data['start']          = $start;
+        $data['start_date']     = $start_date;
         $data['month_current']  = $month_current;
         $data['times']          = Config::get('constants.TIME');
 
+        $bookings               = $clsBooking->get_all();
+        $arr_bookings           = array();
+        foreach ( $data['times'] as $time ) {
+            foreach ( $data['facilitys'] as $fac ) {
+                foreach ( $bookings as $booking ) {
+                    if ( $booking->facility_id == $fac->facility_id ) {
+                        $arr_bookings[$fac->facility_id][$time] = $booking;
+                    }
+                }
+            }
+        }
+        $data['arr_bookings'] = $arr_bookings;
 
         return view('backend.ortho.bookings.booking_result_calendar', $data);
+    }
+
+
+    /**
+     * get view detail
+     * $id: ID record
+     */
+    public function bookingDetail($id)
+    {
+        $data                       = array();
+        $clsBooking                 = new BookingModel();
+        $clsUser                    = new UserModel();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data['booking']            = $clsBooking->get_by_id($id);
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hys']                = $clsUser->get_by_belong([2,3]);
+        $data['clinic_services']    = $clsClinicService->get_all();
+        $data['treatment1s']        = $clsTreatment1->get_all();
+
+        return view('backend.ortho.bookings.booking_detail', $data);
+    }
+
+
+    public function getEdit($id)
+    {
+        $data                       = array();
+        $clsBooking                 = new BookingModel();
+        $clsUser                    = new UserModel();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data['booking']            = $clsBooking->get_by_id($id);
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hys']                = $clsUser->get_by_belong([2,3]);
+        $data['clinic_services']    = $clsClinicService->get_all();
+        $data['treatment1s']        = $clsTreatment1->get_all();
+
+        return view('backend.ortho.bookings.booking_edit', $data);
+    }
+
+
+    public function postEdit($id)
+    {
+
     }
 
     /**

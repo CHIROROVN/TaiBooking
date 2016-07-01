@@ -331,7 +331,7 @@ class XrayController extends BackendController
         $year_current       = date('Y');
         $day_arr            = array();
         if ( $month != 0 ) {
-            $number             = cal_days_in_month(CAL_GREGORIAN, $month, $year_current);
+            $number             = $this->cal_days_in_month(1, $month, $year_current);
             for ( $i = 1; $i <= $number; $i++ ) {
                 $day_arr[] = $i;
             }
@@ -357,5 +357,11 @@ class XrayController extends BackendController
             );
         }
         echo json_encode($tmp);
+    }
+
+
+    function cal_days_in_month($calendar, $month, $year) 
+    { 
+        return date('t', mktime(0, 0, 0, $month, 1, $year)); 
     }
 }

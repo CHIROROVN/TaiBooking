@@ -21,7 +21,7 @@
           <div class="col-md-4">
             <h1>キッズコーポレーション業務管理システム</h1>
           </div>
-          <div class="col-md-4">ようこそ、山田花子さん</div>
+          <div class="col-md-4">ようこそ、{{ Auth::user()->u_name_display }}さん</div>
           <div class="col-md-4 page-right">
             <input type="submit" class="btn btn-sm btn-info  btn-mar-right" name="button2" value="メニューへ" onclick="location.href='{{ route('ortho.menus.index') }}'" />
             <input type="submit" class="btn btn-sm btn-info" name="button" value="ログアウト" onclick="location.href='{{ route('ortho.logout') }}'" />

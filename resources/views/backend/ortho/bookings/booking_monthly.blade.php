@@ -7,16 +7,26 @@
         <h1>予約簿</h1>
         <div class="fillter">
           <div class="col-md-12 page-left">
+          
+          {!! Form::open(array('route' => 'ortho.bookings.booking.monthly', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
             <select name="" id="" class="form-control form-control--small">
-              <option value="">▼地域</option>
+              <option value="0">▼地域</option>
             </select>
-            <select name="" id="" class="form-control form-control--small">
-              <option value="">▼医院名</option>
+            <select name="s_clinic_id" id="clinic_id" class="form-control form-control--small">
+              <option value="0">▼医院名</option>
+              @foreach ( $clinics as $clinic )
+              <option value="{{ $clinic->clinic_id }}" @if($s_clinic_id == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
+              @endforeach
             </select>
-            <select name="" id="" class="form-control form-control--small">
-              <option value="">▼Dr</option>
+            <select name="s_u_id" id="u_id" class="form-control form-control--small">
+              <option value="0">▼Dr</option>
+              @foreach ( $users as $user )
+              <option value="{{ $user->id }}" @if($s_u_id == $user->id) selected="" @endif>{{ $user->u_name }}</option>
+              @endforeach
             </select>
-            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="絞込表示">
+            <input type="submit" class="btn btn-sm btn-page no-border" name="" value="絞込表示">
+          </form>
+
           </div>
         </div>
         <div id='calendar'></div>
@@ -24,6 +34,7 @@
   </div>
 </section>
 
+<?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
 <script>
   $(document).ready(function() {
     var date = new Date();
@@ -44,81 +55,82 @@
       },
 
       //load all event from DB
-      //events: "http://demo_fullcalendar/events.php",
-      events: [
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'booking-daily.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-08',
-          end: '2016-04-09',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-04',
-          end: '2016-04-05',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-03',
-          end: '2016-04-06',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-03',
-          end: '2016-04-07',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-09',
-          end: '2016-04-10',
-          url: 'ddr_calendar_edit.html'
-        },
-        {
-          title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-          start: '2016-04-09',
-          end: '2016-04-11',
-          url: 'ddr_calendar_edit.html'
-        }
-      ],
+      events: bookings,
+      // events: "http://demo_fullcalendar/events.php",
+      // events: [
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'booking-daily.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-08',
+      //     end: '2016-04-09',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-04',
+      //     end: '2016-04-05',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-03',
+      //     end: '2016-04-06',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-03',
+      //     end: '2016-04-07',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-09',
+      //     end: '2016-04-10',
+      //     url: 'ddr_calendar_edit.html'
+      //   },
+      //   {
+      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
+      //     start: '2016-04-09',
+      //     end: '2016-04-11',
+      //     url: 'ddr_calendar_edit.html'
+      //   }
+      // ],
       
       // Convert the allDay from string to boolean
       eventRender: function(event, element, view) {
@@ -159,7 +171,7 @@
         calendar.fullCalendar('unselect');
 
         //window.location.href = 'http://demo_fullcalendar/create-news?start=' + start + '&end=' + end + '&allDay=' + allDay;
-        window.location.href = "{{ route('ortho.bookings.booking.result.calendar') }}?start=" + start;
+        window.location.href = "{{ route('ortho.bookings.booking.result.calendar') }}?start_date=" + start;
       },
 
       editable: true,

@@ -2,6 +2,7 @@
 
 use DB;
 use App\Http\Models\Ortho\ServiceModel;
+
 class ClinicServiceModel
 {
     protected $table = 't_clinic_service';
@@ -14,6 +15,17 @@ class ClinicServiceModel
                     ->where('last_kind', '<>', DELETE)
                     ->where('clinic_id', '=', $clinic_id)
                     ->orderBy('last_date', 'desc')
+                    ->get();
+    }
+
+
+    public function get_all()
+    {
+        return DB::table($this->table)
+                    ->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')
+                    ->select('t_clinic_service.*', 't1.service_name')
+                    ->where('t_clinic_service.last_kind', '<>', DELETE)
+                    ->orderBy('t_clinic_service.clinic_service_id', 'asc')
                     ->get();
     }
 

@@ -24,22 +24,38 @@ class ShiftModel
         );
     }
 
-    public function get_all()
+
+    public function get_all($where = array())
     {
-        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('shift_date', 'asc')->get();
+        $db = DB::table($this->table)
+                    ->leftJoin('m_users as t1', 't_shift.u_id', '=', 't1.id')
+                    ->select('t_shift.*', 't1.u_name')
+                    ->where('t_shift.last_kind', '<>', DELETE);
+
+        // where
+        // if ( ) {
+
+        // }
+
+        $results = $db->get();
+        return $results;
     }
 
 
-    public function get_by_belong($belong_kind = array())
+    public function get_by_belong($belong_kind = array(), $date = '')
     {
         $db = DB::table($this->table)
                     ->leftJoin('m_users as t2', 't_shift.u_id', '=', 't2.id')
-                    ->join('m_belong as t1', 't2.u_belong', '=', 't1.belong_id')
+                    ->leftJoin('m_belong as t1', 't2.u_belong', '=', 't1.belong_id')
                     ->select('id', 'u_name')
                     ->where('t_shift.last_kind', '<>', DELETE)
-                    ->whereIn('t1.belong_kind', $belong_kind)
-                    ->get();
-        return $db;
+                    ->whereIn('t1.belong_kind', $belong_kind);
+        if ( !empty($date) ) {
+            $db = $db->where('t_shift.shift_date', $date);
+        }
+
+        $results = $db->get();
+        return $results;
     }
 
     public function insert($data)

@@ -40,6 +40,10 @@ class X3dctController extends BackendController
         $data['currYear']           = (int)date("Y");
         $data['nextYear']           = (int)date("Y")+1;
 
+        if ( empty($data['patient']) ) {
+            return redirect()->route('ortho.xrays.index');
+        }
+
         return view('backend.ortho.xrays.x3dct.regist', $data);
     }
 

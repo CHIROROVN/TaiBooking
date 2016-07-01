@@ -50,7 +50,7 @@
             <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
             <td>{{ date('Y/m/d', strtotime($xray->p_birthday)) }}</td>
             <td align="center">
-              <input onclick="location.href='{{ route('ortho.xrays.detail', $xray->xray_id) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
+              <input onclick="location.href='{{ route('ortho.xrays.detail', [$xray->xray_id]) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
             </td>
           </tr>
           @endforeach

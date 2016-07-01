@@ -5,7 +5,7 @@
 <section id="page">
 <div class="container">
 <div class="row content-page">
-  <h3>医院情報管理　＞　たい矯正歯科　＞　業務自動枠の一覧　＞　リンガルrem　＞　使用設備と時間の新規登録</h3>
+  <h3>医院情報管理　＞　たい矯正歯科　＞　業務自動枠の一覧　＞　リンガルrem　＞　使用設備と時間の編集</h3>
     <div class="table-responsive">
     {!! Form::open( ['id' => 'frmClinicServiceEdit', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.clinics.services.template_edit', $clinic_id, $service_id, $clinic_service->clinic_service_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
         <table class="table table-bordered">

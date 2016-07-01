@@ -45,7 +45,10 @@
                 <td align="center">@if($clinic_service->service_facility_3 == -1) 治療 @else {{@$facilities[$clinic_service->service_facility_3]}} @endif {{$clinic_service->service_time_3}}分</td>
                 <td align="center">@if($clinic_service->service_facility_4 == -1) 治療 @else  {{@$facilities[$clinic_service->service_facility_4]}} @endif {{$clinic_service->service_time_4}}分</td>
                 <td align="center">@if($clinic_service->service_facility_5 == -1) 治療 @else  {{@$facilities[$clinic_service->service_facility_5]}} @endif {{$clinic_service->service_time_5}}分</td>
-                <td align="center" text-center ><input type="button" onclick="location.href='{{route('ortho.clinics.services.template_edit', [$clinic_id, $clinic_service->service_id, $clinic_service->clinic_service_id])}}'" value="編集" class="btn btn-xs btn-page"/></td>
+                <td align="center" text-center >
+                  <input type="button" onclick="location.href='{{route('ortho.clinics.services.template_edit', [$clinic_id, $clinic_service->service_id, $clinic_service->clinic_service_id])}}'" value="編集" class="btn btn-xs btn-page"/>
+                    <input type="button" onclick="location.href='{{route('ortho.clinics.services.template_regist', [$clinic_id, $clinic_service->service_id])}}'" value="加算" class="btn btn-xs btn-page"/>
+                </td>
               </tr>
               @endforeach
             @endif

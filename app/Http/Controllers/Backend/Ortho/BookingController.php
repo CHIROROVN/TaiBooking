@@ -1,17 +1,15 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
-use Auth;
-use Hash;
+// use Auth;
+// use Hash;
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ShiftModel;
 use App\Http\Models\Ortho\FacilityModel;
-
+use App\Http\Models\Ortho\ServiceModel;
 use Form;
 use Html;
 use Input;
@@ -73,6 +71,9 @@ class BookingController extends BackendController
     public function list1_list(){
         $clsBooking             = new BookingModel();
         $data['list1']          = $clsBooking->get_list1_list();
+        $clsService             = new ServiceModel();
+        $data['sercices']       = $clsService->get_list();
+        //echo "<pre>"; print_r($data['list1']);die;
         return view('backend.ortho.bookings.list1_list', $data);
     }
 

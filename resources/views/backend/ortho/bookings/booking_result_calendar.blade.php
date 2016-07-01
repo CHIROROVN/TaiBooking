@@ -101,16 +101,16 @@
                 @if ( isset($arr_bookings[$facility->facility_id][$time]) && ($arr_bookings[$facility->facility_id][$time]->booking_start_time == $hour && $arr_bookings[$facility->facility_id][$time]->booking_total_time >= $minute && !empty($arr_bookings[$facility->facility_id][$time]->clinic_id) && !empty($arr_bookings[$facility->facility_id][$time]->facility_id)) )
                   @if ( !empty($arr_bookings[$facility->facility_id][$time]->service_1) && $arr_bookings[$facility->facility_id][$time]->service_1 == 1 )
                   <td align="center" class="col-green">
-                    <a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$time]->booking_id ]) }}">
+                    <a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$time]->booking_id, 'start_date' => $start_date ]) }}">
                     <img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />{{ $arr_bookings[$facility->facility_id][$time]->p_name }}</a>
                   </td>
                   @elseif ( !empty($arr_bookings[$facility->facility_id][$time]->service_1) && $arr_bookings[$facility->facility_id][$time]->service_1 == 2 )
                   <td align="center" class="col-blue">
-                    <a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$time]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$time]->p_name }}</a>
+                    <a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$time]->booking_id, 'start_date' => $start_date ]) }}">{{ $arr_bookings[$facility->facility_id][$time]->p_name }}</a>
                   </td>
                   @endif
                 @else
-                <td align="center" class="col-brown"><a href="2"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></a></td>
+                <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
                 @endif
               @endforeach
             </tr>

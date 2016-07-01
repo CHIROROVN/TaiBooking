@@ -121,6 +121,7 @@ class BookingController extends BackendController
         $data['hys']                = $clsUser->get_by_belong([2,3]);
         $data['clinic_services']    = $clsClinicService->get_all();
         $data['treatment1s']        = $clsTreatment1->get_all();
+        $data['start_date']         = Input::get('start_date');
 
         return view('backend.ortho.bookings.booking_detail', $data);
     }
@@ -171,6 +172,31 @@ class BookingController extends BackendController
 
         return redirect()->route('ortho.bookings.booking.detail', [ $id ]);
     }
+
+
+    public function getRegist()
+    {
+        return view('backend.ortho.bookings.booking_regist');
+    }
+
+
+    public function postRegist()
+    {
+
+    }
+
+
+    public function get1stRegist()
+    {
+        return view('backend.ortho.bookings.booking_1st_regist');
+    }
+
+
+    public function post1stRegist()
+    {
+
+    }
+
 
     /**
      * List1 list

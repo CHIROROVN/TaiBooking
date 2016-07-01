@@ -143,7 +143,7 @@ class XrayController extends BackendController
 
         $validator              = Validator::make($dataInsert, $clsXray->Rules(), $clsXray->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.xrays.regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.xrays.regist', [ 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
         }
 
         // insert
@@ -170,6 +170,9 @@ class XrayController extends BackendController
         $data['xray']               = $clsXray->get_by_id($id);
         $data['users']              = $clsUser->get_for_select();
         $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id', 0));
+        // echo '<pre>';
+        // print_r($data['patient']);
+        // echo '</pre>';die;
 
         return view('backend.ortho.xrays.edit', $data);
     }
@@ -237,7 +240,7 @@ class XrayController extends BackendController
 
         $validator              = Validator::make($dataInsert, $clsXray->Rules(), $clsXray->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.xrays.edit', [ $id ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.xrays.edit', [ $id, 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
         }
 
         // update

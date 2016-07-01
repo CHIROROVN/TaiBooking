@@ -6,6 +6,25 @@
   <div class="container">
     <div class="row content-page">
       <h3>予約管理　＞　予約の表示</h3>
+
+      <div class="msg-alert-action margin-top-15">
+        @if ($message = Session::get('success'))
+          <div class="alert alert-success  alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+          </div>
+        @elseif($message = Session::get('danger'))
+          <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+          </div>
+        @endif
+      </div>
+    
       <table class="table table-bordered treatment2-list">
         <tr>
           <td class="col-title">患者名</td>
@@ -133,7 +152,7 @@
     </div>
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        <input onclick="history.back()" value="前の画面に戻る" type="button" class="btn btn-sm btn-page">
+        <input onclick="location.href='{{ route('ortho.bookings.booking.result.calendar', [ 'start_date' => $start_date ]) }}'" value="前の画面に戻る" type="button" class="btn btn-sm btn-page">
       </div>
     </div>
   </div>

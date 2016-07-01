@@ -62,7 +62,7 @@
             </tr> -->
           </tbody>
         </table>
-        <div class="row margin-bottom">
+        <div class="row margin-bottom" style="display: block; float: right;">
           <div class="col-md-12 text-center">
             <input onclick="location.href='{{route('ortho.clinics.index')}}'" value="医院一覧に戻る" type="button" class="btn btn-sm btn-page">
           </div>

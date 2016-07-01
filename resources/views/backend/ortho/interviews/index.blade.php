@@ -77,7 +77,7 @@
       </tbody>
     </table>
 
-    <div class="row margin-bottom">
+    <div class="row margin-bottom" style="display: block; float: right;">
       <div class="col-md-12 text-right">
         <input type="submit" name="button" value="問診票の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{ route('ortho.interviews.set') }}'">
       </div>

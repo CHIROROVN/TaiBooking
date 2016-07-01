@@ -65,7 +65,7 @@
             @endif
         </tbody>
       </table>
-      <div class="row">
+      <div class="row" style="display: block; float: right;">
         <div class="col-md-12 text-center">
           <input type="button" name="button" value="装置の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.equipments.regist')}}'">
         </div>

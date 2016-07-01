@@ -121,7 +121,7 @@
             @endif
           </tbody>
         </table>
-        <div class="row margin-bottom">
+        <div class="row margin-bottom" style="display: block; float: right;">
           <div class="col-md-12 text-center">
             {!! $clinics->render(new App\Pagination\SimplePagination($clinics))  !!}
           </div>

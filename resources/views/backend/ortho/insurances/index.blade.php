@@ -75,7 +75,7 @@
 
       </tbody>
     </table>
-    <div class="row margin-bottom">
+    <div class="row margin-bottom" style="display: block; float: right;">
       <div class="col-md-12 text-right">
         <a href="{{ route('ortho.insurances.regist') }}" class="btn btn-sm btn-page">地域の新規登録</a>
       </div>

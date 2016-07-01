@@ -7,17 +7,16 @@
     <div class="container">
       <div class="row content-page">
         <h3>放射線照射録管理　＞　3D-CTの入力</h3>
-
         <table class="table table-bordered">
           <tbody>
             <tr>
               <td class="col-title">名前</td>
-              <td>{{ $patient->p_no }}　{{ $patient->p_name }}（{{ $patient->p_name_kana }}）</td>
+              <td>{{ @$patient->p_no }}　{{ @$patient->p_name }}（{{ @$patient->p_name_kana }}）</td>
               <td class="col-title">担当</td>
               <td>
-                @foreach ( $users as $user )
-                  @if ( $user->id == $patient->p_dr )
-                  {{ $user->u_name }}
+                @foreach($users as $user)
+                  @if($user->id == $patient->p_dr)
+                  {{$user->u_name}}
                   @endif
                 @endforeach
               </td>

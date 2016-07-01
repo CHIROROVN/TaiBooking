@@ -14,10 +14,9 @@ class ClinicServiceModel
         return DB::table($this->table)
                     ->where('last_kind', '<>', DELETE)
                     ->where('clinic_id', '=', $clinic_id)
-                    ->orderBy('last_date', 'desc')
+                    ->orderBy('clinic_id', 'asc')
                     ->get();
     }
-
 
     public function get_all()
     {
@@ -28,8 +27,4 @@ class ClinicServiceModel
                     ->orderBy('t_clinic_service.clinic_service_id', 'asc')
                     ->get();
     }
-
-    // public function clinicService(){
-    //     return $this->hasMany(ServiceModel::class,'service_id','service_id');
-    // }
 }

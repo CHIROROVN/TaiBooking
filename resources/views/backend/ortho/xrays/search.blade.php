@@ -114,7 +114,7 @@
           <td>
             <input name="s_p_sex_men" value="1" id="s_p_sex_men" type="checkbox" @if($s_p_sex_men == 1) checked="" @endif>
             男　　　　　
-            <input name="s_p_sex_women" value="1" id="s_p_sex_women" type="checkbox" @if($s_p_sex_women == 1) checked="" @endif>
+            <input name="s_p_sex_women" value="2" id="s_p_sex_women" type="checkbox" @if($s_p_sex_women == 2) checked="" @endif>
             女
           </td>
         </tr>

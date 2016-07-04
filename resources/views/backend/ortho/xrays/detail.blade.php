@@ -27,11 +27,11 @@
       <tbody>
         <tr>
           <td class="col-title">名前</td>
-          <td>{{ $xray->p_no }}　{{ $xray->p_name }}（{{ $xray->p_name_kana }}）</td>
+          <td>{{ $patient->p_no }}　{{ $patient->p_name }}（{{ $patient->p_name_kana }}）</td>
           <td class="col-title">担当</td>
           <td>
             @foreach ( $users as $user )
-              @if ( $user->id == $xray->p_dr )
+              @if ( $user->id == $patient->p_dr )
               {{ $user->u_name }}
               @endif
             @endforeach
@@ -41,7 +41,7 @@
           <td class="col-title">生年月日</td>
           <td>{{ date('Y', strtotime($patient->p_birthday)) }}年{{ date('m', strtotime($patient->p_birthday)) }}月{{ date('d', strtotime($patient->p_birthday)) }}日</td>
           <td class="col-title">性別</td>
-          <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
+          <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
         </tr>
       </tbody>
     </table>
@@ -51,7 +51,7 @@
         ▼レントゲン
       </div>
       <div class="col-xs-6 col-md-6 text-right">
-        <input onclick="location.href='{{ route('ortho.xrays.regist', [ 'patient_id' => $xray->p_id ]) }}'" value="レントゲン新規入力" type="button" class="btn btn-sm btn-page">
+        <input onclick="location.href='{{ route('ortho.xrays.regist', [ $patient->p_id ]) }}'" value="レントゲン新規入力" type="button" class="btn btn-sm btn-page">
       </div>
     </div>
 
@@ -185,7 +185,7 @@
             </td>
             <td>{{ $patient_xray->xray_memo }}</td>
             <td align="center">
-              <input onclick="location.href='{{ route('ortho.xrays.edit', [ $patient_xray->xray_id, 'patient_id' => $patient->p_id ]) }}'" value="編集" type="button" class="btn  btn-xs btn-page">
+              <input onclick="location.href='{{ route('ortho.xrays.edit', [ $patient->p_id, $patient_xray->xray_id ]) }}'" value="編集" type="button" class="btn  btn-xs btn-page">
             </td>
             <td align="center">
               <!-- Trigger the modal with a button -->
@@ -202,7 +202,7 @@
                       <p>{{ trans('common.modal_content_delete') }}</p>
                     </div>
                     <div class="modal-footer">
-                      <a href="{{ route('ortho.xrays.delete', [ $patient_xray->xray_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+                      <a href="{{ route('ortho.xrays.delete', [ $patient->p_id, $patient_xray->xray_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
                       <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
                     </div>
                   </div>
@@ -221,7 +221,7 @@
         ▼3D-CT
       </div>
       <div class="col-xs-6 col-md-6 text-right">
-        <input onclick="location.href='{{ route('ortho.xrays.x3dct.regist', [ 'patient_id' => $xray->p_id ]) }}'" value="3D-CT新規入力" type="button" class="btn btn-sm btn-page">
+        <input onclick="location.href='{{ route('ortho.xrays.x3dct.regist', [ 'patient_id' => $patient->p_id ]) }}'" value="3D-CT新規入力" type="button" class="btn btn-sm btn-page">
       </div>
     </div>
 
@@ -331,13 +331,13 @@
             </td>
             <td>{{ $patient_3dct->ct_memo }}</td>
             <td align="center">
-              <input onclick="location.href='{{ route('ortho.xrays.x3dct.edit', [ $patient_3dct->ct_id, 'patient_id' => $patient->p_id ]) }}'" value="編集" type="button" class="btn  btn-xs btn-page">
+              <input onclick="location.href='{{ route('ortho.xrays.x3dct.edit', [ $patient->p_id, $patient_3dct->ct_id ]) }}'" value="編集" type="button" class="btn  btn-xs btn-page">
             </td>
             <td align="center">
               <!-- Trigger the modal with a button -->
-              <input type="button" value="削除" class="btn btn-xs btn-page" data-toggle="modal" data-target="#myModal-{{ $patient_3dct->ct_id }}"/>
+              <input type="button" value="削除" class="btn btn-xs btn-page" data-toggle="modal" data-target="#myModal-3dct-{{ $patient_3dct->ct_id }}"/>
               <!-- Modal -->
-              <div class="modal fade" id="myModal-{{ $patient_3dct->ct_id }}" role="dialog">
+              <div class="modal fade" id="myModal-3dct-{{ $patient_3dct->ct_id }}" role="dialog">
                 <div class="modal-dialog modal-sm">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -348,7 +348,7 @@
                       <p>{{ trans('common.modal_content_delete') }}</p>
                     </div>
                     <div class="modal-footer">
-                      <a href="{{ route('ortho.xrays.x3dct.delete', [ $patient_3dct->ct_id, 'patient_id' => $patient->p_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+                      <a href="{{ route('ortho.xrays.x3dct.delete', [ $patient->p_id, $patient_3dct->ct_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
                       <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
                     </div>
                   </div>

@@ -28,20 +28,19 @@ class X3dctController extends BackendController
     /**
      * 
      */
-    public function getRegist()
+    public function getRegist($patient_id)
     {
-        // $clsXray                    = new XrayModel();
         $clsUser                    = new UserModel();
         $clsPatient                 = new PatientModel();
         $data['users']              = $clsUser->get_for_select();
-        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id'));
+        $data['patient']            = $clsPatient->get_by_id($patient_id);
 
         $data['prevYear']           = (int)date("Y")-1;
         $data['currYear']           = (int)date("Y");
         $data['nextYear']           = (int)date("Y")+1;
 
         if ( empty($data['patient']) ) {
-            return redirect()->route('ortho.xrays.index');
+            return redirect()->route('ortho.xrays.index', [ $patient_id ]);
         }
 
         return view('backend.ortho.xrays.x3dct.regist', $data);
@@ -50,12 +49,12 @@ class X3dctController extends BackendController
     /**
      * 
      */
-    public function postRegist()
+    public function postRegist($patient_id)
     {
         $clsX3dct                  = new X3dctModel();
 
         $dataInsert                = array(
-            'p_id'                 => Input::get('p_id'),
+            'p_id'                 => $patient_id,
             'ct_date'              => '', //after
             'u_id'                 => Input::get('u_id'),
 
@@ -97,29 +96,33 @@ class X3dctController extends BackendController
 
         $validator      = Validator::make($dataInsert, $clsX3dct->Rules(), $clsX3dct->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.xrays.x3dct.regist', [ 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.xrays.x3dct.regist', [ $patient_id ])->withErrors($validator)->withInput();
         }
 
         if ( $clsX3dct->insert($dataInsert) ) {
             Session::flash('success', trans('common.message_regist_success'));
-            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
+            return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
-            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
+            return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         }
     }
 
     /**
      * 
      */
-    public function getEdit($id)
+    public function getEdit($patient_id, $id)
     {
         $clsX3dct                   = new X3dctModel();
         $clsPatient                 = new PatientModel();
         $clsUser                    = new UserModel();
         $data['users']              = $clsUser->get_for_select();
-        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id'));
+        $data['patient']            = $clsPatient->get_by_id($patient_id);
         $data['ct']                 = $clsX3dct->get_by_id($id);
+        $data['ct_year']            = date('Y', strtotime($data['ct']->ct_date));
+        $data['ct_month']           = date('m', strtotime($data['ct']->ct_date));
+        $data['ct_day']             = date('d', strtotime($data['ct']->ct_date));
+        $data['number_day']         = $this->cal_days_in_month(1, $data['ct_month'], $data['ct_year']);
 
         $data['prevYear']           = (int)date("Y")-1;
         $data['currYear']           = (int)date("Y");
@@ -131,12 +134,12 @@ class X3dctController extends BackendController
     /**
      * 
      */
-    public function postEdit($id)
+    public function postEdit($patient_id, $id)
     {
         $clsX3dct                  = new X3dctModel();
 
         $dataInsert                = array(
-            'p_id'                 => Input::get('p_id'),
+            'p_id'                 => $patient_id,
             'ct_date'              => '', //after
             'u_id'                 => Input::get('u_id'),
 
@@ -178,20 +181,20 @@ class X3dctController extends BackendController
 
         $validator      = Validator::make($dataInsert, $clsX3dct->Rules(), $clsX3dct->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.xrays.x3dct.edit', [ $id, 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.xrays.x3dct.edit', [ $patient_id, $id ])->withErrors($validator)->withInput();
         }
 
         if ( $clsX3dct->update($id, $dataInsert) ) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
+            return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
+            return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         }
     }
 
 
-    public function getDelete($id)
+    public function getDelete($patient_id, $id)
     {
         $clsX3dct                  = new X3dctModel();
         $dataInsert                = array(
@@ -203,10 +206,16 @@ class X3dctController extends BackendController
 
         if ( $clsX3dct->update($id, $dataInsert) ) {
             Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.xrays.detail', [ Input::get('patient_id') ]);
+            return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
-            return redirect()->route('ortho.xrays.detail', [ Input::get('patient_id') ]);
+            return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         }
+    }
+
+
+    function cal_days_in_month($calendar, $month, $year) 
+    { 
+        return date('t', mktime(0, 0, 0, $month, 1, $year)); 
     }
 }

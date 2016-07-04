@@ -33,12 +33,12 @@ class PatientModel
     }
 
 
-    public function get_all($where = array())
+    public function get_all($where = array(), $paging = true)
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE);
 
         if ( !empty($where['keyword']) ) {
-            $db = $results->where(function($subQuery) use ($where) {
+            $results = $results->where(function($subQuery) use ($where) {
                 $subQuery->where('p_no', 'like', '%' . $where['keyword'] . '%');
                 $subQuery->orWhere('p_name', 'like', '%' . $where['keyword'] . '%');
                 $subQuery->orWhere('p_name_kana', 'like', '%' . $where['keyword'] . '%');
@@ -46,11 +46,17 @@ class PatientModel
         }
 
         if ( !empty($where['keyword_id']) ) {
-            $db = $results->orWhere('p_id', $where['keyword_id']);
+            $results = $results->orWhere('p_id', $where['keyword_id']);
         }
 
-        $db = $results->orderBy('p_no', 'asc')->simplePaginate(PAGINATION);
-        
+        $results = $results->orderBy('p_no', 'asc');
+
+        if ( $paging ) {
+            $db = $results->simplePaginate(PAGINATION);
+        } else {
+            $db = $results->get();
+        }
+
         return $db;
     }
 

@@ -33,7 +33,7 @@
   }
 </script>
 
-{!! Form::open(array('route' => 'ortho.xrays.regist', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open(array('route' => ['ortho.xrays.regist', $patient->p_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">
@@ -43,11 +43,11 @@
         <tbody>
           <tr>
             <td class="col-title">名前</td>
-            <td>{{ $xray->p_no }}　{{ $xray->p_name }}（{{ $xray->p_name_kana }}）</td>
+            <td>{{ $patient->p_no }}　{{ $patient->p_name }}（{{ $patient->p_name_kana }}）</td>
             <td class="col-title">担当</td>
             <td>
               @foreach ( $users as $user )
-                @if ( $user->id == $xray->p_dr )
+                @if ( $user->id == $patient->p_dr )
                 {{ $user->u_name }}
                 @endif
               @endforeach
@@ -57,7 +57,7 @@
             <td class="col-title">生年月日</td>
             <td>{{ date('Y', strtotime($patient->p_birthday)) }}年{{ date('m', strtotime($patient->p_birthday)) }}月{{ date('d', strtotime($patient->p_birthday)) }}日</td>
             <td class="col-title">性別</td>
-            <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
+            <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
           </tr>
         </tbody>
       </table>

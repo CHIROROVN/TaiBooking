@@ -26,7 +26,7 @@ class X3dctModel
 
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('ct_id', 'asc')->get();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('ct_date', 'asc')->get();
         return $results;
     }
 
@@ -37,6 +37,7 @@ class X3dctModel
                     ->select('t_3dct.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
                     ->where('t_3dct.p_id', $id_patient)
                     ->where('t_3dct.last_kind', '<>', DELETE)
+                    ->orderBy('ct_date', 'asc')
                     ->get();
 
         return $db;

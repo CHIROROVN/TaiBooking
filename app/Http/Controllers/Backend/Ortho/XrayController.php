@@ -41,25 +41,24 @@ class XrayController extends BackendController
         if ( empty($data['s_p_name']) ) {
             $data['s_p_id'] = '';
         }
-        $data['s_p_birthday_year_from']         = Input::get('s_p_birthday_year_from');
-        $data['s_p_birthday_month_from']        = Input::get('s_p_birthday_month_from');
-        $data['s_p_birthday_day_from']          = Input::get('s_p_birthday_day_from');
-        $data['s_p_birthday_year_to']           = Input::get('s_p_birthday_year_to');
-        $data['s_p_birthday_month_to']          = Input::get('s_p_birthday_month_to');
-        $data['s_p_birthday_day_to']            = Input::get('s_p_birthday_day_to');
+        $data['s_p_birthday_year_from']         = Input::get('s_p_birthday_year_from', 0);
+        $data['s_p_birthday_month_from']        = Input::get('s_p_birthday_month_from', 0);
+        $data['s_p_birthday_day_from']          = Input::get('s_p_birthday_day_from', 0);
+        $data['s_p_birthday_year_to']           = Input::get('s_p_birthday_year_to', 0);
+        $data['s_p_birthday_month_to']          = Input::get('s_p_birthday_month_to', 0);
+        $data['s_p_birthday_day_to']            = Input::get('s_p_birthday_day_to', 0);
         $data['s_p_sex_men']                    = Input::get('s_p_sex_men');
         $data['s_p_sex_women']                  = Input::get('s_p_sex_women');
-        $data['s_xray_date_year_from']          = Input::get('s_xray_date_year_from');
-        $data['s_xray_date_month_from']         = Input::get('s_xray_date_month_from');
-        $data['s_xray_date_day_from']           = Input::get('s_xray_date_day_from');
-        $data['s_xray_date_year_to']            = Input::get('s_xray_date_year_to');
-        $data['s_xray_date_month_to']           = Input::get('s_xray_date_month_to');
-        $data['s_xray_date_day_to']             = Input::get('s_xray_date_day_to');
+        $data['s_xray_date_year_from']          = Input::get('s_xray_date_year_from', 0);
+        $data['s_xray_date_month_from']         = Input::get('s_xray_date_month_from', 0);
+        $data['s_xray_date_day_from']           = Input::get('s_xray_date_day_from', 0);
+        $data['s_xray_date_year_to']            = Input::get('s_xray_date_year_to', 0);
+        $data['s_xray_date_month_to']           = Input::get('s_xray_date_month_to', 0);
+        $data['s_xray_date_day_to']             = Input::get('s_xray_date_day_to', 0);
 
         $clsXray            = new XrayModel();
         $clsPatient         = new PatientModel();
-        $data['xrays']      = $clsXray->get_all();
-        $data['patients']   = $clsPatient->get_all();
+        $data['xrays']      = $clsXray->get_all(false, $data);
 
         return view('backend.ortho.xrays.index', $data);
     }
@@ -67,17 +66,15 @@ class XrayController extends BackendController
     /**
      * get view regist
      */
-    public function getRegist()
+    public function getRegist($id)
     {
         $clsXray                    = new XrayModel();
         $clsUser                    = new UserModel();
         $clsClinic                  = new ClinicModel();
         $clsPatient                 = new PatientModel();
         $data['clinics']            = $clsClinic->get_for_select();
-        $data['patients']           = $clsPatient->get_for_select();
-        $data['xray']               = $clsXray->get_by_id(Input::get('patient_id', null));
         $data['users']              = $clsUser->get_for_select();
-        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id', 0));
+        $data['patient']            = $clsPatient->get_by_id($id);
 
         return view('backend.ortho.xrays.regist', $data);
     }
@@ -85,7 +82,7 @@ class XrayController extends BackendController
     /**
      * 
      */
-    public function postRegist()
+    public function postRegist($id)
     {
         $clsXray                        = new XrayModel();
         $dataInsert                     = array(
@@ -145,7 +142,7 @@ class XrayController extends BackendController
 
         $validator              = Validator::make($dataInsert, $clsXray->Rules(), $clsXray->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.xrays.regist', [ 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.xrays.regist', [ $id ])->withErrors($validator)->withInput();
         }
 
         // insert
@@ -155,23 +152,22 @@ class XrayController extends BackendController
             Session::flash('danger', trans('common.message_regist_danger'));
         }
 
-        return redirect()->route('ortho.xrays.detail', [ $dataInsert['p_id'] ]);
+        return redirect()->route('ortho.xrays.detail', [ $id ]);
     }
 
     /**
      * 
      */
-    public function getEdit($id)
+    public function getEdit($patient_id, $id)
     {
         $clsXray                    = new XrayModel();
         $clsUser                    = new UserModel();
         $clsClinic                  = new ClinicModel();
         $clsPatient                 = new PatientModel();
         $data['clinics']            = $clsClinic->get_for_select();
-        $data['patients']           = $clsPatient->get_for_select();
         $data['xray']               = $clsXray->get_by_id($id);
         $data['users']              = $clsUser->get_for_select();
-        $data['patient']            = $clsPatient->get_by_id(Input::get('patient_id', 0));
+        $data['patient']            = $clsPatient->get_by_id($patient_id);
         // echo '<pre>';
         // print_r($data['patient']);
         // echo '</pre>';die;
@@ -182,13 +178,13 @@ class XrayController extends BackendController
     /**
      * 
      */
-    public function postEdit($id)
+    public function postEdit($patient_id, $id)
     {
         $clsXray                        = new XrayModel();
         $dataInsert                     = array(
-            'xray_date'                 => '',
+            'xray_date'                 => '', // after
             'xray_place'                => (Input::get('xray_place') != 0) ? Input::get('xray_place') : '',
-            'p_id'                      => (Input::get('p_id') != 0) ? Input::get('p_id') : 0, // 0 => ''
+            // 'p_id'                      => '',
             'xray_memo'                 => Input::get('xray_memo'),
             'u_id'                      => Input::get('u_id'),
 
@@ -242,7 +238,7 @@ class XrayController extends BackendController
 
         $validator              = Validator::make($dataInsert, $clsXray->Rules(), $clsXray->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.xrays.edit', [ $id, 'patient_id' => $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.xrays.edit', [ $patient_id, $id ])->withErrors($validator)->withInput();
         }
 
         // update
@@ -252,13 +248,13 @@ class XrayController extends BackendController
             Session::flash('danger', trans('common.message_edit_danger'));
         }
 
-        return redirect()->route('ortho.xrays.detail', [ $id ]);
+        return redirect()->route('ortho.xrays.detail', [ $patient_id, $id ]);
     }
 
     /**
      * 
      */
-    public function getDelete($id)
+    public function getDelete($patient_id, $id)
     {
         $clsXray                        = new XrayModel();
 
@@ -276,7 +272,7 @@ class XrayController extends BackendController
             Session::flash('danger', trans('common.message_edit_danger'));
         }
 
-        return redirect()->route('ortho.xrays.detail', [ $id ]);
+        return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
     }
 
 
@@ -290,11 +286,10 @@ class XrayController extends BackendController
         $clsUser                    = new UserModel();
         $clsPatient                 = new PatientModel();
         $cls3dct                    = new X3dctModel();
-        $data['xray']               = $clsXray->get_by_id($id);
         $data['users']              = $clsUser->get_for_select();
-        $data['patient_xrays']      = $clsXray->get_by_patient_id($data['xray']->p_id);
-        $data['patient']            = $clsPatient->get_by_id($data['xray']->p_id);
-        $data['patient_3dcts']      = $cls3dct->get_by_patient_id($data['xray']->p_id);
+        $data['patient_xrays']      = $clsXray->get_by_patient_id($id);
+        $data['patient']            = $clsPatient->get_by_id($id);
+        $data['patient_3dcts']      = $cls3dct->get_by_patient_id($id);
 
         return view('backend.ortho.xrays.detail', $data);
     }

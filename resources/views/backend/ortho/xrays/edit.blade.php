@@ -33,7 +33,7 @@
   }
 </script>
 
-{!! Form::open(array('route' => ['ortho.xrays.edit', $xray->xray_id], 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open(array('route' => ['ortho.xrays.edit', $patient->p_id, $xray->xray_id], 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">
@@ -43,11 +43,11 @@
         <tbody>
           <tr>
             <td class="col-title">名前</td>
-            <td>{{ $xray->p_no }}　{{ $xray->p_name }}（{{ $xray->p_name_kana }}）</td>
+            <td>{{ $patient->p_no }}　{{ $patient->p_name }}（{{ $patient->p_name_kana }}）</td>
             <td class="col-title">担当</td>
             <td>
               @foreach ( $users as $user )
-                @if ( $user->id == $xray->p_dr )
+                @if ( $user->id == $patient->p_dr )
                 {{ $user->u_name }}
                 @endif
               @endforeach
@@ -57,15 +57,12 @@
             <td class="col-title">生年月日</td>
             <td>{{ date('Y', strtotime($patient->p_birthday)) }}年{{ date('m', strtotime($patient->p_birthday)) }}月{{ date('d', strtotime($patient->p_birthday)) }}日</td>
             <td class="col-title">性別</td>
-            <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
+            <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
           </tr>
         </tbody>
       </table>
 
       <table class="table table-bordered">
-
-        <!-- p_id -->
-        <input type="hidden" name="p_id" value="{{ $patient->p_id }}">
 
         <!-- xray_date -->
         <?php
@@ -200,7 +197,11 @@
                   @endif
                 </div>
                 <div class="checkbox">
+                  @if ( old('xray_cat_14') )
                   <label><input name="xray_cat_14" type="checkbox" value="1" @if(old('xray_cat_14') == 1) checked="" @endif>オクルーザル</label>
+                  @else
+                  <label><input name="xray_cat_14" type="checkbox" value="1" @if($xray->xray_cat_14 == 1) checked="" @endif>オクルーザル</label>
+                  @endif
                 </div>
               </div>
               <div class="col-md-3">
@@ -393,7 +394,11 @@
                   @endif
                 </div>
                 <div class="checkbox">
+                  @if ( old('xray_memo_7') )
                   <label><input name="xray_memo_7" type="checkbox" value="1" @if(old('xray_memo_7') == 1) checked="" @endif>転院</label>
+                  @else
+                  <label><input name="xray_memo_7" type="checkbox" value="1" @if($xray->xray_memo_7 == 1) checked="" @endif>転院</label>
+                  @endif
                 </div>
               </div>
               <div class="col-md-3">
@@ -441,7 +446,7 @@
                   <p>{{ trans('common.modal_content_delete') }}</p>
                 </div>
                 <div class="modal-footer">
-                  <a href="{{ route('ortho.xrays.delete', [ $xray->xray_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+                  <a href="{{ route('ortho.xrays.delete', [ $patient->p_id, $xray->xray_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
                   <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
                 </div>
               </div>

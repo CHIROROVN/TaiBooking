@@ -3,7 +3,7 @@
 @section('content')
 <!-- Content xray_3dct_regist -->
   <section id="page">
-  {!! Form::open( ['id' => 'frmX3dctRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.xrays.x3dct.edit', $ct->ct_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
+  {!! Form::open( ['id' => 'frmX3dctRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.xrays.x3dct.edit', $patient->p_id, $ct->ct_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
     <div class="container">
       <div class="row content-page">
         <h3>放射線照射録管理　＞　3D-CTの入力</h3>
@@ -32,14 +32,11 @@
         </table>
 
         <table class="table table-bordered">
-          <!-- p_id -->
-          <input type="hidden" name="p_id" value="{{ $patient->p_id }}">
 
           <!-- ct_date -->
           <tr>
             <td class="col-title">撮影日</td>
             <td>
-              <?php $ct_year = date('Y', strtotime($ct->ct_date)); ?>
               <select style="text-align: center;" name="year" id="year" class="form-control form-control--small">
                 <option value="">----年</option>
                 <option value="{{$prevYear}}" @if($prevYear == $ct_year) selected="" @endif>{{$prevYear}}年</option>
@@ -48,9 +45,15 @@
               </select>
               <select style="text-align: center;" name="month" id="month" class="form-control form-control--small">
                 <option value="">--月</option>
+                @for ( $i = 1; $i <= 12; $i++ )
+                <option value="{{ $i }}" @if($ct_month == $i) selected="" @endif>{{ $i }}月</option>
+                @endfor
               </select>
               <select style="text-align: center;" name="day" id="day" class="form-control form-control--small">
-                <option value="">--日</option>               
+                <option value="">--日</option>
+                @for ( $i = 1; $i <= $number_day; $i++ )
+                <option value="{{ $i }}" @if($ct_day == $i) selected="" @endif>{{ $i }}日</option>
+                @endfor
               </select>
               <img src="{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}" height="23" width="27">
               <span class="error-input">@if ($errors->first('ct_date')) {!! $errors->first('ct_date') !!} @endif</span>
@@ -318,7 +321,7 @@
                   <p>{{ trans('common.modal_content_delete') }}</p>
                 </div>
                 <div class="modal-footer">
-                  <a href="{{ route('ortho.xrays.x3dct.delete', [ $ct->ct_id, 'patient_id' => $patient->p_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+                  <a href="{{ route('ortho.xrays.x3dct.delete', [ $patient->p_id, $ct->ct_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
                   <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
                 </div>
               </div>

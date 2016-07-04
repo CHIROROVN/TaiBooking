@@ -3,7 +3,7 @@
 @section('content')
 <!-- Content xray_3dct_regist -->
   <section id="page">
-  {!! Form::open( ['id' => 'frmX3dctRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => 'ortho.xrays.x3dct.regist', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
+  {!! Form::open( ['id' => 'frmX3dctRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.xrays.x3dct.regist', $patient->p_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
     <div class="container">
       <div class="row content-page">
         <h3>放射線照射録管理　＞　3D-CTの入力</h3>
@@ -31,8 +31,6 @@
         </table>
 
         <table class="table table-bordered">
-          <!-- p_id -->
-          <input type="hidden" name="p_id" value="{{ $patient->p_id }}">
 
           <!-- ct_date -->
           <tr>

@@ -127,20 +127,20 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('equipments/orderby-down', ['as' => 'ortho.equipments.orderby.down', 'uses' => 'EquipmentController@orderby_down']);
 
 	//3dct
-	Route::get('xrays/3dct/regist', ['as' => 'ortho.xrays.x3dct.regist', 'uses' => 'X3dctController@getRegist']);
-	Route::post('xrays/3dct/regist', ['as' => 'ortho.xrays.x3dct.regist', 'uses' => 'X3dctController@postRegist']);
-	Route::get('xrays/3dct/edit/{id}', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@getEdit']);
-	Route::post('xrays/3dct/edit/{id}', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@postEdit']);
-	Route::get('xrays/3dct/delete/{id}', ['as' => 'ortho.xrays.x3dct.delete', 'uses' => 'X3dctController@getDelete']);
+	Route::get('xrays/3dct/{patient_id}/regist', ['as' => 'ortho.xrays.x3dct.regist', 'uses' => 'X3dctController@getRegist']);
+	Route::post('xrays/3dct/{patient_id}/regist', ['as' => 'ortho.xrays.x3dct.regist', 'uses' => 'X3dctController@postRegist']);
+	Route::get('xrays/3dct/{patient_id}/edit/{id}', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@getEdit']);
+	Route::post('xrays/3dct/{patient_id}/edit/{id}', ['as' => 'ortho.xrays.x3dct.edit', 'uses' => 'X3dctController@postEdit']);
+	Route::get('xrays/3dct/{patient_id}/delete/{id}', ['as' => 'ortho.xrays.x3dct.delete', 'uses' => 'X3dctController@getDelete']);
 
 	// xrays
 	Route::any('xrays', ['as' => 'ortho.xrays.index', 'uses' => 'XrayController@index']);
-	Route::get('xrays/regist', ['as' => 'ortho.xrays.regist', 'uses' => 'XrayController@getRegist']);
-	Route::post('xrays/regist', ['as' => 'ortho.xrays.regist', 'uses' => 'XrayController@postRegist']);
-	Route::get('xrays/edit/{id}', ['as' => 'ortho.xrays.edit', 'uses' => 'XrayController@getEdit']);
-	Route::post('xrays/edit/{id}', ['as' => 'ortho.xrays.edit', 'uses' => 'XrayController@postEdit']);
-	Route::get('xrays/delete/{id}', ['as' => 'ortho.xrays.delete', 'uses' => 'XrayController@getDelete']);
-	Route::get('xrays/detail/{id}', ['as' => 'ortho.xrays.detail', 'uses' => 'XrayController@getDetail']);
+	Route::get('xrays/{patient_id}/regist', ['as' => 'ortho.xrays.regist', 'uses' => 'XrayController@getRegist']);
+	Route::post('xrays/{patient_id}/regist', ['as' => 'ortho.xrays.regist', 'uses' => 'XrayController@postRegist']);
+	Route::get('xrays/{patient_id}/edit/{id}', ['as' => 'ortho.xrays.edit', 'uses' => 'XrayController@getEdit']);
+	Route::post('xrays/{patient_id}/edit/{id}', ['as' => 'ortho.xrays.edit', 'uses' => 'XrayController@postEdit']);
+	Route::get('xrays/{patient_id}/delete/{id}', ['as' => 'ortho.xrays.delete', 'uses' => 'XrayController@getDelete']);
+	Route::get('xrays/{patient_id}/detail', ['as' => 'ortho.xrays.detail', 'uses' => 'XrayController@getDetail']);
 	Route::get('xrays/search', ['as' => 'ortho.xrays.search', 'uses' => 'XrayController@getSearch']);
 	Route::get('xrays/get-day', ['as' => 'ortho.xrays.get.day', 'uses' => 'XrayController@getDay']);
 	Route::get('xrays/ajax/autocomplete-patient', ['as' => 'ortho.xrays.autocomplete.patient', 'uses' => 'XrayController@AutoCompletePatient']);

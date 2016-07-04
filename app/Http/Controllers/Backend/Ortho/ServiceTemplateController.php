@@ -25,8 +25,8 @@ class ServiceTemplateController extends BackendController
      */
     public function index($clinic_id, $service_id)
     {
-        $clsTreatment1  = new ServiceTemplateModel();
-        $data['temp_services']      = $clsTreatment1->get_all($clinic_id, $service_id);
+        // $clsTreatment1  = new ServiceTemplateModel();
+        // $data['temp_services']      = $clsTreatment1->get_all($clinic_id, $service_id);
         $data['clinic_id']          = $clinic_id;
         $data['service_id']         = $service_id;
 

@@ -24,8 +24,7 @@ class ServiceModel
 
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('service_sort_no', 'asc')->get();
-        return $results;
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('service_sort_no', 'asc')->get();
     }
 
     public function insert($data)
@@ -71,4 +70,13 @@ class ServiceModel
                             ->orderBy('service_sort_no', 'asc')
                             ->lists('service_name', 'service_id');
     }
+
+    public function get_clinic_service(){
+      return DB::table($this->table)
+                            ->rightJoin('t_clinic_service')
+                            ->where('last_kind', '<>', DELETE)
+                            ->orderBy('service_sort_no', 'asc')
+                            ->get();
+    }
 }
+//->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')

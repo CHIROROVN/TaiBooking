@@ -1,8 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-    <script type="text/javascript" src="{{ asset('ortho') }}/common/js/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ asset('ortho') }}/common/js/jquery.mask.min.js"></script>
 
     <section id="page">
       <div class="container content-page">
@@ -44,7 +42,7 @@
 
         <div class="row">
           <div class="col-md-12 text-right">
-            <a href="{{ asset('ortho/clinics/regist') }}" class="btn btn-sm btn-page">医院の新規登録</a>
+            <a href="{{ route('ortho.clinics.regist') }}" class="btn btn-sm btn-page">医院の新規登録</a>
           </div>
         </div>
         
@@ -114,15 +112,15 @@
                 <td><input type="button" onClick="location.href='{{route('ortho.clinics.services.index',$clinic->clinic_id)}}'" value="「業務枠」管理" class="btn btn-xs btn-page"/></td>
                 <td><input type="button" onClick="location.href='{{route('ortho.clinics.booking.templates.index', $clinic->clinic_id)}}'" value="「予約雛形」管理" class="btn btn-xs btn-page"/></td>
                 <td>
-                  <a href="{{ asset('ortho/clinics/edit/' . $clinic->clinic_id) }}" class="btn btn-xs btn-page">編集</a>
+                  <a href="{{ route('ortho.clinics.edit', [ $clinic->clinic_id ]) }}" class="btn btn-xs btn-page">編集</a>
                 </td>
               </tr>
               @endforeach
             @endif
           </tbody>
         </table>
-        <div class="row margin-bottom" style="display: block; float: right;">
-          <div class="col-md-12 text-center">
+        <div class="row margin-bottom" style="display: block; float: right; width: 100%;">
+          <div class="col-md-12 text-center" style="width: 100%;">
             {!! $clinics->render(new App\Pagination\SimplePagination($clinics))  !!}
           </div>
         </div>

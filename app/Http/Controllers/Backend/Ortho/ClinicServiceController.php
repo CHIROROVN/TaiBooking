@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\FacilityModel;
+use App\Http\Models\Ortho\ClinicModel;
+
 use Auth;
 use Form;
 use Html;
@@ -27,15 +29,13 @@ class ClinicServiceController extends BackendController
      */
     public function index($clinic_id)
     {
-        $clsClinicService  = new ClinicServiceModel();
-        $data['clinic_services']        = $clsClinicService->get_clinic_service($clinic_id);
-        $data['clinic_id']              = $clinic_id;
-        $clsService                     = new ServiceModel();
-        $data['services']               = $clsService->get_all();
+        $clsClinicService               = new ClinicServiceModel();
+        $clsClinic                      = new ClinicModel();
         $clsFacility                    = new FacilityModel();
+        $data['clinic_services']        = $clsClinicService->getAll();
+        $data['clinic']                 = $clsClinic->get_by_id($clinic_id);
         $data['facilities']             = $clsFacility->get_list($clinic_id);
 
-       // echo "<pre>";print_r($data['clinic_services']);die;
         return view('backend.ortho.clinics.services.index', $data);
     }
 

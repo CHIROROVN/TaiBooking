@@ -214,6 +214,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('clinics/{clinic_id}/services', ['as' => 'ortho.clinics.services.index', 'uses' => 'ClinicServiceController@index']);
 
 	//Clinic Service Template
+	Route::get('clinics/{clinic_id}/services/{service_id}/templates', ['as' => 'ortho.clinics.services.template_list', 'uses' => 'ServiceTemplateController@index']);
 	Route::get('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.template_regist', 'uses' => 'ServiceTemplateController@getRegist']);
 	Route::post('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.template_regist', 'uses' => 'ServiceTemplateController@postRegist']);
 	Route::get('clinics/{clinic_id}/services/{service_id}/edit/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@getEdit']);

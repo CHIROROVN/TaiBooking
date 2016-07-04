@@ -57,7 +57,9 @@ class XrayController extends BackendController
         $data['s_xray_date_day_to']             = Input::get('s_xray_date_day_to');
 
         $clsXray            = new XrayModel();
-        $data['xrays']      = $clsXray->get_all(false, $data);
+        $clsPatient         = new PatientModel();
+        $data['xrays']      = $clsXray->get_all();
+        $data['patients']   = $clsPatient->get_all();
 
         return view('backend.ortho.xrays.index', $data);
     }

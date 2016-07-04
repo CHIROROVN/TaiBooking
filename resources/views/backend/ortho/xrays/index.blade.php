@@ -34,23 +34,23 @@
           <td class="col-title" align="center">生年月日</td>
           <td class="col-title" align="center">放射線照射録の表示</td>
         </tr>
-        @if( empty($xrays) || count($xrays) == 0)
+        @if( empty($patients) || count($patients) == 0)
           <tr>
             <td colspan="7">
               <h3 align="center" style="padding-bottom: 0;">{{ trans('common.no_data_correspond') }}</h3>
             </td>
           </tr>
         @else
-          @foreach ( $xrays as $xray )
+          @foreach ( $patients as $patient )
           <tr>
-            <td>{{ date('Y/m/d', strtotime($xray->xray_date)) }}</td>
-            <td>{{ $xray->p_no }}</td>
-            <td>{{ $xray->p_name }}</td>
-            <td>{{ $xray->p_name_kana }}</td>
-            <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
-            <td>{{ date('Y/m/d', strtotime($xray->p_birthday)) }}</td>
+            <td></td>
+            <td>{{ $patient->p_no }}</td>
+            <td>{{ $patient->p_name }}</td>
+            <td>{{ $patient->p_name_kana }}</td>
+            <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
+            <td>{{ date('Y/m/d', strtotime($patient->p_birthday)) }}</td>
             <td align="center">
-              <input onclick="location.href='{{ route('ortho.xrays.detail', [$xray->xray_id]) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
+              <input onclick="location.href='{{ route('ortho.xrays.detail', [$patient->p_id]) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
             </td>
           </tr>
           @endforeach

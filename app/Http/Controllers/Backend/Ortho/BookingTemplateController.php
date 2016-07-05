@@ -6,6 +6,7 @@ use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\TemplateModel;
+use App\Http\Models\Ortho\ServiceModel;
 //use App\Http\Models\Ortho\BookingTemplateModel;
 
 use Request;
@@ -107,9 +108,11 @@ class BookingTemplateController extends BackendController
         $clsClinic                  = new ClinicModel();
         $clsBookingTemplate         = new BookingTemplateModel();
         $clsTemplate                = new TemplateModel();
+        $clsService                 = new ServiceModel();
         $data['booking_template']   = $clsBookingTemplate->get_by_id($id);
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
         $data['facilitys']          = $clsFacility->getAll();
+        $data['services']           = $clsService->get_all();
         $data['times']              = Config::get('constants.TIME');
 
         $templates                  = $clsTemplate->get_all($id);

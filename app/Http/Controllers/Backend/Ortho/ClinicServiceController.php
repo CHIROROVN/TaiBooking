@@ -44,6 +44,7 @@ class ClinicServiceController extends BackendController
         }
         $data['clinic_services'] = $arr_tmp;
 
+
         return view('backend.ortho.clinics.services.index', $data);
     }
 

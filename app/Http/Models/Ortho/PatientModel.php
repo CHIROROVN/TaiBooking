@@ -82,40 +82,44 @@ class PatientModel
 
     public function get_for_select()
     {
-        $db = DB::table($this->table)->select('p_id', 'p_name')->where('last_kind', '<>', DELETE)->get();
-        return $db;
+        return DB::table($this->table)->select('p_id', 'p_name')->where('last_kind', '<>', DELETE)->get();
     }
 
 
     public function insert($data)
     {
-        $results = DB::table($this->table)->insert($data);
-        return $results;
+        return DB::table($this->table)->insert($data);
     }
 
 
     public function insert_get_id($data)
     {
-        $results = DB::table($this->table)->insertGetId($data);
-        return $results;
+        return DB::table($this->table)->insertGetId($data);
     }
 
 
     public function get_by_id($id)
     {
-        $results = DB::table($this->table)
+        return DB::table($this->table)
                         ->leftJoin('m_users', 't_patient.p_dr', '=', 'm_users.id')
                         ->leftJoin('m_clinic', 't_patient.p_hos', '=', 'm_clinic.clinic_id')
                         ->select('t_patient.*', 'm_users.u_name', 'm_clinic.clinic_name')
                         ->where('p_id', $id)
                         ->first();
-        return $results;
     }
 
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('p_id', $id)->update($data);
-        return $results;
+        return DB::table($this->table)->where('p_id', $id)->update($data);
+    }
+
+    public function get_patient_by_id($id)
+    {
+        return DB::table($this->table)
+                        ->select('t_patient.p_id', 't_patient.p_no', 't_patient.p_name')
+                        ->where('last_kind', '<>', DELETE)
+                        ->where('p_id', '=', $id)
+                        ->first();
     }
 }

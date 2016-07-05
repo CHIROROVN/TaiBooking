@@ -1,20 +1,22 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-
-{!! Form::open(array('route' => 'ortho.bookings.booking.regist', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open( ['id' => 'frmBookingRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.bookings.booking.regist', $booking_id, $patient_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">
       <h3>予約管理　＞　予約の新規登録</h3>
       <table class="table table-bordered">
         <tr>
-          <td class="col-title"><label for="textName">患者名</label></td>
-          <td><input type="text" name="txtName" id="textName" class="form-control" value="123456 杉元　俊彦"/><input type="button" name="button3" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{ route('ortho.bookings.booking.1st.regist') }}'"></td>
+          <td class="col-title"><label for="textName">患者名 <span class="note_required">※</span></label></td>
+          <td>
+            <input type="text" name="patient_id" id="patient_id" class="form-control" value="{{@$patient->p_no}} {{@$patient->p_name}}" readonly/>
+            <input type="button" name="button3" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{ route('ortho.bookings.booking.1st.regist') }}'" style="margin-top: 5px;">
+          </td>
         </tr>
         <tr>
           <td class="col-title"><label for="cbReservation">予約日時</label></td>
-          <td>2016年5月1日（日）　15:00～15:15
+          <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
           </td>
         </tr>
         <tr>

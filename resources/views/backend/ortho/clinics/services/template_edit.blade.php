@@ -12,13 +12,23 @@
             <tr>
               <td class="col-title"><label for="service_facility_1">使用する設備-1</label></td>
               <td>
-              <?php if($clinic_service->service_facility_1 == -1){
-                $sf1_chair = "checked";
-                $sf1 = '';
+              <?php 
+                if($clinic_service->service_facility_1 == -1){
+                  $sf1_chair = "checked";
+                  $sf1 = '';
+                  $sf1_chair_null = '';
+                }elseif($clinic_service->service_facility_1 == NULL){
+                  $sf1_chair = '';
+                  $sf1 = '';
+                  $sf1_chair_null = 'checked';
                 }else{
                   $sf1_chair = '';
                   $sf1 = "checked";
-                  } ?>
+                  $sf1_chair_null = '';
+                } ?>
+
+                <input id="service_facility_1_chair_null" type="radio" value="NULL" name="service_facility_1_chair" {{$sf1_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_chair" value="-1" {{$sf1_chair}}>
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_other" value="1" {{$sf1}}>
@@ -40,6 +50,7 @@
               <td class="col-title"><label for="service_time_1">時間-1</label></td>
               <td>
                 <select name="service_time_1" id="service_time_1" class="form-control form-control--small">
+                  <option value="" @if($clinic_service->service_time_1 == '') selected="selected" @endif>----</option>
                   <option value="15" @if($clinic_service->service_time_1 == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if($clinic_service->service_time_1 == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if($clinic_service->service_time_1 == '45') selected="selected" @endif>45分</option>
@@ -57,13 +68,23 @@
             <tr>
               <td class="col-title"><label for="service_facility_2">使用する設備-2</label></td>
               <td>
-              <?php if($clinic_service->service_facility_2 == -1){
-                $sf2_chair = "checked";
-                $sf2 = '';
+              <?php 
+                if($clinic_service->service_facility_2 == -1){
+                  $sf2_chair = "checked";
+                  $sf2 = '';
+                  $sf2_chair_null = '';
+                }elseif($clinic_service->service_facility_2 == NULL){
+                  $sf2_chair = '';
+                  $sf2 = '';
+                  $sf2_chair_null = 'checked';
                 }else{
                   $sf2_chair = '';
                   $sf2 = "checked";
-                  } ?>
+                  $sf2_chair_null = '';
+                } ?>
+
+                <input id="service_facility_2_chair_null" type="radio" value="NULL" name="service_facility_2_chair" {{$sf2_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_chair" value="-1" {{$sf2_chair}}>
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_other" value="1" {{$sf2}}>
@@ -85,6 +106,7 @@
               <td class="col-title"><label for="service_time_2">時間-2</label></td>
               <td>
                 <select name="service_time_2" id="service_time_2" class="form-control form-control--small">
+                  <option value="" @if($clinic_service->service_time_2 == '') selected="selected" @endif>----</option>
                   <option value="15" @if($clinic_service->service_time_2 == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if($clinic_service->service_time_2 == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if($clinic_service->service_time_2 == '45') selected="selected" @endif>45分</option>
@@ -102,13 +124,23 @@
             <tr>
               <td class="col-title"><label for="service_facility_3">使用する設備-3</label></td>
               <td>
-              <?php if($clinic_service->service_facility_3 == -1){
-                $sf3_chair = "checked";
-                $sf3 = '';
+              <?php 
+                if($clinic_service->service_facility_3 == -1){
+                  $sf3_chair = "checked";
+                  $sf3 = '';
+                  $sf3_chair_null = '';
+                }elseif($clinic_service->service_facility_3 == NULL){
+                  $sf3_chair = '';
+                  $sf3 = '';
+                  $sf3_chair_null = 'checked';
                 }else{
                   $sf3_chair = '';
                   $sf3 = "checked";
-                  } ?>
+                  $sf3_chair_null = '';
+                } ?>
+
+                <input id="service_facility_3_chair_null" type="radio" value="NULL" name="service_facility_3_chair" {{$sf3_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_chair" value="-1" {{$sf3_chair}}>
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_other" value="1" {{$sf3}}>
@@ -130,6 +162,7 @@
               <td class="col-title"><label for="service_time_3">時間-3</label></td>
               <td>
                 <select name="service_time_3" id="service_time_3" class="form-control form-control--small">
+                  <option value="" @if($clinic_service->service_time_3 == '') selected="selected" @endif>----</option>
                   <option value="15" @if($clinic_service->service_time_3 == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if($clinic_service->service_time_3 == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if($clinic_service->service_time_3 == '45') selected="selected" @endif>45分</option>
@@ -147,13 +180,23 @@
             <tr>
               <td class="col-title"><label for="service_facility_4">使用する設備-4</label></td>
               <td>
-              <?php if($clinic_service->service_facility_4 == -1){
-                $sf4_chair = "checked";
-                $sf4 = '';
+              <?php 
+                if($clinic_service->service_facility_4 == -1){
+                  $sf4_chair = "checked";
+                  $sf4 = '';
+                  $sf4_chair_null = '';
+                }elseif($clinic_service->service_facility_4 == NULL){
+                  $sf4_chair = '';
+                  $sf4 = '';
+                  $sf4_chair_null = 'checked';
                 }else{
                   $sf4_chair = '';
                   $sf4 = "checked";
-                  } ?>
+                  $sf4_chair_null = '';
+                } ?>
+
+                <input id="service_facility_4_chair_null" type="radio" value="NULL" name="service_facility_4_chair" {{$sf4_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_chair" value="-1" {{$sf4_chair}}>
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_other" value="1" {{$sf4}}>
@@ -175,6 +218,7 @@
               <td class="col-title"><label for="service_time_4">時間-4</label></td>
               <td>
                 <select name="service_time_4" id="service_time_4" class="form-control form-control--small">
+                  <option value="" @if($clinic_service->service_time_4 == '') selected="selected" @endif>----</option>
                   <option value="15" @if($clinic_service->service_time_4 == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if($clinic_service->service_time_4 == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if($clinic_service->service_time_4 == '45') selected="selected" @endif>45分</option>
@@ -192,13 +236,23 @@
             <tr>
               <td class="col-title"><label for="service_facility_5">使用する設備-5</label></td>
               <td>
-              <?php if($clinic_service->service_facility_5 == -1){
-                $sf5_chair = "checked";
-                $sf5 = '';
+              <?php 
+                if($clinic_service->service_facility_5 == -1){
+                  $sf5_chair = "checked";
+                  $sf5 = '';
+                  $sf5_chair_null = '';
+                }elseif($clinic_service->service_facility_5 == NULL){
+                  $sf5_chair = '';
+                  $sf5 = '';
+                  $sf5_chair_null = 'checked';
                 }else{
                   $sf5_chair = '';
                   $sf5 = "checked";
-                  } ?>
+                  $sf5_chair_null = '';
+                } ?>
+
+                <input id="service_facility_5_chair_null" type="radio" value="NULL" name="service_facility_5_chair" {{$sf5_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_chair" value="-1" {{$sf5_chair}}>
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_other" value="1" {{$sf5}}>
@@ -220,6 +274,7 @@
               <td class="col-title"><label for="service_time_5">時間-5</label></td>
             <td>
             <select name="service_time_5" id="service_time_5" class="form-control form-control--small">
+              <option value="" @if($clinic_service->service_time_5 == '') selected="selected" @endif>----</option>
               <option value="15" @if($clinic_service->service_time_5 == '15') selected="selected" @endif>15分</option>
               <option value="30" @if($clinic_service->service_time_5 == '30') selected="selected" @endif>30分</option>
               <option value="45" @if($clinic_service->service_time_5 == '45') selected="selected" @endif>45分</option>
@@ -288,5 +343,10 @@
     $('.sf5').click(function(event) {
       $("#service_facility_5_other").prop("checked", true); 
     });
+
+    $('#service_facility_1_chair_null').click(function(event) {
+      $('#service_time_1 option:eq('')').prop('selected', true);
+    });
+
   </script>
 @endsection

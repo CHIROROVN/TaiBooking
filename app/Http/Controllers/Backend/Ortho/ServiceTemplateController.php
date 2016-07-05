@@ -213,8 +213,6 @@ class ServiceTemplateController extends BackendController
     {
         $clsServiceTemp         = new ServiceTemplateModel();
         $dataDelete             = array(
-            'service_id'        => null,
-
             'last_kind'         => DELETE,
             'last_ipadrs'       => CLIENT_IP_ADRS,
             'last_user'         => Auth::user()->id,

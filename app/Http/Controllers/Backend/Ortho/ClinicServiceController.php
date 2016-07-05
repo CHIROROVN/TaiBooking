@@ -32,9 +32,17 @@ class ClinicServiceController extends BackendController
         $clsClinicService               = new ClinicServiceModel();
         $clsClinic                      = new ClinicModel();
         $clsFacility                    = new FacilityModel();
-        $data['clinic_services']        = $clsClinicService->getAll();
+        $clsService                     = new ServiceModel();
+        $clinic_services                = $clsClinicService->getAll($clinic_id);
         $data['clinic']                 = $clsClinic->get_by_id($clinic_id);
         $data['facilities']             = $clsFacility->get_list($clinic_id);
+        $data['services']               = $clsService->get_all();
+
+        $arr_tmp = array();
+        foreach ( $clinic_services as $clinic_service ) {
+            $arr_tmp['service_' . $clinic_service->service_id] = $clinic_service;
+        }
+        $data['clinic_services'] = $arr_tmp;
 
         return view('backend.ortho.clinics.services.index', $data);
     }

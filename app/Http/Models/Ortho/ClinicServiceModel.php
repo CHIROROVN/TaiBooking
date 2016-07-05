@@ -39,14 +39,32 @@ class ClinicServiceModel
     }
 
 
-    public function getAll()
+    // public function getAll($clinic_id = null)
+    // {
+    //     $db = DB::table('m_service')
+    //                 ->leftJoin('t_clinic_service as t1', 'm_service.service_id', '=', 't1.service_id')
+    //                 ->select('m_service.*', 't1.clinic_id', 't1.clinic_service_id', 't1.service_facility_1', 't1.service_time_1', 't1.service_facility_2', 't1.service_time_2', 't1.service_facility_3', 't1.service_time_3', 't1.service_facility_4', 't1.service_time_4', 't1.service_facility_5', 't1.service_time_5')
+    //                 ->where('m_service.last_kind', '<>', DELETE);
+
+    //     if ( !empty($clinic_id) ) {
+    //         $db = $db->where('t1.clinic_id', $clinic_id);
+    //     }
+
+    //     $db = $db->orderBy('m_service.service_name', 'asc')->get();
+
+    //     return $db;
+    // }
+
+
+    public function getAll($clinic_id = null)
     {
-        $db = DB::table('m_service')
-                    ->leftJoin('t_clinic_service as t1', 'm_service.service_id', '=', 't1.service_id')
-                    ->select('m_service.*', 't1.clinic_service_id', 't1.service_facility_1', 't1.service_time_1', 't1.service_facility_2', 't1.service_time_2', 't1.service_facility_3', 't1.service_time_3', 't1.service_facility_4', 't1.service_time_4', 't1.service_facility_5', 't1.service_time_5')
-                    ->where('m_service.last_kind', '<>', DELETE)
-                    ->orderBy('m_service.service_name', 'asc')
-                    ->get();
+        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        if ( !empty($clinic_id) ) {
+            $db = $db->where('clinic_id', $clinic_id);
+        }
+
+        $db = $db->orderBy('clinic_service_id', 'asc')->get();
 
         return $db;
     }

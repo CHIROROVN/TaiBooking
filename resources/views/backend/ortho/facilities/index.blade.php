@@ -1,8 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-
-	<!-- content clinic facility list -->
+  <!-- content clinic facility list -->
     <section id="page">
       <div class="container content-page">
         <h3>ユーザー管理　＞　登録済みの一覧</h3>
@@ -23,7 +22,6 @@
           </div>
         @endif
       </div>
-
         <div class="row">
             <div class="col-md-12 text-right">
               <input type="submit" name="button" value="設備の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.facilities.regist',$clinic_id)}}'">
@@ -37,31 +35,31 @@
               <td colspan="4" align="center" class="col-title col-action">表示順序</td>
             </tr>
             <?php 
-	            $i = 0;
-	            $max = count($facilities);
-	          ?>
+              $i = 0;
+              $max = count($facilities);
+            ?>
             @if(!count($facilities))
-            	<tr><td colspan="3" style="text-align: center;">該当するデータがありません。</td></tr>
+              <tr><td colspan="3" style="text-align: center;">該当するデータがありません。</td></tr>
             @else
-    			@foreach($facilities as $facility)
-    			<?php $i++; ?>
-	            	<tr>
-		              <td>{{$facility->facility_name}}</td>
-		              <td align="center"><a href="{{route('ortho.facilities.edit', [$clinic_id, $facility->facility_id])}}" class="btn btn-sm btn-edit">編集</a></td>
-	                  <td align="center">
-	                    <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-top?id=' . $facility->facility_id) }}'" class="@if($i < 2) {{'hidden'}} @endif">TOP
-	                  </td>
-	                  <td align="center" class="">
-	                    <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-up?id=' . $facility->facility_id) }}'" class="@if($i < 2) {{'hidden'}} @endif">↑</button>
-	                  </td>
-	                  <td align="center">
-	                    <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-down?id=' . $facility->facility_id) }}'" class="@if($i == $max) {{'hidden'}} @endif">↓</button>
-	                  </td>
-	                  <td align="center" class="">
-	                    <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-last?id=' . $facility->facility_id) }}'" class="@if($i == $max) {{'hidden'}} @endif">LAST</button>
-	                  </td>
-		            </tr>
-		        @endforeach
+          @foreach($facilities as $facility)
+          <?php $i++; ?>
+                <tr>
+                  <td>{{$facility->facility_name}}</td>
+                  <td align="center"><a href="{{route('ortho.facilities.edit', [$clinic_id, $facility->facility_id])}}" class="btn btn-sm btn-edit">編集</a></td>
+                    <td align="center">
+                      <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-top?id=' . $facility->facility_id) }}'" class="@if($i < 2) {{'hidden'}} @endif">TOP
+                    </td>
+                    <td align="center" class="">
+                      <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-up?id=' . $facility->facility_id) }}'" class="@if($i < 2) {{'hidden'}} @endif">↑</button>
+                    </td>
+                    <td align="center">
+                      <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-down?id=' . $facility->facility_id) }}'" class="@if($i == $max) {{'hidden'}} @endif">↓</button>
+                    </td>
+                    <td align="center" class="">
+                      <button onclick="location.href='{{ url('ortho/clinics/'.$clinic_id.'/facility/orderby-last?id=' . $facility->facility_id) }}'" class="@if($i == $max) {{'hidden'}} @endif">LAST</button>
+                    </td>
+                </tr>
+            @endforeach
             @endif
           </tbody>
         </table>

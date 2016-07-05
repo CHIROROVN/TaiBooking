@@ -65,4 +65,11 @@ class Treatment1Model
         $results = DB::table($this->table)->max('treatment_sort_no');
         return $results;
     }
+
+    public function get_list_treatment(){
+        return DB::table($this->table)
+                                    ->where('last_kind', '<>', DELETE)
+                                    ->orderBy('treatment_id', 'asc')
+                                    ->lists('treatment_name', 'treatment_id');
+    }
 }

@@ -87,4 +87,11 @@ class FacilityModel
                                 ->lists('facility_name', 'facility_id');
         }
     }
+
+    public function list_facility_all(){
+        return DB::table($this->table)
+                                ->where('last_kind', '<>', DELETE)
+                                ->orderBy('facility_id', 'asc')
+                                ->lists('facility_name', 'facility_id');
+    }
 }

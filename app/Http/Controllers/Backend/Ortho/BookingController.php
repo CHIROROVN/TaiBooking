@@ -237,12 +237,18 @@ class BookingController extends BackendController
         }
     }
 
-
     public function bookingResultList()
     {
-        return view('backend.ortho.bookings.booking_result_list');
+        $clsBooking                 = new BookingModel();
+        $data['bookings']           = $clsBooking->get_booking_list();
+        $clsFacility                = new FacilityModel();
+        $data['facilities']         = $clsFacility->list_facility_all();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        return view('backend.ortho.bookings.booking_result_list', $data);
     }
-
 
     /**
      * List1 list
@@ -252,7 +258,6 @@ class BookingController extends BackendController
         $data['list1']          = $clsBooking->get_list1_list();
         $clsService             = new ServiceModel();
         $data['sercices']       = $clsService->get_list();
-        //echo "<pre>"; print_r($data['list1']);die;
         return view('backend.ortho.bookings.list1_list', $data);
     }
 }

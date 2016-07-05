@@ -5,9 +5,9 @@
     <section id="page">
       <div class="container">
         <div class="row content-page">
-          <h3>医院情報管理　＞　たい矯正歯科　＞　業務自動枠の一覧　＞　リンガルrem　＞　使用設備と時間の新規登録</h3>
+          <h3>医院情報管理　＞　{{ $clinic->clinic_name }}　＞　業務自動枠の一覧　＞　{{ $service->service_name }}　＞　使用設備と時間の新規登録</h3>
             <div class="table-responsive">
-            {!! Form::open( ['id' => 'frmClinicServiceRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.clinics.services.template_regist', $clinic_id, $service_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
+            {!! Form::open( ['id' => 'frmClinicServiceRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.clinics.services.template_edit', $clinic->clinic_id, $service->service_id, $clinic_service], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
               <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="service_facility_1">使用する設備-1</label></td>
@@ -207,7 +207,7 @@
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
-            <input type="button" onClick="location.href='{{route('ortho.facilities.index',[$clinic_id])}}'" value="登録済み自動枠の構成一覧に戻る" class="btn btn-sm btn-page">
+            <input type="button" onClick="location.href='{{route('ortho.facilities.index', [ $clinic->clinic_id ])}}'" value="登録済み自動枠の構成一覧に戻る" class="btn btn-sm btn-page">
           </div>
         </div>
         {!! Form::close() !!}

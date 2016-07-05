@@ -4,10 +4,10 @@
 	<!-- content clinic booking template list -->
     <section id="page">
       <div class="container content-page">
-        <h3>医院情報管理　＞　たい矯正歯科　＞　予約雛形の一覧</h3>
+        <h3>医院情報管理　＞　{{ $clinic->clinic_name }}　＞　予約雛形の一覧</h3>
         <div class="row">
           <div class="col-md-12 text-right">
-            <input onclick="location.href='clinic_booking-template_regist.html'" value="雛形の新規作成" type="button" class="btn btn-sm btn-page">
+            <input onclick="location.href='{{ route('ortho.clinics.booking.templates.regist', [ $clinic->clinic_id ]) }}'" value="雛形の新規作成" type="button" class="btn btn-sm btn-page">
           </div>
         </div>
         <table class="table table-bordered table-striped treatment2-list">

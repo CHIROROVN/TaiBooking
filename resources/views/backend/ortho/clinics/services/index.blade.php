@@ -1,4 +1,5 @@
 @extends('backend.ortho.ortho')
+
 @section('content')
      <!-- Content clinic service list -->
     <section id="page">
@@ -90,8 +91,14 @@
                   @endif
                 </td>
                 <td align="center" text-center >
-                  <input type="button" onclick="location.href='{{route('ortho.clinics.services.template_edit', [$clinic->clinic_id, $cs->service_id, $cs->clinic_service_id])}}'" value="編集" class="btn btn-xs btn-page"/>
-                    <!-- <input type="button" onclick="location.href='{{route('ortho.clinics.services.template_regist', [$clinic->clinic_id, $cs->service_id])}}'" value="加算" class="btn btn-xs btn-page"/> -->
+                  <?php
+                    if ( $cs->clinic_service_id ) {
+                      $clinic_service_id = $cs->clinic_service_id;
+                    } else {
+                      $clinic_service_id = 0;
+                    }
+                  ?>
+                  <input type="button" onclick="location.href='{{route('ortho.clinics.services.template_edit', [ $clinic->clinic_id, $cs->service_id, $clinic_service_id ])}}'" value="編集" class="btn btn-xs btn-page"/>
                 </td>
               </tr>
               @endforeach

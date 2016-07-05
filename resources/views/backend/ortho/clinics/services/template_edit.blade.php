@@ -7,7 +7,7 @@
 <div class="row content-page">
   <h3>医院情報管理　＞　たい矯正歯科　＞　業務自動枠の一覧　＞　リンガルrem　＞　使用設備と時間の編集</h3>
     <div class="table-responsive">
-    {!! Form::open( ['id' => 'frmClinicServiceEdit', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.clinics.services.template_edit', $clinic_id, $service_id, $clinic_service->clinic_service_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
+    {!! Form::open( ['id' => 'frmClinicServiceEdit', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.clinics.services.template_edit', $clinic->clinic_id, $service->service_id, $clinic_service->clinic_service_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
         <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="service_facility_1">使用する設備-1</label></td>
@@ -238,6 +238,8 @@
 <div class="row margin-bottom">
   <div class="col-md-12 text-center">
     <input type="submit" name="button" id="button" value="登録する" class="btn btn-sm btn-page">
+    <!-- delete -->
+    @if ( $clinic_service->clinic_service_id )
     <button type="button" class="btn btn-sm btn-page" data-toggle="modal" data-target="#myModal">削除する</button>
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
@@ -251,18 +253,19 @@
             <p>{{trans('common.modal_content_delete')}}</p>
           </div>
           <div class="modal-footer">
-            <a href="{{ route('ortho.clinics.services.template_delete', [$clinic_id, $service_id, $clinic_service->clinic_service_id]) }}" class="btn btn-sm btn-page">{{trans('common.modal_btn_delete')}}</a>
+            <a href="{{ route('ortho.clinics.services.template_delete', [ $clinic->clinic_id, $service->service_id, $clinic_service->clinic_service_id ]) }}" class="btn btn-sm btn-page">{{trans('common.modal_btn_delete')}}</a>
             <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{trans('common.modal_btn_cancel')}}</button>
           </div>
         </div>
       </div>
     </div>
     <!-- /Modal -->
+    @endif
   </div>
 </div>
 <div class="row margin-bottom">
   <div class="col-md-12 text-center">
-    <input type="button" onClick="location.href='{{route('ortho.facilities.index',[$clinic_id])}}'" value="登録済み自動枠の構成一覧に戻る" class="btn btn-sm btn-page">
+    <input type="button" onClick="location.href='{{route('ortho.facilities.index', [ $clinic->clinic_id ])}}'" value="登録済み自動枠の構成一覧に戻る" class="btn btn-sm btn-page">
   </div>
 </div>
 {!! Form::close() !!}

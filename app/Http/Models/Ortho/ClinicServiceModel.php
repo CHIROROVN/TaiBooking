@@ -23,11 +23,19 @@ class ClinicServiceModel
     public function get_all_by_sid($service_id=null)
     {
         return DB::table($this->table)
-                    ->select('service_facility_1', 'service_time_1', 'service_facility_2', 'service_time_2', 'service_facility_3', 'service_time_3', 'service_facility_4', 'service_time_4', 'service_facility_5', 'service_time_5')
+                    ->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')
+                    ->select('t_clinic_service.*', 't1.service_name')
                     ->where('t_clinic_service.last_kind', '<>', DELETE)
                     ->where('t_clinic_service.service_id', '=', $service_id)
                     ->orderBy('t_clinic_service.clinic_service_id', 'asc')
                     ->get();
+    }
+
+
+    public function get_by_id($id)
+    {
+        $results = DB::table($this->table)->where('clinic_service_id', $id)->first();
+        return $results;
     }
 
 

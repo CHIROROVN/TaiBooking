@@ -4,6 +4,8 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\Ortho\FacilityModel;
+use App\Http\Models\Ortho\ClinicModel;
+
 use Auth;
 use Form;
 use Html;
@@ -36,7 +38,11 @@ class FacilityController extends BackendController
     */
     public function getRegist($clinic_id)
     {
-        return view('backend.ortho.facilities.regist',compact('clinic_id'));
+        $clsClinic          = new ClinicModel();
+        $data               = array();
+        $data['clinic']     = $clsClinic->get_by_id($clinic_id);
+
+        return view('backend.ortho.facilities.regist', $data);
     }
 
     /**
@@ -78,9 +84,13 @@ class FacilityController extends BackendController
      */
     public function getEdit($clinic_id, $id)
     {
-        $clsFacility = new FacilityModel();
-        $data['facility']           = $clsFacility->get_by_id($id);
-        $data['clinic_id']          = $clinic_id;
+        $clsFacility        = new FacilityModel();
+        $clsClinic          = new ClinicModel();
+        $data               = array();
+        $data['facility']   = $clsFacility->get_by_id($id);
+        $data['clinic_id']  = $clinic_id;
+        $data['clinic']     = $clsClinic->get_by_id($clinic_id);
+
         return view('backend.ortho.facilities.edit', $data);
     }
 

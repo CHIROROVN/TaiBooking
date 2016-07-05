@@ -24,7 +24,7 @@ class BookingTemplateModel
         );
     }
 
-    public function get_all($clinic_id=null)
+    public function get_all($clinic_id = null)
     {
         return DB::table($this->table)
                                 ->where('last_kind', '<>', DELETE)

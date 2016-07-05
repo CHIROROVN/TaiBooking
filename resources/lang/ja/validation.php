@@ -209,4 +209,11 @@ return [
     'error_service_facility_4_required'                     => 'Please choose service_facility_4.',
     'error_service_facility_5_required'                     => 'Please choose service_facility_5.',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model BookingTemplate
+    |--------------------------------------------------------------------------
+    */
+    'error_mbt_name_required'                               => '雛形名を入力してください。',
+
 ];

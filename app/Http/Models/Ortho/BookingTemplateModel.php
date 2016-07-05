@@ -12,7 +12,6 @@ class BookingTemplateModel
     {
         return array(
             'mbt_name'        => 'required',
-            'mbt_time'        => 'required',
         );
     }
 
@@ -20,7 +19,6 @@ class BookingTemplateModel
     {
         return array(
             'mbt_name.required' => trans('validation.error_mbt_name_required'),
-            'mbt_time.required' => trans('validation.error_mbt_time_required'),
         );
     }
 

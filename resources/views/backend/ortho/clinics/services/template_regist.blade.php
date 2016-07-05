@@ -12,7 +12,8 @@
             <tr>
               <td class="col-title"><label for="service_facility_1">使用する設備-1</label></td>
               <td>
-                <input type="radio" name="service_facility_1_chair" id="service_facility_1_chair" value="-1" checked >
+                <input id="service_facility_1_chair_null" type="radio" value="NULL" name="service_facility_1_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="service_facility_1_chair" id="service_facility_1_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_other" value="1" @if(old('service_facility_1_chair') == '1') checked @endif >
                 治療以外→
@@ -33,6 +34,7 @@
               <td class="col-title"><label for="service_time_1">時間-1</label></td>
               <td>
                 <select name="service_time_1" id="service_time_1" class="form-control form-control--small">
+                  <option value="" @if(old('service_time_1') == '') selected="selected" @endif>----</option>
                   <option value="15" @if(old('service_time_1') == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if(old('service_time_1') == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if(old('service_time_1') == '45') selected="selected" @endif>45分</option>
@@ -50,7 +52,8 @@
             <tr>
               <td class="col-title"><label for="service_facility_2">使用する設備-2</label></td>
               <td>
-                <input type="radio" name="service_facility_2_chair" id="service_facility_2_chair" value="-1" checked >
+                <input id="service_facility_2_chair_null" type="radio" value="NULL" name="service_facility_2_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="service_facility_2_chair" id="service_facility_2_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_other" value="1" @if(old('service_facility_2_chair') == '1') checked @endif >
                 治療以外→
@@ -71,6 +74,7 @@
               <td class="col-title"><label for="service_time_2">時間-2</label></td>
               <td>
                 <select name="service_time_2" id="service_time_2" class="form-control form-control--small">
+                  <option value="" @if(old('service_time_2') == '') selected="selected" @endif>----</option>
                   <option value="15" @if(old('service_time_2') == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if(old('service_time_2') == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if(old('service_time_2') == '45') selected="selected" @endif>45分</option>
@@ -88,7 +92,8 @@
             <tr>
               <td class="col-title"><label for="service_facility_3">使用する設備-3</label></td>
               <td>
-                <input type="radio" name="service_facility_3_chair" id="service_facility_3_chair" value="-1" checked >
+                <input id="service_facility_3_chair_null" type="radio" value="NULL" name="service_facility_3_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="service_facility_3_chair" id="service_facility_3_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_other" value="1" @if(old('service_facility_3_chair') == '1') checked @endif >
                 治療以外→
@@ -109,6 +114,7 @@
               <td class="col-title"><label for="service_time_3">時間-3</label></td>
               <td>
                 <select name="service_time_3" id="service_time_3" class="form-control form-control--small">
+                  <option value="" @if(old('service_time_3') == '') selected="selected" @endif>----</option>
                   <option value="15" @if(old('service_time_3') == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if(old('service_time_3') == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if(old('service_time_3') == '45') selected="selected" @endif>45分</option>
@@ -126,7 +132,8 @@
             <tr>
               <td class="col-title"><label for="service_facility_4">使用する設備-4</label></td>
               <td>
-                <input type="radio" name="service_facility_4_chair" id="service_facility_4_chair" value="-1" checked >
+                <input id="service_facility_4_chair_null" type="radio" value="NULL" name="service_facility_4_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="service_facility_4_chair" id="service_facility_4_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_other" value="1" @if(old('service_facility_4_chair') == '1') checked @endif>
                 治療以外→
@@ -147,6 +154,7 @@
               <td class="col-title"><label for="service_time_4">時間-4</label></td>
               <td>
                 <select name="service_time_4" id="service_time_4" class="form-control form-control--small">
+                  <option value="" @if(old('service_time_4') == '') selected="selected" @endif>----</option>
                   <option value="15" @if(old('service_time_4') == '15') selected="selected" @endif>15分</option>
                   <option value="30" @if(old('service_time_4') == '30') selected="selected" @endif>30分</option>
                   <option value="45" @if(old('service_time_4') == '45') selected="selected" @endif>45分</option>
@@ -164,7 +172,8 @@
             <tr>
               <td class="col-title"><label for="service_facility_5">使用する設備-5</label></td>
               <td>
-                <input type="radio" name="service_facility_5_chair" id="service_facility_5_chair" value="-1" checked >
+                <input id="service_facility_5_chair_null" type="radio" value="NULL" name="service_facility_5_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="service_facility_5_chair" id="service_facility_5_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_other" value="1" @if(old('service_facility_5_chair') == '1') checked @endif >
                 治療以外→
@@ -185,6 +194,7 @@
               <td class="col-title"><label for="service_time_5">時間-5</label></td>
             <td>
             <select name="service_time_5" id="service_time_5" class="form-control form-control--small">
+              <option value="" @if(old('service_time_5') == '') selected="selected" @endif>----</option>
               <option value="15" @if(old('service_time_5') == '15') selected="selected" @endif>15分</option>
               <option value="30" @if(old('service_time_5') == '30') selected="selected" @endif>30分</option>
               <option value="45" @if(old('service_time_5') == '45') selected="selected" @endif>45分</option>
@@ -231,5 +241,27 @@
     $('.sf5').click(function(event) {
       $("#service_facility_5_other").prop("checked", true); 
     });
+
+    $('#service_facility_1_chair_null').click(function(event) {
+      $("#service_time_1 option:selected").removeAttr("selected");
+      $('#service_time_1 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_2_chair_null').click(function(event) {
+      $("#service_time_2 option:selected").removeAttr("selected");
+      $('#service_time_2 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_3_chair_null').click(function(event) {
+      $("#service_time_3 option:selected").removeAttr("selected");
+      $('#service_time_3 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_4_chair_null').click(function(event) {
+      $("#service_time_4 option:selected").removeAttr("selected");
+      $('#service_time_4 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_5_chair_null').click(function(event) {
+      $("#service_time_5 option:selected").removeAttr("selected");
+      $('#service_time_5 option[value=""]').attr('selected','selected');
+    });
+
   </script>
 @endsection

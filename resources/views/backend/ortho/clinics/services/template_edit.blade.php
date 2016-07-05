@@ -345,9 +345,25 @@
     });
 
     $('#service_facility_1_chair_null').click(function(event) {
-      $('#service_time_1 option:eq('')').prop('selected', true);
+      $("#service_time_1 option:selected").removeAttr("selected");
+      $('#service_time_1 option[value=""]').attr('selected','selected');
     });
-    
+    $('#service_facility_2_chair_null').click(function(event) {
+      $("#service_time_2 option:selected").removeAttr("selected");
+      $('#service_time_2 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_3_chair_null').click(function(event) {
+      $("#service_time_3 option:selected").removeAttr("selected");
+      $('#service_time_3 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_4_chair_null').click(function(event) {
+      $("#service_time_4 option:selected").removeAttr("selected");
+      $('#service_time_4 option[value=""]').attr('selected','selected');
+    });
+    $('#service_facility_5_chair_null').click(function(event) {
+      $("#service_time_5 option:selected").removeAttr("selected");
+      $('#service_time_5 option[value=""]').attr('selected','selected');
+    });
 
   </script>
 @endsection

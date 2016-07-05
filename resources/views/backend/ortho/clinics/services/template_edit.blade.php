@@ -347,6 +347,7 @@
     $('#service_facility_1_chair_null').click(function(event) {
       $('#service_time_1 option:eq('')').prop('selected', true);
     });
+    
 
   </script>
 @endsection

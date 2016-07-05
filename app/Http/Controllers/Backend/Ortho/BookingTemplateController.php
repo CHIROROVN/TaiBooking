@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\BackendController;
 use App\Http\Models\Ortho\BookingTemplateModel;
+use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\FacilityModel;
+use App\Http\Models\Ortho\BookingModel;
 //use App\Http\Models\Ortho\BookingTemplateModel;
+
 use Request;
 use Auth;
 use Form;
@@ -11,6 +15,7 @@ use Input;
 use Validator;
 use URL;
 use Session;
+use Config;
 
 class BookingTemplateController extends BackendController
 {
@@ -25,9 +30,11 @@ class BookingTemplateController extends BackendController
      */
     public function index($clinic_id)
     {
-        $clsMbt  = new BookingTemplateModel();
-        $data['mbts']      = $clsMbt->get_all($clinic_id);
-        $data['clinic_id']          = $clinic_id;
+        $clsMbt                     = new BookingTemplateModel();
+        $clsClinic                  = new ClinicModel();
+        $data['mbts']               = $clsMbt->get_all($clinic_id);
+        $data['clinic']             = $clsClinic->get_by_id($clinic_id);
+
         return view('backend.ortho.clinics.booking.templates.index', $data);
     }
 
@@ -36,7 +43,26 @@ class BookingTemplateController extends BackendController
     */
     public function getRegist($clinic_id)
     {
-        $data['clinic_id']              = $clinic_id;
+        $clsBooking             = new BookingModel();
+        $clsFacility            = new FacilityModel();
+        $clsClinic              = new ClinicModel();
+        $data['clinic']         = $clsClinic->get_by_id($clinic_id);
+        $data['facilitys']      = $clsFacility->getAll();
+        $data['times']          = Config::get('constants.TIME');
+
+        $bookings               = $clsBooking->get_all();
+        $arr_bookings           = array();
+        foreach ( $data['times'] as $time ) {
+            foreach ( $data['facilitys'] as $fac ) {
+                foreach ( $bookings as $booking ) {
+                    if ( $booking->facility_id == $fac->facility_id ) {
+                        $arr_bookings[$fac->facility_id][$time] = $booking;
+                    }
+                }
+            }
+        }
+        $data['arr_bookings'] = $arr_bookings;
+
         return view('backend.ortho.clinics.booking.templates.regist',$data);
     }
 
@@ -76,65 +102,65 @@ class BookingTemplateController extends BackendController
     /**
      * 
      */
-    public function getEdit($clinic_id, $id)
-    {
-        $clsMbt                      = new BookingTemplateModel();
-        $data['clinic_id']           = $clinic_id;
-        $data['mbt_id']              = $id;
-        return view('backend.ortho.clinics.booking.templates.edit', $data);
-    }
+    // public function getEdit($clinic_id, $id)
+    // {
+    //     $clsMbt                      = new BookingTemplateModel();
+    //     $data['clinic_id']           = $clinic_id;
+    //     $data['mbt_id']              = $id;
+    //     return view('backend.ortho.clinics.booking.templates.edit', $data);
+    // }
 
     /**
      * 
      */
-    public function postEdit($clinic_id, $id)
-    {
-        $clsMbt           = new BookingTemplateModel();
+    // public function postEdit($clinic_id, $id)
+    // {
+    //     $clsMbt           = new BookingTemplateModel();
        
-        $validator                = Validator::make(Input::all(), $rules, $clsMbt->Messages());
-        if ($validator->fails()) {
-            return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id])->withErrors($validator)->withInput();
-        }
+    //     $validator                = Validator::make(Input::all(), $rules, $clsMbt->Messages());
+    //     if ($validator->fails()) {
+    //         return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id])->withErrors($validator)->withInput();
+    //     }
 
-        $dataUpdate = array(
-            'clinic_id'                     => $clinic_id,
-            'mbt_name'                      => Input::get('mbt_name'),
-            'mbt_sort_no'                   => Input::get('mbt_sort_no'),
-            'last_kind'                     => INSERT,
-            'last_ipadrs'                   => CLIENT_IP_ADRS,
-            'last_date'                     => date('y-m-d H:i:s'),
-            'last_user'                     => Auth::user()->id
-        );
-        if ( $clsMbt->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.clinics.booking.templates.index',$clinic_id);
-        } else {
-            Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id]);
-        }
-    }
+    //     $dataUpdate = array(
+    //         'clinic_id'                     => $clinic_id,
+    //         'mbt_name'                      => Input::get('mbt_name'),
+    //         'mbt_sort_no'                   => Input::get('mbt_sort_no'),
+    //         'last_kind'                     => INSERT,
+    //         'last_ipadrs'                   => CLIENT_IP_ADRS,
+    //         'last_date'                     => date('y-m-d H:i:s'),
+    //         'last_user'                     => Auth::user()->id
+    //     );
+    //     if ( $clsMbt->update($id, $dataUpdate) ) {
+    //         Session::flash('success', trans('common.message_edit_success'));
+    //         return redirect()->route('ortho.clinics.booking.templates.index',$clinic_id);
+    //     } else {
+    //         Session::flash('danger', trans('common.message_edit_danger'));
+    //         return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id]);
+    //     }
+    // }
 
     /**
      * 
      */
-    public function delete($clinic_id, $id)
-    {
-        $clsMbt = new BookingTemplateModel();
-        $dataDelete = array(
-            'last_kind'         => DELETE,
-            'last_ipadrs'       => CLIENT_IP_ADRS,
-            'last_user'         => Auth::user()->id,
-            'last_date'         => date('y-m-d H:i:s'),
-        );
+    // public function delete($clinic_id, $id)
+    // {
+    //     $clsMbt = new BookingTemplateModel();
+    //     $dataDelete = array(
+    //         'last_kind'         => DELETE,
+    //         'last_ipadrs'       => CLIENT_IP_ADRS,
+    //         'last_user'         => Auth::user()->id,
+    //         'last_date'         => date('y-m-d H:i:s'),
+    //     );
 
-        if ( $clsMbt->update($id, $dataDelete) ) {
-            Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.clinics.booking.templates.index',$clinic_id);
-        } else {
-            Session::flash('danger', trans('common.message_delete_danger'));
-            return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id]);
-        }
-    }
+    //     if ( $clsMbt->update($id, $dataDelete) ) {
+    //         Session::flash('success', trans('common.message_delete_success'));
+    //         return redirect()->route('ortho.clinics.booking.templates.index',$clinic_id);
+    //     } else {
+    //         Session::flash('danger', trans('common.message_delete_danger'));
+    //         return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id]);
+    //     }
+    // }
 
     /**
      * 

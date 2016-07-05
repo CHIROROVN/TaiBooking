@@ -164,26 +164,87 @@ class ServiceTemplateController extends BackendController
             return redirect()->route('ortho.clinics.services.template_edit', [$clinic_id, $service_id, $id])->withErrors($validator)->withInput();
         }
 
+
+
+
+        $service_time_1 = Input::get('service_time_1');
+        $service_facility_1 = Input::get('service_facility_1_chair');
+        if ( Input::get('service_facility_1_chair') == -1 ) {
+            $service_facility_1 = -1;
+        } elseif ( empty(Input::get('service_facility_1_chair')) ) {
+            $service_facility_1 = null;
+            $service_time_1 = null;
+        } elseif ( Input::get('service_facility_1_chair') == 1 ) {
+            $service_facility_1 = Input::get('service_facility_1');
+        }
+
+        $service_time_2 = Input::get('service_time_2');
+        $service_facility_2 = Input::get('service_facility_2_chair');
+        if ( Input::get('service_facility_2_chair') == -1 ) {
+            $service_facility_2 = -1;
+        } elseif ( empty(Input::get('service_facility_2_chair')) ) {
+            $service_facility_2 = null;
+            $service_time_2 = null;
+        } else {
+            $service_facility_2 = Input::get('service_facility_2');
+        }
+
+        $service_time_3 = Input::get('service_time_3');
+        $service_facility_3 = Input::get('service_facility_3_chair');
+        if ( Input::get('service_facility_3_chair') == -1 ) {
+            $service_facility_3 = -1;
+        } elseif ( empty(Input::get('service_facility_3_chair')) ) {
+            $service_facility_3 = null;
+            $service_time_3 = null;
+        } else {
+            $service_facility_3 = Input::get('service_facility_3');
+        }
+        
+        $service_time_4 = Input::get('service_time_4');
+        $service_facility_4 = Input::get('service_facility_4_chair');
+        if ( Input::get('service_facility_4_chair') == -1 ) {
+            $service_facility_4 = -1;
+        } elseif ( empty(Input::get('service_facility_4_chair')) ) {
+            $service_facility_4 = null;
+            $service_time_4 = null;
+        } else {
+            $service_facility_4 = Input::get('service_facility_4');
+        }
+        
+        $service_time_5 = Input::get('service_time_5');
+        $service_facility_5 = Input::get('service_facility_5_chair');
+        if ( Input::get('service_facility_5_chair') == -1 ) {
+            $service_facility_5 = -1;
+        } elseif ( empty(Input::get('service_facility_5_chair')) ) {
+            $service_facility_5 = null;
+            $service_time_5 = null;
+        } else {
+            $service_facility_5 = Input::get('service_facility_5');
+        }
+
         $dataUpdate = array(
             'clinic_id'                     => $clinic_id,
             'service_id'                    => $service_id,
 
-            'service_facility_1'            => (Input::get('service_facility_1_chair') == -1) ? '-1' : Input::get('service_facility_1'),
-            'service_time_1'                => Input::get('service_time_1'),
-            'service_facility_2'            => (Input::get('service_facility_2_chair') == -1) ? '-1' : Input::get('service_facility_2'),
-            'service_time_2'                => Input::get('service_time_2'),
-            'service_facility_3'            => (Input::get('service_facility_3_chair') == -1) ? '-1' : Input::get('service_facility_3'),
-            'service_time_3'                => Input::get('service_time_3'),
-            'service_facility_4'            => (Input::get('service_facility_4_chair') == -1) ? '-1' : Input::get('service_facility_4'),
-            'service_time_4'                => Input::get('service_time_4'),
-            'service_facility_5'            => (Input::get('service_facility_5_chair') == -1) ? '-1' : Input::get('service_facility_5'),
+            'service_facility_1'            => $service_facility_1,
+            'service_time_1'                => $service_time_1,
+            'service_facility_2'            => $service_facility_2,
+            'service_time_2'                => $service_time_2,
+            'service_facility_3'            => $service_facility_3,
+            'service_time_3'                => $service_time_3,
+            'service_facility_4'            => $service_facility_4,
+            'service_time_4'                => $service_time_4,
+            'service_facility_5'            => $service_facility_5,
+            'service_time_5'                => $service_time_5,
 
-            'service_time_5'                => Input::get('service_time_5'),
             'last_kind'                     => UPDATE,
             'last_ipadrs'                   => CLIENT_IP_ADRS,
             'last_date'                     => date('y-m-d H:i:s'),
             'last_user'                     => Auth::user()->id
         );
+// echo '<pre>';
+// print_r($dataUpdate);
+// echo '</pre>';die;
 
         if ( $id == 0 ) {
             // insert

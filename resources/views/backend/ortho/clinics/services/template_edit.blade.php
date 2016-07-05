@@ -27,7 +27,7 @@
                   $sf1_chair_null = '';
                 } ?>
 
-                <input id="service_facility_1_chair_null" type="radio" value="NULL" name="service_facility_1_chair" {{$sf1_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_1_chair_null" type="radio" value="" name="service_facility_1_chair" {{$sf1_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_chair" value="-1" {{$sf1_chair}}>
                 治療（チェア）　　　
@@ -83,7 +83,7 @@
                   $sf2_chair_null = '';
                 } ?>
 
-                <input id="service_facility_2_chair_null" type="radio" value="NULL" name="service_facility_2_chair" {{$sf2_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_2_chair_null" type="radio" value="" name="service_facility_2_chair" {{$sf2_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_chair" value="-1" {{$sf2_chair}}>
                 治療（チェア）　　　
@@ -139,7 +139,7 @@
                   $sf3_chair_null = '';
                 } ?>
 
-                <input id="service_facility_3_chair_null" type="radio" value="NULL" name="service_facility_3_chair" {{$sf3_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_3_chair_null" type="radio" value="" name="service_facility_3_chair" {{$sf3_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_chair" value="-1" {{$sf3_chair}}>
                 治療（チェア）　　　
@@ -195,7 +195,7 @@
                   $sf4_chair_null = '';
                 } ?>
 
-                <input id="service_facility_4_chair_null" type="radio" value="NULL" name="service_facility_4_chair" {{$sf4_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_4_chair_null" type="radio" value="" name="service_facility_4_chair" {{$sf4_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_chair" value="-1" {{$sf4_chair}}>
                 治療（チェア）　　　
@@ -251,7 +251,7 @@
                   $sf5_chair_null = '';
                 } ?>
 
-                <input id="service_facility_5_chair_null" type="radio" value="NULL" name="service_facility_5_chair" {{$sf5_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_5_chair_null" type="radio" value="" name="service_facility_5_chair" {{$sf5_chair_null}}>使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_chair" value="-1" {{$sf5_chair}}>
                 治療（チェア）　　　

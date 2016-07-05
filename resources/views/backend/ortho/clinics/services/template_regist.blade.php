@@ -12,7 +12,7 @@
             <tr>
               <td class="col-title"><label for="service_facility_1">使用する設備-1</label></td>
               <td>
-                <input id="service_facility_1_chair_null" type="radio" value="NULL" name="service_facility_1_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_1_chair_null" type="radio" value="" name="service_facility_1_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_1_chair" id="service_facility_1_other" value="1" @if(old('service_facility_1_chair') == '1') checked @endif >
@@ -52,7 +52,7 @@
             <tr>
               <td class="col-title"><label for="service_facility_2">使用する設備-2</label></td>
               <td>
-                <input id="service_facility_2_chair_null" type="radio" value="NULL" name="service_facility_2_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_2_chair_null" type="radio" value="" name="service_facility_2_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_2_chair" id="service_facility_2_other" value="1" @if(old('service_facility_2_chair') == '1') checked @endif >
@@ -92,7 +92,7 @@
             <tr>
               <td class="col-title"><label for="service_facility_3">使用する設備-3</label></td>
               <td>
-                <input id="service_facility_3_chair_null" type="radio" value="NULL" name="service_facility_3_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_3_chair_null" type="radio" value="" name="service_facility_3_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_3_chair" id="service_facility_3_other" value="1" @if(old('service_facility_3_chair') == '1') checked @endif >
@@ -132,7 +132,7 @@
             <tr>
               <td class="col-title"><label for="service_facility_4">使用する設備-4</label></td>
               <td>
-                <input id="service_facility_4_chair_null" type="radio" value="NULL" name="service_facility_4_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_4_chair_null" type="radio" value="" name="service_facility_4_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_4_chair" id="service_facility_4_other" value="1" @if(old('service_facility_4_chair') == '1') checked @endif>
@@ -172,7 +172,7 @@
             <tr>
               <td class="col-title"><label for="service_facility_5">使用する設備-5</label></td>
               <td>
-                <input id="service_facility_5_chair_null" type="radio" value="NULL" name="service_facility_5_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="service_facility_5_chair_null" type="radio" value="" name="service_facility_5_chair" checked="">使用しない &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_chair" value="-1" >
                 治療（チェア）　　　
                 <input type="radio" name="service_facility_5_chair" id="service_facility_5_other" value="1" @if(old('service_facility_5_chair') == '1') checked @endif >

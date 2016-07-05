@@ -5,9 +5,9 @@
       <section id="page">
         <div class="container">
           <div class="row content-page">
-            <h3>医院情報管理　＞　たい矯正歯科　＞　登録済み設備の編集</h3>
+            <h3>医院情報管理　＞　{{ $clinic->clinic_name }}　＞　登録済み設備の編集</h3>
               <div class="table-responsive">
-              {!! Form::open( ['id' => 'frmFacilityEdit', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.facilities.edit', $clinic_id, $facility->facility_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
+              {!! Form::open( ['id' => 'frmFacilityEdit', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.facilities.edit', $clinic->clinic_id, $facility->facility_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
                 <table class="table table-bordered">
                   <tr>
                     <td class="col-title"><label for="facility_name">設備名 <span class="note_required">※</span></label></td>
@@ -51,7 +51,7 @@
                       <p>{{trans('common.modal_content_delete')}}</p>
                     </div>
                     <div class="modal-footer">
-                      <a href="{{ route('ortho.facilities.delete', [$clinic_id, $facility->facility_id]) }}" class="btn btn-sm btn-page">{{trans('common.modal_btn_delete')}}</a>
+                      <a href="{{ route('ortho.facilities.delete', [$clinic->clinic_id, $facility->facility_id]) }}" class="btn btn-sm btn-page">{{trans('common.modal_btn_delete')}}</a>
                       <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{trans('common.modal_btn_cancel')}}</button>
                     </div>
                   </div>
@@ -62,7 +62,7 @@
           </div>
           <div class="row margin-bottom">
             <div class="col-md-12 text-center">
-              <input type="button" onClick="location.href='{{route('ortho.facilities.index',[$clinic_id])}}'" value="登録済み設備一覧に戻る" class="btn btn-sm btn-page mar-right">
+              <input type="button" onClick="location.href='{{route('ortho.facilities.index',[$clinic->clinic_id])}}'" value="登録済み設備一覧に戻る" class="btn btn-sm btn-page mar-right">
             </div>
           </div>
           {!! Form::close() !!}

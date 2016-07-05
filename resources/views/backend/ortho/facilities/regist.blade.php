@@ -5,8 +5,8 @@
       <section id="page">
         <div class="container">
           <div class="row content-page">
-            <h3>医院情報管理　＞　たい矯正歯科　＞　設備の新規登録</h3>
-          {!! Form::open(array('route' => ['ortho.facilities.regist', $clinic_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+            <h3>医院情報管理　＞　{{ $clinic->clinic_name }}　＞　設備の新規登録</h3>
+          {!! Form::open(array('route' => ['ortho.facilities.regist', $clinic->clinic_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <tr>
@@ -41,7 +41,7 @@
           </div>
           <div class="row margin-bottom">
             <div class="col-md-12 text-center">
-              <input type="button" onClick="location.href='{{route('ortho.facilities.index',[$clinic_id])}}'" value="登録済み設備一覧に戻る" class="btn btn-sm btn-page mar-right">
+              <input type="button" onClick="location.href='{{route('ortho.facilities.index',[$clinic->clinic_id])}}'" value="登録済み設備一覧に戻る" class="btn btn-sm btn-page mar-right">
             </div>
           </div>
           {!! Form::close() !!}

@@ -14,7 +14,7 @@ use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
-
+use App\Http\Models\Ortho\PatientModel;
 use Form;
 use Html;
 use Input;
@@ -126,7 +126,6 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_detail', $data);
     }
 
-
     public function getEdit($id)
     {
         $data                       = array();
@@ -142,7 +141,6 @@ class BookingController extends BackendController
 
         return view('backend.ortho.bookings.booking_edit', $data);
     }
-
 
     public function postEdit($id)
     {
@@ -176,7 +174,19 @@ class BookingController extends BackendController
 
     public function getRegist()
     {
-        return view('backend.ortho.bookings.booking_regist');
+        $booking_id             = Input::get('booking_id');
+        $clsBooking             = new BookingModel();
+        $clsClinicService       = new ClinicServiceModel();
+
+        // $clsTreatment1          = new Treatment1Model();
+        $data['booking']        = $clsBooking->get_by_id($booking_id);
+        $data['booking_id']     = $booking_id;
+        $patient_id             = Input::get('p_id');
+        $data['patient_id']     = Input::get('patient_id');
+        $clsPatient             = new PatientModel();
+        $data['patient']        = $clsPatient->get_patient_by_id($patient_id);
+
+        return view('backend.ortho.bookings.booking_regist', $data);
     }
 
 

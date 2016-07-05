@@ -5,6 +5,13 @@
 		return date_format($dates,"Y/m/d");
 	}
 
+	function formatDateJp($date=null){
+		$year = date('Y', strtotime($date));
+		$month = date('m', strtotime($date));
+		$day = date('d', strtotime($date));
+		return $year.'年'.$month.'月'.$day.'日';
+	}
+
 	function convert2Digit($num){
 		return sprintf("%02d", $num);
 	}

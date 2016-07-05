@@ -254,8 +254,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-detail/{id}', ['as' => 'ortho.bookings.booking.detail', 'uses' => 'BookingController@bookingDetail']);
 	Route::get('bookings/booking-edit/{id}', ['as' => 'ortho.bookings.booking.edit', 'uses' => 'BookingController@getEdit']);
 	Route::post('bookings/booking-edit/{id}', ['as' => 'ortho.bookings.booking.edit', 'uses' => 'BookingController@postEdit']);
-	Route::get('bookings/booking-regist', ['as' => 'ortho.bookings.booking.regist', 'uses' => 'BookingController@getRegist']);
-	Route::post('bookings/booking-regist', ['as' => 'ortho.bookings.booking.regist', 'uses' => 'BookingController@postRegist']);
+	Route::get('bookings/booking-regist/{booking_id?}/{patient_id?}', ['as' => 'ortho.bookings.booking.regist', 'uses' => 'BookingController@getRegist']);
+	Route::post('bookings/booking-regist/{booking_id?}/{patient_id?}', ['as' => 'ortho.bookings.booking.regist', 'uses' => 'BookingController@postRegist']);
 	Route::get('bookings/booking-1st-regist', ['as' => 'ortho.bookings.booking.1st.regist', 'uses' => 'BookingController@get1stRegist']);
 	Route::post('bookings/booking-1st-regist', ['as' => 'ortho.bookings.booking.1st.regist', 'uses' => 'BookingController@post1stRegist']);
 	Route::get('bookings/booking-change-date/{id}', ['as' => 'ortho.bookings.booking.change.date', 'uses' => 'BookingController@getChangeDate']);
@@ -263,6 +263,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@getConfirm']);
 	Route::post('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@postConfirm']);
 	Route::get('bookings/booking-result-list', ['as' => 'ortho.bookings.booking.result.list', 'uses' => 'BookingController@bookingResultList']);
+
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
 	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);
 	// Route::post('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@postSet']);

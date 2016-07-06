@@ -47,6 +47,13 @@
                 @elseif($booking->service_1_kind == 2)
                   {{@$treatment1s[$booking->service_1]}}
                 @endif
+                、
+                @if($booking->service_2_kind == 1)
+                  {{@$services[$booking->service_2]}}
+                @elseif($booking->service_2_kind == 2)
+                  {{@$treatment1s[$booking->service_2]}}
+                @endif
+
               </td>
               <td align="center">
                 <input onclick="location.href='booking-daily.html'" value="予約簿の表示" type="button" class="btn btn-xs btn-page"></td>

@@ -155,7 +155,6 @@ class BookingController extends BackendController
         $data['inspections']    = $clsInspection->get_list();
         $clsInsurance           = new InsuranceModel();
         $data['insurances']    = $clsInsurance->get_list();
-
         return view('backend.ortho.bookings.booking_edit', $data);
     }
 
@@ -163,16 +162,26 @@ class BookingController extends BackendController
     {
         $clsBooking                 = new BookingModel();
 
-        $dataInput = array(
-            'booking_status'        => Input::get('booking_status'),
-            'booking_recall_ym'     => Input::get('booking_recall_ym'),
-            'booking_memo'          => Input::get('booking_memo'),
+        echo "<pre>";print_r(Input::all());die;
 
-            'last_date'             => date('y-m-d H:i:s'),
-            'last_kind'             => INSERT,
-            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
-            'last_user'             => Auth::user()->id
-        );
+        $dataInput = array(
+                'facility_id'               => Input::get('facility_id'),
+                'doctor_id'                 => Input::get('doctor_id'),
+                'hygienist_id'              => Input::get('hygienist_id'),
+                'equipment_id'              => Input::get('equipment_id'),
+                'service_1'                 => Input::get('service_1'),
+                'service_2'                 => Input::get('service_2'),
+                'inspection_id'             => Input::get('inspection_id'),
+                'insurance_id'              => Input::get('insurance_id'),
+                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+                'booking_status'            => Input::get('booking_status'),
+                'booking_recall_ym'         => Input::get('booking_recall_ym'),
+                'booking_memo'              => Input::get('booking_memo'),
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => UPDATE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
 
         $validator                  = Validator::make($dataInput, $clsBooking->Rules(), $clsBooking->Messages());
         if ($validator->fails()) {

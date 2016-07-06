@@ -1,6 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
+
 {!! Form::open( ['id' => 'frmBookingRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.bookings.booking.regist', $booking_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
 <section id="page">
       <div class="container">
@@ -86,7 +87,7 @@
                   <optgroup label="Treatments">
                         @if(count($treatment1s) > 0)
                           @foreach($treatment1s as $key12 => $treatment12)
-                            <option value="{{$key11}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
+                            <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
                           @endforeach
                         @endif
                   </optgroup>
@@ -108,7 +109,7 @@
                   <optgroup label="Treatments">
                         @if(count($treatment1s) > 0)
                           @foreach($treatment1s as $key22 => $treatment22)
-                            <option value="{{$key}}#sk22" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>
+                            <option value="{{$key22}}#sk22" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>
                           @endforeach
                         @endif
                   </optgroup>

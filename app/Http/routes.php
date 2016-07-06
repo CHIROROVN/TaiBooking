@@ -250,7 +250,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	// bookings
 	Route::any('bookings/booking-monthly', ['as' => 'ortho.bookings.booking.monthly', 'uses' => 'BookingController@bookingMonthly']);
+	
 	Route::any('bookings/booking-result-calendar', ['as' => 'ortho.bookings.booking.result.calendar', 'uses' => 'BookingController@bookingResultCalendar']);
+	
 	Route::get('bookings/booking-detail/{id}', ['as' => 'ortho.bookings.booking.detail', 'uses' => 'BookingController@bookingDetail']);
 
 	Route::get('bookings/booking-edit/{id}', ['as' => 'ortho.bookings.booking.edit', 'uses' => 'BookingController@getEdit']);
@@ -264,8 +266,10 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	Route::get('bookings/booking-change-date/{id}', ['as' => 'ortho.bookings.booking.change.date', 'uses' => 'BookingController@getChangeDate']);
 	Route::post('bookings/booking-change-date/{id}', ['as' => 'ortho.bookings.booking.change.date', 'uses' => 'BookingController@postChangeDate']);
+	
 	Route::get('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@getConfirm']);
 	Route::post('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@postConfirm']);
+	
 	Route::get('bookings/booking-result-list', ['as' => 'ortho.bookings.booking.result.list', 'uses' => 'BookingController@bookingResultList']);
 
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);

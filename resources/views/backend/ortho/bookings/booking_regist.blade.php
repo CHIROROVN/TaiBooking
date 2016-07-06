@@ -9,7 +9,7 @@
       <table class="table table-bordered">
         <tr>
           <td class="col-title"><label for="textName">患者名</label></td>
-          <td><label>{{@$patient->p_no}} {{@$patient->p_name}}</label><br>
+          <td>{{@$patient->p_no}} {{@$patient->p_name}}<br>
           <input type="hidden" id="booking_id" name="booking_id" class="form-control" value="{{$booking_id}}"/>
           <input type="hidden" id="patient_id" name="patient_id" class="form-control" value="{{$patient_id}}"/>
 
@@ -44,9 +44,9 @@
           <td>
             <select name="doctor_id" id="doctor_id" class="form-control">
               <option value="">▼選択</option>
-                @if(count($users) > 0)
-                  @foreach($users as $key => $user)
-                    <option value="{{$key}}" @if($booking->doctor_id == $key) selected @endif>{{$user}}</option>
+                @if(count($doctors) > 0)
+                  @foreach($doctors as $doctor)
+                    <option value="{{$doctor->id}}" @if($booking->doctor_id == $doctor->id) selected @endif>{{$doctor->u_name}}</option>
                   @endforeach
                 @endif
             </select>
@@ -57,9 +57,9 @@
           <td>
             <select name="hygienist_id" id="hygienist_id" class="form-control">
               <option value="">▼選択</option>
-                @if(count($users) > 0)
-                  @foreach($users as $key => $user)
-                    <option value="{{$key}}" @if($booking->hygienist_id == $key) selected @endif>{{$user}}</option>
+                @if(count($hygienists) > 0)
+                  @foreach($hygienists as $hygienist)
+                    <option value="{{$hygienist->id}}" @if($booking->hygienist_id == $hygienist->id) selected @endif>{{$hygienist->u_name}}</option>
                   @endforeach
                 @endif
             </select>

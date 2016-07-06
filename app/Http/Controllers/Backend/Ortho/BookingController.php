@@ -122,10 +122,10 @@ class BookingController extends BackendController
         $data['booking']            = $clsBooking->get_by_id($id);
         $data['doctors']            = $clsUser->get_by_belong([1]);
         $data['hys']                = $clsUser->get_by_belong([2,3]);
-        $data['clinic_services']    = $clsClinicService->get_all();
+        $data['clinic_services']    = $clsClinicService->getAll(1);
         $data['treatment1s']        = $clsTreatment1->get_all();
         $data['start_date']         = Input::get('start_date');
-
+echo "<pre>";print_r($data['doctors']);die;
         return view('backend.ortho.bookings.booking_detail', $data);
     }
 
@@ -187,7 +187,8 @@ class BookingController extends BackendController
         $clsFacility            = new FacilityModel();
         $data['facilities']     = $clsFacility->list_facility_all();
         $clsUser                = new UserModel();
-        $data['users']          = $clsUser->get_list();
+        $data['doctors']        = $clsUser->get_by_belong([1]);
+        $data['hygienists']     = $clsUser->get_by_belong([2,3]);
         $data['booking']        = $clsBooking->get_by_id($booking_id);
 
         $data['booking_id']     = $booking_id;
@@ -212,8 +213,6 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $patient_id                 = Input::get('patient_id');
         $booking_id                 = Input::get('booking_id');
-
-        // echo "<pre>"; print_r($data);die;
         $dataInput = array(
                 'facility_id'               => Input::get('facility_id'),
                 'doctor_id'                 => Input::get('doctor_id'),
@@ -232,7 +231,7 @@ class BookingController extends BackendController
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
             );
-        
+
         if ( $clsBooking->update($booking_id, $dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.result.list');

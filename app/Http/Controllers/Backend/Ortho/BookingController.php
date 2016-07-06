@@ -122,14 +122,14 @@ class BookingController extends BackendController
         $data['booking']            = $clsBooking->get_by_id($id);
         $data['doctors']            = $clsUser->get_by_belong([1]);
         $data['hys']                = $clsUser->get_by_belong([2,3]);
-        $data['clinic_services']    = $clsClinicService->getAll(1);
-        $data['treatment1s']        = $clsTreatment1->get_all();
+        //$data['clinic_services']    = $clsClinicService->getAll(1);
+        //$data['treatment1s']        = $clsTreatment1->get_all();
         $data['start_date']         = Input::get('start_date');
-        $clsService             = new ServiceModel();
-        $data['services']       = $clsService->get_list();
-        $clsTreatment1          = new Treatment1Model();
-        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
-        
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+
         return view('backend.ortho.bookings.booking_detail', $data);
     }
 
@@ -142,9 +142,19 @@ class BookingController extends BackendController
         $clsTreatment1              = new Treatment1Model();
         $data['booking']            = $clsBooking->get_by_id($id);
         $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hys']                = $clsUser->get_by_belong([2,3]);
-        $data['clinic_services']    = $clsClinicService->get_all();
-        $data['treatment1s']        = $clsTreatment1->get_all();
+        $data['hygienists']                = $clsUser->get_by_belong([2,3]);
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $clsFacility            = new FacilityModel();
+        $data['facilities']     = $clsFacility->list_facility_all();
+        $clsEquipment           = new EquipmentModel();
+        $data['equipments']     = $clsEquipment->get_list();
+        $clsInspection          = new InspectionModel();
+        $data['inspections']    = $clsInspection->get_list();
+        $clsInsurance           = new InsuranceModel();
+        $data['insurances']    = $clsInsurance->get_list();
 
         return view('backend.ortho.bookings.booking_edit', $data);
     }

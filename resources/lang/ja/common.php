@@ -6,10 +6,12 @@ return [
     | Modal delete confirm
     |--------------------------------------------------------------------------
     */
-    'modal_header_delete'				=> '削除の確認',
-    'modal_content_delete'				=> '削除してよろしいですか？',
-    'modal_btn_delete'					=> '削除する(確認済)',
-    'modal_btn_cancel'					=> '削除しない',
+    'modal_header_delete'				                   => '削除の確認',
+    'modal_content_delete'				                   => '削除してよろしいですか？',
+    'modal_btn_delete'					                   => '削除する(確認済)',
+    'modal_btn_cancel'					                   => '削除しない',
+    'modal_header_popup_edit_clinic_booking_template'      => 'Title popup',
+    'modal_btn_ok'                                         => '保存する',
 
     /*
     |--------------------------------------------------------------------------

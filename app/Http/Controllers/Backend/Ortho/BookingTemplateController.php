@@ -118,10 +118,10 @@ class BookingTemplateController extends BackendController
         $templates                  = $clsTemplate->get_all($id);
         $arr_templates              = array();
         foreach ( $data['times'] as $time ) {
-            // $time_replate = str_replace (':', '', $time);
+            $time_replate = str_replace (':', '', $time);
             foreach ( $data['facilitys'] as $fac ) {
                 foreach ( $templates as $template ) {
-                    if ( $template->facility_id == $fac->facility_id ) {
+                    if ( $template->facility_id == $fac->facility_id && $template->template_time == $time_replate ) {
                         $arr_templates[$fac->facility_id][$time] = $template;
                     }
                 }
@@ -129,7 +129,7 @@ class BookingTemplateController extends BackendController
         }
         $data['arr_templates']       = $arr_templates;
         // echo '<pre>';
-        // print_r($data['booking_template']);
+        // print_r($arr_templates);
         // echo '</pre>';die;
 
         return view('backend.ortho.clinics.booking.templates.edit', $data);
@@ -140,28 +140,98 @@ class BookingTemplateController extends BackendController
      */
     public function postEdit($clinic_id, $id)
     {
-        $clsMbt           = new BookingTemplateModel();
+        $clsMbt                     = new BookingTemplateModel();
+        $clsTemplate                = new TemplateModel();
        
-        $validator                = Validator::make(Input::all(), $rules, $clsMbt->Messages());
-        if ($validator->fails()) {
-            return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id])->withErrors($validator)->withInput();
-        }
+        // $validator                  = Validator::make(Input::all(), $rules, $clsMbt->Messages());
+        // if ($validator->fails()) {
+        //     return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id])->withErrors($validator)->withInput();
+        // }
 
         $dataUpdate = array(
             'clinic_id'                     => $clinic_id,
             'mbt_name'                      => Input::get('mbt_name'),
-            'mbt_sort_no'                   => Input::get('mbt_sort_no'),
+
+            'last_kind'                     => UPDATE,
+            'last_ipadrs'                   => CLIENT_IP_ADRS,
+            'last_date'                     => date('y-m-d H:i:s'),
+            'last_user'                     => Auth::user()->id
+        );
+
+        // update to table m_booking_template
+        $update1 = $clsMbt->update($id, $dataUpdate);
+
+        // update to table m_template
+        $dataInsert = array(
+            'mbt_id'                        => $id,
             'last_kind'                     => INSERT,
             'last_ipadrs'                   => CLIENT_IP_ADRS,
             'last_date'                     => date('y-m-d H:i:s'),
             'last_user'                     => Auth::user()->id
         );
-        if ( $clsMbt->update($id, $dataUpdate) ) {
+        $dataUpdate = array();
+        $dataUpdate = array(
+            'last_kind'                     => UPDATE,
+            'last_ipadrs'                   => CLIENT_IP_ADRS,
+            'last_date'                     => date('y-m-d H:i:s'),
+            'last_user'                     => Auth::user()->id
+        );
+        $dataDelete = array(
+            'last_kind'                     => DELETE,
+            'last_ipadrs'                   => CLIENT_IP_ADRS,
+            'last_date'                     => date('y-m-d H:i:s'),
+            'last_user'                     => Auth::user()->id
+        );
+
+        $dataNews               = Input::get('facility_service_time');
+        $dataOlds               = $clsTemplate->get_all($id);
+
+        // position old
+        $tmpDataOld = array();
+        foreach ( $dataOlds as $key => $value ) {
+            $tmpDataOld[$value->facility_id . '|' . $value->template_time] = $value;
+        }
+
+        $update2 = false;
+        foreach ( $dataNews as $itemKey => $itemValue ) {
+            $tmp = explode('|', $itemValue);
+
+            // if no change position
+            // (1): no change clinic_service_id => unset
+            // (2): change clinic_service_id => update and unset
+            if ( isset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]) ) {
+                if ( $tmpDataOld[$tmp[0] . '|' . $tmp[2]]->clinic_service_id == $tmp[1] ) {
+                    // (1)
+                    unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
+                } else {
+                    // (2)
+                    $dataUpdate['clinic_service_id'] = $tmp[1];
+                    $update2 = $clsTemplate->update($tmpDataOld[$tmp[0] . '|' . $tmp[2]]->template_id, $dataUpdate);
+                    unset($dataUpdate['clinic_service_id']);
+                    unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
+                }
+            } else {
+                // insert new
+                $dataInsert['facility_id']          = $tmp[0];
+                $dataInsert['clinic_service_id']    = $tmp[1];
+                $dataInsert['template_time']        = $tmp[2];
+                $update2 = $clsTemplate->insert($dataInsert);
+            }
+        }
+        // delete old
+        if ( count($tmpDataOld) ) {
+            foreach ( $tmpDataOld as $itemOld => $keyOld ) {
+                $update2 = $clsTemplate->update($keyOld->template_id, $dataDelete);
+                unset($tmpDataOld[$itemOld]);
+            }
+        }
+
+        if ( $update1 && $update2 ) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.clinics.booking.templates.index',$clinic_id);
+            return redirect()->route('ortho.clinics.booking.templates.index', $clinic_id);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id]);
+            return redirect()->route('ortho.clinics.booking.templates.index', [ $clinic_id, $id ]);
         }
     }
 
@@ -170,20 +240,27 @@ class BookingTemplateController extends BackendController
      */
     public function delete($clinic_id, $id)
     {
-        $clsMbt = new BookingTemplateModel();
-        $dataDelete = array(
+        $clsMbt                 = new BookingTemplateModel();
+        $clsTemplate            = new TemplateModel();
+
+        $dataDelete             = array(
             'last_kind'         => DELETE,
             'last_ipadrs'       => CLIENT_IP_ADRS,
             'last_user'         => Auth::user()->id,
             'last_date'         => date('y-m-d H:i:s'),
         );
 
-        if ( $clsMbt->update($id, $dataDelete) ) {
+        // delete table m_booking_template
+        $delete1 = $clsMbt->update($id, $dataDelete);
+        // delete table m_template
+        $delete2 = $clsTemplate->updateByMbtId($id, $dataDelete);
+
+        if ( $delete1 && $delete2 ) {
             Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.clinics.booking.templates.index',$clinic_id);
+            return redirect()->route('ortho.clinics.booking.templates.index', $clinic_id);
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
-            return redirect()->route('ortho.clinics.booking.templates.edit', [$clinic_id, $id]);
+            return redirect()->route('ortho.clinics.booking.templates.index', [ $clinic_id ]);
         }
     }
 

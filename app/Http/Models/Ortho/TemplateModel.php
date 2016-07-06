@@ -56,4 +56,9 @@ class TemplateModel
     {
         return DB::table($this->table)->where('template_id', $id)->update($data);
     }
+
+    public function updateByMbtId($mbt_id, $data)
+    {
+        return DB::table($this->table)->where('mbt_id', $mbt_id)->update($data);
+    }
 }

@@ -24,6 +24,7 @@
 <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-datetimepicker.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/fullcalendar.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>
+<script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-button-to-input-file.js"></script>
 </head>
 <body>
   <!-- Header -->

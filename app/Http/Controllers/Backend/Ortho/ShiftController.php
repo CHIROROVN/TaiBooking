@@ -4,6 +4,7 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\Ortho\ShiftModel;
+
 use Auth;
 use Form;
 use Html;
@@ -20,9 +21,23 @@ class ShiftController extends BackendController
         $this->middleware('auth');
     }
 
-    public function getListShiftEdit(){
-        return view('backend.ortho.shifts.list_edit');
+
+    public function getSListEdit(){
+        $data = array();
+        $data['yearNow'] = date('Y');
+        $data['monthNow'] = date('m');
+
+        return view('backend.ortho.shifts.list_edit', $data);
     }
+
+
+    public function postSListEdit()
+    {
+        echo '<pre>';
+        print_r(Input::all());
+        echo '</pre>';die;
+    }
+
 
     /**
      * 
@@ -83,10 +98,6 @@ class ShiftController extends BackendController
      */
      public function search(){
         return view('backend.ortho.shifts.search');
-     }
-
-     public function getSListEdit(){
-        return view('backend.ortho.shifts.list_edit');
      }
 
     /**
@@ -197,5 +208,11 @@ class ShiftController extends BackendController
     //     $treatment1s = $clsShift->get_all();
     //     $this->down($clsShift, $id, $treatment1s, 'treatment_id', 'treatment_sort_no');
     //     return redirect()->route('ortho.treatments.treatment1.index');
+    // }
+
+
+    // public function getDate()
+    // {
+        
     // }
 }

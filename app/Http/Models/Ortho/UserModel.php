@@ -73,4 +73,12 @@ class UserModel
     	$results = DB::table($this->table)->where('id', $id)->update($data);
         return $results;
     }
+
+    public function get_list()
+    {
+        return DB::table($this->table)
+                                ->where('last_kind', '<>', DELETE)
+                                ->orderBy('id', 'asc')
+                                ->lists('u_name', 'id');
+    }
 }

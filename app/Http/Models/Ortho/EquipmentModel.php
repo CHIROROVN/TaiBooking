@@ -63,4 +63,11 @@ class EquipmentModel
         $results = DB::table($this->table)->max('equipment_sort_no');
         return $results;
     }
+
+    public function get_list(){
+        return DB::table($this->table)
+                                ->where('last_kind', '<>', DELETE)
+                                ->orderBy('equipment_id', 'asc')
+                                ->lists('equipment_name', 'equipment_id');
+    }
 }

@@ -15,6 +15,9 @@ use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
 use App\Http\Models\Ortho\PatientModel;
+use App\Http\Models\Ortho\EquipmentModel;
+use App\Http\Models\Ortho\InspectionModel;
+use App\Http\Models\Ortho\InsuranceModel;
 use Form;
 use Html;
 use Input;
@@ -171,36 +174,78 @@ class BookingController extends BackendController
         return redirect()->route('ortho.bookings.booking.detail', [ $id ]);
     }
 
-
     public function getRegist()
     {
         $booking_id             = Input::get('booking_id');
-        $clsBooking             = new BookingModel();
-        $clsClinicService       = new ClinicServiceModel();
+        $patient_id             = Input::get('patient_id');
 
-        // $clsTreatment1          = new Treatment1Model();
+        $clsBooking             = new BookingModel();
+        $clsClinic              = new ClinicModel();
+        $data['clinics']        = $clsClinic->get_list_clinic();
+        $clsEquipment           = new EquipmentModel();
+        $data['equipments']     = $clsEquipment->get_list();
+        $clsFacility            = new FacilityModel();
+        $data['facilities']     = $clsFacility->list_facility_all();
+        $clsUser                = new UserModel();
+        $data['users']          = $clsUser->get_list();
         $data['booking']        = $clsBooking->get_by_id($booking_id);
+
         $data['booking_id']     = $booking_id;
-        $patient_id             = Input::get('p_id');
         $data['patient_id']     = Input::get('patient_id');
+
         $clsPatient             = new PatientModel();
         $data['patient']        = $clsPatient->get_patient_by_id($patient_id);
-
+        $clsService             = new ServiceModel();
+        $data['services']       = $clsService->get_list();
+        $clsTreatment1          = new Treatment1Model();
+        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
+        $clsInspection          = new InspectionModel();
+        $data['inspections']    = $clsInspection->get_list();
+        $clsInsurance           = new InsuranceModel();
+        $data['insurances']    = $clsInsurance->get_list();
         return view('backend.ortho.bookings.booking_regist', $data);
     }
 
 
     public function postRegist()
     {
+        $clsBooking                 = new BookingModel();
+        $patient_id                 = Input::get('patient_id');
+        $booking_id                 = Input::get('booking_id');
 
+        // echo "<pre>"; print_r($data);die;
+        $dataInput = array(
+                'facility_id'               => Input::get('facility_id'),
+                'doctor_id'                 => Input::get('doctor_id'),
+                'hygienist_id'              => Input::get('hygienist_id'),
+                'equipment_id'              => Input::get('equipment_id'),
+                'service_1'                 => Input::get('service_1'),
+                'service_2'                 => Input::get('service_2'),
+                'inspection_id'             => Input::get('inspection_id'),
+                'insurance_id'              => Input::get('insurance_id'),
+                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+                'booking_status'            => Input::get('booking_status'),
+                'booking_recall_ym'         => Input::get('booking_recall_ym'),
+                'booking_memo'              => Input::get('booking_memo'),
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => UPDATE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+        
+        if ( $clsBooking->update($booking_id, $dataInput) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+            return redirect()->route('ortho.bookings.booking.result.list');
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+            return redirect()->route('ortho.bookings.booking.regist', ['?booking_id='.$booking_id.'&patient_id='.$patient_id]);
+        }
     }
-
 
     public function get1stRegist()
     {
         return view('backend.ortho.bookings.booking_1st_regist');
     }
-
 
     public function post1stRegist()
     {

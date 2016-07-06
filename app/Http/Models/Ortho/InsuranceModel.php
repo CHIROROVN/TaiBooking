@@ -62,4 +62,12 @@ class InsuranceModel
         $results = DB::table($this->table)->max('insurance_sort_no');
         return $results;
     }
+
+    public function get_list()
+    {
+        return DB::table($this->table)
+                            ->where('last_kind', '<>', DELETE)
+                            ->orderBy('insurance_id', 'asc')
+                            ->lists('insurance_name', 'insurance_id');
+    }
 }

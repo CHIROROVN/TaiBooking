@@ -34,26 +34,27 @@
 	}
 
 	function toTime($from_time, $total_min){
-			$datef = str_split($from_time, 2);
-			$hf = (int)$datef[0];
-			$mf = (int)$datef[1];
-			$to_time = min2hour($total_min);
-
-			$ht = $to_time[0];
-			$mt = $to_time[1];
-
-			$fm = $mf + $mt;
-			$fh = $ht + $hf;
-			if($fm >= 60){
-				$tmp_time = min2hour($fm);
-				$tmp_h = $tmp_time[0];
-				$tmp_m = $tmp_time[1];
-				$fh = $fh + $tmp_h;
-				$fm = $tmp_m;
+			if(strlen($from_time) != 4){
+				return '00:00';
+			}else{
+				$datef = str_split($from_time, 2);
+				$hf = (int)$datef[0];
+				$mf = (int)$datef[1];
+				$to_time = min2hour($total_min);
+				$ht = $to_time[0];
+				$mt = $to_time[1];
+				$fm = $mf + $mt;
+				$fh = $ht + $hf;
+				if($fm >= 60){
+					$tmp_time = min2hour($fm);
+					$tmp_h = $tmp_time[0];
+					$tmp_m = $tmp_time[1];
+					$fh = $fh + $tmp_h;
+					$fm = $tmp_m;
+				}
+				$toTime = sprintf("%02d",$fh).':'.sprintf("%02d",$fm);
+				return $toTime;
 			}
-
-			$toTime = sprintf("%02d",$fh).':'.sprintf("%02d",$fm);
-			return $toTime;
 	}
 
 	function min2hour($min=null){
@@ -67,7 +68,6 @@
 			return array('0'=>$ht, '1'=>$mt);
 		}
 	}
-
 
 	function clinic_service($service_id){
 		return App\Http\Controllers\Backend\Ortho\ClinicServiceController::get_all_by_sid($service_id);

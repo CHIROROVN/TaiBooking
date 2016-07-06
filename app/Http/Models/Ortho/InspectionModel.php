@@ -62,4 +62,12 @@ class InspectionModel
         $results = DB::table($this->table)->max('inspection_sort_no');
         return $results;
     }
+
+    public function get_list()
+    {
+        return DB::table($this->table)
+                            ->where('last_kind', '<>', DELETE)
+                            ->orderBy('inspection_id', 'asc')
+                            ->lists('inspection_name', 'inspection_id');
+    }
 }

@@ -96,8 +96,7 @@ class BookingModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('booking_id', $id)->update($data);
-        return $results;
+    	return DB::table($this->table)->where('booking_id', $id)->update($data);
     }
 
     public function get_list1_list(){

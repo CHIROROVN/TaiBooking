@@ -93,4 +93,11 @@ class ClinicModel
     	$results = DB::table($this->table)->where('clinic_id', $id)->update($data);
         return $results;
     }
+
+    //get list clinic
+    public function get_list_clinic(){
+        return DB::table($this->table)
+                                ->where('last_kind', '<>', DELETE)
+                                ->lists('clinic_name', 'clinic_id');
+    }
 }

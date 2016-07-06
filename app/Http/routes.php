@@ -252,12 +252,16 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::any('bookings/booking-monthly', ['as' => 'ortho.bookings.booking.monthly', 'uses' => 'BookingController@bookingMonthly']);
 	Route::any('bookings/booking-result-calendar', ['as' => 'ortho.bookings.booking.result.calendar', 'uses' => 'BookingController@bookingResultCalendar']);
 	Route::get('bookings/booking-detail/{id}', ['as' => 'ortho.bookings.booking.detail', 'uses' => 'BookingController@bookingDetail']);
+
 	Route::get('bookings/booking-edit/{id}', ['as' => 'ortho.bookings.booking.edit', 'uses' => 'BookingController@getEdit']);
 	Route::post('bookings/booking-edit/{id}', ['as' => 'ortho.bookings.booking.edit', 'uses' => 'BookingController@postEdit']);
+
 	Route::get('bookings/booking-regist/{booking_id?}/{patient_id?}', ['as' => 'ortho.bookings.booking.regist', 'uses' => 'BookingController@getRegist']);
 	Route::post('bookings/booking-regist/{booking_id?}/{patient_id?}', ['as' => 'ortho.bookings.booking.regist', 'uses' => 'BookingController@postRegist']);
+
 	Route::get('bookings/booking-1st-regist', ['as' => 'ortho.bookings.booking.1st.regist', 'uses' => 'BookingController@get1stRegist']);
 	Route::post('bookings/booking-1st-regist', ['as' => 'ortho.bookings.booking.1st.regist', 'uses' => 'BookingController@post1stRegist']);
+
 	Route::get('bookings/booking-change-date/{id}', ['as' => 'ortho.bookings.booking.change.date', 'uses' => 'BookingController@getChangeDate']);
 	Route::post('bookings/booking-change-date/{id}', ['as' => 'ortho.bookings.booking.change.date', 'uses' => 'BookingController@postChangeDate']);
 	Route::get('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@getConfirm']);

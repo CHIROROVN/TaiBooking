@@ -5,6 +5,24 @@
 <section id="page">
   <div class="container content-page">
     <h3>予約管理　＞　予約枠の検索結果（リスト表示）</h3>
+    <div class="msg-alert-action margin-top-15">
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success  alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+        </div>
+      @elseif($message = Session::get('danger'))
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+        </div>
+      @endif
+    </div>
+            
     <table class="table table-bordered table-striped treatment2-list">
       <tbody>
         <tr>

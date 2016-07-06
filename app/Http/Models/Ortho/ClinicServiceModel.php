@@ -58,13 +58,16 @@ class ClinicServiceModel
 
     public function getAll($clinic_id = null)
     {
-        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+        $db = DB::table($this->table)
+                        ->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')
+                        ->select('t_clinic_service.*', 't1.service_name')
+                        ->where('t_clinic_service.last_kind', '<>', DELETE);
 
         if ( !empty($clinic_id) ) {
-            $db = $db->where('clinic_id', $clinic_id);
+            $db = $db->where('t_clinic_service.clinic_id', $clinic_id);
         }
 
-        $db = $db->orderBy('clinic_service_id', 'asc')->get();
+        $db = $db->orderBy('t1.service_name', 'asc')->get();
 
         return $db;
     }

@@ -4,10 +4,11 @@
 
   <style>
     .td-content {
-      display: block;
+      /*display: table-cell;*/
       cursor: pointer;
       width: 100%;
-      min-height: 32px;
+      min-height: 27px;
+      padding-top: 5px;
     }
   </style>
 	 <!-- Content clinic booking template edit -->
@@ -57,6 +58,7 @@
                   $color = 'brown';
                   $service_id = 0;
                   $fullValue = null;
+                  $text = '';
 
                   if ( isset($arr_templates[$facility_id][$time]) ) {
                     $hour_template = substr($arr_templates[$facility->facility_id][$time]->template_time , 0, 2);
@@ -66,10 +68,14 @@
                           && $hour_template == $hour
                           && $minute_template == $minute ) {
                       $color = 'green';
+                      if ( isset($services[$arr_templates[$facility_id][$time]->clinic_service_id]) ) {
+                        $text = $services[$arr_templates[$facility_id][$time]->clinic_service_id]->service_name;
+                      }
                     } elseif ( $arr_templates[$facility_id][$time]->clinic_service_id == -1
                                 && $hour_template == $hour
                                 && $minute_template == $minute ) {
                       $color = 'blue';
+                      $text = '治療';
                     }
                     
                     $service_id = $arr_templates[$facility_id][$time]->clinic_service_id;
@@ -92,6 +98,7 @@
                     @endif
 
                     <!-- input -->
+                    <span>{{ $text }}</span>
                     @if ( $color === 'brown' )
                     <input type="hidden" class="input" name="" value="{{ $fullValue }}">
                     @else
@@ -116,7 +123,7 @@
                                   <option value="0">Close</option>
                                   <option value="-1">治療</option>
                                   @foreach ( $services as $service )
-                                  <option value="{{ $service->service_id }}">{{ $service->service_name }}</option>
+                                  <option value="{{ $service->clinic_service_id }}">{{ $service->service_name }}</option>
                                   @endforeach
                                 </select>
                               </td>
@@ -223,6 +230,7 @@
 
         // new value
         var serviceIdNew = $('#clinic_service_id-' + data_id).val();
+        var serviceTextNew = $('#clinic_service_id-' + data_id).find('option:selected').text();
         var facilityIdNew = $('#facility_id-' + data_id).val();
         var fullValue = facilityIdNew + '|' + serviceIdNew + '|' + dataFullTime;
 
@@ -233,12 +241,12 @@
         // green
         if ( serviceIdNew > 0 ) {
           setClear(tdObjOld, 0, '');
-          setGreen(tdObjNew, serviceIdNew, fullValue);
+          setGreen(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
         }
         // blue
         if ( serviceIdNew < 0 ) {
           setClear(tdObjOld, 0, '');
-          setBlue(tdObjNew, serviceIdNew, fullValue);
+          setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
         }
         // brown
         if ( serviceIdNew == 0 ) {
@@ -251,7 +259,7 @@
         $('#myModal-' + data_id).modal('hide');
       });
 
-      function setGreen(objNew, serviceIdNew, value) {
+      function setGreen(objNew, serviceIdNew, value, text) {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');
@@ -260,10 +268,11 @@
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
         // set value for hidden iput
+        objNew.find('.td-content').html(text);
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBlue(objNew, serviceIdNew, value) {
+      function setBlue(objNew, serviceIdNew, value, text) {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-blue');
@@ -272,6 +281,7 @@
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
         // set value for hidden iput
+        objNew.find('.td-content').html(text);
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
@@ -280,6 +290,7 @@
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
           objNew.addClass('col-brown');
+          objNew.find('.td-content').html('');
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
@@ -293,6 +304,7 @@
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
           objNew.addClass('col-brown');
+          objNew.find('.td-content').html('');
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);

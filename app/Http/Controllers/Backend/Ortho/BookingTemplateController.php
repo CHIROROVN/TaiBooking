@@ -7,6 +7,7 @@ use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\ServiceModel;
+use App\Http\Models\Ortho\ClinicServiceModel;
 //use App\Http\Models\Ortho\BookingTemplateModel;
 
 use Request;
@@ -109,11 +110,18 @@ class BookingTemplateController extends BackendController
         $clsBookingTemplate         = new BookingTemplateModel();
         $clsTemplate                = new TemplateModel();
         $clsService                 = new ServiceModel();
+        $clsClinicService           = new ClinicServiceModel();
         $data['booking_template']   = $clsBookingTemplate->get_by_id($id);
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
         $data['facilitys']          = $clsFacility->getAll();
-        $data['services']           = $clsService->get_all();
+        $services                   = $clsClinicService->getAll($clinic_id);
         $data['times']              = Config::get('constants.TIME');
+
+        $arrServices                = array();
+        foreach ( $services as $service ) {
+            $arrServices[$service->clinic_service_id] = $service;
+        }
+        $data['services']           = $arrServices;
 
         $templates                  = $clsTemplate->get_all($id);
         $arr_templates              = array();
@@ -193,29 +201,31 @@ class BookingTemplateController extends BackendController
         }
 
         $update2 = false;
-        foreach ( $dataNews as $itemKey => $itemValue ) {
-            $tmp = explode('|', $itemValue);
+        if ( count($dataNews) ) {
+            foreach ( $dataNews as $itemKey => $itemValue ) {
+                $tmp = explode('|', $itemValue);
 
-            // if no change position
-            // (1): no change clinic_service_id => unset
-            // (2): change clinic_service_id => update and unset
-            if ( isset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]) ) {
-                if ( $tmpDataOld[$tmp[0] . '|' . $tmp[2]]->clinic_service_id == $tmp[1] ) {
-                    // (1)
-                    unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
+                // if no change position
+                // (1): no change clinic_service_id => unset
+                // (2): change clinic_service_id => update and unset
+                if ( isset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]) ) {
+                    if ( $tmpDataOld[$tmp[0] . '|' . $tmp[2]]->clinic_service_id == $tmp[1] ) {
+                        // (1)
+                        unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
+                    } else {
+                        // (2)
+                        $dataUpdate['clinic_service_id'] = $tmp[1];
+                        $update2 = $clsTemplate->update($tmpDataOld[$tmp[0] . '|' . $tmp[2]]->template_id, $dataUpdate);
+                        unset($dataUpdate['clinic_service_id']);
+                        unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
+                    }
                 } else {
-                    // (2)
-                    $dataUpdate['clinic_service_id'] = $tmp[1];
-                    $update2 = $clsTemplate->update($tmpDataOld[$tmp[0] . '|' . $tmp[2]]->template_id, $dataUpdate);
-                    unset($dataUpdate['clinic_service_id']);
-                    unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
+                    // insert new
+                    $dataInsert['facility_id']          = $tmp[0];
+                    $dataInsert['clinic_service_id']    = $tmp[1];
+                    $dataInsert['template_time']        = $tmp[2];
+                    $update2 = $clsTemplate->insert($dataInsert);
                 }
-            } else {
-                // insert new
-                $dataInsert['facility_id']          = $tmp[0];
-                $dataInsert['clinic_service_id']    = $tmp[1];
-                $dataInsert['template_time']        = $tmp[2];
-                $update2 = $clsTemplate->insert($dataInsert);
             }
         }
         // delete old

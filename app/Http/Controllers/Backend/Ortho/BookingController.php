@@ -181,7 +181,8 @@ class BookingController extends BackendController
                 'service_1'                 => $service_1,
                 'service_1_kind'            => $service_1_kind,
                 'service_2'                 => $service_2,
-                'inspection_id'             => $service_2_kind,
+                'service_2_kind'            => $service_2_kind,
+                'inspection_id'             => Input::get('inspection_id'),
                 'insurance_id'              => Input::get('insurance_id'),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
                 'booking_status'            => Input::get('booking_status'),
@@ -259,7 +260,8 @@ class BookingController extends BackendController
                 'service_1'                 => $service_1,
                 'service_1_kind'            => $service_1_kind,
                 'service_2'                 => $service_2,
-                'inspection_id'             => $service_2_kind,
+                'service_2_kind'            => $service_2_kind,
+                'inspection_id'             => Input::get('inspection_id'),
                 'insurance_id'              => Input::get('insurance_id'),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
                 'booking_status'            => Input::get('booking_status'),
@@ -270,6 +272,8 @@ class BookingController extends BackendController
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
             );
+
+        echo "<pre>";print_r($dataInput);die;
 
         if ( $clsBooking->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));

@@ -125,7 +125,11 @@ class BookingController extends BackendController
         $data['clinic_services']    = $clsClinicService->getAll(1);
         $data['treatment1s']        = $clsTreatment1->get_all();
         $data['start_date']         = Input::get('start_date');
-echo "<pre>";print_r($data['doctors']);die;
+        $clsService             = new ServiceModel();
+        $data['services']       = $clsService->get_list();
+        $clsTreatment1          = new Treatment1Model();
+        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
+        
         return view('backend.ortho.bookings.booking_detail', $data);
     }
 

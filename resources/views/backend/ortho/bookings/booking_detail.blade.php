@@ -33,8 +33,7 @@
         <tr>
           <td class="col-title">予約日時</td>
           <td>
-            {{ date('Y', strtotime($booking->booking_date)) }}年{{ date('m', strtotime($booking->booking_date)) }}月{{ date('d', strtotime($booking->booking_date)) }}日（日）　
-            {{ $booking->booking_start_time }}:00～{{ $booking->booking_start_time }}:{{ $booking->booking_total_time }}
+            {{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
             </td>
         </tr>
         <tr>
@@ -72,40 +71,20 @@
         <tr>
           <td class="col-title">処置内容-1</td>
           <td>
-            @if ( !empty($booking->service_1) && $booking->service_1_kind == 1 )
-              <!-- clinic service -->
-              @foreach ( $clinic_services as $clinic_service )
-                @if ( $booking->service_1 == $clinic_service->clinic_service_id )
-                {{ $clinic_service->service_name }}
-                @endif
-              @endforeach
-            @elseif ( !empty($booking->service_1) && ($booking->service_1_kind == 2 || $booking->service_1_kind == 3) )
-              <!-- treatment -->
-              @foreach ( $treatment1s as $treatment1 )
-                @if ( $booking->service_1 == $treatment1->treatment_id )
-                {{ $treatment1->treatment_name }}
-                @endif
-              @endforeach
+            @if($booking->service_1_kind == '1')
+            {{@$services[$booking->service_1]}}
+            @elseif($booking->service_1_kind == '2')
+            {{@$treatment1s[$booking->service_1]}}
             @endif
           </td>
         </tr>
         <tr>
           <td class="col-title">処置内容-2</td>
           <td>
-            @if ( !empty($booking->service_2) && $booking->service_2_kind == 1 )
-              <!-- clinic service -->
-              @foreach ( $clinic_services as $clinic_service )
-                @if ( $booking->service_2 == $clinic_service->clinic_service_id )
-                {{ $clinic_service->service_name }}
-                @endif
-              @endforeach
-            @elseif ( !empty($booking->service_2) && ($booking->service_2_kind == 2 || $booking->service_2_kind == 3) )
-              <!-- treatment -->
-              @foreach ( $treatment1s as $treatment1 )
-                @if ( $booking->service_2 == $treatment1->treatment_id )
-                {{ $treatment1->treatment_name }}
-                @endif
-              @endforeach
+            @if($booking->service_2_kind == '1')
+            {{@$services[$booking->service_2]}}
+            @elseif($booking->service_2_kind == '2')
+            {{@$treatment1s[$booking->service_2]}}
             @endif
           </td>
         </tr>

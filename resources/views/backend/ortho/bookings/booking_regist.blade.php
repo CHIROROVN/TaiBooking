@@ -9,8 +9,7 @@
           <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>
-              <td>{{$booking->p_no}} {{$booking->p_name}}
-              <br>
+              <td>{{$booking->p_no}} {{$booking->p_name}} &nbsp;
                 <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='1st_booking_regist.html'">
               </td>
             </tr>
@@ -190,7 +189,7 @@
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
-            <input name="button2" id="button2" value="保存する" type="submit" class="btn btn-sm btn-page">
+            <input name="btnSubmit" id="btnSubmit" value="登録する" type="submit" class="btn btn-sm btn-page">
         </div>
         </div>
         <div class="row margin-bottom">

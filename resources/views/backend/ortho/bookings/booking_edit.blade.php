@@ -187,7 +187,7 @@
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
-            <input name="button2" id="button2" value="保存する" type="submit" class="btn btn-sm btn-page">
+            <input name="btnSubmit" id="btnSubmit" value="保存する" type="submit" class="btn btn-sm btn-page">
         </div>
         </div>
         <div class="row margin-bottom">

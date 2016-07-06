@@ -272,9 +272,6 @@ class BookingController extends BackendController
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
             );
-
-        echo "<pre>";print_r($dataInput);die;
-
         if ( $clsBooking->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.result.list');

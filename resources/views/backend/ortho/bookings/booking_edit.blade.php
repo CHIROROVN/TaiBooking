@@ -1,7 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-<?php //echo "<pre>"; print_r($booking) ?>
 {!! Form::open(array('route' => ['ortho.bookings.booking.edit', $booking->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
       <div class="container">
@@ -15,7 +14,7 @@
             <tr>
               <td class="col-title"><label for="textNameRead">予約日時</label></td>
               <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
-              <input type="submit" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='booking_change.html'"></td>
+              <input type="button" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='booking_change.html'"></td>
             </tr>
             <tr>
               <td class="col-title">医院</td>
@@ -78,14 +77,14 @@
                   <optgroup label="Services">
                       @if(count($services) > 0)
                         @foreach($services as $key11 => $service11)
-                        <option value="{{$key11}}-s1" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
+                        <option value="{{$key11}}#sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
                       @endforeach
                       @endif
                   </optgroup>
                   <optgroup label="Treatments">
                         @if(count($treatment1s) > 0)
                           @foreach($treatment1s as $key12 => $treatment12)
-                            <option value="{{$key11}}-t1" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
+                            <option value="{{$key11}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
                           @endforeach
                         @endif
                   </optgroup>
@@ -100,14 +99,14 @@
                   <optgroup label="Services">
                       @if(count($services) > 0)
                         @foreach($services as $key21 => $service21)
-                        <option value="{{$key21}}-s2" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
+                        <option value="{{$key21}}#sk21" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
                       @endforeach
                       @endif
                   </optgroup>
                   <optgroup label="Treatments">
                         @if(count($treatment1s) > 0)
                           @foreach($treatment1s as $key22 => $treatment22)
-                            <option value="{{$key}}-t2" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>
+                            <option value="{{$key}}#sk22" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>
                           @endforeach
                         @endif
                   </optgroup>

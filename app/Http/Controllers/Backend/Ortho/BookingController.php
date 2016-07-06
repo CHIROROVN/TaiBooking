@@ -161,17 +161,27 @@ class BookingController extends BackendController
     public function postEdit($id)
     {
         $clsBooking                 = new BookingModel();
+        $s_1_kind = Input::get('service_1');
+        $s1k = explode('#', $s_1_kind);
+        $service_1          = $s1k[0];
+        $s1_kind            = str_split($s1k[1], 3);
+        $service_1_kind     = $s1_kind[1];
 
-        echo "<pre>";print_r(Input::all());die;
+        $s_2_kind = Input::get('service_2');
+        $s2k = explode('#', $s_2_kind);
+        $service_2          = $s2k[0];
+        $s2_kind            = str_split($s2k[1], 3);
+        $service_2_kind     = $s2_kind[1];
 
         $dataInput = array(
                 'facility_id'               => Input::get('facility_id'),
                 'doctor_id'                 => Input::get('doctor_id'),
                 'hygienist_id'              => Input::get('hygienist_id'),
                 'equipment_id'              => Input::get('equipment_id'),
-                'service_1'                 => Input::get('service_1'),
-                'service_2'                 => Input::get('service_2'),
-                'inspection_id'             => Input::get('inspection_id'),
+                'service_1'                 => $service_1,
+                'service_1_kind'            => $service_1_kind,
+                'service_2'                 => $service_2,
+                'inspection_id'             => $service_2_kind,
                 'insurance_id'              => Input::get('insurance_id'),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
                 'booking_status'            => Input::get('booking_status'),
@@ -190,60 +200,66 @@ class BookingController extends BackendController
 
         if ( $clsBooking->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_edit_success'));
+            return redirect()->route('ortho.bookings.booking.result.list');
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
+            return redirect()->route('ortho.bookings.booking_edit', $id);
         }
 
-        return redirect()->route('ortho.bookings.booking.detail', [ $id ]);
+        
     }
 
-    public function getRegist()
+    public function getRegist($id)
     {
-        $booking_id             = Input::get('booking_id');
-        $patient_id             = Input::get('patient_id');
-
-        $clsBooking             = new BookingModel();
-        $clsClinic              = new ClinicModel();
-        $data['clinics']        = $clsClinic->get_list_clinic();
-        $clsEquipment           = new EquipmentModel();
-        $data['equipments']     = $clsEquipment->get_list();
-        $clsFacility            = new FacilityModel();
-        $data['facilities']     = $clsFacility->list_facility_all();
-        $clsUser                = new UserModel();
-        $data['doctors']        = $clsUser->get_by_belong([1]);
-        $data['hygienists']     = $clsUser->get_by_belong([2,3]);
-        $data['booking']        = $clsBooking->get_by_id($booking_id);
-
-        $data['booking_id']     = $booking_id;
-        $data['patient_id']     = Input::get('patient_id');
-
-        $clsPatient             = new PatientModel();
-        $data['patient']        = $clsPatient->get_patient_by_id($patient_id);
-        $clsService             = new ServiceModel();
-        $data['services']       = $clsService->get_list();
-        $clsTreatment1          = new Treatment1Model();
-        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
-        $clsInspection          = new InspectionModel();
-        $data['inspections']    = $clsInspection->get_list();
-        $clsInsurance           = new InsuranceModel();
-        $data['insurances']    = $clsInsurance->get_list();
+        $data                       = array();
+        $clsBooking                 = new BookingModel();
+        $clsUser                    = new UserModel();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data['booking']            = $clsBooking->get_by_id($id);
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $clsFacility                = new FacilityModel();
+        $data['facilities']         = $clsFacility->list_facility_all();
+        $clsEquipment               = new EquipmentModel();
+        $data['equipments']         = $clsEquipment->get_list();
+        $clsInspection              = new InspectionModel();
+        $data['inspections']        = $clsInspection->get_list();
+        $clsInsurance               = new InsuranceModel();
+        $data['insurances']         = $clsInsurance->get_list();
+        $data['booking_id']         = $id;
         return view('backend.ortho.bookings.booking_regist', $data);
     }
 
 
-    public function postRegist()
+    public function postRegist($id)
     {
         $clsBooking                 = new BookingModel();
-        $patient_id                 = Input::get('patient_id');
-        $booking_id                 = Input::get('booking_id');
+        $s_1_kind = Input::get('service_1');
+        $s1k = explode('#', $s_1_kind);
+        $service_1          = $s1k[0];
+        $s1_kind            = str_split($s1k[1], 3);
+        $service_1_kind     = $s1_kind[1];
+
+        $s_2_kind = Input::get('service_2');
+        $s2k = explode('#', $s_2_kind);
+        $service_2          = $s2k[0];
+        $s2_kind            = str_split($s2k[1], 3);
+        $service_2_kind     = $s2_kind[1];
+
         $dataInput = array(
                 'facility_id'               => Input::get('facility_id'),
                 'doctor_id'                 => Input::get('doctor_id'),
                 'hygienist_id'              => Input::get('hygienist_id'),
                 'equipment_id'              => Input::get('equipment_id'),
-                'service_1'                 => Input::get('service_1'),
-                'service_2'                 => Input::get('service_2'),
-                'inspection_id'             => Input::get('inspection_id'),
+                'service_1'                 => $service_1,
+                'service_1_kind'            => $service_1_kind,
+                'service_2'                 => $service_2,
+                'inspection_id'             => $service_2_kind,
                 'insurance_id'              => Input::get('insurance_id'),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
                 'booking_status'            => Input::get('booking_status'),
@@ -255,7 +271,7 @@ class BookingController extends BackendController
                 'last_user'                 => Auth::user()->id
             );
 
-        if ( $clsBooking->update($booking_id, $dataInput) ) {
+        if ( $clsBooking->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.result.list');
         } else {

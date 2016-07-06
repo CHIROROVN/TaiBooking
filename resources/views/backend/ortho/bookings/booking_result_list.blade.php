@@ -50,7 +50,7 @@
               </td>
               <td align="center">
                 <input onclick="location.href='booking-daily.html'" value="予約簿の表示" type="button" class="btn btn-xs btn-page"></td>
-                <td align="center"><input onclick="location.href='{{route('ortho.bookings.booking.regist',['?booking_id='.$booking->booking_id .'&patient_id='.$booking->patient_id])}}'" value="予約の登録" type="button" class="btn btn-xs btn-page"/></td>
+                <td align="center"><input onclick="location.href='{{route('ortho.bookings.booking.regist', $booking->booking_id)}}'" value="予約の登録" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
           @endforeach
         @endif

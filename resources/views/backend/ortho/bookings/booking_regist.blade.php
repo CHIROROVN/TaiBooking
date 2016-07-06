@@ -9,11 +9,11 @@
       <table class="table table-bordered">
         <tr>
           <td class="col-title"><label for="textName">患者名</label></td>
-          <td>
+          <td><label>{{@$patient->p_no}} {{@$patient->p_name}}</label><br>
           <input type="hidden" id="booking_id" name="booking_id" class="form-control" value="{{$booking_id}}"/>
           <input type="hidden" id="patient_id" name="patient_id" class="form-control" value="{{$patient_id}}"/>
 
-          <input type="text" id="p_id" class="form-control" value="{{@$patient->p_no}} {{@$patient->p_name}}" readonly/>
+          <!-- <input type="text" id="p_id" disabled class="form-control" value="{{@$patient->p_no}} {{@$patient->p_name}}"/> -->
             <input type="button" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{ route('ortho.bookings.booking.1st.regist') }}'" style="margin-top: 5px;">
           </td>
         </tr>

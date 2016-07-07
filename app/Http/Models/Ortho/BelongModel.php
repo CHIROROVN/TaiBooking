@@ -29,6 +29,12 @@ class BelongModel
         return $results;
     }
 
+    public function get_for_select()
+    {
+        $db = DB::table($this->table)->select('belong_id', 'belong_name', 'belong_kind')->where('last_kind', '<>', DELETE)->orderBy('belong_sort_no', 'asc')->get();
+        return $db;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

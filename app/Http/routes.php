@@ -196,7 +196,6 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	Route::get('shifts/list-edit', ['as' => 'ortho.shifts.list_edit', 'uses' => 'ShiftController@getSListEdit']);
 	Route::post('shifts/list-edit', ['as' => 'ortho.shifts.list_edit', 'uses' => 'ShiftController@postSListEdit']);
-	// Route::get('shifts/list-edit/ajax/get-date', ['as' => 'ortho.shifts.list.edit.get.date', 'uses' => 'ShiftController@getDate']);
 
 	//Facility
 	Route::get('clinics/{clinic_id}/facility', ['as' => 'ortho.facilities.index', 'uses' => 'FacilityController@index']);

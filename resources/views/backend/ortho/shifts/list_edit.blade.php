@@ -8,19 +8,18 @@
         <div class="row content content--list">
           <h1>シフト表</h1>
 
-{!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
           <div class="fillter">
             <div class="col-md-12" style="text-align:center;">
-              <!-- year -->
-              <input type="hidden" name="year" id="input-year" value="{{ $yearNow }}">
-              <!-- month -->
-              <input type="hidden" name="month" id="input-month" value="{{ $monthNow }}">
 
-              <input type="button" class="btn btn-sm btn-page no-border" name="prev" id="prev" value="&lt;&lt; 前月">&nbsp;&nbsp;&nbsp;&nbsp;
+              <button type="submit" class="btn btn-sm btn-page no-border" name="prev" value="" id="prev">&lt;&lt; 前月</button>&nbsp;&nbsp;&nbsp;&nbsp;
               <span id="text-year">{{ $yearNow }}</span>年<span id="text-month">{{ $monthNow }}</span>月&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" class="btn btn-sm btn-page no-border" name="next" id="next" value="翌月 &gt;&gt;">
+              <button type="submit" class="btn btn-sm btn-page no-border" name="next" value="" id="next">翌月 &gt;&gt;</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
           </div>
+</form>
+
+{!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
 
           <div class="row content-page">
             <div class="row">
@@ -32,371 +31,60 @@
             <table class="table table-bordered">
               <tr class="col-title">
                 <td>&nbsp;</td>
-                <td colspan="2">Dr</td>
-                <td colspan="2">衛生士</td>
-                <td colspan="2">滅菌</td>
-                <td colspan="2">放射線</td>
-                <td colspan="2">受付</td>
-                </tr>
+                @foreach ( $belongUsers as $belongUser )
+                  @if ( isset($belongUser->belong_users) )
+                  <?php $colspan = (isset($belongUser->belong_users)) ? count($belongUser->belong_users) : 1; ?>
+                  <td colspan="{{ $colspan }}">{{ $belongUser->belong_name }}</td>
+                  @endif
+                @endforeach
+              </tr>
+
               <tr class="col-title">
                 <td>&nbsp;</td>
-                <td>田井</td>
-                <td>高木雅</td>
-                <td>会津</td>
-                <td>吉末</td>
-                <td>榊山</td>
-                <td>大森</td>
-                <td>金道</td>
-                <td>大磐</td>
-                <td>石川</td>
-                <td>平田</td>
+                @foreach ( $belongUsers as $belongUser )
+                  @if ( isset($belongUser->belong_users) )
+                    @foreach( $belongUser->belong_users as $u )
+                    <td>{{ $u->u_name }}</td>
+                    @endforeach
+                  @endif
+                @endforeach
               </tr>
+
+              <!-- format value ==> -->
+              <!-- ==> u_id|shift_date|linic_id -->
+              <?php $selected = ''; ?>
+              @foreach ( $days as $dayKey => $dayValue )
+              <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
               <tr>
-                <td>6/1(水)</td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
+                <td>{{ $dayValue }}</td>
+                @foreach ( $users as $user )
+                <td>
+                  <select name="select[]" class="form-control form-control--small">
+                  <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
+                  <?php
+                  if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {
+                    $selected = 'selected';
+                  } 
+                  ?>
+                  <option value="{{ $user->id }}|{{ $fullDate }}|-1" {{ $selected }}>休み</option>
+                  @foreach ( $clinics as $clinic )
+                  <?php
+                  if ( isset($shifts[$user->id . '|' . $fullDate . '|' . $clinic->clinic_id]) ) {
+                    $selected = 'selected';
+                  } else {
+                    $selected = '';
+                  }
+                  ?>
+                  <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
+                  @endforeach
+                  </select>
+                </td>
+                @endforeach
               <tr>
-                <td>6/2(木)</td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select2" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              <tr>
-                <td>6/3(金)</td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select3" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              <tr>
-                <td>6/4(土)</td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select4" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              <tr>
-                <td>6/5(日)</td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select5" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              <tr>
-                <td>6/6(月)</td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select6" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              <tr>
-                <td>6/7(火)</td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select7" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              <tr>
-                <td>6/8(水)</td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                <td><select name="select8" class="form-control form-control--small">
-                  <option>▼選択</option>
-                  <option>Clinic1</option>
-                </select></td>
-                </tr>
-              </table>
-            </div>
+              @endforeach
+
+            </table>
+          </div>
           
           <div class="row content-page">
             <div class="row">
@@ -418,15 +106,15 @@
 
       // prev
       $("#prev").click(function(){
-        getDate(yearNow, monthNow - 1);
+        getDate(yearNow, monthNow - 1, $(this));
       });
       
       // next
       $("#next").click(function(){
-        getDate(yearNow, monthNow + 1);
+        getDate(yearNow, monthNow + 1, $(this));
       });
 
-      function getDate(year, month) {
+      function getDate(year, month, obj) {
         monthNow = parseInt(month);
         yearNow = parseInt(year);
         
@@ -446,10 +134,11 @@
         if ( monthNow < 10 ) {
           var monthNowShow = String('0') + String(monthNow);
         }
-        $('#text-year').html(yearNow);
-        $('#text-month').html(monthNowShow);
-        $('#input-year').val(yearNow);
-        $('#input-month').val(monthNowShow);
+        // $('#text-year').html(yearNow);
+        // $('#text-month').html(monthNowShow);
+        // $('#input-year').val(yearNow);
+        // $('#input-month').val(monthNowShow);
+        obj.val(yearNow + '-' + monthNowShow);
       }
     });
   </script>

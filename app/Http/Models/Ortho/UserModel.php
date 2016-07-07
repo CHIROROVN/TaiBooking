@@ -38,9 +38,15 @@ class UserModel
     }
 
 
-    public function get_for_select()
+    public function get_for_select($where = array())
     {
-        $db = DB::table($this->table)->select('id', 'u_name')->where('last_kind', '<>', DELETE)->get();
+        $db = DB::table($this->table)->select('id', 'u_name', 'u_human_flg', 'u_belong')->where('last_kind', '<>', DELETE);
+
+        if ( !empty($where['u_human_flg']) ) {
+            $db = $db->where('u_human_flg', $where['u_human_flg']);
+        }
+
+        $db = $db->get();
         return $db;
     }
 

@@ -72,3 +72,27 @@
 	function clinic_service($service_id){
 		return App\Http\Controllers\Backend\Ortho\ClinicServiceController::get_all_by_sid($service_id);
 	}
+
+
+	/**
+	* get array number day by month current
+	*/
+	function getDay($month)
+	{
+		$year_current       = date('Y');
+		$day_arr            = array();
+		if ( $month != 0 ) {
+			$number             = date('t', mktime(0, 0, 0, $month, 1, $year_current));
+			for ( $i = 1; $i <= $number; $i++ ) {
+				$day_arr[$i] = $i;
+			}
+		}
+
+		return $day_arr;
+	}
+
+
+	function testFirst()
+	{
+		return 11111;
+	}

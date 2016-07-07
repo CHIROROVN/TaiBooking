@@ -79,4 +79,30 @@ class ShiftModel
         return DB::table($this->table)->where('shift_id', $id)->update($data);
     }
 
+    public function update_by_uid_shiftdate($u_id, $shift_date, $data)
+    {
+        return DB::table($this->table)
+                    ->where('u_id', $u_id)
+                    ->where('shift_date', $shift_date)
+                    ->where('last_kind', '<>', DELETE)
+                    ->update($data);
+    }
+
+    public function check_exist_by_uid_shiftdate($u_id, $shift_date)
+    {
+        $db = DB::table($this->table)
+                    ->where('u_id', $u_id)
+                    ->where('shift_date', $shift_date)
+                    ->where('last_kind', '<>', DELETE)
+                    ->first();
+
+        if ( count($db) > 0 ) {
+            // exist
+            return true;
+        }
+
+        // not exist
+        return false;
+    }
+
 }

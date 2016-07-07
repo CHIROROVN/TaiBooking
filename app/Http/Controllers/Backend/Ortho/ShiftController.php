@@ -4,6 +4,7 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\Ortho\ShiftModel;
+use App\Http\Models\Ortho\ClinicModel;
 
 use Auth;
 use Form;
@@ -22,10 +23,13 @@ class ShiftController extends BackendController
     }
 
 
-    public function getSListEdit(){
-        $data = array();
-        $data['yearNow'] = date('Y');
-        $data['monthNow'] = date('m');
+    public function getSListEdit()
+    {
+        $clsClinic              = new ClinicModel();
+        $data                   = array();
+        $data['clinics']        = $clsClinic->get_for_select();
+        $data['yearNow']        = date('Y');
+        $data['monthNow']       = date('m');
 
         return view('backend.ortho.shifts.list_edit', $data);
     }

@@ -18,8 +18,8 @@
             @if(!empty(Auth::user()->u_power2))
             <h2>予約管理</h2>
             <ul>
-              <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>新患の予約を取る</a></li>
-              <li><a href="{{route('ortho.bookings.booking_search')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>次回の予約を取る</a></li>
+              <li><a href="{{ route('ortho.bookings.booking_search') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>新患の予約を取る</a></li>
+              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>来院履歴登録～次回の予約を取る</a></li>
               <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
               <li><a href="{{route('ortho.bookings.list1_list')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>TEL待ちリストから予約を取る</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>急患の予約を取る</a></li>
@@ -49,7 +49,7 @@
             <h2>月1回の予約業務前処理</h2>
             <ul>
               <li><a href="{{route('ortho.shifts.list_edit')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>シフトの新規登録・一覧・変更・削除</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿テンプレートの適用・個別編集</a></li>
+              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿テンプレートの適用と個別調整</a></li>
             </ul>
             @endif
 
@@ -57,7 +57,7 @@
             @if(!empty(Auth::user()->u_power6))
             <h2>医院情報管理</h2>
             <ul>
-              <li><a href="{{ route('ortho.clinics.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>医院の新規登録・一覧・変更・削除・設備管理・予約簿テンプレート管理・予約枠管理</a></li>
+              <li><a href="{{ route('ortho.clinics.index') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>医院の新規登録・一覧・変更・削除・設備管理・業務枠管理・予約簿テンプレート管理</a></li>
             </ul>
             @endif
 

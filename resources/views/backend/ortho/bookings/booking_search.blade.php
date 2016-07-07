@@ -304,8 +304,8 @@
  -->
           <div class="row margin-bottom">
             <div class="col-md-12 text-center">
-              <input name="ボタン" onclick="location.href='booking_result_calendar.html'" value="検索開始（カレンダー表示）" type="button" class="btn btn-sm btn-page mar-right">
-              <input name="ボタン2" onclick="location.href='booking_result_list.html'" value="検索開始（一覧表表示）" type="button" class="btn btn-sm btn-page mar-right">
+              <input name="ボタン" onclick="location.href='{{route('ortho.bookings.booking.result.calendar')}}'" value="検索開始（カレンダー表示）" type="button" class="btn btn-sm btn-page mar-right">
+              <input name="ボタン2" onclick="location.href='{{route('ortho.bookings.booking.result.list')}}'" value="検索開始（一覧表表示）" type="button" class="btn btn-sm btn-page mar-right">
               <input name="button" id="button" value="条件クリア" type="reset" class="btn btn-sm btn-page mar-right">
           </div>
           </div>

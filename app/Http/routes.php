@@ -251,6 +251,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	// bookings
 	Route::any('bookings/booking-monthly', ['as' => 'ortho.bookings.booking.monthly', 'uses' => 'BookingController@bookingMonthly']);
+
+	Route::any('bookings/booking-daily', ['as' => 'ortho.bookings.booking.daily', 'uses' => 'BookingController@bookingDaily']);
 	
 	Route::any('bookings/booking-result-calendar', ['as' => 'ortho.bookings.booking.result.calendar', 'uses' => 'BookingController@bookingResultCalendar']);
 	

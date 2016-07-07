@@ -66,6 +66,15 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_monthly', $data);
     }
 
+        /**
+     * get view Dailily
+     */
+    public function bookingDaily()
+    {
+        $data                   = array();
+        return view('backend.ortho.bookings.booking_daily', $data);
+    }
+
 
     /**
      * get view bookingResultCalendar

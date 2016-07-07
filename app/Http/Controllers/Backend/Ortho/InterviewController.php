@@ -468,6 +468,27 @@ class InterviewController extends BackendController
         // return redirect()->route('ortho.interviews.index');
     }
 
+
+    public function getDetail($id)
+    {
+        $clsInterview           = new InterviewModel();
+        $data['interview']      = $clsInterview->get_by_id($id);
+        $data['prefs']          = Config::get('constants.PREF');
+        $data['q5']             = array(
+            '1'                 => '非常に気になる',
+            '2'                 => '少し気になる',
+            '3'                 => 'それ程気にならない',
+            '4'                 => '全く気にならない',
+            '5'                 => '当てはまらない',
+        );
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';die;
+
+        return view('backend.ortho.interviews.detail', $data);
+    }
+
+
     /**
      * 
      */

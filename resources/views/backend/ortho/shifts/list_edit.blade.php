@@ -25,7 +25,7 @@
             <div class="row">
               <div class="col-md-12 text-center">
                 <input value="保存する" type="submit" name="save" class="btn btn-sm btn-page">&nbsp;&nbsp;&nbsp;&nbsp;
-                <input value="元に戻す" type="submit" name="back_save" class="btn btn-sm btn-page">
+                <input value="元に戻す" type="reset" name="back_save" class="btn btn-sm btn-page back-save">
               </div>
             </div>
             <table class="table table-bordered">
@@ -89,7 +89,8 @@
           <div class="row content-page">
             <div class="row">
               <div class="col-md-12 text-center">
-                <input name="save" value="保存する" type="submit" class="btn btn-sm btn-page">&nbsp;&nbsp;&nbsp;&nbsp;<input name="back_save" value="元に戻す" type="submit" class="btn btn-sm btn-page">
+                <input name="save" value="保存する" type="submit" class="btn btn-sm btn-page">&nbsp;&nbsp;&nbsp;&nbsp;
+                <input name="back_save" value="元に戻す" type="reset" class="btn btn-sm btn-page back-save">
               </div>
             </div>
           </div>

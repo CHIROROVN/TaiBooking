@@ -313,7 +313,7 @@ class BookingController extends BackendController
         $data['clinics']            = $clsClinic->get_for_select();
         $data['booking']            = $clsBooking->get_by_id($id);
 
-        return view('backend.ortho.bookings.booking_change_date', $data);
+        return view('backend.ortho.bookings.booking_change', $data);
     }
 
 
@@ -338,6 +338,12 @@ class BookingController extends BackendController
         } else {
             return redirect()->route('ortho.bookings.booking.result.list');
         }
+    }
+
+    //Booking Search
+    public function bookingSearch(){
+        $data           = array();
+        return view('backend.ortho.bookings.booking_search', $data);
     }
 
     public function bookingResultList()

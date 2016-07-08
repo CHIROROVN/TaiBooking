@@ -11,6 +11,8 @@ use App\User;
 use App\Http\Models\Ortho\InterviewModel;
 use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\BookingModel;
+use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\UserModel;
 
 use Form;
 use Html;
@@ -472,6 +474,8 @@ class InterviewController extends BackendController
     public function getDetail($id)
     {
         $clsInterview           = new InterviewModel();
+        $clsClinic              = new ClinicModel();
+        $clsUser                = new UserModel();
         $data['interview']      = $clsInterview->get_by_id($id);
         $data['prefs']          = Config::get('constants.PREF');
         $data['q5']             = array(
@@ -481,9 +485,22 @@ class InterviewController extends BackendController
             '4'                 => '全く気にならない',
             '5'                 => '当てはまらない',
         );
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';die;
+        $clinics                = $clsClinic->get_for_select();
+        $tmpClinics = array();
+        foreach ( $clinics as $clinic ) {
+            $tmpClinics[$clinic->clinic_id] = $clinic;
+        }
+        $data['clinics'] = $tmpClinics;
+
+        $users                  = $clsUser->get_for_select();
+        $tmpUsers = array();
+        foreach ( $users as $user ) {
+            $tmpUsers[$user->id] = $user;
+        }
+        $data['users'] = $tmpUsers;
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';die;
 
         return view('backend.ortho.interviews.detail', $data);
     }

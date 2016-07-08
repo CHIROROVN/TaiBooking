@@ -63,6 +63,12 @@ class InterviewModel
         return $results;
     }
 
+    public function get_by_patient_id($patient_id)
+    {
+        $results = DB::table($this->table)->where('patient_id', $patient_id)->where('t_1st.last_kind', '<>', DELETE)->first();
+        return $results;
+    }
+
     public function update($id, $data)
     {
     	$results = DB::table($this->table)->where('first_id', $id)->update($data);

@@ -1,11 +1,38 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
+
 <div class="content-page">
+    <?php
+        $first_id = 0;
+        if ( isset($interview->first_id) ) {
+            $first_id = $interview->first_id;
+        }
+    ?>
   <h3>問診票の参照</h3>
   <div class="text-right">
-    <input onclick="location.href='interview_edit.html'" value="編集する" class="btn btn-sm btn-page btn-mar-right" type="button">
-    <input onclick="location.href='interview_delete_cnf.html'" value="削除する" class="btn btn-sm btn-page" type="button">
+    <input onclick="location.href='{{ route('ortho.interviews.edit', $first_id) }}'" value="編集する" class="btn btn-sm btn-page btn-mar-right" type="button">
+    <input value="削除する" class="btn btn-sm btn-page" type="button" data-toggle="modal" data-target="#myModal">
+    <!-- Trigger the modal with a button -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{ trans('common.modal_header_delete') }}</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{ trans('common.modal_content_delete') }}</p>
+        </div>
+        <div class="modal-footer">
+          <a href="{{ route('ortho.interviews.delete', [ $first_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+          <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- end modal -->
   </div>
   <table class="table table-bordered interview-regist treatment2-list">
     <tbody>
@@ -16,7 +43,7 @@
         <td width="25%">問診票記入場所</td>
         <td>
           <div class="row">
-            <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_1_clinic] }}</div>
+            <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_1_clinic]->clinic_name }}</div>
             <div class="col-md-6 col-lg-6">日付：テスト-{{ @$interview->q0_1_date }}</div>
           </div>
         </td>
@@ -25,21 +52,21 @@
         <td>相談を行った場所</td>
         <td>
           <div class="row">
-            <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_2_clinic] }}</div>
+            <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_2_clinic]->clinic_name }}</div>
             <div class="col-md-6 col-lg-6">日付：テスト-{{ @$interview->q0_2_date }}</div>
           </div>
         </td>
       </tr>
       <tr>
         <td>相談担当者</td>
-        <td>{{ @$users[$interview->q0_3_user] }}</td>
+        <td>{{ @$users[$interview->q0_3_user]->u_name }}</td>
       </tr>
       <tr>
         <td>紹介元医院</td>
         <td>
           <div class="row">
-            <div class="col-md-6 col-lg-6">たい矯正歯科</div>
-            <div class="col-md-6 col-lg-6">日付：テスト-日付</div>
+            <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_4_clinic]->clinic_name }}</div>
+            <div class="col-md-6 col-lg-6">日付：テスト-{{ @$interview->q0_4_date }}</div>
           </div>
         </td>
       </tr>
@@ -596,15 +623,28 @@
         <td colspan="2">
             @if ( isset($interview->q7_kind) && $interview->q7_kind == 1 )
             はい<br>
-              @if ( isset($interview->q7_sq_1) && $interview->q7_sq_1 == 1 )
-              心臓病
-              @elseif ( isset($interview->q7_sq_2) && $interview->q7_sq_2 == 1 )
-              肝臓病
-              @elseif ( isset($interview->q7_sq_3) && $interview->q7_sq_3 == 1 )
-              脳梗塞
-              @elseif ( isset($interview->q7_sq_4) && $interview->q7_sq_4 == 1 )
-              その他 病名： {{ @$interview->q7_sq }}
-              @endif
+              <div class="col-md-12 col-lg-12">
+                  @if ( isset($interview->q7_sq_1) && $interview->q7_sq_1 == 1 )
+                  <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <label class="font-weight-nomal"> 心臓病</label>&nbsp;&nbsp;
+                  </div>
+                  @endif
+                  @if ( isset($interview->q7_sq_2) && $interview->q7_sq_2 == 1 )
+                  <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <label class="font-weight-nomal"> 肝臓病</label>&nbsp;&nbsp;
+                  </div>
+                  @endif
+                  @if ( isset($interview->q7_sq_3) && $interview->q7_sq_3 == 1 )
+                  <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <label class="font-weight-nomal"> 脳梗塞&nbsp;&nbsp;</label>&nbsp;&nbsp;
+                  </div>
+                  @endif
+                  @if ( isset($interview->q7_sq_4) && $interview->q7_sq_4 == 1 )
+                  <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <label class="font-weight-nomal"> その他 病名：{{ @$interview->q7_sq }}&nbsp;&nbsp;</label>&nbsp;&nbsp;
+                  </div>
+                  @endif
+              </div>
             @elseif ( isset($interview->q7_kind) && $interview->q7_kind == 2 )
             いいえ
             @endif

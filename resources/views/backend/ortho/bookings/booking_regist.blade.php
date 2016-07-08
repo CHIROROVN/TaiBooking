@@ -7,11 +7,28 @@
       <div class="container">
         <div class="row content-page">
           <h3>予約管理　＞　予約の新規登録</h3>
+            <div class="msg-alert-action margin-top-15">
+              @if ($message = Session::get('success'))
+                <div class="alert alert-success  alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+                </div>
+              @elseif($message = Session::get('danger'))
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+                </div>
+              @endif
+            </div>
           <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>
               <td>{{$booking->p_no}} {{$booking->p_name}} &nbsp;
-                <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='1st_booking_regist.html'">
+                <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.1st.regist',$booking->booking_id)}}'">
               </td>
             </tr>
             <tr>
@@ -24,7 +41,7 @@
               <td>{{$booking->clinic_name}}</td>
             </tr>
             <tr>
-              <td class="col-title"><label for="cbChair">チェアー</label></td>
+              <td class="col-title"><label for="facility_id">チェアー</label></td>
               <td><select name="facility_id" id="facility_id" class="form-control">
                 <option value="">▼選択</option>
                   @if(count($facilities) > 0)
@@ -153,34 +170,34 @@
             <tr>
               <td class="col-title">予約ステータス</td>
               <td>
-            <div class="radio">
-              <label><input name="booking_status" value="1" type="radio" @if($booking->booking_status == 1) checked @endif>通常</label>
-            </div>
-            <div class="radio">
-              <label><input name="booking_status" value="2" type="radio" @if($booking->booking_status == 2) checked @endif>「TEL待ち」です</label>
-            </div>
-            <div class="radio">
-              <label>
-                <input name="booking_status" value="3" type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
-                <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
-                <?php $year =  date('Y', strtotime($booking->booking_date))?>
-                  <option value="" selected>▼選択</option>
-                  <option value="{{$year}}01" @if($year.'01' == $booking->booking_recall_ym) selected @endif>1ヶ月後</option>
-                  <option value="{{$year}}02" @if($year.'02' == $booking->booking_recall_ym) selected @endif>2ヶ月後</option>
-                  <option value="{{$year}}03" @if($year.'03' == $booking->booking_recall_ym) selected @endif>3ヶ月後</option>
-                  <option value="{{$year}}04" @if($year.'04' == $booking->booking_recall_ym) selected @endif>4ヶ月後</option>
-                  <option value="{{$year}}05" @if($year.'05' == $booking->booking_recall_ym) selected @endif>5ヶ月後</option>
-                  <option value="{{$year}}06" @if($year.'06' == $booking->booking_recall_ym) selected @endif>6ヶ月後</option>
-                </select>
-              </label>
-            </div>
-            <div class="radio">
-              <label><input name="booking_status" value="4" type="radio" @if($booking->booking_status == 4) checked @endif>未作成技工物TEL待ち</label>
-            </div>
-            <div class="radio">
-              <label><input name="booking_status" value="5" type="radio" @if($booking->booking_status == 5) checked @endif>作成済み技工物キャンセル</label>
-            </div>
-          </td>
+                <div class="radio">
+                  <label><input name="booking_status" value="1" type="radio" @if($booking->booking_status == 1) checked @endif>通常</label>
+                </div>
+                <div class="radio">
+                  <label><input name="booking_status" value="2" type="radio" @if($booking->booking_status == 2) checked @endif>「TEL待ち」です</label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input name="booking_status" value="3" type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
+                    <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
+                    <?php $year =  date('Y', strtotime($booking->booking_date))?>
+                      <option value="" selected>▼選択</option>
+                      <option value="{{$year}}01" @if($year.'01' == $booking->booking_recall_ym) selected @endif>1ヶ月後</option>
+                      <option value="{{$year}}02" @if($year.'02' == $booking->booking_recall_ym) selected @endif>2ヶ月後</option>
+                      <option value="{{$year}}03" @if($year.'03' == $booking->booking_recall_ym) selected @endif>3ヶ月後</option>
+                      <option value="{{$year}}04" @if($year.'04' == $booking->booking_recall_ym) selected @endif>4ヶ月後</option>
+                      <option value="{{$year}}05" @if($year.'05' == $booking->booking_recall_ym) selected @endif>5ヶ月後</option>
+                      <option value="{{$year}}06" @if($year.'06' == $booking->booking_recall_ym) selected @endif>6ヶ月後</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label><input name="booking_status" value="4" type="radio" @if($booking->booking_status == 4) checked @endif>未作成技工物TEL待ち</label>
+                </div>
+                <div class="radio">
+                  <label><input name="booking_status" value="5" type="radio" @if($booking->booking_status == 5) checked @endif>作成済み技工物キャンセル</label>
+                </div>
+              </td>
             </tr>
             <tr>
               <td class="col-title"><label for="booking_memo">備考</label></td>

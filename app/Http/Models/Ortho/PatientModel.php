@@ -122,4 +122,9 @@ class PatientModel
                         ->where('p_id', '=', $id)
                         ->first();
     }
+
+    public function get_max_pid()
+    {
+        return DB::table($this->table)->max('p_id');
+    }
 }

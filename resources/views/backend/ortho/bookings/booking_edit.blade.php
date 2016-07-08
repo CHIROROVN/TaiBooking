@@ -74,14 +74,14 @@
               <td>
                 <select name="service_1" id="service_1" class="form-control">
                   <option value="">▼選択</option>
-                  <optgroup label="Services">
+                  <optgroup label="業務名">
                       @if(count($services) > 0)
                         @foreach($services as $key11 => $service11)
                         <option value="{{$key11}}#sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
                       @endforeach
                       @endif
                   </optgroup>
-                  <optgroup label="Treatments">
+                  <optgroup label="治療内容">
                         @if(count($treatment1s) > 0)
                           @foreach($treatment1s as $key12 => $treatment12)
                             <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
@@ -96,14 +96,14 @@
               <td>
                 <select name="service_2" id="service_2" class="form-control">
                   <option value="">▼選択</option>
-                  <optgroup label="Services">
+                  <optgroup label="業務名">
                       @if(count($services) > 0)
                         @foreach($services as $key21 => $service21)
                         <option value="{{$key21}}#sk21" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
                       @endforeach
                       @endif
                   </optgroup>
-                  <optgroup label="Treatments">
+                  <optgroup label="治療内容">
                         @if(count($treatment1s) > 0)
                           @foreach($treatment1s as $key22 => $treatment22)
                             <option value="{{$key22}}#sk22" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>

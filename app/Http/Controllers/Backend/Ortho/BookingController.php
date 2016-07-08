@@ -18,6 +18,8 @@ use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\EquipmentModel;
 use App\Http\Models\Ortho\InspectionModel;
 use App\Http\Models\Ortho\InsuranceModel;
+use App\Http\Models\Ortho\InterviewModel;
+
 use Form;
 use Html;
 use Input;
@@ -216,7 +218,6 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking_edit', $id);
         }
 
-        
     }
 
     public function getRegist($id)
@@ -290,14 +291,110 @@ class BookingController extends BackendController
         }
     }
 
-    public function get1stRegist()
+    public function get1stRegist($id)
     {
-        return view('backend.ortho.bookings.booking_1st_regist');
+        $data                       = array();
+        $clsBooking                 = new BookingModel();
+        $clsUser                    = new UserModel();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data['booking']            = $clsBooking->get_by_id($id);
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $clsFacility                = new FacilityModel();
+        $data['facilities']         = $clsFacility->list_facility_all();
+        $clsEquipment               = new EquipmentModel();
+        $data['equipments']         = $clsEquipment->get_list();
+        $clsInspection              = new InspectionModel();
+        $data['inspections']        = $clsInspection->get_list();
+        $clsInsurance               = new InsuranceModel();
+        $data['insurances']         = $clsInsurance->get_list();
+        $data['booking_id']         = $id;
+        return view('backend.ortho.bookings.booking_1st_regist', $data);
     }
 
-    public function post1stRegist()
-    {
+    public function post1stRegist($id)
+    { 
+        //echo "<pre>"; print_r(Input::all());die;
+        $clsPatient             = new PatientModel();
+        $p_max                  = $clsPatient->get_max_pid();
+        $p_id                   = $p_max + 1;
 
+        $patientInst = array(
+            'p_name'            => Input::get('p_name'),
+            'p_name_kana'       => Input::get('p_name_kana'),
+            'p_sex'             => Input::get('p_sex'),
+            'p_tel'             => Input::get('p_tel'),
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => INSERT,
+            'last_ipadrs'       => CLIENT_IP_ADRS,
+            'last_user'         => Auth::user()->id,
+            );
+
+        $validator                  = Validator::make($patientInst, $clsPatient->Rules(), $clsPatient->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.bookings.booking.1st.regist', [ $id ])->withErrors($validator)->withInput();
+        }
+        $clsPatient->insert($patientInst);
+
+        if(!empty(Input::get('insert_to_tbl_first'))){
+            $clsInterview           = new InterviewModel();
+            $interviewInst = array(
+                    'patient_id'        => $p_id,
+                    'last_date'         => date('y-m-d H:i:s'),
+                    'last_kind'         => INSERT,
+                    'last_ipadrs'       => CLIENT_IP_ADRS,
+                    'last_user'         => Auth::user()->id
+                );
+            $clsInterview->insert($interviewInst);
+        }
+
+        $clsBooking                 = new BookingModel();
+        $s_1_kind = Input::get('service_1');
+        $s1k = explode('#', $s_1_kind);
+        $service_1          = $s1k[0];
+        $s1_kind            = str_split($s1k[1], 3);
+        $service_1_kind     = $s1_kind[1];
+
+        $s_2_kind = Input::get('service_2');
+        $s2k = explode('#', $s_2_kind);
+        $service_2          = $s2k[0];
+        $s2_kind            = str_split($s2k[1], 3);
+        $service_2_kind     = $s2_kind[1];
+
+        $dataInput = array(
+                'patient_id'                => $p_id,
+                'facility_id'               => Input::get('facility_id'),
+                'doctor_id'                 => Input::get('doctor_id'),
+                'hygienist_id'              => Input::get('hygienist_id'),
+                'equipment_id'              => Input::get('equipment_id'),
+                'service_1'                 => $service_1,
+                'service_1_kind'            => $service_1_kind,
+                'service_2'                 => $service_2,
+                'service_2_kind'            => $service_2_kind,
+                'inspection_id'             => Input::get('inspection_id'),
+                'insurance_id'              => Input::get('insurance_id'),
+                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+                'booking_status'            => Input::get('booking_status'),
+                'booking_recall_ym'         => Input::get('booking_recall_ym'),
+                'booking_memo'              => Input::get('booking_memo'),
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => UPDATE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+
+        if ( $clsBooking->update($id, $dataInput) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+            return redirect()->route('ortho.bookings.booking.regist', [$id]);
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+            return redirect()->route('ortho.bookings.booking.1st.regist', [$id]);
+        }
     }
 
 
@@ -375,7 +472,6 @@ class BookingController extends BackendController
                 $condition['week_later'] = Input::get('week_later');
             }
         }
-        //echo "<pre>";print_r($condition['week_later']);die;
         if(!empty(Input::get('clinic_service_name')))
             $condition['clinic_service_name']         = Input::get('clinic_service_name');
         return redirect()->route('ortho.bookings.booking.result.list', $condition);

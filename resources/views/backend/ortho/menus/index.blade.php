@@ -38,7 +38,7 @@
 
             <h2>メモ管理</h2>
             <ul>
-              <li><a href="memo_calendar.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>カレンダー表示・メモの新規登録・変更・削除</a></li>
+              <li><a href="{{ route('ortho.memos.calendar') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>カレンダー表示・メモの新規登録・変更・削除</a></li>
             </ul>
 
           </div>

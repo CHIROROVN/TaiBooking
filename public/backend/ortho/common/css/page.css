@@ -599,3 +599,9 @@ textarea {
 .fc-basic-view .fc-body .fc-row {
   overflow: overlay;
 }
+
+.memo-calendar .fc-event {
+  background-color: transparent;
+  border: none;
+  color: #257272;
+}

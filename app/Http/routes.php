@@ -293,6 +293,16 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	// Route::get('bookings/delete/{id}', ['as' => 'ortho.bookings.delete', 'uses' => 'BookingController@getDelete']);
 
 
+	// memos
+	Route::any('memos-calendar', ['as' => 'ortho.memos.calendar', 'uses' => 'MemoController@calendar']);
+	Route::get('memos/regist', ['as' => 'ortho.memos.regist', 'uses' => 'MemoController@getRegist']);
+	Route::post('memos/regist', ['as' => 'ortho.memos.regist', 'uses' => 'MemoController@postRegist']);
+	Route::get('memos/edit/{id}', ['as' => 'ortho.memos.edit', 'uses' => 'MemoController@getEdit']);
+	Route::post('memos/edit/{id}', ['as' => 'ortho.memos.edit', 'uses' => 'MemoController@postEdit']);
+	Route::get('memos/delete/{id}', ['as' => 'ortho.memos.delete', 'uses' => 'MemoController@getDelete']);
+	// Route::get('memos/ajax/autocomplete-patient', ['as' => 'ortho.memos.autocomplete.patient', 'uses' => 'MemoController@AutoCompletePatient']);
+
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

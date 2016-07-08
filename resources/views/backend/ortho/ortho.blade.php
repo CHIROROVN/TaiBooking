@@ -21,6 +21,8 @@
 <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-ui.1.11.4.min.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/moment.min.js"></script>
+<script src="{{ asset('') }}public/backend/ortho/common/js/moment.js"></script>
+
 <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-datetimepicker.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/fullcalendar.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>

@@ -270,12 +270,18 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-change/{id}', ['as' => 'ortho.bookings.booking.change', 'uses' => 'BookingController@getChangeDate']);	
 	Route::post('bookings/booking-change/{id}', ['as' => 'ortho.bookings.booking.change', 'uses' => 'BookingController@postChangeDate']);
 
-	Route::any('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@bookingSearch']);
+	Route::get('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@getSearch']);
+
+	Route::post('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@postSearch']);	
 	
 	Route::get('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@getConfirm']);
 	Route::post('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@postConfirm']);
 	
 	Route::get('bookings/booking-result-list', ['as' => 'ortho.bookings.booking.result.list', 'uses' => 'BookingController@bookingResultList']);
+
+	Route::get('bookings', function(){
+		return redirect()->route('ortho.bookings.booking_search');
+	});
 
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
 	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);

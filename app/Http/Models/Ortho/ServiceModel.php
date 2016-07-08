@@ -66,6 +66,7 @@ class ServiceModel
     public function get_list()
     {
         return DB::table($this->table)
+                            //->rightJoin('t_clinic_service', 'm_service.service_id', '=', 't_clinic_service.service_id')
                             ->where('last_kind', '<>', DELETE)
                             ->orderBy('service_sort_no', 'asc')
                             ->lists('service_name', 'service_id');
@@ -79,4 +80,3 @@ class ServiceModel
                             ->get();
     }
 }
-//->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')

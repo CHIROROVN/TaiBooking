@@ -223,7 +223,7 @@ header h1 {
 }
 
 .form-control {
-  height:30px;
+  height:32px !important;
 }
 
 .fl-right {

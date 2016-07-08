@@ -1,8 +1,13 @@
 <?php
 
-	function formatDate($date=null){
+	function formatDate($date = null, $comma = null){
 		$dates = date_create($date);
-		return date_format($dates,"Y/m/d");
+		if($comma == null){
+			return date_format($dates,"Y/m/d");
+		}else{
+			return date_format($dates,"Y".$comma."m".$comma."d");
+		}
+		
 	}
 
 	function formatDateJp($date=null){
@@ -91,8 +96,3 @@
 		return $day_arr;
 	}
 
-
-	function testFirst()
-	{
-		return 11111;
-	}

@@ -341,15 +341,66 @@ class BookingController extends BackendController
     }
 
     //Booking Search
-    public function bookingSearch(){
-        $data           = array();
+    public function getSearch(){
+        $clsClinic                  = new ClinicModel();
+        $data['clinics']            = $clsClinic->get_list_clinic();
+        $clsUser                    = new UserModel();
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         return view('backend.ortho.bookings.booking_search', $data);
     }
 
+     public function postSearch(){
+
+        $condition = array();
+        if(!empty(Input::get('clinic_id')))
+            $condition['clinic_id']         = Input::get('clinic_id');
+        if(!empty(Input::get('doctor_id')))
+            $condition['doctor_id']         = Input::get('doctor_id');
+        if(!empty(Input::get('hygienist_id')))
+            $condition['hygienist_id']      = Input::get('hygienist_id');
+        if(!empty(Input::get('booking_date')))
+            $condition['booking_date'] = Input::get('booking_date');
+
+        if(!empty(Input::get('week_later'))){
+            if(Input::get('week_later') == 'week_specified'){
+            $condition['week_later'] = Input::get('week_later_option');
+            }elseif (Input::get('week_later') == 'date_picker') {
+                $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
+            }else{
+                $condition['week_later'] = Input::get('week_later');
+            }
+        }
+        //echo "<pre>";print_r($condition['week_later']);die;
+        if(!empty(Input::get('clinic_service_name')))
+            $condition['clinic_service_name']         = Input::get('clinic_service_name');
+        return redirect()->route('ortho.bookings.booking.result.list', $condition);
+     }
+
+
     public function bookingResultList()
     {
+        $where = array();
+        if(Input::get('clinic_id') != null)
+            $where['clinic_id']        = Input::get('clinic_id');
+        if(Input::get('doctor_id') != null)
+            $where['doctor_id']        = Input::get('doctor_id');
+        if(Input::get('hygienist_id') != null)
+            $where['hygienist_id']        = Input::get('hygienist_id');
+        if(Input::get('booking_date') != null)
+            $where['booking_date']        = Input::get('booking_date');
+        if(Input::get('week_later') != null)
+            $where['week_later']        = Input::get('week_later');
+        if(Input::get('clinic_service_name') != null)
+            $where['clinic_service_name']        = Input::get('clinic_service_name');
+
+
         $clsBooking                 = new BookingModel();
-        $data['bookings']           = $clsBooking->get_booking_list();
+        $data['bookings']           = $clsBooking->get_booking_list($where);
         $clsFacility                = new FacilityModel();
         $data['facilities']         = $clsFacility->list_facility_all();
         $clsTreatment1              = new Treatment1Model();

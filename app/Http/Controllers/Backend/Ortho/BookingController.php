@@ -4,7 +4,7 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
-// use Hash;
+
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ShiftModel;
@@ -27,6 +27,7 @@ use Validator;
 use URL;
 use Session;
 use Config;
+use Carbon;
 
 class BookingController extends BackendController
 {
@@ -319,7 +320,6 @@ class BookingController extends BackendController
 
     public function post1stRegist($id)
     { 
-        //echo "<pre>"; print_r(Input::all());die;
         $clsPatient             = new PatientModel();
         $p_max                  = $clsPatient->get_max_pid();
         $p_id                   = $p_max + 1;

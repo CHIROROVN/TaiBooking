@@ -52,7 +52,8 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    //'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Tokyo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -149,6 +150,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        //Carbon\Carbon::class,
 
         /*
          * Application Service Providers...
@@ -157,7 +159,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
         Collective\Html\HtmlServiceProvider::class,
 
     ],
@@ -211,6 +212,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'Carbon' => Carbon\Carbon::class,
 
     ],
 

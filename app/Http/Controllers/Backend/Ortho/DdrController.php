@@ -43,8 +43,16 @@ class DdrController extends BackendController
         $tmpddrs           = array();
         foreach ( $ddrs as $ddr ) {
             $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
+            $start_time = splitHourMin($ddr->ddr_start_time);
+            $end_time = splitHourMin($ddr->ddr_end_time);
+            if ( $start_time == '00:00' ) {
+                $start_time = null;
+            }
+            if ( $end_time == '00:00' ) {
+                $end_time = null;
+            }
             $tmpddrs[] = array(
-                'title' => $kind . ' ' . splitHourMin($ddr->ddr_start_time) . '~' . splitHourMin($ddr->ddr_end_time) . ' ' . $ddr->ddr_contents,
+                'title' => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
                 'start' => $ddr->ddr_start_date,
                 'end'   => $ddr->ddr_start_date + 1,
                 'url'   => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
@@ -114,6 +122,16 @@ class DdrController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
+        if ( empty(Input::get('ddr_start_hh')) && empty(Input::get('ddr_start_mm')) ) {
+            $dataInsert['ddr_start_time'] = null;
+        }
+        if ( empty(Input::get('ddr_end_hh')) && empty(Input::get('ddr_end_mm')) ) {
+            $dataInsert['ddr_end_time'] = null;
+        }
+        if ( empty(Input::get('ddr_end_year')) && empty(Input::get('ddr_end_month')) && empty(Input::get('ddr_end_day')) ) {
+            $dataInsert['ddr_end_date'] = null;
+        }
+
         $input['ddr_start_date'] = $dataInsert['ddr_start_date'];
         if ( empty(Input::get('ddr_start_year')) && empty(Input::get('ddr_start_month')) && empty(Input::get('ddr_start_day')) ) {
             $input['ddr_start_date'] = '';
@@ -197,6 +215,16 @@ class DdrController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
+        if ( empty(Input::get('ddr_start_hh')) && empty(Input::get('ddr_start_mm')) ) {
+            $dataInsert['ddr_start_time'] = null;
+        }
+        if ( empty(Input::get('ddr_end_hh')) && empty(Input::get('ddr_end_mm')) ) {
+            $dataInsert['ddr_end_time'] = null;
+        }
+        if ( empty(Input::get('ddr_end_year')) && empty(Input::get('ddr_end_month')) && empty(Input::get('ddr_end_day')) ) {
+            $dataInsert['ddr_end_date'] = null;
+        }
+
         $input['ddr_start_date'] = $dataInsert['ddr_start_date'];
         if ( empty(Input::get('ddr_start_year')) && empty(Input::get('ddr_start_month')) && empty(Input::get('ddr_start_day')) ) {
             $input['ddr_start_date'] = '';

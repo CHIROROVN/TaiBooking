@@ -176,7 +176,7 @@
                   @endforeach
                 </select>
                 <select name="ddr_end_mm" class="form-control form-control--small">
-                  <option>--分</option>
+                  <option value="">--分</option>
                   @if ( old('ddr_end_mm') )
                   <option value="00" @if(old('ddr_end_mm') == '00') selected="" @endif>00分</option>
                   <option value="15" @if(old('ddr_end_mm') == '15') selected="" @endif>15分</option>

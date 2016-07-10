@@ -2,10 +2,10 @@
 
 use DB;
 
-class MemoModel
+class DdrModel
 {
 
-    protected $table = 't_memo';
+    protected $table = 't_ddr';
 
     public function Rules()
     {
@@ -23,7 +23,7 @@ class MemoModel
 
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('memo_date', 'asc')->get();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('ddr_start_date', 'asc')->get();
         return $results;
     }
 
@@ -41,7 +41,7 @@ class MemoModel
 
     public function get_by_id($id)
     {
-        $results = DB::table($this->table)->where('memo_id', $id)->where('last_kind', '<>', DELETE)->first();
+        $results = DB::table($this->table)->where('ddr_id', $id)->where('last_kind', '<>', DELETE)->first();
         return $results;
     }
 
@@ -53,7 +53,7 @@ class MemoModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('memo_id', $id)->update($data);
+    	$results = DB::table($this->table)->where('ddr_id', $id)->update($data);
         return $results;
     }
 }

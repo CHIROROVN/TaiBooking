@@ -302,6 +302,14 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('memos/delete/{id}', ['as' => 'ortho.memos.delete', 'uses' => 'MemoController@getDelete']);
 	// Route::get('memos/ajax/autocomplete-patient', ['as' => 'ortho.memos.autocomplete.patient', 'uses' => 'MemoController@AutoCompletePatient']);
 
+	// ddrs
+	Route::any('ddrs-calendar', ['as' => 'ortho.ddrs.calendar', 'uses' => 'DdrController@calendar']);
+	Route::get('ddrs/regist', ['as' => 'ortho.ddrs.regist', 'uses' => 'DdrController@getRegist']);
+	Route::post('ddrs/regist', ['as' => 'ortho.ddrs.regist', 'uses' => 'DdrController@postRegist']);
+	Route::get('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@getEdit']);
+	Route::post('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@postEdit']);
+	Route::get('ddrs/delete/{id}', ['as' => 'ortho.ddrs.delete', 'uses' => 'DdrController@getDelete']);
+
 
 
 	// auth

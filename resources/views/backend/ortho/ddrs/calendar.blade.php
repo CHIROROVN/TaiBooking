@@ -5,7 +5,7 @@
 <section id="page">
   <div class="container">
     <div class="row content content--list">
-        <h1>メモカレンダー</h1>
+        <h1>院長カレンダー</h1>
 
         <div id='calendar' class="memo-calendar"></div>
     </div>

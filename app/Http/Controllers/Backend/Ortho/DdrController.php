@@ -30,21 +30,21 @@ class DdrController extends BackendController
      */
     public function calendar()
     {
-        // $clsDdr            = new DdrModel();
+        $clsDdr            = new DdrModel();
 
-        // $ddrs              = $clsDdr->get_all();
-        // $tmpddrs           = array();
-        // foreach ( $ddrs as $memo ) {
-        //     $tmpddrs[] = array(
-        //         'title' => $memo->memo_contents,
-        //         'start' => $memo->memo_date,
-        //         'end'   => $memo->memo_date + 1,
-        //         'url'   => route('ortho.ddrs.edit', [ $memo->memo_id ]),
-        //     );
-        // }
-        // $data['ddrs']      = json_encode($tmpddrs);
+        $ddrs              = $clsDdr->get_all();
+        $tmpddrs           = array();
+        foreach ( $ddrs as $memo ) {
+            $tmpddrs[] = array(
+                'title' => $memo->memo_contents,
+                'start' => $memo->memo_date,
+                'end'   => $memo->memo_date + 1,
+                'url'   => route('ortho.ddrs.edit', [ $memo->memo_id ]),
+            );
+        }
+        $data['ddrs']      = json_encode($tmpddrs);
 
-        // return view('backend.ortho.ddrs.calendar', $data);
+        return view('backend.ortho.ddrs.calendar', $data);
     }
 
     /**

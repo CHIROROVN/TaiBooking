@@ -12,7 +12,7 @@
   </div>
 </section>
 
-<?php echo '<script>var memos = ' . $memos . '</script>'; ?>
+<?php echo '<script>var ddrs = ' . $ddrs . '</script>'; ?>
 <script>
   $(document).ready(function() {
     var date = new Date();
@@ -34,7 +34,7 @@
       },
 
       //load all event from DB
-      events: memos,
+      events: ddrs,
       
       // Convert the allDay from string to boolean
       eventRender: function(event, element, view) {
@@ -74,24 +74,10 @@
         
         calendar.fullCalendar('unselect');
 
-        window.location.href = "{{ route('ortho.memos.regist') }}?memo_date=" + start;
+        window.location.href = "{{ route('ortho.ddrs.regist') }}?ddr_start_date=" + start;
       },
     });
-
-    // set date for link text
-    var tmpArr = [];
-    $( ".fc-content-skeleton thead td" ).each(function( index ) {
-        var start = $(this).attr('data-date');
-        start = "{{ route('ortho.memos.regist') }}?memo_date=" + start;
-        tmpArr[index] = start;
-    });
-
-    $( ".fc-content-skeleton tbody td" ).each(function( index ) {
-      if ( $(this).attr('class') == null ) {
-        $(this).append('<a style="margin-left: 5px; text-decoration: underline;" href="' + tmpArr[index] + '">未登録</a>');
-      }
-    });
-
+    // end calendar
   });
 </script>
 

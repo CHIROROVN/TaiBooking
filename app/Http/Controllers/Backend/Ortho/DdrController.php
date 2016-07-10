@@ -37,8 +37,8 @@ class DdrController extends BackendController
         foreach ( $ddrs as $memo ) {
             $tmpddrs[] = array(
                 'title' => $memo->memo_contents,
-                'start' => $memo->memo_date,
-                'end'   => $memo->memo_date + 1,
+                'start' => $memo->ddr_start_date,
+                'end'   => $memo->ddr_start_date + 1,
                 'url'   => route('ortho.ddrs.edit', [ $memo->memo_id ]),
             );
         }
@@ -52,21 +52,37 @@ class DdrController extends BackendController
      */
     public function getRegist()
     {
-        // $memo_date = Input::get('memo_date');
-        // if ( empty($memo_date) ) {
-        //     return redirect()->route('ortho.ddrs.calendar');
-        // }
+        $ddr_start_date = Input::get('ddr_start_date');
+        if ( empty($ddr_start_date) ) {
+            return redirect()->route('ortho.ddrs.calendar');
+        }
 
-        // $clsDdr = new DdrModel();
-        // $memo = $clsDdr->get_by_memo_date($memo_date);
-        // if ( count($memo) ) {
-        //     return redirect()->route('ortho.ddrs.calendar');
-        // }
+        $clsDdr = new DdrModel();
 
-        // $data = array();
-        // $data['memo_date'] = $memo_date;
+        $data = array();
+        $data['ddr_start_date'] = $ddr_start_date;
+        $data['ddr_start_date_y'] = date('Y', strtotime($ddr_start_date));
+        $data['ddr_start_date_m'] = date('m', strtotime($ddr_start_date));
+        $data['ddr_start_date_d'] = date('d', strtotime($ddr_start_date));
 
-        // return view('backend.ortho.ddrs.regist', $data);
+        // set hour
+        $tmpHours = array();
+        for ( $i = 1; $i <= 12; $i++ ) {
+            $tmpHours[$i] = $i;
+        }
+        $data['hours'] = $tmpHours;
+
+        // set year
+        $tmpYears = array();
+        $tmpYearNow = date('Y');
+        $tmpYears[$tmpYearNow] = $tmpYearNow;
+        for ( $i = 1; $i <= 5; $i++ ) {
+            $tmp = $tmpYearNow + $i;
+            $tmpYears[$tmp] = $tmp;
+        }
+        $data['years'] = $tmpYears;
+
+        return view('backend.ortho.ddrs.regist', $data);
     }
 
     /**
@@ -77,7 +93,7 @@ class DdrController extends BackendController
         // $clsDdr                = new DdrModel();
 
         // $dataInsert             = array(
-        //     'memo_date'         => Input::get('memo_date'),
+        //     'ddr_start_date'         => Input::get('ddr_start_date'),
         //     'memo_contents'     => Input::get('memo_contents'),
 
         //     'last_date'         => date('y-m-d H:i:s'),

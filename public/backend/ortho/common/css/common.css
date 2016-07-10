@@ -193,6 +193,15 @@ header h1 {
   border-radius:3px;
 }
 
+.form-control--medium {
+  display: inline;
+  width: 250px!important;
+  height: 30px;
+  padding: 5px;
+  border-radius:3px;
+  color:#257272;
+}
+
 .form-control--small {
   display: inline;
   width: 125px!important;

@@ -11,14 +11,14 @@ class DdrModel
     public function Rules()
     {
     	return array(
-
+            'ddr_start_date' => 'required',
 		);
     }
 
     public function Messages()
     {
     	return array(
-
+            'ddr_start_date.required' => trans('validation.error_ddr_start_date_required'),
 		);
     }
 

@@ -74,7 +74,7 @@
         
         calendar.fullCalendar('unselect');
 
-        window.location.href = "{{ route('ortho.ddrs.regist') }}?ddr_start_date=" + start;
+        window.location.href = "{{ route('ortho.ddrs.regist') }}?start_date=" + start;
       },
     });
     // end calendar

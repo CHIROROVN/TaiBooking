@@ -33,13 +33,21 @@ class DdrController extends BackendController
         $clsDdr            = new DdrModel();
 
         $ddrs              = $clsDdr->get_all();
+        $color = array(
+            '1' => '#000',
+            '2' => '#F00',
+            '3' => '#00F',
+            '4' => '#390',
+            '5' => '#F90',
+        );
         $tmpddrs           = array();
-        foreach ( $ddrs as $memo ) {
+        foreach ( $ddrs as $ddr ) {
+            $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
             $tmpddrs[] = array(
-                'title' => $memo->memo_contents,
-                'start' => $memo->ddr_start_date,
-                'end'   => $memo->ddr_start_date + 1,
-                'url'   => route('ortho.ddrs.edit', [ $memo->memo_id ]),
+                'title' => $kind . ' ' . splitHourMin($ddr->ddr_start_time) . '~' . splitHourMin($ddr->ddr_end_time) . ' ' . $ddr->ddr_contents,
+                'start' => $ddr->ddr_start_date,
+                'end'   => $ddr->ddr_start_date + 1,
+                'url'   => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
             );
         }
         $data['ddrs']      = json_encode($tmpddrs);
@@ -52,7 +60,7 @@ class DdrController extends BackendController
      */
     public function getRegist()
     {
-        $ddr_start_date = Input::get('ddr_start_date');
+        $ddr_start_date = Input::get('start_date');
         if ( empty($ddr_start_date) ) {
             return redirect()->route('ortho.ddrs.calendar');
         }
@@ -61,6 +69,7 @@ class DdrController extends BackendController
 
         $data = array();
         $data['ddr_start_date'] = $ddr_start_date;
+        $data['start_date']     = $ddr_start_date;
         $data['ddr_start_date_y'] = date('Y', strtotime($ddr_start_date));
         $data['ddr_start_date_m'] = date('m', strtotime($ddr_start_date));
         $data['ddr_start_date_d'] = date('d', strtotime($ddr_start_date));
@@ -68,7 +77,7 @@ class DdrController extends BackendController
         // set hour
         $tmpHours = array();
         for ( $i = 1; $i <= 12; $i++ ) {
-            $tmpHours[$i] = $i;
+            $tmpHours[$i] = convert2Digit($i);
         }
         $data['hours'] = $tmpHours;
 
@@ -90,30 +99,38 @@ class DdrController extends BackendController
      */
     public function postRegist()
     {
-        // $clsDdr                = new DdrModel();
+        $clsDdr                 = new DdrModel();
+        $input                  = Input::all();
+        $dataInsert             = array(
+            'ddr_start_date'    => Input::get('ddr_start_year') . '-' . Input::get('ddr_start_month') . '-' . Input::get('ddr_start_day'),
+            'ddr_start_time'    => Input::get('ddr_start_hh') . Input::get('ddr_start_mm'),
+            'ddr_end_date'      => Input::get('ddr_end_year') . '-' . Input::get('ddr_end_month') . '-' . Input::get('ddr_end_day'),
+            'ddr_end_time'      => Input::get('ddr_end_hh') . Input::get('ddr_end_mm'),
+            'ddr_kind'          => Input::get('ddr_kind'),
+            'ddr_contents'      => Input::get('ddr_contents'),
 
-        // $dataInsert             = array(
-        //     'ddr_start_date'         => Input::get('ddr_start_date'),
-        //     'memo_contents'     => Input::get('memo_contents'),
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => INSERT,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => Auth::user()->id
+        );
+        $input['ddr_start_date'] = $dataInsert['ddr_start_date'];
+        if ( empty(Input::get('ddr_start_year')) && empty(Input::get('ddr_start_month')) && empty(Input::get('ddr_start_day')) ) {
+            $input['ddr_start_date'] = '';
+        }
 
-        //     'last_date'         => date('y-m-d H:i:s'),
-        //     'last_kind'         => INSERT,
-        //     'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'         => Auth::user()->id
-        // );
-
-        // $validator      = Validator::make($dataInsert, $clsDdr->Rules(), $clsDdr->Messages());
-        // if ($validator->fails()) {
-        //     return redirect()->route('ortho.ddrs.regist')->withErrors($validator)->withInput();
-        // }
+        $validator      = Validator::make($input, $clsDdr->Rules(), $clsDdr->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.ddrs.regist', [ 'start_date' => $input['start_date'] ])->withErrors($validator)->withInput();
+        }
         
-        // if ( $clsDdr->insert($dataInsert) ) {
-        //     Session::flash('success', trans('common.message_regist_success'));
-        // } else {
-        //     Session::flash('danger', trans('common.message_regist_danger'));
-        // }
+        if ( $clsDdr->insert($dataInsert) ) {
+            Session::flash('success', trans('common.message_regist_success'));
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+        }
 
-        // return redirect()->route('ortho.ddrs.calendar');
+        return redirect()->route('ortho.ddrs.calendar');
     }
 
     /**
@@ -121,11 +138,38 @@ class DdrController extends BackendController
      */
     public function getEdit($id)
     {
-        // $clsDdr                = new DdrModel();
-        // $data                   = array();
-        // $data['memo']           = $clsDdr->get_by_id($id);
+        $ddr_start_date = Input::get('start_date');
+        if ( empty($ddr_start_date) ) {
+            return redirect()->route('ortho.ddrs.calendar');
+        }
 
-        // return view('backend.ortho.ddrs.edit', $data);
+        $clsDdr = new DdrModel();
+
+        $data = array();
+        $data['ddr_start_date'] = $ddr_start_date;
+        $data['start_date']     = $ddr_start_date;
+        $data['ddr_start_date_y'] = date('Y', strtotime($ddr_start_date));
+        $data['ddr_start_date_m'] = date('m', strtotime($ddr_start_date));
+        $data['ddr_start_date_d'] = date('d', strtotime($ddr_start_date));
+
+        // set hour
+        $tmpHours = array();
+        for ( $i = 1; $i <= 12; $i++ ) {
+            $tmpHours[$i] = convert2Digit($i);
+        }
+        $data['hours'] = $tmpHours;
+
+        // set year
+        $tmpYears = array();
+        $tmpYearNow = date('Y');
+        $tmpYears[$tmpYearNow] = $tmpYearNow;
+        for ( $i = 1; $i <= 5; $i++ ) {
+            $tmp = $tmpYearNow + $i;
+            $tmpYears[$tmp] = $tmp;
+        }
+        $data['years'] = $tmpYears;
+
+        return view('backend.ortho.ddrs.regist', $data);
     }
 
     /**

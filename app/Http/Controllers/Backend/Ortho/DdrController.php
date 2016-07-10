@@ -68,11 +68,11 @@ class DdrController extends BackendController
         $clsDdr = new DdrModel();
 
         $data = array();
-        $data['ddr_start_date'] = $ddr_start_date;
-        $data['start_date']     = $ddr_start_date;
-        $data['ddr_start_date_y'] = date('Y', strtotime($ddr_start_date));
-        $data['ddr_start_date_m'] = date('m', strtotime($ddr_start_date));
-        $data['ddr_start_date_d'] = date('d', strtotime($ddr_start_date));
+        $data['ddr_start_date']     = $ddr_start_date;
+        $data['start_date']         = $ddr_start_date;
+        $data['ddr_start_date_y']   = date('Y', strtotime($ddr_start_date));
+        $data['ddr_start_date_m']   = date('m', strtotime($ddr_start_date));
+        $data['ddr_start_date_d']   = date('d', strtotime($ddr_start_date));
 
         // set hour
         $tmpHours = array();
@@ -138,19 +138,24 @@ class DdrController extends BackendController
      */
     public function getEdit($id)
     {
-        $ddr_start_date = Input::get('start_date');
-        if ( empty($ddr_start_date) ) {
-            return redirect()->route('ortho.ddrs.calendar');
-        }
-
-        $clsDdr = new DdrModel();
+        $clsDdr                     = new DdrModel();
+        $ddr                        = $clsDdr->get_by_id($id);
+        $ddr_start_date             = $ddr->ddr_start_date;
+        $ddr_end_date               = $ddr->ddr_end_date;
 
         $data = array();
-        $data['ddr_start_date'] = $ddr_start_date;
-        $data['start_date']     = $ddr_start_date;
-        $data['ddr_start_date_y'] = date('Y', strtotime($ddr_start_date));
-        $data['ddr_start_date_m'] = date('m', strtotime($ddr_start_date));
-        $data['ddr_start_date_d'] = date('d', strtotime($ddr_start_date));
+        $data['ddr']                = $ddr;
+        $data['ddr_start_date']     = $ddr_start_date;
+        $data['ddr_start_date_y']   = date('Y', strtotime($ddr_start_date));
+        $data['ddr_start_date_m']   = date('m', strtotime($ddr_start_date));
+        $data['ddr_start_date_d']   = date('d', strtotime($ddr_start_date));
+        $data['ddr_start_time_hh']  = substr($ddr->ddr_start_time, 0, 2);
+        $data['ddr_start_time_mm']  = substr($ddr->ddr_start_time, 2, 4);
+        $data['ddr_end_time_hh']    = substr($ddr->ddr_end_time, 0, 2);
+        $data['ddr_end_time_mm']    = substr($ddr->ddr_end_time, 2, 4);
+        $data['ddr_end_date_y']     = date('Y', strtotime($ddr_end_date));
+        $data['ddr_end_date_m']     = date('m', strtotime($ddr_end_date));
+        $data['ddr_end_date_d']     = date('d', strtotime($ddr_end_date));
 
         // set hour
         $tmpHours = array();
@@ -169,7 +174,7 @@ class DdrController extends BackendController
         }
         $data['years'] = $tmpYears;
 
-        return view('backend.ortho.ddrs.regist', $data);
+        return view('backend.ortho.ddrs.edit', $data);
     }
 
     /**
@@ -177,29 +182,38 @@ class DdrController extends BackendController
      */
     public function postEdit($id)
     {
-        // $clsDdr                = new DdrModel();
+        $clsDdr                 = new DdrModel();
+        $input                  = Input::all();
+        $dataInsert             = array(
+            'ddr_start_date'    => Input::get('ddr_start_year') . '-' . Input::get('ddr_start_month') . '-' . Input::get('ddr_start_day'),
+            'ddr_start_time'    => Input::get('ddr_start_hh') . Input::get('ddr_start_mm'),
+            'ddr_end_date'      => Input::get('ddr_end_year') . '-' . Input::get('ddr_end_month') . '-' . Input::get('ddr_end_day'),
+            'ddr_end_time'      => Input::get('ddr_end_hh') . Input::get('ddr_end_mm'),
+            'ddr_kind'          => Input::get('ddr_kind'),
+            'ddr_contents'      => Input::get('ddr_contents'),
 
-        // $dataInsert             = array(
-        //     'memo_contents'     => Input::get('memo_contents'),
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => UPDATE,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => Auth::user()->id
+        );
+        $input['ddr_start_date'] = $dataInsert['ddr_start_date'];
+        if ( empty(Input::get('ddr_start_year')) && empty(Input::get('ddr_start_month')) && empty(Input::get('ddr_start_day')) ) {
+            $input['ddr_start_date'] = '';
+        }
 
-        //     'last_date'         => date('y-m-d H:i:s'),
-        //     'last_kind'         => UPDATE,
-        //     'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'         => Auth::user()->id
-        // );
-
-        // $validator      = Validator::make($dataInsert, $clsDdr->Rules(), $clsDdr->Messages());
-        // if ($validator->fails()) {
-        //     return redirect()->route('ortho.ddrs.edit', [ $id ])->withErrors($validator)->withInput();
-        // }
+        $validator      = Validator::make($input, $clsDdr->Rules(), $clsDdr->Messages());
+        if ($validator->fails()) {
+            return redirect()->route('ortho.ddrs.edit', [ $id ])->withErrors($validator)->withInput();
+        }
         
-        // if ( $clsDdr->update($id, $dataInsert) ) {
-        //     Session::flash('success', trans('common.message_edit_success'));
-        // } else {
-        //     Session::flash('danger', trans('common.message_edit_danger'));
-        // }
+        if ( $clsDdr->update($id, $dataInsert) ) {
+            Session::flash('success', trans('common.message_edit_success'));
+        } else {
+            Session::flash('danger', trans('common.message_edit_danger'));
+        }
 
-        // return redirect()->route('ortho.ddrs.calendar');
+        return redirect()->route('ortho.ddrs.calendar');
     }
 
     /**
@@ -207,33 +221,22 @@ class DdrController extends BackendController
      */
     public function getDelete($id)
     {
-        // $clsDdr                = new DdrModel();
-        // $clsClinicArea          = new ClinicDdrModel();
+        $clsDdr                 = new DdrModel();
 
-        // // update table area
-        // $dataUpdate = array(
-        //     'last_date'         => date('y-m-d H:i:s'),
-        //     'last_kind'         => DELETE,
-        //     'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'         => Auth::user()->id
-        // );
-        // $clsDdr->update($id, $dataUpdate);
-
-        // // update to table clinic_area
-        // $dataUpdate = array(
-        //     'last_date'         => date('y-m-d H:i:s'),
-        //     'last_kind'         => DELETE,
-        //     'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-        //     'last_user'         => Auth::user()->id
-        // );
+        // update table area
+        $dataUpdate = array(
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => DELETE,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => Auth::user()->id
+        );
         
-        // if ( $clsClinicArea->update_by_area($id, $dataUpdate) ) {
-        //     Session::flash('success', trans('common.message_regist_success'));
-        // } else {
-        //     Session::flash('danger', trans('common.message_regist_danger'));
-        // }
+        if ( $clsDdr->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_delete_success'));
+        } else {
+            Session::flash('danger', trans('common.message_delete_danger'));
+        }
 
-
-        // return redirect()->route('ortho.ddrs.index');
+        return redirect()->route('ortho.ddrs.calendar');
     }
 }

@@ -32,7 +32,7 @@
             @if(!empty(Auth::user()->u_power3))
             <h2>院長予定管理</h2>
             <ul>
-              <li><a href="ddr-calendar.html"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>院長予定のカレンダー表示・新規登録・変更・削除</a></li>
+              <li><a href="{{ route('ortho.ddrs.calendar') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>院長予定のカレンダー表示・新規登録・変更・削除</a></li>
             </ul>
             @endif
 

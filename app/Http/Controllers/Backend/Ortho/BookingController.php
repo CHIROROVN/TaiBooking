@@ -154,19 +154,20 @@ class BookingController extends BackendController
         $clsTreatment1              = new Treatment1Model();
         $data['booking']            = $clsBooking->get_by_id($id);
         $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hygienists']                = $clsUser->get_by_belong([2,3]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
         $clsService                 = new ServiceModel();
         $data['services']           = $clsService->get_list();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        $clsFacility            = new FacilityModel();
-        $data['facilities']     = $clsFacility->list_facility_all();
-        $clsEquipment           = new EquipmentModel();
-        $data['equipments']     = $clsEquipment->get_list();
-        $clsInspection          = new InspectionModel();
-        $data['inspections']    = $clsInspection->get_list();
-        $clsInsurance           = new InsuranceModel();
-        $data['insurances']    = $clsInsurance->get_list();
+        $clsFacility                = new FacilityModel();
+        $data['facilities']         = $clsFacility->list_facility_all();
+        $clsEquipment               = new EquipmentModel();
+        $data['equipments']         = $clsEquipment->get_list();
+        $clsInspection              = new InspectionModel();
+        $data['inspections']        = $clsInspection->get_list();
+        $clsInsurance               = new InsuranceModel();
+        $data['insurances']         = $clsInsurance->get_list();
+       // echo "<pre>";print_r($data);die;
         return view('backend.ortho.bookings.booking_edit', $data);
     }
 
@@ -400,15 +401,31 @@ class BookingController extends BackendController
 
     public function getChangeDate($id)
     {
-        $data                       = array();
-        $clsClinic                  = new ClinicModel();
-        $clsUser                    = new UserModel();
-        $clsClinic                  = new ClinicModel();
+        // $data                       = array();
+        // $clsUser                    = new UserModel();
+        // $clsClinic                  = new ClinicModel();
+        // $clsBooking                 = new BookingModel();
+        // $data['doctors']            = $clsUser->get_by_belong([1]);
+        // $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        // $data['booking']            = $clsBooking->get_by_id($id);
+        // $clsService                 = new ServiceModel();
+        // $data['services']           = $clsService->get_list();
+        // $clsTreatment1              = new Treatment1Model();
+        // $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+
+
+
         $clsBooking                 = new BookingModel();
-        $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hys']                = $clsUser->get_by_belong([2,3]);
-        $data['clinics']            = $clsClinic->get_for_select();
         $data['booking']            = $clsBooking->get_by_id($id);
+        $clsClinic                  = new ClinicModel();
+        $data['clinics']            = $clsClinic->get_list_clinic();
+        $clsUser                    = new UserModel();
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
 
         return view('backend.ortho.bookings.booking_change', $data);
     }
@@ -448,6 +465,7 @@ class BookingController extends BackendController
         $data['services']           = $clsService->get_list();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+
         return view('backend.ortho.bookings.booking_search', $data);
     }
 

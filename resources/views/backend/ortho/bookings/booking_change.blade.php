@@ -9,10 +9,15 @@
             <h3>予約管理　＞　予約日時の変更</h3>
               <table class="table table-bordered">
                 <tr>
-                  <td class="col-title"><label for="textName">医院 [*]</label></td>
+                  <td class="col-title"><label for="textName">医院</label></td>
                   <td>
-                    <select name="select10" id="select10" class="form-control">
-                      <option selected="selected">▼選択</option>
+                    <select name="clinic_id" id="clinic_id" class="form-control">
+                      <option value="" selected="selected">▼選択</option>
+                      @if(count($clinics) > 0)
+                        @foreach($clinics as $clinic_id => $clinic)
+                        <option value="{{$clinic_id}}" @if($clinic_id == $booking->booking_id) selected @endif >{{$clinic}}</option>
+                        @endforeach
+                      @endif
                     </select>
                   </td>
                 </tr>
@@ -20,30 +25,15 @@
                   <td class="col-title">担当ドクター</td>
                   <td>
                     <div class="row">
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="radio"> 山田　太郎</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="radio"> 杉本　かよ</label>
-                        </div>
-                      </div>
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="radio"> 山田　花子</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="radio"> 大森　二郎</label>
-                        </div>
-                      </div>
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="radio"> 山田　三郎</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="radio"> 理大　太郎</label>
-                        </div>
-                      </div>
+                      @if(count($doctors) > 0)
+                        @foreach($doctors as $doctor)
+                          <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="checkbox">
+                              <label><input name="doctor_id" value="{{$doctor->id}}" type="radio"> {{$doctor->u_name}}</label>
+                            </div>
+                          </div>
+                        @endforeach
+                      @endif
                     </div>
                   </td>
                 </tr>
@@ -51,30 +41,15 @@
                   <td class="col-title">衛生士</td>
                   <td>
                     <div class="row">
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">山田　太郎</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">杉本　かよ</label>
-                        </div>
-                      </div>
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">山田　花子</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">大森　二郎</label>
-                        </div>
-                      </div>
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">山田　三郎</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">理大　太郎</label>
-                        </div>
-                      </div>
+                       @if(count($hygienists) > 0)
+                        @foreach($hygienists as $hygienist)
+                          <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="checkbox">
+                              <label><input name="hygienist_id" value="{{$hygienist->id}}" type="radio"> {{$hygienist->u_name}}</label>
+                            </div>
+                          </div>
+                        @endforeach
+                      @endif
                     </div>
                   </td>
                 </tr>
@@ -84,37 +59,37 @@
                     <div class="row">
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">日</label>
+                          <label><input name="booking_date[]" value="Sun" type="checkbox">日</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">月</label>
+                          <label><input name="booking_date[]" value="Mon" type="checkbox">月</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">火</label>
+                          <label><input name="booking_date[]" value="Tue" type="checkbox">火</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">水</label>
+                          <label><input name="booking_date[]" value="Wed" type="checkbox">水</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">木</label>
+                          <label><input name="booking_date[]" value="Thu" type="checkbox">木</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">金</label>
+                          <label><input name="booking_date[]" value="Fri" type="checkbox">金</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="checkbox" value="checkbox" type="checkbox">土</label>
+                          <label><input name="booking_date[]" value="Sat" type="checkbox">土</label>
                         </div>
                       </div>
                     </div>
@@ -123,197 +98,91 @@
                 <tr>
                     <td class=col-title>何週間後</td>
                     <td>
-                      <div class="row">
-                        <div class="col-xs-3 col-sm-2 col-md-1">
-                          <div class="radio">
-                            <label><input type="radio" name="week_radio" value="1"  checked />1週間後</label>
-                          </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-1">
-                          <div class="radio">
-                            <label><input type="radio" name="week_radio" value="1"  checked />1ヵ月後</label>
-                          </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-1">
-                          <div class="radio">
-                            <label><input type="radio" name="week_radio" value="2"  />2ヵ月後</label>
-                          </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-1">
-                          <div class="radio">
-                            <label><input type="radio" name="week_radio" value="3" />週指定</label>
-                          </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-1">
-                          <div class="radio">
-                            <label><input type="radio" name="week_radio" value="5"  />日付指定</label>
-                          </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-2 col-md-1">
-                          <div class="radio">
-                            <label><input type="radio" name="week_radio" value=""  />週後</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <input style="display:inline" type="text" id="begin2" name="search_date" class="form-control" data-end="#end2">
-                         <input type="button" class="btn btn-sm btn-page" name="button" value="Button" />
-                        </div>
-                      </div>
+                      <label class="radio-inline"><input type="radio" name="optradio">指定なし</label>
+                      <label class="radio-inline"><input type="radio" name="optradio">1週間後</label>
+                      <label class="radio-inline"><input type="radio" name="optradio">1ヵ月後</label>
+                      <label class="radio-inline"><input type="radio" name="optradio">2ヵ月後</label>
+                      
+                      <label class="radio-inline"><input type="radio" name="optradio">週指定</label>
+                          <select name="week_later_option" id="week_later_option" style="width: 100px;">
+                                  <option value="one_week">1週間後</option>
+                                  <option value="two_week">2週間後</option>
+                                  <option value="three_week">3週間後</option>
+                                  <option value="four_week">4週間後</option>
+                                  <option value="five_week">5週間後</option>
+                                </select>
+                      
+                        <label class="radio-inline"><input type="radio" name="optradio">日付指定
+                        
+                        </label>
+                        <input type="calendar" name="datepicker" id="datepicker" class="datepicker" style="width: 150px;">
                     </td>
+
                 </tr>
                 <tr>
                   <td class="col-title">業務</td>
                   <td>
-                    <select name="select10" id="select10" class="form-control">
-                      <option selected="selected">指定なし</option>
+                    <select name="clinic_service_name" id="clinic_service_name" class="form-control">
+                      <option value="" selected="selected">指定なし</option>
+                      <optgroup label="業務名">
+                        @if(count($services) > 0)
+                          @foreach($services as $key11 => $service11)
+                          <option value="{{$key11}}_sk11" >{{$service11}}</option>
+                        @endforeach
+                        @endif
+                    </optgroup>
+                    <optgroup label="治療内容">
+                          @if(count($treatment1s) > 0)
+                            @foreach($treatment1s as $key12 => $treatment12)
+                              <option value="{{$key12}}_sk12" >{{$treatment12}}</option>
+                            @endforeach
+                          @endif
+                    </optgroup>
                     </select>
-<!--                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="radio">
-                          <label><input name="radio" value="radio" type="radio">指定なし</label>
-                        </div>
-                        <div class="radio">
-                          <label><input name="radio2" value="radio" type="radio">セット</label>
-                          <select name="">
-                            <option>--</option>
-                            <option>斜面(15)</option>
-                            <option>可フェンス(15)</option>
-                            <option>ツインブロック(15)</option>
-                            <option>BJA(15)</option>
-                            <option>TP(15)</option>
-                            <option>T4K(15)</option>
-                            <option>SR(15)</option>
-                            <option>シュワルツ(30)</option>
-                            <option>バイオブロック(30)</option>
-                            <option>インビザ(30)</option>
-                            <option>プロト(30)</option>
-                            <option>HG(30)</option>
-                            <option>RPE(30)</option>
-                          </select>
-                        </div>
-                        <div class="radio">
-                          <label><input name="radio2" value="radio" type="radio">その他</label>
-                          <select name="">
-                            <option>--</option>
-                            <option>斜面(15)</option>
-                            <option>可フェンス(15)</option>
-                            <option>ツインブロック(15)</option>
-                            <option>BJA(15)</option>
-                            <option>TP(15)</option>
-                            <option>T4K(15)</option>
-                            <option>SR(15)</option>
-                            <option>シュワルツ(30)</option>
-                            <option>バイオブロック(30)</option>
-                            <option>インビザ(30)</option>
-                            <option>プロト(30)</option>
-                            <option>HG(30)</option>
-                            <option>RPE(30)</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="radio">
-                          <label><input name="radio" value="radio" type="radio">相談</label>
-                        </div>
-                        <div class="radio">
-                          <label><input name="radio2" value="radio" type="radio">チェック</label>
-                          <select name="">
-                            <option>--</option>
-                            <option>斜面(15)</option>
-                            <option>可フェンス(15)</option>
-                            <option>ツインブロック(15)</option>
-                            <option>BJA(15)</option>
-                            <option>TP(15)</option>
-                            <option>T4K(15)</option>
-                            <option>SR(15)</option>
-                            <option>シュワルツ(30)</option>
-                            <option>バイオブロック(30)</option>
-                            <option>インビザ(30)</option>
-                            <option>プロト(30)</option>
-                            <option>HG(30)</option>
-                            <option>RPE(30)</option>
-                          </select>
-                        </div>
-                        <div class="radio">
-                          <label><input name="radio2" value="radio" type="radio">即日</label>
-                          <select name="">
-                            <option>--</option>
-                            <option>斜面(15)</option>
-                            <option>可フェンス(15)</option>
-                            <option>ツインブロック(15)</option>
-                            <option>BJA(15)</option>
-                            <option>TP(15)</option>
-                            <option>T4K(15)</option>
-                            <option>SR(15)</option>
-                            <option>シュワルツ(30)</option>
-                            <option>バイオブロック(30)</option>
-                            <option>インビザ(30)</option>
-                            <option>プロト(30)</option>
-                            <option>HG(30)</option>
-                            <option>RPE(30)</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-xs-4 col-sm-4 col-md-4">
-                        <div class="radio">
-                          <label><input name="radio" value="radio" type="radio">診断</label>
-                        </div>
-                        <div class="radio">
-                          <label><input name="radio2" value="radio" type="radio">rem</label>
-                          <select name="">
-                            <option>--</option>
-                            <option>斜面(15)</option>
-                            <option>可フェンス(15)</option>
-                            <option>ツインブロック(15)</option>
-                            <option>BJA(15)</option>
-                            <option>TP(15)</option>
-                            <option>T4K(15)</option>
-                            <option>SR(15)</option>
-                            <option>シュワルツ(30)</option>
-                            <option>バイオブロック(30)</option>
-                            <option>インビザ(30)</option>
-                            <option>プロト(30)</option>
-                            <option>HG(30)</option>
-                            <option>RPE(30)</option>
-                          </select>
-                        </div>
-                      </div>-->
                   </td>
                 </tr>
               </table>
           </div>
-<!--
-      <script language="javascript">
-        function inputsEnable(flg){
-          var input_tags = document.getElementById("timeband").getElementsByTagName("input");
 
-          if (document.getElementById("care").checked == true){
-            return false;
-          }
-
-          for(var i=0;i<input_tags.length;i++){
-            input_tags[i].disabled = flg;
-          }
-        }
-      </script>
-      <script language="javascript">
-        var input_tags = document.getElementById("timeband").getElementsByTagName("input");
-
-        for(var i=0;i<input_tags.length;i++){
-          input_tags[i].disabled = true;
-        }
-      </script>
- -->
           <div class="row margin-bottom">
             <div class="col-md-12 text-center">
-              <input name="ボタン" onclick="location.href='booking_result_calendar.html'" value="検索開始（カレンダー表示）" type="button" class="btn btn-sm btn-page mar-right">
-              <input name="ボタン2" onclick="location.href='booking_result_list.html'" value="検索開始（一覧表表示）" type="button" class="btn btn-sm btn-page mar-right">
-              <input name="button" id="button" value="条件クリア" type="reset" class="btn btn-sm btn-page mar-right">
+              
+              <input name="BookingCalendar" id="BookingCalendar" onclick="location.href='{{route('ortho.bookings.booking.result.calendar')}}'" value="検索開始（カレンダー表示）" type="button" class="btn btn-sm btn-page mar-right">
+
+              <input name="BookingList" id="BookingList" value="検索開始（一覧表表示）" type="submit" class="btn btn-sm btn-page mar-right">
+
+              <input name="Reset" id="button" value="条件クリア" type="reset" class="btn btn-sm btn-page mar-right">
           </div>
           </div>
         </div>
       </section>
 </form>
+<script type="text/javascript">
+  $(document).ready(function() {
+      $(".datepicker").datepicker({
+          showOn: 'both',
+          buttonText: 'カレンダー',
+          buttonImageOnly: true,
+           buttonImage: "{{asset('public/backend/ortho/common/image/calendar.gif')}}",
+          dateFormat: 'yy-mm-dd',
+          constrainInput: true,
+          locale: 'ja'
+      });
+
+      $('.ui-datepicker-trigger').css('margin-top','5px');
+      $(".ui-datepicker-trigger").mouseover(function() {
+          $(this).css('cursor', 'pointer');
+      });
+  });
+</script>
+
+<script type="text/javascript">
+  $('#date_picker_option').click(function() {
+    $('#date_picker').attr("checked", "checked");
+  });
+  $('#week_later_option').click(function() {
+    $('#week_later').attr("checked", "checked");
+  });
+</script>
 
 @endsection

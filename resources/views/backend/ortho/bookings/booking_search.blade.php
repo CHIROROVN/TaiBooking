@@ -152,14 +152,14 @@
                   <td>
                     <select name="clinic_service_name" id="clinic_service_name" class="form-control">
                       <option value="" selected="selected">指定なし</option>
-                      <optgroup label="Services">
+                      <optgroup label="業務名">
 	                      @if(count($services) > 0)
 	                        @foreach($services as $key11 => $service11)
 	                        <option value="{{$key11}}_sk11" >{{$service11}}</option>
 	                      @endforeach
 	                      @endif
 	                  </optgroup>
-	                  <optgroup label="Treatments">
+	                  <optgroup label="治療内容">
 	                        @if(count($treatment1s) > 0)
 	                          @foreach($treatment1s as $key12 => $treatment12)
 	                            <option value="{{$key12}}_sk12" >{{$treatment12}}</option>

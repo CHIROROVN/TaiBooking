@@ -308,6 +308,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	// ddrs
 	Route::any('ddrs-calendar', ['as' => 'ortho.ddrs.calendar', 'uses' => 'DdrController@calendar']);
+	Route::any('my-calendar', ['as' => 'ortho.ddrs.my.calendar', 'uses' => 'DdrController@myCalendar']);
 	Route::get('ddrs/regist', ['as' => 'ortho.ddrs.regist', 'uses' => 'DdrController@getRegist']);
 	Route::post('ddrs/regist', ['as' => 'ortho.ddrs.regist', 'uses' => 'DdrController@postRegist']);
 	Route::get('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@getEdit']);

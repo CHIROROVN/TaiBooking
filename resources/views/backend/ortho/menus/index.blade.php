@@ -67,9 +67,9 @@
             <ul>
               <li><a href="{{route('ortho.bookings.list1_list')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「TEL待ち」リストの表示</a></li>
               <li><a href="{{ route('ortho.bookings.list2_list') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「無断キャンセル」リストの表示</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「リコール」リストの表示</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「未作成技工物TEL待ち」リストの表示</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「作成済み技工物キャンセル」リストの表示</a></li>
+              <li><a href="{{ route('ortho.bookings.list3_list') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「リコール」リストの表示</a></li>
+              <li><a href="{{ route('ortho.bookings.list4_list') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「未作成技工物TEL待ち」リストの表示</a></li>
+              <li><a href="{{ route('ortho.bookings.list5_list') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「作成済み技工物キャンセル」リストの表示</a></li>
             </ul>
             @endif
 

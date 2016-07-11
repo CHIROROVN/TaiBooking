@@ -35,11 +35,13 @@ class MemoController extends BackendController
         $memos              = $clsMemo->get_all();
         $tmpMemos           = array();
         foreach ( $memos as $memo ) {
-            $tmpMemos[] = array(
-                'title' => $memo->memo_contents,
-                'start' => $memo->memo_date,
-                'end'   => $memo->memo_date + 1,
-                'url'   => route('ortho.memos.edit', [ $memo->memo_id ]),
+            $tmpMemos[]     = array(
+                'title'     => $memo->memo_contents,
+                'start'     => $memo->memo_date,
+                'end'       => $memo->memo_date + 1,
+                'url'       => route('ortho.memos.edit', [ $memo->memo_id ]),
+                'color'     => 'transparent',
+                'border'    => 'none',
             );
         }
         $data['memos']      = json_encode($tmpMemos);

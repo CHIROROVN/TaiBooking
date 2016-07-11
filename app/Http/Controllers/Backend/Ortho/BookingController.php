@@ -562,9 +562,6 @@ class BookingController extends BackendController
             $tmpYears[$curYear + $i] = $curYear + $i;
         }
         $data['years'] = $tmpYears;
-        // echo '<pre>';
-        // print_r($data['list2s']);
-        // echo '</pre>';die;
 
         return view('backend.ortho.bookings.list2_list', $data);
     }
@@ -573,32 +570,75 @@ class BookingController extends BackendController
      * List3 list
      */
     public function list3_list(){
-        // $clsBooking             = new BookingModel();
-        // $data['list1']          = $clsBooking->get_list1_list();
-        // $clsService             = new ServiceModel();
-        // $data['sercices']       = $clsService->get_list();
-        // return view('backend.ortho.bookings.list1_list', $data);
+        // where
+        $where = array();
+        $where['booking_recall_yy']     = Input::get('booking_recall_yy');
+        $where['booking_recall_mm']     = Input::get('booking_recall_mm');
+
+        $clsBooking                     = new BookingModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
+        $data['list3s']                 = $clsBooking->get_list3_list($where);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+        $data['booking_recall_yy']      = $where['booking_recall_yy'];
+        $data['booking_recall_mm']      = $where['booking_recall_mm'];
+        
+        // set year
+        $curYear = date('Y');
+        $tmpYears = array();
+        $tmpYears[$curYear] = $curYear;
+        for ( $i = 1; $i <= 5; $i++ ) {
+            $tmpYears[$curYear + $i] = $curYear + $i;
+        }
+        $data['years'] = $tmpYears;
+
+        return view('backend.ortho.bookings.list3_list', $data);
     }
 
     /**
      * List4 list
      */
     public function list4_list(){
-        // $clsBooking             = new BookingModel();
-        // $data['list1']          = $clsBooking->get_list1_list();
-        // $clsService             = new ServiceModel();
-        // $data['sercices']       = $clsService->get_list();
-        // return view('backend.ortho.bookings.list1_list', $data);
+        $clsBooking                     = new BookingModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
+        $data['list4s']                 = $clsBooking->get_list4_list(4);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+        
+        // set year
+        $curYear = date('Y');
+        $tmpYears = array();
+        $tmpYears[$curYear] = $curYear;
+        for ( $i = 1; $i <= 5; $i++ ) {
+            $tmpYears[$curYear + $i] = $curYear + $i;
+        }
+        $data['years'] = $tmpYears;
+
+        return view('backend.ortho.bookings.list4_list', $data);
     }
 
     /**
      * List5 list
      */
     public function list5_list(){
-        // $clsBooking             = new BookingModel();
-        // $data['list1']          = $clsBooking->get_list1_list();
-        // $clsService             = new ServiceModel();
-        // $data['sercices']       = $clsService->get_list();
-        // return view('backend.ortho.bookings.list1_list', $data);
+        $clsBooking                     = new BookingModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
+        $data['list5s']                 = $clsBooking->get_list4_list(5);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+        
+        // set year
+        $curYear = date('Y');
+        $tmpYears = array();
+        $tmpYears[$curYear] = $curYear;
+        for ( $i = 1; $i <= 5; $i++ ) {
+            $tmpYears[$curYear + $i] = $curYear + $i;
+        }
+        $data['years'] = $tmpYears;
+
+        return view('backend.ortho.bookings.list5_list', $data);
     }
 }

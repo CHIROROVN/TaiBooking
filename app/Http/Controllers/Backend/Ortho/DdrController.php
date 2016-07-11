@@ -9,6 +9,7 @@ use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\DdrModel;
+use App\Http\Models\Ortho\ShiftModel;
 
 use Form;
 use Html;
@@ -40,7 +41,7 @@ class DdrController extends BackendController
             '4' => '#390',
             '5' => '#F90',
         );
-        $tmpddrs           = array();
+        $tmpDdrs           = array();
         foreach ( $ddrs as $ddr ) {
             $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
             $start_time = splitHourMin($ddr->ddr_start_time);
@@ -51,16 +52,77 @@ class DdrController extends BackendController
             if ( $end_time == '00:00' ) {
                 $end_time = null;
             }
-            $tmpddrs[] = array(
-                'title' => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
-                'start' => $ddr->ddr_start_date,
-                'end'   => $ddr->ddr_start_date + 1,
-                'url'   => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
+            $tmpDdrs[]      = array(
+                'title'     => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
+                'start'     => $ddr->ddr_start_date,
+                'end'       => $ddr->ddr_start_date + 1,
+                'url'       => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
+                'color'     => 'transparent',
+                'border'    => 'none',
             );
         }
-        $data['ddrs']      = json_encode($tmpddrs);
+        $data['ddrs']      = json_encode($tmpDdrs);
 
         return view('backend.ortho.ddrs.calendar', $data);
+    }
+
+    /**
+     * 
+     */
+    public function myCalendar()
+    {
+        $clsDdr            = new DdrModel();
+        $clsShift          = new ShiftModel();
+        $ddrs              = $clsDdr->get_all();
+        $shifts            = $clsShift->get_all(['u_id' => Auth::user()->id]);
+        $color = array(
+            '1' => '#000',
+            '2' => '#F00',
+            '3' => '#00F',
+            '4' => '#390',
+            '5' => '#F90',
+        );
+        $tmpDdrs           = array();
+        foreach ( $ddrs as $ddr ) {
+            $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
+            $start_time = splitHourMin($ddr->ddr_start_time);
+            $end_time = splitHourMin($ddr->ddr_end_time);
+            if ( $start_time == '00:00' ) {
+                $start_time = null;
+            }
+            if ( $end_time == '00:00' ) {
+                $end_time = null;
+            }
+            $tmpDdrs[]      = array(
+                'title'     => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
+                'start'     => $ddr->ddr_start_date,
+                'end'       => $ddr->ddr_start_date + 1,
+                'url'       => '',
+                'color'     => 'transparent',
+                'border'    => 'none',
+            );
+        }
+        $colorClinic = '#99CCFF';
+        $textClinic = '';
+        foreach ( $shifts as $shift ) {
+            if ( $shift->clinic_id == -1 ) {
+                $colorClinic = '#FFDFBF';
+                $textClinic = '休み';
+            } else {
+                $colorClinic = '#99CCFF';
+                $textClinic = $shift->clinic_name;
+            }
+            $tmpDdrs[]      = array(
+                'title'     => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png" width="13" height="11">' . $textClinic,
+                'start'     => $shift->shift_date,
+                'end'       => $shift->shift_date + 1,
+                'url'       => '',
+                'color'     => $colorClinic,
+            );
+        }
+        $data['ddrs']      = json_encode($tmpDdrs);
+
+        return view('backend.ortho.ddrs.mycalendar', $data);
     }
 
     /**

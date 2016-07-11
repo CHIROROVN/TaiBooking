@@ -38,7 +38,7 @@
             <span>ようこそ、<?php echo (Auth::check()) ? Auth::user()->u_name_display : '' ;  ?>さん (<a href="{{ route('ortho.change.password', [Auth::user()->id]) }}" class="text-orange">パスワード変更</a>）</span>
           </div>
           <div class="col-md-6 page-right mar-top">
-            <input type="button" class="btn btn-sm btn-header" name="button2" onclick="location.href='mycalendar.html'" value="院長・自分カレンダー" />
+            <input type="button" class="btn btn-sm btn-header" name="button2" onclick="location.href='{{ route('ortho.ddrs.my.calendar') }}'" value="院長・自分カレンダー" />
             <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='{{ route('ortho.bookings.booking.monthly') }}'" value="予約簿" />
             <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='carte_patient_search.html'" value="カルテ" />
             <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='{{ route('ortho.menus.index') }}'" value="メニューへ" />

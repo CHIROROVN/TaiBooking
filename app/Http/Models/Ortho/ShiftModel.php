@@ -29,13 +29,14 @@ class ShiftModel
     {
         $db = DB::table($this->table)
                     ->leftJoin('m_users as t1', 't_shift.u_id', '=', 't1.id')
-                    ->select('t_shift.*', 't1.u_name')
+                    ->leftJoin('m_clinic as t2', 't_shift.clinic_id', '=', 't2.clinic_id')
+                    ->select('t_shift.*', 't1.u_name', 't2.clinic_name')
                     ->where('t_shift.last_kind', '<>', DELETE);
 
         // where
-        // if ( ) {
-
-        // }
+        if ( !empty($where['u_id']) ) {
+            $db = $db->where('t_shift.u_id', $where['u_id']);
+        }
 
         $results = $db->get();
         return $results;

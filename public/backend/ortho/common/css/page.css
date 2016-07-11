@@ -601,9 +601,18 @@ textarea {
 }
 
 .memo-calendar .fc-event {
-  background-color: transparent;
-  border: none;
+  // background-color: transparent;
+  // border: none;
   color: #257272;
+}
+
+.fc-event img {
+  height: 11px;
+  margin: 2px 3px;
+}
+
+.fc-day-grid-event {
+  margin: 1px 5px 0;
 }
 
 .ui-datepicker-trigger {

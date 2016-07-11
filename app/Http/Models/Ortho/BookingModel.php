@@ -112,17 +112,27 @@ class BookingModel
                         ->get();
     }
 
-    public function get_list2_list(){
-        return DB::table($this->table)
+    public function get_list2_list($where = array()){
+        $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-                        ->leftJoin('t_result as t2', 't_booking.patient_id', '=', 't2.p_id')
+                        ->join('t_result as t2', 't_booking.patient_id', '=', 't2.patient_id')
                         ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name')
-                        ->where('t_booking.last_kind', '<>', DELETE)
-                        ->orderBy('t_booking.booking_id', 'asc')
-                        ->get();
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+                        ->where('t_booking.last_kind', '<>', DELETE);
+
+        if ( !empty($where['booking_date_year']) && !empty($where['booking_date_month']) ) {
+            $db = $db->whereYEAR('t_booking.booking_date', '=', $where['booking_date_year'])
+                    ->whereMONTH('t_booking.booking_date', '=', $where['booking_date_month']);
+        } elseif ( !empty($where['booking_date_year']) && empty($where['booking_date_month']) ) {
+            $db = $db->whereYEAR('t_booking.booking_date', '=', $where['booking_date_year']);
+        } elseif ( empty($where['booking_date_year']) && !empty($where['booking_date_month']) ) {
+            $db = $db->whereMONTH('t_booking.booking_date', '=', $where['booking_date_month']);
+        }
+        
+        $db = $db->orderBy('t2.result_date', 'desc')->get();
+        return $db;
     }
 
     public function get_booking_list($where = null){

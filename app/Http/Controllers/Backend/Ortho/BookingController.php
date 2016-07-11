@@ -540,10 +540,32 @@ class BookingController extends BackendController
      * List2 list
      */
     public function list2_list(){
-        $clsBooking             = new BookingModel();
-        $clsService             = new ServiceModel();
-        $data['list1']          = $clsBooking->get_list2_list();
-        $data['sercices']       = $clsService->get_list();
+        // where
+        $where = array();
+        $where['booking_date_year']     = Input::get('booking_date_year');
+        $where['booking_date_month']    = Input::get('booking_date_month');
+
+        $clsBooking                     = new BookingModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
+        $data['list2s']                 = $clsBooking->get_list2_list($where);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+        $data['booking_date_year']      = $where['booking_date_year'];
+        $data['booking_date_month']     = $where['booking_date_month'];
+        
+        // set year
+        $curYear = date('Y');
+        $tmpYears = array();
+        $tmpYears[$curYear] = $curYear;
+        for ( $i = 1; $i <= 5; $i++ ) {
+            $tmpYears[$curYear + $i] = $curYear + $i;
+        }
+        $data['years'] = $tmpYears;
+        // echo '<pre>';
+        // print_r($data['list2s']);
+        // echo '</pre>';die;
+
         return view('backend.ortho.bookings.list2_list', $data);
     }
 

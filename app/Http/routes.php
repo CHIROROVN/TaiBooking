@@ -290,6 +290,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	// booked history
 	Route::any('bookeds/history', ['as' => 'ortho.bookeds.history', 'uses' => 'BookedController@getHistory']);
+	Route::get('bookeds/history/edit/{id}', ['as' => 'ortho.bookeds.history.edit', 'uses' => 'BookedController@getEditHistory']);
 
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
 	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);

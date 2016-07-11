@@ -54,7 +54,7 @@
             <td>
               @if ( $result->service_2_kind == 1 )
               {{ @$services[$result->service_2] }}
-              @else@if ( $result->service_2_kind == 2 )
+              @elseif ( $result->service_2_kind == 2 )
               {{ @$treatment1s[$result->service_2] }}
               @endif
             </td>

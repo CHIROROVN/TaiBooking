@@ -39,7 +39,7 @@
 	}
 
 	/**
-	 * ex: {{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
+	 * ex: {{ splitHourMin($booking->booking_start_time) }}～{{ toTime($booking->booking_start_time, $booking->booking_total_time) }}
 	 */
 	function toTime($from_time, $total_min){
 			if(strlen($from_time) != 4){
@@ -97,5 +97,36 @@
 		}
 
 		return $day_arr;
+	}
+
+	/**
+	 * ex: 2016-07-11, 1
+	 * return array(
+	 	'2016-07-10' => 2016-07-10,
+		'2016-07-11' => 2016-07-11,
+		'2016-07-12' => 2016-07-12,
+	 )
+	 */
+	function getSomeDayFromDay($currentDay, $number)
+	{
+		if ( $number == 0 ) {
+			return $tmpDates[$currentDay] = $currentDay;
+		}
+
+		$tmpDates = array();
+		$newdate = '';
+        for ( $i = $number; $i >= 1; $i-- ) {
+            $newdate = strtotime ( '-' . $i . ' day' , strtotime ( $currentDay ) ) ;
+            $newdate = date ( 'Y-m-j' , $newdate );
+            $tmpDates[$newdate] = $newdate;
+        }
+        $tmpDates[$currentDay] = $currentDay;
+        for ( $i = 1; $i <= $number; $i++ ) {
+            $newdate = strtotime ( '+' . $i . ' day' , strtotime ( $currentDay ) ) ;
+            $newdate = date ( 'Y-m-j' , $newdate );
+            $tmpDates[$newdate] = $newdate;
+        }
+
+        return $tmpDates;
 	}
 

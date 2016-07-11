@@ -11,6 +11,7 @@
                 <tr>
                   <td class="col-title"><label for="textName">医院</label></td>
                   <td>
+                  <input type="hidden" name="booking_date" value="{{$booking->booking_date}}">
                     <select name="clinic_id" id="clinic_id" class="form-control">
                       <option value="" selected="selected">▼選択</option>
                       @if(count($clinics) > 0)
@@ -98,12 +99,12 @@
                 <tr>
                     <td class=col-title>何週間後</td>
                     <td>
-                      <label class="radio-inline"><input type="radio" name="optradio">指定なし</label>
-                      <label class="radio-inline"><input type="radio" name="optradio">1週間後</label>
-                      <label class="radio-inline"><input type="radio" name="optradio">1ヵ月後</label>
-                      <label class="radio-inline"><input type="radio" name="optradio">2ヵ月後</label>
+                      <label class="radio-inline"><input type="radio" checked="" id="none_week" value="" name="week_later">指定なし</label>
+                      <label class="radio-inline"><input type="radio" value="one_week" id="one_week"  name="week_later">1週間後</label>
+                      <label class="radio-inline"><input type="radio" value="one_month" id="one_month" name="week_later">1ヵ月後</label>
+                      <label class="radio-inline"><input type="radio" id="two_month" value="two_month" name="week_later">2ヵ月後</label>
                       
-                      <label class="radio-inline"><input type="radio" name="optradio">週指定</label>
+                      <label class="radio-inline"><input type="radio" value="week_specified" name="week_later" id="week_later">週指定</label>
                           <select name="week_later_option" id="week_later_option" style="width: 100px;">
                                   <option value="one_week">1週間後</option>
                                   <option value="two_week">2週間後</option>
@@ -112,12 +113,11 @@
                                   <option value="five_week">5週間後</option>
                                 </select>
                       
-                        <label class="radio-inline"><input type="radio" name="optradio">日付指定
+                        <label class="radio-inline"><input type="radio" name="week_later" id="date_picker" value="date_picker">日付指定
                         
                         </label>
-                        <input type="calendar" name="datepicker" id="datepicker" class="datepicker" style="width: 150px;">
+                        <input type="calendar" name="date_picker_option" id="date_picker_option" class="datepicker" style="width: 150px;">
                     </td>
-
                 </tr>
                 <tr>
                   <td class="col-title">業務</td>
@@ -148,9 +148,7 @@
             <div class="col-md-12 text-center">
               
               <input name="BookingCalendar" id="BookingCalendar" onclick="location.href='{{route('ortho.bookings.booking.result.calendar')}}'" value="検索開始（カレンダー表示）" type="button" class="btn btn-sm btn-page mar-right">
-
               <input name="BookingList" id="BookingList" value="検索開始（一覧表表示）" type="submit" class="btn btn-sm btn-page mar-right">
-
               <input name="Reset" id="button" value="条件クリア" type="reset" class="btn btn-sm btn-page mar-right">
           </div>
           </div>
@@ -163,15 +161,20 @@
           showOn: 'both',
           buttonText: 'カレンダー',
           buttonImageOnly: true,
-           buttonImage: "{{asset('public/backend/ortho/common/image/calendar.gif')}}",
+          buttonImage: "{{asset('public/backend/ortho/common/image/calendar.gif')}}",
           dateFormat: 'yy-mm-dd',
           constrainInput: true,
-          locale: 'ja'
+          inline: true,
+          //locale: 'ja'
       });
 
       $('.ui-datepicker-trigger').css('margin-top','5px');
       $(".ui-datepicker-trigger").mouseover(function() {
           $(this).css('cursor', 'pointer');
+      });
+
+      $('.ui-datepicker-trigger').click(function(event) {
+        $('#date_picker').attr("checked", "checked");
       });
   });
 </script>

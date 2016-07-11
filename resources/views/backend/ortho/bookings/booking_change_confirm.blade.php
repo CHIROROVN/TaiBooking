@@ -138,7 +138,6 @@
       <div class="col-md-12 text-center">
         {!! Form::open(array('route' => ['ortho.bookings.booking.change.confirm', 1], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
         <input type="hidden" name="booking_id" value="1">
-        <input type="hidden" name="next" value="{{ $next }}">
         <input value="変更する（確認済）" name="save" type="submit" class="btn btn-sm btn-page">
         </form>
       </div>

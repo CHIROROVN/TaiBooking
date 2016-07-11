@@ -99,3 +99,50 @@
 		return $day_arr;
 	}
 
+	//booking change date
+	function booking_change_date($date=null, $param=null){
+		if($date == '' || $param == ''){
+			return '';
+		}else{
+			switch ($param) {
+				case 'one_week':
+					$result = date ( 'Y-m-d', strtotime ( '+1 week' , strtotime ( $date ) )) ;
+					break;
+				case 'one_month':
+					$result = date ( 'Y-m-d', strtotime ( '+1 month' , strtotime ( $date ) )) ;
+					break;
+				case 'two_month':
+					$result = date ( 'Y-m-d', strtotime ( '+2 month' , strtotime ( $date ) )) ;
+					break;
+				case 'two_week':
+					$result = date ( 'Y-m-d', strtotime ( '+2 week' , strtotime ( $date ) )) ;
+					break;
+				case 'three_week':
+					$result = date ( 'Y-m-d', strtotime ( '+3 week' , strtotime ( $date ) )) ;
+					break;
+				case 'four_week':
+					$result = date ( 'Y-m-d', strtotime ( '+4 week' , strtotime ( $date ) )) ;
+					break;
+				case 'five_week':
+					$result = date ( 'Y-m-d', strtotime ( '+5 week' , strtotime ( $date ) )) ;
+					break;
+				case '':
+					$result = '';
+					break;
+				default:
+					$result = $param;
+					break;
+			}
+			return $result;
+		}
+	}
+
+	//convert date to YYYYMM
+	function date2YearMonth($date=null){
+		if(!empty($date)){
+			return date('Ym', strtotime($date));
+		}else{
+			return '';
+		}
+	}
+

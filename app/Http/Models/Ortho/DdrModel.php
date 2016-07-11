@@ -24,7 +24,7 @@ class DdrModel
 
     public function get_all()
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('ddr_start_time', 'asc')->get();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('ddr_start_date', 'asc')->orderBy('ddr_start_time', 'asc')->get();
         return $results;
     }
 

@@ -23,9 +23,6 @@
     var str = '<option value="">---日</option>';
     if ( year.length && month.length ) {
       var numbers = new Date(year, month, 0).getDate();
-      console.log(year);
-      console.log(month);
-      console.log(numbers);
       var selected = '';
       for (var i = 1; i <= numbers; i++) {
         if ( editDay == i ) {
@@ -111,8 +108,8 @@
                 <select name="ddr_start_day" id="ddr_start_day" class="form-control form-control--small">
                   <option value="">---日</option>
                 </select>
-                <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" width="27" height="23" />
-                <input type="hidden" id="hidden-datetime">
+                <!-- <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" width="27" height="23" /> -->
+                <input type="hidden" id="datepicker">
                 
                 <!-- ddr_start_time -->
                 <select name="ddr_start_hh" class="form-control form-control--small">
@@ -148,8 +145,8 @@
                 <select name="ddr_end_day" id="ddr_end_day" class="form-control form-control--small">
                   <option value="">---日</option>
                 </select>
-                <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" width="27" height="23" />
-                <input type="hidden" id="hidden-datetime1">
+                <!-- <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" width="27" height="23" /> -->
+                <input type="hidden" id="datepicker1">
 
                 <!-- ddr_end_time -->
                 <select name="ddr_end_hh" class="form-control form-control--small">
@@ -159,7 +156,7 @@
                   @endforeach
                 </select>
                 <select name="ddr_end_mm" class="form-control form-control--small">
-                  <option>--分</option>
+                  <option value="">--分</option>
                   <option value="00" @if(old('ddr_end_mm') == '00') selected="" @endif>00分</option>
                   <option value="15" @if(old('ddr_end_mm') == '15') selected="" @endif>15分</option>
                   <option value="30" @if(old('ddr_end_mm') == '30') selected="" @endif>30分</option>
@@ -195,11 +192,8 @@
   </section>
 {!! Form::close() !!}
 
-
 <script type="text/javascript">
   $(document).ready(function(){
-    var numbers = new Date('2016', '2', 0).getDate();
-    console.log(numbers);
     var editYearStar = "{{ $ddr_start_date_y }}";
     var editMonthStar = "{{ $ddr_start_date_m }}";
     var editDayStar = "{{ $ddr_start_date_d }}";
@@ -232,20 +226,63 @@
       }
     });
 
-    // 1
-    // $(function () {
-    //   $('#hidden-datetime').datetimepicker({
-    //     format: 'YYYY/MM/DD'
-    //   });
-    // });
-    // 2
-    // $(function () {
-    //   $('#hidden-datetime1').datetimepicker({
-    //     format: 'YYYY/MM/DD'
-    //   });
-    // });
 
+    // datepicker
+    $(function() {
+      $( "#datepicker" ).datepicker({
+        showOn: "button",
+        buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
+        buttonImageOnly: true,
+        buttonText: "Select date",
+        dateFormat: 'yyyy-mm-dd',
+        inline: true,
+        onSelect: function(dateText, inst) { 
+          var date = $(this).datepicker('getDate'),
+          day  = date.getDate(),
+          month = date.getMonth() + 1,
+          year =  date.getFullYear();
+          console.log(year);
+          console.log(month);
+          console.log(day);
 
+          $( "#ddr_start_year option" ).each(function( index ) {
+            if($(this).val() == year) {
+                $(this).prop("selected", true);
+            }
+          });
+
+          getMonths('ddr_start_month', year.toString(), month.toString());
+          getDays('ddr_start_day', month.toString(), day.toString());
+        }
+      });
+    });
+
+    // datepicker 1
+    $(function() {
+      $( "#datepicker1" ).datepicker({
+        showOn: "button",
+        buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
+        buttonImageOnly: true,
+        buttonText: "Select date",
+        dateFormat: 'yyyy-mm-dd',
+        inline: true,
+        onSelect: function(dateText, inst) { 
+          var date = $(this).datepicker('getDate'),
+          day  = date.getDate(),
+          month = date.getMonth() + 1,
+          year =  date.getFullYear();
+
+          $( "#ddr_end_year option" ).each(function( index ) {
+            if($(this).val() == year) {
+                $(this).prop("selected", true);
+            }
+          });
+
+          getMonths('ddr_end_month', year.toString(), month.toString());
+          getDays('ddr_end_day', month.toString(), day.toString());
+        }
+      });
+    });
   });
 </script>
 

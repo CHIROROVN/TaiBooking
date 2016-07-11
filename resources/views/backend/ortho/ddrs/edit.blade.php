@@ -108,8 +108,7 @@
                 <select name="ddr_start_day" id="ddr_start_day" class="form-control form-control--small">
                   <option value="">---日</option>
                 </select>
-                <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" width="27" height="23" />
-                <input type="hidden" id="hidden-datetime">
+                <input type="hidden" id="datepicker">
                 
                 <!-- ddr_start_time -->
                 <select name="ddr_start_hh" class="form-control form-control--small">
@@ -161,8 +160,7 @@
                 <select name="ddr_end_day" id="ddr_end_day" class="form-control form-control--small">
                   <option value="">---日</option>
                 </select>
-                <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" width="27" height="23" />
-                <input type="hidden" id="hidden-datetime1">
+                <input type="hidden" id="datepicker1">
 
                 <!-- ddr_end_time -->
                 <select name="ddr_end_hh" class="form-control form-control--small">
@@ -294,19 +292,63 @@
       }
     });
 
-    // 1
-    // $(function () {
-    //   $('#hidden-datetime').datetimepicker({
-    //     format: 'YYYY/MM/DD'
-    //   });
-    // });
-    // 2
-    // $(function () {
-    //   $('#hidden-datetime1').datetimepicker({
-    //     format: 'YYYY/MM/DD'
-    //   });
-    // });
 
+    // datepicker
+    $(function() {
+      $( "#datepicker" ).datepicker({
+        showOn: "button",
+        buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
+        buttonImageOnly: true,
+        buttonText: "Select date",
+        dateFormat: 'yyyy-mm-dd',
+        inline: true,
+        onSelect: function(dateText, inst) { 
+          var date = $(this).datepicker('getDate'),
+          day  = date.getDate(),
+          month = date.getMonth() + 1,
+          year =  date.getFullYear();
+          console.log(year);
+          console.log(month);
+          console.log(day);
+
+          $( "#ddr_start_year option" ).each(function( index ) {
+            if($(this).val() == year) {
+                $(this).prop("selected", true);
+            }
+          });
+
+          getMonths('ddr_start_month', year.toString(), month.toString());
+          getDays('ddr_start_day', month.toString(), day.toString());
+        }
+      });
+    });
+
+    // datepicker 1
+    $(function() {
+      $( "#datepicker1" ).datepicker({
+        showOn: "button",
+        buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
+        buttonImageOnly: true,
+        buttonText: "Select date",
+        dateFormat: 'yyyy-mm-dd',
+        inline: true,
+        onSelect: function(dateText, inst) { 
+          var date = $(this).datepicker('getDate'),
+          day  = date.getDate(),
+          month = date.getMonth() + 1,
+          year =  date.getFullYear();
+
+          $( "#ddr_end_year option" ).each(function( index ) {
+            if($(this).val() == year) {
+                $(this).prop("selected", true);
+            }
+          });
+
+          getMonths('ddr_end_month', year.toString(), month.toString());
+          getDays('ddr_end_day', month.toString(), day.toString());
+        }
+      });
+    });
 
   });
 </script>

@@ -35,6 +35,28 @@
 
       //load all event from DB
       events: ddrs,
+      eventOrder: 'start',
+      // original function
+      // compareSegs: function(seg1, seg2) {
+      //     return seg1.eventStartMS - seg2.eventStartMS || // earlier events go first
+      //         seg2.eventDurationMS - seg1.eventDurationMS || // tie? longer events go first
+      //         seg2.event.allDay - seg1.event.allDay || // tie? put all-day events first (booleans cast to 0/1)
+      //         compareByFieldSpecs(seg1.event, seg2.event, this.view.eventOrderSpecs);
+      // },
+
+      // custom function
+      compareSegs: function(seg1, seg2) {
+          if(this.view.name=="basicWeek"){ // ordering events by color in ListView
+          return seg2.event.allDay - seg1.event.allDay || // tie? put all-day events first (booleans cast to 0/1)
+              compareByFieldSpecs(seg1.event, seg2.event, this.view.eventOrderSpecs);
+          }
+          else{
+              return seg1.eventStartMS - seg2.eventStartMS || // earlier events go first
+                          seg2.eventDurationMS - seg1.eventDurationMS || // tie? longer events go first
+                          seg2.event.allDay - seg1.event.allDay || // tie? put all-day events first (booleans cast to 0/1)
+                          compareByFieldSpecs(seg1.event, seg2.event, this.view.eventOrderSpecs);
+          }
+      },
       
       // Convert the allDay from string to boolean
       eventRender: function(event, element, view) {
@@ -75,7 +97,7 @@
         calendar.fullCalendar('unselect');
 
         window.location.href = "{{ route('ortho.ddrs.regist') }}?start_date=" + start;
-      },
+      }
     });
     // end calendar
   });

@@ -606,6 +606,10 @@ textarea {
   color: #257272;
 }
 
-/* .note-required {
-  color: red;
-} */
+.ui-datepicker-trigger {
+  cursor: pointer;
+}
+
+.fc-day-grid-event .fc-content {
+    white-space: normal;
+}

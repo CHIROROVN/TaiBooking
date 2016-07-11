@@ -9,6 +9,9 @@ use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
+use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\ServiceModel;
+use App\Http\Models\Ortho\Treatment1Model;
 
 use Form;
 use Html;
@@ -30,8 +33,22 @@ class BookedController extends BackendController
      */
     public function getHistory()
     {
-        $clsBooked = new BookingModel();
-        $data['bookeds'] = $clsBooked->get_all();
+        // where
+        $data                       = array();
+        $data['s_clinic_id']        = Input::get('s_clinic_id');
+        $data['s_booking_date']     = Input::get('s_booking_date');
+
+        $clsBooking                 = new BookingModel();
+        $clsClinic                  = new ClinicModel();
+        $clsService                 = new ServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data['bookeds']            = $clsBooking->get_all($data, true);
+        $data['clinics']            = $clsClinic->get_for_select();
+        $data['services']           = $clsService->get_list();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
+        $data['currentDay']         = date('Y-m-d');
+
 
         return view('backend.ortho.bookeds.history', $data);
     }
@@ -52,17 +69,17 @@ class BookedController extends BackendController
      */
     // public function postRegist()
     // {
-    //     $clsBooked        = new BookingModel();
+    //     $clsBooking        = new BookingModel();
     //     $clsClinicArea  = new ClinicBookingModel();
     //     $inputs         = Input::all();
-    //     $validator      = Validator::make($inputs, $clsBooked->Rules(), $clsBooked->Messages());
+    //     $validator      = Validator::make($inputs, $clsBooking->Rules(), $clsBooking->Messages());
 
     //     if ($validator->fails()) {
     //         return redirect()->route('ortho.bookeds.regist')->withErrors($validator)->withInput();
     //     }
 
     //     // insert
-    //     $max = $clsBooked->get_max();
+    //     $max = $clsBooking->get_max();
     //     $dataInsert = array(
     //         'area_name'         => Input::get('area_name'),
 
@@ -72,7 +89,7 @@ class BookedController extends BackendController
     //         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
     //         'last_user'         => Auth::user()->id
     //     );
-    //     $id_area = $clsBooked->insert_get_id($dataInsert);
+    //     $id_area = $clsBooking->insert_get_id($dataInsert);
 
     //     // insert to table clinic_area
     //     $clinics = Input::get('clinic');
@@ -112,34 +129,26 @@ class BookedController extends BackendController
     /**
      * 
      */
-    // public function getEdit($id)
-    // {
-    //     $clsBooked                = new BookingModel();
-    //     $clsClinic              = new ClinicModel();
-    //     $clsClinicArea          = new ClinicBookingModel();
-    //     $data['area']           = $clsBooked->get_by_id($id);
-    //     $data['clinics']        = $clsClinic->get_all();
-    //     $area_clinics           = $clsClinicArea->get_by_area($id);
-    //     $tmp                    = array();
-    //     foreach($area_clinics as $area_clinic)
-    //     {
-    //         $tmp[$area_clinic->clinic_id] = $area_clinic->clinic_id;
-    //     }
-    //     $data['area_clinics']   = $tmp;
+    public function getEditHistory($id)
+    {
+        $clsBooking                 = new BookingModel();
+        $data['booked']             = $clsBooking->get_by_id($id);
+        $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
+        $data['currentDay']         = date('Y-m-d');
 
-    //     return view('backend.ortho.bookeds.edit', $data);
-    // }
+        return view('backend.ortho.bookeds.history_edit', $data);
+    }
 
     /**
      * 
      */
     // public function postEdit($id)
     // {
-    //     $clsBooked                = new BookingModel();
+    //     $clsBooking                = new BookingModel();
     //     $clsClinicArea          = new ClinicBookingModel();
     //     $inputs                 = Input::all();
 
-    //     $validator              = Validator::make($inputs, $clsBooked->Rules(), $clsBooked->Messages());
+    //     $validator              = Validator::make($inputs, $clsBooking->Rules(), $clsBooking->Messages());
 
     //     if ($validator->fails()) {
     //         return redirect()->route('ortho.bookeds.edit', [$id])->withErrors($validator)->withInput();
@@ -154,7 +163,7 @@ class BookedController extends BackendController
     //         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
     //         'last_user'         => Auth::user()->id
     //     );
-    //     $clsBooked->update($id, $dataUpdate);
+    //     $clsBooking->update($id, $dataUpdate);
 
     //     // before update table clinic_area
     //     $clinics = Input::get('clinic');
@@ -215,7 +224,7 @@ class BookedController extends BackendController
      */
     // public function getDelete($id)
     // {
-    //     $clsBooked                = new BookingModel();
+    //     $clsBooking                = new BookingModel();
     //     $clsClinicArea          = new ClinicBookingModel();
 
     //     // update table area
@@ -225,7 +234,7 @@ class BookedController extends BackendController
     //         'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
     //         'last_user'         => Auth::user()->id
     //     );
-    //     $clsBooked->update($id, $dataUpdate);
+    //     $clsBooking->update($id, $dataUpdate);
 
     //     // update to table clinic_area
     //     $dataUpdate = array(

@@ -87,17 +87,4 @@ class UserModel
                                 ->orderBy('id', 'asc')
                                 ->lists('u_name', 'id');
     }
-
-    public function get_by_belong_shift($belong_kind = array())
-    {
-        return DB::table($this->table)
-                    ->rightJoin('t_shift as ts1', 'm_users.id', '=', 'ts1.u_id')
-                    ->leftJoin('m_belong as t1', 'm_users.u_belong', '=', 't1.belong_id')
-                    ->select('id', 'u_name')
-                    ->where('m_users.last_kind', '<>', DELETE)
-                    ->where('ts1.last_kind', '<>', DELETE)
-                    //->where('ts1.u_id', '=', 'm_users.id')
-                    ->whereIn('t1.belong_kind', $belong_kind)
-                    ->get();
-    }
 }

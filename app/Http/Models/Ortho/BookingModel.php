@@ -34,11 +34,11 @@ class BookingModel
 		);
     }
 
-    public function get_all($where = array())
+    public function get_all($where = array(), $paging = false)
     {
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-                        ->select('t_booking.*', 't1.p_name')
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana')
                         ->where('t_booking.last_kind', '<>', DELETE);
         
         // where clinic_id
@@ -50,8 +50,19 @@ class BookingModel
             $results = $db->where('t_booking.doctor_id', $where['s_u_id'])
                           ->orWhere('t_booking.hygienist_id', $where['s_u_id']);
         }
+        // where s_booking_date
+        if ( isset($where['s_booking_date']) && !empty($where['s_booking_date']) ) {
+            $results = $db->where('t_booking.booking_date', $where['s_booking_date']);
+        }
 
-        $results = $db->orderBy('t_booking.booking_id', 'asc')->get();
+        $results = $db->orderBy('t_booking.booking_date', 'asc');
+
+        if ( $paging ) {
+            $results = $results->simplePaginate(PAGINATION);
+        } else {
+            $results = $results->get();
+        }
+
         return $results;
     }
 

@@ -96,25 +96,55 @@
                 <tr>
                     <td class=col-title>何週間後</td>
                     <td>
-                      <label class="radio-inline"><input type="radio" checked=""  id="none_week" value="" name="week_later">指定なし</label>
-                      <label class="radio-inline"><input type="radio"  value="one_week" id="one_week"  name="week_later">1週間後</label>
-                      <label class="radio-inline"><input type="radio"  value="one_month" id="one_month" name="week_later">1ヵ月後</label>
-                      <label class="radio-inline"><input type="radio"  id="two_month" value="two_month" name="week_later">2ヵ月後</label>
-                      
-                      <label class="radio-inline"><input type="radio"  value="week_specified" name="week_later" id="week_later">週指定</label>
-                          <select name="week_later_option"  id="week_later_option" style="width: 100px;">
-                                  <option value="one_week">1週間後</option>
-                                  <option value="two_week">2週間後</option>
-                                  <option value="three_week">3週間後</option>
-                                  <option value="four_week">4週間後</option>
-                                  <option value="five_week">5週間後</option>
-                                </select>
-                      
-                        <label class="radio-inline"><input type="radio"   name="week_later" id="date_picker" value="date_picker">日付指定
-                        
-                        </label>
-                        <input type="calendar" name="date_picker_option" id="date_picker_option" class="datepicker" style="width: 150px;">
-                    </td>
+                      <div class="row">
+                      	<div class="col-xs-3 col-sm-2 col-md-1">
+                          <div class="radio">
+                            <label><input type="radio" name="week_later" id="one_week" value=""checked />指定なし</label>
+                          </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-2 col-md-1">
+                          <div class="radio">
+                            <label><input type="radio" name="week_later" id="one_week" value="one_week" />1週間後</label>
+                          </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-2 col-md-1">
+                          <div class="radio">
+                            <label><input type="radio" name="week_later" id="one_month" value="one_month" />1ヵ月後</label>
+                          </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-2 col-md-1">
+                          <div class="radio">
+                            <label><input type="radio" name="week_later" id="two_month" value="two_month"  />2ヵ月後</label>
+                          </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-2 col-md-1">
+                          <div class="radio">
+                            <label><input type="radio" name="week_later" id="week_later" value="week_specified" />週指定</label>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                        <select name="week_later_option" id="week_later_option">
+                            	<option value="one_week">1週間後</option>
+                            	<option value="two_week">2週間後</option>
+                            	<option value="three_week">3週間後</option>
+                            	<option value="four_week">4週間後</option>
+                            	<option value="five_week">5週間後</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-2 col-md-1">
+                          <div class="radio">
+                            <label><input type="radio" name="week_later" id="date_picker" value="date_picker"  />日付指定</label>
+                          </div>
+                        </div>
+                        <div class="col-xs-1 col-sm-2 col-md-1">
+	                          <div class="input-group date" data-provide="datepicker">
+							    <input type="text" name="date_picker_option" id="date_picker_option" class="form-control datepicker">
+							    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+							  </div>
+							</div>
+                        </div>
+                     </div>
                     </td>
                 </tr>
                 <tr>
@@ -156,58 +186,19 @@
       </section>
 {!! Form::close() !!}
 <script type="text/javascript">
-    $(document).ready(function() {
-      $(".datepicker").datepicker({
-          showOn: 'both',
-          buttonText: 'カレンダー',
-          buttonImageOnly: true,
-          buttonImage: "{{asset('public/backend/ortho/common/image/calendar.gif')}}",
-          dateFormat: 'yy-mm-dd',
-          constrainInput: true,
-          inline: true,
-         // locale: 'ja'
-      });
-
-      $('.ui-datepicker-trigger').css('margin-top','5px');
-      $(".ui-datepicker-trigger").mouseover(function() {
-          $(this).css('cursor', 'pointer');
-      });
-
-      $('.ui-datepicker-trigger').click(function(event) {
-        $('#date_picker').attr("checked", "checked");
-      });
-  });
+	$('.datepicker').datepicker({
+	    format: 'yyyy-mm-dd',
+        locale: 'ja'
+});
 </script>
 
 <script type="text/javascript">
-  $('#date_picker_option').click(function() {
-    $('#date_picker').attr("checked", "checked");
-  });
-  $('#week_later_option').click(function() {
-    $('#week_later').attr("checked", "checked");
-  });
-  $('#none_week').click(function(event) {
-    $('#none_week').attr("checked", "checked");
-  });
-  $('#one_week').click(function(event) {
-    $('#one_week').attr("checked", "checked");
-  });
-  $('#one_month').click(function(event) {
-    $('#one_month').attr("checked", "checked");
-  });
-  $('#two_month').click(function(event) {
-    $('#two_month').attr("checked", "checked");
-  });
-  $('#week_later_option').click(function(event) {
-    $('#week_later').attr("checked", "checked");
-  });
-  $('#date_picker').click(function(event) {
-    $('#date_picker').attr("checked", "checked");
-  });
-  $('#week_later').click(function(event) {
-    $('#week_later').attr("checked", "checked");
-  });
-  
+	$('#date_picker_option').click(function() {
+		$('#date_picker').attr("checked", "checked");
+	});
+	$('#week_later_option').click(function() {
+		$('#week_later').attr("checked", "checked");
+	});
 </script>
 
 @endsection

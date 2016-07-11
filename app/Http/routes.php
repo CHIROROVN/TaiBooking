@@ -288,6 +288,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 		return redirect()->route('ortho.bookings.booking_search');
 	});
 
+	// booked history
+	Route::any('bookeds/history', ['as' => 'ortho.bookeds.history', 'uses' => 'BookedController@getHistory']);
+
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
 	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);
 	// Route::post('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@postSet']);

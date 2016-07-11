@@ -19,6 +19,7 @@ use App\Http\Models\Ortho\EquipmentModel;
 use App\Http\Models\Ortho\InspectionModel;
 use App\Http\Models\Ortho\InsuranceModel;
 use App\Http\Models\Ortho\InterviewModel;
+use App\Http\Models\Ortho\ResultModel;
 
 use Form;
 use Html;
@@ -533,5 +534,49 @@ class BookingController extends BackendController
         $clsService             = new ServiceModel();
         $data['sercices']       = $clsService->get_list();
         return view('backend.ortho.bookings.list1_list', $data);
+    }
+
+    /**
+     * List2 list
+     */
+    public function list2_list(){
+        $clsBooking             = new BookingModel();
+        $clsService             = new ServiceModel();
+        $data['list1']          = $clsBooking->get_list2_list();
+        $data['sercices']       = $clsService->get_list();
+        return view('backend.ortho.bookings.list2_list', $data);
+    }
+
+    /**
+     * List3 list
+     */
+    public function list3_list(){
+        // $clsBooking             = new BookingModel();
+        // $data['list1']          = $clsBooking->get_list1_list();
+        // $clsService             = new ServiceModel();
+        // $data['sercices']       = $clsService->get_list();
+        // return view('backend.ortho.bookings.list1_list', $data);
+    }
+
+    /**
+     * List4 list
+     */
+    public function list4_list(){
+        // $clsBooking             = new BookingModel();
+        // $data['list1']          = $clsBooking->get_list1_list();
+        // $clsService             = new ServiceModel();
+        // $data['sercices']       = $clsService->get_list();
+        // return view('backend.ortho.bookings.list1_list', $data);
+    }
+
+    /**
+     * List5 list
+     */
+    public function list5_list(){
+        // $clsBooking             = new BookingModel();
+        // $data['list1']          = $clsBooking->get_list1_list();
+        // $clsService             = new ServiceModel();
+        // $data['sercices']       = $clsService->get_list();
+        // return view('backend.ortho.bookings.list1_list', $data);
     }
 }

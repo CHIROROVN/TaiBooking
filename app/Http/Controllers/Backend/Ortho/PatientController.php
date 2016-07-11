@@ -11,6 +11,7 @@ use App\User;
 use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\InterviewModel;
 
 use Form;
 use Html;
@@ -46,9 +47,17 @@ class PatientController extends BackendController
         Session::put('where', $where);
 
         $clsPatient             = new PatientModel();
+        $clsInterview           = new InterviewModel();
         $data['patients']       = $clsPatient->get_all($where);
         $data['keyword']        = $keyword;
         $data['keyword_id']     = $keyword_id;
+
+        $interviews = $clsInterview->get_all();
+        $tmpInterviews = array();
+        foreach ( $interviews as $interview ) {
+            $tmpInterviews[$interview->patient_id] = $interview;
+        }
+        $data['interviews'] = $tmpInterviews;
 
         return view('backend.ortho.patients.index', $data);
     }

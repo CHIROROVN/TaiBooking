@@ -392,7 +392,6 @@ class InterviewController extends BackendController
     {
         $clsInterview           = new InterviewModel();
         $interview              = $clsInterview->get_by_id($id);
-
         $dataInsert = array(
             'patient_id'        => $interview->patient_id,
 
@@ -555,7 +554,7 @@ class InterviewController extends BackendController
 
         $validator      = Validator::make($dataInsert, $clsInterview->Rules(), $clsInterview->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.interviews.regist', [ 'patient_id' => $dataInsert['patient_id'], 'booking_id' => $dataInsert['booking_id'], 'clinic_id' => $dataInsert['clinic_id'] ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.interviews.edit', [ $id ])->withErrors($validator)->withInput();
         }
 
         // set value befor insert

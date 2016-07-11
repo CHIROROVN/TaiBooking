@@ -1,7 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-{!! Form::open(array('route' => ['ortho.interviews.edit', $interview->patient_id], 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open(array('route' => ['ortho.interviews.edit', $interview->first_id], 'enctype'=>'multipart/form-data')) !!}
 <div class="content-page">
   <h3>問診票の登録</h3>
   <table class="table table-bordered interview-regist">

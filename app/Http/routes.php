@@ -247,7 +247,11 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('interviews/detail/{patient_id}', ['as' => 'ortho.interviews.detail', 'uses' => 'InterviewController@getDetail']);
 
 	//List1
-	Route::get('list1_list', ['as' => 'ortho.bookings.list1_list', 'uses' => 'BookingController@list1_list']);
+	Route::get('list1-list', ['as' => 'ortho.bookings.list1_list', 'uses' => 'BookingController@list1_list']);
+	Route::get('list2-list', ['as' => 'ortho.bookings.list2_list', 'uses' => 'BookingController@list2_list']);
+	Route::get('list3-list', ['as' => 'ortho.bookings.list3_list', 'uses' => 'BookingController@list3_list']);
+	Route::get('list4-list', ['as' => 'ortho.bookings.list4_list', 'uses' => 'BookingController@list4_list']);
+	Route::get('list5-list', ['as' => 'ortho.bookings.list5_list', 'uses' => 'BookingController@list5_list']);
 
 	// bookings
 	Route::any('bookings/booking-monthly', ['as' => 'ortho.bookings.booking.monthly', 'uses' => 'BookingController@bookingMonthly']);

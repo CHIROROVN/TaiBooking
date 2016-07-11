@@ -112,6 +112,19 @@ class BookingModel
                         ->get();
     }
 
+    public function get_list2_list(){
+        return DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->leftJoin('t_result as t2', 't_booking.patient_id', '=', 't2.p_id')
+                        ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
+                        // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
+                        // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->orderBy('t_booking.booking_id', 'asc')
+                        ->get();
+    }
+
     public function get_booking_list($where = null){
         $db =  DB::table($this->table)
                                 ->leftJoin('t_facility as tf1', 't_booking.facility_id', '=', 'tf1.facility_id')

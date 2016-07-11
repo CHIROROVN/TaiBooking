@@ -68,7 +68,13 @@
               <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
               <td>{{ date('Y/m/d', strtotime($patient->p_birthday)) }}</td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.detail', [$patient->p_id]) }}'" value="詳細" type="button" class="btn btn-xs btn-page"></td>
-              <td align="center"><input onclick="location.href='{{ route('ortho.interviews.detail', [$patient->p_id]) }}'" value="問診票の参照" type="button" class="btn btn-xs btn-page"></td>
+              <td align="center">
+                @if ( isset($interviews[$patient->p_id]) )
+                <input onclick="location.href='{{ route('ortho.interviews.detail', [$patient->p_id]) }}'" value="問診票の参照" type="button" class="btn btn-xs btn-page">
+                @else
+                <input onclick="location.href='{{ route('ortho.interviews.detail', [$patient->p_id]) }}'" value="問診票の参照" type="button" class="btn btn-xs btn-page" disabled="">
+                @endif
+              </td>
               <td align="center"><input onclick="location.href='patient_booking_list.html'" value="予約表示" type="button" class="btn btn-xs btn-page"/></td>
               <td align="center"><input onclick="location.href='patient_visit_list.html'" value="来院履歴" type="button" class="btn btn-xs btn-page"/></td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.communications.index', [$patient->p_id]) }}'" value="コミュノート" type="button" class="btn btn-xs btn-page"/></td>

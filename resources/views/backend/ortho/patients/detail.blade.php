@@ -195,9 +195,13 @@
     </div>
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        <input type="button" onClick="location.href='interview_detail.html'" value="問診票の参照" class="btn btn-sm btn-page mar-right">
+        @if ( isset($interviews[$patient->p_id]) )
+        <input type="button" onClick="location.href='{{ route('ortho.interviews.detail', [$patient->p_id]) }}'" value="問診票の参照" class="btn btn-sm btn-page mar-right">
+        @else
+        <input type="button" onClick="location.href='{{ route('ortho.interviews.detail', [$patient->p_id]) }}'" value="問診票の参照" class="btn btn-sm btn-page mar-right" disabled="">
+        @endif
         <input type="button" onClick="location.href='patient_booking_list.html'" value="予約表示" class="btn btn-sm btn-page mar-right">
-        <input type="button" onClick="location.href='patient_visit_list.html'" value="来院履歴" class="btn btn-sm btn-page mar-right">
+        <input type="button" onClick="location.href='{{ route('ortho.patients.visit.list', [$patient->p_id]) }}'" value="来院履歴" class="btn btn-sm btn-page mar-right">
         <input type="button" onClick="location.href='{{ route('ortho.patients.communications.index', [ $patient->p_id ]) }}'" value="コミュニケーションノート" class="btn btn-sm btn-page mar-right">
         <input type="button" onClick="location.href='{{ route('ortho.patients.brothers.index', [ $patient->p_id ]) }}'" value="兄弟設定" class="btn btn-sm btn-page mar-right">
       </div>

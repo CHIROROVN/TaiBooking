@@ -27,6 +27,18 @@ class ResultModel
         return $results;
     }
 
+    public function get_by_patientID($patient_id)
+    {
+        $results = DB::table($this->table)
+                        ->leftJoin('m_clinic as t1', 't_result.clinic_id', '=', 't1.clinic_id')
+                        ->select('t_result.*', 't1.clinic_name')
+                        ->where('t_result.patient_id', $patient_id)
+                        ->where('t_result.last_kind', '<>', DELETE)
+                        ->orderBy('t_result.result_date', 'asc')
+                        ->get();
+        return $results;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

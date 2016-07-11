@@ -76,7 +76,7 @@
                 @endif
               </td>
               <td align="center"><input onclick="location.href='patient_booking_list.html'" value="予約表示" type="button" class="btn btn-xs btn-page"/></td>
-              <td align="center"><input onclick="location.href='patient_visit_list.html'" value="来院履歴" type="button" class="btn btn-xs btn-page"/></td>
+              <td align="center"><input onclick="location.href='{{ route('ortho.patients.visit.list', [$patient->p_id]) }}'" value="来院履歴" type="button" class="btn btn-xs btn-page"/></td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.communications.index', [$patient->p_id]) }}'" value="コミュノート" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
             @endforeach

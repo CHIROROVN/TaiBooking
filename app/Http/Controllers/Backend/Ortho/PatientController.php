@@ -12,6 +12,9 @@ use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\InterviewModel;
+use App\Http\Models\Ortho\ResultModel;
+use App\Http\Models\Ortho\ServiceModel;
+use App\Http\Models\Ortho\Treatment1Model;
 
 use Form;
 use Html;
@@ -261,10 +264,51 @@ class PatientController extends BackendController
     public function getDetail($id)
     {
         $clsPatient                 = new PatientModel();
+        $clsInterview               = new InterviewModel();
         $data['patient']            = $clsPatient->get_by_id($id);
         $data['prefs']              = Config::get('constants.PREF');
 
+        $interviews                 = $clsInterview->get_all();
+        $tmpInterviews              = array();
+        foreach ( $interviews as $interview ) {
+            $tmpInterviews[$interview->patient_id] = $interview;
+        }
+        $data['interviews'] = $tmpInterviews;
+
         return view('backend.ortho.patients.detail', $data);
+    }
+
+
+    public function getVisitList($id)
+    {
+        $clsResult                  = new ResultModel();
+        $clsPatient                 = new PatientModel();
+        $clsUser                    = new UserModel();
+        $clsService                 = new ServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data                       = array();
+        $data['patient']            = $clsPatient->get_by_id($id);
+        $data['results']            = $clsResult->get_by_patientID($id);
+        $data['services']           = $clsService->get_list();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+
+        // set doctor
+        $doctors            = $clsUser->get_by_belong([1]);
+        $tmpDoctors = array();
+        foreach ( $doctors as $doctor ) {
+            $tmpDoctors[$doctor->id] = $doctor;
+        }
+        $data['doctors'] = $tmpDoctors;
+
+        // set hygienist
+        $hygienists         = $clsUser->get_by_belong([2,3]);
+        $tmpHygienists = array();
+        foreach ( $hygienists as $hygienist ) {
+            $tmpHygienists[$hygienist->id] = $hygienist;
+        }
+        $data['hygienists'] = $tmpHygienists;
+
+        return view('backend.ortho.patients.visit_list', $data);
     }
 
 

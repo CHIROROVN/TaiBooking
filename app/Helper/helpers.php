@@ -38,6 +38,9 @@
 		}
 	}
 
+	/**
+	 * ex: {{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
+	 */
 	function toTime($from_time, $total_min){
 			if(strlen($from_time) != 4){
 				return '00:00';

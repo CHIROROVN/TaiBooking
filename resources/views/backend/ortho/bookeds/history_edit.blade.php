@@ -23,129 +23,183 @@
           <tr>
             <td class="col-title" colspan="2">時間</td>
             <td><select name="result_start_time_hh" id="result_start_time_hh" class="form-control form-control--small">
-              <option>6時</option>
-              <option>7時</option>
-              <option>8時</option>
-              <option selected>9時</option>
-              <option>10時</option>
-              <option>11時</option>
-              <option>12時</option>
-              <option>13時</option>
-              <option>14時</option>
-              <option>15時</option>
-              <option>16時</option>
-              <option>17時</option>
-              <option>18時</option>
-              <option>19時</option>
-              <option>20時</option>
-              <option>21時</option>
-              <option>22時</option>
-              <option>23時</option>
+              @for ( $i = 6; $i <= 23; $i++ )
+              <?php $i = ($i < 10) ? '0' . $i : $i; ?>
+              <option value="{{ $i }}">{{ $i }}時</option>
+              @endfor
             </select>
               <select name="result_start_time_mm" id="result_start_time_mm" class="form-control form-control--small">
-                <option selected>00分</option>
-                <option>15分</option>
-                <option>30分</option>
-                <option>45分</option>
+                <option value="00">00分</option>
+                <option value="15">15分</option>
+                <option value="30">30分</option>
+                <option value="45">45分</option>
             </select>
               ～
               <!-- result_total_time -->
               <select name="result_total_time_hh" id="result_total_time_hh" class="form-control form-control--small">
-                <option>6時</option>
-                <option>7時</option>
-                <option>8時</option>
-                <option selected>9時</option>
-                <option>10時</option>
-                <option>11時</option>
-                <option>12時</option>
-                <option>13時</option>
-                <option>14時</option>
-                <option>15時</option>
-                <option>16時</option>
-                <option>17時</option>
-                <option>18時</option>
-                <option>19時</option>
-                <option>20時</option>
-                <option>21時</option>
-                <option>22時</option>
-                <option>23時</option>
+                @for ( $i = 6; $i <= 23; $i++ )
+                <?php $i = ($i < 10) ? '0' . $i : $i; ?>
+                <option value="{{ $i }}">{{ $i }}時</option>
+                @endfor
               </select>
               <select name="result_total_time_mm" id="result_total_time_mm" class="form-control form-control--small">
-                <option>00分</option>
-                <option selected>15分</option>
-                <option>30分</option>
-                <option>45分</option>
+                <option value="00">00分</option>
+                <option value="15">15分</option>
+                <option value="30">30分</option>
+                <option value="45">45分</option>
               </select></td>
           </tr>
+
+          <!-- clinic_id -->
           <tr>
-            <td class="col-title" colspan="2"><label for="cbChair">医院</label></td>
+            <td class="col-title" colspan="2"><label for="clinic_id">医院</label></td>
             <td>
-              <select name="cbClinic" id="cbClinic" class="form-control">
-                <option>▼選択</option>
+              <select name="clinic_id" id="clinic_id" class="form-control">
+                <option value="">▼選択</option>
+                @foreach ( $clinics as $clinic )
+                <option value="{{ $clinic->clinic_id }}">{{ $clinic->clinic_name }}</option>
+                @endforeach
               </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="col-title" colspan="2"><label for="cbDoctor">ドクター</label></td>
-            <td>
-              <select name="cbDoctor" id="cbDoctor" class="form-control">
-                <option>▼選択</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="col-title" colspan="2"><label for="cbHygienist">衛生士</label></td>
-            <td>
-              <select name="cbHygienist" id="cbHygienist" class="form-control">
-                <option>▼選択</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="col-title" colspan="2"><label for="cbTreatContent1">実施業務-1</label></td>
-            <td>
-              <select name="cbTreatContent1" id="cbTreatContent1" class="form-control">
-                <option>▼選択</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="col-title" colspan="2"><label for="cbTreatContent2">実施業務-2</label></td>
-            <td>
-              <select name="cbTreatContent2" id="cbTreatContent2" class="form-control">
-                <option>▼選択</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="col-title" colspan="2"><label for="cbMemo">メモ</label></td>
-            <td><textarea></textarea>
             </td>
           </tr>
 
+          <!-- doctor_id -->
+          <tr>
+            <td class="col-title" colspan="2"><label for="doctor_id">ドクター</label></td>
+            <td>
+              <select name="doctor_id" id="doctor_id" class="form-control">
+                <option value="">▼選択</option>
+                @foreach ( $doctors as $doctor )
+                <option value="{{ $doctor->id }}">{{ $doctor->u_name }}</option>
+                @endforeach
+              </select>
+            </td>
+          </tr>
+
+            <!-- hygienist_id -->
+          <tr>
+            <td class="col-title" colspan="2"><label for="hygienist_id">衛生士</label></td>
+            <td>
+              <select name="hygienist_id" id="hygienist_id" class="form-control">
+                <option value="">▼選択</option>
+                @foreach ( $hygienists as $hygienist )
+                <option value="{{ $hygienist->id }}">{{ $hygienist->u_name }}</option>
+                @endforeach
+              </select>
+            </td>
+          </tr>
+
+          <!-- service_1 -->
+          <tr>
+            <td class="col-title" colspan="2"><label for="service_1">実施業務-1</label></td>
+            <td>
+              <select name="service_1" id="service_1" class="form-control">
+                <option value="">▼選択</option>
+                <optgroup label="業務名">
+                @if(count($services) > 0)
+                  @foreach($services as $service)
+                  <option value="1|{{ $service->service_id }}" >{{ $service->service_name }}</option>
+                @endforeach
+                @endif
+                </optgroup>
+                <optgroup label="治療内容">
+                @if(count($treatment1s) > 0)
+                  @foreach($treatment1s as $key => $treatment1)
+                    <option value="2|{{ $key }}">{{ $treatment1 }}</option>
+                  @endforeach
+                @endif
+                </optgroup>
+              </select>
+            </td>
+          </tr>
+
+          <!-- service_2 -->
+          <tr>
+            <td class="col-title" colspan="2"><label for="service_2">実施業務-2</label></td>
+            <td>
+              <select name="service_2" id="service_2" class="form-control">
+                <option value="">▼選択</option>
+                <optgroup label="業務名">
+                @if(count($services) > 0)
+                  @foreach($services as $service)
+                  <option value="1|{{ $service->service_id }}" >{{ $service->service_name }}</option>
+                @endforeach
+                @endif
+                </optgroup>
+                <optgroup label="治療内容">
+                @if(count($treatment1s) > 0)
+                  @foreach($treatment1s as $key => $treatment1)
+                    <option value="2|{{ $key }}">{{ $treatment1 }}</option>
+                  @endforeach
+                @endif
+                </optgroup>
+              </select>
+            </td>
+          </tr>
+
+          <!-- result_memo -->
+          <tr>
+            <td class="col-title" colspan="2"><label for="result_memo">メモ</label></td>
+            <td><textarea name="result_memo" class="" rows="3"></textarea>
+            </td>
+          </tr>
+
+          <!-- result_next -->
           <tr>
             <td class="col-title" rowspan="3">次回予約のために<br>
               ※Drの指示による</td>
-            <td class="col-title"><label for="cbInspection">日時候補</label></td>
+            <td class="col-title"><label for="result_next">日時候補</label></td>
             <td>
               <div class="form-inline">
-                <input type="text" name="textfield" id="textfield">
+                <input type="text" name="result_next" id="result_next" class="form-control">
               </div>
             </td>
           </tr>
+
+          <!-- next_service_1 -->
           <tr>
             <td class="col-title"><label for="cbTreatContent1">予定業務-1</label></td>
             <td>
               <select name="nextTreatContent1" id="nextTreatContent1" class="form-control">
-                <option>▼選択</option>
+                <option value="">▼選択</option>
+                <optgroup label="業務名">
+                @if(count($services) > 0)
+                  @foreach($services as $service)
+                  <option value="1|{{ $service->service_id }}" >{{ $service->service_name }}</option>
+                @endforeach
+                @endif
+                </optgroup>
+                <optgroup label="治療内容">
+                @if(count($treatment1s) > 0)
+                  @foreach($treatment1s as $key => $treatment1)
+                    <option value="2|{{ $key }}">{{ $treatment1 }}</option>
+                  @endforeach
+                @endif
+                </optgroup>
               </select>
             </td>
           </tr>
+
+          <!-- next_service_2 -->
           <tr>
-            <td class="col-title"><label for="cbTreatContent2">予定業務-2</label></td>
+            <td class="col-title"><label for="next_service_2">予定業務-2</label></td>
             <td>
-              <select name="nextTreatContent2" id="nextTreatContent2" class="form-control">
-                <option>▼選択</option>
+              <select name="next_service_2" id="next_service_2" class="form-control">
+                <option value="">▼選択</option>
+                <optgroup label="業務名">
+                @if(count($services) > 0)
+                  @foreach($services as $service)
+                  <option value="1|{{ $service->service_id }}" >{{ $service->service_name }}</option>
+                @endforeach
+                @endif
+                </optgroup>
+                <optgroup label="治療内容">
+                @if(count($treatment1s) > 0)
+                  @foreach($treatment1s as $key => $treatment1)
+                    <option value="2|{{ $key }}">{{ $treatment1 }}</option>
+                  @endforeach
+                @endif
+                </optgroup>
               </select>
             </td>
           </tr>

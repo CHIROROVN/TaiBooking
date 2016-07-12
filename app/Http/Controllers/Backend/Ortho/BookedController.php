@@ -12,6 +12,9 @@ use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
+use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\ClinicServiceModel;
+use App\Http\Models\Ortho\ResultModel;
 
 use Form;
 use Html;
@@ -56,19 +59,19 @@ class BookedController extends BackendController
     /**
      * 
      */
-    // public function getRegist()
-    // {
+    public function getRegistHistory()
+    {
     //     $clsClinic          = new ClinicModel();
     //     $data['clinics']    = $clsClinic->get_all();
 
     //     return view('backend.ortho.bookeds.regist', $data);
-    // }
+    }
 
     /**
      * 
      */
-    // public function postRegist()
-    // {
+    public function postRegistHistory()
+    {
     //     $clsBooking        = new BookingModel();
     //     $clsClinicArea  = new ClinicBookingModel();
     //     $inputs         = Input::all();
@@ -124,7 +127,7 @@ class BookedController extends BackendController
     //     }
 
     //     return redirect()->route('ortho.bookeds.index');
-    // }
+    }
 
     /**
      * 
@@ -132,7 +135,18 @@ class BookedController extends BackendController
     public function getEditHistory($id)
     {
         $clsBooking                 = new BookingModel();
+        $clsClinic                  = new ClinicModel();
+        $clsUser                    = new UserModel();
+        $clsTreatment1              = new Treatment1Model();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsResult                  = new ResultModel();
         $data['booked']             = $clsBooking->get_by_id($id);
+        $data['clinics']            = $clsClinic->get_for_select();
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['services']           = $clsClinicService->get_service();
+        $data['results']            = $clsResult->get_list();
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
 
@@ -142,8 +156,8 @@ class BookedController extends BackendController
     /**
      * 
      */
-    // public function postEdit($id)
-    // {
+    public function postEditHistory($id)
+    {
     //     $clsBooking                = new BookingModel();
     //     $clsClinicArea          = new ClinicBookingModel();
     //     $inputs                 = Input::all();
@@ -217,7 +231,7 @@ class BookedController extends BackendController
     //     }
 
     //     return redirect()->route('ortho.bookeds.index');
-    // }
+    }
 
     /**
      * 

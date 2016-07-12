@@ -39,6 +39,11 @@ class ResultModel
         return $results;
     }
 
+    public function get_list()
+    {
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('service_sort_no', 'asc')->lists('result_date', 'patient_id');
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

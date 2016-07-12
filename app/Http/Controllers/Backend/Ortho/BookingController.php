@@ -85,23 +85,32 @@ class BookingController extends BackendController
      */
     public function bookingResultCalendar()
     {
+        $data                   = array();
         $start_date             = Input::get('start_date');
-        $month_current          = date('m');
-        if ( Input::get('month_cur') && Input::get('month_cur') >= 1 && Input::get('month_cur') <= 12 ) {
-            $month_current = Input::get('month_cur');
+        $date_current           = date('Y-m-d');
+        if ( Input::get('next') ) {
+            $date_current       = Input::get('next');
+            $newDate            = strtotime ( '+ 1 day' , strtotime ( $date_current ) ) ;
+            $newDate            = date ( 'Y-m-j' , $newDate );
+            $date_current       = $newDate;
+        } elseif ( Input::get('prev') ) {
+            $date_current       = Input::get('prev');
+            $newDate            = strtotime ( '- 1 day' , strtotime ( $date_current ) ) ;
+            $newDate            = date ( 'Y-m-j' , $newDate );
+            $date_current       = $newDate;
+        } elseif ( Input::get('prev') ) {
+            $date_current           = date('Y-m-d');
         }
+        $data['date_current']   = $date_current;
 
         $clsShift               = new ShiftModel();
         $clsBooking             = new BookingModel();
         $clsFacility            = new FacilityModel();
-        $data                   = array();
         $data['doctors']        = $clsShift->get_by_belong([1], $start_date);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $start_date);
         $data['facilitys']      = $clsFacility->getAll();
 
-        $data['date_current']   = date('Y-m-d');
         $data['start_date']     = $start_date;
-        $data['month_current']  = $month_current;
         $data['times']          = Config::get('constants.TIME');
 
         $bookings               = $clsBooking->get_all();

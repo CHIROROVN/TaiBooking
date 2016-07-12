@@ -1,7 +1,7 @@
 <?php namespace App\Http\Models\Ortho;
 
 use DB;
-
+use Carbon;
 class BookingModel
 {
 
@@ -265,5 +265,25 @@ class BookingModel
 
         return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
 
+    }
+
+    /**
+     * get booking by patient id
+    */
+    public function getBookByPatientID($p_id=null){
+        return DB::table($this->table)
+                                ->leftJoin('m_clinic as cl', 't_booking.clinic_id', '=', 'cl.clinic_id')
+                                ->leftJoin('t_patient as pt', 't_booking.patient_id', '=', 'pt.p_id')
+                                ->leftJoin('t_facility as fl', 't_booking.facility_id', '=', 'fl.facility_id')
+                                ->leftJoin('m_insurance as insu', 't_booking.insurance_id', '=', 'insu.insurance_id')
+                                ->leftJoin('m_inspection as insp', 't_booking.inspection_id', '=', 'insp.inspection_id')
+                                ->leftJoin('m_equipment as equi', 't_booking.equipment_id', '=', 'equi.equipment_id')
+                                ->select('t_booking.*', 'cl.clinic_name', 'pt.p_no', 'pt.p_name','fl.facility_name','insu.insurance_name', 'insp.inspection_name','equi.equipment_name')
+                                ->where('t_booking.last_kind', '<>', DELETE)
+                                ->where('t_booking.patient_id', '=', $p_id)
+                                ->where('t_booking.booking_date', '>=', 'NOW()')
+                                ->orderBy('t_booking.booking_date', 'asc')
+                                ->limit(2)
+                                ->get();
     }
 }

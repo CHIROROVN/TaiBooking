@@ -156,6 +156,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('patients/visit-list/{id}', ['as' => 'ortho.patients.visit.list', 'uses' => 'PatientController@getVisitList']);
 	Route::get('patients/ajax/autocomplete-patient', ['as' => 'ortho.patients.autocomplete.patient', 'uses' => 'PatientController@AutoCompletePatient']);
 
+	Route::get('patients/patient-booking-list/{p_id}', ['as' => 'ortho.patients.patient_booking_list', 'uses' => 'PatientController@bookingList']);
+
+
 	// brothers patient
 	Route::any('patients/brothers/{patient_id}', ['as' => 'ortho.patients.brothers.index', 'uses' => 'BrotherController@index']);
 	Route::get('patients/brothers/regist/{patient_id}', ['as' => 'ortho.patients.brothers.regist', 'uses' => 'BrotherController@getRegist']);

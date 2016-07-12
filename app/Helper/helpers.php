@@ -129,8 +129,6 @@
 
         return $tmpDates;
 	}
-<<<<<<< HEAD
-=======
 		//booking change date
 	function booking_change_date($date=null, $param=null){
 		if($date == '' || $param == ''){
@@ -177,5 +175,4 @@
 			return '';
 		}
 	}
->>>>>>> 335f1730685d2b16a6964bc201a2e98d684f35f4
 

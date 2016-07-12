@@ -82,7 +82,7 @@
             </tr>
             <tr>
               <td class="col-title">予約日時</td>
-              <td>{{formatDateJp($booking_change['booking_date_change'])}} ({{DayJp($booking_change['booking_date_change'])}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
+              <td>{{formatDateJp(@$booking_change['booking_date_change'])}} ({{DayJp(@$booking_change['booking_date_change'])}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
             </tr>
             <tr>
               <td class="col-title">医院</td>
@@ -124,23 +124,23 @@
             </tr>
             <tr>
               <td class="col-title">検査</td>
-              <td></td>
+              <td>{{$booking->inspection_name}}</td>
             </tr>
             <tr>
               <td class="col-title">保険診療</td>
-              <td></td>
+              <td>{{$booking->insurance_name}}</td>
             </tr>
             <tr>
               <td class="col-title">救急</td>
-              <td>救急ではない</td>
+              <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>
               <td class="col-title">予約ステータス</td>
-              <td>通常</td>
+              <td>@if($booking->booking_status == 1) 通常 @endif</td>
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td></td>
+              <td><?php echo nl2br($booking->booking_memo);?> </td>
             </tr>
           </tbody>
         </table>
@@ -148,7 +148,7 @@
     </div>
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        <input value="変更する（確認済）" name="btnSave" type="button" class="btn btn-sm btn-page">
+        <input value="変更する（確認済）" onclick="location.href='{{route('ortho.bookings.booking.update.confirm', [$booking->booking_id])}}'" name="btnSave" type="button" class="btn btn-sm btn-page">
         <input value="キャンセル" onclick="location.href='{{route('ortho.bookings.booking.change', [$booking->booking_id])}}'" name="btnCancel" type="button" class="btn btn-sm btn-page">
       </div>
     </div>

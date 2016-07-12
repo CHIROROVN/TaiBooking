@@ -27,14 +27,14 @@
 		return $convertEn2Jp[date("D", $dayEn)];
 	}
 
-	function splitHourMin($str_time){
+	function splitHourMin($str_time, $char = ':'){
 		if(strlen($str_time) != 4){
 			return '00:00';
 		}else{
 			$date = str_split($str_time, 2);
 			$hour = $date[0];
 			$min = $date[1];
-			return $hour.':'.$min;
+			return $hour. $char .$min;
 		}
 	}
 
@@ -189,9 +189,24 @@
 	 * ex: 70 => 01:10
 	 * ex: 70, 'H:i:s' => 01:10:00
 	 */
-	function convertSecond2Time($seconds, $formatTime = 'H:i')
+	function convertSecond2Time($seconds, $formatTime = 'H:i:s')
 	{
 		$result = date($formatTime, mktime(0, 0, $seconds));
+		return $result;
+	}
+
+	function splitHourMinArray($hh_mm)
+	{
+		$result = array(
+			'hh' => '00',
+			'mm' => '00'
+		);
+
+		if ( strlen($hh_mm) == 4 ) {
+			$result['hh'] = substr($hh_mm, 0, 2);
+			$result['mm'] = substr($hh_mm, 2, 2);
+		}
+
 		return $result;
 	}
 

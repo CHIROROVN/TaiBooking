@@ -223,4 +223,15 @@ return [
     */
     'error_ddr_start_date_required'                         => '開始日時を入力してください。',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model Result
+    |--------------------------------------------------------------------------
+    */
+    'error_result_result_date_required'                         => '日付を選択してください。',
+    'error_result_result_start_time_required'                   => '時間を選択してください。',
+    'error_result_clinic_id_required'                           => '医院を選択してください。',
+    'error_result_doctor_id_required'                           => 'ドクターを選択してください。',
+    'error_result_service_1_required'                           => '実施業務-1を選択してください。',
+
 ];

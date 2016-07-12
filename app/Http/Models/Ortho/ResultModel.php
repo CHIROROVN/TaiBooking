@@ -10,14 +10,22 @@ class ResultModel
     public function Rules()
     {
     	return array(
-    		// 'area_name' => 'required',
+    		'result_date'                   => 'required',
+            'result_start_time'             => 'required',
+            'clinic_id'                     => 'required',
+            'doctor_id'                     => 'required',
+            'service_1'                     => 'required',
 		);
     }
 
     public function Messages()
     {
     	return array(
-            // 'area_name.required' => trans('validation.error_area_name_required'),
+            'result_date.required'          => trans('validation.error_result_result_date_required'),
+            'result_start_time.required'    => trans('validation.error_result_result_start_time_required'),
+            'clinic_id.required'            => trans('validation.error_result_clinic_id_required'),
+            'doctor_id.required'            => trans('validation.error_result_doctor_id_required'),
+            'service_1.required'            => trans('validation.error_result_service_1_required'),
 		);
     }
 
@@ -62,9 +70,21 @@ class ResultModel
         return $results;
     }
 
+    public function get_by_patient_id($patient_id)
+    {
+        $results = DB::table($this->table)->where('patient_id', $patient_id)->first();
+        return $results;
+    }
+
     public function update($id, $data)
     {
     	$results = DB::table($this->table)->where('result_id', $id)->update($data);
+        return $results;
+    }
+
+    public function update_by_patient_id($patient_id, $data)
+    {
+        $results = DB::table($this->table)->where('patient_id', $patient_id)->update($data);
         return $results;
     }
 }

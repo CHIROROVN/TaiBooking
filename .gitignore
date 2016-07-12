@@ -8,5 +8,4 @@ Homestead.json
 /storage
 /resources
 /public/tai-booking-document
-/storage/app
-/storage/debugbar
+/bootstrap

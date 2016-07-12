@@ -2,10 +2,27 @@
 
 @section('content')
 {!! Form::open(array('route' => ['ortho.bookings.booking.edit', $booking->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
-<section id="page">
+  <section id="page">
       <div class="container">
         <div class="row content-page">
           <h3>予約管理　＞　登録済み予約の編集</h3>
+                      <div class="msg-alert-action margin-top-15">
+              @if ($message = Session::get('success'))
+                <div class="alert alert-success  alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+                </div>
+              @elseif($message = Session::get('danger'))
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+                </div>
+              @endif
+            </div>
           <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>

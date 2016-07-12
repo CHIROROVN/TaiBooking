@@ -280,7 +280,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@postSearch']);
 	
 	Route::get('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@getConfirm']);
-	Route::post('bookings/booking-change/{id}/confirm', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@postConfirm']);
+	Route::any('bookings/booking-update/{id}/confirm', ['as' => 'ortho.bookings.booking.update.confirm', 'uses' => 'BookingController@postConfirm']);
 	
 	Route::get('bookings/booking-result-list', ['as' => 'ortho.bookings.booking.result.list', 'uses' => 'BookingController@bookingResultList']);
 

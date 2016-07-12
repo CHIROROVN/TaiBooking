@@ -59,10 +59,18 @@
               @endif
             </td>
             <td align="center">
+              <!-- regist -->
               @if ( isset($results[$booked->patient_id]) )
+              <input onclick="location.href='{{ route('ortho.bookeds.history.regist') }}'" value="登録" type="button" class="btn btn-xs btn-page" disabled="">
+              @else
               <input onclick="location.href='{{ route('ortho.bookeds.history.regist') }}'" value="登録" type="button" class="btn btn-xs btn-page">
               @endif
+              <!-- edit -->
+              @if ( isset($results[$booked->patient_id]) )
               <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page">
+              @else
+              <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page" disabled="">
+              @endif
             </td>
             <td align="center">
               @if ( $booked->booking_date > $currentDay )

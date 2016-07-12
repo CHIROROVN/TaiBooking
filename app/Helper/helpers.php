@@ -176,3 +176,22 @@
 		}
 	}
 
+	/**
+	 * ex: 00,02 -> 00,03 ==> 60s
+	 */
+	function totalSecond($hh1, $mm1, $ss1 = '0', $hh2, $mm2, $ss3 = '0')
+	{
+		$seconds = mktime($hh1, $mm1, $ss1) - mktime($hh2, $mm2, $ss3);
+		return $seconds;
+	}
+
+	/**
+	 * ex: 70 => 01:10
+	 * ex: 70, 'H:i:s' => 01:10:00
+	 */
+	function convertSecond2Time($seconds, $formatTime = 'H:i')
+	{
+		$result = date($formatTime, mktime(0, 0, $seconds));
+		return $result;
+	}
+

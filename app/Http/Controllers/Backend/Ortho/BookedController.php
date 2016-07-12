@@ -45,13 +45,14 @@ class BookedController extends BackendController
         $clsClinic                  = new ClinicModel();
         $clsService                 = new ServiceModel();
         $clsTreatment1              = new Treatment1Model();
+        $clsResult                  = new ResultModel();
         $data['bookeds']            = $clsBooking->get_all($data, true);
         $data['clinics']            = $clsClinic->get_for_select();
         $data['services']           = $clsService->get_list();
+        $data['results']            = $clsResult->get_list();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
-
 
         return view('backend.ortho.bookeds.history', $data);
     }
@@ -146,9 +147,14 @@ class BookedController extends BackendController
         $data['hygienists']         = $clsUser->get_by_belong([2,3]);
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['services']           = $clsClinicService->get_service();
-        $data['results']            = $clsResult->get_list();
+        $data['result']             = $clsResult->get_by_id($id);
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
+
+        
+        // echo '<pre>';
+        // print_r($result);
+        // echo '</pre>';die;
 
         return view('backend.ortho.bookeds.history_edit', $data);
     }

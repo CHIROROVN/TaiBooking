@@ -213,7 +213,7 @@
       </div>
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">
-          <input onclick="history.back()" value="前の画面に戻る" type="button" class="btn btn-sm btn-page">
+          <input onclick="location.href='{{ route('ortho.bookeds.history') }}'" value="前の画面に戻る" type="button" class="btn btn-sm btn-page">
         </div>
       </div>
     </div>

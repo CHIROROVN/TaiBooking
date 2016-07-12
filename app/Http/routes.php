@@ -297,10 +297,10 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	// booked history
 	Route::any('bookeds/history', ['as' => 'ortho.bookeds.history', 'uses' => 'BookedController@getHistory']);
-	Route::get('bookeds/history/regist', ['as' => 'ortho.bookeds.history.regist', 'uses' => 'BookedController@getRegistHistory']);
-	Route::post('bookeds/history/regist', ['as' => 'ortho.bookeds.history.regist', 'uses' => 'BookedController@postRegistHistory']);
-	Route::get('bookeds/history/edit/{id}', ['as' => 'ortho.bookeds.history.edit', 'uses' => 'BookedController@getEditHistory']);
-	Route::post('bookeds/history/edit/{id}', ['as' => 'ortho.bookeds.history.edit', 'uses' => 'BookedController@postEditHistory']);
+	Route::get('bookeds/history/regist/{booking_id}', ['as' => 'ortho.bookeds.history.regist', 'uses' => 'BookedController@getRegistHistory']);
+	Route::post('bookeds/history/regist/{booking_id}', ['as' => 'ortho.bookeds.history.regist', 'uses' => 'BookedController@postRegistHistory']);
+	Route::get('bookeds/history/edit/{booking_id}', ['as' => 'ortho.bookeds.history.edit', 'uses' => 'BookedController@getEditHistory']);
+	Route::post('bookeds/history/edit/{booking_id}', ['as' => 'ortho.bookeds.history.edit', 'uses' => 'BookedController@postEditHistory']);
 
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
 	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);

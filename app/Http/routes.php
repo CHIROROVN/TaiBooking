@@ -261,6 +261,10 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	
 	Route::any('bookings/booking-result-calendar', ['as' => 'ortho.bookings.booking.result.calendar', 'uses' => 'BookingController@bookingResultCalendar']);
 	
+	Route::get('bookings/booking-cancel-cnf/{id}', ['as' => 'ortho.bookings.booking.cancel_cnf', 'uses' => 'BookingController@bookingCancelCnf']);
+
+	Route::get('bookings/booking-cancel/{id}', ['as' => 'ortho.bookings.booking.cancel', 'uses' => 'BookingController@bookingCancel']);
+
 	Route::get('bookings/booking-detail/{id}', ['as' => 'ortho.bookings.booking.detail', 'uses' => 'BookingController@bookingDetail']);
 
 	Route::get('bookings/booking-edit/{id}', ['as' => 'ortho.bookings.booking.edit', 'uses' => 'BookingController@getEdit']);

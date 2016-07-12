@@ -146,6 +146,44 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_detail', $data);
     }
 
+    public function bookingCancelCnf($id)
+    {
+        $data                       = array();
+        $clsBooking                 = new BookingModel();
+        $clsUser                    = new UserModel();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $data['booking']            = $clsBooking->get_by_id($id);
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hys']                = $clsUser->get_by_belong([2,3]);
+        //$data['clinic_services']    = $clsClinicService->getAll(1);
+        //$data['treatment1s']        = $clsTreatment1->get_all();
+        $data['start_date']         = Input::get('start_date');
+        $clsService                 = new ServiceModel();
+        $data['services']           = $clsService->get_list();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+
+        return view('backend.ortho.bookings.booking_cancel_cnf', $data);
+    }
+
+    public function bookingCancel($id){
+        $clsBooking                         = new BookingModel();
+        $dataUpdate = array(
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => DELETE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+        if ( $clsBooking->update($id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_delete_success'));
+            return redirect()->route('ortho.bookings.booking.result.list');
+        } else {
+            Session::flash('danger', trans('common.message_delete_danger'));
+            return redirect()->route('ortho.ortho.bookings.booking_cancel_cnf', $id);
+        }
+    }
+
     public function getEdit($id)
     {
         $data                       = array();

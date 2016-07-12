@@ -171,10 +171,6 @@
                 </tr>
                 <tr>
                   <td class="col-title">チェアー</td>
-                  <td><?php echo e($bookings[0]->facility_name); ?></td>
-                </tr>
-                <tr>
-                  <td class="col-title">チェアー</td>
                   <td><?php echo e($bookings[1]->facility_name); ?></td>
                 </tr>
                 <tr>

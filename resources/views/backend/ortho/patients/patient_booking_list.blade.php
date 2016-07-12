@@ -173,10 +173,6 @@
                 </tr>
                 <tr>
                   <td class="col-title">チェアー</td>
-                  <td>{{$bookings[0]->facility_name}}</td>
-                </tr>
-                <tr>
-                  <td class="col-title">チェアー</td>
                   <td>{{$bookings[1]->facility_name}}</td>
                 </tr>
                 <tr>

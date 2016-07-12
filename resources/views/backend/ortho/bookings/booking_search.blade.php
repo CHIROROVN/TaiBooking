@@ -124,8 +124,8 @@
                       <option value="" selected="selected">指定なし</option>
                       <optgroup label="業務名">
                         @if(count($services) > 0)
-                          @foreach($services as $key11 => $service11)
-                          <option value="{{$key11}}_sk11" >{{$service11}}</option>
+                          @foreach($services as $service)
+                          <option value="{{$service->service_id}}_sk11" >{{$service->service_name}}</option>
                         @endforeach
                         @endif
                     </optgroup>

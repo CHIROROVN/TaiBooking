@@ -15,6 +15,8 @@ use App\Http\Models\Ortho\InterviewModel;
 use App\Http\Models\Ortho\ResultModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
+use App\Http\Models\Ortho\BookingModel;
+use App\Http\Models\Ortho\ClinicServiceModel;
 
 use Form;
 use Html;
@@ -276,6 +278,23 @@ class PatientController extends BackendController
         $data['interviews'] = $tmpInterviews;
 
         return view('backend.ortho.patients.detail', $data);
+    }
+
+    /**
+     * Patient Booking List
+    */
+    public function bookingList($p_id){
+        $clsBooking             = new BookingModel();
+        $data['bookings']       = $clsBooking->getBookByPatientID($p_id);
+        $clsUser                    = new UserModel();
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hys']                = $clsUser->get_by_belong([2,3]);
+        $clsClinicService           = new ClinicServiceModel();
+        $data['services']           = $clsClinicService->get_service();
+        $clsTreatment1              = new Treatment1Model();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        // echo "<pre>";print_r($data);die;
+        return view('backend.ortho.patients.patient_booking_list', $data);
     }
 
 

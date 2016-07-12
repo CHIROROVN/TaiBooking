@@ -458,8 +458,8 @@ class BookingController extends BackendController
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_list_clinic();
         $clsUser                    = new UserModel();
-        $data['doctors']            = $clsUser->get_by_belong_shift([1]);
-        $data['hygienists']         = $clsUser->get_by_belong_shift([2,3]);
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
         $clsService                 = new ServiceModel();
         $data['services']           = $clsService->get_list();
         $clsTreatment1              = new Treatment1Model();
@@ -610,7 +610,9 @@ class BookingController extends BackendController
         return redirect()->route('ortho.bookings.booking.result.list', $condition);
      }
 
-
+    /**
+     * Booking Result List
+     */
     public function bookingResultList()
     {
         $where = array();
@@ -626,8 +628,6 @@ class BookingController extends BackendController
             $where['week_later']        = Input::get('week_later');
         if(Input::get('clinic_service_name') != null)
             $where['clinic_service_name']        = Input::get('clinic_service_name');
-
-
         $clsBooking                 = new BookingModel();
         $data['bookings']           = $clsBooking->get_booking_list($where);
         $clsFacility                = new FacilityModel();

@@ -6,6 +6,7 @@ use Landish\Pagination\Simple\Pagination as BasePagination;
 
 class SimplePagination extends BasePagination 
 {
+
     /**
      * Pagination wrapper HTML.
      *
@@ -54,8 +55,9 @@ class SimplePagination extends BasePagination
      * @var string
      */
     protected $dotsText = '...';
-
 }
+
+
 
 
 // using in view

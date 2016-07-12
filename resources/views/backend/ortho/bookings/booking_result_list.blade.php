@@ -63,19 +63,13 @@
         @endif
       </tbody>
     </table>
-      <div class="row margin-bottom" style="display: block; float: right;">
-        <div class="col-md-12 text-center">
-          {!! $bookings->render(new App\Pagination\SimplePagination($bookings))  !!}
+      <div class="row margin-bottom">
+        <div class="col-md-12 text-center">    
+        {!! $bookings->appends([])->render(new App\Pagination\SimplePagination($bookings)) !!}
         </div>
       </div>
 
-   <!--  <div class="row margin-bottom">
-      <div class="col-md-12 text-center">
-        <input name="button" value="前の10件を表示" disabled="disabled" type="submit" class="btn btn-sm btn-page mar-right">
-        <input name="button2" value="次の10件を表示" type="submit" class="btn btn-sm btn-page">
-      </div>
-    </div> -->
-  </div>    
+  </div>
 </section>
 
 

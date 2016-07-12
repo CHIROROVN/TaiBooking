@@ -219,8 +219,10 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	//Clinic Service Template
 	Route::get('clinics/{clinic_id}/services/{service_id}/templates', ['as' => 'ortho.clinics.services.template_list', 'uses' => 'ServiceTemplateController@index']);
+	
 	// Route::get('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.template_regist', 'uses' => 'ServiceTemplateController@getRegist']);
 	// Route::post('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.template_regist', 'uses' => 'ServiceTemplateController@postRegist']);
+
 	Route::get('clinics/{clinic_id}/services/{service_id}/update/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@getEdit']);
 	Route::post('clinics/{clinic_id}/services/{service_id}/update/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@postEdit']);
 	Route::get('clinics/{clinic_id}/services/{service_id}/delete/{id}', ['as' => 'ortho.clinics.services.template_delete', 'uses' => 'ServiceTemplateController@delete']);

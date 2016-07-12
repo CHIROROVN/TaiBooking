@@ -21,7 +21,7 @@
             <tr>
               <td>チェア（治療）</td>
               <td>30分</td>
-              <td align="center"><a href="clinic_facility_edit.html" class="btn btn-sm btn-edit">編集</a></td>
+              <td align="center"><a href="{{route('ortho.facilities.edit', [$clinic_id, 1])}}" class="btn btn-sm btn-edit">編集</a></td>
               <td align="center"></td>
               <td align="center" class=""></td>
               <td align="center"><button>↓</button></td>
@@ -40,7 +40,7 @@
         </table>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
-            <input type="submit" name="button" value="業務自動枠一覧に戻る" class="btn btn-sm btn-page" onclick="location.href='clinic_service_list.html'">
+            <input type="submit" name="button" value="業務自動枠一覧に戻る" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.clinics.services.index',[$clinic_id])}}'">
           </div>
         </div>
       </div>    

@@ -21,10 +21,10 @@
         <div class="fillter">
           <div class="col-md-12 page-left">
             {!! Form::open(array('route' => 'ortho.bookings.template.daily', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
-            <select name="" id="" class="form-control form-control--small">
+            <select name="mbt_id" id="mbt_id" class="form-control form-control--small">
               <option value="">▼選択</option>
               @foreach ( $booking_templates as $key => $value )
-              <option value="{{ $key }}">{{ $value }}</option>
+              <option value="{{ $key }}" @if($s_mtb_id == $key) selected="" @endif>{{ $value }}</option>
               @endforeach
             </select>
             <input type="submit" class="btn btn-sm btn-page no-border" name="button" value="適用">

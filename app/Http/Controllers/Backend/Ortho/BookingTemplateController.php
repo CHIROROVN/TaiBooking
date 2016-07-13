@@ -112,7 +112,7 @@ class BookingTemplateController extends BackendController
         $clsClinicService           = new ClinicServiceModel();
         $data['booking_template']   = $clsBookingTemplate->get_by_id($id);
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
-        $data['facilitys']          = $clsFacility->getAll();
+        $data['facilitys']          = $clsFacility->getAll($clinic_id);
         $services                   = $clsClinicService->getAll($clinic_id);
         $data['times']              = Config::get('constants.TIME');
 
@@ -306,6 +306,8 @@ class BookingTemplateController extends BackendController
             $data['date'] = Input::get('date');
         }
 
+        $data['s_mtb_id']           = Input::get('s_mbt_id');
+
         $clsFacility                = new FacilityModel();
         $clsTemplate                = new TemplateModel();
         $clsService                 = new ServiceModel();
@@ -322,7 +324,10 @@ class BookingTemplateController extends BackendController
         }
         $data['services']           = $arrServices;
 
-        $templates                  = $clsTemplate->get_all();
+        $templates                  = $clsTemplate->get_all(Input::get('s_mbt_id'));
+        if ( empty(Input::get('s_mbt_id')) ) {
+            $templates = array();
+        }
         $arr_templates              = array();
         foreach ( $data['times'] as $time ) {
             $time_replate = str_replace (':', '', $time);

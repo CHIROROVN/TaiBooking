@@ -36,7 +36,7 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center">時間</td>
+              <td align="center" width="10%">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center">{{ $facility->facility_name }}</td>
               @endforeach

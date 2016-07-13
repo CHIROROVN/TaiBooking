@@ -12,26 +12,28 @@
     }
   </style>
 	 <!-- Content clinic booking template edit -->
-  {!! Form::open(array('route' => ['ortho.clinics.booking.templates.edit', $clinic->clinic_id, $booking_template->mbt_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+  {!! Form::open(array('route' => ['ortho.bookings.template.daily'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
   <section id="page">
     <div class="container">
       <div class="row content">
-        <h3>医院情報管理　＞　{{ $clinic->clinic_name }}　＞　予約雛形の編集</h3>
+        <h3>予約雛形の適用と個別開閉　＞　たい矯正歯科</h3>
 
-        <table class="table table-bordered">
-          <tr>
-            <td class="col-title"><label for="mbt_name">雛形名</label></td>
-            <td>
-              @if ( old('mbt_name') )
-              <input name="mbt_name" id="mbt_name" value="{{ old('mbt_name') }}" type="text" class="form-control form-control--default">
-              @else
-              <input name="mbt_name" id="mbt_name" value="{{ $booking_template->mbt_name }}" type="text" class="form-control form-control--default">
-              @endif
-              <span class="error-input">@if ($errors->first('mbt_name')) {!! $errors->first('mbt_name') !!} @endif</span>
-              <!-- <input type="button" class="btn btn-sm btn-page no-border" name="button" value="保存する"> -->
-            </td>
-          </tr>
-        </table>
+        <div class="fillter">
+          <div class="col-md-12 page-left">
+            <select name="" id="" class="form-control form-control--small">
+              <option value="">▼選択</option>
+            </select>
+            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="適用">
+          </div>
+        </div>
+
+        <div class="" align="center">
+          <div class="col-md-12 page-left">
+            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="<< 前日">
+            &nbsp;&nbsp;&nbsp;&nbsp;2016年6月15日&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="翌日 >>">
+          </div>
+        </div>
 
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
@@ -164,27 +166,6 @@
         <div class="col-md-12 text-center">
           <!-- save -->
           <input name="" id="button2" value="保存する" type="submit" class="btn btn-sm btn-page mar-right">
-          <!-- delete -->
-          <button type="button" class="btn btn-sm btn-page" data-toggle="modal" data-target="#myModal">削除する</button>
-          <!-- Modal -->
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-sm">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">{{trans('common.modal_header_delete')}}</h4>
-                </div>
-                <div class="modal-body">
-                  <p>{{trans('common.modal_content_delete')}}</p>
-                </div>
-                <div class="modal-footer">
-                  <a href="{{ route('ortho.clinics.booking.templates.delete', [$clinic->clinic_id, $booking_template->mbt_id]) }}" class="btn btn-sm btn-page">{{trans('common.modal_btn_delete')}}</a>
-                  <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{trans('common.modal_btn_cancel')}}</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /Modal -->
         </div>
       </div>
 

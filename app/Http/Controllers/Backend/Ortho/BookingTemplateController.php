@@ -8,7 +8,6 @@ use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
-//use App\Http\Models\Ortho\BookingTemplateModel;
 
 use Request;
 use Auth;
@@ -282,6 +281,50 @@ class BookingTemplateController extends BackendController
         $data['clinics']    = $clsClinic->get_list_clinic();
 
         return view('backend.ortho.bookings.booking_template_set', $data);
+    }
+
+
+    public function getBookingTemplateDaily()
+    {
+        $clsFacility                = new FacilityModel();
+        $clsTemplate                = new TemplateModel();
+        $clsService                 = new ServiceModel();
+        $clsClinicService           = new ClinicServiceModel();
+        $clsBookingTemplate         = new BookingTemplateModel();
+        $data['facilitys']          = $clsFacility->getAll();
+        $services                   = $clsClinicService->getAll();
+        $data['times']              = Config::get('constants.TIME');
+        $data['booking_templates']  = $clsBookingTemplate->ge
+
+        $arrServices                = array();
+        foreach ( $services as $service ) {
+            $arrServices[$service->clinic_service_id] = $service;
+        }
+        $data['services']           = $arrServices;
+
+        $templates                  = $clsTemplate->get_all();
+        $arr_templates              = array();
+        foreach ( $data['times'] as $time ) {
+            $time_replate = str_replace (':', '', $time);
+            foreach ( $data['facilitys'] as $fac ) {
+                foreach ( $templates as $template ) {
+                    if ( $template->facility_id == $fac->facility_id && $template->template_time == $time_replate ) {
+                        $arr_templates[$fac->facility_id][$time] = $template;
+                    }
+                }
+            }
+        }
+        $data['arr_templates']       = $arr_templates;
+
+        return view('backend.ortho.bookings.booking_template_daily', $data);
+    }
+
+
+    public function postBookingTemplateDaily()
+    {
+        echo '<pre>';
+        print_r(Input::all());
+        echo '</pre>';die;
     }
 
 

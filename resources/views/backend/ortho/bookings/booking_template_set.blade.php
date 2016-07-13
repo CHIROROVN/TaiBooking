@@ -87,7 +87,7 @@
         
         calendar.fullCalendar('unselect');
 
-        window.location.href = "{{ route('ortho.memos.regist') }}?memo_date=" + start;
+        window.location.href = "{{ route('ortho.bookings.template.daily') }}?memo_date=" + start;
       },
     });
 

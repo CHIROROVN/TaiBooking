@@ -47,7 +47,6 @@ return [
     'error_clinic_zip3_required'                            => '郵便番号を入力してください。',
     'error_clinic_zip4_required'                            => '郵便番号を入力してください。',
     'error_clinic_address1_required'                        => '住所を入力してください。',
-    'error_clinic_address2_required'                        => '住所（ビル名等）を入力してください。',
     'error_clinic_ownername_required'                       => '院長名を入力してください。',
     'error_clinic_tel_required'                             => 'TELを入力してください。',
     'error_clinic_email_required'                           => 'E-mailを入力してください。',

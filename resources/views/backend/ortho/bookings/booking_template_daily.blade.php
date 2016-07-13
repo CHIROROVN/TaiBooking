@@ -12,7 +12,7 @@
     }
   </style>
 	 <!-- Content clinic booking template edit -->
-  {!! Form::open(array('route' => ['ortho.bookings.template.daily'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+  
   <section id="page">
     <div class="container">
       <div class="row content">
@@ -20,19 +20,32 @@
 
         <div class="fillter">
           <div class="col-md-12 page-left">
+            {!! Form::open(array('route' => 'ortho.bookings.template.daily', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
             <select name="" id="" class="form-control form-control--small">
               <option value="">▼選択</option>
+              @foreach ( $booking_templates as $key => $value )
+              <option value="{{ $key }}">{{ $value }}</option>
+              @endforeach
             </select>
-            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="適用">
+            <input type="submit" class="btn btn-sm btn-page no-border" name="button" value="適用">
+            </form>
           </div>
         </div>
 
         <div class="" align="center">
           <div class="col-md-12 page-left">
-            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="<< 前日">
-            &nbsp;&nbsp;&nbsp;&nbsp;2016年6月15日&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" class="btn btn-sm btn-page no-border" name="button" value="翌日 >>">
+            <?php
+            $prevDate = strtotime ( '-1 day' , strtotime ( $date ) ) ;
+            $prevDate = date ( 'Y-m-d' , $prevDate );
+            $nextDate = strtotime ( '+1 day' , strtotime ( $date ) ) ;
+            $nextDate = date ( 'Y-m-d' , $nextDate );
+            ?>
+            {!! Form::open(array('route' => ['ortho.bookings.template.daily'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
+            <button type="submit" class="btn btn-sm btn-page no-border" name="date" value="{{ $prevDate }}"><< 前日</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ formatDateJp($date) }}&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-sm btn-page no-border" name="date" value="{{ $nextDate }}">翌日 >></button>
           </div>
+          </form>
         </div>
 
         <div class="table-responsive">
@@ -164,19 +177,11 @@
 
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">
-          <!-- save -->
-          <input name="" id="button2" value="保存する" type="submit" class="btn btn-sm btn-page mar-right">
-        </div>
-      </div>
-
-      <div class="row margin-bottom">
-        <div class="col-md-12 text-center">
-          <input onclick="location.href='{{ route('ortho.clinics.index') }}'" value="医院一覧に戻る" type="button" class="btn btn-sm btn-page">
+          <input onclick="location.href='{{ route('ortho.bookings.template.set') }}'" value="月カレンダーに戻る" type="button" class="btn btn-sm btn-page">
         </div>
       </div>
     </div>
   </section>
-  </form>
   <!-- End content clinic booking template edit -->
 
   <script>

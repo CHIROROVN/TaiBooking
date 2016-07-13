@@ -12,7 +12,7 @@
               <select name="s_clinic_id" id="s_clinic_id" class="form-control form-control--small">
                 <option value="">▼医院名</option>
                 @foreach ( $clinics as $key => $clinic )
-                <option value="{{ $key }}">{{ $clinic }}</option>
+                <option value="{{ $key }}" @if($s_clinic_id == $key) selected="" @endif>{{ $clinic }}</option>
                 @endforeach
               </select>
               <input type="submit" class="btn btn-sm btn-page no-border" name="" value="表示">
@@ -25,7 +25,7 @@
   </section>
   <!-- End content list1 list -->
 
-  <?php //echo '<script>var memos = ' . $memos . '</script>'; ?>
+  <?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
   <script>
   $(document).ready(function() {
     var date = new Date();
@@ -47,7 +47,7 @@
       },
 
       //load all event from DB
-      events: '',
+      events: bookings,
       
       // Convert the allDay from string to boolean
       eventRender: function(event, element, view) {
@@ -87,8 +87,22 @@
         
         calendar.fullCalendar('unselect');
 
-        window.location.href = "{{ route('ortho.bookings.template.daily') }}?memo_date=" + start;
+        window.location.href = "{{ route('ortho.bookings.template.daily') }}?date=" + start;
       },
+    });
+
+    // set date for link text
+    var tmpArr = [];
+    $( ".fc-content-skeleton thead td" ).each(function( index ) {
+        var start = $(this).attr('data-date');
+        start = "{{ route('ortho.bookings.template.daily') }}?date=" + start;
+        tmpArr[index] = start;
+    });
+
+    $( ".fc-content-skeleton tbody td" ).each(function( index ) {
+      if ( $(this).attr('class') == null ) {
+        $(this).append('<a style="margin-left: 5px; text-decoration: underline;" href="' + tmpArr[index] + '">Not yet</a>');
+      }
     });
 
   });

@@ -276,9 +276,24 @@ class BookingTemplateController extends BackendController
 
     public function setBookingTemplate()
     {
-        $data               = array();
-        $clsClinic          = new ClinicModel();
-        $data['clinics']    = $clsClinic->get_list_clinic();
+        $data                   = array();
+        $data['s_clinic_id']    = Input::get('s_clinic_id');
+        $clsClinic              = new ClinicModel();
+        $clsBooking             = new BookingModel();
+        $data['clinics']        = $clsClinic->get_list_clinic();
+
+        $bookings               = $clsBooking->get_all($data);
+        $tmpBookings            = array();
+        foreach ( $bookings as $booking ) {
+            $tmpBookings[]      = array(
+                'title'         => 'xxxxxxx',
+                'start'         => $booking->booking_date,
+                'end'           => $booking->booking_date + 1,
+                'url'           => '',
+                'className'     => 'booking-template-set',
+            );
+        }
+        $data['bookings']      = json_encode($tmpBookings);
 
         return view('backend.ortho.bookings.booking_template_set', $data);
     }
@@ -286,6 +301,11 @@ class BookingTemplateController extends BackendController
 
     public function getBookingTemplateDaily()
     {
+        $data['date'] = date('Y-m-d');
+        if ( Input::get('date') ) {
+            $data['date'] = Input::get('date');
+        }
+
         $clsFacility                = new FacilityModel();
         $clsTemplate                = new TemplateModel();
         $clsService                 = new ServiceModel();
@@ -294,7 +314,7 @@ class BookingTemplateController extends BackendController
         $data['facilitys']          = $clsFacility->getAll();
         $services                   = $clsClinicService->getAll();
         $data['times']              = Config::get('constants.TIME');
-        $data['booking_templates']  = $clsBookingTemplate->ge
+        $data['booking_templates']  = $clsBookingTemplate->get_list();
 
         $arrServices                = array();
         foreach ( $services as $service ) {

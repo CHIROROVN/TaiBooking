@@ -274,6 +274,17 @@ class BookingTemplateController extends BackendController
         }
     }
 
+
+    public function setBookingTemplate()
+    {
+        $data               = array();
+        $clsClinic          = new ClinicModel();
+        $data['clinics']    = $clsClinic->get_list_clinic();
+
+        return view('backend.ortho.bookings.booking_template_set', $data);
+    }
+
+
     /**
      * 
      */

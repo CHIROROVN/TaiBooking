@@ -228,12 +228,12 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('clinics/{clinic_id}/services/{service_id}/delete/{id}', ['as' => 'ortho.clinics.services.template_delete', 'uses' => 'ServiceTemplateController@delete']);
 
 	//Clinic Booking Template
-	 Route::get('clinics/{clinic_id}/booking/templates', ['as' => 'ortho.clinics.booking.templates.index', 'uses' => 'BookingTemplateController@index']);
-	  Route::get('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@getRegist']);
-	 Route::post('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@postRegist']);
-	 Route::get('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@getEdit']);
-	 Route::post('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@postEdit']);
-	 Route::get('clinics/{clinic_id}/booking/templates/delete/{id}', ['as' => 'ortho.clinics.booking.templates.delete', 'uses' => 'BookingTemplateController@delete']);
+	Route::get('clinics/{clinic_id}/booking/templates', ['as' => 'ortho.clinics.booking.templates.index', 'uses' => 'BookingTemplateController@index']);
+	Route::get('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@getRegist']);
+	Route::post('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@postRegist']);
+	Route::get('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@getEdit']);
+	Route::post('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@postEdit']);
+	Route::get('clinics/{clinic_id}/booking/templates/delete/{id}', ['as' => 'ortho.clinics.booking.templates.delete', 'uses' => 'BookingTemplateController@delete']);
 
 	Route::get('clinics/{clinic_id}/booking/templates/orderby-top/{id?}', ['as' => 'ortho.booking.templates.orderby.top', 'uses' => 'BookingTemplateController@orderby_top']);
 	Route::get('clinics/{clinic_id}/booking/templates/orderby-last/{id?}', ['as' => 'ortho.booking.templates.orderby.last', 'uses' => 'BookingTemplateController@orderby_last']);
@@ -296,6 +296,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings', function(){
 		return redirect()->route('ortho.bookings.booking_search');
 	});
+
+	Route::get('bookings/booking-template-set', ['as' => 'ortho.bookings.template.set', 'uses' => 'BookingTemplateController@setBookingTemplate']);
 
 	// booked history
 	Route::any('bookeds/history', ['as' => 'ortho.bookeds.history', 'uses' => 'BookedController@getHistory']);

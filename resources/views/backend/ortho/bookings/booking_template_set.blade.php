@@ -87,15 +87,19 @@
         
         calendar.fullCalendar('unselect');
 
-        window.location.href = "{{ route('ortho.bookings.template.daily') }}?date=" + start;
+        // get clinic_id
+        var clinic_id = $('#s_clinic_id').find(":selected").val();
+
+        window.location.href = "{{ route('ortho.bookings.template.daily') }}?date=" + start + '&clinic_id=' + clinic_id;
       },
     });
 
     // set date for link text
     var tmpArr = [];
+    var clinic_id = $('#s_clinic_id').find(":selected").val();
     $( ".fc-content-skeleton thead td" ).each(function( index ) {
         var start = $(this).attr('data-date');
-        start = "{{ route('ortho.bookings.template.daily') }}?date=" + start;
+        start = "{{ route('ortho.bookings.template.daily') }}?date=" + start + '&clinic_id=' + clinic_id;
         tmpArr[index] = start;
     });
 

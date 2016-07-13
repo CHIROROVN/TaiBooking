@@ -306,14 +306,16 @@ class BookingTemplateController extends BackendController
             $data['date'] = Input::get('date');
         }
 
-        $data['s_mtb_id']           = Input::get('s_mbt_id');
+        $data['s_mbt_id']           = Input::get('s_mbt_id');
 
         $clsFacility                = new FacilityModel();
         $clsTemplate                = new TemplateModel();
         $clsService                 = new ServiceModel();
         $clsClinicService           = new ClinicServiceModel();
         $clsBookingTemplate         = new BookingTemplateModel();
-        $data['facilitys']          = $clsFacility->getAll();
+        $clsClinic                  = new ClinicModel();
+        $data['clinic']             = $clsClinic->get_by_id(Input::get('clinic_id'));
+        $data['facilitys']          = $clsFacility->getAll(@$data['clinic']->clinic_id);
         $services                   = $clsClinicService->getAll();
         $data['times']              = Config::get('constants.TIME');
         $data['booking_templates']  = $clsBookingTemplate->get_list();
@@ -328,6 +330,7 @@ class BookingTemplateController extends BackendController
         if ( empty(Input::get('s_mbt_id')) ) {
             $templates = array();
         }
+
         $arr_templates              = array();
         foreach ( $data['times'] as $time ) {
             $time_replate = str_replace (':', '', $time);
@@ -349,7 +352,55 @@ class BookingTemplateController extends BackendController
     {
         echo '<pre>';
         print_r(Input::all());
-        echo '</pre>';die;
+        echo '</pre>';
+
+        $clsTemplate                = new TemplateModel();
+        $clsFacility                = new FacilityModel();
+        $clsBooking                 = new BookingModel();
+        $facilitys                  = $clsFacility->getAll(Input::get('clinic_id'));
+
+        $mbt_id = Input::get('mbt_id');
+        $templates = array();
+        if ( !empty($mbt_id) ) {
+            $templates = $clsTemplate->get_all($mbt_id);
+        }
+        
+        // echo '<pre>';
+        // print_r($templates);
+        // echo '</pre>';die;
+        if ( count($templates) ) {
+            foreach ( $templates as $template ) {
+                foreach ( $facilitys as $facility ) {
+                    if ( $facility->facility_id == $template->facility_id ) {
+                        // insert to table "t_booking"
+                        $data                           = array();
+                        $data['booking_date']           = Input::get('date');
+                        $data['booking_start_time']     = $template->template_time;
+                        $data['booking_total_time']     = 0;
+                        $data['clinic_id']              = Input::get('clinic_id');
+                        $data['facility_id']            = $template->facility_id;
+                        if ( $template->clinic_service_id == -1 ) {
+                            $data['service_1']          = null;
+                            $data['service_1_kind']     = 2;
+                        } else {
+                            $data['service_2']          = $template->clinic_service_id;
+                            $data['service_2_kind']     = 1;
+                        }
+
+                        $data['last_date']              = date('y-m-d H:i:s');
+                        $data['last_kind']              = INSERT;
+                        $data['last_ipadrs']            = $_SERVER['REMOTE_ADDR'];
+                        $data['last_user']              = Auth::user()->id;
+                        $clsBooking->insert($data);
+                    }
+                }
+            }
+        }
+        // echo '<pre>';
+        // print_r($templates);
+        // echo '</pre>';die;
+
+        return redirect()->route('ortho.bookings.template.daily', [ 'clinic_id' => Input::get('clinic_id'), 'date' => Input::get('date'), 's_mbt_id' => Input::get('mbt_id') ]);
     }
 
 

@@ -24,7 +24,7 @@ class FacilityModel
         );
     }
 
-    public function getAll($clinic_id)
+    public function getAll($clinic_id = null)
     {
         $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
 

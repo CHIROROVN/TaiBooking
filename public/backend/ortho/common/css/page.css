@@ -622,3 +622,9 @@ textarea {
 .fc-day-grid-event .fc-content {
     white-space: normal;
 }
+
+.fc-event.booking-template-set {
+  color: transparent;
+  background-color: transparent;
+  border: none;
+}

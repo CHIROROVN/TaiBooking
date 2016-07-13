@@ -16,15 +16,20 @@
   <section id="page">
     <div class="container">
       <div class="row content">
-        <h3>予約雛形の適用と個別開閉　＞　たい矯正歯科</h3>
+        <h3>予約雛形の適用と個別開閉　＞　{{ @$clinic->clinic_name }}</h3>
+
+
 
         <div class="fillter">
           <div class="col-md-12 page-left">
             {!! Form::open(array('route' => 'ortho.bookings.template.daily', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+            <input type="hidden" name="date" value="{{ $date }}">
+            <input type="hidden" name="clinic_id" value="{{ @$clinic->clinic_id }}">
+
             <select name="mbt_id" id="mbt_id" class="form-control form-control--small">
               <option value="">▼選択</option>
               @foreach ( $booking_templates as $key => $value )
-              <option value="{{ $key }}" @if($s_mtb_id == $key) selected="" @endif>{{ $value }}</option>
+              <option value="{{ $key }}" @if($s_mbt_id == $key) selected="" @endif>{{ $value }}</option>
               @endforeach
             </select>
             <input type="submit" class="btn btn-sm btn-page no-border" name="button" value="適用">
@@ -41,6 +46,8 @@
             $nextDate = date ( 'Y-m-d' , $nextDate );
             ?>
             {!! Form::open(array('route' => ['ortho.bookings.template.daily'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
+            <input type="hidden" name="clinic_id" value="{{ @$clinic->clinic_id }}">
+            <input type="hidden" name="s_mbt_id" value="{{ @$s_mbt_id }}">
             <button type="submit" class="btn btn-sm btn-page no-border" name="date" value="{{ $prevDate }}"><< 前日</button>
             &nbsp;&nbsp;&nbsp;&nbsp;{{ formatDateJp($date) }}&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="submit" class="btn btn-sm btn-page no-border" name="date" value="{{ $nextDate }}">翌日 >></button>
@@ -51,7 +58,7 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center">時間</td>
+              <td align="center" width="10%">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center">{{ $facility->facility_name }}</td>
               @endforeach

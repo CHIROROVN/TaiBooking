@@ -105,7 +105,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_address2">住所（ビル名等） (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_address2">住所（ビル名等）</label></td>
                   <td>
                     <input name="clinic_address2" type="text" id="clinic_address2" class="form-control" value="{{ old('clinic_address2') }}" />
                     <span class="error-input">@if ($errors->first('clinic_address2')) {!! $errors->first('clinic_address2') !!} @endif</span>

@@ -60,11 +60,12 @@ class BookingController extends BackendController
         $bookings               = $clsBooking->get_all($data);
         $tmp_arr            = array();
         foreach ( $bookings as $booking ) {
+            $booking_id = $booking->booking_id;
             $tmp_arr[] = array(
                 'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
                 'start' => $booking->booking_date,
                 'end' => $booking->booking_date + 1,
-                'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$data['clinic_id'],'start_date' => $booking->booking_date ]),
+                'url' => route('ortho.bookings.booking.daily', [ 'booking_id'=>$booking_id,'start_date' => $booking->booking_date ]),
             );
         }
         $data['bookings'] = json_encode($tmp_arr);

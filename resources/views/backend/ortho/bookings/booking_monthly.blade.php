@@ -104,9 +104,7 @@
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
-
-// var clinic_id = $.urlParam('clinic_id');
-
+    
     var calendar = $('#calendar').fullCalendar({
       lang: 'ja',
       eventLimit: false,

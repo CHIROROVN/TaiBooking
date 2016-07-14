@@ -36,7 +36,6 @@
   </div>
 </section>
 
-<?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
 <?php echo '<script>var clinic_id = ' . $clinic_id . '</script>'; ?>
 <script>  
     $('#area_id').click(function(event) {
@@ -83,9 +82,7 @@
             error: function (data) {
                 console.log('Error:', data);
             }
-             
         });
-      
   });
 
   $.urlParam = function(name){
@@ -100,13 +97,15 @@
 
 </script>
 
-
+<?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
 <script>
   $(document).ready(function() {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+
+// var clinic_id = $.urlParam('clinic_id');
 
     var calendar = $('#calendar').fullCalendar({
       lang: 'ja',
@@ -138,7 +137,8 @@
           var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
         
         calendar.fullCalendar('unselect');
-        window.location.href = "{{ route('ortho.bookings.booking.result.calendar') }}?start_date=" + start;
+        window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
+
       },
 
       editable: true,

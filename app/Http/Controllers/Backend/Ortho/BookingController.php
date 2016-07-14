@@ -64,11 +64,10 @@ class BookingController extends BackendController
                 'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
                 'start' => $booking->booking_date,
                 'end' => $booking->booking_date + 1,
-                'url' => route('ortho.bookings.booking.result.calendar', [ 'start_date' => $booking->booking_date ]),
+                'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$data['clinic_id'],'start_date' => $booking->booking_date ]),
             );
         }
         $data['bookings'] = json_encode($tmp_arr);
-
         return view('backend.ortho.bookings.booking_monthly', $data);
     }
 
@@ -111,6 +110,7 @@ class BookingController extends BackendController
         $data['date_current']   = $date_current;
 
         $clinic_id = Input::get('clinic_id');
+        
         if ( empty($clinic_id) ) {
             return redirect()->route('ortho.bookings.booking_search');
         }

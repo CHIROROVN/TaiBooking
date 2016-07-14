@@ -20,7 +20,7 @@
               <li><a href="<?php echo e(route('ortho.bookeds.history')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>来院履歴登録～次回の予約を取る</a></li>
               <li><a href="<?php echo e(route('ortho.patients.index')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
               <li><a href="<?php echo e(route('ortho.bookings.list1_list')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>TEL待ちリストから予約を取る</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>急患の予約を取る</a></li>
+              <li><a href="<?php echo e(route('ortho.bookings.booking_search')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>急患の予約を取る</a></li>
               <li><a href="<?php echo e(route('ortho.bookings.booking.monthly')); ?>"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
               <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約状況の模式図</a></li>
             </ul>
@@ -47,7 +47,7 @@
             <h2>月1回の予約業務前処理</h2>
             <ul>
               <li><a href="<?php echo e(route('ortho.shifts.list_edit')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>シフトの新規登録・一覧・変更・削除</a></li>
-              <li><a href=""><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿テンプレートの適用と個別調整</a></li>
+              <li><a href="<?php echo e(route('ortho.bookings.template.set')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿テンプレートの適用と個別調整</a></li>
             </ul>
             <?php endif; ?>
 

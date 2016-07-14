@@ -25,34 +25,14 @@
     <div class="row content-page">
       <h3>予約管理　＞　予約枠の検索結果（カレンダー表示）</h3>
         <div class="mar-top20">
-          <?php echo Form::open(array('route' => 'ortho.bookings.booking.result.calendar', 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')); ?>
+          <?php echo Form::open(array('route' => 'ortho.bookings.booking.result.calendar', 'method' => 'post', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')); ?>
 
-          <!-- start_date -->
-          <input type="hidden" name="start_date" value="<?php echo e($start_date); ?>">
-          <!-- month prev -->
-          <input type="hidden" name="month_cur" value="<?php echo (($month_current - 1) >= 1) ? ($month_current - 1) : 1; ?>">
-          <input type="submit" name="" id="button" value="&lt;&lt; 前月" class="btn btn-sm btn-page"/>
-          </form>
-          
-          <!-- month current -->
-          <?php echo Form::open(array('route' => 'ortho.bookings.booking.result.calendar', 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')); ?>
-
-          <!-- start_date -->
-          <input type="hidden" name="start_date" value="<?php echo e($start_date); ?>">
-          <input type="hidden" name="month_cur" value="<?php echo e(date('m', strtotime($date_current))); ?>">
-          <input type="submit" name="" id="button2" value="今月"  class="btn btn-sm btn-page"/>
-          </form>
-          
-          <!-- month next -->
-          <?php echo Form::open(array('route' => 'ortho.bookings.booking.result.calendar', 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')); ?>
-
-          <!-- start_date -->
-          <input type="hidden" name="start_date" value="<?php echo e($start_date); ?>">
-          <input type="hidden" name="month_cur" value="<?php echo (($month_current + 1) <= 12) ? ($month_current + 1) : 12; ?>">
-          <input type="submit" name="" id="button3" value="翌月 &gt;&gt;"  class="btn btn-sm btn-page"/>
+          <button type="submit" name="prev" id="prev" value="<?php echo e($date_current); ?>"  class="btn btn-sm btn-page">&lt;&lt; 前日</button>
+          <button type="submit" name="cur" id="cur" value="current"  class="btn btn-sm btn-page">今日</button>
+          <button type="submit" name="next" id="next" value="<?php echo e($date_current); ?>"  class="btn btn-sm btn-page">翌日 &gt;&gt;</button>
           </form>
 
-          <h3 class="text-center mar-top20"><?php echo e(date('Y', strtotime($date_current))); ?>年<?php echo e($month_current); ?>月<?php echo e(date('d', strtotime($date_current))); ?>日（土）</h3>
+          <h3 class="text-center mar-top20"><?php echo e(formatDateJp($date_current)); ?>（<?php echo e(DayJp($date_current)); ?>）</h3>
 
           <p>たい矯正歯科</p>
         </div>
@@ -129,6 +109,7 @@
   //     window.location.href = 'booking_regist.html';
   //   });
   // });
+
 </script>
 
 <?php $__env->stopSection(); ?>

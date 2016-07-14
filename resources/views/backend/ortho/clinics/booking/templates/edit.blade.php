@@ -236,7 +236,6 @@
 
         // set color td
         var tdObjNew = $('#td-' + facilityIdNew + '-' + dataFullTime);
-        console.log(fullValue);
 
         // green
         if ( serviceIdNew == -1 ) {
@@ -247,8 +246,17 @@
           }
         } else if ( serviceIdNew == 0 ) {
           // brown
-          if ( serviceIdNew == 0 ) {
-            setClear(tdObjOld, 0, '');
+          if ( tdObjOld.find('.td-content').attr('data-group') != '' ) {
+            // group
+            $('.' + tdObjOld.find('.td-content').attr('data-group')).each(function(index, el) {
+              setClear($(this).parent(), 0, '', '');
+              setBrow($(this).parent(), 0, '', '');
+              setClear($(this), 0, '', '');
+              setBrow($(this), 0, '', '');
+            });
+          } else {
+            // single
+            setClear(tdObjNew, 0, '');
             setBrow(tdObjNew, 0, '');
           }
         } else {
@@ -259,20 +267,21 @@
             dataType: 'json',
             data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
             success: function(result){
+              console.log(result);
               // set color
               $(result.tmpArr).each(function( index, value ) {
                 var tdObj = $('#td-' + value.facility_id + '-' + value.time);
-                var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time;
+                var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
                 if ( value.facility_id == -1 ) {
                   var selectFactility = facilityIdOld;
                   if ( facilityIdNew != 0 ) {
                     selectFactility = facilityIdNew;
                   }
                   var tdObj = $('#td-' + selectFactility + '-' + value.time);
-                  var fullValue = selectFactility + '|' + -1 + '|' + value.time;
-                  setBlue(tdObj, selectFactility, fullValue, '治療');
+                  var fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
+                  setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
                 } else {
-                  setGreen(tdObj, value.facility_id, fullValue, serviceTextNew);
+                  setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
                 }
                 
               });
@@ -283,7 +292,7 @@
         $('#myModal-' + data_id).modal('hide');
       });
 
-      function setGreen(objNew, serviceIdNew, value, text) {
+      function setGreen(objNew, serviceIdNew, value, text, group = '') {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');
@@ -291,12 +300,15 @@
         objNew.find('.td-content').append('');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').addClass(group);
+        objNew.find('.td-content').attr('data-group', group);
         // set value for hidden iput
         objNew.find('.td-content').html(text);
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBlue(objNew, serviceIdNew, value, text) {
+      function setBlue(objNew, serviceIdNew, value, text, group = '') {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-blue');
@@ -304,12 +316,15 @@
         objNew.find('.td-content').append('');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // get group
+        objNew.find('.td-content').addClass(group);
+        objNew.find('.td-content').attr('data-group', group);
         // set value for hidden iput
         objNew.find('.td-content').html(text);
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBrow(objNew, serviceIdNew, value) {
+      function setBrow(objNew, serviceIdNew, value, group = '') {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -318,12 +333,14 @@
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').attr('data-group', group);
         // set value for hidden iput
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
         }
       }
 
-      function setClear(objNew, serviceIdNew, value) {
+      function setClear(objNew, serviceIdNew, value, group = '') {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -332,6 +349,8 @@
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').attr('data-group', group);
         objNew.find('.td-content > .input').val(value);
         objNew.find('.td-content > .input').attr('name', '');
         }

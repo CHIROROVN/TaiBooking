@@ -478,10 +478,14 @@ class BookingTemplateController extends BackendController
             if ( $min < 10 ) {
                 $min = '0' . $min;
             }
+            if ( strlen($hour) < 2 ) {
+                $hour = '0' . $hour;
+            }
             $tmpArr[] = array(
                 'facility_id' => $clinicService->service_facility_1,
                 'clinic_service' => $clinicService->clinic_service_id,
                 'time' => $hour.$min,
+                'group' => 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id,
             );
             for ( $i = 2; $i <= $n; $i++ ) {
                 $min = $min + 15;
@@ -492,11 +496,15 @@ class BookingTemplateController extends BackendController
                 if ( $min < 10 ) {
                     $min = '0' . $min;
                 }
+                if ( strlen($hour) < 2 ) {
+                    $hour = '0' . $hour;
+                }
 
                 $tmpArr[] = array(
                     'facility_id' => $clinicService->service_facility_1,
                     'clinic_service' => $clinicService->clinic_service_id,
                     'time' => $hour.$min,
+                    'group' => 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id,
                 );
             }
         }
@@ -515,11 +523,15 @@ class BookingTemplateController extends BackendController
                 if ( $min < 10 ) {
                     $min = '0' . $min;
                 }
+                if ( strlen($hour) < 2 ) {
+                    $hour = '0' . $hour;
+                }
 
                 $tmpArr[] = array(
                     'facility_id' => $clinicService->service_facility_2,
                     'clinic_service' => $clinicService->clinic_service_id,
                     'time' => $hour.$min,
+                    'group' => 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id,
                 );
             }
         }
@@ -537,11 +549,15 @@ class BookingTemplateController extends BackendController
                 if ( $min < 10 ) {
                     $min = '0' . $min;
                 }
+                if ( strlen($hour) < 2 ) {
+                    $hour = '0' . $hour;
+                }
 
                 $tmpArr[] = array(
                     'facility_id' => $clinicService->service_facility_3,
                     'clinic_service' => $clinicService->clinic_service_id,
                     'time' => $hour.$min,
+                    'group' => 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id,
                 );
             }
         }
@@ -560,11 +576,15 @@ class BookingTemplateController extends BackendController
                 if ( $min < 10 ) {
                     $min = '0' . $min;
                 }
+                if ( strlen($hour) < 2 ) {
+                    $hour = '0' . $hour;
+                }
 
                 $tmpArr[] = array(
                     'facility_id' => $clinicService->service_facility_4,
                     'clinic_service' => $clinicService->clinic_service_id,
                     'time' => $hour.$min,
+                    'group' => 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id,
                 );
             }
         }
@@ -583,11 +603,15 @@ class BookingTemplateController extends BackendController
                 if ( $min < 10 ) {
                     $min = '0' . $min;
                 }
+                if ( strlen($hour) < 2 ) {
+                    $hour = '0' . $hour;
+                }
 
                 $tmpArr[] = array(
                     'facility_id' => $clinicService->service_facility_5,
                     'clinic_service' => $clinicService->clinic_service_id,
                     'time' => $hour.$min,
+                    'group' => 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id,
                 );
             }
         }

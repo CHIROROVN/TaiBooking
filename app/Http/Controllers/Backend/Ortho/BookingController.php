@@ -20,6 +20,8 @@ use App\Http\Models\Ortho\InspectionModel;
 use App\Http\Models\Ortho\InsuranceModel;
 use App\Http\Models\Ortho\InterviewModel;
 use App\Http\Models\Ortho\ResultModel;
+use App\Http\Models\Ortho\AreaModel;
+use App\Http\Models\Ortho\ClinicAreaModel;
 
 use Form;
 use Html;
@@ -29,6 +31,7 @@ use URL;
 use Session;
 use Config;
 use Carbon;
+use Response;
 
 class BookingController extends BackendController
 {
@@ -44,18 +47,17 @@ class BookingController extends BackendController
      */
     public function bookingMonthly()
     {
-        $data                   = array();
-        $data['s_clinic_id']    = Input::get('s_clinic_id', 0);
-        $data['s_u_id']         = Input::get('s_u_id', 0);
-        // $clsShift            = new ShiftModel();
-        // $shifts              = $clsShift->get_all();
-        $clsBooking             = new BookingModel();
+        $clsAreaModel           = new AreaModel();
+        $data['areas']          = $clsAreaModel->get_list();
+        $data['area_id']         = Input::get('area_id');
+        $data['clinic_id']    = Input::get('clinic_id');
+        $data['u_id']         = Input::get('u_id');
+        
         $clsUser                = new UserModel();
-        $clsClinic              = new ClinicModel();
         $data['users']          = $clsUser->get_all();
-        $data['clinics']        = $clsClinic->get_all();
-        $bookings               = $clsBooking->get_all($data);
 
+        $clsBooking             = new BookingModel();
+        $bookings               = $clsBooking->get_all($data);
         $tmp_arr            = array();
         foreach ( $bookings as $booking ) {
             $tmp_arr[] = array(
@@ -70,7 +72,17 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_monthly', $data);
     }
 
-        /**
+    /**
+    *Ajax get clinic area id
+    **/
+    function getClinicByAreaID(){
+        $clsClinicArea      = new ClinicAreaModel();
+        $area_id            = Input::get('area_id');
+        $clinics = $clsClinicArea->list_clinic_by_area($area_id);
+        return response()->json($clinics);
+    }
+
+    /**
      * get view Dailily
      */
     public function bookingDaily()
@@ -516,8 +528,6 @@ class BookingController extends BackendController
                 $dataInput['booking_date_change'] = $date;
                 break;
         }
-
-         //echo "<pre>";print_r($dataInput);die;
 
         if(!empty(Input::get('clinic_service_name'))){
             $sk = explode('_', Input::get('clinic_service_name'));

@@ -61,4 +61,5 @@ class TemplateModel
     {
         return DB::table($this->table)->where('mbt_id', $mbt_id)->update($data);
     }
+
 }

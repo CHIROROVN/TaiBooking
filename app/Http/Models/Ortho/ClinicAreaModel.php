@@ -97,4 +97,22 @@ class ClinicAreaModel
         $results = DB::table($this->table)->insert($data);
         return $results;
     }
+
+
+    //get list clinic
+    public function list_clinic_by_area($area_id = null){
+        if(!empty($area_id)){
+            return DB::table($this->table)
+                                ->leftJoin('m_area', 't_clinic_area.area_id', '=', 'm_area.area_id')
+                                ->leftJoin('m_clinic', 't_clinic_area.clinic_id', '=', 'm_clinic.clinic_id')
+                                ->where('t_clinic_area.area_id', '=', $area_id)
+                                ->where('m_area.last_kind', '<>', DELETE)
+                                ->where('m_clinic.last_kind', '<>', DELETE)
+                                ->where('t_clinic_area.last_kind', '<>', DELETE)
+                                ->select('t_clinic_area.clinic_id','m_clinic.clinic_name')
+                                ->get();
+        }else{
+            return null;
+        }
+    }
 }

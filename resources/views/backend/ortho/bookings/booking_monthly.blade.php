@@ -8,20 +8,22 @@
         <div class="fillter">
           <div class="col-md-12 page-left">
           
-          {!! Form::open(array('route' => 'ortho.bookings.booking.monthly', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
-            <select name="" id="" class="form-control form-control--small">
-              <option value="0">▼地域</option>
+          {!! Form::open(array('route' => 'ortho.bookings.booking.monthly', 'id'=>'bookingMonthly', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
+            <select name="area_id" id="area_id" class="form-control form-control--small">
+              <option value="">▼地域</option>
+              @if(!empty($areas))
+                @foreach($areas as $a_id => $area_name)
+                  <option value="{{$a_id}}" @if($a_id == $area_id) selected="" @endif>{{$area_name}}</option>
+                @endforeach
+              @endif
             </select>
-            <select name="s_clinic_id" id="clinic_id" class="form-control form-control--small">
-              <option value="0">▼医院名</option>
-              @foreach ( $clinics as $clinic )
-              <option value="{{ $clinic->clinic_id }}" @if($s_clinic_id == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
-              @endforeach
+            <select name="clinic_id" id="clinic_id" class="form-control form-control--small">
+              <option value="">▼医院名</option>
             </select>
-            <select name="s_u_id" id="u_id" class="form-control form-control--small">
-              <option value="0">▼Dr</option>
+            <select name="u_id" id="u_id" class="form-control form-control--small">
+              <option value="">▼Dr</option>
               @foreach ( $users as $user )
-              <option value="{{ $user->id }}" @if($s_u_id == $user->id) selected="" @endif>{{ $user->u_name }}</option>
+              <option value="{{ $user->id }}" @if($u_id == $user->id) selected="" @endif>{{ $user->u_name }}</option>
               @endforeach
             </select>
             <input type="submit" class="btn btn-sm btn-page no-border" name="" value="絞込表示">
@@ -35,6 +37,70 @@
 </section>
 
 <?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
+<?php echo '<script>var clinic_id = ' . $clinic_id . '</script>'; ?>
+<script>  
+    $('#area_id').click(function(event) {
+      var area_id = $('#area_id').val();
+      var url = "{{route('ortho.bookings.monthly.clinics')}}";
+      var htmlOptions = "<option value="+">▼医院名</option>";
+      $.ajax({
+          type:"GET",
+          url:url,
+          data:{area_id:area_id},
+          success: function(results){
+            $.each(results, function(k, val){
+              htmlOptions += "<option value="+val.clinic_id+">" + val.clinic_name + "</option>";
+            });
+             $('#clinic_id').html(htmlOptions);
+          },
+          error: function (data) {
+              console.log('Error:', data);
+          }
+      });
+
+    });
+
+  $(document).ready(function() {
+     var area_id = $.urlParam('area_id');
+     var clinic_id = $.urlParam('clinic_id');
+       var url = "{{route('ortho.bookings.monthly.clinics')}}";
+        var htmlOptions = "<option value="+">▼医院名</option>";
+        $.ajax({
+            type:"GET",
+            url:url,
+            data:{area_id:area_id},
+            success: function(results){
+              $.each(results, function(k, val){
+              htmlOptions += "<option value="+val.clinic_id+">" + val.clinic_name + "</option>";
+            });
+            $('#clinic_id').html(htmlOptions);
+            $("#clinic_id").find('option').each(function( i, opt ) {
+                  if( opt.value == clinic_id ){
+                      $(opt).attr('selected', 'selected');
+                  }
+              });
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+             
+        });
+      
+  });
+
+  $.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+  }
+
+</script>
+
+
 <script>
   $(document).ready(function() {
     var date = new Date();
@@ -56,81 +122,6 @@
 
       //load all event from DB
       events: bookings,
-      // events: "http://demo_fullcalendar/events.php",
-      // events: [
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'booking-daily.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-08',
-      //     end: '2016-04-09',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-04',
-      //     end: '2016-04-05',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-03',
-      //     end: '2016-04-06',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-03',
-      //     end: '2016-04-07',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-09',
-      //     end: '2016-04-10',
-      //     url: 'ddr_calendar_edit.html'
-      //   },
-      //   {
-      //     title: '<img src="{{ asset('') }}public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="{{ asset('') }}public/backend/ortho/common/image/docter.png">大村Dr ',
-      //     start: '2016-04-09',
-      //     end: '2016-04-11',
-      //     url: 'ddr_calendar_edit.html'
-      //   }
-      // ],
       
       // Convert the allDay from string to boolean
       eventRender: function(event, element, view) {
@@ -143,34 +134,10 @@
       selectable: true,
       selectHelper: true,
       select: function(start, end, allDay) {
-        // var title = prompt('Event Title:');
-        // var url = prompt('Type Event url, if exits:');
-        // if (title) {
-          // var start = moment(start).format('YYYY-MM-DD HH:mm:ss'); 
           var start = moment(start).format('YYYY-MM-DD');
           var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
-        //  $.ajax({
-        //    url: 'http://demo_fullcalendar/add_events.php',
-        //    data: 'title='+ title+'&start='+ start +'&end='+ end +'&url='+ url ,
-        //    type: "POST",
-        //    success: function(json) {
-        //      alert('Added Successfully');
-        //    }
-        //  });
-        //  calendar.fullCalendar('renderEvent',
-        //  {
-        //    title: title,
-        //    start: start,
-        //    end: end,
-        //    allDay: allDay
-        //  },
-        //  true
-        //  );
-        // }
         
         calendar.fullCalendar('unselect');
-
-        //window.location.href = 'http://demo_fullcalendar/create-news?start=' + start + '&end=' + end + '&allDay=' + allDay;
         window.location.href = "{{ route('ortho.bookings.booking.result.calendar') }}?start_date=" + start;
       },
 

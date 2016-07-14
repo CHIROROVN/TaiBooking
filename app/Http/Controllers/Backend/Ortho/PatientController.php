@@ -293,7 +293,6 @@ class PatientController extends BackendController
         $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        // echo "<pre>";print_r($data);die;
         return view('backend.ortho.patients.patient_booking_list', $data);
     }
 

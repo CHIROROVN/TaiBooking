@@ -64,4 +64,17 @@ class BookingTemplateModel
     {
         return DB::table($this->table)->max('mbt_sort_no');
     }
+
+    /**
+     * get booking template
+    */
+    public function getBookTemp(){
+        return DB::table($this->table)
+                                ->leftJoin('t_template', 'm_booking_template.mbt_id', '=', 't_template.mbt_id')
+                                ->leftJoin('t_facility', 't_template.facility_id', '=', 't_facility.facility_id')
+                                ->where('m_booking_template.last_kind', '<>', DELETE)
+                                ->select('m_booking_template.*', 't_template.template_time', 't_facility.facility_name')
+                                ->orderBy('m_booking_template.mbt_sort_no', 'asc')
+                                ->simplePaginate(PAGINATION);
+    }
 }

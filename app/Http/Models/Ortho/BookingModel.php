@@ -42,17 +42,17 @@ class BookingModel
                         ->where('t_booking.last_kind', '<>', DELETE);
         
         // where clinic_id
-        if ( isset($where['s_clinic_id']) && $where['s_clinic_id'] != 0 ) {
-            $results = $db->where('t_booking.clinic_id', $where['s_clinic_id']);
+        if ( isset($where['clinic_id']) && $where['clinic_id'] != 0 ) {
+            $results = $db->where('t_booking.clinic_id', $where['clinic_id']);
         }
         // where u_id
-        if ( isset($where['s_u_id']) && $where['s_u_id'] != 0 ) {
-            $results = $db->where('t_booking.doctor_id', $where['s_u_id'])
-                          ->orWhere('t_booking.hygienist_id', $where['s_u_id']);
+        if ( isset($where['u_id']) && $where['u_id'] != 0 ) {
+            $results = $db->where('t_booking.doctor_id', $where['u_id'])
+                          ->orWhere('t_booking.hygienist_id', $where['u_id']);
         }
         // where s_booking_date
-        if ( isset($where['s_booking_date']) && !empty($where['s_booking_date']) ) {
-            $results = $db->where('t_booking.booking_date', $where['s_booking_date']);
+        if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
+            $results = $db->where('t_booking.booking_date', $where['booking_date']);
         }
 
         $results = $db->orderBy('t_booking.booking_date', 'asc');

@@ -6,6 +6,8 @@ use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
+use App\Http\Models\Ortho\BookingTemplateModel;
+
 
 use Request;
 use Auth;
@@ -27,14 +29,49 @@ class ServiceTemplateController extends BackendController
     /**
      * 
      */
-    public function index($clinic_id, $service_id)
+    public function orderby_top($clinic_id)
     {
-        // $clsTreatment1  = new ServiceTemplateModel();
-        // $data['temp_services']      = $clsTreatment1->get_all($clinic_id, $service_id);
-        $data['clinic_id']          = $clinic_id;
-        $data['service_id']         = $service_id;
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');
+        $this->top($clsFacility, $id, 'facility_sort_no');
+        return redirect()->route('ortho.facilities.index',$clinic_id);
+    }
 
-        return view('backend.ortho.clinics.services.template_list', $data);
+    /**
+     * 
+     */
+    public function orderby_last($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');        
+        $this->last($clsFacility, $id, 'facility_sort_no');
+        return redirect()->route('ortho.facilities.index',$clinic_id);
+    }
+
+    /**
+     * 
+     */
+    public function orderby_up($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');
+        $facilitys = $clsFacility->get_all($clinic_id);
+        
+        $this->up($clsFacility, $id, $facilitys, 'facility_id', 'facility_sort_no');
+
+        return redirect()->route('ortho.facilities.index',$clinic_id);
+    }
+
+    /**
+     * 
+     */
+    public function orderby_down($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');
+        $facilitys = $clsFacility->get_all($clinic_id);
+        $this->down($clsFacility, $id, $facilitys, 'facility_id', 'facility_sort_no');
+        return redirect()->route('ortho.facilities.index',$clinic_id);
     }
     
 
@@ -92,9 +129,6 @@ class ServiceTemplateController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('ortho.clinics.services.template_edit', [$clinic_id, $service_id, $id])->withErrors($validator)->withInput();
         }
-
-
-
 
         $service_time_1 = Input::get('service_time_1');
         $service_facility_1 = Input::get('service_facility_1_chair');

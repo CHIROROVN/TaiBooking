@@ -62,4 +62,9 @@ class AreaModel
         $results = DB::table($this->table)->max('area_sort_no');
         return $results;
     }
+
+    public function get_list()
+    {
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('area_sort_no', 'asc')->lists('area_name', 'area_id');
+    }
 }

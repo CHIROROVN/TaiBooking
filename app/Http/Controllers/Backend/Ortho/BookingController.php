@@ -61,11 +61,13 @@ class BookingController extends BackendController
         $tmp_arr            = array();
         foreach ( $bookings as $booking ) {
             $booking_id = $booking->booking_id;
+            $clinic_id  = $booking->clinic_id;
+
             $tmp_arr[] = array(
                 'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
                 'start' => $booking->booking_date,
                 'end' => $booking->booking_date + 1,
-                'url' => route('ortho.bookings.booking.daily', [ 'booking_id'=>$booking_id,'start_date' => $booking->booking_date ]),
+                'url' => route('ortho.bookings.booking.daily', [ 'booking_id'=>$booking_id,'clinic_id'=>$clinic_id,'start_date' => $booking->booking_date ]),
             );
         }
         $data['bookings'] = json_encode($tmp_arr);
@@ -88,6 +90,34 @@ class BookingController extends BackendController
     public function bookingDaily()
     {
         $data                   = array();
+        $data['booking_id']             = Input::get('booking_id');
+        $clinic_id              = Input::get('clinic_id');
+
+        $clsBooking             = new BookingModel();
+        $data['booking']        = $clsBooking->get_by_id(Input::get('booking_id'));
+
+        $date_current           = date('Y-m-d');
+        if ( !empty(Input::get('prev')) ) {
+            $date_current = Input::get('prev');
+        }
+        if (  !empty(Input::get('cur')) ) {
+            $date_current = Input::get('cur');
+        }
+        if ( !empty(Input::get('next')) ) {
+            $date_current = Input::get('next');
+        }
+        $data['date_current']   = $date_current;
+        $data['times']          = Config::get('constants.TIME');
+
+        $clsShift               = new ShiftModel();
+        $clsBooking             = new BookingModel();
+        $clsFacility            = new FacilityModel();
+        $clsClinic              = new ClinicModel();
+        $data['doctors']        = $clsShift->get_by_belong([1]);
+        $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
+        $data['facilitys']      = $clsFacility->getAll($clinic_id);
+        $data['clinic']         = $clsClinic->get_by_id($clinic_id);
+
         return view('backend.ortho.bookings.booking_daily', $data);
     }
 

@@ -113,6 +113,7 @@ class BookingTemplateController extends BackendController
         $data['booking_template']   = $clsBookingTemplate->get_by_id($id);
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
         $data['facilitys']          = $clsFacility->getAll($clinic_id);
+        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id, 1);
         $services                   = $clsClinicService->getAll($clinic_id);
         $data['times']              = Config::get('constants.TIME');
 
@@ -462,60 +463,135 @@ class BookingTemplateController extends BackendController
 
         $clsClinicService = new ClinicServiceModel();
         $clinicService = $clsClinicService->get_by_id($clinic_service_id);
-        
-        $totalTime = 0;
-        if ( !empty($clinicService->service_facility_1) && !empty($clinicService->service_time_1) ) {
-            $totalTime += $clinicService->service_time_1;
-        }
-        if ( !empty($clinicService->service_facility_2) && !empty($clinicService->service_time_2) ) {
-            $totalTime += $clinicService->service_time_2;
-        }
-        if ( !empty($clinicService->service_facility_3) && !empty($clinicService->service_time_3) ) {
-            $totalTime += $clinicService->service_time_3;
-        }
-        if ( !empty($clinicService->service_facility_4) && !empty($clinicService->service_time_4) ) {
-            $totalTime += $clinicService->service_time_4;
-        }
-        if ( !empty($clinicService->service_facility_5) && !empty($clinicService->service_time_5) ) {
-            $totalTime += $clinicService->service_time_5;
-        }
 
+        $tmpArr = array();
         $startTime = Input::get('startTime');
-
         $hour = (int)substr($startTime, 0, 2);
         $min = (int)substr($startTime, 2, 2);
-        $total = (int)$totalTime;
-        $tmpArr = array();
-        for ( $i = 2; $i <= $total / 15; $i++ ) {
-            $min = $min + 15;
-            if ( $min > 45 ) {
-                $hour = $hour + 1;
-                $min = '00';
+        
+        $totalTime = 0;
+        // 1
+        if ( !empty($clinicService->service_facility_1) && !empty($clinicService->service_time_1) ) {
+            $totalTime += $clinicService->service_time_1;
+
+            $n = $clinicService->service_time_1 / 15;
+            if ( $min < 10 ) {
+                $min = '0' . $min;
             }
-            if ( $hour < 10 ) {
-                $hour = '0' . $hour;
+            $tmpArr[] = array(
+                'facility_id' => $clinicService->service_facility_1,
+                'clinic_service' => $clinicService->clinic_service_id,
+                'time' => $hour.$min,
+            );
+            for ( $i = 2; $i <= $n; $i++ ) {
+                $min = $min + 15;
+                if ( $min > 45 ) {
+                    $hour = $hour + 1;
+                    $min = 0;
+                }
+                if ( $min < 10 ) {
+                    $min = '0' . $min;
+                }
+
+                $tmpArr[] = array(
+                    'facility_id' => $clinicService->service_facility_1,
+                    'clinic_service' => $clinicService->clinic_service_id,
+                    'time' => $hour.$min,
+                );
             }
-            $tmpArr[] = $hour.$min;
+        }
+
+        // 2
+        if ( !empty($clinicService->service_facility_2) && !empty($clinicService->service_time_2) ) {
+            $totalTime += $clinicService->service_time_2;
+
+            $n = $clinicService->service_time_2 / 15;
+            for ( $i = 1; $i <= $n; $i++ ) {
+                $min = $min + 15;
+                if ( $min > 45 ) {
+                    $hour = $hour + 1;
+                    $min = 0;
+                }
+                if ( $min < 10 ) {
+                    $min = '0' . $min;
+                }
+
+                $tmpArr[] = array(
+                    'facility_id' => $clinicService->service_facility_2,
+                    'clinic_service' => $clinicService->clinic_service_id,
+                    'time' => $hour.$min,
+                );
+            }
+        }
+         // 3
+        if ( !empty($clinicService->service_facility_3) && !empty($clinicService->service_time_3) ) {
+            $totalTime += $clinicService->service_time_3;
+
+            $n = $clinicService->service_time_3 / 15;
+            for ( $i = 1; $i <= $n; $i++ ) {
+                $min = $min + 15;
+                if ( $min > 45 ) {
+                    $hour = $hour + 1;
+                    $min = 0;
+                }
+                if ( $min < 10 ) {
+                    $min = '0' . $min;
+                }
+
+                $tmpArr[] = array(
+                    'facility_id' => $clinicService->service_facility_3,
+                    'clinic_service' => $clinicService->clinic_service_id,
+                    'time' => $hour.$min,
+                );
+            }
+        }
+
+        // 4
+        if ( !empty($clinicService->service_facility_4) && !empty($clinicService->service_time_4) ) {
+            $totalTime += $clinicService->service_time_4;
+
+            $n = $clinicService->service_time_4 / 15;
+            for ( $i = 1; $i <= $n; $i++ ) {
+                $min = $min + 15;
+                if ( $min > 45 ) {
+                    $hour = $hour + 1;
+                    $min = 0;
+                }
+                if ( $min < 10 ) {
+                    $min = '0' . $min;
+                }
+
+                $tmpArr[] = array(
+                    'facility_id' => $clinicService->service_facility_4,
+                    'clinic_service' => $clinicService->clinic_service_id,
+                    'time' => $hour.$min,
+                );
+            }
+        }
+
+        // 5
+        if ( !empty($clinicService->service_facility_5) && !empty($clinicService->service_time_5) ) {
+            $totalTime += $clinicService->service_time_5;
+
+            $n = $clinicService->service_time_5 / 15;
+            for ( $i = 1; $i <= $n; $i++ ) {
+                $min = $min + 15;
+                if ( $min > 45 ) {
+                    $hour = $hour + 1;
+                    $min = 0;
+                }
+                if ( $min < 10 ) {
+                    $min = '0' . $min;
+                }
+
+                $tmpArr[] = array(
+                    'facility_id' => $clinicService->service_facility_5,
+                    'clinic_service' => $clinicService->clinic_service_id,
+                    'time' => $hour.$min,
+                );
+            }
         }
 
         echo json_encode(['tmpArr' => $tmpArr, 'totalTime' => $totalTime]);
-
-
-
-
-        // for ( $i = 1; $i <= 5; $i++ ) {
-        //     if ( !empty($clinicService->service_facility_ . $i) && $clinicService->service_facility_ . $i == -1 ) {
-        //         $tmpArr[$i] = array(
-        //             'clinic_service' => -1,
-        //             'facility_id' => $clinicService->service_facility_ . $i,
-        //             'time' => '',
-        //         );
-        //         $time = $clinicService->service_time_ . $i;
-        //     } elseif () {
-
-        //     } else {
-
-        //     }
-        // }
     }
 }

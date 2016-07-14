@@ -24,12 +24,15 @@ class FacilityModel
         );
     }
 
-    public function getAll($clinic_id = null)
+    public function getAll($clinic_id = null, $facility_kind = null)
     {
         $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
 
         if ( !empty($clinic_id) ) {
             $db = $db->where('clinic_id', $clinic_id);
+        }
+        if ( !empty($facility_kind) ) {
+            $db = $db->where('facility_kind', $facility_kind);
         }
 
         $db = $db->orderBy('facility_sort_no', 'asc')->get();

@@ -132,7 +132,7 @@
                               <td align="left">チェアの選択</td>
                               <td align="left">
                                 <select name="" id="facility_id-{{ $common_id }}">
-                                  @foreach ( $facilitys as $item )
+                                  @foreach ( $facilitys_popup as $item )
                                   <option value="{{ $item->facility_id }}" @if ( $facility->facility_id == $item->facility_id ) selected @endif>{{ $item->facility_name }}</option>
                                   @endforeach
                                 </select>
@@ -239,47 +239,48 @@
         console.log(fullValue);
 
         // green
-        if ( serviceIdNew > 0 ) {
-          setClear(tdObjOld, 0, '');
-          setGreen(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
-        }
-        // blue
-        if ( serviceIdNew < 0 ) {
-          setClear(tdObjOld, 0, '');
-          setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
-        }
-        // brown
-        if ( serviceIdNew == 0 ) {
-          setClear(tdObjOld, 0, '');
-          setBrow(tdObjNew, 0, '');
-        }
-
-// alert(serviceIdNew);
-// alert(fullValue);
-        // console.log(serviceIdNew);
-        $('#myModal-' + data_id).modal('hide');
-
-        // select total sum time clinic service
-        $.ajax({
-          url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
-          type: 'get',
-          dataType: 'json',
-          data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
-          success: function(result){
-            console.log(result);
-            $(result.tmpArr).each(function( index, value ) {
-              // alert(value);
-              var facility_id = facilityIdOld;
-              if ( facilityIdNew.length ) {
-                facility_id = facilityIdNew;
-              }
-              var tdObj = $('#td-' + facility_id + '-' + value);
-              var thisCls = tdObj.attr('class');
-              var fullValue = facility_id + '|' + serviceIdNew + '|' + value;
-              setGreen(tdObj, facility_id, fullValue, serviceTextNew);
-            });
+        if ( serviceIdNew == -1 ) {
+          // blue
+          if ( serviceIdNew < 0 ) {
+            setClear(tdObjOld, 0, '');
+            setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
           }
-        });
+        } else if ( serviceIdNew == 0 ) {
+          // brown
+          if ( serviceIdNew == 0 ) {
+            setClear(tdObjOld, 0, '');
+            setBrow(tdObjNew, 0, '');
+          }
+        } else {
+          // select total sum time clinic service
+          $.ajax({
+            url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
+            type: 'get',
+            dataType: 'json',
+            data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
+            success: function(result){
+              // set color
+              $(result.tmpArr).each(function( index, value ) {
+                var tdObj = $('#td-' + value.facility_id + '-' + value.time);
+                var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time;
+                if ( value.facility_id == -1 ) {
+                  var selectFactility = facilityIdOld;
+                  if ( facilityIdNew != 0 ) {
+                    selectFactility = facilityIdNew;
+                  }
+                  var tdObj = $('#td-' + selectFactility + '-' + value.time);
+                  var fullValue = selectFactility + '|' + -1 + '|' + value.time;
+                  setBlue(tdObj, selectFactility, fullValue, '治療');
+                } else {
+                  setGreen(tdObj, value.facility_id, fullValue, serviceTextNew);
+                }
+                
+              });
+            }
+          });
+        }
+
+        $('#myModal-' + data_id).modal('hide');
       });
 
       function setGreen(objNew, serviceIdNew, value, text) {

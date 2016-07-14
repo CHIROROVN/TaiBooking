@@ -9,3 +9,4 @@ Homestead.json
 /resources
 /public/tai-booking-document
 /bootstrap
+/storage/logs/laravel.log

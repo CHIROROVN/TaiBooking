@@ -210,3 +210,14 @@
 		return $result;
 	}
 
+	function convertHour2Min($hhmm)
+	{
+		$totalMin = 0;
+
+		$hh = substr($hhmm, 0, 2);
+		$mm = substr($hhmm, 2, 2);
+		$totalMin = $hh * 60 + $mm;
+
+		return $totalMin;
+	}
+

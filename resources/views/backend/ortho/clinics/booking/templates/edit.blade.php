@@ -254,9 +254,32 @@
           setBrow(tdObjNew, 0, '');
         }
 
-
-        console.log(serviceIdNew);
+// alert(serviceIdNew);
+// alert(fullValue);
+        // console.log(serviceIdNew);
         $('#myModal-' + data_id).modal('hide');
+
+        // select total sum time clinic service
+        $.ajax({
+          url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
+          type: 'get',
+          dataType: 'json',
+          data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
+          success: function(result){
+            console.log(result);
+            $(result.tmpArr).each(function( index, value ) {
+              // alert(value);
+              var facility_id = facilityIdOld;
+              if ( facilityIdNew.length ) {
+                facility_id = facilityIdNew;
+              }
+              var tdObj = $('#td-' + facility_id + '-' + value);
+              var thisCls = tdObj.attr('class');
+              var fullValue = facility_id + '|' + serviceIdNew + '|' + value;
+              setGreen(tdObj, facility_id, fullValue, serviceTextNew);
+            });
+          }
+        });
       });
 
       function setGreen(objNew, serviceIdNew, value, text) {

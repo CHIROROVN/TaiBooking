@@ -27,15 +27,32 @@
     <div class="row content-page">
       <h3>予約管理　＞　予約枠の検索結果（カレンダー表示）</h3>
         <div class="mar-top20">
-          {!! Form::open(array('route' => 'ortho.bookings.booking.result.calendar', 'method' => 'post', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
-          <button type="submit" name="prev" id="prev" value="{{ $date_current }}"  class="btn btn-sm btn-page">&lt;&lt; 前日</button>
-          <button type="submit" name="cur" id="cur" value="current"  class="btn btn-sm btn-page">今日</button>
-          <button type="submit" name="next" id="next" value="{{ $date_current }}"  class="btn btn-sm btn-page">翌日 &gt;&gt;</button>
+          <?php
+          $prevDate            = strtotime ( '- 1 day' , strtotime ( $date_current ) ) ;
+          $prevDate            = date ( 'Y-m-j' , $prevDate );
+          $nextDate            = strtotime ( '+ 1 day' , strtotime ( $date_current ) ) ;
+          $nextDate            = date ( 'Y-m-j' , $nextDate );
+          $curDate            = date ( 'Y-m-j');
+          ?>
+          {!! Form::open(array('route' => ['ortho.bookings.booking.result.calendar'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
+          <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">
+          <input type="hidden" name="prev" value="{{ $prevDate }}">
+          <input type="submit" name="" value="&lt;&lt; 前日" class="btn btn-sm btn-page">
+          </form>
+          {!! Form::open(array('route' => ['ortho.bookings.booking.result.calendar'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
+          <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">
+          <input type="hidden" name="cur" value="{{ $curDate }}">
+          <input type="submit" name="" value="今日" class="btn btn-sm btn-page">
+          </form>
+          {!! Form::open(array('route' => ['ortho.bookings.booking.result.calendar'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
+          <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">
+          <input type="hidden" name="next" value="{{ $nextDate }}">
+          <input type="submit" name="" value="翌日 &gt;&gt;" class="btn btn-sm btn-page">
           </form>
 
           <h3 class="text-center mar-top20">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
 
-          <p>たい矯正歯科</p>
+          <p>{{ $clinic->clinic_name }}</p>
         </div>
 
         <div class="table-responsive">
@@ -64,7 +81,7 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center">時間</td>
+              <td align="center" width="10%">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center">{{ $facility->facility_name }}</td>
               @endforeach
@@ -76,23 +93,25 @@
               $tmp_arr = explode(':', $time);
               $hour = $tmp_arr[0]; // printf( "%02d", $tmp_arr[0] );
               $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
+              $fullTime = $hour . $minute;
             ?>
             <tr>
               <td align="center">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
-                @if ( isset($arr_bookings[$facility->facility_id][$time]) && ($arr_bookings[$facility->facility_id][$time]->booking_start_time == $hour && $arr_bookings[$facility->facility_id][$time]->booking_total_time >= $minute && !empty($arr_bookings[$facility->facility_id][$time]->clinic_id) && !empty($arr_bookings[$facility->facility_id][$time]->facility_id)) )
-                  @if ( !empty($arr_bookings[$facility->facility_id][$time]->service_1) && $arr_bookings[$facility->facility_id][$time]->service_1 == 1 )
+                @if ( (isset($arr_bookings[$facility->facility_id][$fullTime])) && ($arr_bookings[$facility->facility_id][$fullTime]->booking_start_time == $fullTime || $arr_bookings[$facility->facility_id][$fullTime]->booking_total_time <= $minute) )
+                  @if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->service_1) && $arr_bookings[$facility->facility_id][$fullTime]->service_1_kind == 1 )
                   <td align="center" class="col-green">
-                    <a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$time]->booking_id, 'start_date' => $start_date ]) }}">
-                    <img src="{{ asset('') }}public/backend/ortho/common/image/icon-shift-set.png" />{{ $arr_bookings[$facility->facility_id][$time]->p_name }}</a>
+                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$fullTime]->p_name }}</a></span>
                   </td>
-                  @elseif ( !empty($arr_bookings[$facility->facility_id][$time]->service_1) && $arr_bookings[$facility->facility_id][$time]->service_1 == 2 )
+                  @else
                   <td align="center" class="col-blue">
-                    <a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$time]->booking_id, 'start_date' => $start_date ]) }}">{{ $arr_bookings[$facility->facility_id][$time]->p_name }}</a>
+                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$fullTime]->p_name }}</a></span>
                   </td>
                   @endif
                 @else
-                <td align="center" class="col-brown"><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></td>
+                <td align="center" class="col-brown">
+                  <span><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></span>
+                </td>
                 @endif
               @endforeach
             </tr>

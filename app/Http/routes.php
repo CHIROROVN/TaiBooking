@@ -233,6 +233,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('clinics/{clinic_id}/booking/templates/regist', ['as' => 'ortho.clinics.booking.templates.regist', 'uses' => 'BookingTemplateController@postRegist']);
 	Route::get('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@getEdit']);
 	Route::post('clinics/{clinic_id}/booking/templates/edit/{id}', ['as' => 'ortho.clinics.booking.templates.edit', 'uses' => 'BookingTemplateController@postEdit']);
+	Route::get('clinics/booking/templates/edit/ajax/get-total-time-clinic-service', ['as' => 'ortho.clinics.booking.templates.edit.get_total_time_clinic_service', 'uses' => 'BookingTemplateController@getTotalTimeClinicService']);
 	Route::get('clinics/{clinic_id}/booking/templates/delete/{id}', ['as' => 'ortho.clinics.booking.templates.delete', 'uses' => 'BookingTemplateController@delete']);
 
 	Route::get('clinics/{clinic_id}/booking/templates/orderby-top/{id?}', ['as' => 'ortho.booking.templates.orderby.top', 'uses' => 'BookingTemplateController@orderby_top']);

@@ -86,45 +86,57 @@ class BookingController extends BackendController
     public function bookingResultCalendar()
     {
         $data                   = array();
-        $start_date             = Input::get('start_date');
         $date_current           = date('Y-m-d');
-        if ( Input::get('next') ) {
-            $date_current       = Input::get('next');
-            $newDate            = strtotime ( '+ 1 day' , strtotime ( $date_current ) ) ;
-            $newDate            = date ( 'Y-m-j' , $newDate );
-            $date_current       = $newDate;
-        } elseif ( Input::get('prev') ) {
-            $date_current       = Input::get('prev');
-            $newDate            = strtotime ( '- 1 day' , strtotime ( $date_current ) ) ;
-            $newDate            = date ( 'Y-m-j' , $newDate );
-            $date_current       = $newDate;
-        } elseif ( Input::get('prev') ) {
-            $date_current           = date('Y-m-d');
+        if ( !empty(Input::get('prev')) ) {
+            $date_current = Input::get('prev');
+        }
+        if (  !empty(Input::get('cur')) ) {
+            $date_current = Input::get('cur');
+        }
+        if ( !empty(Input::get('next')) ) {
+            $date_current = Input::get('next');
         }
         $data['date_current']   = $date_current;
+
+        $clinic_id = Input::get('clinic_id');
+        if ( empty($clinic_id) ) {
+            return redirect()->route('ortho.bookings.booking_search');
+        }
 
         $clsShift               = new ShiftModel();
         $clsBooking             = new BookingModel();
         $clsFacility            = new FacilityModel();
-        $data['doctors']        = $clsShift->get_by_belong([1], $start_date);
-        $data['hygienists']     = $clsShift->get_by_belong([2,3], $start_date);
-        $data['facilitys']      = $clsFacility->getAll();
+        $clsClinic              = new ClinicModel();
+        $data['doctors']        = $clsShift->get_by_belong([1]);
+        $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
+        $data['facilitys']      = $clsFacility->getAll($clinic_id);
+        $data['clinic']         = $clsClinic->get_by_id($clinic_id);
 
-        $data['start_date']     = $start_date;
         $data['times']          = Config::get('constants.TIME');
 
-        $bookings               = $clsBooking->get_all();
+        $where['s_clinic_id']   = $clinic_id;
+        $bookings               = $clsBooking->get_all($where);
+        // $data['bookings']       = $bookings;
         $arr_bookings           = array();
         foreach ( $data['times'] as $time ) {
+            $fullTime = str_replace(':', '', $time);
+            $tmpTime = explode(':', $time);
+            $tmpHour = $tmpTime[0];
+            $tmpMin = $tmpTime[1];
             foreach ( $data['facilitys'] as $fac ) {
                 foreach ( $bookings as $booking ) {
-                    if ( $booking->facility_id == $fac->facility_id ) {
-                        $arr_bookings[$fac->facility_id][$time] = $booking;
+                    if ( $booking->facility_id == $fac->facility_id && $booking->booking_start_time == $fullTime ) {
+                        // if ( $booking->booking_total_time < $tmpMin ) {
+                            $arr_bookings[$fac->facility_id][$fullTime] = $booking;
+                        // }
                     }
                 }
             }
         }
         $data['arr_bookings'] = $arr_bookings;
+        // echo '<pre>';
+        // print_r($data['arr_bookings']);
+        // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_result_calendar', $data);
     }

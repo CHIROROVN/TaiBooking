@@ -83,16 +83,18 @@
                       $service_id = 0;
                     }
 
-                    $fullValue = $facility_id . '|' . $service_id . '|' . $hour_template.$minute_template;
+                    $fullValue = $facility_id . '|' . $service_id . '|' . $hour_template.$minute_template . '|' . $arr_templates[$facility_id][$time]->template_group_id;
                     if ( $color === 'brown' ) {
                       $fullValue = null;
                     }
+
+                    $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
                   }
                 ?>
 
                 <!-- close -->
                 <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}">
-                  <div class="td-content" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}">
+                  <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                     @endif

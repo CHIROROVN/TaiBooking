@@ -200,7 +200,7 @@ class BookingTemplateController extends BackendController
             $tmpDataOld[$value->facility_id . '|' . $value->template_time] = $value;
         }
 
-        $update2 = false;
+        $update2 = true;
         if ( count($dataNews) ) {
             foreach ( $dataNews as $itemKey => $itemValue ) {
                 $tmp = explode('|', $itemValue);
@@ -215,8 +215,10 @@ class BookingTemplateController extends BackendController
                     } else {
                         // (2)
                         $dataUpdate['clinic_service_id'] = $tmp[1];
+                        $dataUpdate['template_group_id'] = $tmp[3];
                         $update2 = $clsTemplate->update($tmpDataOld[$tmp[0] . '|' . $tmp[2]]->template_id, $dataUpdate);
                         unset($dataUpdate['clinic_service_id']);
+                        unset($dataUpdate['template_group_id']);
                         unset($tmpDataOld[$tmp[0] . '|' . $tmp[2]]);
                     }
                 } else {
@@ -224,6 +226,7 @@ class BookingTemplateController extends BackendController
                     $dataInsert['facility_id']          = $tmp[0];
                     $dataInsert['clinic_service_id']    = $tmp[1];
                     $dataInsert['template_time']        = $tmp[2];
+                    $dataInsert['template_group_id']    = $tmp[3];
                     $update2 = $clsTemplate->insert($dataInsert);
                 }
             }
@@ -236,7 +239,7 @@ class BookingTemplateController extends BackendController
             }
         }
 
-        if ( $update1 && $update2 ) {
+        if ( $update2 ) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.clinics.booking.templates.index', $clinic_id);
         } else {
@@ -390,6 +393,7 @@ class BookingTemplateController extends BackendController
                             $data['service_2']          = $template->clinic_service_id;
                             $data['service_2_kind']     = 1;
                         }
+                        $data['booking_group_id']       = $template->template_group_id;
 
                         $data['last_date']              = date('y-m-d H:i:s');
                         $data['last_kind']              = INSERT;

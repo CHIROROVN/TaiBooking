@@ -40,32 +40,31 @@ class BookingModel
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
                         ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
-                        ->where('m_clinic.last_kind', '<>', DELETE)
-                        ->where('t1.last_kind', '<>', DELETE)
-                        ->where('t_booking.last_kind', '<>', DELETE)
-                        ->where('t_booking.clinic_id', '=', $where['clinic_id']);
+                        // ->where('m_clinic.last_kind', '<>', DELETE)
+                        // ->where('t1.last_kind', '<>', DELETE)
+                        ->where('t_booking.last_kind', '<>', DELETE);
+                        // ->where('t_booking.clinic_id', '=', $where['clinic_id']);
 
         // where u_id
-        if ( isset($where['u_id']) && $where['u_id'] != null) {
-            $results = $db->where('t_booking.doctor_id', $where['u_id'])
-                          ->orWhere('t_booking.hygienist_id', $where['u_id']);
+        if ( isset($where['u_id']) && !empty($where['u_id']) ) {
+            $db = $db->where('t_booking.doctor_id', $where['u_id']);
         }
         // where s_booking_date
         if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
-            $results = $db->where('t_booking.booking_date', $where['booking_date']);
+            $db = $db->where('t_booking.booking_date', $where['booking_date']);
         }
 
         // where clinic_id
-        if ( isset($where['clinic_id']) && $where['clinic_id'] != null) {
-            $results = $db->where('t_booking.clinic_id', $where['clinic_id']);
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('t_booking.clinic_id', $where['clinic_id']);
         }
 
-        $results = $db->orderBy('t_booking.booking_date', 'asc');
+        $db = $db->orderBy('t_booking.booking_date', 'asc');
 
         if ( $paging ) {
-            $results = $results->simplePaginate(PAGINATION);
+            $results = $db->simplePaginate(PAGINATION);
         } else {
-            $results = $results->get();
+            $results = $db->get();
         }
 
         return $results;
@@ -80,6 +79,22 @@ class BookingModel
                         ->where('t_booking.booking_date', date('Y-m-d'))
                         ->orderBy('t_booking.booking_id', 'asc')
                         ->get();
+        return $results;
+    }
+
+    public function get_by_clinic($clinic_id, $date = '')
+    {
+        $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->select('t_booking.*', 't1.p_name')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.clinic_id', $clinic_id);
+
+        if ( !empty($date) ) {
+            $results = $results->where('t_booking.booking_date', $date);
+        }
+
+        $results = $results->orderBy('t_booking.booking_id', 'asc')->get();
         return $results;
     }
 
@@ -138,32 +153,6 @@ class BookingModel
     public function update($id, $data)
     {
     	return DB::table($this->table)->where('booking_id', $id)->update($data);
-    }
-
-    public function update_by_where($where, $data)
-    {
-        $db = DB::table($this->table);
-
-        // booking_start_time
-        if ( !empty($where['booking_start_time']) ) {
-            $db->where('booking_start_time', $where['booking_start_time']);
-        }
-        // booking_group_id
-        if ( !empty($where['booking_group_id']) ) {
-            $db->where('booking_group_id', $where['booking_group_id']);
-        }
-        // booking_date
-        if ( !empty($where['booking_date']) ) {
-            $db->where('booking_date', $where['booking_date']);
-        }
-        // clinic_id
-        if ( !empty($where['clinic_id']) ) {
-            $db->where('clinic_id', $where['clinic_id']);
-        }
-
-        $db = $db->update($data);
-
-        return $db;
     }
 
     public function get_list1_list(){

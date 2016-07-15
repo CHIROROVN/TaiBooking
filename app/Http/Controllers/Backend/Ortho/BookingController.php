@@ -22,6 +22,7 @@ use App\Http\Models\Ortho\InterviewModel;
 use App\Http\Models\Ortho\ResultModel;
 use App\Http\Models\Ortho\AreaModel;
 use App\Http\Models\Ortho\ClinicAreaModel;
+use App\Http\Models\Ortho\TemplateModel;
 
 use Form;
 use Html;
@@ -67,10 +68,11 @@ class BookingController extends BackendController
                 'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
                 'start' => $booking->booking_date,
                 'end' => $booking->booking_date + 1,
-                'url' => route('ortho.bookings.booking.daily', [ 'booking_id'=>$booking_id,'clinic_id'=>$clinic_id,'start_date' => $booking->booking_date ]),
+                'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $booking->booking_date ]),
             );
         }
         $data['bookings'] = json_encode($tmp_arr);
+
         return view('backend.ortho.bookings.booking_monthly', $data);
     }
 
@@ -90,13 +92,12 @@ class BookingController extends BackendController
     public function bookingDaily()
     {
         $data                   = array();
-        $data['booking_id']             = Input::get('booking_id');
         $clinic_id              = Input::get('clinic_id');
 
-        $clsBooking             = new BookingModel();
-        $data['booking']        = $clsBooking->get_by_id(Input::get('booking_id'));
-
         $date_current           = date('Y-m-d');
+        if ( !empty(Input::get('start_date')) ) {
+            $date_current = Input::get('start_date');
+        }
         if ( !empty(Input::get('prev')) ) {
             $date_current = Input::get('prev');
         }
@@ -113,10 +114,42 @@ class BookingController extends BackendController
         $clsBooking             = new BookingModel();
         $clsFacility            = new FacilityModel();
         $clsClinic              = new ClinicModel();
+        $clsTemplate            = new TemplateModel();
+        $clsTreatment1          = new Treatment1Model();
+        $clsService             = new ServiceModel();
+        $clsClinicService       = new ClinicServiceModel();
+
         $data['doctors']        = $clsShift->get_by_belong([1]);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
         $data['facilitys']      = $clsFacility->getAll($clinic_id);
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);
+        $data['times']          = Config::get('constants.TIME');
+        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
+        $clinicServices         = $clsClinicService->getAll($clinic_id);
+        $templates              = $clsTemplate->get_all();
+        $bookings               = $clsBooking->get_by_clinic($clinic_id, $date_current);
+
+        $tmpClinicServices = array();
+        foreach ( $clinicServices as $clinicService ) {
+            $tmpClinicServices[$clinicService->clinic_service_id] = $clinicService;
+        }
+        $data['clinicServices'] = $tmpClinicServices;
+
+        $arr_bookings           = array();
+        foreach ( $data['times'] as $time ) {
+            $time_replate = str_replace (':', '', $time);
+            foreach ( $data['facilitys'] as $fac ) {
+                foreach ( $bookings as $booking ) {
+                    if ( $booking->facility_id == $fac->facility_id && $booking->booking_start_time == $time_replate ) {
+                        $arr_bookings[$fac->facility_id][$time] = $booking;
+                    }
+                }
+            }
+        }
+        $data['arr_bookings']       = $arr_bookings;
+        // echo '<pre>';
+        // print_r($data['arr_bookings']);
+        // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_daily', $data);
     }

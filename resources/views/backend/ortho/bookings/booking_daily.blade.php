@@ -25,32 +25,29 @@
             <div class="mar-top20">
             <?php
               $prevDate            = strtotime ( '- 1 day' , strtotime ( $date_current ) ) ;
-              $prevDate            = date ( 'Y-m-j' , $prevDate );
+              $prevDate            = date ( 'Y-m-d' , $prevDate );
               $nextDate            = strtotime ( '+ 1 day' , strtotime ( $date_current ) ) ;
-              $nextDate            = date ( 'Y-m-j' , $nextDate );
-              $curDate            = date ( 'Y-m-j');
+              $nextDate            = date ( 'Y-m-d' , $nextDate );
+              $curDate            = date ( 'Y-m-d');
             ?>
           {!! Form::open(array('route' => ['ortho.bookings.booking.daily'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
             <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">
-            <input type="hidden" name="booking_id" value="{{ $booking_id }}">
             <input type="hidden" name="prev" value="{{ $prevDate }}">
             <input type="submit" name="" value="&lt;&lt; 前日" class="btn btn-sm btn-page">
           </form>
           {!! Form::open(array('route' => ['ortho.bookings.booking.daily'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
             <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">
-            <input type="hidden" name="booking_id" value="{{ $booking_id }}">
             <input type="hidden" name="cur" value="{{ $curDate }}">
             <input type="submit" name="" value="今日" class="btn btn-sm btn-page">
           </form>
           {!! Form::open(array('route' => ['ortho.bookings.booking.daily'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
-            <input type="hidden" name="booking_id" value="{{ $booking_id }}">          
             <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">
             <input type="hidden" name="next" value="{{ $nextDate }}">
             <input type="submit" name="" value="翌日 &gt;&gt;" class="btn btn-sm btn-page">
           </form>
 
           <h3 class="text-center mar-top20">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
-              <p>{{$booking->clinic_name}}</p>
+              <p>{{ @$clinic->clinic_name }}</p>
         </div>
 
             <div class="table-responsive">
@@ -91,26 +88,63 @@
               $tmp_arr = explode(':', $time);
               $hour = $tmp_arr[0]; // printf( "%02d", $tmp_arr[0] );
               $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
-              $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" width="6%">{{ $time }}～</td>
+              <td align="center">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
-                @if ( (isset($arr_bookings[$facility->facility_id][$fullTime])) && ($arr_bookings[$facility->facility_id][$fullTime]->booking_start_time == $fullTime || $arr_bookings[$facility->facility_id][$fullTime]->booking_total_time <= $minute) )
-                  @if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->service_1) && $arr_bookings[$facility->facility_id][$fullTime]->service_1_kind == 1 )
-                  <td align="center" class="col-green">
-                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$fullTime]->p_name }}</a></span>
-                  </td>
-                  @else
-                  <td align="center" class="col-blue">
-                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$fullTime]->p_name }}</a></span>
-                  </td>
-                  @endif
-                @else
-                <td align="center" class="col-brown">
-                  <span><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></span>
+                <?php
+                  $common_id = $facility->facility_id . '-' . $hour.$minute;
+                  $facility_id = $facility->facility_id;
+                  $color = 'brown';
+                  $service_id = 0;
+                  $fullValue = null;
+                  $text = '';
+
+                  if ( isset($arr_bookings[$facility_id][$time]) ) {
+                    $hour_template = substr($arr_bookings[$facility->facility_id][$time]->booking_start_time , 0, 2);
+                    $minute_template = substr($arr_bookings[$facility->facility_id][$time]->booking_start_time , 2, 2);
+
+                    if ( empty($arr_bookings[$facility_id][$time]->patient_id) ) {
+                      $link = route('ortho.bookings.booking.regist', $arr_bookings[$facility_id][$time]->booking_id);
+                    } else {
+                      $link = route('ortho.bookings.booking.detail', $arr_bookings[$facility_id][$time]->booking_id);
+                    }
+
+                    if ( $arr_bookings[$facility_id][$time]->service_1_kind == 1 ) {
+                      $color = 'green';
+                      $br = '<br />';
+                      if ( empty($arr_bookings[$facility_id][$time]->p_name) ) {
+                        $br = '';
+                      }
+                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$clinicServices[$arr_bookings[$facility_id][$time]->service_1]->service_name . '</a>';
+                    } elseif ( $arr_bookings[$facility_id][$time]->service_1_kind == 2 ) {
+                      $color = 'blue';
+                      $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                    } 
+                    if ( $arr_bookings[$facility_id][$time]->service_2_kind == 1 ) {
+                      $color = 'green';
+                      $br = '<br />';
+                      if ( empty($arr_bookings[$facility_id][$time]->p_name) ) {
+                        $br = '';
+                      }
+                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$clinicServices[$arr_bookings[$facility_id][$time]->service_2]->service_name . '</a>';
+                    } elseif ( $arr_bookings[$facility_id][$time]->service_2_kind == 2 ) {
+                      $color = 'blue';
+                      $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                    }
+                  }
+                ?>
+
+                <!-- close -->
+                <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}">
+                  <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
+                    {!! $text !!}
+                    @if ( $color === 'brown' )
+                    <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
+                    @endif
+                  </div>
                 </td>
-                @endif
+                <!-- end close -->
               @endforeach
             </tr>
             @endforeach

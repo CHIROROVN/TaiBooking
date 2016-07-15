@@ -60,20 +60,24 @@
           @foreach ( $bookeds as $booked )
           <tr>
             <td>{{ splitHourMin($booked->booking_start_time) }}～{{ toTime($booked->booking_start_time, $booked->booking_total_time) }}</td>
-            <td>{{ $booked->p_no }}　{{ $booked->p_name }}（{{ $booked->p_name_kana }}）</td>
+            <td>{{ $booked->p_no }}　{{ $booked->p_name }}@if(!empty($booked->p_name_kana))（{{ $booked->p_name_kana }}）@endif</td>
             <td>
               @if ( $booked->service_1_kind == 1 )
               {{ @$services[$booked->service_1] }}
               @elseif ( $booked->service_1_kind == 2 )
               {{ @$treatment1s[$booked->service_1] }}
               @endif
+              
               @if ( !empty($booked->service_2) )
-              ,
-              @if ( $booked->service_2_kind == 1 )
-              {{ @$services[$booked->service_2] }}
-              @elseif ( $booked->service_2_kind == 2 )
-              {{ @$treatment1s[$booked->service_2] }}
-              @endif
+                @if ( $booked->service_2_kind == 1 )
+                  @if( !empty($services[$booked->service_2]) )
+                    ,{{ @$services[$booked->service_2] }}
+                  @endif
+                @elseif ( $booked->service_2_kind == 2 )
+                  @if( !empty($services[$booked->service_2]) )
+                    ,{{ @$treatment1s[$booked->service_2] }}
+                  @endif
+                @endif
               @endif
             </td>
             <td align="center">

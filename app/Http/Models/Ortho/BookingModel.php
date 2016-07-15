@@ -36,7 +36,6 @@ class BookingModel
 
     public function get_all($where = array(), $paging = false)
     {
-//        var_dump($where);
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
@@ -47,7 +46,7 @@ class BookingModel
                         ->where('t_booking.clinic_id', '=', $where['clinic_id']);
 
         // where u_id
-        if ( isset($where['u_id'])) {
+        if ( isset($where['u_id']) && $where['u_id'] != null) {
             $results = $db->where('t_booking.doctor_id', $where['u_id'])
                           ->orWhere('t_booking.hygienist_id', $where['u_id']);
         }
@@ -57,7 +56,7 @@ class BookingModel
         }
 
         // where clinic_id
-        if ( isset($where['clinic_id'])) {
+        if ( isset($where['clinic_id']) && $where['clinic_id'] != null) {
             $results = $db->where('t_booking.clinic_id', $where['clinic_id']);
         }
 

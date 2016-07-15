@@ -121,7 +121,8 @@ $(document).ready(function(){
         //right: 'month,agendaWeek,agendaDay'
         right: ''
       },
-
+       displayEventTime: false,
+       
       //load all event from DB
       events: bookings,
       

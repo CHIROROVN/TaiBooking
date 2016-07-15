@@ -38,7 +38,8 @@ class BookingModel
     {
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana')
+                        ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
                         ->where('t_booking.last_kind', '<>', DELETE);
         
         // where clinic_id
@@ -209,12 +210,12 @@ class BookingModel
             });
         }
 
-        if(isset($where['booking_date'])){
-            $booking_date = $where['booking_date'];
-            $result = $db->where('t_booking.booking_date', function($subQuery) use ($booking_date){
-                $subQuery->select('t_booking.booking_date')->whereIn('t_booking.booking_date', $booking_date);
-            });
-        }
+        // if(isset($where['booking_date'])){
+        //     $booking_date = $where['booking_date'];
+        //     $result = $db->where('t_booking.booking_date', function($subQuery) use ($booking_date){
+        //         $subQuery->select('t_booking.booking_date')->whereIn('t_booking.booking_date', $booking_date);
+        //     });
+        // }
 
         if(isset($where['week_later'])){
             if($where['week_later'] == 'one_week'){

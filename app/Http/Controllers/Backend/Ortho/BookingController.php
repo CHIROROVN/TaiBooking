@@ -62,9 +62,9 @@ class BookingController extends BackendController
         foreach ( $bookings as $booking ) {
             $booking_id = $booking->booking_id;
             $clinic_id  = $booking->clinic_id;
-
+            $clinic_name  = $booking->clinic_name;
             $tmp_arr[] = array(
-                'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">たい矯正歯科<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
+                'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
                 'start' => $booking->booking_date,
                 'end' => $booking->booking_date + 1,
                 'url' => route('ortho.bookings.booking.daily', [ 'booking_id'=>$booking_id,'clinic_id'=>$clinic_id,'start_date' => $booking->booking_date ]),

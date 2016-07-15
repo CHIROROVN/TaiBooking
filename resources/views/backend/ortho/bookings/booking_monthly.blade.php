@@ -37,6 +37,11 @@
 </section>
 
 <?php echo '<script>var clinic_id = ' . $clinic_id . '</script>'; ?>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 <script>  
     $('#area_id').click(function(event) {
       var area_id = $('#area_id').val();

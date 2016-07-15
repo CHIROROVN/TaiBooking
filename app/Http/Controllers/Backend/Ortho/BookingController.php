@@ -47,22 +47,22 @@ class BookingController extends BackendController
      */
     public function bookingMonthly()
     {
+        $data['area_id']        = Input::get('area_id');
+        $data['clinic_id']      = Input::get('clinic_id');
+        $data['u_id']           = Input::get('u_id');
+        $clsBooking             = new BookingModel();
+        $bookings               = $clsBooking->get_all($data);
+        
         $clsAreaModel           = new AreaModel();
         $data['areas']          = $clsAreaModel->get_list();
-        $data['area_id']         = Input::get('area_id');
-        $data['clinic_id']    = Input::get('clinic_id');
-        $data['u_id']         = Input::get('u_id');
-        
         $clsUser                = new UserModel();
         $data['users']          = $clsUser->get_all();
 
-        $clsBooking             = new BookingModel();
-        $bookings               = $clsBooking->get_all($data);
-        $tmp_arr            = array();
+        $tmp_arr                = array();
         foreach ( $bookings as $booking ) {
-            $booking_id = $booking->booking_id;
-            $clinic_id  = $booking->clinic_id;
-            $clinic_name  = $booking->clinic_name;
+            $booking_id     = $booking->booking_id;
+            $clinic_id      = $booking->clinic_id;
+            $clinic_name    = $booking->clinic_name;
             $tmp_arr[] = array(
                 'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
                 'start' => $booking->booking_date,

@@ -36,24 +36,29 @@ class BookingModel
 
     public function get_all($where = array(), $paging = false)
     {
+//        var_dump($where);
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
                         ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
-                        ->where('t_booking.last_kind', '<>', DELETE);
-        
-        // where clinic_id
-        if ( isset($where['clinic_id']) && $where['clinic_id'] != 0 ) {
-            $results = $db->where('t_booking.clinic_id', $where['clinic_id']);
-        }
+                        ->where('m_clinic.last_kind', '<>', DELETE)
+                        ->where('t1.last_kind', '<>', DELETE)
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.clinic_id', '=', $where['clinic_id']);
+
         // where u_id
-        if ( isset($where['u_id']) && $where['u_id'] != 0 ) {
+        if ( isset($where['u_id'])) {
             $results = $db->where('t_booking.doctor_id', $where['u_id'])
                           ->orWhere('t_booking.hygienist_id', $where['u_id']);
         }
         // where s_booking_date
         if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
             $results = $db->where('t_booking.booking_date', $where['booking_date']);
+        }
+
+        // where clinic_id
+        if ( isset($where['clinic_id'])) {
+            $results = $db->where('t_booking.clinic_id', $where['clinic_id']);
         }
 
         $results = $db->orderBy('t_booking.booking_date', 'asc');
@@ -198,22 +203,25 @@ class BookingModel
 
         if(isset($where['doctor_id'])){
             $doctor_id = $where['doctor_id'];
-            $result = $db->where('t_booking.doctor_id', function($subQuery) use ($doctor_id){
-                $subQuery->select('t_booking.doctor_id')->whereIn('t_booking.doctor_id', $doctor_id);
-            });
+            $result = $db->whereIn('t_booking.doctor_id', $doctor_id);
+
+            // $result = $db->where('t_booking.doctor_id', function($subQuery) use ($doctor_id){
+            //     $subQuery->select('t_booking.doctor_id')->whereIn('t_booking.doctor_id', $doctor_id);
+            // });
         }
 
         if(isset($where['hygienist_id'])){
             $hygienist_id = $where['hygienist_id'];
-            $result = $db->where('t_booking.hygienist_id', function($subQuery) use ($hygienist_id){
-                $subQuery->select('t_booking.hygienist_id')->whereIn('t_booking.hygienist_id', $hygienist_id);
-            });
+            $result = $db->whereIn('t_booking.hygienist_id', $hygienist_id);
+            // $result = $db->where('t_booking.hygienist_id', function($subQuery) use ($hygienist_id){
+            //     $subQuery->select('t_booking.hygienist_id')->whereIn('t_booking.hygienist_id', $hygienist_id);
+            // });
         }
 
         // if(isset($where['booking_date'])){
         //     $booking_date = $where['booking_date'];
         //     $result = $db->where('t_booking.booking_date', function($subQuery) use ($booking_date){
-        //         $subQuery->select('t_booking.booking_date')->whereIn('t_booking.booking_date', $booking_date);
+        //         $subQuery->select(DB::raw('DAYOFWEEK(t_booking.booking_date)')->whereIn('t_booking.booking_date', $booking_date);
         //     });
         // }
 

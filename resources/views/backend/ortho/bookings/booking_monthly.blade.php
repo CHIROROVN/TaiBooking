@@ -140,8 +140,8 @@ $(document).ready(function(){
           var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
         
         calendar.fullCalendar('unselect');
-        window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
-
+        // window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
+        location.reload();
       },
 
       editable: true,

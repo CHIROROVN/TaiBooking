@@ -105,16 +105,18 @@
                       $service_id = 0;
                     }
 
-                    $fullValue = $facility_id . '|' . $service_id . '|' . $hour_template.$minute_template;
+                    $fullValue = $facility_id . '|' . $service_id . '|' . $hour_template.$minute_template. '|' . $arr_templates[$facility_id][$time]->template_group_id;
                     if ( $color === 'brown' ) {
                       $fullValue = null;
                     }
+
+                    $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
                   }
                 ?>
 
                 <!-- close -->
                 <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}">
-                  <div class="td-content" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}">
+                  <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                     @endif
@@ -154,7 +156,7 @@
                               <td align="left">チェアの選択</td>
                               <td align="left">
                                 <select name="" id="facility_id-{{ $common_id }}">
-                                  @foreach ( $facilitys as $item )
+                                  @foreach ( $facilitys_popup as $item )
                                   <option value="{{ $item->facility_id }}" @if ( $facility->facility_id == $item->facility_id ) selected @endif>{{ $item->facility_name }}</option>
                                   @endforeach
                                 </select>
@@ -229,58 +231,70 @@
 
         // set color td
         var tdObjNew = $('#td-' + facilityIdNew + '-' + dataFullTime);
-        console.log(fullValue);
 
         // green
-        if ( serviceIdNew > 0 ) {
+        if ( serviceIdNew == -1 ) {
+          // blue
+          if ( serviceIdNew < 0 ) {
+            setClear(tdObjOld, 0, '');
+            setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
+          }
+        } else if ( serviceIdNew == 0 ) {
+          console.log(tdObjOld.find('.td-content').attr('data-group'));
+          console.log(tdObjOld.find('.td-content').attr('data-full-time'));
+          // brown
           setClear(tdObjOld, 0, '');
-          setGreen(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
-        }
-        // blue
-        if ( serviceIdNew < 0 ) {
-          setClear(tdObjOld, 0, '');
-          setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
-        }
-        // brown
-        if ( serviceIdNew == 0 ) {
-          setClear(tdObjOld, 0, '');
-          setBrow(tdObjNew, 0, '');
+          setBrow(tdObjOld, 0, '');
+
+          // update to database table "t_booking"
+          $.ajax({
+            url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
+            type: 'get',
+            dataType: 'json',
+            data: { 
+              booking_start_time: tdObjOld.find('.td-content').attr('data-full-time'),
+              booking_group_id: tdObjOld.find('.td-content').attr('data-group'),
+              booking_date: '{{ $date }}',
+              clinic_id: '{{ @$clinic->clinic_id }}' 
+            },
+            success: function(result){
+              console.log(result);
+            }
+          });
+        } else {
+          // select total sum time clinic service
+          $.ajax({
+            url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
+            type: 'get',
+            dataType: 'json',
+            data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
+            success: function(result){
+              console.log(result);
+              // set color
+              $(result.tmpArr).each(function( index, value ) {
+                var tdObj = $('#td-' + value.facility_id + '-' + value.time);
+                var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
+                if ( value.facility_id == -1 ) {
+                  var selectFactility = facilityIdOld;
+                  if ( facilityIdNew != 0 ) {
+                    selectFactility = facilityIdNew;
+                  }
+                  var tdObj = $('#td-' + selectFactility + '-' + value.time);
+                  var fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
+                  setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
+                } else {
+                  setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
+                }
+                
+              });
+            }
+          });
         }
 
-        // update to database table "t_booking"
-        // $.ajax({
-        //   url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
-        //   type: 'get',
-        //   dataType: 'json',
-        //   data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
-        //   success: function(result){
-        //     console.log(result);
-        //     // set color
-        //     $(result.tmpArr).each(function( index, value ) {
-        //       var tdObj = $('#td-' + value.facility_id + '-' + value.time);
-        //       var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
-        //       if ( value.facility_id == -1 ) {
-        //         var selectFactility = facilityIdOld;
-        //         if ( facilityIdNew != 0 ) {
-        //           selectFactility = facilityIdNew;
-        //         }
-        //         var tdObj = $('#td-' + selectFactility + '-' + value.time);
-        //         var fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
-        //         setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
-        //       } else {
-        //         setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
-        //       }
-              
-        //     });
-        //   }
-        // });
-
-
-        console.log(serviceIdNew);
         $('#myModal-' + data_id).modal('hide');
       });
 
-      function setGreen(objNew, serviceIdNew, value, text) {
+      function setGreen(objNew, serviceIdNew, value, text, group = '') {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');
@@ -288,12 +302,15 @@
         objNew.find('.td-content').append('');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').addClass(group);
+        objNew.find('.td-content').attr('data-group', group);
         // set value for hidden iput
         objNew.find('.td-content').html(text);
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBlue(objNew, serviceIdNew, value, text) {
+      function setBlue(objNew, serviceIdNew, value, text, group = '') {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-blue');
@@ -301,12 +318,15 @@
         objNew.find('.td-content').append('');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // get group
+        objNew.find('.td-content').addClass(group);
+        objNew.find('.td-content').attr('data-group', group);
         // set value for hidden iput
         objNew.find('.td-content').html(text);
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBrow(objNew, serviceIdNew, value) {
+      function setBrow(objNew, serviceIdNew, value, group = '') {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -315,12 +335,14 @@
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').attr('data-group', group);
         // set value for hidden iput
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
         }
       }
 
-      function setClear(objNew, serviceIdNew, value) {
+      function setClear(objNew, serviceIdNew, value, group = '') {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -329,6 +351,8 @@
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').attr('data-group', group);
         objNew.find('.td-content > .input').val(value);
         objNew.find('.td-content > .input').attr('name', '');
         }

@@ -323,7 +323,8 @@ class BookingTemplateController extends BackendController
         $clsClinic                  = new ClinicModel();
         $data['clinic']             = $clsClinic->get_by_id(Input::get('clinic_id'));
         $data['facilitys']          = $clsFacility->getAll(@$data['clinic']->clinic_id);
-        $services                   = $clsClinicService->getAll();
+        $data['facilitys_popup']    = $clsFacility->getAll(@$data['clinic']->clinic_id, 1);
+        $services                   = $clsClinicService->getAll(@$data['clinic']->clinic_id);
         $data['times']              = Config::get('constants.TIME');
         $data['booking_templates']  = $clsBookingTemplate->get_list();
 
@@ -357,10 +358,6 @@ class BookingTemplateController extends BackendController
 
     public function postBookingTemplateDaily()
     {
-        echo '<pre>';
-        print_r(Input::all());
-        echo '</pre>';
-
         $clsTemplate                = new TemplateModel();
         $clsFacility                = new FacilityModel();
         $clsBooking                 = new BookingModel();
@@ -372,9 +369,6 @@ class BookingTemplateController extends BackendController
             $templates = $clsTemplate->get_all($mbt_id);
         }
         
-        // echo '<pre>';
-        // print_r($templates);
-        // echo '</pre>';die;
         if ( count($templates) ) {
             foreach ( $templates as $template ) {
                 foreach ( $facilitys as $facility ) {
@@ -399,14 +393,23 @@ class BookingTemplateController extends BackendController
                         $data['last_kind']              = INSERT;
                         $data['last_ipadrs']            = $_SERVER['REMOTE_ADDR'];
                         $data['last_user']              = Auth::user()->id;
-                        $clsBooking->insert($data);
+
+                        $where = array(
+                            'booking_start_time'    => $template->template_time,
+                            'booking_group_id'      => $template->template_group_id,
+                            'booking_date'          => Input::get('date'),
+                            'clinic_id'             => Input::get('clinic_id'),
+                        );
+                        $booking = $clsBooking->checkExist($where);
+                        if ( !empty($booking) ) {
+                            $clsBooking->update($booking->booking_id, $data);
+                        } else {
+                            $clsBooking->insert($data);
+                        }
                     }
                 }
             }
         }
-        // echo '<pre>';
-        // print_r($templates);
-        // echo '</pre>';die;
 
         return redirect()->route('ortho.bookings.template.daily', [ 'clinic_id' => Input::get('clinic_id'), 'date' => Input::get('date'), 's_mbt_id' => Input::get('mbt_id') ]);
     }
@@ -626,6 +629,26 @@ class BookingTemplateController extends BackendController
 
     public function editBookingTemplateDailyAjax()
     {
-        
+        $clsBooking = new BookingModel();
+
+        $dataUpdate = array(
+            'last_date'             => date('y-m-d H:i:s'),
+            'last_kind'             => DELETE,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->id
+        );
+        $where = array(
+            'booking_start_time'    => Input::get('booking_start_time'),
+            'booking_group_id'      => Input::get('booking_group_id'),
+            'booking_date'          => Input::get('booking_date'),
+            'clinic_id'             => Input::get('clinic_id'),
+        );
+        $booking = $clsBooking->checkExist($where);
+        $status = '';
+        if ( !empty($booking) ) {
+            $status = $clsBooking->update($booking->booking_id, $dataUpdate);
+        }
+
+        echo json_encode(array('status', $status));
     }
 }

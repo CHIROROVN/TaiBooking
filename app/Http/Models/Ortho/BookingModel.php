@@ -110,9 +110,60 @@ class BookingModel
         return $results;
     }
 
+    public function checkExist($where = array())
+    {
+        $db = DB::table($this->table);
+
+        // booking_start_time
+        if ( !empty($where['booking_start_time']) ) {
+            $db->where('booking_start_time', $where['booking_start_time']);
+        }
+        // booking_group_id
+        if ( !empty($where['booking_group_id']) ) {
+            $db->where('booking_group_id', $where['booking_group_id']);
+        }
+        // booking_date
+        if ( !empty($where['booking_date']) ) {
+            $db->where('booking_date', $where['booking_date']);
+        }
+        // clinic_id
+        if ( !empty($where['clinic_id']) ) {
+            $db->where('clinic_id', $where['clinic_id']);
+        }
+
+        $db = $db->first();
+        return $db;
+    }
+
     public function update($id, $data)
     {
     	return DB::table($this->table)->where('booking_id', $id)->update($data);
+    }
+
+    public function update_by_where($where, $data)
+    {
+        $db = DB::table($this->table);
+
+        // booking_start_time
+        if ( !empty($where['booking_start_time']) ) {
+            $db->where('booking_start_time', $where['booking_start_time']);
+        }
+        // booking_group_id
+        if ( !empty($where['booking_group_id']) ) {
+            $db->where('booking_group_id', $where['booking_group_id']);
+        }
+        // booking_date
+        if ( !empty($where['booking_date']) ) {
+            $db->where('booking_date', $where['booking_date']);
+        }
+        // clinic_id
+        if ( !empty($where['clinic_id']) ) {
+            $db->where('clinic_id', $where['clinic_id']);
+        }
+
+        $db = $db->update($data);
+
+        return $db;
     }
 
     public function get_list1_list(){

@@ -622,4 +622,10 @@ class BookingTemplateController extends BackendController
 
         echo json_encode(['tmpArr' => $tmpArr, 'totalTime' => $totalTime]);
     }
+
+
+    public function editBookingTemplateDailyAjax()
+    {
+        
+    }
 }

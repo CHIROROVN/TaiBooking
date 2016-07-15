@@ -276,7 +276,7 @@ class BookedController extends BackendController
         $dataUpdate['result_total_time'] = $totalTime;
         
         // set service 1
-        $service_1                          = Input::get('service_1');
+        $service_1                              = Input::get('service_1');
         if ( !empty($service_1) ) {
             $tmp1                               = explode('|', $service_1);
             $dataUpdate['service_1_kind']       = $tmp1[0];
@@ -284,7 +284,7 @@ class BookedController extends BackendController
         }
         
         // set service 2
-        $service_2                          = Input::get('service_2');
+        $service_2                              = Input::get('service_2');
         if ( !empty($service_2) ) {
             $tmp2                               = explode('|', $service_2);
             $dataUpdate['service_2_kind']       = $tmp1[0];
@@ -292,7 +292,7 @@ class BookedController extends BackendController
         }
 
         // set next service 1
-        $next_service_1                     = Input::get('next_service_1');
+        $next_service_1                         = Input::get('next_service_1');
         if ( !empty($next_service_1) ) {
             $tmpNext1                           = explode('|', $next_service_1);
             $dataUpdate['next_service_1_kind']  = $tmpNext1[0];
@@ -300,7 +300,7 @@ class BookedController extends BackendController
         }
         
         // set next service 2
-        $next_service_2                     = Input::get('next_service_2');
+        $next_service_2                         = Input::get('next_service_2');
         if ( !empty($next_service_2) ) {
             $tmpNext2                           = explode('|', $next_service_2);
             $dataUpdate['next_service_2_kind']  = $tmpNext2[0];

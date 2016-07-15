@@ -67,7 +67,7 @@
               @elseif ( $booked->service_1_kind == 2 )
               {{ @$treatment1s[$booked->service_1] }}
               @endif
-              
+
               @if ( !empty($booked->service_2) )
                 @if ( $booked->service_2_kind == 1 )
                   @if( !empty($services[$booked->service_2]) )

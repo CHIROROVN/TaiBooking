@@ -125,15 +125,9 @@ class BookingController extends BackendController
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);
         $data['times']          = Config::get('constants.TIME');
         $data['treatment1s']    = $clsTreatment1->get_list_treatment();
-        $clinicServices         = $clsClinicService->getAll($clinic_id);
+        $data['services']       = $clsService->get_list();
         $templates              = $clsTemplate->get_all();
         $bookings               = $clsBooking->get_by_clinic($clinic_id, $date_current);
-
-        $tmpClinicServices = array();
-        foreach ( $clinicServices as $clinicService ) {
-            $tmpClinicServices[$clinicService->clinic_service_id] = $clinicService;
-        }
-        $data['clinicServices'] = $tmpClinicServices;
 
         $arr_bookings           = array();
         foreach ( $data['times'] as $time ) {
@@ -148,7 +142,7 @@ class BookingController extends BackendController
         }
         $data['arr_bookings']       = $arr_bookings;
         // echo '<pre>';
-        // print_r($data['arr_bookings']);
+        // print_r($data['services']);
         // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_daily', $data);

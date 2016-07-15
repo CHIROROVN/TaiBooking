@@ -361,7 +361,9 @@ class BookingTemplateController extends BackendController
         $clsTemplate                = new TemplateModel();
         $clsFacility                = new FacilityModel();
         $clsBooking                 = new BookingModel();
+        $clsClinicService           = new ClinicServiceModel();
         $facilitys                  = $clsFacility->getAll(Input::get('clinic_id'));
+        $clinicServices             = $clsClinicService->getAll();
 
         $mbt_id = Input::get('mbt_id');
         $templates = array();
@@ -380,12 +382,16 @@ class BookingTemplateController extends BackendController
                         $data['booking_total_time']     = 0;
                         $data['clinic_id']              = Input::get('clinic_id');
                         $data['facility_id']            = $template->facility_id;
-                        if ( $template->clinic_service_id == -1 ) {
-                            $data['service_1']          = null;
-                            $data['service_1_kind']     = 2;
-                        } else {
-                            $data['service_2']          = $template->clinic_service_id;
-                            $data['service_2_kind']     = 1;
+                        foreach ( $clinicServices as $clinicService ) {
+                            if ( $clinicService->clinic_service_id == $template->clinic_service_id ) {
+                                $data['service_1']          = $clinicService->service_id; //error service here
+                                $data['service_1_kind']     = 1;
+                            } else {
+                                if ( $template->clinic_service_id == -1 ) {
+                                    $data['service_1']          = -1;
+                                    $data['service_1_kind']     = 2;
+                                }
+                            }
                         }
                         $data['booking_group_id']       = $template->template_group_id;
 

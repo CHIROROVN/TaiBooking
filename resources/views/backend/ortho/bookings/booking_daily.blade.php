@@ -116,22 +116,22 @@
                       if ( empty($arr_bookings[$facility_id][$time]->p_name) ) {
                         $br = '';
                       }
-                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$clinicServices[$arr_bookings[$facility_id][$time]->service_1]->service_name . '</a>';
+                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$services[$arr_bookings[$facility_id][$time]->service_1] . '</a>';
                     } elseif ( $arr_bookings[$facility_id][$time]->service_1_kind == 2 ) {
                       $color = 'blue';
                       $text = '<a href="' . $link . '">' . '治療' . '</a>';
-                    } 
-                    if ( $arr_bookings[$facility_id][$time]->service_2_kind == 1 ) {
-                      $color = 'green';
-                      $br = '<br />';
-                      if ( empty($arr_bookings[$facility_id][$time]->p_name) ) {
-                        $br = '';
-                      }
-                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$clinicServices[$arr_bookings[$facility_id][$time]->service_2]->service_name . '</a>';
-                    } elseif ( $arr_bookings[$facility_id][$time]->service_2_kind == 2 ) {
-                      $color = 'blue';
-                      $text = '<a href="' . $link . '">' . '治療' . '</a>';
                     }
+                    // if ( $arr_bookings[$facility_id][$time]->service_2_kind == 1 ) {
+                    //   $color = 'green';
+                    //   $br = '<br />';
+                    //   if ( empty($arr_bookings[$facility_id][$time]->p_name) ) {
+                    //     $br = '';
+                    //   }
+                    //   $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$services[$arr_bookings[$facility_id][$time]->service_2] . '</a>';
+                    // } elseif ( $arr_bookings[$facility_id][$time]->service_2_kind == 2 ) {
+                    //   $color = 'blue';
+                    //   $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                    // }
                   }
                 ?>
 

@@ -141,10 +141,6 @@ class BookingController extends BackendController
             }
         }
         $data['arr_bookings']       = $arr_bookings;
-        // echo '<pre>';
-        // print_r($data['services']);
-        // echo '</pre>';die;
-
         return view('backend.ortho.bookings.booking_daily', $data);
     }
 
@@ -508,7 +504,7 @@ class BookingController extends BackendController
                 'service_2_kind'            => $service_2_kind,
                 'inspection_id'             => Input::get('inspection_id'),
                 'insurance_id'              => Input::get('insurance_id'),
-                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : '',
                 'booking_status'            => Input::get('booking_status'),
                 'booking_recall_ym'         => Input::get('booking_recall_ym'),
                 'booking_memo'              => Input::get('booking_memo'),

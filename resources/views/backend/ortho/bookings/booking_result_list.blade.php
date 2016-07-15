@@ -1,7 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-
 <section id="page">
   <div class="container content-page">
     <h3>予約管理　＞　予約枠の検索結果（リスト表示）</h3>
@@ -56,7 +55,8 @@
 
               </td>
               <td align="center">
-                <input onclick="location.href='{{route('ortho.bookings.booking.daily')}}'" value="予約簿の表示" type="button" class="btn btn-xs btn-page"></td>
+                <input onclick="location.href='{{route('ortho.bookings.booking.daily', [ 'clinic_id' => $booking->clinic_id ] )}}'" value="予約簿の表示" type="button" class="btn btn-xs btn-page">
+                </td>
                 <td align="center"><input onclick="location.href='{{route('ortho.bookings.booking.regist', $booking->booking_id)}}'" value="予約の登録" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
           @endforeach

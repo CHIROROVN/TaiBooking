@@ -226,7 +226,6 @@
 
       $(".btn-save").click(function(event){
         event.preventDefault();
-        alert(1);
 
         var data_id = $(this).attr('data-id');
         var dataFullTime = $(this).attr('data-full-time');

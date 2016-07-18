@@ -78,9 +78,9 @@ class AreaController extends BackendController
 
         // insert to table clinic_area
         $clinics = Input::get('clinic');
+        $status_insert = true;
         if(!empty($clinics))
         {
-            $status_insert = false;
             foreach($clinics as $clinic)
             {
                 if(!$clsClinicArea->exist_area_clinic($id_area, $clinic)) // && !$clsClinicArea->exist_clinic($clinic)
@@ -160,9 +160,9 @@ class AreaController extends BackendController
 
         // before update table clinic_area
         $clinics = Input::get('clinic');
+        $status_insert = true;
         if(!empty($clinics))
         {
-            $status_insert = false;
             foreach($clinics as $clinic)
             {
                 if($clsClinicArea->exist_clinic($clinic))

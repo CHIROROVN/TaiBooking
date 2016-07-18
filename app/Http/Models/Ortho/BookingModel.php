@@ -245,7 +245,6 @@ class BookingModel
         $db =  DB::table($this->table)
                                 ->leftJoin('t_facility as tf1', 't_booking.facility_id', '=', 'tf1.facility_id')
                                 ->select('t_booking.booking_id', 't_booking.patient_id', 't_booking.booking_date', 't_booking.booking_start_time', 't_booking.booking_total_time', 't_booking.facility_id', 't_booking.facility_id', 't_booking.service_1', 't_booking.service_1_kind', 't_booking.service_2', 't_booking.service_2_kind','t_booking.doctor_id','t_booking.hygienist_id', 'tf1.facility_id', 'tf1.facility_name', 't_booking.clinic_id')
-                                //->select('t_booking.*', 'tf1.*')
                                 ->where('t_booking.last_kind', '<>', DELETE);
 
         if(isset($where['clinic_id'])){
@@ -255,18 +254,11 @@ class BookingModel
         if(isset($where['doctor_id'])){
             $doctor_id = $where['doctor_id'];
             $result = $db->whereIn('t_booking.doctor_id', $doctor_id);
-
-            // $result = $db->where('t_booking.doctor_id', function($subQuery) use ($doctor_id){
-            //     $subQuery->select('t_booking.doctor_id')->whereIn('t_booking.doctor_id', $doctor_id);
-            // });
         }
 
         if(isset($where['hygienist_id'])){
             $hygienist_id = $where['hygienist_id'];
             $result = $db->whereIn('t_booking.hygienist_id', $hygienist_id);
-            // $result = $db->where('t_booking.hygienist_id', function($subQuery) use ($hygienist_id){
-            //     $subQuery->select('t_booking.hygienist_id')->whereIn('t_booking.hygienist_id', $hygienist_id);
-            // });
         }
 
         // if(isset($where['booking_date'])){
@@ -302,7 +294,6 @@ class BookingModel
         }
 
         if(isset($where['clinic_service_name'])){
-
             $sk = explode('_', $where['clinic_service_name']);
             $service          = $sk[0];
             $s_kind            = str_split($sk[1], 3);
@@ -324,7 +315,6 @@ class BookingModel
         }
 
         return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
-
     }
 
     /**

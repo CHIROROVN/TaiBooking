@@ -36,7 +36,7 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center" width="10%">時間</td>
+              <td align="center" width="5%">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center">{{ $facility->facility_name }}</td>
               @endforeach
@@ -50,7 +50,10 @@
               $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
             ?>
             <tr>
-              <td align="center">{{ $time }}～</td>
+              <td align="center" width="5%">{{ $time }}～</td>
+              @if(empty($facilitys))
+              <td align="center">&nbsp;</td>
+              @endif
               @foreach ( $facilitys as $facility )
                 <?php
                   $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -155,6 +158,7 @@
                 </td>
                 <!-- end close -->
               @endforeach
+
             </tr>
             @endforeach
             

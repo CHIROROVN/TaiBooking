@@ -56,6 +56,18 @@
         } else {
           event.allDay = false;
         }
+        
+        $(element).addClass("fc-event-inner-aaaaaaaaa");
+      },
+      dayRender: function (date, cell) {
+          // cell.append('<span><a style="margin-left: 5px; text-decoration: underline;" href="' + moment(date).format('DD') + '">Not yet</a></span>');
+
+          // $( ".fc-content-skeleton tbody td" ).each(function( index ) {
+          //   if ( $(this).attr('class') == null ) {
+          //     // $(this).append('<a style="margin-left: 5px; text-decoration: underline;" href="222">Not yet</a>');
+          //     cell.text('<a style="margin-left: 5px; text-decoration: underline;" href="222">Not yet</a>');
+          //   }
+          // }); 
       },
       selectable: true,
       selectHelper: true,
@@ -84,6 +96,9 @@
         //  true
         //  );
         // }
+
+
+        
         
         calendar.fullCalendar('unselect');
 
@@ -91,23 +106,17 @@
         var clinic_id = $('#s_clinic_id').find(":selected").val();
 
         window.location.href = "{{ route('ortho.bookings.template.daily') }}?date=" + start + '&clinic_id=' + clinic_id;
-      },
-    });
 
-    // set date for link text
-    var tmpArr = [];
-    var clinic_id = $('#s_clinic_id').find(":selected").val();
-    $( ".fc-content-skeleton thead td" ).each(function( index ) {
-        var start = $(this).attr('data-date');
-        start = "{{ route('ortho.bookings.template.daily') }}?date=" + start + '&clinic_id=' + clinic_id;
-        tmpArr[index] = start;
+      }
+
     });
 
     $( ".fc-content-skeleton tbody td" ).each(function( index ) {
       if ( $(this).attr('class') == null ) {
-        $(this).append('<a style="margin-left: 5px; text-decoration: underline;" href="' + tmpArr[index] + '">Not yet</a>');
+        $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="222" onclick="myfunction()">Not yet</span>');
       }
     });
+
 
   });
   </script>

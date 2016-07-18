@@ -26,6 +26,11 @@
       editable: false,
       timezone: 'Asia/Tokyo',
       displayEventTime: false,
+      buttonText: {
+          prev: '<< 前月',
+          next: '翌月 >>',
+          today: '今月'
+      },
       header: {
         left: 'prev today next',
         center: 'title',

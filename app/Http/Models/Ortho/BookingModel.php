@@ -323,7 +323,7 @@ class BookingModel
             }
         }
 
-        return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+        return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
 
     }
 

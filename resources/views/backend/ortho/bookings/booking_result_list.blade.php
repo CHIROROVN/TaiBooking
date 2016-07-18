@@ -38,7 +38,7 @@
           @foreach($bookings as $booking)
             <tr>
               <td>{{formatDate($booking->booking_date)}} ({{DayJp($booking->booking_date)}})</td>
-              <td>{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
+              <td>{{splitHourMin($booking->booking_start_time)}}</td>
               <td>{{@$facilities[$booking->facility_id]}}</td>
               <td>
                 @if($booking->service_1_kind == 1)

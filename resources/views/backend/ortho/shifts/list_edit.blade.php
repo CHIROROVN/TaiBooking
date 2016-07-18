@@ -71,36 +71,36 @@
 
               <!-- format value ==> -->
               <!-- ==> u_id|shift_date|linic_id -->
-              <?php $selected = ''; ?>
-              @foreach ( $days as $dayKey => $dayValue )
-              <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
-              <tr>
-                <td>{{ $dayValue }}</td>
-                @foreach ( $users as $user )
-                <td>
-                  <select name="select[]" class="form-control form-control--small">
-                  <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
-                  <?php
-                  if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {
-                    $selected = 'selected';
-                  } 
-                  ?>
-                  <option value="{{ $user->id }}|{{ $fullDate }}|-1" {{ $selected }}>休み</option>
-                  @foreach ( $clinics as $clinic )
-                  <?php
-                  if ( isset($shifts[$user->id . '|' . $fullDate . '|' . $clinic->clinic_id]) ) {
-                    $selected = 'selected';
-                  } else {
-                    $selected = '';
-                  }
-                  ?>
-                  <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
+                <?php $selected = ''; ?>
+                @foreach ( $days as $dayKey => $dayValue )
+                <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
+                <tr>
+                  <td>{{ $dayValue }}</td>
+                  @foreach ( $users as $user )
+                  <td style="">
+                    <select name="select[]" class="form-control form-control--small">
+                    <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
+                    <?php
+                    if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {
+                      $selected = 'selected';
+                    } 
+                    ?>
+                    <option value="{{ $user->id }}|{{ $fullDate }}|-1" {{ $selected }}>休み</option>
+                    @foreach ( $clinics as $clinic )
+                    <?php
+                    if ( isset($shifts[$user->id . '|' . $fullDate . '|' . $clinic->clinic_id]) ) {
+                      $selected = 'selected';
+                    } else {
+                      $selected = '';
+                    }
+                    ?>
+                    <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
+                    @endforeach
+                    </select>
+                  </td>
                   @endforeach
-                  </select>
-                </td>
+                <tr>
                 @endforeach
-              <tr>
-              @endforeach
 
             </table>
           </div>

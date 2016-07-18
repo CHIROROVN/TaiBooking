@@ -37,6 +37,9 @@ class ShiftModel
         if ( !empty($where['u_id']) ) {
             $db = $db->where('t_shift.u_id', $where['u_id']);
         }
+        if ( !empty($where['u_id']) ) {
+            $db = $db->where('t_shift.u_id', $where['u_id']);
+        }
 
         $results = $db->get();
         return $results;

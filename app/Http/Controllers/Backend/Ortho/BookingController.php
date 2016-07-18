@@ -52,7 +52,9 @@ class BookingController extends BackendController
         $data['clinic_id']      = Input::get('clinic_id');
         $data['u_id']           = Input::get('u_id');
         $clsBooking             = new BookingModel();
+        $clsShift               = new ShiftModel();
         $bookings               = $clsBooking->get_all($data);
+        
         
         $clsAreaModel           = new AreaModel();
         $data['areas']          = $clsAreaModel->get_list();

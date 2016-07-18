@@ -351,6 +351,9 @@ class BookingTemplateController extends BackendController
             }
         }
         $data['arr_templates']       = $arr_templates;
+        // echo '<pre>';
+        // print_r($data['arr_templates']);
+        // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_template_daily', $data);
     }

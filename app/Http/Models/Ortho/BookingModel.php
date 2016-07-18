@@ -82,6 +82,18 @@ class BookingModel
         return $results;
     }
 
+    public function get_by_group($booking_group_id)
+    {
+        $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->select('t_booking.*', 't1.p_name')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.booking_group_id', $booking_group_id)
+                        ->orderBy('t_booking.booking_id', 'asc')
+                        ->get();
+        return $results;
+    }
+
     public function get_by_clinic($clinic_id, $date = '')
     {
         $results = DB::table($this->table)

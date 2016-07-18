@@ -109,7 +109,7 @@
                   </div>
                   <!-- Modal -->
                   <div class="modal fade" id="myModal-{{ $common_id }}" role="dialog">
-                    <div class="modal-dialog modal-sm">
+                    <div class="modal-dialog modal-md">
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -142,7 +142,7 @@
                             </tr>
                             <tr>
                               <td colspan="2">
-                                <button type="" class="btn btn-sm btn-page btn-save" data-id="{{ $common_id }}" data-full-time="{{ $hour.$minute }}" id="btn-save-{{ $common_id }}">{{ trans('common.modal_btn_ok') }}</button>
+                                <button type="button" class="btn btn-sm btn-page btn-save" data-id="{{ $common_id }}" data-full-time="{{ $hour.$minute }}" id="btn-save-{{ $common_id }}">{{ trans('common.modal_btn_ok') }}</button>
                               </td>
                             </tr>
                           </table>
@@ -225,7 +225,7 @@
 
 
       $(".btn-save").click(function(event){
-        event.preventDefault();
+        // event.preventDefault();
 
         var data_id = $(this).attr('data-id');
         var dataFullTime = $(this).attr('data-full-time');

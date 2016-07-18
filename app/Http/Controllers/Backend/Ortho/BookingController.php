@@ -71,6 +71,9 @@ class BookingController extends BackendController
                 'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $booking->booking_date ]),
             );
         }
+        if ( empty($data['clinic_id']) ) {
+            $tmp_arr = array();
+        }
         $data['bookings'] = json_encode($tmp_arr);
 
         return view('backend.ortho.bookings.booking_monthly', $data);
@@ -384,10 +387,12 @@ class BookingController extends BackendController
         $service_1_kind     = $s1_kind[1];
 
         $s_2_kind = Input::get('service_2');
-        $s2k = explode('#', $s_2_kind);
-        $service_2          = $s2k[0];
-        $s2_kind            = str_split($s2k[1], 3);
-        $service_2_kind     = $s2_kind[1];
+        if ( !empty($s_2_kind) ) {
+            $s2k = explode('#', $s_2_kind);
+            $service_2          = $s2k[0];
+            $s2_kind            = str_split($s2k[1], 3);
+            $service_2_kind     = $s2_kind[1];
+        }
 
         $dataInput = array(
                 'facility_id'               => Input::get('facility_id'),
@@ -409,6 +414,14 @@ class BookingController extends BackendController
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
             );
+
+
+        // update group
+        $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        foreach ( $bookingGroups as $bookingGroup ) {
+            $clsBooking->update($bookingGroup->booking_id, $dataInput);
+        }
+        
         if ( $clsBooking->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.result.list');
@@ -447,8 +460,9 @@ class BookingController extends BackendController
     public function post1stRegist($id)
     { 
         $clsPatient             = new PatientModel();
-        $p_max                  = $clsPatient->get_max_pid();
-        $p_id                   = $p_max + 1;
+        $clsBooking             = new BookingModel();
+        $clsInterview           = new InterviewModel();
+        $booking                = $clsBooking->get_by_id($id);
 
         $patientInst = array(
             'p_name'            => Input::get('p_name'),
@@ -487,32 +501,42 @@ class BookingController extends BackendController
         $service_1_kind     = $s1_kind[1];
 
         $s_2_kind = Input::get('service_2');
-        $s2k = explode('#', $s_2_kind);
-        $service_2          = $s2k[0];
-        $s2_kind            = str_split($s2k[1], 3);
-        $service_2_kind     = $s2_kind[1];
+        $service_2          = null;
+        $service_2_kind     = null;
+        if ( !empty($s_2_kind) ) {
+            $s2k = explode('#', $s_2_kind);
+            $service_2          = $s2k[0];
+            $s2_kind            = str_split($s2k[1], 3);
+            $service_2_kind     = $s2_kind[1];
+        }
 
         $dataInput = array(
-                'patient_id'                => $p_id,
-                'facility_id'               => Input::get('facility_id'),
-                'doctor_id'                 => Input::get('doctor_id'),
-                'hygienist_id'              => Input::get('hygienist_id'),
-                'equipment_id'              => Input::get('equipment_id'),
-                'service_1'                 => $service_1,
-                'service_1_kind'            => $service_1_kind,
-                'service_2'                 => $service_2,
-                'service_2_kind'            => $service_2_kind,
-                'inspection_id'             => Input::get('inspection_id'),
-                'insurance_id'              => Input::get('insurance_id'),
-                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : '',
-                'booking_status'            => Input::get('booking_status'),
-                'booking_recall_ym'         => Input::get('booking_recall_ym'),
-                'booking_memo'              => Input::get('booking_memo'),
-                'last_date'                 => date('y-m-d H:i:s'),
-                'last_kind'                 => UPDATE,
-                'last_ipadrs'               => CLIENT_IP_ADRS,
-                'last_user'                 => Auth::user()->id
-            );
+            'patient_id'                => $p_id,
+            'facility_id'               => Input::get('facility_id'),
+            'doctor_id'                 => Input::get('doctor_id'),
+            'hygienist_id'              => Input::get('hygienist_id'),
+            'equipment_id'              => Input::get('equipment_id'),
+            'service_1'                 => $service_1,
+            'service_1_kind'            => $service_1_kind,
+            'service_2'                 => $service_2,
+            'service_2_kind'            => $service_2_kind,
+            'inspection_id'             => Input::get('inspection_id'),
+            'insurance_id'              => Input::get('insurance_id'),
+            'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+            'booking_status'            => Input::get('booking_status'),
+            'booking_recall_ym'         => Input::get('booking_recall_ym'),
+            'booking_memo'              => Input::get('booking_memo'),
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id
+        );
+
+        // update group
+        $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        foreach ( $bookingGroups as $bookingGroup ) {
+            $clsBooking->update($bookingGroup->booking_id, $dataInput);
+        }
 
         if ( $clsBooking->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));

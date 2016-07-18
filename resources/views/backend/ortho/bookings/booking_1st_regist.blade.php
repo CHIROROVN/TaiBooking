@@ -83,7 +83,7 @@
             <!-- booking_date -->
             <tr>
               <td class="col-title"><label for="cbReservation">予約日時</label></td>
-              <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
+              <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}
               </td>
             </tr>
 

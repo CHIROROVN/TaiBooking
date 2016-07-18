@@ -58,7 +58,7 @@ class BookingController extends BackendController
         // $bookings               = $clsBooking->get_all($data);
         $data['areas']          = $clsAreaModel->get_list();
         $data['users']          = $clsUser->get_all();
-        $shifts                 = $clsShift->get_all();
+        $shifts                 = $clsShift->get_all($data);
 
         $tmp_arr                = array();
         foreach ( $shifts as $shift ) {

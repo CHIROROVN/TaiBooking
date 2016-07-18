@@ -44,6 +44,9 @@
                   <option value="105" @if(old('service_time_1') == '105') selected="selected" @endif>105分</option>
                   <option value="120" @if(old('service_time_1') == '120') selected="selected" @endif>120分</option>
                 </select>
+                @if ($errors->first('service_time_1'))
+                    <span class="error-input">※ {!! $errors->first('service_time_1') !!}</span>
+                @endif
               </td>
             </tr>
         </table>
@@ -85,6 +88,9 @@
                   <option value="120" @if(old('service_time_2') == '120') selected="selected" @endif>120分</option>
                 </select>
               </td>
+              @if ($errors->first('service_time_2'))
+                    <span class="error-input">※ {!! $errors->first('service_time_2') !!}</span>
+                @endif
             </tr
         </table>
         <br />
@@ -124,6 +130,9 @@
                   <option value="105" @if(old('service_time_3') == '105') selected="selected" @endif>105分</option>
                   <option value="120" @if(old('service_time_3') == '120') selected="selected" @endif>120分</option>
                 </select>
+                @if ($errors->first('service_time_3'))
+                    <span class="error-input">※ {!! $errors->first('service_time_3') !!}</span>
+                @endif
               </td>
             </tr
         </table>
@@ -164,6 +173,9 @@
                   <option value="105" @if(old('service_time_4') == '105') selected="selected" @endif>105分</option>
                   <option value="120" @if(old('service_time_4') == '120') selected="selected" @endif>120分</option>
                 </select>
+                @if ($errors->first('service_time_4'))
+                    <span class="error-input">※ {!! $errors->first('service_time_4') !!}</span>
+                @endif
               </td>
             </tr
         </table>
@@ -204,6 +216,9 @@
               <option value="105" @if(old('service_time_5') == '105') selected="selected" @endif>105分</option>
               <option value="120" @if(old('service_time_5') == '120') selected="selected" @endif>120分</option>
             </select>
+            @if ($errors->first('service_time_5'))
+                    <span class="error-input">※ {!! $errors->first('service_time_5') !!}</span>
+                @endif
           </td>
         </tr>
       </table>

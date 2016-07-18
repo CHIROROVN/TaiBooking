@@ -83,8 +83,8 @@ class ServiceTemplateController extends BackendController
             unset($rules['service_time_3']);
         if(Input::get('service_facility_4_chair') == '')
             unset($rules['service_time_4']);
-        if(Input::get('service_facility_4_chair') == '')
-            unset($rules['service_time_4']);
+        if(Input::get('service_facility_5_chair') == '')
+            unset($rules['service_time_5']);
 
         $inputs                   = Input::all();
 

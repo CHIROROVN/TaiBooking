@@ -11,7 +11,14 @@
               {!! Form::open(array('route' => 'ortho.bookings.template.set', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
               <select name="s_clinic_id" id="s_clinic_id" class="form-control form-control--small">
                 <option value="">▼医院名</option>
-                @foreach ( $clinics as $key => $clinic )
+                <?php $listClinic = $clinics; ?>
+                @foreach($listClinic as $clinic_id => $clinic)
+                  @if ( $clinic == 'たい矯正歯科' )
+                  <option value="{{$clinic_id}}" selected="">{{$clinic}}</option>
+                  <?php unset($listClinic[$clinic_id]) ?>
+                  @endif
+                @endforeach
+                @foreach ( $listClinic as $key => $clinic )
                 <option value="{{ $key }}" @if($s_clinic_id == $key) selected="" @endif>{{ $clinic }}</option>
                 @endforeach
               </select>

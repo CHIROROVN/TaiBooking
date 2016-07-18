@@ -2760,28 +2760,6 @@
     <div class="text-center">
       <!-- save -->
       <input type="submit" name="button" value="登録する" class="btn btn-sm btn-page mar-right">
-      <!-- delete -->
-        <!-- <input value="削除する" class="btn btn-sm btn-page" type="button" data-toggle="modal" data-target="#myModal"> -->
-        <!-- Trigger the modal with a button -->
-        <!-- Modal -->
-        <!-- <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">{{ trans('common.modal_header_delete') }}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{{ trans('common.modal_content_delete') }}</p>
-            </div>
-            <div class="modal-footer">
-              <a href="{{ route('ortho.interviews.delete', [ $interview->first_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
-              <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
-            </div>
-          </div>
-        </div>
-        </div> -->
-        <!-- end modal -->
     </div>
   </div>
 </div>

@@ -10,9 +10,16 @@
                   <td class="col-title"><label for="textName">医院</label></td>
                   <td>
                     <select name="clinic_id" id="clinic_id" class="form-control">
-                      <option value="" selected="selected">▼選択</option>
+                      <option value="">▼選択</option>
                       @if(count($clinics) > 0)
-                        @foreach($clinics as $clinic_id => $clinic)
+                        <?php $listClinic = $clinics; ?>
+                        @foreach($listClinic as $clinic_id => $clinic)
+                          @if ( $clinic == 'たい矯正歯科' )
+                          <option value="{{$clinic_id}}" selected="">{{$clinic}}</option>
+                          <?php unset($listClinic[$clinic_id]) ?>
+                          @endif
+                        @endforeach
+                        @foreach($listClinic as $clinic_id => $clinic)
                         <option value="{{$clinic_id}}">{{$clinic}}</option>
                         @endforeach
                       @endif

@@ -28,7 +28,14 @@
           {!! Form::open(array('route' => 'ortho.bookeds.history', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
           <select title="医院" name="s_clinic_id" class="form-control">
             <option value="">医院</option>
-            @foreach ( $clinics as $clinic)
+            <?php $listClinic = $clinics; ?>
+            @foreach($listClinic as $clinic_id => $clinic)
+              @if ( $clinic->clinic_name == 'たい矯正歯科' )
+              <option value="{{$clinic_id}}" selected="">{{ $clinic->clinic_name }}</option>
+              <?php unset($listClinic[$clinic_id]) ?>
+              @endif
+            @endforeach
+            @foreach ( $listClinic as $clinic)
             <option value="{{ $clinic->clinic_id }}" @if($s_clinic_id == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
             @endforeach
           </select>

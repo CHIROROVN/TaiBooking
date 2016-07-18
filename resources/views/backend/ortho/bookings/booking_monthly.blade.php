@@ -53,9 +53,13 @@ $(document).ready(function(){
           data:{area_id:area_id},
           success: function(results){
             $.each(results, function(k, val){
-              htmlOptions += "<option value="+val.clinic_id+">" + val.clinic_name + "</option>";
+              if ( val.clinic_name == 'たい矯正歯科' ) {
+                htmlOptions += "<option value="+val.clinic_id+" selected>" + val.clinic_name + "</option>";
+              } else {
+                htmlOptions += "<option value="+val.clinic_id+">" + val.clinic_name + "</option>";
+              }
             });
-             $('#clinic_id').html(htmlOptions);
+            $('#clinic_id').html(htmlOptions);
           },
           error: function (data) {
               console.log('Error:', data);

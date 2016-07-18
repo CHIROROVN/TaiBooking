@@ -53,29 +53,29 @@ class BookingController extends BackendController
         $data['u_id']           = Input::get('u_id');
         $clsBooking             = new BookingModel();
         $clsShift               = new ShiftModel();
-        $bookings               = $clsBooking->get_all($data);
-        
-        
         $clsAreaModel           = new AreaModel();
-        $data['areas']          = $clsAreaModel->get_list();
         $clsUser                = new UserModel();
+        // $bookings               = $clsBooking->get_all($data);
+        $data['areas']          = $clsAreaModel->get_list();
         $data['users']          = $clsUser->get_all();
+        $shifts                 = $clsShift->get_all();
 
         $tmp_arr                = array();
-        foreach ( $bookings as $booking ) {
-            $booking_id     = $booking->booking_id;
-            $clinic_id      = $booking->clinic_id;
-            $clinic_name    = $booking->clinic_name;
+        foreach ( $shifts as $shift ) {
+            // $booking_id     = $shift->booking_id;
+            $clinic_id              = $shift->clinic_id;
+            $clinic_display_name    = $shift->clinic_display_name;
             $tmp_arr[] = array(
-                'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $booking->p_name,
-                'start' => $booking->booking_date,
-                'end' => $booking->booking_date + 1,
-                'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $booking->booking_date ]),
+                'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_display_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $shift->u_name_display,
+                'start' => $shift->shift_date,
+                'end' => $shift->shift_date + 1,
+                'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $shift->shift_date ]),
             );
         }
         if ( empty($data['clinic_id']) ) {
             $tmp_arr = array();
         }
+
         $data['bookings'] = json_encode($tmp_arr);
 
         return view('backend.ortho.bookings.booking_monthly', $data);

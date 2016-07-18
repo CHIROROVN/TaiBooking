@@ -274,17 +274,17 @@
               $(result.tmpArr).each(function( index, value ) {
                 var tdObj = $('#td-' + value.facility_id + '-' + value.time);
                 var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
-                if ( value.facility_id == -1 ) {
-                  var selectFactility = facilityIdOld;
-                  if ( facilityIdNew != 0 ) {
-                    selectFactility = facilityIdNew;
-                  }
-                  var tdObj = $('#td-' + selectFactility + '-' + value.time);
-                  var fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
-                  setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
-                } else {
+                // if ( value.facility_id == -1 ) {
+                //   var selectFactility = facilityIdOld;
+                //   if ( facilityIdNew != 0 ) {
+                //     selectFactility = facilityIdNew;
+                //   }
+                //   var tdObj = $('#td-' + selectFactility + '-' + value.time);
+                //   var fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
+                //   setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
+                // } else {
                   setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
-                }
+                // }
                 
               });
             }

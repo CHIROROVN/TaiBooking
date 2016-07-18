@@ -17,6 +17,7 @@
 <link href="{{ asset('') }}public/backend/ortho/common/css/import.css" rel="stylesheet">
 
 <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-1.9.1.min.js"></script>
+<script src="{{ asset('') }}public/backend/ortho/common/js/jquery-migrate-1.2.0.min.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap.min.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-ui.1.11.4.min.js"></script>

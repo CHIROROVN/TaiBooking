@@ -92,6 +92,7 @@
 		if ( $month != 0 ) {
 			$number             = date('t', mktime(0, 0, 0, $month, 1, $year_current));
 			for ( $i = 1; $i <= $number; $i++ ) {
+				$i = sprintf('%02d', $i);
 				$day_arr[$i] = $i;
 			}
 		}

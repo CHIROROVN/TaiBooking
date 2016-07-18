@@ -632,3 +632,7 @@ textarea {
 .fc-content .fc-title .table--indiagram{
   background-color: #fff;
 }
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}

@@ -95,13 +95,11 @@ class ShiftController extends BackendController
             'last_user'         => Auth::user()->id,
             'last_date'         => date('y-m-d H:i:s'),
         );
-        echo '<pre>';
-        print_r(Input::all());
-        echo '</pre>';die;
 
         $tmpCount = 0;
-        $insert = false;
-        $update = false;
+        $update = true;
+        $update1 = true;
+        $update2 = true;
         foreach ( $inputs as $key => $value ) {
             if ( !empty($value) ) {
                 $tmpCount++;
@@ -112,9 +110,9 @@ class ShiftController extends BackendController
 
                 if ( $dataInput['clinic_id'] == 0 ) {
                     // delete
-                    unset($dataInput['clinic_id']);
                     $dataInput['last_kind'] = DELETE;
-                    $update = $clsShift->update_by_uid_shiftdate($dataInput['u_id'], $dataInput['shift_date'], $dataInput);
+                    $clsShift->update_by_uid_shiftdate($dataInput['u_id'], $dataInput['shift_date'], $dataInput);
+                    // unset($dataInput['clinic_id']);
                 } elseif ( $dataInput['clinic_id'] != '0' ) {
                     // (1) udpate
                     // (2) if not already is insert
@@ -122,17 +120,26 @@ class ShiftController extends BackendController
                     if ( $status ) {
                         // (1)
                         $dataInput['last_kind'] = UPDATE;
-                        $update = $clsShift->update_by_uid_shiftdate($dataInput['u_id'], $dataInput['shift_date'], $dataInput);
+                        $update1 = $clsShift->update_by_uid_shiftdate($dataInput['u_id'], $dataInput['shift_date'], $dataInput);
                     } else {
                         // (2)
                         $dataInput['last_kind'] = INSERT;
-                        $update = $clsShift->insert($dataInput);
+                        $update2 = $clsShift->insert($dataInput);
                     }
                 }
             }
         }
+        // if ( $update ) {
+        //     echo '000000';
+        // }
+        // if ( $update1 ) {
+        //     echo 1;
+        // }
+        // if ( $update2 ) {
+        //     echo 2;
+        // }die;
 
-        if ( $insert && $update ) {
+        if ( $update ) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.shifts.list_edit');
         } else {

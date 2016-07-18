@@ -8,6 +8,24 @@
         <div class="row content content--list">
           <h1>シフト表</h1>
 
+          <div class="msg-alert-action margin-top-15">
+            @if ($message = Session::get('success'))
+              <div class="alert alert-success  alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+              </div>
+            @elseif($message = Session::get('danger'))
+              <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+              </div>
+            @endif
+          </div>
+
 {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
           <div class="fillter">
             <div class="col-md-12" style="text-align:center;">
@@ -20,6 +38,7 @@
 </form>
 
 {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+          <input type="hidden" name="date" value="{{ $yearNow }}-{{ $monthNow }}">
 
           <div class="row content-page">
             <div class="row">

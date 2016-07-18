@@ -178,10 +178,14 @@ class BookingController extends BackendController
         $clsBooking             = new BookingModel();
         $clsFacility            = new FacilityModel();
         $clsClinic              = new ClinicModel();
+        $clsService             = new ServiceModel();
+        $clsTreatment1          = new Treatment1Model();
         $data['doctors']        = $clsShift->get_by_belong([1]);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
         $data['facilitys']      = $clsFacility->getAll($clinic_id);
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);
+        $data['services']       = $clsService->get_list();
+        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
 
         $data['times']          = Config::get('constants.TIME');
 
@@ -204,6 +208,7 @@ class BookingController extends BackendController
                 }
             }
         }
+        // echo '<pre>';print_r($arr_bookings);die;
         $data['arr_bookings'] = $arr_bookings;
         // echo '<pre>';
         // print_r($data['arr_bookings']);

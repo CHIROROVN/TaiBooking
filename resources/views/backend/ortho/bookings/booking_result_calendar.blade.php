@@ -98,14 +98,37 @@
             <tr>
               <td align="center">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
-                @if ( (isset($arr_bookings[$facility->facility_id][$fullTime])) && ($arr_bookings[$facility->facility_id][$fullTime]->booking_start_time == $fullTime || $arr_bookings[$facility->facility_id][$fullTime]->booking_total_time <= $minute) )
-                  @if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->service_1) && $arr_bookings[$facility->facility_id][$fullTime]->service_1_kind == 1 )
+                @if ( (isset($arr_bookings[$facility->facility_id][$fullTime])) )
+                  <?php
+                  $serviceName1 = '';
+                  $serviceName2 = '';
+                  if ( isset($services[$arr_bookings[$facility->facility_id][$fullTime]->service_1_kind]) ) {
+                    if (  $services[$arr_bookings[$facility->facility_id][$fullTime]->service_1_kind] == 1 ) {
+                      $serviceName1 = @$services[$arr_bookings[$facility->facility_id][$fullTime]->service_1];
+                    } else {
+                      $serviceName1 = @$treatment1s[$arr_bookings[$facility->facility_id][$fullTime]->service_1];
+                    }
+                  }
+                  if ( isset($services[$arr_bookings[$facility->facility_id][$fullTime]->service_2_kind]) ) {
+                    if (  $services[$arr_bookings[$facility->facility_id][$fullTime]->service_2_kind] == 1 ) {
+                      $serviceName2 = @$services[$arr_bookings[$facility->facility_id][$fullTime]->service_2];
+                    } else {
+                      $serviceName2 = @$treatment1s[$arr_bookings[$facility->facility_id][$fullTime]->service_2];
+                    }
+                  }
+
+                  $patientName = '';
+                  if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->p_name) ) {
+                    $patientName .= $arr_bookings[$facility->facility_id][$fullTime]->p_name . '<br/>';
+                  }
+                  ?>
+                  @if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->service_1) && $arr_bookings[$facility->facility_id][$fullTime]->service_1 > 0 )
                   <td align="center" class="col-green">
-                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$fullTime]->p_name }}</a></span>
+                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{!! $patientName !!}{{ $serviceName1 }}</a></span>
                   </td>
                   @else
                   <td align="center" class="col-blue">
-                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{{ $arr_bookings[$facility->facility_id][$fullTime]->p_name }}</a></span>
+                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{!! $patientName !!}{{ $serviceName2 }}</a></span>
                   </td>
                   @endif
                 @else

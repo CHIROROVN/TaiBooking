@@ -46,11 +46,15 @@
                 @elseif($booking->service_1_kind == 2)
                   {{@$treatment1s[$booking->service_1]}}
                 @endif
-                、
+                
                 @if($booking->service_2_kind == 1)
-                  {{@$services[$booking->service_2]}}
+                  @if(!empty($services[$booking->service_2]))
+                  、{{@$services[$booking->service_2]}}
+                  @endif
                 @elseif($booking->service_2_kind == 2)
-                  {{@$treatment1s[$booking->service_2]}}
+                  @if(!empty($treatment1s[$booking->service_2]))
+                 、{{@$treatment1s[$booking->service_2]}}
+                  @endif
                 @endif
 
               </td>

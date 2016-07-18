@@ -56,10 +56,10 @@
               <td align="center" class="col-title">SP</td>
               <td align="center" class="col-title">TBI</td>
               <td align="center" class="col-title">出張</td>
-              <td align="center" class="col-title">設備管理</td>
-              <td align="center" class="col-title">業務枠管理</td>
-              <td align="center" class="col-title">予約雛形管理</td>
-              <td align="center" class="col-title">編集</td>
+              <td align="center" class="col-title" style="min-width: 75px;">設備管理</td>
+              <td align="center" class="col-title" style="min-width: 90px;">業務枠管理</td>
+              <td align="center" class="col-title" style="min-width: 120px;">予約雛形管理</td>
+              <td align="center" class="col-title" style="min-width: 60px;">編集</td>
             </tr>
             @if(empty($clinics) || count($clinics) < 1)
             <tr>

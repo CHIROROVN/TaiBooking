@@ -46,8 +46,8 @@
             @foreach ( $times as $time )
             <?php
               $tmp_arr = explode(':', $time);
-              $hour = $tmp_arr[0]; // printf( "%02d", $tmp_arr[0] );
-              $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
+              $hour = $tmp_arr[0];
+              $minute = $tmp_arr[1];
             ?>
             <tr>
               <td align="center" width="5%">{{ $time }}～</td>

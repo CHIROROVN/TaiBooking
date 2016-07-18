@@ -1,6 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
+AAAAAAAAAAAAAAaa
      <!-- Content clinic service list -->
     <section id="page">
         <div class="container">

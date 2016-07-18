@@ -175,7 +175,7 @@ class BookingModel
                         ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
                         ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 'ms1.service_name', 'ms2.service_name')
                         ->where('t_booking.last_kind', '<>', DELETE)
-                        ->where('t_booking.booking_status', '=', '1')
+                        ->where('t_booking.booking_status', '=', 1)
                         ->orderBy('t_booking.booking_id', 'asc')
                         ->get();
     }

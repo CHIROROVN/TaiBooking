@@ -28,9 +28,9 @@
 		                <td>{{$l1->p_no}}</td>
 		                <td>{{$l1->p_name}}</td>
 		                <td>{{$l1->p_tel}}</td>
-		                <td>{{@$sercices[$l1->service_1]}} @if(!empty($sercices[$l1->service_2]))、{{@$sercices[$l1->service_2]}}@endif</td>
+		                <td>{{@$sercices[$l1->service_1]}} @if(!empty($sercices[$l1->service_2]) && !empty($sercices[$l1->service_1]))、@endif{{@$sercices[$l1->service_2]}}</td>
 		                <td>{{$l1->booking_memo}}</td>
-		                <td align="center"><input onclick="location.href='booking_edit.html'" value="予約情報の編集" type="button" class="btn btn-xs btn-page"/></td>
+		                <td align="center"><input onclick="location.href='{{route('ortho.bookings.booking.edit', $l1->booking_id)}}'" value="予約情報の編集" type="button" class="btn btn-xs btn-page"/></td>
 		              </tr>
 	              @endforeach
               @endif

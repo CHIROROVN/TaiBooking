@@ -226,7 +226,7 @@ class BookingTemplateController extends BackendController
                     $dataInsert['facility_id']          = $tmp[0];
                     $dataInsert['clinic_service_id']    = $tmp[1];
                     $dataInsert['template_time']        = $tmp[2];
-                    $dataInsert['template_group_id']    = $tmp[3];
+                    $dataInsert['template_group_id']    = (isset($tmp[3])) ? $tmp[3] : '';
                     $update2 = $clsTemplate->insert($dataInsert);
                 }
             }

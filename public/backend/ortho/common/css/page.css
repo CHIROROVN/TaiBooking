@@ -636,3 +636,8 @@ textarea {
 .no-margin-bottom {
   margin-bottom: 0 !important;
 }
+
+.tableDiv {
+  width: 1000px;
+  margin: 0 auto;
+}

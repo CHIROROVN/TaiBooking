@@ -47,7 +47,9 @@
                 <input value="元に戻す" type="reset" name="back_save" class="btn btn-sm btn-page back-save">
               </div>
             </div>
-            <table class="table table-bordered">
+
+            <div id="tableDiv_Arrays" class="tableDiv">
+            <table class="table table-bordered FixedTables" id="Open_Text_Arrays">
               <tr class="col-title">
                 <td>&nbsp;</td>
                 @foreach ( $belongUsers as $belongUser )
@@ -101,8 +103,9 @@
                   @endforeach
                 <tr>
                 @endforeach
-
             </table>
+            </div>
+
           </div>
           
           <div class="row content-page">
@@ -178,6 +181,46 @@
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+  </script>
+
+  <script type="text/javascript">
+    // this "tableDiv" must be the table's class
+    $(".tableDiv").each(function() {      
+        var Id = $(this).get(0).id;
+        var maintbheight = 555;
+        var maintbwidth = 1000;
+
+        $("#" + Id + " .FixedTables").fixedTable({
+            width: maintbwidth,
+            height: maintbheight,
+            fixedColumns: 1,
+            // header style
+            classHeader: "fixedHead col-title",
+            // footer style        
+            classFooter: "fixedFoot",
+            // fixed column on the left        
+            classColumn: "fixedColumn",
+            // the width of fixed column on the left      
+            fixedColumnWidth: 100,
+            // table's parent div's id           
+            outerId: Id,
+            // tds' in content area default background color                     
+            Contentbackcolor: "transparent",
+            // tds' in content area background color while hover.     
+            Contenthovercolor: "transparent", 
+            // tds' in fixed column default background color   
+            fixedColumnbackcolor:"transparent", 
+            // tds' in fixed column background color while hover. 
+            fixedColumnhovercolor:"transparent"  
+        });        
+    });
+    $('.fixedTable > table').addClass('table table-bordered');
+    $('.fixedTable > table tr td').each(function(index, el) {
+      if ( $(this).html() === '&nbsp;' ) {
+        console.log($(this).html());
+        $(this).parent().addClass('col-title');
+      }
+    });
   </script>
   <!-- End content shift search -->
 

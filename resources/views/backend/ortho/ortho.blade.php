@@ -28,6 +28,7 @@
 <script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-button-to-input-file.js"></script>
 <script src="{{ asset('') }}public/backend/ortho/common/js/ckeditor/ckeditor.js"></script>
+<script src="{{ asset('') }}public/backend/ortho/common/js/jquery.fixedtable.js"></script>
 </head>
 <body>
   <!-- Header -->

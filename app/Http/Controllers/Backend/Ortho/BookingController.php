@@ -479,7 +479,7 @@ class BookingController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('ortho.bookings.booking.1st.regist', [ $id ])->withErrors($validator)->withInput();
         }
-        $clsPatient->insert($patientInst);
+        $p_id = $clsPatient->insert_get_id($patientInst);
 
         if(!empty(Input::get('insert_to_tbl_first'))){
             $clsInterview           = new InterviewModel();

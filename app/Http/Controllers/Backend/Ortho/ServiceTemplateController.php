@@ -27,56 +27,7 @@ class ServiceTemplateController extends BackendController
     }
 
     /**
-     * 
-     */
-    public function orderby_top($clinic_id)
-    {
-        $clsFacility = new FacilityModel();
-        $id = Input::get('id');
-        $this->top($clsFacility, $id, 'facility_sort_no');
-        return redirect()->route('ortho.facilities.index',$clinic_id);
-    }
-
-    /**
-     * 
-     */
-    public function orderby_last($clinic_id)
-    {
-        $clsFacility = new FacilityModel();
-        $id = Input::get('id');        
-        $this->last($clsFacility, $id, 'facility_sort_no');
-        return redirect()->route('ortho.facilities.index',$clinic_id);
-    }
-
-    /**
-     * 
-     */
-    public function orderby_up($clinic_id)
-    {
-        $clsFacility = new FacilityModel();
-        $id = Input::get('id');
-        $facilitys = $clsFacility->get_all($clinic_id);
-        
-        $this->up($clsFacility, $id, $facilitys, 'facility_id', 'facility_sort_no');
-
-        return redirect()->route('ortho.facilities.index',$clinic_id);
-    }
-
-    /**
-     * 
-     */
-    public function orderby_down($clinic_id)
-    {
-        $clsFacility = new FacilityModel();
-        $id = Input::get('id');
-        $facilitys = $clsFacility->get_all($clinic_id);
-        $this->down($clsFacility, $id, $facilitys, 'facility_id', 'facility_sort_no');
-        return redirect()->route('ortho.facilities.index',$clinic_id);
-    }
-    
-
-    /**
-     * 
+     * edit clinic service template
      */
     public function getEdit($clinic_id, $service_id, $id)
     {
@@ -123,6 +74,18 @@ class ServiceTemplateController extends BackendController
         
         $sf5_chair  = Input::get('service_facility_5_chair');
         if($sf5_chair != '1') unset($rules['service_facility_5']);
+
+        if(Input::get('service_facility_1_chair') == '')
+            unset($rules['service_time_1']);
+        if(Input::get('service_facility_2_chair') == '')
+            unset($rules['service_time_2']);
+        if(Input::get('service_facility_3_chair') == '')
+            unset($rules['service_time_3']);
+        if(Input::get('service_facility_4_chair') == '')
+            unset($rules['service_time_4']);
+        if(Input::get('service_facility_4_chair') == '')
+            unset($rules['service_time_4']);
+
         $inputs                   = Input::all();
 
         $validator                = Validator::make($inputs, $rules, $clsServiceTemp->Messages());
@@ -247,5 +210,53 @@ class ServiceTemplateController extends BackendController
             Session::flash('danger', trans('common.message_delete_danger'));
             return redirect()->route('ortho.clinics.services.index', [ $clinic_id ]);
         }
+    }
+
+        /**
+     * 
+     */
+    public function orderby_top($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');
+        $this->top($clsFacility, $id, 'facility_sort_no');
+        return redirect()->route('ortho.facilities.index',$clinic_id);
+    }
+
+    /**
+     * 
+     */
+    public function orderby_last($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');        
+        $this->last($clsFacility, $id, 'facility_sort_no');
+        return redirect()->route('ortho.facilities.index',$clinic_id);
+    }
+
+    /**
+     * 
+     */
+    public function orderby_up($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');
+        $facilitys = $clsFacility->get_all($clinic_id);
+        
+        $this->up($clsFacility, $id, $facilitys, 'facility_id', 'facility_sort_no');
+
+        return redirect()->route('ortho.facilities.index',$clinic_id);
+    }
+
+    /**
+     * 
+     */
+    public function orderby_down($clinic_id)
+    {
+        $clsFacility = new FacilityModel();
+        $id = Input::get('id');
+        $facilitys = $clsFacility->get_all($clinic_id);
+        $this->down($clsFacility, $id, $facilitys, 'facility_id', 'facility_sort_no');
+        return redirect()->route('ortho.facilities.index',$clinic_id);
     }
 }

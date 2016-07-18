@@ -31,7 +31,6 @@ class ClinicServiceModel
                     ->get();
     }
 
-
     public function get_by_id($id)
     {
         $results = DB::table($this->table)->where('clinic_service_id', $id)->first();

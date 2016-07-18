@@ -202,11 +202,17 @@ return [
     | Model ServiceTemplate
     |--------------------------------------------------------------------------
     */
-    'error_service_facility_1_required'                     => 'Please choose service_facility_1.',
-    'error_service_facility_2_required'                     => 'Please choose service_facility_2.',
-    'error_service_facility_3_required'                     => 'Please choose service_facility_3.',
-    'error_service_facility_4_required'                     => 'Please choose service_facility_4.',
-    'error_service_facility_5_required'                     => 'Please choose service_facility_5.',
+    'error_service_facility_1_required'                     => '治療-1を選択してください。',
+    'error_service_facility_2_required'                     => '治療-2を選択してください。',
+    'error_service_facility_3_required'                     => '治療-3を選択してください。',
+    'error_service_facility_4_required'                     => '治療-4を選択してください。',
+    'error_service_facility_5_required'                     => '治療-5を選択してください。',
+
+    'error_service_time_1_required'                         => '時間-1を選択してください。',
+    'error_service_time_2_required'                         => '時間-2を選択してください。',
+    'error_service_time_3_required'                         => '時間-3を選択してください。',
+    'error_service_time_4_required'                         => '時間-4を選択してください。',
+    'error_service_time_5_required'                         => '時間-5を選択してください。',
 
     /*
     |--------------------------------------------------------------------------

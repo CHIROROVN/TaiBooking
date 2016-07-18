@@ -220,6 +220,7 @@
         console.log($(this).html());
         $(this).parent().addClass('col-title');
       }
+      
     });
   </script>
   <!-- End content shift search -->

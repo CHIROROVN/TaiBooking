@@ -18,11 +18,20 @@
                   <tr>
                     <td class="col-title">所属医院</td>
                     <td>
-                      <div class="checkbox">
+                      <!-- <div class="checkbox">
                         <label><input type="checkbox" name="clinic[]" value="-1" @if(isset($area_clinics[-1])) {{'checked'}} @endif />たい矯正歯科</label>
-                      </div>
+                      </div> -->
                       @if(!empty($clinics) && count($clinics) > 0)
-                        @foreach($clinics as $clinic)
+                        <?php $listClinics = $clinics; ?>
+                        @foreach($listClinics as $key => $value)
+                          @if ( $value->clinic_name == 'たい矯正歯科' )
+                          <div class="checkbox">
+                            <label><input type="checkbox" name="clinic[]" value="{{ $value->clinic_id }}" @if(isset($area_clinics[$value->clinic_id])) {{'checked'}} @endif />{{ $value->clinic_name }}</label>
+                          </div>
+                          <?php unset($listClinics[$key]); ?>
+                          @endif
+                        @endforeach
+                        @foreach($listClinics as $clinic)
                         <div class="checkbox">
                           <label><input type="checkbox" name="clinic[]" value="{{ $clinic->clinic_id }}" @if(isset($area_clinics[$clinic->clinic_id])) {{'checked'}} @endif />{{ $clinic->clinic_name }}</label>
                         </div>

@@ -16,7 +16,7 @@
                 <td class="col-title" align="center">電話番号</td>
                 <td class="col-title" align="center">業務内容-1-2</td>
                 <td class="col-title" align="center">備考</td>
-                <td class="col-title" align="center" style="min-width:110px">予約情報の編集</td>
+                <td class="col-title" align="center" style="min-width:120px">予約情報の編集</td>
               </tr>
               @if(!count($list1))
               	<tr><td colspan="8" style="text-align: center;">該当するデータがありません。</td></tr>
@@ -28,7 +28,7 @@
 		                <td>{{$l1->p_no}}</td>
 		                <td>{{$l1->p_name}}</td>
 		                <td>{{$l1->p_tel}}</td>
-		                <td>{{@$sercices[$l1->service_1]}}、{{@$sercices[$l1->service_2]}}</td>
+		                <td>{{@$sercices[$l1->service_1]}} @if(!empty($sercices[$l1->service_2]))、{{@$sercices[$l1->service_2]}}@endif</td>
 		                <td>{{$l1->booking_memo}}</td>
 		                <td align="center"><input onclick="location.href='booking_edit.html'" value="予約情報の編集" type="button" class="btn btn-xs btn-page"/></td>
 		              </tr>

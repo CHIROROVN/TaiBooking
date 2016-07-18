@@ -2761,10 +2761,10 @@
       <!-- save -->
       <input type="submit" name="button" value="登録する" class="btn btn-sm btn-page mar-right">
       <!-- delete -->
-        <input value="削除する" class="btn btn-sm btn-page" type="button" data-toggle="modal" data-target="#myModal">
+        <!-- <input value="削除する" class="btn btn-sm btn-page" type="button" data-toggle="modal" data-target="#myModal"> -->
         <!-- Trigger the modal with a button -->
         <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
+        <!-- <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-sm">
           <div class="modal-content">
             <div class="modal-header">
@@ -2780,7 +2780,7 @@
             </div>
           </div>
         </div>
-        </div>
+        </div> -->
         <!-- end modal -->
     </div>
   </div>

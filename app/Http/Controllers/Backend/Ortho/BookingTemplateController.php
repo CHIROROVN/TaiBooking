@@ -292,6 +292,7 @@ class BookingTemplateController extends BackendController
         }
         $tmpBookings            = array();
         foreach ( $bookings as $booking ) {
+            if(count($booking))
             $tmpBookings[]      = array(
                 'title'         => 'xxxxxxx',
                 'start'         => $booking->booking_date,

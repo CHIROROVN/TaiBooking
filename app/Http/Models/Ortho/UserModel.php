@@ -51,6 +51,12 @@ class UserModel
     }
 
 
+    public function get_human()
+    {
+        return DB::table($this->table)->select('id', 'u_name', 'u_human_flg', 'u_belong')->whereNull('u_human_flg')->where('last_kind', '<>', DELETE)->get();
+    }
+
+
     public function get_by_belong($belong_kind = array())
     {
         $db = DB::table($this->table)

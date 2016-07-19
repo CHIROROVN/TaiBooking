@@ -30,7 +30,7 @@
             </tr>
             <tr>
               <td class="col-title"><label for="textNameRead">予約日時</label></td>
-              <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}
+              <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}
               <input type="button" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.change', $booking->booking_id)}}'"></td>
             </tr>
             <tr>

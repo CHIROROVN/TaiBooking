@@ -395,7 +395,7 @@ class BookingTemplateController extends BackendController
                         }
                     }
                 }
-                $data['booking_group_id']       = $template->template_group_id;
+                $data['booking_group_id']       = $template->template_group_id . '_' . Input::get('date');
 
                 $data['last_date']              = date('y-m-d H:i:s');
                 $data['last_kind']              = INSERT;

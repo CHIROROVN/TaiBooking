@@ -276,7 +276,7 @@
             <!-- booking_memo -->
             <tr>
               <td class="col-title"><label for="booking_memo">備考</label></td>
-              <td><textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control">{{@$booking->booking_memo}}</textarea></td>
+              <td><textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{@$booking->booking_memo}}</textarea></td>
             </tr>
           </table>
         </div>

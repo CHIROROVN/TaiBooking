@@ -1584,7 +1584,7 @@
       <!-- q28 -->
       <tr>
           <td colspan="2">
-            <textarea name="q28" id="q28" cols="30" rows="10" class="form-control">{{ old('q28') }}</textarea>
+            <textarea name="q28" id="q28" cols="30" rows="10" class="form-control  form-control-full">{{ old('q28') }}</textarea>
           </td>
       </tr>
 

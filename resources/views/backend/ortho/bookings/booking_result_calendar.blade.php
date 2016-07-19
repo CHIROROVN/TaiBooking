@@ -98,44 +98,57 @@
             <tr>
               <td align="center">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
-                @if ( (isset($arr_bookings[$facility->facility_id][$fullTime])) )
-                  <?php
-                  $serviceName1 = '';
-                  $serviceName2 = '';
-                  if ( isset($services[$arr_bookings[$facility->facility_id][$fullTime]->service_1_kind]) ) {
-                    if (  $services[$arr_bookings[$facility->facility_id][$fullTime]->service_1_kind] == 1 ) {
-                      $serviceName1 = @$services[$arr_bookings[$facility->facility_id][$fullTime]->service_1];
-                    } else {
-                      $serviceName1 = @$treatment1s[$arr_bookings[$facility->facility_id][$fullTime]->service_1];
-                    }
-                  }
-                  if ( isset($services[$arr_bookings[$facility->facility_id][$fullTime]->service_2_kind]) ) {
-                    if (  $services[$arr_bookings[$facility->facility_id][$fullTime]->service_2_kind] == 1 ) {
-                      $serviceName2 = @$services[$arr_bookings[$facility->facility_id][$fullTime]->service_2];
-                    } else {
-                      $serviceName2 = @$treatment1s[$arr_bookings[$facility->facility_id][$fullTime]->service_2];
-                    }
-                  }
+                <?php
+                  // $common_id = $facility->facility_id . '-' . $hour.$minute;
+                  $facility_id = $facility->facility_id;
+                  $color = 'brown';
+                  // $service_id = 0;
+                  // $fullValue = null;
+                  $text = '';
 
-                  $patientName = '';
-                  if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->p_name) ) {
-                    $patientName .= $arr_bookings[$facility->facility_id][$fullTime]->p_name . '<br/>';
+                  if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
+
+                    if ( empty($arr_bookings[$facility_id][$fullTime]->patient_id) ) {
+                      $link = route('ortho.bookings.booking.regist', $arr_bookings[$facility_id][$fullTime]->booking_id);
+                    } else {
+                      $link = route('ortho.bookings.booking.detail', $arr_bookings[$facility_id][$fullTime]->booking_id);
+                    }
+
+                    if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1 ) {
+                      $color = 'green';
+                      $br = '<br />';
+                      if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
+                        $br = '';
+                      }
+                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_1] . '</a>';
+                    } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
+                      $color = 'blue';
+                      $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                    }
+                    // if ( $arr_bookings[$facility_id][$fullTime]->service_2_kind == 1 ) {
+                    //   $color = 'green';
+                    //   $br = '<br />';
+                    //   if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
+                    //     $br = '';
+                    //   }
+                    //   $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_2] . '</a>';
+                    // } elseif ( $arr_bookings[$facility_id][$fullTime]->service_2_kind == 2 ) {
+                    //   $color = 'blue';
+                    //   $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                    // }
                   }
-                  ?>
-                  @if ( !empty($arr_bookings[$facility->facility_id][$fullTime]->service_1) && $arr_bookings[$facility->facility_id][$fullTime]->service_1 > 0 )
-                  <td align="center" class="col-green">
-                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{!! $patientName !!}{{ $serviceName1 }}</a></span>
-                  </td>
-                  @else
-                  <td align="center" class="col-blue">
-                    <span><a href="{{ route('ortho.bookings.booking.detail', [ $arr_bookings[$facility->facility_id][$fullTime]->booking_id ]) }}">{!! $patientName !!}{{ $serviceName2 }}</a></span>
-                  </td>
-                  @endif
-                @else
-                <td align="center" class="col-brown">
-                  <span><img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" /></span>
+                ?>
+
+                <!-- close -->
+                <td align="center" class="col-{{ $color }}" id="">
+                  <div class="td-content">
+                    {!! $text !!}
+                    @if ( $color === 'brown' )
+                    <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
+                    @endif
+                  </div>
                 </td>
-                @endif
+                <!-- end close -->
               @endforeach
             </tr>
             @endforeach

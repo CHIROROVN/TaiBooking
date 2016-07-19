@@ -188,7 +188,7 @@
     $(".tableDiv").each(function() {      
         var Id = $(this).get(0).id;
         var maintbheight = 500;
-        var maintbwidth = 1000;
+        var maintbwidth = 1200;
 
         $("#" + Id + " .FixedTables").fixedTable({
             width: maintbwidth,

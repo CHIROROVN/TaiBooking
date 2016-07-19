@@ -50,7 +50,7 @@ class ShiftController extends BackendController
         $data['clinics']        = $clsClinic->get_for_select();
         $data['yearNow']        = $yearNow;
         $data['monthNow']       = convert2Digit($monthNow);
-        $data['users']          = $clsUser->get_for_select(['u_human_flg' => 1]);
+        $data['users']          = $clsUser->get_human();
         $shifts                 = $clsShift->get_all();
 
         // set day

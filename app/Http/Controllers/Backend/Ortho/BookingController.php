@@ -189,7 +189,8 @@ class BookingController extends BackendController
 
         $data['times']          = Config::get('constants.TIME');
 
-        $where['s_clinic_id']   = $clinic_id;
+        $where['clinic_id']     = $clinic_id;
+        $where['booking_date']  = $date_current;
         $bookings               = $clsBooking->get_all($where);
         // $data['bookings']       = $bookings;
         $arr_bookings           = array();
@@ -208,7 +209,7 @@ class BookingController extends BackendController
                 }
             }
         }
-        // echo '<pre>';print_r($arr_bookings);die;
+        // echo '<pre>';print_r($data['services']);die;
         $data['arr_bookings'] = $arr_bookings;
         // echo '<pre>';
         // print_r($data['arr_bookings']);
@@ -266,13 +267,24 @@ class BookingController extends BackendController
 
     public function bookingCancel($id){
         $clsBooking                         = new BookingModel();
+        $booking                            = $clsBooking->get_by_id($id);
+
         $dataUpdate = array(
-                'last_date'                 => date('y-m-d H:i:s'),
-                'last_kind'                 => DELETE,
-                'last_ipadrs'               => CLIENT_IP_ADRS,
-                'last_user'                 => Auth::user()->id
-            );
-        if ( $clsBooking->update($id, $dataUpdate) ) {
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => DELETE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id
+        );
+
+        $listBookingGroup = $clsBooking->get_by_group($booking->booking_group_id);
+        $status = true;
+        foreach ( $listBookingGroup as $item ) {
+            if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
+                $status = false;
+            }
+        }
+
+        if ( $status ) {
             Session::flash('success', trans('common.message_delete_success'));
             return redirect()->route('ortho.bookings.booking.result.list');
         } else {
@@ -402,7 +414,7 @@ class BookingController extends BackendController
         }
 
         $dataInput = array(
-                'facility_id'               => Input::get('facility_id'),
+                // 'facility_id'               => Input::get('facility_id'),
                 'doctor_id'                 => Input::get('doctor_id'),
                 'hygienist_id'              => Input::get('hygienist_id'),
                 'equipment_id'              => Input::get('equipment_id'),
@@ -519,7 +531,7 @@ class BookingController extends BackendController
 
         $dataInput = array(
             'patient_id'                => $p_id,
-            'facility_id'               => Input::get('facility_id'),
+            // 'facility_id'               => Input::get('facility_id'),
             'doctor_id'                 => Input::get('doctor_id'),
             'hygienist_id'              => Input::get('hygienist_id'),
             'equipment_id'              => Input::get('equipment_id'),
@@ -540,12 +552,15 @@ class BookingController extends BackendController
         );
 
         // update group
+        $status = true;
         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
         foreach ( $bookingGroups as $bookingGroup ) {
-            $clsBooking->update($bookingGroup->booking_id, $dataInput);
+            if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
+                $status = false;
+            }
         }
 
-        if ( $clsBooking->update($id, $dataInput) ) {
+        if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.regist', [$id]);
         } else {

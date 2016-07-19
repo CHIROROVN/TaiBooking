@@ -117,7 +117,7 @@ $(document).ready(function(){
     var calendar = $('#calendar').fullCalendar({
       lang: 'ja',
       eventLimit: false,
-      editable: true,
+      editable: false,
       timezone: 'Asia/Tokyo',
       buttonText: {
           prev: '<< 前月',
@@ -153,8 +153,6 @@ $(document).ready(function(){
         // window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
         location.reload();
       },
-
-      editable: true,
     });
   });
   </script>

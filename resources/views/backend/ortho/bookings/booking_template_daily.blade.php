@@ -58,9 +58,9 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center" width="10%">時間</td>
+              <td align="center" style="width: 5%;">時間</td>
               @foreach ( $facilitys as $facility )
-              <td align="center">{{ $facility->facility_name }}</td>
+              <td align="center" style="width: 45px;">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
 
@@ -72,7 +72,7 @@
               $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
             ?>
             <tr>
-              <td align="center">{{ $time }}～</td>
+              <td align="center" style="width: 5%;">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
                 <?php
                   $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -115,7 +115,7 @@
                 ?>
 
                 <!-- close -->
-                <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}">
+                <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}" style="width: 45px;">
                   <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />

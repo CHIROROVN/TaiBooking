@@ -639,7 +639,7 @@ class BookingController extends BackendController
             $dataInput['service_1_kind']    = $service_kind;
         }
 
-        $dataInput['last_date']         = date('y-m-d H:i:s');
+        $dataInput['last_date']         = date('Y-m-d H:i:s');
         $dataInput['last_kind']         = UPDATE;
         $dataInput['last_ipadrs']       = CLIENT_IP_ADRS;
         $dataInput['last_user']         = Auth::user()->id;

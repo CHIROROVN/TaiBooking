@@ -27,6 +27,11 @@
 		return $convertEn2Jp[date("D", $dayEn)];
 	}
 
+	function DayEn($date){
+		$dayEn = strtotime($date);
+		return date("D", $dayEn);
+	}
+
 	function splitHourMin($str_time, $char = ':'){
 		if(strlen($str_time) != 4){
 			return '00:00';
@@ -176,6 +181,19 @@
 			return '';
 		}
 	}
+
+	function dateAddMonth($date=null, $monthNum=null, $format=null){
+		if(!empty($date)){
+			if($format == null)
+				$format = 'Y-m-d';
+			return date($format, strtotime("+".$monthNum." month", strtotime($date)));
+		}else{
+			return '';
+		}
+	}
+
+// 	$time = strtotime("2016-07-19");
+// $final = date("Y-m-d", strtotime("+2 month", $time));
 
 	/**
 	 * ex: 00,02 -> 00,03 ==> 60s

@@ -16,7 +16,7 @@
                       <option value="" selected="selected">▼選択</option>
                       @if(count($clinics) > 0)
                         @foreach($clinics as $clinic_id => $clinic)
-                        <option value="{{$clinic_id}}" @if($clinic_id == $booking->booking_id) selected @endif >{{$clinic}}</option>
+                        <option value="{{$clinic_id}}" @if($clinic_id == $booking->clinic_id) selected="selected" @endif>{{$clinic}}</option>
                         @endforeach
                       @endif
                     </select>
@@ -30,7 +30,7 @@
                         @foreach($doctors as $doctor)
                           <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="checkbox">
-                              <label><input name="doctor_id" value="{{$doctor->id}}" type="radio"> {{$doctor->u_name}}</label>
+                              <label><input name="doctor_id" value="{{$doctor->id}}" type="radio" @if($doctor->id == $booking->doctor_id) checked="checked" @endif> {{$doctor->u_name}}</label>
                             </div>
                           </div>
                         @endforeach
@@ -46,7 +46,7 @@
                         @foreach($hygienists as $hygienist)
                           <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="checkbox">
-                              <label><input name="hygienist_id" value="{{$hygienist->id}}" type="radio"> {{$hygienist->u_name}}</label>
+                              <label><input name="hygienist_id" value="{{$hygienist->id}}" type="radio" @if( $hygienist->id == $booking->hygienist_id) checked="checked" @endif> {{$hygienist->u_name}}</label>
                             </div>
                           </div>
                         @endforeach
@@ -60,37 +60,37 @@
                     <div class="row">
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Sun" type="checkbox">日</label>
+                          <label><input name="booking_day[]" value="Sun" type="checkbox" @if(DayEn($booking->booking_date) == 'Sun') checked="" @endif>日</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Mon" type="checkbox">月</label>
+                          <label><input name="booking_day[]" value="Mon" type="checkbox" @if(DayEn($booking->booking_date) == 'Mon') checked="" @endif>月</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Tue" type="checkbox">火</label>
+                          <label><input name="booking_day[]" value="Tue" type="checkbox" @if(DayEn($booking->booking_date) == 'Tue') checked="" @endif>火</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Wed" type="checkbox">水</label>
+                          <label><input name="booking_day[]" value="Wed" type="checkbox" @if(DayEn($booking->booking_date) == 'Wed') checked="" @endif>水</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Thu" type="checkbox">木</label>
+                          <label><input name="booking_day[]" value="Thu" type="checkbox" @if(DayEn($booking->booking_date) == 'Thu') checked="" @endif>木</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Fri" type="checkbox">金</label>
+                          <label><input name="booking_day[]" value="Fri" type="checkbox" @if(DayEn($booking->booking_date) == 'Fri') checked="" @endif>金</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Sat" type="checkbox">土</label>
+                          <label><input name="booking_day[]" value="Sat" type="checkbox" @if(DayEn($booking->booking_date) == 'Sat') checked="" @endif>土</label>
                         </div>
                       </div>
                     </div>

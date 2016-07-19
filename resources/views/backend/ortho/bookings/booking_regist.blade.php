@@ -182,12 +182,12 @@
                     <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
                     <?php $year =  date('Y', strtotime($booking->booking_date))?>
                       <option value="" selected>▼選択</option>
-                      <option value="{{$year}}01" @if($year.'01' == $booking->booking_recall_ym) selected @endif>1ヶ月後</option>
-                      <option value="{{$year}}02" @if($year.'02' == $booking->booking_recall_ym) selected @endif>2ヶ月後</option>
-                      <option value="{{$year}}03" @if($year.'03' == $booking->booking_recall_ym) selected @endif>3ヶ月後</option>
-                      <option value="{{$year}}04" @if($year.'04' == $booking->booking_recall_ym) selected @endif>4ヶ月後</option>
-                      <option value="{{$year}}05" @if($year.'05' == $booking->booking_recall_ym) selected @endif>5ヶ月後</option>
-                      <option value="{{$year}}06" @if($year.'06' == $booking->booking_recall_ym) selected @endif>6ヶ月後</option>
+                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" @if($year.'01' == $booking->booking_recall_ym) selected @endif>1ヶ月後</option>
+                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 03, 'Ym') == $booking->booking_recall_ym) selected @endif>2ヶ月後</option>
+                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 03, 'Ym') == $booking->booking_recall_ym) selected @endif>3ヶ月後</option>
+                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 04, 'Ym') == $booking->booking_recall_ym) selected @endif>4ヶ月後</option>
+                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}0" @if(dateAddMonth($booking->booking_date, 05, 'Ym') == $booking->booking_recall_ym) selected @endif>5ヶ月後</option>
+                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 06, 'Ym') == $booking->booking_recall_ym) selected @endif>6ヶ月後</option>
                     </select>
                   </label>
                 </div>

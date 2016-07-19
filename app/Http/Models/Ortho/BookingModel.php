@@ -157,6 +157,10 @@ class BookingModel
         if ( !empty($where['clinic_id']) ) {
             $db->where('clinic_id', $where['clinic_id']);
         }
+        // facility_id
+        if ( !empty($where['facility_id']) ) {
+            $db->where('facility_id', $where['facility_id']);
+        }
 
         $db = $db->first();
         return $db;

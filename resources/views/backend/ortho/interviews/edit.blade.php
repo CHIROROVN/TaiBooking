@@ -17,7 +17,14 @@
             <!-- q0_1_clinic -->
             <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
               <select class="form-control" name="q0_1_clinic" id="q0_1_clinic">
-                @foreach ( $clinics as $clinic )
+                <?php $listClinics = $clinics; ?>
+                @foreach ( $listClinics as $key => $value )
+                  @if ( $value->clinic_name == 'たい矯正歯科' )
+                  <option value="{{ $value->clinic_id }}">{{ $value->clinic_name }}</option>
+                  <?php unset($listClinics[$key]) ?>
+                  @endif
+                @endforeach
+                @foreach ( $listClinics as $clinic )
                   @if ( old('q0_1_clinic') )
                   <option value="{{ $clinic->clinic_id }}" selected="" >{{ $clinic->clinic_name }}</option>
                   @elseif ( isset($interview->q0_1_clinic) && $interview->q0_1_clinic == $clinic->clinic_id )
@@ -36,8 +43,10 @@
               <div class="col-sm-8 col-md-9 col-lg-7">
                 @if ( old('q0_1_date') )
                 <input class="form-control" type="text" name="q0_1_date" id="q0_1_date" value="{{ old('q0_1_date') }}" />
+                @elseif ( !empty($interview->q0_1_date) && $interview->q0_1_date != '0000-00-00' )
+                <input class="form-control" type="text" name="q0_1_date" id="q0_1_date" aa="{{ @$interview->q0_1_date }}" value="{{ @$interview->q0_1_date }}" />
                 @else
-                <input class="form-control" type="text" name="q0_1_date" id="q0_1_date" value="{{ @$interview->q0_1_date }}" />
+                <input class="form-control" type="text" name="q0_1_date" id="q0_1_date" value="" />
                 @endif
                 <span class="error-input">@if ($errors->first('q0_1_date')) {!! $errors->first('q0_1_date') !!} @endif</span>
               </div>
@@ -54,7 +63,14 @@
             <!-- q0_2_clinic -->
             <div class="col-sm-5 col-md-4 col-lg-3">
               <select class="form-control" name="q0_2_clinic" id="q0_2_clinic">
-                @foreach ( $clinics as $clinic )
+                <?php $listClinics = $clinics; ?>
+                @foreach ( $listClinics as $key => $value )
+                  @if ( $value->clinic_name == 'たい矯正歯科' )
+                  <option value="{{ $value->clinic_id }}">{{ $value->clinic_name }}</option>
+                  <?php unset($listClinics[$key]) ?>
+                  @endif
+                @endforeach
+                @foreach ( $listClinics as $clinic )
                   @if ( old('q0_2_clinic') )
                   <option value="{{ $clinic->clinic_id }}" selected="" >{{ $clinic->clinic_name }}</option>
                   @elseif ( isset($interview->q0_2_clinic) && $interview->q0_2_clinic == $clinic->clinic_id )
@@ -73,8 +89,10 @@
               <div class="col-sm-8 col-md-9 col-lg-7">
                 @if ( old('q0_2_date') )
                 <input class="form-control" type="text" name="q0_2_date" id="q0_2_date" value="{{ old('q0_2_date') }}" />
-                @else
+                @elseif ( !empty($interview->q0_2_date) && $interview->q0_2_date != '0000-00-00' )
                 <input class="form-control" type="text" name="q0_2_date" id="q0_2_date" value="{{ @$interview->q0_2_date }}" />
+                @else
+                <input class="form-control" type="text" name="q0_2_date" id="q0_2_date" value="" />
                 @endif
                 <span class="error-input">@if ($errors->first('q0_2_date')) {!! $errors->first('q0_2_date') !!} @endif</span>
               </div>
@@ -112,6 +130,13 @@
             <div class="col-sm-5 col-md-4 col-lg-3">
               <select class="form-control" name="q0_4_clinic" id="q0_4_clinic">
                 <option data-hidden="true"></option>
+                <?php $listClinics = $clinics; ?>
+                @foreach ( $listClinics as $key => $value )
+                  @if ( $value->clinic_name == 'たい矯正歯科' )
+                  <option value="{{ $value->clinic_id }}">{{ $value->clinic_name }}</option>
+                  <?php unset($listClinics[$key]) ?>
+                  @endif
+                @endforeach
                 @foreach ( $clinics as $clinic )
                   @if ( old('q0_4_clinic') )
                   <option value="{{ $clinic->clinic_id }}" selected="" >{{ $clinic->clinic_name }}</option>
@@ -131,8 +156,10 @@
               <div class="col-sm-8 col-md-9 col-lg-7">
                 @if ( old('q0_4_date') )
                 <input class="form-control" type="text" name="q0_4_date" id="q0_4_date" value="{{ old('q0_4_date') }}" />
-                @else
+                @elseif ( !empty($interview->q0_4_date) && $interview->q0_4_date != '0000-00-00' )
                 <input class="form-control" type="text" name="q0_4_date" id="q0_4_date" value="{{ @$interview->q0_4_date }}" />
+                @else
+                <input class="form-control" type="text" name="q0_4_date" id="q0_4_date" value="" />
                 @endif
                 <span class="error-input">@if ($errors->first('q0_4_clinic')) {!! $errors->first('q0_4_clinic') !!} @endif</span>
               </div>
@@ -146,9 +173,9 @@
         <td>主訴</td>
         <td>
           @if ( old('q0_5') )
-          <textarea name="q0_5"class="form-control">{{ old('q0_5') }}</textarea>
+          <textarea name="q0_5" class="form-control form-control-area" rows="5">{{ old('q0_5') }}</textarea>
           @else
-          <textarea name="q0_5"class="form-control">{{ $interview->q0_5 }}</textarea>
+          <textarea name="q0_5" class="form-control form-control-area">{{ $interview->q0_5 }}</textarea>
           @endif
           <span class="error-input">@if ($errors->first('q0_5')) {!! $errors->first('q0_5') !!} @endif</span>
         </td>
@@ -159,9 +186,9 @@
         <td>所見</td>
         <td>
           @if ( old('q0_6') )
-          <textarea name="q0_6"class="form-control">{{ old('q0_6') }}</textarea>
+          <textarea name="q0_6" class="form-control form-control-area">{{ old('q0_6') }}</textarea>
           @else
-          <textarea name="q0_6"class="form-control">{{ $interview->q0_6 }}</textarea>
+          <textarea name="q0_6" class="form-control form-control-area">{{ $interview->q0_6 }}</textarea>
           @endif
           <span class="error-input">@if ($errors->first('q0_6')) {!! $errors->first('q0_6') !!} @endif</span>
         </td>
@@ -172,9 +199,9 @@
         <td>説明チェック</td>
         <td>
           @if ( old('q0_7') )
-          <textarea name="q0_7"class="form-control">{{ old('q0_7') }}</textarea>
+          <textarea name="q0_7" class="form-control form-control-area">{{ old('q0_7') }}</textarea>
           @else
-          <textarea name="q0_7"class="form-control">{{ $interview->q0_7 }}</textarea>
+          <textarea name="q0_7" class="form-control form-control-area">{{ $interview->q0_7 }}</textarea>
           @endif
           <span class="error-input">@if ($errors->first('q0_7')) {!! $errors->first('q0_7') !!} @endif</span>
         </td>
@@ -185,9 +212,9 @@
         <td>資料チェック</td>
         <td>
           @if ( old('q0_8') )
-          <textarea name="q0_8"class="form-control">{{ old('q0_8') }}</textarea>
+          <textarea name="q0_8" class="form-control form-control-area">{{ old('q0_8') }}</textarea>
           @else
-          <textarea name="q0_8"class="form-control">{{ $interview->q0_8 }}</textarea>
+          <textarea name="q0_8" class="form-control form-control-area">{{ $interview->q0_8 }}</textarea>
           @endif
           <span class="error-input">@if ($errors->first('q0_8')) {!! $errors->first('q0_8') !!} @endif</span>
         </td>
@@ -198,9 +225,9 @@
         <td>メモ</td>
         <td>
           @if ( old('q0_9') )
-          <textarea name="q0_9"class="form-control">{{ old('q0_9') }}</textarea>
+          <textarea name="q0_9" class="form-control form-control-area">{{ old('q0_9') }}</textarea>
           @else
-          <textarea name="q0_9"class="form-control">{{ $interview->q0_9 }}</textarea>
+          <textarea name="q0_9" class="form-control form-control-area">{{ $interview->q0_9 }}</textarea>
           @endif
           <span class="error-input">@if ($errors->first('q0_9')) {!! $errors->first('q0_9') !!} @endif</span>
         </td>
@@ -2746,9 +2773,9 @@
       <tr>
           <td colspan="2">
             @if ( old('q28') )
-            <textarea name="q28" id="q28" cols="30" rows="10" class="form-control">{{ old('q28') }}</textarea>
+            <textarea name="q28" id="q28" cols="30" rows="10" class="form-control form-control-area-full">{{ old('q28') }}</textarea>
             @else
-            <textarea name="q28" id="q28" cols="30" rows="10" class="form-control">{{ @$interview->q28 }}</textarea>
+            <textarea name="q28" id="q28" cols="30" rows="10" class="form-control form-control-area-full">{{ @$interview->q28 }}</textarea>
             @endif
           </td>
       </tr>
@@ -2769,45 +2796,42 @@
   $(document).ready(function(){
     // 1
     $(function () {
-      $('#q0_1_date').datetimepicker({
+      $('#q0_1_date').datepicker({
         // viewMode: 'years',
-        format: 'YYYY/MM/DD'
+        dateFormat: 'yy/mm/dd'
       });
     });
     // 2
     $(function () {
-      $('#q0_2_date').datetimepicker({
+      $('#q0_2_date').datepicker({
         // viewMode: 'years',
-        format: 'YYYY/MM/DD'
+        dateFormat: 'yy/mm/dd'
       });
     });
     // 3
     $(function () {
-      $('#q0_4_date').datetimepicker({
+      $('#q0_4_date').datepicker({
         // viewMode: 'years',
-        format: 'YYYY/MM/DD'
+        dateFormat: 'yy/mm/dd'
       });
     });
 
     // year
     $(function () {
-      $('#q1_10_year').datetimepicker({
-        viewMode: 'years',
-        format: 'YYYY'
+      $('#q1_10_year').datepicker({
+        dateFormat: 'yy'
       });
     });
     // month
     $(function () {
-      $('#q1_10_month').datetimepicker({
-        viewMode: 'months',
-        format: 'MM'
+      $('#q1_10_month').datepicker({
+        dateFormat: 'mm'
       });
     });
     // day
     $(function () {
-      $('#q1_10_day').datetimepicker({
-        viewMode: 'days',
-        format: 'DD'
+      $('#q1_10_day').datepicker({
+        dateFormat: 'dd'
       });
     });
   });

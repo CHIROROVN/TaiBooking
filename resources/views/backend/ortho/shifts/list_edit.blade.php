@@ -187,7 +187,7 @@
     // this "tableDiv" must be the table's class
     $(".tableDiv").each(function() {      
         var Id = $(this).get(0).id;
-        var maintbheight = 555;
+        var maintbheight = 500;
         var maintbwidth = 1000;
 
         $("#" + Id + " .FixedTables").fixedTable({
@@ -217,7 +217,6 @@
     $('.fixedTable > table').addClass('table table-bordered');
     $('.fixedTable > table tr td').each(function(index, el) {
       if ( $(this).html() === '&nbsp;' ) {
-        console.log($(this).html());
         $(this).parent().addClass('col-title');
       }
 

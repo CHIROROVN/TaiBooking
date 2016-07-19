@@ -377,46 +377,41 @@ class BookingTemplateController extends BackendController
         
         if ( count($templates) ) {
             foreach ( $templates as $template ) {
-                foreach ( $facilitys as $facility ) {
-                    if ( $facility->facility_id == $template->facility_id ) {
-                        // insert to table "t_booking"
-                        $data                           = array();
-                        $data['booking_date']           = Input::get('date');
-                        $data['booking_start_time']     = $template->template_time;
-                        $data['booking_total_time']     = 0;
-                        $data['clinic_id']              = Input::get('clinic_id');
-                        $data['facility_id']            = $template->facility_id;
-                        foreach ( $clinicServices as $clinicService ) {
-                            if ( $clinicService->clinic_service_id == $template->clinic_service_id ) {
-                                $data['service_1']          = $clinicService->service_id; //error service here
-                                $data['service_1_kind']     = 1;
-                            } else {
-                                if ( $template->clinic_service_id == -1 ) {
-                                    $data['service_1']          = -1;
-                                    $data['service_1_kind']     = 2;
-                                }
-                            }
-                        }
-                        $data['booking_group_id']       = $template->template_group_id;
-
-                        $data['last_date']              = date('y-m-d H:i:s');
-                        $data['last_kind']              = INSERT;
-                        $data['last_ipadrs']            = $_SERVER['REMOTE_ADDR'];
-                        $data['last_user']              = Auth::user()->id;
-
-                        $where = array(
-                            'booking_start_time'    => $template->template_time,
-                            'booking_group_id'      => $template->template_group_id,
-                            'booking_date'          => Input::get('date'),
-                            'clinic_id'             => Input::get('clinic_id'),
-                        );
-                        $booking = $clsBooking->checkExist($where);
-                        if ( !empty($booking) ) {
-                            $clsBooking->update($booking->booking_id, $data);
-                        } else {
-                            $clsBooking->insert($data);
+                // insert to table "t_booking"
+                $data                           = array();
+                $data['booking_date']           = Input::get('date');
+                $data['booking_start_time']     = $template->template_time;
+                $data['booking_total_time']     = 0;
+                $data['clinic_id']              = Input::get('clinic_id');
+                $data['facility_id']            = $template->facility_id;
+                foreach ( $clinicServices as $clinicService ) {
+                    if ( $clinicService->clinic_service_id == $template->clinic_service_id ) {
+                        $data['service_1']          = $clinicService->service_id; //error service here
+                        $data['service_1_kind']     = 1;
+                    } else {
+                        if ( $template->clinic_service_id == -1 ) {
+                            $data['service_1']          = -1;
+                            $data['service_1_kind']     = 2;
                         }
                     }
+                }
+                $data['booking_group_id']       = $template->template_group_id;
+
+                $data['last_date']              = date('y-m-d H:i:s');
+                $data['last_kind']              = INSERT;
+                $data['last_ipadrs']            = $_SERVER['REMOTE_ADDR'];
+                $data['last_user']              = Auth::user()->id;
+
+                $where = array(
+                    'booking_start_time'    => $template->template_time,
+                    // 'booking_group_id'      => $template->template_group_id,
+                    'booking_date'          => Input::get('date'),
+                    'clinic_id'             => Input::get('clinic_id'),
+                    'facility_id'           => $template->facility_id,
+                );
+                $booking = $clsBooking->checkExist($where);
+                if ( empty($booking) ) {
+                    $clsBooking->insert($data);
                 }
             }
         }

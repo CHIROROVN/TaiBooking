@@ -235,6 +235,15 @@ header h1 {
   height:32px !important;
 }
 
+.form-control-area {
+  height: auto !important;
+}
+
+.form-control-area-full {
+  height: auto !important;
+  width: 100% !important;
+}
+
 .fl-right {
   float:right;
 }

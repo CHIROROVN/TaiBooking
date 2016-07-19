@@ -70,6 +70,42 @@ class BookingModel
         return $results;
     }
 
+    public function get_all_groupby($where = array(), $paging = false)
+    {
+        $db = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
+                        // ->where('m_clinic.last_kind', '<>', DELETE)
+                        // ->where('t1.last_kind', '<>', DELETE)
+                        ->where('t_booking.last_kind', '<>', DELETE);
+                        // ->where('t_booking.clinic_id', '=', $where['clinic_id']);
+
+        // where u_id
+        if ( isset($where['u_id']) && !empty($where['u_id']) ) {
+            $db = $db->where('t_booking.doctor_id', $where['u_id']);
+        }
+        // where booking_date
+        if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
+            $db = $db->where('t_booking.booking_date', $where['booking_date']);
+        }
+
+        // where clinic_id
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('t_booking.clinic_id', $where['clinic_id']);
+        }
+
+        $db = $db->groupBy('t_booking.booking_group_id')->orderBy('t_booking.booking_date', 'asc');
+
+        if ( $paging ) {
+            $results = $db->simplePaginate(PAGINATION);
+        } else {
+            $results = $db->get();
+        }
+
+        return $results;
+    }
+
     public function get_by_today()
     {
         $results = DB::table($this->table)

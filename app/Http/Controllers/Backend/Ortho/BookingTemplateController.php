@@ -286,7 +286,7 @@ class BookingTemplateController extends BackendController
         $clsBooking             = new BookingModel();
         $data['clinics']        = $clsClinic->get_list_clinic();
 
-        $bookings               = $clsBooking->get_all($data);
+        $bookings               = $clsBooking->get_all_groupby($data);
         if ( empty(Input::get('s_clinic_id')) ) {
             $bookings = array();
         }
@@ -294,10 +294,10 @@ class BookingTemplateController extends BackendController
         foreach ( $bookings as $booking ) {
             if(count($booking))
             $tmpBookings[]      = array(
-                'title'         => 'xxxxxxx',
+                'title'         => $booking->p_name,
                 'start'         => $booking->booking_date,
                 'end'           => $booking->booking_date + 1,
-                'url'           => '',
+                'url'           => route('ortho.bookings.template.daily', [ 'date' => $booking->booking_date, 'clinic_id' => $booking->clinic_id ]),
                 'className'     => 'booking-template-set',
             );
         }

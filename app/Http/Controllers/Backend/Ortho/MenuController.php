@@ -9,7 +9,7 @@ use Auth;
 use Hash;
 use Session;
 // use App\User;
-// use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\ClinicModel;
 // use App\Http\Models\Ortho\BelongModel;
 
 use Form;
@@ -31,6 +31,17 @@ class MenuController extends BackendController
      */
     public function index()
     {
-        return view('backend.ortho.menus.index');
+        $data = array();
+        $clsClinic = new ClinicModel();
+        $clinics = $clsClinic->get_all();
+
+        $data['clinic_id'] = '';
+        foreach ( $clinics as $value ) {
+            if ( $value->clinic_name == 'たい矯正歯科' ) {
+                $data['clinic_id'] = $value->clinic_id;
+            }
+        }
+
+        return view('backend.ortho.menus.index', $data);
     }
 }

@@ -623,12 +623,6 @@ textarea {
     white-space: normal;
 }
 
-.fc-event.booking-template-set {
-  color: transparent;
-  background-color: transparent;
-  border: none;
-}
-
 .fc-content .fc-title .table--indiagram{
   background-color: #fff;
 }

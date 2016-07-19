@@ -321,6 +321,9 @@ class BookingController extends BackendController
     public function postEdit($id)
     {
         $clsBooking                 = new BookingModel();
+        $booking                    = $clsBooking->get_by_id($id);
+        $bookingGroups              = $clsBooking->get_by_group($booking->booking_group_id);
+
         $s_1_kind = Input::get('service_1');
         $s1k = explode('#', $s_1_kind);
         $service_1          = $s1k[0];
@@ -334,7 +337,7 @@ class BookingController extends BackendController
         $service_2_kind     = $s2_kind[1];
 
         $dataInput = array(
-                'facility_id'               => Input::get('facility_id'),
+                // 'facility_id'               => Input::get('facility_id'),
                 'doctor_id'                 => Input::get('doctor_id'),
                 'hygienist_id'              => Input::get('hygienist_id'),
                 'equipment_id'              => Input::get('equipment_id'),
@@ -359,12 +362,19 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking.edit', [ $id ])->withErrors($validator)->withInput();
         }
 
-        if ( $clsBooking->update($id, $dataInput) ) {
+        $status = true;
+        foreach ( $bookingGroups as $item ) {
+            if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                $status = false;
+            }
+        }
+
+        if ( $status ) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.result.list');
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.bookings.booking_edit', $id);
+            return redirect()->route('ortho.bookings.booking.edit', $id);
         }
 
     }
@@ -407,6 +417,8 @@ class BookingController extends BackendController
         $service_1_kind     = $s1_kind[1];
 
         $s_2_kind = Input::get('service_2');
+        $service_2_kind = null;
+        $service_2 = null;
         if ( !empty($s_2_kind) ) {
             $s2k = explode('#', $s_2_kind);
             $service_2          = $s2k[0];
@@ -438,11 +450,14 @@ class BookingController extends BackendController
 
         // update group
         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        $status = true;
         foreach ( $bookingGroups as $bookingGroup ) {
-            $clsBooking->update($bookingGroup->booking_id, $dataInput);
+            if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
+                $status = false;
+            }
         }
         
-        if ( $clsBooking->update($id, $dataInput) ) {
+        if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.result.list');
         } else {
@@ -563,7 +578,7 @@ class BookingController extends BackendController
 
         if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
-            return redirect()->route('ortho.bookings.booking.regist', [$id]);
+            return redirect()->route('ortho.bookings.booking.result.list');
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
             return redirect()->route('ortho.bookings.booking.1st.regist', [$id]);

@@ -61,9 +61,13 @@
             @for ( $j = 1; $j <= $rowspanDoctor; $j++ )
               <tr>
                 <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title" style="width: 70px;">ドクター</td>
-                @foreach ( $doctors as $doctor )
-                <td align="center">{{ $doctor->u_name }}</td>
-                @endforeach
+                @if(!count($doctors))
+                  <td align="center">&nbsp;</td>
+                @else
+                    @foreach ( $doctors as $doctor )
+                    <td align="center">{{ $doctor->u_name }}</td>
+                    @endforeach
+                @endif
               </tr>
             @endfor
 
@@ -91,8 +95,8 @@
             @foreach ( $times as $time )
             <?php
               $tmp_arr = explode(':', $time);
-              $hour = $tmp_arr[0]; // printf( "%02d", $tmp_arr[0] );
-              $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
+              $hour = $tmp_arr[0];
+              $minute = $tmp_arr[1];
               $fullTime = $hour . $minute;
             ?>
             <tr>

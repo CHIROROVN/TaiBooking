@@ -447,7 +447,7 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking.result.list');
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
-            return redirect()->route('ortho.bookings.booking.regist', ['?booking_id='.$booking_id.'&patient_id='.$patient_id]);
+            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
         }
     }
 

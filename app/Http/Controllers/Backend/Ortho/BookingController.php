@@ -409,11 +409,15 @@ class BookingController extends BackendController
     {
         $clsBooking                 = new BookingModel();
         $booking                    = $clsBooking->get_by_id($id);
+        $service_1_kind = null;
+        $service_1 = null;
         $s_1_kind = Input::get('service_1');
-        $s1k = explode('#', $s_1_kind);
-        $service_1          = $s1k[0];
-        $s1_kind            = str_split($s1k[1], 3);
-        $service_1_kind     = $s1_kind[1];
+        if(!empty($s_1_kind)){
+            $s1k = explode('#', $s_1_kind);
+            $service_1          = $s1k[0];
+            $s1_kind            = str_split($s1k[1], 3);
+            $service_1_kind     = $s1_kind[1];
+        }
 
         $s_2_kind = Input::get('service_2');
         $service_2_kind = null;

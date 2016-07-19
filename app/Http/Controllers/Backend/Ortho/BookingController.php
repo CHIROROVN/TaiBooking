@@ -399,6 +399,7 @@ class BookingController extends BackendController
     public function postRegist($id)
     {
         $clsBooking                 = new BookingModel();
+        $booking                    = $clsBooking->get_by_id($id);
         $s_1_kind = Input::get('service_1');
         $s1k = explode('#', $s_1_kind);
         $service_1          = $s1k[0];

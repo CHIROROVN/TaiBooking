@@ -94,7 +94,7 @@
             </tr>
 
             <!-- facility_id -->
-            <tr>
+            <!-- <tr>
               <td class="col-title"><label for="facility_id">設備</label></td>
               <td><select name="facility_id" id="facility_id" class="form-control">
                 <option value="">▼選択</option>
@@ -105,7 +105,7 @@
                 @endif
               </select>
               </td>
-            </tr>
+            </tr> -->
 
             <!-- doctor_id -->
             <tr>

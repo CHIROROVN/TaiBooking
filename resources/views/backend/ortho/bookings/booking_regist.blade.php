@@ -40,7 +40,7 @@
               <td class="col-title">医院</td>
               <td>{{$booking->clinic_name}}</td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td class="col-title"><label for="facility_id">チェアー</label></td>
               <td><select name="facility_id" id="facility_id" class="form-control">
                 <option value="">▼選択</option>
@@ -51,7 +51,7 @@
                 @endif
               </select>
               </td>
-            </tr>
+            </tr> -->
             <tr>
               <td class="col-title"><label for="doctor_id">ドクター</label></td>
               <td><select name="doctor_id" id="doctor_id" class="form-control">

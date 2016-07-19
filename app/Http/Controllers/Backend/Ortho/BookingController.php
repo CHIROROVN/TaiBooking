@@ -172,7 +172,6 @@ class BookingController extends BackendController
         
         if ( empty($clinic_id) ) {
             return redirect()->route('ortho.bookings.booking_search');
-            
         }
 
         $clsShift               = new ShiftModel();
@@ -210,7 +209,6 @@ class BookingController extends BackendController
                 }
             }
         }
-        // echo '<pre>';print_r($data['services']);die;
         $data['arr_bookings'] = $arr_bookings;
         // echo '<pre>';
         // print_r($data['arr_bookings']);

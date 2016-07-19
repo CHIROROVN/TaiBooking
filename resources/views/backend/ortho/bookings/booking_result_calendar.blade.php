@@ -60,7 +60,7 @@
             <!-- doctor -->
             @for ( $j = 1; $j <= $rowspanDoctor; $j++ )
               <tr>
-                <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title">ドクター</td>
+                <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title" style="width: 70px;">ドクター</td>
                 @foreach ( $doctors as $doctor )
                 <td align="center">{{ $doctor->u_name }}</td>
                 @endforeach
@@ -70,7 +70,7 @@
             <!-- hygienists -->
             @for ( $j = 1; $j <= $rowspanHygienists; $j++ )
               <tr>
-                <td align="center" rowspan="{{ $rowspanHygienists }}" class="col-title">衛生士</td>
+                <td align="center" rowspan="{{ $rowspanHygienists }}" class="col-title" style="width: 70px;">衛生士</td>
                 @foreach ( $hygienists as $hygienist )
                 <td align="center">{{ $hygienist->u_name }}</td>
                 @endforeach
@@ -81,7 +81,7 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center" width="10%">時間</td>
+              <td align="center" width="10%" style="width: 70px;">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center">{{ $facility->facility_name }}</td>
               @endforeach
@@ -96,7 +96,7 @@
               $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center">{{ $time }}～</td>
+              <td align="center" style="width: 70px;">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
                 <?php
                   // $common_id = $facility->facility_id . '-' . $hour.$minute;

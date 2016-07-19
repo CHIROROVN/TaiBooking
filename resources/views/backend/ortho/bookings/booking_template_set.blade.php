@@ -77,6 +77,13 @@
           //   }
           // }); 
       },
+      eventAfterAllRender: function() {
+        $( ".fc-content-skeleton tbody td" ).each(function( index ) {
+          if ( $(this).attr('class') == null ) {
+            $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="" onclick="myfunction()">Not yet</span>');
+          }
+        });
+      },
       selectable: true,
       selectHelper: true,
       select: function(start, end, allDay) {
@@ -105,9 +112,6 @@
         //  );
         // }
 
-
-        
-        
         calendar.fullCalendar('unselect');
 
         // get clinic_id
@@ -118,15 +122,6 @@
       }
 
     });
-
-    function setNotYet() {
-      $( ".fc-content-skeleton tbody td" ).each(function( index ) {
-        if ( $(this).attr('class') == null ) {
-          $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="222" onclick="myfunction()">Not yet</span>');
-        }
-      });
-    }
-
 
   });
   </script>

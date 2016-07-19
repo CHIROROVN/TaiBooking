@@ -80,7 +80,7 @@
       eventAfterAllRender: function() {
         $( ".fc-content-skeleton tbody td" ).each(function( index ) {
           if ( $(this).attr('class') == null ) {
-            $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="" onclick="myfunction()">Not yet</span>');
+            $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="" onclick="myfunction()">{{ trans("common.") }}</span>');
           }
         });
       },
@@ -121,6 +121,14 @@
 
       }
 
+    });
+
+
+    // auto select option clinic
+    $('#s_clinic_id option').each(function(index, el) {
+      if ( $(this).text() == 'たい矯正歯科' ) {
+        var clinic_id = $(this).val();
+      }
     });
 
   });

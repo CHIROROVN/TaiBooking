@@ -172,6 +172,7 @@ class BookingController extends BackendController
         
         if ( empty($clinic_id) ) {
             return redirect()->route('ortho.bookings.booking_search');
+            
         }
 
         $clsShift               = new ShiftModel();
@@ -180,7 +181,7 @@ class BookingController extends BackendController
         $clsClinic              = new ClinicModel();
         $clsService             = new ServiceModel();
         $clsTreatment1          = new Treatment1Model();
-        $data['doctors']        = $clsShift->get_by_belong([1]);
+        $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
         $data['facilitys']      = $clsFacility->getAll($clinic_id);
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);

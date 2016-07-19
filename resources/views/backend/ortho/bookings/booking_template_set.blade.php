@@ -66,6 +66,7 @@
         
         $(element).addClass("fc-event-inner-aaaaaaaaa");
       },
+      
       dayRender: function (date, cell) {
           // cell.append('<span><a style="margin-left: 5px; text-decoration: underline;" href="' + moment(date).format('DD') + '">Not yet</a></span>');
 
@@ -118,11 +119,13 @@
 
     });
 
-    $( ".fc-content-skeleton tbody td" ).each(function( index ) {
-      if ( $(this).attr('class') == null ) {
-        $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="222" onclick="myfunction()">Not yet</span>');
-      }
-    });
+    function setNotYet() {
+      $( ".fc-content-skeleton tbody td" ).each(function( index ) {
+        if ( $(this).attr('class') == null ) {
+          $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="222" onclick="myfunction()">Not yet</span>');
+        }
+      });
+    }
 
 
   });

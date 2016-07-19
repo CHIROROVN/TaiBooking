@@ -98,6 +98,7 @@
                     ?>
                     <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
                     @endforeach
+                    
                     </select>
                   </td>
                   @endforeach

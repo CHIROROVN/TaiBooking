@@ -80,7 +80,7 @@
       eventAfterAllRender: function() {
         $( ".fc-content-skeleton tbody td" ).each(function( index ) {
           if ( $(this).attr('class') == null ) {
-            $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="" onclick="myfunction()">{{ trans("common.") }}</span>');
+            $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="" onclick="myfunction()">{{ trans("common.text_not_yet") }}</span>');
           }
         });
       },
@@ -125,11 +125,30 @@
 
 
     // auto select option clinic
-    $('#s_clinic_id option').each(function(index, el) {
-      if ( $(this).text() == 'たい矯正歯科' ) {
-        var clinic_id = $(this).val();
-      }
-    });
+    var s_clinic_id = getUrlParameter('s_clinic_id');
+    if ( s_clinic_id == undefined || !s_clinic_id.length ) {
+      $('#s_clinic_id option').each(function(index, el) {
+        if ( $(this).text() == 'たい矯正歯科' ) {
+          var clinic_id = $(this).val();
+          window.location.href = "{{ route('ortho.bookings.template.set') }}?s_clinic_id=" + clinic_id;
+        }
+      });
+    }
+    function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
 
   });
   </script>

@@ -181,4 +181,98 @@ class ShiftController extends BackendController
         $data['shift']              = $clsShift->get_by_id($id);
         return view('backend.ortho.shifts.edit', $data);
     }
+
+
+    public function getUpdateFree()
+    {
+        $clsShift = new ShiftModel();
+
+        $dataUpdate = array(
+            'last_date'             => date('y-m-d H:i:s'),
+            'last_kind'             => UPDATE,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->id
+        );
+        $dataUpdate2 = array(
+            'last_date'             => date('y-m-d H:i:s'),
+            'last_kind'             => INSERT,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->id
+        );
+
+        if ( !empty(Input::get('u_id_old')) ) {
+            $where = array(
+                'u_id'                  => Input::get('u_id_old'),
+                'shift_date'            => Input::get('shift_date'),
+                'clinic_id'             => Input::get('clinic_id')
+            );
+        } else {
+            $where = array(
+                'u_id'                  => Input::get('u_id'),
+                'shift_date'            => Input::get('shift_date'),
+                'clinic_id'             => Input::get('clinic_id')
+            );
+        }
+        $shift = $clsShift->checkExist($where);
+
+        $status = '';
+        if ( !empty($shift) ) {
+            // for udpate facility_id
+            if ( empty($shift->shift_free1) ) {
+                $dataUpdate['shift_free1'] = Input::get('facility_id');
+            } else {
+                if ( empty($shift->shift_free2) ) {
+                    $dataUpdate['shift_free2'] = Input::get('facility_id');
+                } else {
+                    if ( empty($shift->shift_free3) ) {
+                        $dataUpdate['shift_free3'] = Input::get('facility_id');
+                    } else {
+                        if ( empty($shift->shift_free4) ) {
+                            $dataUpdate['shift_free4'] = Input::get('facility_id');
+                        } else {
+                            if ( empty($shift->shift_free5) ) {
+                                $dataUpdate['shift_free5'] = Input::get('facility_id');
+                            }
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+
+            // for reset facility_id
+            if ( $shift->shift_free1 == Input::get('facility_id_old') ) {
+                $dataUpdate2['shift_free1'] = null;
+            } else {
+                if ( $shift->shift_free2 == Input::get('facility_id_old') ) {
+                    $dataUpdate2['shift_free2'] = null;
+                } else {
+                    if ( $shift->shift_free3 == Input::get('facility_id_old') ) {
+                        $dataUpdate2['shift_free3'] = null;
+                    } else {
+                        if ( $shift->shift_free4 == Input::get('facility_id_old') ) {
+                            $dataUpdate2['shift_free4'] = null;
+                        } else {
+                            if ( $shift->shift_free5 == Input::get('facility_id_old') ) {
+                                $dataUpdate2['shift_free5'] = null;
+                            }
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+
+            if ( !empty(Input::get('u_id_old')) ) {
+                $status = $clsShift->update($shift->shift_id, $dataUpdate2);
+            } else {
+                $status = $clsShift->update($shift->shift_id, $dataUpdate);
+            }
+            // $status = $clsShift->update($shift->shift_id, $dataUpdate);
+        }
+
+        echo json_encode(array('status', $status));
+    }
 }

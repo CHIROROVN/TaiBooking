@@ -4,22 +4,25 @@
 
 <?php
   // doctor
-  $totalRecordDoctor    = count($doctors);
-  $numberRowDoctor      = ceil($totalRecordDoctor / 15);
-  $rowspanDoctor        = $numberRowDoctor;
-  if ( $numberRowDoctor == 0 ) {
-    $rowspanDoctor = 1;
-  }
+  // $totalRecordDoctor    = 45; //count($doctors);
+  // $numberRowDoctor      = ceil($totalRecordDoctor / 15);
+  // $rowspanDoctor        = $numberRowDoctor;
+  // if ( $numberRowDoctor == 0 ) {
+  //   $rowspanDoctor = 1;
+  // }
 
-  // hygienists
-  $totalRecordHygienists  = count($hygienists);
-  $numberRowHygienists    = ceil($totalRecordHygienists / 15);
-  $rowspanHygienists      = $numberRowHygienists;
-  if ( $rowspanHygienists == 0 ) {
-    $rowspanHygienists = 1;
-  }
+  // // hygienists
+  // $totalRecordHygienists  = 45; //count($hygienists);
+  // $numberRowHygienists    = ceil($totalRecordHygienists / 15);
+  // $rowspanHygienists      = $numberRowHygienists;
+  // if ( $rowspanHygienists == 0 ) {
+  //   $rowspanHygienists = 1;
+  // }
 
   // echo $totalRecordDoctor.'-dfw3erf-'.$numberRowDoctor;
+
+  // $totalRecord = count($doctors);
+  // echo $totalRecord;
 ?>
 
 <section id="page">
@@ -55,39 +58,120 @@
           <p>{{ $clinic->clinic_name }}</p>
         </div>
 
+        <?php
+        $text = '末設定';
+        ?>
         <div class="table-responsive">
           <table class="table table-bordered">
-            <!-- doctor -->
-            @for ( $j = 1; $j <= $rowspanDoctor; $j++ )
-              <tr>
-                <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title">ドクター</td>
-                @if(!count($doctors))
-                  <td align="center">&nbsp;</td>
-                @else
-                    @foreach ( $doctors as $doctor )
-                    <td align="center">{{ $doctor->u_name }}</td>
-                    @endforeach
-                @endif
-              </tr>
-            @endfor
+            <!-- list doctor -->
+            <tr>
+              <td align="center" rowspan="3" class="col-title" style="width: 142px">ドクター</td>
+              @foreach ( $facilitys as $facility )
+              <?php
+              $str = '';
+              foreach ( $doctors as $doctor ) {
+                if ( $doctor->shift_free1 == $doctor->id ) {
+                  $text = $doctor->u_name;
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->id . '" >' . $doctor->u_name . '</label></li>';
+              }
+              $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+              $str = '';
+              foreach ( $doctors as $doctor ) {
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->id . '" >' . $doctor->u_name . '</label></li>';
+              }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+              $str = '';
+              foreach ( $doctors as $doctor ) {
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->id . '" >' . $doctor->u_name . '</label></li>';
+              }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
 
-            <!-- hygienists -->
-            @for ( $j = 1; $j <= $rowspanHygienists; $j++ )
-              <tr>
-                <td align="center" rowspan="{{ $rowspanHygienists }}" class="col-title">衛生士</td>
-                @foreach ( $hygienists as $hygienist )
-                <td align="center">{{ $hygienist->u_name }}</td>
-                @endforeach
-              </tr>
-            @endfor
+            <!-- list hygienists -->
+            <tr>
+              <td align="center" rowspan="3" class="col-title" style="width: 142px">衛生士</td>
+              @foreach ( $facilitys as $facility )
+              <?php
+              $str = '';
+              foreach ( $hygienists as $hygienist ) {
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->id . '" >' . $hygienist->u_name . '</label></li>';
+              }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+              $str = '';
+              foreach ( $hygienists as $hygienist ) {
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->id . '" >' . $hygienist->u_name . '</label></li>';
+              }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+              $str = '';
+              foreach ( $hygienists as $hygienist ) {
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->id . '" >' . $hygienist->u_name . '</label></li>';
+              }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <!-- 3 -->
           </table>
         </div>
+
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center" width="50px">時間</td>
+              <td align="center" style="width: 6%;">時間</td>
               @foreach ( $facilitys as $facility )
-              <td align="center" width="50px">{{ $facility->facility_name }}</td>
+              <td align="center" style="width: 6%;">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
 
@@ -100,7 +184,7 @@
               $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" style="width: 50px;">{{ $time }}～</td>
+              <td align="center" style="width: 6%">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
                 <?php
                   // $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -124,22 +208,11 @@
                       if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
                         $br = '';
                       }
-                      $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_1] . '</a>';
-                    } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_1] . '<span></span></a>';
+                    } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind < 1 ) {
                       $color = 'blue';
-                      $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '治療<span></span>' . '</a>';
                     }
-                    // if ( $arr_bookings[$facility_id][$fullTime]->service_2_kind == 1 ) {
-                    //   $color = 'green';
-                    //   $br = '<br />';
-                    //   if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
-                    //     $br = '';
-                    //   }
-                    //   $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_2] . '</a>';
-                    // } elseif ( $arr_bookings[$facility_id][$fullTime]->service_2_kind == 2 ) {
-                    //   $color = 'blue';
-                    //   $text = '<a href="' . $link . '">' . '治療' . '</a>';
-                    // }
                   }
                 ?>
 
@@ -164,12 +237,68 @@
 </section>
 
 <script>
-  // $(document).ready(function(){
-  //   $(".table-responsive table.table-bordered tr td").click(function(){
-  //     window.location.href = 'booking_regist.html';
-  //   });
-  // });
+  $(document).ready(function(){
+    $('.popup').popover({
+      html: true
+    });
+    
+    // set value from popup
+    $('.popup').click(function(event) {
+      var objPopup = $(this);
+      var facility_id = $(this).attr('data-facility-id');
+      var u_id_old = $(this).attr('data-u-id');
+      var facility_id_old = $(this).attr('data-facility-id');
+      if ( u_id_old == undefined ) {
+        u_id_old = null;
+      }
+      if ( facility_id_old == undefined ) {
+        facility_id_old = null;
+      }
 
+      // auto select value old
+      $('.input-user').each(function(index, el) {
+        if ( $(this).val() == objPopup.attr('data-u-id') ) {
+          $(this).attr("checked",true);
+          $(this).attr('disabled', 'disabled');
+        }
+      });
+
+      $('.input-user').click(function(event) {
+        console.log($(this).val());
+        console.log($(this).attr('text'));
+        var u_id = $(this).val();
+        var u_name = $(this).attr('text');
+
+        if ( u_id == '-1' ) {
+          objPopup.html('末設定');
+          objPopup.attr('data-u-id', null);
+          $('.facility_id-' + facility_id).each(function(index, el) {
+            $('.facility_id-' + facility_id).find('span').html('<br /><span></span>');
+          });
+        } else {
+          objPopup.html(u_name);
+          objPopup.attr('data-u-id', u_id);
+          $('.facility_id-' + facility_id).each(function(index, el) {
+            $('.facility_id-' + facility_id).find('span').html('<br /><span>' + u_name + '</span>');
+          });
+        }
+        objPopup.popover('hide');
+
+        // update to table "t_shift"
+        $.ajax({
+           url: "{{ route('ortho.shifts.update.free.ajax') }}",
+           data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old, facility_id_old: facility_id_old } ,
+           dataType: 'json',
+           type: "get",
+           success: function(result) {
+             console.log(result);
+           }
+        });
+        // end update to table "t_shift"
+      });
+    });
+    // end set value from popup
+  });
 </script>
 
 @endsection

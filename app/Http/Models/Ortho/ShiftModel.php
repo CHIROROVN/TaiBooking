@@ -109,4 +109,25 @@ class ShiftModel
         return false;
     }
 
+    public function checkExist($where = array())
+    {
+        $db = DB::table($this->table);
+
+        // u_id
+        if ( !empty($where['u_id']) ) {
+            $db->where('u_id', $where['u_id']);
+        }
+        // shift_date
+        if ( !empty($where['shift_date']) ) {
+            $db->where('shift_date', $where['shift_date']);
+        }
+        // clinic_id
+        if ( !empty($where['clinic_id']) ) {
+            $db->where('clinic_id', $where['clinic_id']);
+        }
+
+        $db = $db->first();
+        return $db;
+    }
+
 }

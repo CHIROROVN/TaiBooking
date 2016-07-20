@@ -211,7 +211,7 @@ class BookingController extends BackendController
         }
         $data['arr_bookings'] = $arr_bookings;
         // echo '<pre>';
-        // print_r($data['arr_bookings']);
+        // print_r($data['doctors']);
         // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_result_calendar', $data);

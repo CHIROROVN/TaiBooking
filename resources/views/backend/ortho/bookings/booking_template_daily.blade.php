@@ -261,33 +261,31 @@
           });
         } else if ( serviceIdNew == 0 ) {
           // brown
-          
-          $('.td-content').each(function(index, el) {
-          
-            console.log(tdObjOld.find('.td-content').attr('data-group'));
-
-            if ( $(this).attr('data-group') == tdObjOld.find('.td-content').attr('data-group') ) {
-              // setClear($(this), 0, '');
-              // setBrow($(this), 0, '');
-              // console.log($(this).attr('class'));
+          // update to database table "t_booking"
+          $.ajax({
+            url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
+            type: 'get',
+            dataType: 'json',
+            data: { 
+              booking_start_time: tdObjOld.find('.td-content').attr('data-full-time'),
+              booking_group_id: tdObjOld.find('.td-content').attr('data-group') + '_' + '{{ $date }}',
+              booking_date: '{{ $date }}',
+              clinic_id: '{{ @$clinic->clinic_id }}' 
+            },
+            success: function(result){
+              console.log(result);
             }
           });
-
-          // update to database table "t_booking"
-          // $.ajax({
-          //   url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
-          //   type: 'get',
-          //   dataType: 'json',
-          //   data: { 
-          //     booking_start_time: tdObjOld.find('.td-content').attr('data-full-time'),
-          //     booking_group_id: tdObjOld.find('.td-content').attr('data-group'),
-          //     booking_date: '{{ $date }}',
-          //     clinic_id: '{{ @$clinic->clinic_id }}' 
-          //   },
-          //   success: function(result){
-          //     console.log(result);
-          //   }
-          // });
+          // reset html
+          var groupDelete = tdObjOld.find('.td-content').attr('data-group');
+          $('.td-content').each(function(index, el) {
+            if ( $(this).attr('data-group') == groupDelete ) {
+              setClear($(this).parent(), 0, '');
+              setBrow($(this).parent(), 0, '');
+              setClear($(this), 0, '');
+              setBrow($(this), 0, '');
+            }
+          });
         } else {
           // select total sum time clinic service
           $.ajax({

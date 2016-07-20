@@ -60,7 +60,7 @@
             <!-- doctor -->
             @for ( $j = 1; $j <= $rowspanDoctor; $j++ )
               <tr>
-                <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title" style="width: 70px;">ドクター</td>
+                <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title">ドクター</td>
                 @if(!count($doctors))
                   <td align="center">&nbsp;</td>
                 @else
@@ -74,7 +74,7 @@
             <!-- hygienists -->
             @for ( $j = 1; $j <= $rowspanHygienists; $j++ )
               <tr>
-                <td align="center" rowspan="{{ $rowspanHygienists }}" class="col-title" style="width: 70px;">衛生士</td>
+                <td align="center" rowspan="{{ $rowspanHygienists }}" class="col-title">衛生士</td>
                 @foreach ( $hygienists as $hygienist )
                 <td align="center">{{ $hygienist->u_name }}</td>
                 @endforeach
@@ -85,9 +85,9 @@
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
-              <td align="center" width="10%" style="width: 70px;">時間</td>
+              <td align="center" width="50px">時間</td>
               @foreach ( $facilitys as $facility )
-              <td align="center">{{ $facility->facility_name }}</td>
+              <td align="center" width="50px">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
 
@@ -100,7 +100,7 @@
               $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" style="width: 70px;">{{ $time }}～</td>
+              <td align="center" style="width: 50px;">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
                 <?php
                   // $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -144,7 +144,7 @@
                 ?>
 
                 <!-- close -->
-                <td align="center" class="col-{{ $color }}" id="">
+                <td align="center" width="50px" class="col-{{ $color }}" id="">
                   <div class="td-content">
                     {!! $text !!}
                     @if ( $color === 'brown' )

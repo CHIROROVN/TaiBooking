@@ -651,7 +651,7 @@ class BookingTemplateController extends BackendController
         $booking = $clsBooking->checkExist($where);
         $status = '';
         if ( !empty($booking) ) {
-            $bookingGroups = $clsBooking->get_by_group($booking->booking_id);
+            $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
             foreach ( $bookingGroups as $item ) {
                 $status = $clsBooking->update($item->booking_id, $dataUpdate);
             }

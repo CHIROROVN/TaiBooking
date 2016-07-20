@@ -111,11 +111,17 @@
                     }
 
                     $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
+                    
                   }
                 ?>
 
                 <!-- close -->
                 <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}" style="width: 45px;">
+                  <?php
+                  if ( $color === 'brown' ) {
+                      $clsNameGroup = null;
+                    }
+                  ?>
                   <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
@@ -233,27 +239,19 @@
         var tdObjNew = $('#td-' + facilityIdNew + '-' + dataFullTime);
 
         // green
-        if ( serviceIdNew == -1 ) {
+        if ( serviceIdNew < 0 ) {
           // blue
-          if ( serviceIdNew < 0 ) {
-            setClear(tdObjOld, 0, '');
-            setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
-          }
-        } else if ( serviceIdNew == 0 ) {
-          console.log(tdObjOld.find('.td-content').attr('data-group'));
-          console.log(tdObjOld.find('.td-content').attr('data-full-time'));
-          // brown
           setClear(tdObjOld, 0, '');
-          setBrow(tdObjOld, 0, '');
+          setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
 
-          // update to database table "t_booking"
+          // insert to table "t_booking"
           $.ajax({
-            url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
+            url: "{{ route('ortho.bookings.template.daily.insert.ajax') }}",
             type: 'get',
             dataType: 'json',
             data: { 
-              booking_start_time: tdObjOld.find('.td-content').attr('data-full-time'),
-              booking_group_id: tdObjOld.find('.td-content').attr('data-group'),
+              facility_id: facilityIdNew,
+              time: dataFullTime,
               booking_date: '{{ $date }}',
               clinic_id: '{{ @$clinic->clinic_id }}' 
             },
@@ -261,6 +259,35 @@
               console.log(result);
             }
           });
+        } else if ( serviceIdNew == 0 ) {
+          // brown
+          
+          $('.td-content').each(function(index, el) {
+          
+            console.log(tdObjOld.find('.td-content').attr('data-group'));
+
+            if ( $(this).attr('data-group') == tdObjOld.find('.td-content').attr('data-group') ) {
+              // setClear($(this), 0, '');
+              // setBrow($(this), 0, '');
+              // console.log($(this).attr('class'));
+            }
+          });
+
+          // update to database table "t_booking"
+          // $.ajax({
+          //   url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
+          //   type: 'get',
+          //   dataType: 'json',
+          //   data: { 
+          //     booking_start_time: tdObjOld.find('.td-content').attr('data-full-time'),
+          //     booking_group_id: tdObjOld.find('.td-content').attr('data-group'),
+          //     booking_date: '{{ $date }}',
+          //     clinic_id: '{{ @$clinic->clinic_id }}' 
+          //   },
+          //   success: function(result){
+          //     console.log(result);
+          //   }
+          // });
         } else {
           // select total sum time clinic service
           $.ajax({

@@ -651,7 +651,42 @@ class BookingTemplateController extends BackendController
         $booking = $clsBooking->checkExist($where);
         $status = '';
         if ( !empty($booking) ) {
-            $status = $clsBooking->update($booking->booking_id, $dataUpdate);
+            $bookingGroups = $clsBooking->get_by_group($booking->booking_id);
+            foreach ( $bookingGroups as $item ) {
+                $status = $clsBooking->update($item->booking_id, $dataUpdate);
+            }
+        }
+
+        echo json_encode(array('status', $status));
+    }
+
+
+    public function insertBookingTemplateDailyAjax()
+    {
+        $clsBooking = new BookingModel();
+
+        $dataInsert = array(
+            'booking_date'          => Input::get('booking_date'),
+            'booking_start_time'    => Input::get('time'),
+            'clinic_id'             => Input::get('clinic_id'),
+            'facility_id'           => Input::get('facility_id'),
+            'service_1'             => -1,
+
+            'last_date'             => date('y-m-d H:i:s'),
+            'last_kind'             => INSERT,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->id
+        );
+        $where = array(
+            'booking_start_time'    => Input::get('booking_start_time'),
+            'facility_id'           => Input::get('facility_id'),
+            'booking_date'          => Input::get('booking_date'),
+            'clinic_id'             => Input::get('clinic_id'),
+        );
+        $booking = $clsBooking->checkExist($where);
+        $status = '';
+        if ( empty($booking) ) {
+            $status = $clsBooking->insert($dataInsert);
         }
 
         echo json_encode(array('status', $status));

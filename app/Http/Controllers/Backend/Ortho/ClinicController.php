@@ -389,9 +389,9 @@ class ClinicController extends BackendController
         );
         
         if ( $clsClinicArea->update_by_clinic($id, $dataInsert) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_delete_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_delete_danger'));
         }
 
         return redirect()->route('ortho.clinics.index');

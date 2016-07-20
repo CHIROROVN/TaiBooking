@@ -124,6 +124,7 @@
     });
 
 
+
     // auto select option clinic
     var s_clinic_id = getUrlParameter('s_clinic_id');
     if ( s_clinic_id == undefined || !s_clinic_id.length ) {

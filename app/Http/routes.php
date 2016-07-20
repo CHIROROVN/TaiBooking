@@ -22,7 +22,6 @@ Route::get('/home', 'HomeController@index');
 
 Route::any('/password/change', 'HomeController@change');
 
-
 Route::get('/profile', 'HomeController@profile');
 
 

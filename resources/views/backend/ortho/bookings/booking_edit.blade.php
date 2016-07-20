@@ -175,7 +175,7 @@
             </div>
             <div class="radio">
               <label>
-                <input name="booking_status" value="3" type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
+                <input name="booking_status" id="recalling" value="3"  type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
                 <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
                   <option value="" selected>▼選択</option>
                   <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 01, 'Ym') == $booking->booking_recall_ym) selected @endif>1ヶ月後</option>
@@ -214,5 +214,10 @@
       </div>
     </section>
 {!! Form::close() !!}
+<script type="text/javascript">
+  $('#booking_recall_ym').click(function(event) {
+    $('#recalling').attr("checked", "checked");
+  });
+</script>
 
 @endsection

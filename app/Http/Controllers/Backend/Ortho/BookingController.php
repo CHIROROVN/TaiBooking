@@ -714,9 +714,9 @@ class BookingController extends BackendController
     public function getSearch(){
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_list_clinic();
-        $clsUser                    = new UserModel();
-        $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+        $clsShift                    = new ShiftModel();
+        $data['doctors']            = $clsShift->get_user_shift([1]);
+        $data['hygienists']         = $clsShift->get_user_shift([2,3]);
        // $clsService                 = new ServiceModel();
        
         //$data['services']           = $clsService->get_list();

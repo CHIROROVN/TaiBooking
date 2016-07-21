@@ -130,4 +130,16 @@ class ShiftModel
         return $db;
     }
 
+    public function get_user_shift($belong_kind = array())
+    {
+        $db = DB::table($this->table)
+                    ->leftJoin('m_users as t2', 't_shift.u_id', '=', 't2.id')
+                    ->leftJoin('m_belong as t1', 't2.u_belong', '=', 't1.belong_id')
+                    ->select('id', 'u_name')
+                    ->where('t_shift.last_kind', '<>', DELETE)
+                    ->distinct('id')
+                    ->whereIn('t1.belong_kind', $belong_kind);
+       return $db->get();
+    }
+
 }

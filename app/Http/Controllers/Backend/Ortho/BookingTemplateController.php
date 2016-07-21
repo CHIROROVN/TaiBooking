@@ -675,6 +675,7 @@ class BookingTemplateController extends BackendController
             'clinic_id'             => Input::get('clinic_id'),
             'facility_id'           => Input::get('facility_id'),
             'service_1'             => -1,
+            'service_1_kind'        => 2,
 
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => INSERT,

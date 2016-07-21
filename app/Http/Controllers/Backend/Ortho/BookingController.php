@@ -724,7 +724,7 @@ class BookingController extends BackendController
         $data['services']           = $clsClinicService->get_service();
         
         $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
         return view('backend.ortho.bookings.booking_search', $data);
     }
 
@@ -792,9 +792,6 @@ class BookingController extends BackendController
         $data['treatment1s']              = $clsTreatment1->get_list_treatment();
         $clsService                       = new ServiceModel();
         $data['services']                 = $clsService->get_list();
-        //$data['page']                     = Input::get('page');
-
-
         return view('backend.ortho.bookings.booking_result_list', $data);
     }
 

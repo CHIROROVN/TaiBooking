@@ -359,8 +359,11 @@ class BookingModel
             }
         }
 
-        // return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
-        return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+        if($service_kind == 2){
+            return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+        }else{
+            return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+        }
     }
 
     /**

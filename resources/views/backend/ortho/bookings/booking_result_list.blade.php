@@ -62,7 +62,7 @@
       </tbody>
     </table>
       <div class="row margin-bottom">
-        <div class="col-md-12 text-center">    
+        <div class="col-md-12 text-center">
         {!! $bookings->appends(
         ['clinic_id'=>@$clinic_id,
         'doctor_id'=>@$doctor_id,

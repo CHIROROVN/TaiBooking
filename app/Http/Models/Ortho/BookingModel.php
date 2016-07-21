@@ -281,11 +281,12 @@ class BookingModel
         return $db;
     }
 
+    //search booking list
     public function get_booking_list($where = null){
         $db =  DB::table($this->table)
-                                ->leftJoin('t_facility as tf1', 't_booking.facility_id', '=', 'tf1.facility_id')
-                                ->select('t_booking.booking_id', 't_booking.patient_id', 't_booking.booking_date', 't_booking.booking_start_time', 't_booking.booking_total_time', 't_booking.facility_id', 't_booking.facility_id', 't_booking.service_1', 't_booking.service_1_kind', 't_booking.service_2', 't_booking.service_2_kind','t_booking.doctor_id','t_booking.hygienist_id', 'tf1.facility_id', 'tf1.facility_name', 't_booking.clinic_id')
-                                ->where('t_booking.last_kind', '<>', DELETE);
+                        ->leftJoin('t_facility as tf1', 't_booking.facility_id', '=', 'tf1.facility_id')
+                        ->select('t_booking.booking_id', 't_booking.patient_id', 't_booking.booking_date', 't_booking.booking_start_time', 't_booking.booking_total_time', 't_booking.facility_id', 't_booking.facility_id', 't_booking.service_1', 't_booking.service_1_kind', 't_booking.service_2', 't_booking.service_2_kind','t_booking.doctor_id','t_booking.hygienist_id', 'tf1.facility_id', 'tf1.facility_name', 't_booking.clinic_id')
+                        ->where('t_booking.last_kind', '<>', DELETE);
 
         if(isset($where['clinic_id'])){
             $result = $db->where('t_booking.clinic_id', '=', $where['clinic_id']);
@@ -336,7 +337,7 @@ class BookingModel
         if(isset($where['clinic_service_name'])){
             $sk = explode('_', $where['clinic_service_name']);
             $service          = $sk[0];
-            $s_kind            = str_split($sk[1], 3);
+            $s_kind            = str_split($sk[1], 2);
             $service_kind     = $s_kind[1];
 
             if($service_kind == 1){
@@ -347,9 +348,13 @@ class BookingModel
             }
 
             if($service_kind == 2){
-                $result = $db->where('t_booking.service_1', '=', $service)
+                $split = explode('#', $service);
+                $treatment_id = $split[0];
+                $treatment_time = $split[1];
+
+                $result = $db->where('t_booking.service_1', '=', '-1')
                 ->where('t_booking.service_1_kind', '=', $service_kind);
-                $result = $db->orWhere('t_booking.service_2', '=', $service)
+                $result = $db->orWhere('t_booking.service_2', '=', '-1')
                 ->where('t_booking.service_2_kind', '=', $service_kind);
             }
         }

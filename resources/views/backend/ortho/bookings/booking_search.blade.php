@@ -132,14 +132,14 @@
                       <optgroup label="業務名">
                         @if(count($services) > 0)
                           @foreach($services as $service)
-                          <option value="{{$service->service_id}}_sk11" >{{$service->service_name}}</option>
+                          <option value="{{$service->service_id}}_sk1" >{{$service->service_name}}</option>
                         @endforeach
                         @endif
                     </optgroup>
                     <optgroup label="治療内容">
                           @if(count($treatment1s) > 0)
-                            @foreach($treatment1s as $key12 => $treatment12)
-                              <option value="{{$key12}}_sk12" >{{$treatment12}}</option>
+                            @foreach($treatment1s as $treatment12)
+                              <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk2" >{{$treatment12->treatment_name}}</option>
                             @endforeach
                           @endif
                     </optgroup>

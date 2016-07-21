@@ -725,7 +725,6 @@ class BookingController extends BackendController
         
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-
         return view('backend.ortho.bookings.booking_search', $data);
     }
 

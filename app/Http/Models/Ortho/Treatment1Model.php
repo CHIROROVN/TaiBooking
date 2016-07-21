@@ -69,7 +69,8 @@ class Treatment1Model
     public function get_list_treatment(){
         return DB::table($this->table)
                                     ->where('last_kind', '<>', DELETE)
+                                    ->select('treatment_id','treatment_name', 'treatment_time')
                                     ->orderBy('treatment_id', 'asc')
-                                    ->lists('treatment_name', 'treatment_id');
+                                    ->get();
     }
 }

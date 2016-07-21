@@ -15,6 +15,7 @@
                   @if(empty($doctors))
                     <option value="">▼ドクター</option>
                   @else
+                    <option value="">▼ドクター</option>
                     @foreach($doctors as $doctor)
                       <option value="{{@$doctor->id}}" @if(@$doctor->id == @$doctor_id) selected="" @endif >{{@$doctor->u_name}}</option>
                     @endforeach

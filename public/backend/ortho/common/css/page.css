@@ -650,3 +650,47 @@ textarea {
   border-bottom: 1px solid #ddd;
   vertical-align: middle;
 }
+
+.percent-1 {
+  background-color: #D3DEF1 !important;
+}
+
+.percent-2 {
+  background-color: #D3EDFB !important;
+}
+
+.percent-3 {
+  background-color: #D4ECEA !important;
+}
+
+.percent-4 {
+  background-color: #D5EAD8 !important;
+}
+
+.percent-5 {
+  background-color: #ECF4D9 !important;
+}
+
+.percent-6 {
+  background-color: #FFFCDB !important;
+}
+
+.percent-7 {
+  background-color: #FEECD2 !important;
+}
+
+.percent-8 {
+  background-color: #FBDAC8 !important;
+}
+
+.percent-9 {
+  background-color: #FADBDA !important;
+}
+
+.percent-10 {
+  background-color: #660033 !important;
+}
+
+.percent-11 {
+  background-color: #dd0000 !important;
+}

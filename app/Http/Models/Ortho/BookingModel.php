@@ -70,6 +70,22 @@ class BookingModel
         return $results;
     }
 
+    public function countTotal($date, $startTime, $endTime, $patient_id = false)
+    {
+        $results = DB::table($this->table)
+                            ->where('booking_date', $date)
+                            ->where('booking_start_time', '>=', $startTime)
+                            ->where('booking_start_time', '<', $endTime)
+                            ->where('last_kind', '<>', DELETE);
+
+        if ( $patient_id ) {
+            $results = $results->whereNotNull('patient_id');
+        }
+        
+        $db = $results->count();
+        return $db;
+    }
+
     public function get_all_groupby($where = array(), $paging = false)
     {
         $db = DB::table($this->table)

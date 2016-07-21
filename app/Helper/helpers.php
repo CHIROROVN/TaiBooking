@@ -266,3 +266,34 @@
       	return $prevDate;
 	}
 
+	function checkPercent($percent)
+	{
+		if ( 0 < $percent && $percent <= 9 ) {
+			$colorCls = 'percent-1';
+		} elseif ( 10 <= $percent && $percent <= 19 ) {
+			$colorCls = 'percent-2';
+		} elseif ( 20 <= $percent && $percent <= 29 ) {
+			$colorCls = 'percent-3';
+		} elseif ( 30 <= $percent && $percent <= 39 ) {
+			$colorCls = 'percent-4';
+		} elseif ( 40 <= $percent && $percent <= 49 ) {
+			$colorCls = 'percent-5';
+		} elseif ( 50 <= $percent && $percent <= 59 ) {
+			$colorCls = 'percent-6';
+		} elseif ( 60 <= $percent && $percent <= 69 ) {
+			$colorCls = 'percent-7';
+		} elseif ( 70 <= $percent && $percent <= 79 ) {
+			$colorCls = 'percent-8';
+		} elseif ( 80 <= $percent && $percent <= 89 ) {
+			$colorCls = 'percent-9';
+		} elseif ( 90 <= $percent && $percent <= 99 ) {
+			$colorCls = 'percent-10';
+		} elseif ( $percent == 100 ) {
+			$colorCls = 'percent-11';
+		} else {
+			$colorCls = '';
+		}
+
+		return $colorCls;
+	}
+

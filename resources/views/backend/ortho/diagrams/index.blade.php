@@ -27,7 +27,7 @@
             {!! Form::close() !!}
 
 
-            <div id='calendar'></div>
+            <div id='calendar' class="diagram-calendar"></div>
 
         </div>
       </div>
@@ -76,8 +76,6 @@
             // window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
             //location.reload();
           },
-
-          editable: false,
         });
       });
 

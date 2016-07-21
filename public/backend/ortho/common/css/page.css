@@ -636,4 +636,17 @@ textarea {
   margin: 0 auto;
 }
 
+.diagram-calendar .custom-indiagram {
+  border: 1px solid #ddd !important;
+  margin-bottom: 0;
+}
 
+.diagram-calendar .fc-row .fc-content-skeleton td,
+.diagram-calendar .fc-row .fc-helper-skeleton td {
+  border-color: #ddd;
+}
+
+.diagram-calendar .custom-indiagram td {
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}

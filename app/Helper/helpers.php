@@ -90,12 +90,14 @@
 	/**
 	* get array number day by month current
 	*/
-	function getDay($month)
+	function getDay($month, $year)
 	{
-		$year_current       = date('Y');
+		if ( empty($year) ) {
+			$year = date('Y');
+		}
 		$day_arr            = array();
 		if ( $month != 0 ) {
-			$number             = date('t', mktime(0, 0, 0, $month, 1, $year_current));
+			$number             = date('t', mktime(0, 0, 0, $month, 1, $year));
 			for ( $i = 1; $i <= $number; $i++ ) {
 				$i = sprintf('%02d', $i);
 				$day_arr[$i] = $i;
@@ -238,5 +240,29 @@
 		$totalMin = $hh * 60 + $mm;
 
 		return $totalMin;
+	}
+
+	function addOneDay($currentDay)
+	{
+		if ( empty($currentDay) ) {
+			$currentDay = date('Y-m-d');
+		}
+
+		$nextDate            = strtotime ( '+ 1 day' , strtotime ( $currentDay ) ) ;
+      	$nextDate            = date ( 'Y-m-d' , $nextDate );
+
+      	return $nextDate;
+	}
+
+	function subOneDay($currentDay)
+	{
+		if ( empty($currentDay) ) {
+			$currentDay = date('Y-m-d');
+		}
+
+		$prevDate            = strtotime ( '- 1 day' , strtotime ( $currentDay ) ) ;
+      	$prevDate            = date ( 'Y-m-d' , $prevDate );
+
+      	return $prevDate;
 	}
 

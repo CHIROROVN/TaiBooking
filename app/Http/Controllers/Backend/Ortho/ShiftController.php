@@ -29,17 +29,17 @@ class ShiftController extends BackendController
     {
         $yearNow                = date('Y');
         $monthNow               = date('m');
-        $days                   = getDay($monthNow);
+        $days                   = getDay($monthNow, $yearNow);
         if ( Input::get('next') ) {
             $input = explode('-', Input::get('next'));
             $yearNow                = $input[0];
             $monthNow               = $input[1];
-            $days                   = getDay($monthNow);
+            $days                   = getDay($monthNow, $yearNow);
         } elseif ( Input::get('prev') ) {
             $input = explode('-', Input::get('prev'));
             $yearNow                = $input[0];
             $monthNow               = $input[1];
-            $days                   = getDay($monthNow);
+            $days                   = getDay($monthNow, $yearNow);
         }
 
         $clsClinic              = new ClinicModel();

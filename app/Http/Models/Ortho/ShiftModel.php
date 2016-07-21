@@ -40,6 +40,9 @@ class ShiftModel
         if ( !empty($where['clinic_id']) ) {
             $db = $db->where('t_shift.clinic_id', $where['clinic_id']);
         }
+        if ( !empty($where['shift_date']) ) {
+            $db = $db->where('t_shift.shift_date', $where['shift_date']);
+        }
 
         $results = $db->get();
         return $results;
@@ -51,7 +54,7 @@ class ShiftModel
         $db = DB::table($this->table)
                     ->leftJoin('m_users as t2', 't_shift.u_id', '=', 't2.id')
                     ->leftJoin('m_belong as t1', 't2.u_belong', '=', 't1.belong_id')
-                    ->select('id', 'u_name')
+                    ->select('t_shift.*', 'u_name')
                     ->where('t_shift.last_kind', '<>', DELETE)
                     ->whereIn('t1.belong_kind', $belong_kind);
         if ( !empty($date) ) {

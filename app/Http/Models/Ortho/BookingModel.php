@@ -285,7 +285,7 @@ class BookingModel
     public function get_booking_list($where = null){
         $db =  DB::table($this->table)
                         ->leftJoin('t_facility as tf1', 't_booking.facility_id', '=', 'tf1.facility_id')
-                        ->select('t_booking.booking_id', 't_booking.patient_id', 't_booking.booking_date', 't_booking.booking_start_time', 't_booking.booking_total_time', 't_booking.facility_id', 't_booking.facility_id', 't_booking.service_1', 't_booking.service_1_kind', 't_booking.service_2', 't_booking.service_2_kind','t_booking.doctor_id','t_booking.hygienist_id', 'tf1.facility_id', 'tf1.facility_name', 't_booking.clinic_id')
+                        ->select('t_booking.booking_id', 't_booking.patient_id', 't_booking.booking_date', 't_booking.booking_start_time', 't_booking.booking_total_time', 't_booking.facility_id', 't_booking.facility_id', 't_booking.service_1', 't_booking.service_1_kind', 't_booking.service_2', 't_booking.service_2_kind','t_booking.doctor_id','t_booking.hygienist_id', 'tf1.facility_id', 'tf1.facility_name', 't_booking.clinic_id', 't_booking.booking_group_id')
                         ->where('t_booking.last_kind', '<>', DELETE);
 
         if(isset($where['clinic_id'])){
@@ -359,7 +359,8 @@ class BookingModel
             }
         }
 
-        return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+        // return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+        return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
     }
 
     /**

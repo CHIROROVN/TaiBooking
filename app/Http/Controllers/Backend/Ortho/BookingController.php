@@ -760,26 +760,41 @@ class BookingController extends BackendController
     public function bookingResultList()
     {
         $where = array();
-        if(Input::get('clinic_id') != null)
-            $where['clinic_id']        = Input::get('clinic_id');
-        if(Input::get('doctor_id') != null)
-            $where['doctor_id']        = Input::get('doctor_id');
-        if(Input::get('hygienist_id') != null)
+        if(Input::get('clinic_id') != null){
+            $where['clinic_id']           = Input::get('clinic_id');
+            $data['clinic_id']            = Input::get('clinic_id');
+        }
+        if(Input::get('doctor_id') != null){
+            $where['doctor_id']           = Input::get('doctor_id');
+            $data['doctor_id']            = Input::get('doctor_id');
+        }
+        if(Input::get('hygienist_id') != null){
             $where['hygienist_id']        = Input::get('hygienist_id');
-        if(Input::get('booking_date') != null)
+            $data['hygienist_id']         = Input::get('hygienist_id');
+        }
+        if(Input::get('booking_date') != null){
             $where['booking_date']        = Input::get('booking_date');
-        if(Input::get('week_later') != null)
-            $where['week_later']        = Input::get('week_later');
-        if(Input::get('clinic_service_name') != null)
-            $where['clinic_service_name']        = Input::get('clinic_service_name');
-        $clsBooking                 = new BookingModel();
-        $data['bookings']           = $clsBooking->get_booking_list($where);
-        $clsFacility                = new FacilityModel();
-        $data['facilities']         = $clsFacility->list_facility_all();
-        $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        $clsService                 = new ServiceModel();
-        $data['services']           = $clsService->get_list();
+            $data['booking_date']         = Input::get('booking_date');
+        }
+        if(Input::get('week_later') != null){
+            $where['week_later']          = Input::get('week_later');
+            $data['week_later']           = Input::get('week_later');
+        }
+        if(Input::get('clinic_service_name') != null){
+            $where['clinic_service_name'] = Input::get('clinic_service_name');
+            $data['clinic_service_name']  = Input::get('clinic_service_name');
+        }
+        $clsBooking                       = new BookingModel();
+        $data['bookings']                 = $clsBooking->get_booking_list($where);
+        $clsFacility                      = new FacilityModel();
+        $data['facilities']               = $clsFacility->list_facility_all();
+        $clsTreatment1                    = new Treatment1Model();
+        $data['treatment1s']              = $clsTreatment1->get_list_treatment();
+        $clsService                       = new ServiceModel();
+        $data['services']                 = $clsService->get_list();
+        //$data['page']                     = Input::get('page');
+
+
         return view('backend.ortho.bookings.booking_result_list', $data);
     }
 

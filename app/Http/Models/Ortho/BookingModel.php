@@ -359,7 +359,7 @@ class BookingModel
             }
         }
 
-        if($service_kind == 2){
+        if(isset($where['clinic_service_name']) && $service_kind == 2){
             return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
         }else{
             return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);

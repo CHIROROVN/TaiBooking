@@ -210,10 +210,6 @@ class BookingController extends BackendController
             }
         }
         $data['arr_bookings'] = $arr_bookings;
-        // echo '<pre>';
-        // print_r($data['doctors']);
-        // echo '</pre>';die;
-
         return view('backend.ortho.bookings.booking_result_calendar', $data);
     }
 
@@ -304,8 +300,10 @@ class BookingController extends BackendController
         $data['hygienists']         = $clsUser->get_by_belong([2,3]);
         $clsService                 = new ServiceModel();
         $data['services']           = $clsService->get_list();
+        // $clsTreatment1              = new Treatment1Model();
+        // $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
         $clsFacility                = new FacilityModel();
         $data['facilities']         = $clsFacility->list_facility_all();
         $clsEquipment               = new EquipmentModel();
@@ -323,17 +321,35 @@ class BookingController extends BackendController
         $booking                    = $clsBooking->get_by_id($id);
         $bookingGroups              = $clsBooking->get_by_group($booking->booking_group_id);
 
-        $s_1_kind = Input::get('service_1');
-        $s1k = explode('#', $s_1_kind);
-        $service_1          = $s1k[0];
-        $s1_kind            = str_split($s1k[1], 3);
-        $service_1_kind     = $s1_kind[1];
+        $service_1 = $service_1_kind = $service_2 = $service_2_kind = '';
 
-        $s_2_kind = Input::get('service_2');
-        $s2k = explode('#', $s_2_kind);
-        $service_2          = $s2k[0];
-        $s2_kind            = str_split($s2k[1], 3);
-        $service_2_kind     = $s2_kind[1];
+        if(!empty(Input::get('service_1'))){
+            $s1k = explode('_', Input::get('service_1'));
+            $s1_kind            = str_split($s1k[1], 3);
+            $service_1_kind     = $s1_kind[1];
+
+            if($service_1_kind == 2){
+                $st1 = explode('#', $s1k[0]);
+                $service_1      = $st1[0];
+                $treatment_time_1 = $st1[1];
+            }else{
+                $service_1      = $s1k[0];
+            }
+        }
+
+        if(!empty(Input::get('service_2'))){
+            $s2k = explode('_', Input::get('service_2'));
+            $s2_kind            = str_split($s2k[1], 3);
+            $service_2_kind     = $s2_kind[1];
+
+            if($service_2_kind == 2){
+                $st2 = explode('#', $s2k[0]);
+                $service_2      = $st2[0];
+                $treatment_time_2 = $st2[1];
+            }else{
+                $service_2      = $s2k[0];
+            }
+        }
 
         $dataInput = array(
                 // 'facility_id'               => Input::get('facility_id'),
@@ -391,7 +407,7 @@ class BookingController extends BackendController
         $clsService                 = new ServiceModel();
         $data['services']           = $clsService->get_list();
         $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
         $clsFacility                = new FacilityModel();
         $data['facilities']         = $clsFacility->list_facility_all();
         $clsEquipment               = new EquipmentModel();
@@ -404,29 +420,38 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_regist', $data);
     }
 
-
     public function postRegist($id)
     {
         $clsBooking                 = new BookingModel();
         $booking                    = $clsBooking->get_by_id($id);
-        $service_1_kind = null;
-        $service_1 = null;
-        $s_1_kind = Input::get('service_1');
-        if(!empty($s_1_kind)){
-            $s1k = explode('#', $s_1_kind);
-            $service_1          = $s1k[0];
+        $service_1 = $service_1_kind = $service_2 = $service_2_kind = '';
+
+        if(!empty(Input::get('service_1'))){
+            $s1k = explode('_', Input::get('service_1'));
             $s1_kind            = str_split($s1k[1], 3);
             $service_1_kind     = $s1_kind[1];
+
+            if($service_1_kind == 2){
+                $st1 = explode('#', $s1k[0]);
+                $service_1      = $st1[0];
+                $treatment_time_1 = $st1[1];
+            }else{
+                $service_1      = $s1k[0];
+            }
         }
 
-        $s_2_kind = Input::get('service_2');
-        $service_2_kind = null;
-        $service_2 = null;
-        if ( !empty($s_2_kind) ) {
-            $s2k = explode('#', $s_2_kind);
-            $service_2          = $s2k[0];
+        if(!empty(Input::get('service_2'))){
+            $s2k = explode('_', Input::get('service_2'));
             $s2_kind            = str_split($s2k[1], 3);
             $service_2_kind     = $s2_kind[1];
+
+            if($service_2_kind == 2){
+                $st2 = explode('#', $s2k[0]);
+                $service_2      = $st2[0];
+                $treatment_time_2 = $st2[1];
+            }else{
+                $service_2      = $s2k[0];
+            }
         }
 
         $dataInput = array(
@@ -450,16 +475,16 @@ class BookingController extends BackendController
                 'last_user'                 => Auth::user()->id
             );
 
-
         // update group
         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+
         $status = true;
         foreach ( $bookingGroups as $bookingGroup ) {
             if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
                 $status = false;
             }
         }
-        
+
         if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
             return redirect()->route('ortho.bookings.booking.result.list');
@@ -717,9 +742,7 @@ class BookingController extends BackendController
         $clsShift                    = new ShiftModel();
         $data['doctors']            = $clsShift->get_user_shift([1]);
         $data['hygienists']         = $clsShift->get_user_shift([2,3]);
-       // $clsService                 = new ServiceModel();
-       
-        //$data['services']           = $clsService->get_list();
+
         $clsClinicService           = new ClinicServiceModel();
         $data['services']           = $clsClinicService->get_service();
         

@@ -1,7 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-
 {!! Form::open( ['id' => 'frmBookingRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.bookings.booking.regist', $booking_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
 <section id="page">
       <div class="container">
@@ -97,14 +96,14 @@
                   <optgroup label="業務名">
                       @if(count($services) > 0)
                         @foreach($services as $key11 => $service11)
-                        <option value="{{$key11}}#sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
+                        <option value="{{$key11}}_sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
                       @endforeach
                       @endif
                   </optgroup>
                   <optgroup label="治療内容">
                         @if(count($treatment1s) > 0)
-                          @foreach($treatment1s as $key12 => $treatment12)
-                            <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
+                          @foreach($treatment1s as $treatment12)
+                              <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if($booking->service_1 == $treatment12->treatment_id) selected @endif>{{$treatment12->treatment_name}}</option>
                           @endforeach
                         @endif
                   </optgroup>
@@ -119,14 +118,14 @@
                   <optgroup label="業務名">
                       @if(count($services) > 0)
                         @foreach($services as $key21 => $service21)
-                        <option value="{{$key21}}#sk21" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
-                      @endforeach
+                          <option value="{{$key21}}_sk21" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
+                        @endforeach
                       @endif
                   </optgroup>
                   <optgroup label="治療内容">
                         @if(count($treatment1s) > 0)
-                          @foreach($treatment1s as $key22 => $treatment22)
-                            <option value="{{$key22}}#sk22" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>
+                          @foreach($treatment1s as $treatment12)
+                            <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if($booking->service_2 == $treatment12->treatment_id) selected @endif >{{$treatment12->treatment_name}}</option>
                           @endforeach
                         @endif
                   </optgroup>
@@ -219,7 +218,7 @@
     </section>
 {!! Form::close() !!}
 <script type="text/javascript">
-  $('#booking_recall_ym').click(function(event) {
+  $('#booking_recall_ym').click(function() {
     $('#recalling').attr("checked", "checked");
   });
 </script>

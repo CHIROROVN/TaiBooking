@@ -217,7 +217,13 @@
                       $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_1] . '<span></span></a>';
                     } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
                       $color = 'blue';
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '治療<span></span>' . '</a>';
+                      $booking = $arr_bookings[$facility_id][$fullTime];
+                      if($booking->service_1 != -1){
+                        $treatment_name = @$treatment1s[$booking->service_1];
+                      }else{
+                        $treatment_name = '治療';
+                      }
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . "{$treatment_name}" .'<span></span>' . '</a>';
                     }
                   }
                 ?>

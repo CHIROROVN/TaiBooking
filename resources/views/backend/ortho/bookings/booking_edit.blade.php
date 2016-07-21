@@ -100,8 +100,8 @@
                   </optgroup>
                   <optgroup label="治療内容">
                         @if(count($treatment1s) > 0)
-                          @foreach($treatment1s as $key12 => $treatment12)
-                            <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
+                          @foreach($treatment1s as $treatment12)
+                              <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if($booking->service_1 == $treatment12->treatment_id) selected @endif>{{$treatment12->treatment_name}}</option>
                           @endforeach
                         @endif
                   </optgroup>
@@ -121,11 +121,9 @@
                       @endif
                   </optgroup>
                   <optgroup label="治療内容">
-                        @if(count($treatment1s) > 0)
-                          @foreach($treatment1s as $key22 => $treatment22)
-                            <option value="{{$key22}}#sk22" @if($booking->service_2 == $key22) selected @endif>{{$treatment22}}</option>
-                          @endforeach
-                        @endif
+                        @foreach($treatment1s as $treatment12)
+                          <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if($booking->service_2 == $treatment12->treatment_id) selected @endif >{{$treatment12->treatment_name}}</option>
+                        @endforeach
                   </optgroup>
                 </select>
               </td>

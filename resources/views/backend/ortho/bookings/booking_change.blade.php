@@ -130,11 +130,11 @@
                         @endif
                     </optgroup>
                     <optgroup label="治療内容">
-                          @if(count($treatment1s) > 0)
-                            @foreach($treatment1s as $key12 => $treatment12)
-                              <option value="{{$key12}}_sk12" >{{$treatment12}}</option>
-                            @endforeach
-                          @endif
+                        @if(count($treatment1s) > 0)
+                          @foreach($treatment1s as $key12 => $treatment12)
+                            <option value="{{$key12}}_sk12" >{{$treatment12}}</option>
+                          @endforeach
+                        @endif
                     </optgroup>
                     </select>
                   </td>

@@ -96,6 +96,7 @@ class ClinicModel
     public function get_list_clinic(){
         return DB::table($this->table)
                                 ->where('last_kind', '<>', DELETE)
+                                ->orderBy('clinic_name', 'ASC')
                                 ->lists('clinic_name', 'clinic_id');
     }
 }

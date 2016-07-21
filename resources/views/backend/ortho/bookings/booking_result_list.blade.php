@@ -41,16 +41,24 @@
               <td>{{splitHourMin($booking->booking_start_time)}}</td>
               <td>{{@$facilities[$booking->facility_id]}}</td>
               <td>
-                @if($booking->service_1_kind == 1)
-                  {{@$services[$booking->service_1]}}
-                @endif
-
-                @if($booking->service_2_kind == 1)
-                  @if(!empty($services[$booking->service_2]))
-                  @if(!empty($services[$booking->service_1]))、@endif{{@$services[$booking->service_2]}}
+              <!-- service 1 -->
+                  @if($booking->service_1_kind == 1)
+                    {{@$services[$booking->service_1]}}
+                  @elseif($booking->service_1_kind == 2)
+                    @if($booking->service_1 != -1)
+                      {{$treatment1s[$booking->service_1]}}
+                    @endif
                   @endif
-                @endif
-
+                  <!-- Service 2 -->
+                  @if($booking->service_2_kind == 1)
+                    @if(!empty($services[$booking->service_2]))
+                      @if(!empty($services[$booking->service_1]) && !empty($services[$booking->service_2]))、 @endif {{@$services[$booking->service_2]}}
+                    @endif
+                  @elseif($booking->service_2_kind == 2)
+                    @if($booking->service_2 != -1)
+                       @if(!empty($treatment1s[$booking->service_1]) && !empty($treatment1s[$booking->service_2]))、@endif {{$treatment1s[$booking->service_2]}}
+                    @endif
+                  @endif
               </td>
               <td align="center">
                 <input onclick="location.href='{{route('ortho.bookings.booking.daily', [ 'clinic_id' => $booking->clinic_id ] )}}'" value="予約簿の表示" type="button" class="btn btn-xs btn-page">

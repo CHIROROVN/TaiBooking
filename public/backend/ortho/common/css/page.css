@@ -688,9 +688,10 @@ textarea {
 }
 
 .percent-10 {
-  background-color: #660033 !important;
+  background-color: #CC9999 !important;
 }
 
 .percent-11 {
   background-color: #dd0000 !important;
+  color: white !important;
 }

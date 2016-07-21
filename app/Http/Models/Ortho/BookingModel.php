@@ -70,7 +70,7 @@ class BookingModel
         return $results;
     }
 
-    public function countTotal($date, $startTime, $endTime, $patient_id = false)
+    public function countTotal($date, $startTime, $endTime, $patient_id = false, $doctor_id = null)
     {
         $results = DB::table($this->table)
                             ->where('booking_date', $date)
@@ -80,6 +80,10 @@ class BookingModel
 
         if ( $patient_id ) {
             $results = $results->whereNotNull('patient_id');
+        }
+
+        if ( !empty($doctor_id) ) {
+            $results = $results->where('doctor_id', $doctor_id);
         }
         
         $db = $results->count();

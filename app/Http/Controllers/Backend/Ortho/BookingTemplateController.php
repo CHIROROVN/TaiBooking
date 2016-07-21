@@ -395,7 +395,11 @@ class BookingTemplateController extends BackendController
                         }
                     }
                 }
-                $data['booking_group_id']       = $template->template_group_id . '_' . Input::get('date');
+                if ( empty($template->template_group_id) ) {
+                    $data['booking_group_id']       = '';
+                } else {
+                    $data['booking_group_id']       = $template->template_group_id . '_' . Input::get('date');
+                }
 
                 $data['last_date']              = date('y-m-d H:i:s');
                 $data['last_kind']              = INSERT;
@@ -678,7 +682,7 @@ class BookingTemplateController extends BackendController
             'last_user'             => Auth::user()->id
         );
         $where = array(
-            'booking_start_time'    => Input::get('booking_start_time'),
+            'booking_start_time'    => Input::get('time'),
             'facility_id'           => Input::get('facility_id'),
             'booking_date'          => Input::get('booking_date'),
             'clinic_id'             => Input::get('clinic_id'),

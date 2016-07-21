@@ -70,9 +70,9 @@
               <?php
               $str = '';
               foreach ( $doctors as $doctor ) {
-                if ( $doctor->shift_free1 == $doctor->id ) {
-                  $text = $doctor->u_name;
-                }
+                // if ( $doctor->shift_free1 == $doctor->id ) {
+                //   $text = $doctor->u_name;
+                // }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->id . '" >' . $doctor->u_name . '</label></li>';
               }
               $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';

@@ -50,33 +50,131 @@
               <p>{{ @$clinic->clinic_name }}</p>
         </div>
 
+          <?php
+        $text = '末設定';
+        ?>
             <div class="table-responsive">
           <table class="table table-bordered">
-            <!-- doctor -->
-            @for ( $j = 1; $j <= $rowspanDoctor; $j++ )
-              <tr>
-                <td align="center" rowspan="{{ $rowspanDoctor }}" class="col-title">ドクター</td>
-                @foreach ( $doctors as $doctor )
-                <td align="center">{{ $doctor->u_name }}</td>
-                @endforeach
-              </tr>
-            @endfor
+            <!-- list doctor -->
+            <tr>
+              <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
+              @foreach ( $facilitys as $facility )
+              <?php
+                $str = '';
+                foreach ( $doctors as $doctor ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
 
-            <!-- hygienists -->
-            @for ( $j = 1; $j <= $rowspanHygienists; $j++ )
-              <tr>
-                <td align="center" rowspan="{{ $rowspanHygienists }}" class="col-title">衛生士</td>
-                @foreach ( $hygienists as $hygienist )
-                <td align="center">{{ $hygienist->u_name }}</td>
-                @endforeach
-              </tr>
-            @endfor
+                // if ( $doctor->shift_free1 == $facility->facility_id ) {
+                //   $text = $facility->facility_name;die;
+                // }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+                $str = '';
+                foreach ( $doctors as $doctor ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+
+                // if ( $doctor->shift_free1 == $facility->facility_id ) {
+                //   $text = $facility->facility_name;die;
+                // }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+                $str = '';
+                foreach ( $doctors as $doctor ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+
+                // if ( $doctor->shift_free1 == $facility->facility_id ) {
+                //   $text = $facility->facility_name;die;
+                // }
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+
+            <!-- list hygienists -->
+            <tr>
+              <td align="center" rowspan="3" class="col-title" style="width: 6%">衛生士</td>
+              @foreach ( $facilitys as $facility )
+              <?php
+                $str = '';
+                foreach ( $hygienists as $hygienist ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+                $str = '';
+                foreach ( $hygienists as $hygienist ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+                $str = '';
+                foreach ( $hygienists as $hygienist ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+              ?>
+              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <!-- 3 -->
           </table>
             </div>
             <div class="table-responsive">
               <table class="table table-bordered table-shift-set">
           <tr>
-              <td align="center" width="5%">時間</td>
+              <td align="center" width="6%">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center" >{{ $facility->facility_name }}</td>
               @endforeach
@@ -90,7 +188,7 @@
               $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
             ?>
             <tr>
-              <td align="center" width="5%">{{ $time }}～</td>
+              <td align="center" width="6%">{{ $time }}～</td>
               @if ( empty($facilitys) )
               <td align="center">&nbsp;</td>
               @endif
@@ -139,7 +237,7 @@
                 ?>
 
                 <!-- close -->
-                <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}">
+                <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}" width="142px">
                   <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
                     {!! $text !!}
                     @if ( $color === 'brown' )

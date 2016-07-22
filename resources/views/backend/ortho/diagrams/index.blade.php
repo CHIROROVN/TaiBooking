@@ -86,7 +86,68 @@
 
 
       $(document).ready(function() {
-        alert(2);
+        var dateCur   = new Date();
+        var year      = dateCur.getFullYear();
+        var month     = dateCur.getMonth() + 1;
+        var day       = dateCur.getDate();
+
+        myFunction(year + '-' + month + '-' + day);
+
+        $(document).on("click",".fc-next-button span",function(){
+          var monthNext = month + 1;
+          myFunction(year + '-' + monthNext + '-' + day);
+        });
+
+
+        function myFunction(date){
+          console.log(date);
+          $.ajax({
+            type: "GET",
+            dataType: "json",
+            data: { dateCur: date },
+            url: "{{ route('ortho.diagrams.get.ajax') }}",
+            cache: false,
+            success: function(data) {
+              console.log(data);
+              var calendar = $('#calendar').fullCalendar({
+                lang: 'ja',
+                eventLimit: false,
+                editable: false,
+                timezone: 'Asia/Tokyo',
+                header: {
+                  left: 'prev today next',
+                  center: 'title',
+                  //right: 'month,agendaWeek,agendaDay'
+                  right: ''
+                },
+                 displayEventTime: false,
+                 
+                //load all event from DB
+                events: data.diagrams,
+                
+                // Convert the allDay from string to boolean
+                eventRender: function(event, element, view) {
+                  if (event.allDay === 'true') {
+                    event.allDay = true;
+                  } else {
+                    event.allDay = false;
+                  }
+                },
+                selectable: false,
+                selectHelper: false,
+                select: function(start, end, allDay) {
+                    var start = moment(start).format('YYYY-MM-DD');
+                    var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
+                  
+                  calendar.fullCalendar('unselect');
+                  // window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
+                  //location.reload();
+                },
+              });
+            } // end success
+          }); // end ajax
+        }; // end var myFunction
+
       });
 
     </script>

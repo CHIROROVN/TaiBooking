@@ -65,7 +65,7 @@
           <table class="table table-bordered">
             <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="col-title" style="width: 142px">ドクター</td>
+              <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 $str = '';
@@ -93,6 +93,10 @@
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+
+                // if ( $doctor->shift_free1 == $facility->facility_id ) {
+                //   $text = $facility->facility_name;die;
+                // }
               ?>
               <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
@@ -109,6 +113,10 @@
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+
+                // if ( $doctor->shift_free1 == $facility->facility_id ) {
+                //   $text = $facility->facility_name;die;
+                // }
               ?>
               <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
@@ -120,7 +128,7 @@
 
             <!-- list hygienists -->
             <tr>
-              <td align="center" rowspan="3" class="col-title" style="width: 142px">衛生士</td>
+              <td align="center" rowspan="3" class="col-title" style="width: 6%">衛生士</td>
               @foreach ( $facilitys as $facility )
               <?php
                 $str = '';
@@ -229,7 +237,7 @@
                 ?>
 
                 <!-- close -->
-                <td align="center" width="50px" class="col-{{ $color }}" id="">
+                <td align="center" width="50px" class="col-{{ $color }}" id="" width="142px">
                   <div class="td-content">
                     {!! $text !!}
                     @if ( $color === 'brown' )

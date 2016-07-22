@@ -33,24 +33,26 @@
 	}
 
 	function splitHourMin($str_time, $char = ':'){
-		if(strlen($str_time) != 4){
-			return '00:00';
-		}else{
-			$date = str_split($str_time, 2);
+		// if(strlen($str_time) != 4){
+		// 	return '00:00';
+		// }else{
+			$tmpStr = sprintf("%04d",$str_time);
+			$date = str_split($tmpStr, 2);
 			$hour = $date[0];
 			$min = $date[1];
 			return $hour. $char .$min;
-		}
+		// }
 	}
 
 	/**
 	 * ex: {{ splitHourMin($booking->booking_start_time) }}～{{ toTime($booking->booking_start_time, $booking->booking_total_time) }}
 	 */
 	function toTime($from_time, $total_min){
-			if(strlen($from_time) != 4){
-				return '00:00';
-			}else{
-				$datef = str_split($from_time, 2);
+			// if(strlen($from_time) != 4){
+			// 	return '00:00';
+			// }else{
+			$tmpStr = sprintf("%04d",$from_time);
+				$datef = str_split($tmpStr, 2);
 				$hf = (int)$datef[0];
 				$mf = (int)$datef[1];
 				$to_time = min2hour($total_min);
@@ -67,7 +69,7 @@
 				}
 				$toTime = sprintf("%02d",$fh).':'.sprintf("%02d",$fm);
 				return $toTime;
-			}
+			// }
 	}
 
 	function min2hour($min=null){

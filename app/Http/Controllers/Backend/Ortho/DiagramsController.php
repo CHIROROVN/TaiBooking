@@ -351,8 +351,13 @@ class DiagramsController extends BackendController
 
       // for in month
       $date_current             = date('Y-m-d');
-      $month                    = date('m');
-      $year                     = date('Y');
+      if ( Input::get('dateCur') ) {
+        $date_current = Input::get('dateCur');
+      }
+
+      $tmpDate                  = explode('-', $date_current);
+      $month                    = $tmpDate[1];
+      $year                     = $tmpDate[0];
       $days                     = getDay($month, $year);
       $tempDiagram              = array();
       foreach ( $days as $day ) {
@@ -645,6 +650,6 @@ class DiagramsController extends BackendController
         );
       }
 
-      echo json_encode($tempDiagram);
+      echo json_encode(array('diagrams' => $tempDiagram));
     }
 }

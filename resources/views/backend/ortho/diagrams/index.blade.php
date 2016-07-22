@@ -78,6 +78,14 @@
             //location.reload();
           },
         });
+
+        $('.fc-next-button').click(function() {
+          var date = calendar.fullCalendar('getDate');
+            console.log(date.format('YYYY-MM-DD'));
+            calendar.fullCalendar({
+              events: {}
+            });
+        });
       });
 
     </script>

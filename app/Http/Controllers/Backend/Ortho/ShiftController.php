@@ -62,14 +62,17 @@ class ShiftController extends BackendController
 
         // set belong user
         $tmpBelong = $clsBelong->get_for_select();
+        $tmpUsers = array();
         foreach ( $tmpBelong as $belong ) {
             foreach ( $data['users'] as $user ) {
                 if ( $user->u_belong == $belong->belong_id ) {
                     $belong->belong_users[] = $user;
+                    $tmpUsers[] = $user;
                 }
             }
         }
         $data['belongUsers'] = $tmpBelong;
+        $data['users'] = $tmpUsers;
 
         // set shift
         // u_id|shift_date|linic_id
@@ -80,7 +83,8 @@ class ShiftController extends BackendController
         $data['shifts'] = $tmpShift;
         
         // echo '<pre>';
-        // print_r($data['shifts']);
+        // print_r($data['belongUsers']);
+        // print_r($data['users']);
         // echo '</pre>';die;
 
         return view('backend.ortho.shifts.list_edit', $data);

@@ -312,7 +312,6 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('bookeds/history/edit/{booking_id}', ['as' => 'ortho.bookeds.history.edit', 'uses' => 'BookedController@postEditHistory']);
 
 	Route::get('diagrams', ['as' => 'ortho.diagrams.index', 'uses' => 'DiagramsController@index']);
-	Route::get('diagrams/get/ajax', ['as' => 'ortho.diagrams.get.ajax', 'uses' => 'DiagramsController@getAjax']);
 
 	// Route::any('bookings', ['as' => 'ortho.bookings.index', 'uses' => 'BookingController@index']);
 	// Route::get('bookings/set', ['as' => 'ortho.bookings.set', 'uses' => 'BookingController@getSet']);

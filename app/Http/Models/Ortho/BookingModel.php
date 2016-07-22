@@ -73,10 +73,13 @@ class BookingModel
     public function countTotal($date, $startTime, $endTime, $patient_id = false, $doctor_id = null)
     {
         $results = DB::table($this->table)
+                            ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
+                            ->select('t_booking.booking_id', 'm_clinic.clinic_name')
+                            ->where('m_clinic.clinic_name', '=', 'たい矯正歯科')
                             ->where('booking_date', $date)
                             ->where('booking_start_time', '>=', $startTime)
                             ->where('booking_start_time', '<', $endTime)
-                            ->where('last_kind', '<>', DELETE);
+                            ->where('t_booking.last_kind', '<>', DELETE);
 
         if ( $patient_id ) {
             $results = $results->whereNotNull('patient_id');

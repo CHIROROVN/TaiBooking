@@ -268,6 +268,30 @@
       	return $prevDate;
 	}
 
+	function addOneMonth($currentDay)
+	{
+		if ( empty($currentDay) ) {
+			$currentDay = date('Y-m-d');
+		}
+
+		$nextDate            = strtotime ( '+ 1 month' , strtotime ( $currentDay ) ) ;
+      	$nextDate            = date ( 'Y-m-d' , $nextDate );
+
+      	return $nextDate;
+	}
+
+	function subOneMonth($currentDay)
+	{
+		if ( empty($currentDay) ) {
+			$currentDay = date('Y-m-d');
+		}
+
+		$nextDate            = strtotime ( '- 1 month' , strtotime ( $currentDay ) ) ;
+      	$nextDate            = date ( 'Y-m-d' , $nextDate );
+
+      	return $nextDate;
+	}
+
 	function checkPercent($percent)
 	{
 		if ( 0 < $percent && $percent <= 9 ) {

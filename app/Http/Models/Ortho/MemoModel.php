@@ -10,14 +10,14 @@ class MemoModel
     public function Rules()
     {
     	return array(
-
+                'memo_contents'                 => 'required'
 		);
     }
 
     public function Messages()
     {
     	return array(
-
+                'memo_contents.required'        => trans('validation.error_memo_date_required')
 		);
     }
 

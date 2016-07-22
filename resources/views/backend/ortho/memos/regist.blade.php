@@ -1,7 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-{!! Form::open(array('route' => 'ortho.memos.regist', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open(array('route' => ['ortho.memos.regist',$memo_date], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
   <section id="page">
     <div class="container">
       <div class="row content">
@@ -19,9 +19,10 @@
 
               <!-- memo_contents -->
               <tr>
-                <td class="col-title"><label for="memo_contents">内容</label></td>
+                <td class="col-title"><label for="memo_contents">内容 <span class="note_required">※</span></label></td>
                 <td>
                   <textarea name="memo_contents" rows="5" id="memo_contents" class="form-control">{!! old('memo_contetns') !!}</textarea>
+                  <span class="error-input">@if ($errors->first('memo_contents')) ※{!! $errors->first('memo_contents') !!} @endif</span>
                 </td>
               </tr>
             </table>

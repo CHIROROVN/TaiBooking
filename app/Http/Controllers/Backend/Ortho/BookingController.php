@@ -423,6 +423,7 @@ class BookingController extends BackendController
     public function postRegist($id)
     {
         $clsBooking                 = new BookingModel();
+        $clsTreatment1              = new Treatment1Model();
         $booking                    = $clsBooking->get_by_id($id);
         $service_1 = $service_1_kind = $service_2 = $service_2_kind = '';
 
@@ -474,6 +475,17 @@ class BookingController extends BackendController
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
             );
+
+        // check total time of treatment1
+        if ( $service_1_kind == 2 ) {
+            $treatment1                 = $clsTreatment1->get_by_id($service_1);
+            $bookingStartTime           = $booking->booking_start_time;
+            $treatment1TotalTime        = $treatment1->treatment_time;
+            
+        } elseif ( $service_2_kind == 2 ) {
+            // do something
+        }
+
 
         // update group
         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);

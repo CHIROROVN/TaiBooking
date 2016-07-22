@@ -49,6 +49,13 @@
           event.allDay = false;
         }
       },
+      eventAfterAllRender: function() {
+        $( ".fc-content-skeleton tbody td" ).each(function( index ) {
+          if ( $(this).attr('class') == null ) {
+            $(this).append('<span style="margin-left: 5px; text-decoration: underline; z-index: -1; cursor: pointer;" href="">未登録</span>');
+          }
+        });
+      },
       selectable: true,
       selectHelper: true,
       select: function(start, end, allDay) {
@@ -81,20 +88,6 @@
 
         window.location.href = "{{ route('ortho.memos.regist') }}?memo_date=" + start;
       },
-    });
-
-    // set date for link text
-    var tmpArr = [];
-    $( ".fc-content-skeleton thead td" ).each(function( index ) {
-        var start = $(this).attr('data-date');
-        start = "{{ route('ortho.memos.regist') }}?memo_date=" + start;
-        tmpArr[index] = start;
-    });
-
-    $( ".fc-content-skeleton tbody td" ).each(function( index ) {
-      if ( $(this).attr('class') == null ) {
-        $(this).append('<a style="margin-left: 5px; text-decoration: underline;" href="' + tmpArr[index] + '">未登録</a>');
-      }
     });
 
   });

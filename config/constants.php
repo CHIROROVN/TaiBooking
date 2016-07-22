@@ -7,7 +7,7 @@ return [
 		'UPDATE' 				=> 1,
 		'DELETE' 				=> 9,
 
-		'PAGINATION' 			=> 20, // number item in per page backend
+		'PAGINATION' 			=> 3, // number item in per page backend
 	),
 
 	'CLINIC_AM_START' => array(

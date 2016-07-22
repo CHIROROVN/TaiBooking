@@ -28,7 +28,6 @@ class DiagramsController extends BackendController
         'u_id' => $data['doctor_id']
       );
       $bookings                 = $clsBooking->get_all($where);
-
       $data['doctors']        	= $clsUser->get_by_belong([1]);
 
       // for in month

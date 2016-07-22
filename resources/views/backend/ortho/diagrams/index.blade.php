@@ -83,7 +83,22 @@
           var date = calendar.fullCalendar('getDate');
             console.log(date.format('YYYY-MM-DD'));
             calendar.fullCalendar({
-              events: {}
+              events: [
+                        {
+                            title  : 'event1',
+                            start  : '2016-07-23'
+                        },
+                        {
+                            title  : 'event2',
+                            start  : '2016-07-23',
+                            end    : '2016-07-24'
+                        },
+                        {
+                            title  : 'event3',
+                            start  : '2016-07-23',
+                            allDay : false // will make the time show
+                        }
+                    ]
             });
         });
       });

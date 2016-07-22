@@ -31,7 +31,7 @@
             <?php $listClinic = $clinics; ?>
             @foreach($listClinic as $clinic_id => $clinic)
               @if ( $clinic->clinic_name == 'たい矯正歯科' )
-              <option value="{{$clinic_id}}" selected="">{{ $clinic->clinic_name }}</option>
+              <option value="{{$clinic->clinic_id}}" selected="">{{ $clinic->clinic_name }}</option>
               <?php unset($listClinic[$clinic_id]) ?>
               @endif
             @endforeach
@@ -116,7 +116,7 @@
 
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        {!! $bookeds->render(new App\Pagination\SimplePagination($bookeds))  !!}
+        {!! $bookeds->appends(['s_clinic_id' => $s_clinic_id, 's_booking_date' => $s_booking_date, ])->render(new App\Pagination\SimplePagination($bookeds)) !!}
       </div>
     </div>
   </div>    

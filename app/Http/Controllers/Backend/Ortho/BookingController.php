@@ -422,7 +422,7 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
         $booking                    = $clsBooking->get_by_id($id);
-        $service_1 = $service_1_kind = $service_2 = $service_2_kind = '';
+        $service_1 = $service_1_kind = $service_2 = $service_2_kind = null;
 
         if(!empty(Input::get('service_1'))){
             $s1k = explode('_', Input::get('service_1'));
@@ -454,15 +454,15 @@ class BookingController extends BackendController
 
         $dataInput = array(
                 // 'facility_id'               => Input::get('facility_id'),
-                'doctor_id'                 => Input::get('doctor_id'),
-                'hygienist_id'              => Input::get('hygienist_id'),
-                'equipment_id'              => Input::get('equipment_id'),
+                'doctor_id'                 => Input::get('doctor_id', null),
+                'hygienist_id'              => Input::get('hygienist_id', null),
+                'equipment_id'              => Input::get('equipment_id', null),
                 'service_1'                 => $service_1,
                 'service_1_kind'            => $service_1_kind,
                 'service_2'                 => $service_2,
                 'service_2_kind'            => $service_2_kind,
-                'inspection_id'             => Input::get('inspection_id'),
-                'insurance_id'              => Input::get('insurance_id'),
+                'inspection_id'             => Input::get('inspection_id', null),
+                'insurance_id'              => Input::get('insurance_id', null),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
                 'booking_status'            => Input::get('booking_status'),
                 'booking_recall_ym'         => Input::get('booking_recall_ym'),
@@ -478,7 +478,52 @@ class BookingController extends BackendController
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
             $treatment1TotalTime        = $treatment1->treatment_time;
-            
+
+            $mm = hourMin2Min($bookingStartTime);
+            $mm = $mm + $treatment1TotalTime;
+            $hhmmBookingEndTime = (int)min2HourMin($mm);
+
+            $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $hhmmBookingEndTime, $bookingStartTime);
+
+            // update treatment1
+            $status = true;
+            if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
+                // not ok check
+                $tmpArr = array();
+                for ( $i = 0; $i < $treatment1TotalTime/15; $i++ ) {
+                    $tmpMin = $i * 15;
+                    $tmpMin2 = hourMin2Min($bookingStartTime) + $tmpMin;
+                    $tmpArr[] = min2HourMin($tmpMin2);
+                }
+
+                // if not continuity => NO UPDATE
+                foreach ( $listBookingUpdate as $item ) {
+                    if ( !in_array($item->booking_start_time, $tmpArr) ) {
+                        Session::flash('danger', trans('common.message_regist_danger'));
+                        return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+                    }
+                }
+
+                // ok update
+                $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
+                foreach ( $listBookingUpdate as $item ) {
+                    if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                        $status = false;
+                    }
+                }
+
+                if ( $status ) {
+                    Session::flash('success', trans('common.message_regist_success'));
+                    return redirect()->route('ortho.bookings.booking.result.list');
+                } else {
+                    Session::flash('danger', trans('common.message_regist_danger'));
+                    return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+                }
+            } else {
+                Session::flash('danger', trans('common.message_regist_danger'));
+                return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+            }
+
         } elseif ( $service_2_kind == 2 ) {
             // do something
         }

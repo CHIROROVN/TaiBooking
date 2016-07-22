@@ -85,7 +85,7 @@
           customButtons: {
             // current day
             myCustomButton: {
-              text: '今日',
+              text: '今月',
               click: function() {
                 window.location.href = "{{ route('ortho.diagrams.index') }}";
               }

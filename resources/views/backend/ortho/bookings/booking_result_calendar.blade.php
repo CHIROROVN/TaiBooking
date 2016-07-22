@@ -292,15 +292,15 @@
         if ( u_id == '-1' ) {
           objPopup.html('末設定');
           objPopup.attr('data-u-id', null);
-          $('.facility_id-' + facility_id).each(function(index, el) {
-            $('.facility_id-' + facility_id).find('span').html('<br /><span></span>');
-          });
+          // $('.facility_id-' + facility_id).each(function(index, el) {
+          //   $('.facility_id-' + facility_id).find('span').html('<br /><span></span>');
+          // });
         } else {
           objPopup.html(u_name);
           objPopup.attr('data-u-id', u_id);
-          $('.facility_id-' + facility_id).each(function(index, el) {
-            $('.facility_id-' + facility_id).find('span').html('<br /><span>' + u_name + '</span>');
-          });
+          // $('.facility_id-' + facility_id).each(function(index, el) {
+          //   $('.facility_id-' + facility_id).find('span').html('<br /><span>' + u_name + '</span>');
+          // });
         }
         objPopup.popover('hide');
 

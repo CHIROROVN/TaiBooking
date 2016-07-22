@@ -9,10 +9,10 @@
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <tr>
-                    <td class="col-title"><label for="area_name">地域名 (*)</label></td>
+                    <td class="col-title"><label for="area_name">地域名 <span class="note_required">※</span></label></td>
                     <td>
                       <input type="text" name="area_name" id="area_name " class="form-control" value="{{ old('area_name') }}" />
-                      <span class="error-input">@if ($errors->first('area_name')) {!! $errors->first('area_name') !!} @endif</span>
+                      <span class="error-input">@if ($errors->first('area_name')) ※{!! $errors->first('area_name') !!} @endif</span>
                     </td>
                   </tr>
                   <tr>

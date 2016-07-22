@@ -22,7 +22,7 @@
                   @endif
                 @endforeach
               </select>
-              <span class="error-input">@if ($errors->first('result_date')) {!! $errors->first('result_date') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('result_date')) ※{!! $errors->first('result_date') !!} @endif</span>
             </td>
           </tr>
 
@@ -56,13 +56,13 @@
                 <option value="30" @if(old('result_total_time_mm') == '30') selected="" @endif>30分</option>
                 <option value="45" @if(old('result_total_time_mm') == '45') selected="" @endif>45分</option>
               </select>
-              <span class="error-input">@if ($errors->first('result_start_time')) {!! $errors->first('result_start_time') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('result_start_time')) ※{!! $errors->first('result_start_time') !!} @endif</span>
             </td>
           </tr>
 
           <!-- clinic_id -->
           <tr>
-            <td class="col-title" colspan="2"><label for="clinic_id">医院</label></td>
+            <td class="col-title" colspan="2"><label for="clinic_id">医院 <span class="note_required">※</span></label></td>
             <td>
               <select name="clinic_id" id="clinic_id" class="form-control">
                 <option value="">▼選択</option>
@@ -70,13 +70,13 @@
                   <option value="{{ $clinic->clinic_id }}" @if(old('clinic_id') == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
                 @endforeach
               </select>
-              <span class="error-input">@if ($errors->first('clinic_id')) {!! $errors->first('clinic_id') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
             </td>
           </tr>
 
           <!-- doctor_id -->
           <tr>
-            <td class="col-title" colspan="2"><label for="doctor_id">ドクター</label></td>
+            <td class="col-title" colspan="2"><label for="doctor_id">ドクター <span class="note_required">※</span></label></td>
             <td>
               <select name="doctor_id" id="doctor_id" class="form-control">
                 <option value="">▼選択</option>
@@ -84,7 +84,7 @@
                   <option value="{{ $doctor->id }}" @if(old('doctor_id') == $doctor->id) selected="" @endif>{{ $doctor->u_name }}</option>
                 @endforeach
               </select>
-              <span class="error-input">@if ($errors->first('doctor_id')) {!! $errors->first('doctor_id') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('doctor_id')) ※{!! $errors->first('doctor_id') !!} @endif</span>
             </td>
           </tr>
 
@@ -103,7 +103,7 @@
 
           <!-- service_1 -->
           <tr>
-            <td class="col-title" colspan="2"><label for="service_1">実施業務-1</label></td>
+            <td class="col-title" colspan="2"><label for="service_1">実施業務-1 <span class="note_required">※</span></label></td>
             <td>
               <select name="service_1" id="service_1" class="form-control">
                 <option value="">▼選択</option>
@@ -130,7 +130,7 @@
                 @endif
                 </optgroup>
               </select>
-              <span class="error-input">@if ($errors->first('service_1')) {!! $errors->first('service_1') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('service_1')) ※{!! $errors->first('service_1') !!} @endif</span>
             </td>
           </tr>
 

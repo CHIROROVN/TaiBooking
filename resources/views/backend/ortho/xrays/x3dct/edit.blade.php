@@ -35,7 +35,7 @@
 
           <!-- ct_date -->
           <tr>
-            <td class="col-title">撮影日</td>
+            <td class="col-title">撮影日 <span class="note_required">※</span></td>
             <td>
               <select style="text-align: center;" name="year" id="year" class="form-control form-control--small">
                 <option value="">----年</option>
@@ -56,7 +56,7 @@
                 @endfor
               </select>
               <img src="{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}" height="23" width="27">
-              <span class="error-input">@if ($errors->first('ct_date')) {!! $errors->first('ct_date') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('ct_date')) ※{!! $errors->first('ct_date') !!} @endif</span>
             </td>
           </tr>
 

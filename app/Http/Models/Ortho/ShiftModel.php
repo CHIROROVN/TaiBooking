@@ -48,7 +48,6 @@ class ShiftModel
         return $results;
     }
 
-
     public function get_by_belong($belong_kind = array(), $date = '')
     {
         $db = DB::table($this->table)

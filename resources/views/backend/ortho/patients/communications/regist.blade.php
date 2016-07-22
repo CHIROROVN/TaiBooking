@@ -13,19 +13,19 @@
 
             <!-- com_title -->
             <tr>
-              <td class="col-title"><label for="com_title">タイトル</label></td>
+              <td class="col-title"><label for="com_title">タイトル <span class="note_required">※</span></label></td>
               <td>
                 <input type="text" name="com_title" id="com_title" class="form-control form-control--default" value="{{ old('com_title') }}" />
-                <span class="error-input">@if ($errors->first('com_title')) {!! $errors->first('com_title') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('com_title')) ※{!! $errors->first('com_title') !!} @endif</span>
               </td>
             </tr>
 
             <!-- com_contents -->
             <tr>
-              <td class="col-title"><label for="com_contents">詳細</label></td>
+              <td class="col-title"><label for="com_contents">詳細 <span class="note_required">※</span></label></td>
               <td>
-                <textarea name="com_contents" rows="10" id="com_contents" class="form-control">{{ old('com_contents') }}</textarea>
-                <span class="error-input">@if ($errors->first('com_contents')) {!! $errors->first('com_contents') !!} @endif</span>
+                <textarea name="com_contents" rows="10" id="com_contents" class="form-control form-control-area">{{ old('com_contents') }}</textarea>
+                <span class="error-input">@if ($errors->first('com_contents')) ※{!! $errors->first('com_contents') !!} @endif</span>
               </td>
             </tr>
           </table>

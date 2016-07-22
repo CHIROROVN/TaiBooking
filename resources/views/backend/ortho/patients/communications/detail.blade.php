@@ -17,7 +17,7 @@
           <!-- com_contents -->
           <tr>
             <td class="col-title">詳細</td>
-            <td>{{ $communication->com_contents }}</td>
+            <td><?php echo nl2br($communication->com_contents);?></td>
           </tr>
         </table>
       </div>
@@ -25,8 +25,8 @@
 
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        <input name="button" id="button" value="変更する" type="submit" class="btn btn-sm btn-page mar-right">
-        <input name="button2" id="button2" value="削除する" type="submit" class="btn btn-sm btn-page">
+        <input onclick="location.href='{{ route('ortho.patients.communications.edit', [$communication->com_id, $patient_id ]) }}'" name="button" id="button" value="変更する" type="button" class="btn btn-sm btn-page mar-right">
+        <input onclick="location.href='{{ route('ortho.patients.communications.delete', [$communication->com_id, $patient_id ]) }}'" name="button2" id="button2" value="削除する" type="button" class="btn btn-sm btn-page">
       </div>
     </div>
 

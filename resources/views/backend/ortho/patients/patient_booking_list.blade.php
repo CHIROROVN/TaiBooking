@@ -6,7 +6,6 @@
         <h3>患者管理　＞　予約の表示</h3>
         <p>予約は2件あります。</p>
         <div class="row">
-
           <div class="col-md-6">
             <table class="table table-bordered treatment2-list">
             @if(!empty($bookings[0]))

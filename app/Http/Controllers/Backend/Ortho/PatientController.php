@@ -287,15 +287,14 @@ class PatientController extends BackendController
         $clsBooking             = new BookingModel();
         $data['bookings']       = $clsBooking->getBookByPatientID($p_id);
         $clsUser                    = new UserModel();
-        $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hys']                = $clsUser->get_by_belong([2,3]);
+        $data['doctors']            = $clsUser->get_list_users([1]);
+        $data['hys']                = $clsUser->get_list_users([2,3]);
         $clsClinicService           = new ClinicServiceModel();
         $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         return view('backend.ortho.patients.patient_booking_list', $data);
     }
-
 
     public function getVisitList($id)
     {

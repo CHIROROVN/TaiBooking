@@ -106,4 +106,14 @@ class UserModel
                     ->whereIn('t1.belong_kind', $belong_kind)
                     ->get();
     }
+
+    public function get_list_users($belong_kind = array())
+    {
+        return DB::table($this->table)
+                    ->leftJoin('m_belong as t1', 'm_users.u_belong', '=', 't1.belong_id')
+                    ->select('id', 'u_name')
+                    ->where('m_users.last_kind', '<>', DELETE)
+                    ->whereIn('t1.belong_kind', $belong_kind)
+                    ->lists('u_name', 'id');
+    }
 }

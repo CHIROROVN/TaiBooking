@@ -10,15 +10,15 @@
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <tr>
-                    <td class="col-title"><label for="belong_name">所属名 (*)</label></td>
+                    <td class="col-title"><label for="belong_name">所属名 <span class="note_required">※</span></label></td>
                     <td>
                       <input type="text" name="belong_name" id="belong_name " class="form-control" value="{{ $belong->belong_name }}" />
-                      <span class="error-input">@if ($errors->first('belong_name')) {!! $errors->first('belong_name') !!} @endif</span>
+                      <span class="error-input">@if ($errors->first('belong_name')) ※{!! $errors->first('belong_name') !!} @endif</span>
                     </td>
                   </tr>
                   <!-- belong_kind -->
                   <tr>
-                    <td class="col-title"><label for="belong_kind">所属区分 (*)</label></td>
+                    <td class="col-title"><label for="belong_kind">所属区分 <span class="note_required">※</span></label></td>
                     <td>
                       <select name="belong_kind" id="belong_kind" class="form-control form-control--small">
                         <option value="1" @if($belong->belong_kind == 1) selected="" @endif>医師</option>
@@ -29,7 +29,7 @@
                         <option value="6" @if($belong->belong_kind == 6) selected="" @endif>放射線技師</option>
                         <option value="7" @if($belong->belong_kind == 7) selected="" @endif>滅菌</option>
                       </select>
-                      <span class="error-input">@if ($errors->first('belong_kind')) {!! $errors->first('belong_kind') !!} @endif</span>
+                      <span class="error-input">@if ($errors->first('belong_kind')) ※{!! $errors->first('belong_kind') !!} @endif</span>
                     </td>
                   </tr>
                 </table>

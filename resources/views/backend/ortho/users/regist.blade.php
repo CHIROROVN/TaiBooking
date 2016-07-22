@@ -7,38 +7,38 @@
       <table class="table table-bordered">
         <tbody>
           <tr>
-            <td class="col-title">氏名 (*)</td>
+            <td class="col-title">氏名 <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="text" name="u_name" id="u_name" value="{{ old('u_name') }}" />
-              <span class="error-input">@if ($errors->first('u_name')) {!! $errors->first('u_name') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('u_name')) ※{!! $errors->first('u_name') !!} @endif</span>
             </td>
           </tr>
           <tr>
-            <td class="col-title">氏名よみ (*)</td>
+            <td class="col-title">氏名よみ <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="text" name="u_name_yomi" id="u_name_yomi" value="{{ old('u_name_yomi') }}" />
-              <span class="error-input">@if ($errors->first('u_name_yomi')) {!! $errors->first('u_name_yomi') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('u_name_yomi')) ※{!! $errors->first('u_name_yomi') !!} @endif</span>
             </td>
           </tr>
           <tr>
-            <td class="col-title">（表示用）氏名 (*)</td>
+            <td class="col-title">（表示用）氏名 <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="text" name="u_name_display" id="u_name_display" value="{{ old('u_name_display') }}" />
-              <span class="error-input">@if ($errors->first('u_name_display')) {!! $errors->first('u_name_display') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('u_name_display')) ※{!! $errors->first('u_name_display') !!} @endif</span>
             </td>
           </tr>
           <tr>
-            <td class="col-title">ログインID (*)</td>
+            <td class="col-title">ログインID <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="text" name="u_login" id="u_login" value="{{ old('u_login') }}" />
-              <span class="error-input">@if ($errors->first('u_login')) {!! $errors->first('u_login') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('u_login')) ※{!! $errors->first('u_login') !!} @endif</span>
             </td>
           </tr>
           <tr>
-            <td class="col-title">パスワード (*)</td>
+            <td class="col-title">パスワード <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="password" name="password" id="password" />
-              <span class="error-input">@if ($errors->first('password')) {!! $errors->first('password') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('password')) ※{!! $errors->first('password') !!} @endif</span>
             </td>
           </tr>
           <tr>

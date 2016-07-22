@@ -56,47 +56,47 @@
 
             <!-- p_name -->
             <tr>
-              <td class="col-title"><label for="p_name">氏名</label></td>
+              <td class="col-title"><label for="p_name">氏名 <span class="note_required">※</span></label></td>
               <td>
                 <input type="text" name="p_name" id="p_name" class="form-control" value="{{ old('p_name') }}" />
-                <span class="error-input">@if ($errors->first('p_name')) {!! $errors->first('p_name') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_name')) ※{!! $errors->first('p_name') !!} @endif</span>
               </td>
             </tr>
 
             <!-- p_name_kana -->
             <tr>
-              <td class="col-title"><label for="p_name_kana">氏名（よみ）</label></td>
+              <td class="col-title"><label for="p_name_kana">氏名（よみ） <span class="note_required">※</span></label></td>
               <td>
                 <input type="text" name="p_name_kana" id="p_name_kana" class="form-control" value="{{ old('p_name_kana') }}" />
-                <span class="error-input">@if ($errors->first('p_name_kana')) {!! $errors->first('p_name_kana') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_name_kana')) ※{!! $errors->first('p_name_kana') !!} @endif</span>
               </td>
             </tr>
 
             <!-- p_sex -->
             <tr>
-              <td class="col-title">性別</td>
+              <td class="col-title">性別 <span class="note_required">※</span></td>
               <td>
                 <input type="radio" name="p_sex" value="1" @if(old('p_sex') == 1) checked="" @endif /> 男　　　
                 <input type="radio" name="p_sex" value="2" @if(old('p_sex') == 2) checked="" @endif /> 女
-                <span class="error-input">@if ($errors->first('p_sex')) {!! $errors->first('p_sex') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_sex')) ※{!! $errors->first('p_sex') !!} @endif</span>
               </td>
             </tr>
 
             <!-- p_birthday -->
             <tr>
-              <td class="col-title"><label for="p_birthday">生年月日</label></td>
+              <td class="col-title"><label for="p_birthday">生年月日 <span class="note_required">※</span></label></td>
               <td>
                 <input type="text" name="p_birthday" id="p_birthday" class="form-control" value="{{ old('p_birthday') }}" placeholder="YYYY/mm/dd" />
-                <span class="error-input">@if ($errors->first('p_sex')) {!! $errors->first('p_sex') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_sex')) ※{!! $errors->first('p_sex') !!} @endif</span>
               </td>
             </tr>
 
             <!-- p_family_dr -->
             <tr>
-              <td class="col-title"><label for="p_family_dr">かかりつけ</label></td>
+              <td class="col-title"><label for="p_family_dr">かかりつけ <span class="note_required">※</span></label></td>
               <td>
                 <input type="text" name="p_family_dr" id="p_family_dr" class="form-control" value="{{ old('p_family_dr') }}" />
-                <span class="error-input">@if ($errors->first('p_family_dr')) {!! $errors->first('p_family_dr') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_family_dr')) ※{!! $errors->first('p_family_dr') !!} @endif</span>
               </td>
             </tr>
 
@@ -105,7 +105,7 @@
               <td class="col-title"><label for="p_introduce">紹介先</label></td>
               <td>
                 <input type="text" name="p_introduce" id="p_introduce" class="form-control" value="{{ old('p_introduce') }}" />
-                <span class="error-input">@if ($errors->first('p_introduce')) {!! $errors->first('p_introduce') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_introduce')) ※{!! $errors->first('p_introduce') !!} @endif</span>
               </td>
             </tr>
 
@@ -114,7 +114,7 @@
               <td class="col-title"><label for="p_start">治療開始</label></td>
               <td>
                 <input type="text" name="p_start" id="p_start" class="form-control" value="{{ old('p_start') }}" />
-                <span class="error-input">@if ($errors->first('p_start')) {!! $errors->first('p_start') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_start')) ※{!! $errors->first('p_start') !!} @endif</span>
               </td>
             </tr>
 
@@ -123,7 +123,7 @@
               <td class="col-title"><label for="p_start2">2期開始</label></td>
               <td>
                 <input type="text" name="p_start2" id="p_start2" class="form-control" value="{{ old('p_start2') }}" />
-                <span class="error-input">@if ($errors->first('p_start2')) {!! $errors->first('p_start2') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_start2')) ※{!! $errors->first('p_start2') !!} @endif</span>
               </td>
             </tr>
 
@@ -137,7 +137,7 @@
                     <option value="{{ $clinic->clinic_id }}" @if(old('p_place') == $clinic->clinic_id) selected="" @endif >{{ $clinic->clinic_name }}</option>
                   @endforeach
                 </select>
-                <span class="error-input">@if ($errors->first('p_place')) {!! $errors->first('p_place') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_place')) ※{!! $errors->first('p_place') !!} @endif</span>
               </td>
             </tr>
 
@@ -146,7 +146,7 @@
               <td class="col-title"><label for="p_xray">xray</label></td>
               <td>
                 <input type="text" name="p_xray" id="p_xray" class="form-control" value="{{ old('p_xray') }}" />
-                <span class="error-input">@if ($errors->first('p_xray')) {!! $errors->first('p_xray') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_xray')) ※{!! $errors->first('p_xray') !!} @endif</span>
               </td>
             </tr>
 
@@ -155,7 +155,7 @@
               <td class="col-title"><label for="p_clinic_memo">医院関連メモ</label></td>
               <td>
                 <input type="text" name="p_clinic_memo" id="p_clinic_memo" class="form-control" value="{{ old('p_clinic_memo') }}" />
-                <span class="error-input">@if ($errors->first('p_clinic_memo')) {!! $errors->first('p_clinic_memo') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_clinic_memo')) ※{!! $errors->first('p_clinic_memo') !!} @endif</span>
               </td>
             </tr>
 
@@ -164,7 +164,7 @@
               <td class="col-title"><label for="p_personal_memo">個人情報メモ</label></td>
               <td>
                 <input type="text" name="p_personal_memo" id="p_personal_memo" class="form-control" value="{{ old('p_personal_memo') }}" />
-                <span class="error-input">@if ($errors->first('p_personal_memo')) {!! $errors->first('p_personal_memo') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_personal_memo')) ※{!! $errors->first('p_personal_memo') !!} @endif</span>
               </td>
             </tr>
 
@@ -173,7 +173,7 @@
               <td class="col-title"><label for="p_used">使用装置</label></td>
               <td>
                 <input type="text" name="p_used" id="p_used" class="form-control" value="{{ old('p_used') }}" />
-                <span class="error-input">@if ($errors->first('p_used')) {!! $errors->first('p_used') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_used')) ※{!! $errors->first('p_used') !!} @endif</span>
               </td>
             </tr>
 
@@ -182,7 +182,7 @@
               <td class="col-title"><label for="p_payment">入金状況</label></td>
               <td>
                 <input type="text" name="p_payment" id="p_payment" class="form-control" value="{{ old('p_payment') }}" />
-                <span class="error-input">@if ($errors->first('p_payment')) {!! $errors->first('p_payment') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_payment')) ※{!! $errors->first('p_payment') !!} @endif</span>
               </td>
             </tr>
 
@@ -191,7 +191,7 @@
               <td class="col-title"><label for="p_amount">契約金</label></td>
               <td>
                 <input type="text" name="p_amount" id="p_amount" class="form-control" value="{{ old('p_amount') }}" />
-                <span class="error-input">@if ($errors->first('p_amount')) {!! $errors->first('p_amount') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_amount')) ※{!! $errors->first('p_amount') !!} @endif</span>
               </td>
             </tr>
 
@@ -201,7 +201,7 @@
                 <!-- p_zip -->
                 <div class="mar-bottom">
                   <input type="text" name="p_zip" id="p_zip" class="form-control" placeholder="郵便番号を入力して下さい。　例)100-0000" value="{{ old('p_zip') }}" />
-                  <span class="error-input">@if ($errors->first('p_zip')) {!! $errors->first('p_zip') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_zip')) ※{!! $errors->first('p_zip') !!} @endif</span>
                 </div>
                 <!-- p_pref -->
                 <div class="mar-bottom">
@@ -211,17 +211,17 @@
                     <option value="{{ $key }}" @if(old('p_pref') == $key) selected="" @endif >{{ $value }}</option>
                     @endforeach
                   </select>
-                  <span class="error-input">@if ($errors->first('p_pref')) {!! $errors->first('p_pref') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_pref')) ※{!! $errors->first('p_pref') !!} @endif</span>
                 </div>
                 <!-- p_address1 -->
                 <div class="mar-bottom">
                   <input type="text" name="p_address1" id="p_address1" class="form-control" placeholder="例）岡山市北区1-2-3" value="{{ old('p_address1') }}" />
-                  <span class="error-input">@if ($errors->first('p_address1')) {!! $errors->first('p_address1') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_address1')) ※{!! $errors->first('p_address1') !!} @endif</span>
                 </div>
                 <!-- p_address_2 -->
                 <div class="mar-bottom">
                   <input type="text" name="p_address_2" id="p_address_2" class="form-control" placeholder="マンション名などをご記入ください" value="{{ old('p_address_2') }}" />
-                  <span class="error-input">@if ($errors->first('p_address_2')) {!! $errors->first('p_address_2') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_address_2')) ※{!! $errors->first('p_address_2') !!} @endif</span>
                 </div>
               </td>
             </tr>
@@ -231,7 +231,7 @@
               <td class="col-title"><label for="p_tel">TEL</label></td>
               <td>
                 <input class="form-control" name="p_tel" value="{{ old('p_tel') }}" type="text" id="p_tel" />
-                <span class="error-input">@if ($errors->first('p_tel')) {!! $errors->first('p_tel') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_tel')) ※{!! $errors->first('p_tel') !!} @endif</span>
               </td>
             </tr>
 
@@ -240,7 +240,7 @@
               <td class="col-title"><label for="p_fax">FAX</label></td>
               <td>
                 <input class="form-control" name="p_fax" value="{{ old('p_fax') }}" type="text" id="p_fax" />
-                <span class="error-input">@if ($errors->first('p_fax')) {!! $errors->first('p_fax') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_fax')) ※{!! $errors->first('p_fax') !!} @endif</span>
               </td>
             </tr>
 
@@ -249,7 +249,7 @@
               <td class="col-title"><label for="p_mobile">携帯電話</label></td>
               <td>
                 <input class="form-control" name="p_mobile" value="{{ old('p_mobile') }}" type="text" id="p_mobile" />
-                <span class="error-input">@if ($errors->first('p_mobile')) {!! $errors->first('p_mobile') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_mobile')) ※{!! $errors->first('p_mobile') !!} @endif</span>
               </td>
             </tr>
 
@@ -265,7 +265,7 @@
                   <option value="4" @if(old('p_mobile_owner') == 4) selected="" @endif >祖父</option>
                   <option value="5" @if(old('p_mobile_owner') == 5) selected="" @endif >祖母</option>
                 </select>
-                <span class="error-input">@if ($errors->first('p_mobile_owner')) {!! $errors->first('p_mobile_owner') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_mobile_owner')) ※{!! $errors->first('p_mobile_owner') !!} @endif</span>
               </td>
             </tr>
 
@@ -274,7 +274,7 @@
               <td class="col-title"><label for="p_email">e-mail</label></td>
               <td>
                 <input class="form-control" placeholder="例）example@domain.co.jp" name="p_email" value="{{ old('p_email') }}" type="text" id="p_email" />
-                <span class="error-input">@if ($errors->first('p_email')) {!! $errors->first('p_email') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_email')) ※{!! $errors->first('p_email') !!} @endif</span>
               </td>
             </tr>
 
@@ -283,7 +283,7 @@
               <td class="col-title"><label for="p_company">学校・勤務先</label></td>
               <td>
                 <input class="form-control" placeholder="学校・勤務先をご記入ください" name="p_company" value="{{ old('p_company') }}" type="text" id="p_company" />
-                <span class="error-input">@if ($errors->first('p_company')) {!! $errors->first('p_company') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_company')) ※{!! $errors->first('p_company') !!} @endif</span>
               </td>
             </tr>
 
@@ -292,7 +292,7 @@
               <td class="col-title"><label for="p_parent_name">保護者氏名</label></td>
               <td>
                 <input class="form-control" name="p_parent_name" value="{{ old('p_parent_name') }}" type="text" id="p_parent_name" />
-                <span class="error-input">@if ($errors->first('p_parent_name')) {!! $errors->first('p_parent_name') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_name')) ※{!! $errors->first('p_parent_name') !!} @endif</span>
               </td>
             </tr>
 
@@ -301,7 +301,7 @@
               <td class="col-title"><label for="p_parent_company">保護者勤務先</label></td>
               <td>
                 <input class="form-control" name="p_parent_company" value="{{ old('p_parent_company') }}" type="text" id="p_parent_company" />
-                <span class="error-input">@if ($errors->first('p_parent_company')) {!! $errors->first('p_parent_company') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_company')) ※{!! $errors->first('p_parent_company') !!} @endif</span>
               </td>
             </tr>
 
@@ -310,7 +310,7 @@
               <td class="col-title"><label for="p_parent_tel">保護者連絡先</label></td>
               <td>
                 <input class="form-control" name="p_parent_tel" value="{{ old('p_parent_tel') }}" type="text" id="p_parent_tel" />
-                <span class="error-input">@if ($errors->first('p_parent_tel')) {!! $errors->first('p_parent_tel') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_tel')) ※{!! $errors->first('p_parent_tel') !!} @endif</span>
               </td>
             </tr>
 
@@ -326,7 +326,7 @@
                   <option value="4" @if(old('p_parent_kind') == 4) selected="" @endif >祖父</option>
                   <option value="5" @if(old('p_parent_kind') == 5) selected="" @endif >祖母</option>
                 </select>
-                <span class="error-input">@if ($errors->first('p_parent_kind')) {!! $errors->first('p_parent_kind') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_kind')) ※{!! $errors->first('p_parent_kind') !!} @endif</span>
               </td>
             </tr>
 

@@ -12,6 +12,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 <link href="{{ asset('') }}public/backend/ortho/common/css/jquery-ui.min.css" rel="stylesheet">
+<link href="{{ asset('') }}public/backend/ortho/common/css/style.css" rel="stylesheet">
 <link href="{{ asset('') }}public/backend/ortho/common/css/fullcalendar.css" rel="stylesheet">
 <link href="{{ asset('') }}public/backend/ortho/common/css/fullcalendar.print.css" rel="stylesheet" media='print'>
 <link href="{{ asset('') }}public/backend/ortho/common/css/import.css" rel="stylesheet">

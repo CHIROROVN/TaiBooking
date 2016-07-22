@@ -7,7 +7,7 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td class="col-title"><label for="insurance_name">保険診療名</label></td>
+        <td class="col-title"><label for="insurance_name">保険診療名 <span class="note_required">※</span></label></td>
         <td>
           @if ( old('insurance_name') )
           <input class="form-control" type="text" name="insurance_name" id="insurance_name" value="{{ old('insurance_name') }}" />
@@ -17,7 +17,7 @@
           <input class="form-control" type="text" name="insurance_name" id="insurance_name" value="" />
           @endif
           
-          <span class="error-input">@if ($errors->first('insurance_name')) {!! $errors->first('insurance_name') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('insurance_name')) ※{!! $errors->first('insurance_name') !!} @endif</span>
         </td>
       </tr>
     </tbody>

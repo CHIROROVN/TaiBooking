@@ -695,3 +695,7 @@ textarea {
   background-color: #dd0000 !important;
   color: white !important;
 }
+
+span.note_required{
+  color: #F36161 !important;
+}

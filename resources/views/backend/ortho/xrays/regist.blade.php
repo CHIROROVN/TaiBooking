@@ -74,7 +74,7 @@
         $year_prev = $year_now - 1;
         ?>
         <tr>
-          <td class="col-title">撮影日</td>
+          <td class="col-title">撮影日 <span class="note_required">※</span></td>
           <td>
             <select name="xray_date_year" class="form-control form-control--small">
               <option value="0">----年</option>
@@ -92,13 +92,13 @@
               <option value="0">--日</option>
             </select>
             <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" height="23" width="27">
-            <span class="error-input">@if ($errors->first('xray_date')) {!! $errors->first('xray_date') !!} @endif</span>
+            <span class="error-input">@if ($errors->first('xray_date')) ※{!! $errors->first('xray_date') !!} @endif</span>
           </td>
         </tr>
 
         <!-- xray_place (clinic_name, clinic_id) -->
         <tr>
-          <td class="col-title">撮影場所</td>
+          <td class="col-title">撮影場所 <span class="note_required">※</span></td>
           <td>
             <select name="xray_place" class="form-control form-control--small">
               <option value="0">----</option>
@@ -106,7 +106,7 @@
               <option value="{{ $clinic->clinic_id }}" @if(old('xray_place') == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
               @endforeach
             </select>
-            <span class="error-input">@if ($errors->first('xray_place')) {!! $errors->first('xray_place') !!} @endif</span>
+            <span class="error-input">@if ($errors->first('xray_place')) ※{!! $errors->first('xray_place') !!} @endif</span>
           </td>
         </tr>
 

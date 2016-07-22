@@ -1,7 +1,8 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-{!! Form::open(array('route' => ['ortho.patients.edit', $patient->p_id], 'enctype'=>'multipart/form-data')) !!}
+<?php echo "<pre>";print_r($communications);?>
+{!! Form::open(array('route' => ['ortho.patients.communications.edit', $patient->p_id], 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">
@@ -73,7 +74,7 @@
 
             <!-- p_name -->
             <tr>
-              <td class="col-title"><label for="p_name">氏名</label></td>
+              <td class="col-title"><label for="p_name">氏名 <span class="note_required">※</span></label></td>
               <td>
                 @if ( old('p_name') )
                 <input type="text" name="p_name" id="p_name" class="form-control" value="{{ old('p_name') }}" />
@@ -86,20 +87,20 @@
 
             <!-- p_name_kana -->
             <tr>
-              <td class="col-title"><label for="p_name_kana">氏名（よみ）</label></td>
+              <td class="col-title"><label for="p_name_kana">氏名（よみ） <span class="note_required">※</span></label></td>
               <td>
                 @if ( old('p_name_kana') )
                 <input type="text" name="p_name_kana" id="p_name_kana" class="form-control" value="{{ old('p_name_kana') }}" />
                 @else
                 <input type="text" name="p_name_kana" id="p_name_kana" class="form-control" value="{{ $patient->p_name_kana }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_name_kana')) {!! $errors->first('p_name_kana') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_name_kana')) ※{!! $errors->first('p_name_kana') !!} @endif</span>
               </td>
             </tr>
 
             <!-- p_sex -->
             <tr>
-              <td class="col-title">性別</td>
+              <td class="col-title">性別 <span class="note_required">※</span></td>
               <td>
                 @if ( old('p_sex') )
                 <input type="radio" name="p_sex" value="1" @if(old('p_sex') == 1) checked="" @endif /> 男　　　
@@ -108,20 +109,20 @@
                 <input type="radio" name="p_sex" value="1" @if($patient->p_sex == 1) checked="" @endif /> 男　　　
                 <input type="radio" name="p_sex" value="2" @if($patient->p_sex == 2) checked="" @endif /> 女
                 @endif
-                <span class="error-input">@if ($errors->first('p_sex')) {!! $errors->first('p_sex') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_sex')) ※{!! $errors->first('p_sex') !!} @endif</span>
               </td>
             </tr>
 
             <!-- p_birthday -->
             <tr>
-              <td class="col-title"><label for="p_birthday">生年月日</label></td>
+              <td class="col-title"><label for="p_birthday">生年月日 <span class="note_required">※</span></label></td>
               <td>
                 @if ( old('p_birthday') )
                 <input type="text" name="p_birthday" id="p_birthday" class="form-control" value="{{ old('p_birthday') }}" placeholder="YYYY/mm/dd" />
                 @else
                 <input type="text" name="p_birthday" id="p_birthday" class="form-control" value="{{ date('Y/m/d', strtotime($patient->p_birthday)) }}" placeholder="YYYY/mm/dd" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_sex')) {!! $errors->first('p_sex') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_sex')) ※{!! $errors->first('p_sex') !!} @endif</span>
               </td>
             </tr>
 
@@ -134,7 +135,7 @@
                 @else
                 <input type="text" name="p_family_dr" id="p_family_dr" class="form-control" value="{{ $patient->p_family_dr }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_family_dr')) {!! $errors->first('p_family_dr') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_family_dr')) ※{!! $errors->first('p_family_dr') !!} @endif</span>
               </td>
             </tr>
 
@@ -147,7 +148,7 @@
                 @else
                 <input type="text" name="p_introduce" id="p_introduce" class="form-control" value="{{ $patient->p_introduce }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_introduce')) {!! $errors->first('p_introduce') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_introduce')) ※{!! $errors->first('p_introduce') !!} @endif</span>
               </td>
             </tr>
 
@@ -160,7 +161,7 @@
                 @else
                 <input type="text" name="p_start" id="p_start" class="form-control" value="{{ $patient->p_start }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_start')) {!! $errors->first('p_start') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_start')) ※{!! $errors->first('p_start') !!} @endif</span>
               </td>
             </tr>
 
@@ -173,7 +174,7 @@
                 @else
                 <input type="text" name="p_start2" id="p_start2" class="form-control" value="{{ $patient->p_start2 }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_start2')) {!! $errors->first('p_start2') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_start2')) ※{!! $errors->first('p_start2') !!} @endif</span>
               </td>
             </tr>
 
@@ -191,7 +192,7 @@
                     @endif
                   @endforeach
                 </select>
-                <span class="error-input">@if ($errors->first('p_place')) {!! $errors->first('p_place') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_place')) ※{!! $errors->first('p_place') !!} @endif</span>
               </td>
             </tr>
 
@@ -204,7 +205,7 @@
                 @else
                 <input type="text" name="p_xray" id="p_xray" class="form-control" value="{{ $patient->p_xray }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_xray')) {!! $errors->first('p_xray') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_xray')) ※{!! $errors->first('p_xray') !!} @endif</span>
               </td>
             </tr>
 
@@ -217,7 +218,7 @@
                 @else
                 <input type="text" name="p_clinic_memo" id="p_clinic_memo" class="form-control" value="{{ $patient->p_clinic_memo }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_clinic_memo')) {!! $errors->first('p_clinic_memo') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_clinic_memo')) ※{!! $errors->first('p_clinic_memo') !!} @endif</span>
               </td>
             </tr>
 
@@ -230,7 +231,7 @@
                 @else
                 <input type="text" name="p_personal_memo" id="p_personal_memo" class="form-control" value="{{ $patient->p_personal_memo }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_personal_memo')) {!! $errors->first('p_personal_memo') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_personal_memo')) ※{!! $errors->first('p_personal_memo') !!} @endif</span>
               </td>
             </tr>
 
@@ -243,7 +244,7 @@
                 @else
                 <input type="text" name="p_used" id="p_used" class="form-control" value="{{ $patient->p_used }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_used')) {!! $errors->first('p_used') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_used')) ※{!! $errors->first('p_used') !!} @endif</span>
               </td>
             </tr>
 
@@ -256,7 +257,7 @@
                 @else
                 <input type="text" name="p_payment" id="p_payment" class="form-control" value="{{ $patient->p_payment }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_payment')) {!! $errors->first('p_payment') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_payment')) ※{!! $errors->first('p_payment') !!} @endif</span>
               </td>
             </tr>
 
@@ -269,7 +270,7 @@
                 @else
                 <input type="text" name="p_amount" id="p_amount" class="form-control" value="{{ $patient->p_amount }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_amount')) {!! $errors->first('p_amount') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_amount')) ※{!! $errors->first('p_amount') !!} @endif</span>
               </td>
             </tr>
 
@@ -283,7 +284,7 @@
                   @else
                   <input type="text" name="p_zip" id="p_zip" class="form-control" placeholder="郵便番号を入力して下さい。　例)100-0000" value="{{ $patient->p_zip }}" />
                   @endif
-                  <span class="error-input">@if ($errors->first('p_zip')) {!! $errors->first('p_zip') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_zip')) ※{!! $errors->first('p_zip') !!} @endif</span>
                 </div>
                 <!-- p_pref -->
                 <div class="mar-bottom">
@@ -306,7 +307,7 @@
                   @else
                   <input type="text" name="p_address1" id="p_address1" class="form-control" placeholder="例）岡山市北区1-2-3" value="{{ $patient->p_address1 }}" />
                   @endif
-                  <span class="error-input">@if ($errors->first('p_address1')) {!! $errors->first('p_address1') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_address1')) ※{!! $errors->first('p_address1') !!} @endif</span>
                 </div>
                 <!-- p_address_2 -->
                 <div class="mar-bottom">
@@ -315,7 +316,7 @@
                   @else
                   <input type="text" name="p_address_2" id="p_address_2" class="form-control" placeholder="マンション名などをご記入ください" value="{{ $patient->p_address_2 }}" />
                   @endif
-                  <span class="error-input">@if ($errors->first('p_address_2')) {!! $errors->first('p_address_2') !!} @endif</span>
+                  <span class="error-input">@if ($errors->first('p_address_2')) ※{!! $errors->first('p_address_2') !!} @endif</span>
                 </div>
               </td>
             </tr>
@@ -329,7 +330,7 @@
                 @else
                 <input class="form-control" name="p_tel" value="{{ $patient->p_tel }}" type="text" id="p_tel" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_tel')) {!! $errors->first('p_tel') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_tel')) ※{!! $errors->first('p_tel') !!} @endif</span>
               </td>
             </tr>
 
@@ -342,7 +343,7 @@
                 @else
                 <input class="form-control" name="p_fax" value="{{ $patient->p_fax }}" type="text" id="p_fax" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_fax')) {!! $errors->first('p_fax') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_fax')) ※{!! $errors->first('p_fax') !!} @endif</span>
               </td>
             </tr>
 
@@ -355,7 +356,7 @@
                 @else
                 <input class="form-control" name="p_mobile" value="{{ $patient->p_mobile }}" type="text" id="p_mobile" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_mobile')) {!! $errors->first('p_mobile') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_mobile')) ※{!! $errors->first('p_mobile') !!} @endif</span>
               </td>
             </tr>
 
@@ -379,7 +380,7 @@
                   <option value="5" @if($patient->p_mobile_owner == 5) selected="" @endif >祖母</option>
                   @endif
                 </select>
-                <span class="error-input">@if ($errors->first('p_mobile_owner')) {!! $errors->first('p_mobile_owner') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_mobile_owner')) ※{!! $errors->first('p_mobile_owner') !!} @endif</span>
               </td>
             </tr>
 
@@ -392,7 +393,7 @@
                 @else
                 <input class="form-control" placeholder="例）example@domain.co.jp" name="p_email" value="{{ $patient->p_email }}" type="text" id="p_email" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_email')) {!! $errors->first('p_email') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_email')) ※{!! $errors->first('p_email') !!} @endif</span>
               </td>
             </tr>
 
@@ -405,7 +406,7 @@
                 @else
                 <input class="form-control" placeholder="学校・勤務先をご記入ください" name="p_company" value="{{ $patient->p_company }}" type="text" id="p_company" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_company')) {!! $errors->first('p_company') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_company')) ※{!! $errors->first('p_company') !!} @endif</span>
               </td>
             </tr>
 
@@ -418,7 +419,7 @@
                 @else
                 <input class="form-control" name="p_parent_name" value="{{ $patient->p_parent_name }}" type="text" id="p_parent_name" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_parent_name')) {!! $errors->first('p_parent_name') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_name')) ※{!! $errors->first('p_parent_name') !!} @endif</span>
               </td>
             </tr>
 
@@ -431,7 +432,7 @@
                 @else
                 <input class="form-control" name="p_parent_company" value="{{ $patient->p_parent_company }}" type="text" id="p_parent_company" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_parent_company')) {!! $errors->first('p_parent_company') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_company')) ※{!! $errors->first('p_parent_company') !!} @endif</span>
               </td>
             </tr>
 
@@ -444,7 +445,7 @@
                 @else
                 <input class="form-control" name="p_parent_tel" value="{{ $patient->p_parent_tel }}" type="text" id="p_parent_tel" />
                 @endif
-                <span class="error-input">@if ($errors->first('p_parent_tel')) {!! $errors->first('p_parent_tel') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_tel')) ※{!! $errors->first('p_parent_tel') !!} @endif</span>
               </td>
             </tr>
 
@@ -468,7 +469,7 @@
                   <option value="5" @if($patient->p_parent_kind == 5) selected="" @endif >祖母</option>
                   @endif
                 </select>
-                <span class="error-input">@if ($errors->first('p_parent_kind')) {!! $errors->first('p_parent_kind') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_parent_kind')) ※{!! $errors->first('p_parent_kind') !!} @endif</span>
               </td>
             </tr>
 

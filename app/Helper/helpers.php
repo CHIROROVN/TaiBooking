@@ -244,6 +244,9 @@
 		return $totalMin;
 	}
 
+	/**
+	 * ex: 2016-07-22 => 2016-07-23
+	 */
 	function addOneDay($currentDay)
 	{
 		if ( empty($currentDay) ) {
@@ -321,5 +324,23 @@
 		}
 
 		return $colorCls;
+	}
+
+
+	function hourMin2Min($hhmm)
+	{
+		$tmpHHMM = sprintf("%04d", $hhmm);
+		$hh = substr($tmpHHMM, 0, 2);
+		$mm = substr($tmpHHMM, 2, 2);
+
+		return $hh * 60 + $mm;
+	}
+
+	function min2HourMin($mm)
+	{
+		$hh = floor($mm / 60);
+		$mm = $mm % 60;
+
+		return $hh . sprintf("%02d", $mm);
 	}
 

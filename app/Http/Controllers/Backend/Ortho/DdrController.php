@@ -4,13 +4,11 @@ use App\Http\Controllers\BackendController;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\DdrModel;
 use App\Http\Models\Ortho\ShiftModel;
-
 use Form;
 use Html;
 use Input;
@@ -32,7 +30,6 @@ class DdrController extends BackendController
     public function calendar()
     {
         $clsDdr            = new DdrModel();
-
         $ddrs              = $clsDdr->get_all();
         $color = array(
             '1' => '#000',
@@ -121,7 +118,6 @@ class DdrController extends BackendController
             );
         }
         $data['ddrs']      = json_encode($tmpDdrs);
-
         return view('backend.ortho.ddrs.mycalendar', $data);
     }
 
@@ -134,23 +130,19 @@ class DdrController extends BackendController
         if ( empty($ddr_start_date) ) {
             return redirect()->route('ortho.ddrs.calendar');
         }
-
         $clsDdr = new DdrModel();
-
         $data = array();
         $data['ddr_start_date']     = $ddr_start_date;
         $data['start_date']         = $ddr_start_date;
         $data['ddr_start_date_y']   = date('Y', strtotime($ddr_start_date));
         $data['ddr_start_date_m']   = date('m', strtotime($ddr_start_date));
         $data['ddr_start_date_d']   = date('d', strtotime($ddr_start_date));
-
         // set hour
         $tmpHours = array();
         for ( $i = 1; $i <= 12; $i++ ) {
             $tmpHours[$i] = convert2Digit($i);
         }
         $data['hours'] = $tmpHours;
-
         // set year
         $tmpYears = array();
         $tmpYearNow = date('Y');
@@ -160,7 +152,6 @@ class DdrController extends BackendController
             $tmpYears[$tmp] = $tmp;
         }
         $data['years'] = $tmpYears;
-
         return view('backend.ortho.ddrs.regist', $data);
     }
 
@@ -209,7 +200,6 @@ class DdrController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.ddrs.calendar');
     }
 
@@ -253,7 +243,6 @@ class DdrController extends BackendController
             $tmpYears[$tmp] = $tmp;
         }
         $data['years'] = $tmpYears;
-
         return view('backend.ortho.ddrs.edit', $data);
     }
 
@@ -271,7 +260,6 @@ class DdrController extends BackendController
             'ddr_end_time'      => Input::get('ddr_end_hh') . Input::get('ddr_end_mm'),
             'ddr_kind'          => Input::get('ddr_kind'),
             'ddr_contents'      => Input::get('ddr_contents'),
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
@@ -296,13 +284,11 @@ class DdrController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('ortho.ddrs.edit', [ $id ])->withErrors($validator)->withInput();
         }
-        
         if ( $clsDdr->update($id, $dataInsert) ) {
             Session::flash('success', trans('common.message_edit_success'));
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
         }
-
         return redirect()->route('ortho.ddrs.calendar');
     }
 
@@ -312,7 +298,6 @@ class DdrController extends BackendController
     public function getDelete($id)
     {
         $clsDdr                 = new DdrModel();
-
         // update table area
         $dataUpdate = array(
             'last_date'         => date('y-m-d H:i:s'),
@@ -320,13 +305,11 @@ class DdrController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        
         if ( $clsDdr->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_delete_success'));
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
         }
-
         return redirect()->route('ortho.ddrs.calendar');
     }
 }

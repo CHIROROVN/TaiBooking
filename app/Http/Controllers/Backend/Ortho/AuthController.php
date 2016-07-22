@@ -1,17 +1,12 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use Session;
-// use App\User;
 use App\Http\Models\Ortho\UserModel;
-// use App\Http\Models\Ortho\BelongModel;
-
 use Form;
 use Html;
 use Input;
@@ -25,9 +20,7 @@ class AuthController extends Controller
     public function __construct()
     {
         parent::__construct();
-
         LaravelLocalization::setLocale('ja');
-
         $configs = Config::get('constants.DEFINE');
         foreach($configs as $key => $value)
         {
@@ -51,7 +44,6 @@ class AuthController extends Controller
     public function postLogin()
     {
         $inputs = Input::all();
-
         $Rules = array(
             'u_login'   => 'required',
             'password'  => 'required',
@@ -87,7 +79,6 @@ class AuthController extends Controller
         }
     }
 
-
     /**
      * 
      */
@@ -96,7 +87,6 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('ortho.login');
     }
-
 
     /**
      * get view change password
@@ -107,10 +97,8 @@ class AuthController extends Controller
         if ( !Auth::check() ) {
             return redirect()->route('ortho.login');
         }
-
         return view('backend.ortho.auth.change_pass');
     }
-
 
     /**
      * update new password
@@ -121,7 +109,6 @@ class AuthController extends Controller
         $clsUser                    = new UserModel();
         $user                       = $clsUser->get_by_id($id);
         $inputs                     = Input::all();
-
         $Rules = array(
             'password'                          => 'required',
             'new_password'                      => 'required',
@@ -147,7 +134,6 @@ class AuthController extends Controller
 
         $dataUpdate = array(
             'password'          => Hash::make(Input::get('new_password')),
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],

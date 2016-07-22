@@ -4,7 +4,6 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ClinicModel;
@@ -13,7 +12,6 @@ use App\Http\Models\Ortho\Treatment1Model;
 use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\ResultModel;
-
 use Form;
 use Html;
 use Input;
@@ -38,7 +36,6 @@ class BookedController extends BackendController
         $data                       = array();
         $data['s_clinic_id']        = Input::get('s_clinic_id');
         $data['s_booking_date']     = Input::get('s_booking_date');
-
         $clsBooking                 = new BookingModel();
         $clsClinic                  = new ClinicModel();
         $clsService                 = new ServiceModel();
@@ -51,7 +48,6 @@ class BookedController extends BackendController
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
-
         return view('backend.ortho.bookeds.history', $data);
     }
 
@@ -73,7 +69,6 @@ class BookedController extends BackendController
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
         $data['booking']            = $clsBooking->get_by_id($booking_id);
-
         return view('backend.ortho.bookeds.history_regist', $data);
     }
 
@@ -86,7 +81,6 @@ class BookedController extends BackendController
         $clsBooking                 = new BookingModel();
         $inputs                     = Input::all();
         $booking                    = $clsBooking->get_by_id($booking_id);
-
         // set result_start_time
         $inputs['result_start_time'] = 'abc';
         if ( empty(Input::get('result_start_time_hh')) 
@@ -108,7 +102,6 @@ class BookedController extends BackendController
             'patient_id'            => $booking->patient_id,
             'facility_id'           => $booking->facility_id,
             'equipment_id'          => $booking->equipment_id,
-
             'result_date'           => Input::get('result_date'),
             'result_start_time'     => Input::get('result_start_time_hh').Input::get('result_start_time_mm'),
             'result_total_time'     => '',
@@ -125,10 +118,9 @@ class BookedController extends BackendController
             'next_service_1_kind'   => '',
             'next_service_2'        => '',
             'next_service_2_kind'   => '',
-
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => INSERT,
-            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_ipadrs'           => CLIENT_IP_ADRS,
             'last_user'             => Auth::user()->id
         );
         
@@ -141,7 +133,6 @@ class BookedController extends BackendController
         $totalSecond = totalSecond(Input::get('result_total_time_hh'), Input::get('result_total_time_mm'), '0', Input::get('result_start_time_hh'), Input::get('result_start_time_mm'), '0');
         $totalTime = $totalSecond / 60;
         $dataUpdate['result_total_time'] = $totalTime;
-        
         // set service 1
         $service_1                          = Input::get('service_1');
         if ( !empty($service_1) ) {
@@ -149,7 +140,6 @@ class BookedController extends BackendController
             $dataUpdate['service_1_kind']       = $tmp1[0];
             $dataUpdate['service_1']            = $tmp1[1];
         }
-        
         // set service 2
         $service_2                          = Input::get('service_2');
         if ( !empty($service_2) ) {
@@ -165,7 +155,6 @@ class BookedController extends BackendController
             $dataUpdate['next_service_1_kind']  = $tmpNext1[0];
             $dataUpdate['next_service_1']       = $tmpNext1[1];
         }
-        
         // set next service 2
         $next_service_2                     = Input::get('next_service_2');
         if ( !empty($next_service_2) ) {
@@ -173,13 +162,11 @@ class BookedController extends BackendController
             $dataUpdate['next_service_2_kind']  = $tmpNext2[0];
             $dataUpdate['next_service_2']       = $tmpNext2[1];
         }
-
         if ( $clsResult->insert($dataUpdate) ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.bookeds.history');
     }
 
@@ -204,7 +191,6 @@ class BookedController extends BackendController
         $data['result']             = $clsResult->get_by_patient_id($data['booked']->patient_id);
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
-
         return view('backend.ortho.bookeds.history_edit', $data);
     }
 
@@ -217,7 +203,6 @@ class BookedController extends BackendController
         $clsBooking                 = new BookingModel();
         $booking                    = $clsBooking->get_by_id($booking_id);
         $inputs                     = Input::all();
-
         // set result_start_time
         $inputs['result_start_time'] = 'abc';
         if ( empty(Input::get('result_start_time_hh')) 
@@ -229,7 +214,6 @@ class BookedController extends BackendController
         }
 
         $validator                  = Validator::make($inputs, $clsResult->Rules(), $clsResult->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.bookeds.history.edit', [$booking_id])->withErrors($validator)->withInput();
         }
@@ -239,7 +223,6 @@ class BookedController extends BackendController
             'patient_id'            => $booking->patient_id,
             'facility_id'           => $booking->facility_id,
             'equipment_id'          => $booking->equipment_id,
-
             'result_date'           => Input::get('result_date'),
             'result_start_time'     => Input::get('result_start_time_hh').Input::get('result_start_time_mm'),
             'result_total_time'     => '',
@@ -256,7 +239,6 @@ class BookedController extends BackendController
             'next_service_1_kind'   => '',
             'next_service_2'        => '',
             'next_service_2_kind'   => '',
-
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => UPDATE,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -267,12 +249,12 @@ class BookedController extends BackendController
         if ( empty(Input::get('result_start_time_hh')) && empty(Input::get('result_start_time_mm')) ) {
             $dataUpdate['result_start_time'] = null;
         }
-        
+
         // set result_total_time
         $totalSecond = totalSecond(Input::get('result_total_time_hh'), Input::get('result_total_time_mm'), '0', Input::get('result_start_time_hh'), Input::get('result_start_time_mm'), '0');
         $totalTime = $totalSecond / 60;
         $dataUpdate['result_total_time'] = $totalTime;
-        
+
         // set service 1
         $service_1                              = Input::get('service_1');
         if ( !empty($service_1) ) {
@@ -280,7 +262,7 @@ class BookedController extends BackendController
             $dataUpdate['service_1_kind']       = $tmp1[0];
             $dataUpdate['service_1']            = $tmp1[1];
         }
-        
+
         // set service 2
         $service_2                              = Input::get('service_2');
         if ( !empty($service_2) ) {
@@ -296,7 +278,7 @@ class BookedController extends BackendController
             $dataUpdate['next_service_1_kind']  = $tmpNext1[0];
             $dataUpdate['next_service_1']       = $tmpNext1[1];
         }
-        
+
         // set next service 2
         $next_service_2                         = Input::get('next_service_2');
         if ( !empty($next_service_2) ) {
@@ -310,7 +292,6 @@ class BookedController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
         }
-
         return redirect()->route('ortho.bookeds.history');
     }
 }

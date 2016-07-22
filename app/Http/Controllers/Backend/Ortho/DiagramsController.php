@@ -5,10 +5,8 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\BookingModel;
-
 use Form;
 use Input;
-
 
 class DiagramsController extends BackendController
 {

@@ -36,7 +36,6 @@ class CommunicationController extends BackendController
         $clsPatient                 = new PatientModel();
         $data['communications']     = $ClsCommunication->get_all($patient_id);
         $data['patient']            = $clsPatient->get_by_id($patient_id);
-
         return view('backend.ortho.patients.communications.index', $data);
     }
 
@@ -47,7 +46,6 @@ class CommunicationController extends BackendController
     {
         $data                       = array();
         $data['patient_id']         = $patient_id;
-
         return view('backend.ortho.patients.communications.regist', $data);
     }
 
@@ -62,7 +60,6 @@ class CommunicationController extends BackendController
             'u_id'                  => Auth::user()->id,
             'com_title'             => Input::get('com_title'),
             'com_contents'          => Input::get('com_contents'),
-
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => INSERT,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -80,7 +77,6 @@ class CommunicationController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.patients.communications.index', [ $dataInsert['p_id'] ]);
     }
 
@@ -149,7 +145,6 @@ class CommunicationController extends BackendController
         }
         return redirect()->route('ortho.patients.communications.index', $patient_id);
     }
-
 
     /**
      * get view detail

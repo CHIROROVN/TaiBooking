@@ -7,7 +7,6 @@ use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\ClinicModel;
-
 use Auth;
 use Form;
 use Html;
@@ -37,15 +36,11 @@ class ClinicServiceController extends BackendController
         $data['clinic']                 = $clsClinic->get_by_id($clinic_id);
         $data['facilities']             = $clsFacility->get_list($clinic_id);
         $data['services']               = $clsService->get_all();
-
         $arr_tmp = array();
         foreach ( $clinic_services as $clinic_service ) {
             $arr_tmp['service_' . $clinic_service->service_id] = $clinic_service;
         }
         $data['clinic_services'] = $arr_tmp;
-
-
         return view('backend.ortho.clinics.services.index', $data);
     }
-
 }

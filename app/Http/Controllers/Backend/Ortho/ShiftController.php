@@ -7,7 +7,6 @@ use App\Http\Models\Ortho\ShiftModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\BelongModel;
 use App\Http\Models\Ortho\UserModel;
-
 use Auth;
 use Form;
 use Html;
@@ -23,7 +22,6 @@ class ShiftController extends BackendController
         parent::__construct();
         $this->middleware('auth');
     }
-
 
     public function getSListEdit()
     {
@@ -59,7 +57,6 @@ class ShiftController extends BackendController
             $tmpDate[$day] = $monthNow . '/' . $day . '(' . DayJp($yearNow . '-' . $monthNow . '-' . $day) . ')';
         }
         $data['days']           = $tmpDate;
-
         // set belong user
         $tmpBelong = $clsBelong->get_for_select();
         $tmpUsers = array();
@@ -73,23 +70,13 @@ class ShiftController extends BackendController
         }
         $data['belongUsers'] = $tmpBelong;
         $data['users'] = $tmpUsers;
-
-        // set shift
-        // u_id|shift_date|linic_id
         $tmpShift               = array();
         foreach ( $shifts as $shift ) {
             $tmpShift[$shift->u_id . '|' . $shift->shift_date . '|' . $shift->clinic_id] = $shift;
         }
         $data['shifts'] = $tmpShift;
-        
-        // echo '<pre>';
-        // print_r($data['belongUsers']);
-        // print_r($data['users']);
-        // echo '</pre>';die;
-
         return view('backend.ortho.shifts.list_edit', $data);
     }
-
 
     public function postSListEdit()
     {

@@ -5,7 +5,6 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\ClinicModel;
-
 use Auth;
 use Form;
 use Html;
@@ -41,7 +40,6 @@ class FacilityController extends BackendController
         $clsClinic          = new ClinicModel();
         $data               = array();
         $data['clinic']     = $clsClinic->get_by_id($clinic_id);
-
         return view('backend.ortho.facilities.regist', $data);
     }
 
@@ -90,7 +88,6 @@ class FacilityController extends BackendController
         $data['facility']   = $clsFacility->get_by_id($id);
         $data['clinic_id']  = $clinic_id;
         $data['clinic']     = $clsClinic->get_by_id($clinic_id);
-
         return view('backend.ortho.facilities.edit', $data);
     }
 
@@ -147,7 +144,7 @@ class FacilityController extends BackendController
 
     /**
      * 
-     */
+    */
     public function orderby_top($clinic_id)
     {
         $clsFacility = new FacilityModel();

@@ -4,13 +4,11 @@ use App\Http\Controllers\BackendController;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\BrotherModel;
 use App\Http\Models\Ortho\PatientModel;
-
 use Form;
 use Html;
 use Input;
@@ -37,7 +35,6 @@ class BrotherController extends BackendController
         $clsPatient         = new PatientModel();
         $data['brothers']   = $clsBrother->get_all($patient_id);
         $data['patient']    = $clsPatient->get_by_id($patient_id);
-
         return view('backend.ortho.patients.brothers.index', $data);
     }
 
@@ -48,7 +45,6 @@ class BrotherController extends BackendController
     {
         $data               = array();
         $data['patient_id'] = $patient_id;
-
         return view('backend.ortho.patients.brothers.regist', $data);
     }
 
@@ -58,13 +54,11 @@ class BrotherController extends BackendController
     public function postRegist($patient_id)
     {
         $clsBrother                 = new BrotherModel();
-        
         $dataInsert                 = array(
             'p_id'                  => Input::get('p_id'),
             'p_relation_name'       => Input::get('p_relation_name'),
             'p_relation_id'         => Input::get('p_relation_id'),
             'brother_relation'      => Input::get('brother_relation'),
-
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => INSERT,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -87,7 +81,6 @@ class BrotherController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.patients.brothers.index', [ $dataInsert['p_id'] ]);
     }
 
@@ -101,7 +94,6 @@ class BrotherController extends BackendController
         $data                       = array();
         $data['brother']            = $clsBrother->get_by_id($id);
         $data['patient_id']         = $patient_id;
-
         return view('backend.ortho.patients.brothers.edit', $data);
     }
 
@@ -111,14 +103,12 @@ class BrotherController extends BackendController
      */
     public function postEdit($id, $patient_id)
     {
-        $clsBrother                 = new BrotherModel();
-        
+        $clsBrother                 = new BrotherModel();        
         $dataInsert                 = array(
             'p_id'                  => Input::get('p_id'),
             'p_relation_name'       => Input::get('p_relation_name'),
             'p_relation_id'         => Input::get('p_relation_id'),
             'brother_relation'      => Input::get('brother_relation'),
-
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => UPDATE,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -152,7 +142,6 @@ class BrotherController extends BackendController
     public function getDelete($id, $patient_id)
     {
         $clsBrother             = new BrotherModel();
-
         // update table
         $dataUpdate = array(
             'last_date'         => date('y-m-d H:i:s'),
@@ -160,16 +149,13 @@ class BrotherController extends BackendController
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-
         if ( $clsBrother->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_delete_success'));
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
         }
-
         return redirect()->route('ortho.patients.brothers.index', [ $patient_id ]);
     }
-
 
     // autocomplete patient
     public function AutoCompletePatient()

@@ -1,17 +1,14 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\AreaModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\ClinicAreaModel;
-
 use Form;
 use Html;
 use Input;
@@ -45,7 +42,6 @@ class AreaController extends BackendController
     {
         $clsClinic          = new ClinicModel();
         $data['clinics']    = $clsClinic->get_all();
-
         return view('backend.ortho.areas.regist', $data);
     }
 
@@ -58,7 +54,6 @@ class AreaController extends BackendController
         $clsClinicArea  = new ClinicAreaModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsArea->Rules(), $clsArea->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.areas.regist')->withErrors($validator)->withInput();
         }
@@ -128,7 +123,6 @@ class AreaController extends BackendController
             $tmp[$area_clinic->clinic_id] = $area_clinic->clinic_id;
         }
         $data['area_clinics']   = $tmp;
-
         return view('backend.ortho.areas.edit', $data);
     }
 
@@ -140,7 +134,6 @@ class AreaController extends BackendController
         $clsArea                = new AreaModel();
         $clsClinicArea          = new ClinicAreaModel();
         $inputs                 = Input::all();
-
         $validator              = Validator::make($inputs, $clsArea->Rules(), $clsArea->Messages());
 
         if ($validator->fails()) {
@@ -208,7 +201,6 @@ class AreaController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.areas.index');
     }
 
@@ -219,7 +211,6 @@ class AreaController extends BackendController
     {
         $clsArea                = new AreaModel();
         $clsClinicArea          = new ClinicAreaModel();
-
         // update table area
         $dataUpdate = array(
             'last_date'         => date('y-m-d H:i:s'),
@@ -228,7 +219,6 @@ class AreaController extends BackendController
             'last_user'         => Auth::user()->id
         );
         $clsArea->update($id, $dataUpdate);
-
         // update to table clinic_area
         $dataUpdate = array(
             'last_date'         => date('y-m-d H:i:s'),
@@ -242,8 +232,6 @@ class AreaController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
-
         return redirect()->route('ortho.areas.index');
     }
 
@@ -254,9 +242,7 @@ class AreaController extends BackendController
     {
         $clsArea = new AreaModel();
         $id = Input::get('id');
-
         $this->top($clsArea, $id, 'area_sort_no');
-
         return redirect()->route('ortho.areas.index');
     }
 
@@ -266,10 +252,8 @@ class AreaController extends BackendController
     public function orderby_last()
     {
         $clsArea = new AreaModel();
-        $id = Input::get('id');
-        
+        $id = Input::get('id');        
         $this->last($clsArea, $id, 'area_sort_no');
-
         return redirect()->route('ortho.areas.index');
     }
 
@@ -281,9 +265,7 @@ class AreaController extends BackendController
         $clsArea = new AreaModel();
         $id = Input::get('id');
         $areas = $clsArea->get_all();
-        
         $this->up($clsArea, $id, $areas, 'area_id', 'area_sort_no');
-
         return redirect()->route('ortho.areas.index');
     }
 
@@ -295,9 +277,7 @@ class AreaController extends BackendController
         $clsArea = new AreaModel();
         $id = Input::get('id');
         $areas = $clsArea->get_all();
-        
         $this->down($clsArea, $id, $areas, 'area_id', 'area_sort_no');
-
         return redirect()->route('ortho.areas.index');
     }
 }

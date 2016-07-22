@@ -1,14 +1,11 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\Ortho\MemoModel;
-
 use Form;
 use Html;
 use Input;
@@ -55,13 +52,11 @@ class MemoController extends BackendController
         if ( empty($memo_date) ) {
             return redirect()->route('ortho.memos.calendar');
         }
-
         $clsMemo = new MemoModel();
         $memo = $clsMemo->get_by_memo_date($memo_date);
         if ( count($memo) ) {
             return redirect()->route('ortho.memos.calendar');
         }
-
         $data = array();
         $data['memo_date'] = $memo_date;
         return view('backend.ortho.memos.regist', $data);
@@ -127,7 +122,6 @@ class MemoController extends BackendController
             'last_ipadrs'       => CLIENT_IP_ADRS,
             'last_user'         => Auth::user()->id
         );
-
         $validator      = Validator::make($dataUpdate, $clsMemo->Rules(), $clsMemo->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.memos.edit', [ $id ])->withErrors($validator)->withInput();
@@ -139,5 +133,4 @@ class MemoController extends BackendController
         }
         return redirect()->route('ortho.memos.calendar');
     }
-
 }

@@ -1,15 +1,12 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\BelongModel;
-
 use Form;
 use Html;
 use Input;
@@ -32,7 +29,6 @@ class BelongController extends BackendController
     {
         $clsBelong          = new BelongModel();
         $data['belongs']    = $clsBelong->get_all();
-
         return view('backend.ortho.belongs.index', $data);
     }
 
@@ -52,21 +48,18 @@ class BelongController extends BackendController
         $clsBelong      = new BelongModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.belongs.regist')->withErrors($validator)->withInput();
         }
-
         // insert
         $max = $clsBelong->get_max();
         $dataInsert             = array(
             'belong_name'       => Input::get('belong_name'),
             'belong_sort_no'    => $max + 1,
             'belong_kind'       => Input::get('belong_kind'),
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
-            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_ipadrs'       => CLIENT_IP_ADRS,
             'last_user'         => Auth::user()->id
         );
         
@@ -75,7 +68,6 @@ class BelongController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.belongs.index');
     }
 
@@ -86,7 +78,6 @@ class BelongController extends BackendController
     {
         $clsBelong          = new BelongModel();
         $data['belong']     = $clsBelong->get_by_id($id);
-
         return view('backend.ortho.belongs.edit', $data);
     }
 
@@ -98,7 +89,6 @@ class BelongController extends BackendController
         $clsBelong      = new BelongModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsBelong->Rules(), $clsBelong->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.belongs.edit', [$id])->withErrors($validator)->withInput();
         }
@@ -107,19 +97,17 @@ class BelongController extends BackendController
         $dataUpdate = array(
             'belong_name'       => Input::get('belong_name'),
             'belong_kind'       => Input::get('belong_kind'),
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        
+
         if ( $clsBelong->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.belongs.index');
     }
 
@@ -129,21 +117,17 @@ class BelongController extends BackendController
     public function getDelete($id)
     {
         $clsBelong              = new BelongModel();
-
-         // update
         $dataUpdate             = array(
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => DELETE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
-        
         if ( $clsBelong->update($id, $dataUpdate) ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.belongs.index');
     }
 
@@ -154,9 +138,7 @@ class BelongController extends BackendController
     {
         $clsBelong      = new BelongModel();
         $id             = Input::get('id');
-
         $this->top($clsBelong, $id, 'belong_sort_no');
-
         return redirect()->route('ortho.belongs.index');
     }
 
@@ -166,10 +148,8 @@ class BelongController extends BackendController
     public function orderby_last()
     {
         $clsBelong      = new BelongModel();
-        $id             = Input::get('id');
-        
+        $id             = Input::get('id');        
         $this->last($clsBelong, $id, 'belong_sort_no');
-
         return redirect()->route('ortho.belongs.index');
     }
 
@@ -181,9 +161,7 @@ class BelongController extends BackendController
         $clsBelong      = new BelongModel();
         $id             = Input::get('id');
         $belongs        = $clsBelong->get_all();
-        
         $this->up($clsBelong, $id, $belongs, 'belong_id', 'belong_sort_no');
-
         return redirect()->route('ortho.belongs.index');
     }
 
@@ -195,9 +173,7 @@ class BelongController extends BackendController
         $clsBelong      = new BelongModel();
         $id             = Input::get('id');
         $belongs        = $clsBelong->get_all();
-        
         $this->down($clsBelong, $id, $belongs, 'belong_id', 'belong_sort_no');
-
         return redirect()->route('ortho.belongs.index');
     }
 }

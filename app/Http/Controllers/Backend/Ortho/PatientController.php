@@ -1,12 +1,9 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\UserModel;
@@ -17,7 +14,6 @@ use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
-
 use Form;
 use Html;
 use Input;
@@ -205,7 +201,6 @@ class PatientController extends BackendController
             'p_parent_tel'          => Input::get('p_parent_tel'),
             'p_parent_kind'         => Input::get('p_parent_kind'),
             'p_memo'                => Input::get('p_memo'),
-
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => UPDATE,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -251,13 +246,11 @@ class PatientController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.patients.index', [
             'keyword'       => Session::get('where')['keyword'],
             'keyword_id'    => Session::get('where')['keyword_id']
         ]);
     }
-
 
     /**
      * get view detail
@@ -269,14 +262,12 @@ class PatientController extends BackendController
         $clsInterview               = new InterviewModel();
         $data['patient']            = $clsPatient->get_by_id($id);
         $data['prefs']              = Config::get('constants.PREF');
-
         $interviews                 = $clsInterview->get_all();
         $tmpInterviews              = array();
         foreach ( $interviews as $interview ) {
             $tmpInterviews[$interview->patient_id] = $interview;
         }
         $data['interviews'] = $tmpInterviews;
-
         return view('backend.ortho.patients.detail', $data);
     }
 
@@ -324,10 +315,8 @@ class PatientController extends BackendController
             $tmpHygienists[$hygienist->id] = $hygienist;
         }
         $data['hygienists'] = $tmpHygienists;
-
         return view('backend.ortho.patients.visit_list', $data);
     }
-
 
     // autocomplete patient
     public function AutoCompletePatient()

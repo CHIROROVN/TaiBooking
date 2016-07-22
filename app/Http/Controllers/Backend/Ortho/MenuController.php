@@ -4,14 +4,9 @@ use App\Http\Controllers\BackendController;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
-use Hash;
 use Session;
-// use App\User;
 use App\Http\Models\Ortho\ClinicModel;
-// use App\Http\Models\Ortho\BelongModel;
-
 use Form;
 use Html;
 use Input;

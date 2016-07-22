@@ -1,19 +1,15 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\Ortho\InterviewModel;
 use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\UserModel;
-
 use Form;
 use Html;
 use Input;
@@ -41,7 +37,6 @@ class InterviewController extends BackendController
         return view('backend.ortho.interviews.index', $data);
     }
 
-
     /**
      * get view set patient, interview
      */
@@ -50,7 +45,6 @@ class InterviewController extends BackendController
         return view('backend.ortho.interviews.set');
     }
 
-
     /**
      * insert database to table patient, interview
      */
@@ -58,7 +52,6 @@ class InterviewController extends BackendController
     {
         $clsInterview           = new InterviewModel();
         $clsPatient             = new PatientModel();
-
         $dataInsert             = array(
             'p_name'            => Input::get('p_name'),
             'p_name_kana'       => Input::get('p_name_kana'),
@@ -83,13 +76,11 @@ class InterviewController extends BackendController
             'patient_id' => $patient_id
         );
         $insert_interview = $clsInterview->insert($dataInsert);
-
         if ( $patient_id && $insert_interview ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.interviews.index');
     }
 
@@ -104,7 +95,6 @@ class InterviewController extends BackendController
         $data['patient_id']     = Input::get('patient_id');
         $data['clinic_id']      = Input::get('clinic_id');
         $data['booking_id']     = Input::get('booking_id');
-
         return view('backend.ortho.interviews.regist', $data);
     }
 
@@ -114,7 +104,6 @@ class InterviewController extends BackendController
     public function postRegist()
     {
         $clsInterview           = new InterviewModel();
-
         $dataInsert = array(
             'patient_id'        => Input::get('patient_id'),
             'first_date'        => '',
@@ -122,7 +111,6 @@ class InterviewController extends BackendController
             'first_total_time'  => '',
             'clinic_id'         => Input::get('clinic_id'),
             'booking_id'        => Input::get('booking_id'),
-
             'q1_1_sei'          => Input::get('q1_1_sei', ''),
             'q1_1_mei'          => Input::get('q1_1_mei', ''),
             'q1_2_sei'          => Input::get('q1_2_sei', ''),
@@ -144,15 +132,11 @@ class InterviewController extends BackendController
             'q1_13'             => Input::get('q1_13', ''),
             'q1_14'             => Input::get('q1_14', ''),
             'q1_15'             => Input::get('q1_15', ''),
-
             'q2_kind'           => Input::get('q2_kind', ''),
             'q2_sq'             => Input::get('q2_sq', ''),
-
             'q3_kind'           => Input::get('q3_kind', ''),
             'q3_sq'             => Input::get('q3_sq', ''),
-
             'q4_kind'           => Input::get('q4_kind', ''),
-
             'q5_a_1'            => Input::get('q5_a_1', ''),
             'q5_a_2'            => Input::get('q5_a_2', ''),
             'q5_b_1'            => Input::get('q5_b_1', ''),
@@ -172,7 +156,6 @@ class InterviewController extends BackendController
 
             'q6_kind'           => Input::get('q6_kind'),
             // q6_sg after --->
-
             'q7_kind'           => Input::get('q7_kind', ''),
             'q7_sq_1'           => Input::get('q7_sq_1', ''),
             'q7_sq_2'           => Input::get('q7_sq_2', ''),
@@ -365,7 +348,6 @@ class InterviewController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.interviews.index');
     }
 
@@ -381,7 +363,6 @@ class InterviewController extends BackendController
         $data['clinics']        = $clsClinic->get_for_select();
         $data['users']          = $clsUser->get_for_select();
         $data['prefs']          = Config::get('constants.PREF');
-
         return view('backend.ortho.interviews.edit', $data);
     }
 
@@ -394,7 +375,6 @@ class InterviewController extends BackendController
         $interview              = $clsInterview->get_by_id($id);
         $dataInsert = array(
             'patient_id'        => $interview->patient_id,
-
             // only edit
             'q0_1_clinic'       => Input::get('q0_1_clinic', ''),
             'q0_1_date'         => Input::get('q0_1_date', ''),
@@ -689,10 +669,6 @@ class InterviewController extends BackendController
             $tmpUsers[$user->id] = $user;
         }
         $data['users'] = $tmpUsers;
-        // echo '<pre>';
-        // print_r($data);
-        // echo '</pre>';die;
-
         return view('backend.ortho.interviews.detail', $data);
     }
 
@@ -718,7 +694,6 @@ class InterviewController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
         }
-
         return redirect()->route('ortho.patients.index');
     }
 }

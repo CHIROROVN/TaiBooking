@@ -7,8 +7,6 @@ use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\BookingTemplateModel;
-
-
 use Request;
 use Auth;
 use Form;

@@ -1,15 +1,11 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\Ortho\InspectionModel;
-
 use Form;
 use Html;
 use Input;
@@ -33,7 +29,6 @@ class InspectionController extends BackendController
     {
         $clsInspection          = new InspectionModel();
         $data['inspections']    = $clsInspection->get_all();
-
         return view('backend.ortho.inspections.index', $data);
     }
 
@@ -53,7 +48,6 @@ class InspectionController extends BackendController
         $clsInspection          = new InspectionModel();
         $inputs                 = Input::all();
         $validator              = Validator::make($inputs, $clsInspection->Rules(), $clsInspection->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.inspections.regist')->withErrors($validator)->withInput();
         }
@@ -63,7 +57,6 @@ class InspectionController extends BackendController
         $dataInsert = array(
             'inspection_name'           => Input::get('inspection_name'),
             'inspection_sort_no'        => $max + 1,
-
             'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => INSERT,
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
@@ -75,7 +68,6 @@ class InspectionController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.inspections.index');
     }
 
@@ -87,7 +79,6 @@ class InspectionController extends BackendController
     {
         $clsInspection                = new InspectionModel();
         $data['inspection']           = $clsInspection->get_by_id($id);
-
         return view('backend.ortho.inspections.edit', $data);
     }
 
@@ -100,7 +91,6 @@ class InspectionController extends BackendController
         $clsInspection                  = new InspectionModel();
         $inspection                     = $clsInspection->get_by_id($id);
         $inputs                         = Input::all();
-
         $validator                      = Validator::make($inputs, $clsInspection->Rules(), $clsInspection->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.inspections.edit', [$inspection->inspection_id])->withErrors($validator)->withInput();
@@ -109,7 +99,6 @@ class InspectionController extends BackendController
         // update
         $dataUpdate = array(
             'inspection_name'           => Input::get('inspection_name'),
-
             'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => UPDATE,
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
@@ -121,7 +110,6 @@ class InspectionController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.inspections.index');
     }
 
@@ -132,7 +120,6 @@ class InspectionController extends BackendController
     public function getDelete($id)
     {
         $clsInspection                = new InspectionModel();
-
         // update table
         $dataUpdate = array(
             'last_date'         => date('y-m-d H:i:s'),
@@ -146,7 +133,6 @@ class InspectionController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.inspections.index');
     }
 
@@ -157,9 +143,7 @@ class InspectionController extends BackendController
     {
         $clsInspection      = new InspectionModel();
         $id                 = Input::get('id');
-
         $this->top($clsInspection, $id, 'inspection_sort_no');
-
         return redirect()->route('ortho.inspections.index');
     }
 
@@ -169,10 +153,8 @@ class InspectionController extends BackendController
     public function orderby_last()
     {
         $clsInspection = new InspectionModel();
-        $id = Input::get('id');
-        
+        $id = Input::get('id');        
         $this->last($clsInspection, $id, 'inspection_sort_no');
-
         return redirect()->route('ortho.inspections.index');
     }
 
@@ -183,10 +165,8 @@ class InspectionController extends BackendController
     {
         $clsInspection      = new InspectionModel();
         $id                 = Input::get('id');
-        $inspections        = $clsInspection->get_all();
-        
+        $inspections        = $clsInspection->get_all();        
         $this->up($clsInspection, $id, $inspections, 'inspection_id', 'inspection_sort_no');
-
         return redirect()->route('ortho.inspections.index');
     }
 
@@ -197,10 +177,8 @@ class InspectionController extends BackendController
     {
         $clsInspection      = new InspectionModel();
         $id                 = Input::get('id');
-        $inspections        = $clsInspection->get_all();
-        
+        $inspections        = $clsInspection->get_all();        
         $this->down($clsInspection, $id, $inspections, 'inspection_id', 'inspection_sort_no');
-
         return redirect()->route('ortho.inspections.index');
     }
 }

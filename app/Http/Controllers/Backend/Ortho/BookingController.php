@@ -4,7 +4,6 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
-
 use App\User;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ShiftModel;
@@ -41,7 +40,6 @@ class BookingController extends BackendController
         parent::__construct();
         $this->middleware('auth');
     }
-
 
     /**
      * get view monthly
@@ -391,7 +389,6 @@ class BookingController extends BackendController
             Session::flash('danger', trans('common.message_edit_danger'));
             return redirect()->route('ortho.bookings.booking.edit', $id);
         }
-
     }
 
     public function getRegist($id)
@@ -485,7 +482,6 @@ class BookingController extends BackendController
         } elseif ( $service_2_kind == 2 ) {
             // do something
         }
-
 
         // update group
         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
@@ -625,7 +621,6 @@ class BookingController extends BackendController
         }
     }
 
-
     public function getChangeDate($id)
     {
         if (Session::has('booking_change'))
@@ -644,7 +639,6 @@ class BookingController extends BackendController
         $data['services']           = $clsService->get_list();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-
         return view('backend.ortho.bookings.booking_change', $data);
     }
 
@@ -698,10 +692,8 @@ class BookingController extends BackendController
         $dataInput['last_kind']         = UPDATE;
         $dataInput['last_ipadrs']       = CLIENT_IP_ADRS;
         $dataInput['last_user']         = Auth::user()->id;
-
         Session::put('booking_change', $dataInput);
         return redirect()->route('ortho.bookings.booking.change.confirm', [$id]);
-
     }
 
 
@@ -724,7 +716,6 @@ class BookingController extends BackendController
         $data['inspections']        = $clsInspection->get_list();
         $clsInsurance               = new InsuranceModel();
         $data['insurances']         = $clsInsurance->get_list();
-
         $data['booking_change']     = Session::get('booking_change');
         return view('backend.ortho.bookings.booking_change_confirm', $data);
     }
@@ -754,17 +745,15 @@ class BookingController extends BackendController
         $clsShift                    = new ShiftModel();
         $data['doctors']            = $clsShift->get_user_shift([1]);
         $data['hygienists']         = $clsShift->get_user_shift([2,3]);
-
         $clsClinicService           = new ClinicServiceModel();
-        $data['services']           = $clsClinicService->get_service();
-        
+        $data['services']           = $clsClinicService->get_service();        
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_treatment_search();
         return view('backend.ortho.bookings.booking_search', $data);
     }
 
-     public function postSearch(){
-
+    public function postSearch()
+     {
         $condition = array();
         if(!empty(Input::get('clinic_id')))
             $condition['clinic_id']         = Input::get('clinic_id');
@@ -849,7 +838,6 @@ class BookingController extends BackendController
         $where = array();
         $where['booking_date_year']     = Input::get('booking_date_year');
         $where['booking_date_month']    = Input::get('booking_date_month');
-
         $clsBooking                     = new BookingModel();
         $clsService                     = new ServiceModel();
         $clsTreatment1                  = new Treatment1Model();
@@ -858,7 +846,6 @@ class BookingController extends BackendController
         $data['treatment1s']            = $clsTreatment1->get_list_treatment();
         $data['booking_date_year']      = $where['booking_date_year'];
         $data['booking_date_month']     = $where['booking_date_month'];
-        
         // set year
         $curYear = date('Y');
         $tmpYears = array();
@@ -867,7 +854,6 @@ class BookingController extends BackendController
             $tmpYears[$curYear + $i] = $curYear + $i;
         }
         $data['years'] = $tmpYears;
-
         return view('backend.ortho.bookings.list2_list', $data);
     }
 
@@ -888,7 +874,7 @@ class BookingController extends BackendController
         $data['treatment1s']            = $clsTreatment1->get_list_treatment();
         $data['booking_recall_yy']      = $where['booking_recall_yy'];
         $data['booking_recall_mm']      = $where['booking_recall_mm'];
-        
+
         // set year
         $curYear = date('Y');
         $tmpYears = array();
@@ -897,7 +883,6 @@ class BookingController extends BackendController
             $tmpYears[$curYear + $i] = $curYear + $i;
         }
         $data['years'] = $tmpYears;
-
         return view('backend.ortho.bookings.list3_list', $data);
     }
 
@@ -920,7 +905,6 @@ class BookingController extends BackendController
             $tmpYears[$curYear + $i] = $curYear + $i;
         }
         $data['years'] = $tmpYears;
-
         return view('backend.ortho.bookings.list4_list', $data);
     }
 
@@ -943,7 +927,6 @@ class BookingController extends BackendController
             $tmpYears[$curYear + $i] = $curYear + $i;
         }
         $data['years'] = $tmpYears;
-
         return view('backend.ortho.bookings.list5_list', $data);
     }
 }

@@ -4,14 +4,12 @@ use App\Http\Controllers\BackendController;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use App\clinic;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\AreaModel;
 use App\Http\Models\Ortho\ClinicAreaModel;
-
 use Form;
 use Html;
 use Input;
@@ -34,7 +32,6 @@ class ClinicController extends BackendController
     public function index()
     {
         $clsClinic          = new ClinicModel();
-
         // search
         $keyword            = Input::get('keyword');
         $data['keyword']    = $keyword;
@@ -43,7 +40,6 @@ class ClinicController extends BackendController
         } else {
             $data['clinics']    = $clsClinic->get_all(true);
         }
-
         return view('backend.ortho.clinics.index', $data);
     }
 
@@ -58,7 +54,6 @@ class ClinicController extends BackendController
         $data['clinic_am_ends']      = Config::get('constants.CLINIC_AM_END');
         $data['clinic_pms']          = Config::get('constants.CLINIC_PM');
         $data['clinic_ms']           = Config::get('constants.CLINIC_M');
-
         return view('backend.ortho.clinics.regist', $data);
     }
 
@@ -71,11 +66,9 @@ class ClinicController extends BackendController
         $clsClinicArea          = new ClinicAreaModel();
         $inputs                 = Input::all();
         $validator              = Validator::make($inputs, $clsClinic->Rules(), $clsClinic->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.clinics.regist')->withErrors($validator)->withInput();
         }
-
         // insert
         $dataInsert = array(
             'clinic_name'               => Input::get('clinic_name'),
@@ -194,7 +187,6 @@ class ClinicController extends BackendController
                 Session::flash('danger', trans('common.message_regist_danger'));
             }
         }
-
         return redirect()->route('ortho.clinics.index');
     }
 
@@ -219,7 +211,6 @@ class ClinicController extends BackendController
             $tmp[$area_clinic->area_id] = $area_clinic->area_id;
         }
         $data['area_clinics']   = $tmp;
-
         return view('backend.ortho.clinics.edit', $data);
     }
 
@@ -232,13 +223,10 @@ class ClinicController extends BackendController
         $clsClinicArea          = new ClinicAreaModel();
         $clinic                 = $clsClinic->get_by_id($id);
         $inputs                 = Input::all();
-
         $validator              = Validator::make($inputs, $clsClinic->Rules(), $clsClinic->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.clinics.edit', [$id])->withErrors($validator)->withInput();
         }
-
         // update
         $dataUpdate = array(
             'clinic_name'               => Input::get('clinic_name'),
@@ -329,7 +317,6 @@ class ClinicController extends BackendController
             'clinic_sat_pm_start_m'     => Input::get('clinic_sat_pm_start_m'),
             'clinic_sat_pm_end_h'       => Input::get('clinic_sat_pm_end_h'),
             'clinic_sat_pm_end_m'       => Input::get('clinic_sat_pm_end_m'),
-
             'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => UPDATE,
             'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
@@ -349,7 +336,6 @@ class ClinicController extends BackendController
             $dataInsert = array(
                 'area_id'           => $areas,
                 'clinic_id'         => $id,
-
                 'last_date'         => date('y-m-d H:i:s'),
                 'last_kind'         => UPDATE,
                 'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
@@ -393,7 +379,6 @@ class ClinicController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
         }
-
         return redirect()->route('ortho.clinics.index');
     }
 }

@@ -92,6 +92,12 @@ class MemoController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('ortho.memos.regist')->withErrors($validator)->withInput();
         }
+
+        // check exist in day
+        if ( !empty($clsMemo->get_by_memo_date($dataInsert['memo_date'])) ) {
+            Session::flash('danger', trans('common.message_regist_danger'));
+            return redirect()->route('ortho.memos.calendar');
+        }
         
         if ( $clsMemo->insert($dataInsert) ) {
             Session::flash('success', trans('common.message_regist_success'));

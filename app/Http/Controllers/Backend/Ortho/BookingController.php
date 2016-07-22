@@ -124,7 +124,7 @@ class BookingController extends BackendController
         $clsService             = new ServiceModel();
         $clsClinicService       = new ClinicServiceModel();
 
-        $data['doctors']        = $clsShift->get_by_belong([1]);
+        $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
         $data['facilitys']      = $clsFacility->getAll($clinic_id);
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);

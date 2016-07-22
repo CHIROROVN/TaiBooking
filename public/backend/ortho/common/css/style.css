@@ -1,0 +1,15 @@
+span.note_required{
+  color: #d30 !important;
+}
+
+.error-input {
+  color: #d30 !important;
+}
+
+.content-page .table input[type="text"],.content-page .table select,.content-page .table textarea {
+  width: 60%;
+}
+
+.content-page .table input[type="password"],.content-page .table select,.content-page .table textarea {
+  width: 60%;
+}

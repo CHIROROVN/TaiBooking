@@ -326,21 +326,48 @@
 		return $colorCls;
 	}
 
-
-	function hourMin2Min($hhmm)
-	{
-		$tmpHHMM = sprintf("%04d", $hhmm);
-		$hh = substr($tmpHHMM, 0, 2);
-		$mm = substr($tmpHHMM, 2, 2);
-
-		return $hh * 60 + $mm;
+	function weeklater($week_later = null){
+		$datenow = Carbon::now();
+		if(!empty($week_later)){
+			switch ($week_later) {
+				case 'one_week':
+					return getWeek($datenow->addWeek(), 'w');
+					break;
+				case 'two_week':
+					return getWeek($datenow->addWeeks(2), 'w');
+					break;
+				case 'three_week':
+					return getWeek($datenow->addWeeks(3), 'w');
+					break;
+				case 'four_week':
+					return getWeek($datenow->addWeeks(4), 'w');
+					break;
+				case 'five_week':
+					return getWeek($datenow->addWeeks(5), 'w');
+					break;
+				case 'one_month':
+					return getWeek($datenow->addMonth(), 'm');
+					break;
+				case 'two_month':
+					return getWeek($datenow->addMonths(2), 'm');
+					break;
+				default:
+					return '';
+					break;
+			}
+		}else{
+			return null;
+		}
 	}
 
-	function min2HourMin($mm)
-	{
-		$hh = floor($mm / 60);
-		$mm = $mm % 60;
-
-		return $hh . sprintf("%02d", $mm);
+	function getWeek($date, $kind){
+		if($kind == 'w'){
+			return [formatDate($date->subDays(3)->toDateTimeString(),'-'), formatDate($date->addDays(6)->toDateTimeString(), '-')];
+		}else if($kind == 'm'){
+			return [formatDate($date->subDays(7)->toDateTimeString(),'-'), formatDate($date->addDays(14)->toDateTimeString(), '-')];
+		}else{
+			return '';
+		}
 	}
+
 

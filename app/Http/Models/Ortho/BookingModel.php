@@ -351,26 +351,21 @@ class BookingModel
 
         if(isset($where['week_later'])){
             if($where['week_later'] == 'one_week'){
-               $week_later = date('Y-m-d', strtotime(date("Y-m-d").' + 1 week'));
-               $result = $db->whereDate('t_booking.booking_date', '<=', $week_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
             }elseif($where['week_later'] == 'two_week'){
-                $week_later = date('Y-m-d', strtotime(date("Y-m-d").' + 2 week'));
-                $result = $db->whereDate('t_booking.booking_date', '<=', $week_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
             }elseif($where['week_later'] == 'three_week'){
-                $week_later = date('Y-m-d', strtotime(date("Y-m-d").' + 3 week'));
-                $result = $db->whereDate('t_booking.booking_date', '<=', $week_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
             }elseif($where['week_later'] == 'four_week'){
-                $week_later = date('Y-m-d', strtotime(date("Y-m-d").' + 4 week'));
-                $result = $db->whereDate('t_booking.booking_date', '<=', $week_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
             }elseif($where['week_later'] == 'five_week'){
-                $week_later = date('Y-m-d', strtotime(date("Y-m-d").' + 5 week'));
-                $result = $db->whereDate('t_booking.booking_date', '<=', $week_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
             }elseif($where['week_later'] == 'one_month'){
-                $month_later = date('Y-m-d', strtotime(date("Y-m-d").' + 1 month'));
-                $result = $db->whereDate('t_booking.booking_date', '<=', $month_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
             }elseif($where['week_later'] == 'two_month'){
-                $two_month_later = date('Y-m-d', strtotime(date("Y-m-d").' + 2 month'));
-                $result = $db->whereDate('t_booking.booking_date', '<=', $two_month_later);
+                $result = $db->whereBetween('t_booking.booking_date', weeklater($where['week_later']));
+            }else{
+                $result = $db->whereDate('t_booking.booking_date', '=', $where['week_later']);
             }
         }
 

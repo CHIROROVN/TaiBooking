@@ -342,12 +342,9 @@ class BookingModel
             $result = $db->whereIn('t_booking.hygienist_id', $hygienist_id);
         }
 
-        // if(isset($where['booking_date'])){
-        //     $booking_date = $where['booking_date'];
-        //     $result = $db->where('t_booking.booking_date', function($subQuery) use ($booking_date){
-        //         $subQuery->select(DB::raw('DAYOFWEEK(t_booking.booking_date)')->whereIn('t_booking.booking_date', $booking_date);
-        //     });
-        // }
+        if(isset($where['booking_date'])){
+            $result = $db->whereIn(DB::raw("DAYOFWEEK(booking_date)"), $where['booking_date']);
+        }
 
         if(isset($where['week_later'])){
             if($where['week_later'] == 'one_week'){

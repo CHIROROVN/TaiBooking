@@ -64,37 +64,37 @@
                     <div class="row">
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Sun" type="checkbox">日</label>
+                          <label><input name="booking_date[]" value="1" type="checkbox">日</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Mon" type="checkbox">月</label>
+                          <label><input name="booking_date[]" value="2" type="checkbox">月</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Tue" type="checkbox">火</label>
+                          <label><input name="booking_date[]" value="3" type="checkbox">火</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Wed" type="checkbox">水</label>
+                          <label><input name="booking_date[]" value="4" type="checkbox">水</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Thu" type="checkbox">木</label>
+                          <label><input name="booking_date[]" value="5" type="checkbox">木</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Fri" type="checkbox">金</label>
+                          <label><input name="booking_date[]" value="6" type="checkbox">金</label>
                         </div>
                       </div>
                       <div class="col-xs-3 col-sm-2 col-md-1">
                         <div class="checkbox">
-                          <label><input name="booking_date[]" value="Sat" type="checkbox">土</label>
+                          <label><input name="booking_date[]" value="7" type="checkbox">土</label>
                         </div>
                       </div>
                     </div>

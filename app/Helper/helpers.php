@@ -369,3 +369,23 @@
 			return '';
 		}
 	}
+
+
+	function hourMin2Min($hhmm)
+	{
+		$tmpHhmm = sprintf('%04d', $hhmm);
+
+		$hh = substr($tmpHhmm, 0, 2);
+		$mm = substr($tmpHhmm, 2, 2);
+
+		return $hh * 60 + $mm;
+	}
+
+
+	function min2HourMin($mm)
+	{
+		$tmpHh = sprintf('%02d', floor($mm / 60));
+		$tmpMm = sprintf('%02d', $mm % 60);
+
+		return $tmpHh . $tmpMm;
+	}

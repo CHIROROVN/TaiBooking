@@ -53,7 +53,7 @@ return [
     */
 
     //'timezone' => env('APP_TIMEZONE', 'UTC'),
-    'timezone' => env('APP_TIMEZONE', 'Asia/Tokyo'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Tokyo'), //Asia/Ho_Chi_Minh
 
     /*
     |--------------------------------------------------------------------------

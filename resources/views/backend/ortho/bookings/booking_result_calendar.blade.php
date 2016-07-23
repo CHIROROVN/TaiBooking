@@ -35,7 +35,7 @@
           $prevDate            = date ( 'Y-m-j' , $prevDate );
           $nextDate            = strtotime ( '+ 1 day' , strtotime ( $date_current ) ) ;
           $nextDate            = date ( 'Y-m-j' , $nextDate );
-          $curDate            = date ( 'Y-m-j');
+          $curDate             = date ( 'Y-m-j');
           ?>
           {!! Form::open(array('route' => ['ortho.bookings.booking.result.calendar'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'style' => 'display: inline-block')) !!}
           <input type="hidden" name="clinic_id" value="{{ $clinic->clinic_id }}">

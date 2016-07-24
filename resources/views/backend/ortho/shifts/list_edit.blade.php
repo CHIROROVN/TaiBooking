@@ -25,8 +25,8 @@
               </div>
             @endif
           </div>
-
-{!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
+          
+          {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
           <div class="fillter">
             <div class="col-md-12" style="text-align:center;">
 
@@ -35,9 +35,10 @@
               <button type="submit" class="btn btn-sm btn-page no-border" name="next" value="" id="next">翌月 &gt;&gt;</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
           </div>
-</form>
+          </form>
 
-{!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+          @if ( count($users) > 0 && !empty($users) )
+          {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
           <input type="hidden" name="date" value="{{ $yearNow }}-{{ $monthNow }}">
 
           <div class="row content-page">
@@ -117,11 +118,12 @@
               </div>
             </div>
           </div>
+          </form>
+          @endif
         </div>
       </div>
       <!-- end container -->
     </section>
-</form>
 
   <script>
     $(document).ready(function(){

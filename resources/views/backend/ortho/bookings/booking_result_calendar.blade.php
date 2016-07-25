@@ -231,7 +231,11 @@
                       }else{
                         $treatment_name = '治療';
                       }
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . "{$treatment_name}" .'<span></span>' . '</a>';
+                      $br = '<br />';
+                      if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
+                        $br = '';
+                      }
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . "{$treatment_name}" .'<span></span>' . '</a>';
                     }
                   }
                 ?>

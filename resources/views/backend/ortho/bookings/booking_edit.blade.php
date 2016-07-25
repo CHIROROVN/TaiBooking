@@ -94,7 +94,7 @@
                   <optgroup label="業務名">
                       @if(count($services) > 0)
                         @foreach($services as $key11 => $service11)
-                        <option value="{{$key11}}#sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
+                        <option value="{{$key11}}_sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
                       @endforeach
                       @endif
                   </optgroup>
@@ -116,8 +116,8 @@
                   <optgroup label="業務名">
                       @if(count($services) > 0)
                         @foreach($services as $key21 => $service21)
-                        <option value="{{$key21}}#sk21" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
-                      @endforeach
+                          <option value="{{$key21}}_sk21" @if($booking->service_2 == $key21) selected @endif >{{$service21}}</option>
+                        @endforeach
                       @endif
                   </optgroup>
                   <optgroup label="治療内容">

@@ -370,7 +370,6 @@
 		}
 	}
 
-
 	function hourMin2Min($hhmm)
 	{
 		$tmpHhmm = sprintf('%04d', $hhmm);

@@ -317,13 +317,13 @@ class DiagramsController extends BackendController
           $str = '<p class="col-pspec">休診日</p>';
         }
 
-        $tempDiagram[] = array(
-          'title' => $str,
-          'start' => $year . '-' . $month . '-' . $day,
-          'end' => addOneDay($year . '-' . $month . '-' . $day),
-          'url' => '',
-          'color' => 'white',
-          'textColor' => '#257272'
+        $tempDiagram[]  = array(
+          'title'       => $str,
+          'start'       => $year . '-' . $month . '-' . $day,
+          'end'         => addOneDay($year . '-' . $month . '-' . $day),
+          'url'         => '',
+          'color'       => 'white',
+          'textColor'   => '#257272'
         );
       }
 

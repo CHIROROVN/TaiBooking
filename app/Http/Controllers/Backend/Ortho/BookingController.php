@@ -586,6 +586,7 @@ class BookingController extends BackendController
         $clsInsurance               = new InsuranceModel();
         $data['insurances']         = $clsInsurance->get_list();
         $data['booking_id']         = $id;
+
         return view('backend.ortho.bookings.booking_1st_regist', $data);
     }
 
@@ -845,7 +846,17 @@ class BookingController extends BackendController
         $dataInput                  = Session::get('booking_change');
         unset($dataInput['booking_date_change']);
         $clsBooking                 = new BookingModel();
-        if ( $clsBooking->update($id, $dataInput) ) {
+
+        $booking = $clsBooking->get_by_id($id);
+        $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        $status = true;
+        foreach ( $bookingGroups as $item ) {
+            if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                $status = false;
+            }
+        }
+
+        if ( !$status ) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.edit',[$id]);
         } else {

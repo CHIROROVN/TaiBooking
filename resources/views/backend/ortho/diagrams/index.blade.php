@@ -126,7 +126,7 @@
         // auto select date
         var date = getUrlParameter('date');
         if ( date == undefined || !date.length ) {
-          window.location.href = "{{ route('ortho.diagrams.index') }}?date={{ $date }}";
+          window.location.href = "{{ route('ortho.diagrams.index') }}?date={{ $date }}&doctor_id={{ $doctor_id }}";
         }
         function getUrlParameter(sParam) {
             var sPageURL = decodeURIComponent(window.location.search.substring(1)),

@@ -298,7 +298,7 @@
         $('#myModal-' + data_id).modal('hide');
       });
 
-      function setGreen(objNew, serviceIdNew, value, text, group = '') {
+      function setGreen(objNew, serviceIdNew, value, text, group = "") {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');

@@ -272,7 +272,9 @@ class BookingTemplateController extends BackendController
             $bookings = array();
         }
         $tmpBookings            = array();
+        $i = 0;
         foreach ( $bookings as $booking ) {
+            $i++;
             // get template name
             if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
                 $groupNameFinish = '治療';
@@ -280,7 +282,7 @@ class BookingTemplateController extends BackendController
             } else {
                 $tmp = null;
                 $tmp = explode('_', $booking->booking_group_id);
-                if ( !empty($tmp) ) {
+                if ( !empty($tmp) && count($tmp) >= 5 ) {
                     $groupNameTmp = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2] . '_' . $tmp[3] . '_' . $tmp[4];
                     $groupName = $clsTemplate->get_template_name($groupNameTmp);
                     if ( !empty($groupName) ) {

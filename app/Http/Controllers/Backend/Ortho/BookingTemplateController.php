@@ -283,6 +283,9 @@ class BookingTemplateController extends BackendController
                 if ( !empty($tmp) ) {
                     $groupNameTmp = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2] . '_' . $tmp[3] . '_' . $tmp[4];
                     $groupName = $clsTemplate->get_template_name($groupNameTmp);
+                    echo '<pre>';
+                    print_r($groupName);
+                    echo '</pre>';die;
                     if ( !empty($groupName) ) {
                         $groupNameFinish = $groupName->mbt_name;
                         $s_mbt_id = $groupName->mbt_id;

@@ -28,7 +28,7 @@
 
             <!-- p_name -->
             <tr>
-              <td class="col-title"><label for="p_name">患者名 <span class="note_required">※</span></label></td>
+              <td class="col-title"><label for="p_name">患者名</label></td>
               <td><input type="text" name="p_name" id="p_name" class="form-control" value="{{ old('p_name') }}" />
                 @if ($errors->first('p_name'))
                     <span class="error-input">※ {!! $errors->first('p_name') !!}</span>
@@ -38,7 +38,7 @@
 
             <!-- p_name_kana -->
             <tr>
-              <td class="col-title"><label for="p_name_kana">患者名よみ <span class="note_required">※</span></label></td>
+              <td class="col-title"><label for="p_name_kana">患者名よみ</label></td>
               <td><input type="text" name="p_name_kana" id="p_name_kana" class="form-control" value="{{ old('p_name_kana') }}" />
                 @if ($errors->first('p_name_kana'))
                     <span class="error-input">※ {!! $errors->first('p_name_kana') !!}</span>
@@ -48,7 +48,7 @@
 
             <!-- p_sex -->
             <tr>
-              <td class="col-title">性別 <span class="note_required">※</span></td>
+              <td class="col-title">性別</td>
               <td>
                 <div class="row">
                   <div class="col-xs-4 col-sm-2 col-md-1">

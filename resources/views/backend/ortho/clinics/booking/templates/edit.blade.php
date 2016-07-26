@@ -298,7 +298,7 @@
         $('#myModal-' + data_id).modal('hide');
       });
 
-      function setGreen(objNew, serviceIdNew, value, text, group = "") {
+      function setGreen(objNew, serviceIdNew, value, text, group) {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');
@@ -314,7 +314,7 @@
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBlue(objNew, serviceIdNew, value, text, group = '') {
+      function setBlue(objNew, serviceIdNew, value, text, group) {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-blue');
@@ -330,7 +330,7 @@
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBrow(objNew, serviceIdNew, value, group = '') {
+      function setBrow(objNew, serviceIdNew, value, group) {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -346,7 +346,7 @@
         }
       }
 
-      function setClear(objNew, serviceIdNew, value, group = '') {
+      function setClear(objNew, serviceIdNew, value, group) {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);

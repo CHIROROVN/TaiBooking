@@ -37,6 +37,21 @@ class TemplateModel
         return $db;
     }
 
+    public function get_template_name($template_group_id = null)
+    {
+        $db = DB::table($this->table)
+                    ->leftJoin('m_booking_template as t1', 't_template.mbt_id', '=', 't1.mbt_id')
+                    ->select('t_template.mbt_id', 't1.mbt_name')
+                    ->where('t_template.last_kind', '<>', DELETE);
+
+        if ( !empty($template_group_id) ) {
+            $db = $db->where('t_template.template_group_id', $template_group_id);
+        }
+                                
+        $db = $db->first();
+        return $db;
+    }
+
     public function insert($data)
     {
         return DB::table($this->table)->insert($data);

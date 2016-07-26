@@ -264,6 +264,7 @@ class BookingTemplateController extends BackendController
         $data['s_clinic_id']    = Input::get('s_clinic_id');
         $clsClinic              = new ClinicModel();
         $clsBooking             = new BookingModel();
+        $clsTemplate            = new TemplateModel();
         $data['clinics']        = $clsClinic->get_list_clinic();
 
         $bookings               = $clsBooking->get_all_groupby($data);
@@ -272,14 +273,29 @@ class BookingTemplateController extends BackendController
         }
         $tmpBookings            = array();
         foreach ( $bookings as $booking ) {
+            // get template name
+            if ( empty($booking->booking_group_id) ) {
+                $groupNameFinish = '治療';
+                $s_mbt_id = null;
+            } else {
+                $tmp = null;
+                $tmp = explode('_', $booking->booking_group_id);
+                $groupName = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2] . '_' . $tmp[3] . '_' . $tmp[4];
+                $groupName = $clsTemplate->get_template_name($groupName);
+                if ( !empty($groupName) ) {
+                    $groupNameFinish = $groupName->mbt_name;
+                    $s_mbt_id = $groupName->mbt_id;
+                }
+            }
+
             if(count($booking))
-            $tmpBookings[]      = array(
-                'title'         => $booking->p_name,
-                'start'         => $booking->booking_date,
-                'end'           => $booking->booking_date + 1,
-                'url'           => route('ortho.bookings.template.daily', [ 'date' => $booking->booking_date, 'clinic_id' => $booking->clinic_id ]),
-                'className'     => 'booking-template-set',
-            );
+                $tmpBookings[]      = array(
+                    'title'         => $groupNameFinish,
+                    'start'         => $booking->booking_date,
+                    'end'           => $booking->booking_date + 1,
+                    'url'           => route('ortho.bookings.template.daily', [ 'date' => $booking->booking_date, 'clinic_id' => $booking->clinic_id, 's_mbt_id' => $s_mbt_id ]),
+                    'className'     => 'booking-template-set',
+                );
         }
         $data['bookings']      = json_encode($tmpBookings);
 

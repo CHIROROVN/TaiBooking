@@ -241,7 +241,7 @@
         // green
         if ( serviceIdNew < 0 ) {
           // blue
-          setClear(tdObjOld, 0, '');
+          setClear(tdObjOld, 0);
           setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
 
           // insert to table "t_booking"
@@ -280,9 +280,9 @@
           var groupDelete = tdObjOld.find('.td-content').attr('data-group');
           $('.td-content').each(function(index, el) {
             if ( $(this).attr('data-group') == groupDelete ) {
-              setClear($(this).parent(), 0, '');
+              setClear($(this).parent(), 0);
               setBrow($(this).parent(), 0, '');
-              setClear($(this), 0, '');
+              setClear($(this), 0);
               setBrow($(this), 0, '');
             }
           });
@@ -319,7 +319,7 @@
         $('#myModal-' + data_id).modal('hide');
       });
 
-      function setGreen(objNew, serviceIdNew, value, text, group = '') {
+      function setGreen(objNew, serviceIdNew, value, text, group) {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');
@@ -335,7 +335,7 @@
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBlue(objNew, serviceIdNew, value, text, group = '') {
+      function setBlue(objNew, serviceIdNew, value, text, group) {
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-blue');
@@ -351,7 +351,7 @@
         objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
       }
 
-      function setBrow(objNew, serviceIdNew, value, group = '') {
+      function setBrow(objNew, serviceIdNew, value, group) {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -367,7 +367,7 @@
         }
       }
 
-      function setClear(objNew, serviceIdNew, value, group = '') {
+      function setClear(objNew, serviceIdNew) {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -377,8 +377,8 @@
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
         // set group
-        objNew.find('.td-content').attr('data-group', group);
-        objNew.find('.td-content > .input').val(value);
+        objNew.find('.td-content').attr('data-group', '');
+        objNew.find('.td-content > .input').val('');
         objNew.find('.td-content > .input').attr('name', '');
         }
       }

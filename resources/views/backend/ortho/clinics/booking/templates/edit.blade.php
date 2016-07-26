@@ -247,7 +247,7 @@
         if ( serviceIdNew == -1 ) {
           // blue
           if ( serviceIdNew < 0 ) {
-            setClear(tdObjOld, 0, '');
+            setClear(tdObjOld, 0);
             setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
           }
         } else if ( serviceIdNew == 0 ) {
@@ -255,14 +255,14 @@
           if ( tdObjOld.find('.td-content').attr('data-group') != '' ) {
             // group
             $('.' + tdObjOld.find('.td-content').attr('data-group')).each(function(index, el) {
-              setClear($(this).parent(), 0, '', '');
+              setClear($(this).parent(), 0);
               setBrow($(this).parent(), 0, '', '');
-              setClear($(this), 0, '', '');
+              setClear($(this), 0);
               setBrow($(this), 0, '', '');
             });
           } else {
             // single
-            setClear(tdObjNew, 0, '');
+            setClear(tdObjNew, 0);
             setBrow(tdObjNew, 0, '');
           }
         } else {
@@ -346,7 +346,7 @@
         }
       }
 
-      function setClear(objNew, serviceIdNew, value, group) {
+      function setClear(objNew, serviceIdNew) {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);
@@ -356,8 +356,8 @@
         // set service id
         objNew.find('.td-content').attr('data-service-id', serviceIdNew);
         // set group
-        objNew.find('.td-content').attr('data-group', group);
-        objNew.find('.td-content > .input').val(value);
+        objNew.find('.td-content').attr('data-group', '');
+        objNew.find('.td-content > .input').val('');
         objNew.find('.td-content > .input').attr('name', '');
         }
       }

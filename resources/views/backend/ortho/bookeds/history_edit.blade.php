@@ -96,7 +96,18 @@
             <td>
               <select name="clinic_id" id="clinic_id" class="form-control">
                 <option value="">▼選択</option>
-                @foreach ( $clinics as $clinic )
+                <?php $listClinic = $clinics; ?>
+                @foreach ( $listClinic as $key => $clinic )
+                  @if ( $clinic->clinic_name == 'たい矯正歯科' )
+                    @if ( old('clinic_id') )
+                    <option value="{{ $clinic->clinic_id }}" @if(old('clinic_id') == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
+                    @else
+                    <option value="{{ $clinic->clinic_id }}" @if(@$result->clinic_id == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
+                    @endif
+                  <?php unset($listClinic[$key]) ?>
+                  @endif
+                @endforeach
+                @foreach ( $listClinic as $clinic )
                   @if ( old('clinic_id') )
                   <option value="{{ $clinic->clinic_id }}" @if(old('clinic_id') == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
                   @else

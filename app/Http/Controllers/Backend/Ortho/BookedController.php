@@ -41,7 +41,7 @@ class BookedController extends BackendController
         $clsService                 = new ServiceModel();
         $clsTreatment1              = new Treatment1Model();
         $clsResult                  = new ResultModel();
-        $data['bookeds']            = $clsBooking->get_all($data, true);
+        $data['bookeds']            = $clsBooking->getBookedHistory($data);
         $data['clinics']            = $clsClinic->get_for_select();
         $data['services']           = $clsService->get_list();
         $data['results']            = $clsResult->get_list();

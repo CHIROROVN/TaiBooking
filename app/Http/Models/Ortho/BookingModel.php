@@ -70,6 +70,33 @@ class BookingModel
         return $results;
     }
 
+    public function getBookedHistory($where = array())
+    {
+        $db = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
+                        ->where('t_booking.last_kind', '<>', DELETE);
+
+        // where u_id
+        if ( isset($where['u_id']) && !empty($where['u_id']) ) {
+            $db = $db->where('t_booking.doctor_id', $where['u_id']);
+        }
+        // where booking_date
+        if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
+            $db = $db->where('t_booking.booking_date', $where['booking_date']);
+        }
+
+        // where clinic_id
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('t_booking.clinic_id', $where['clinic_id']);
+        }
+
+        $results = $db->groupBy('t_booking.booking_group_id')->orderBy('t_booking.booking_date', 'asc')->simplePaginate(PAGINATION);
+
+        return $results;
+    }
+
     public function countTotal($date, $startTime, $endTime, $patient_id = false, $doctor_id = null)
     {
         $results = DB::table($this->table)

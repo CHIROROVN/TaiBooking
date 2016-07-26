@@ -274,7 +274,7 @@ class BookingTemplateController extends BackendController
         $tmpBookings            = array();
         foreach ( $bookings as $booking ) {
             // get template name
-            if ( empty($booking->booking_group_id) ) {
+            if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
                 $groupNameFinish = '治療';
                 $s_mbt_id = null;
             } else {
@@ -283,9 +283,6 @@ class BookingTemplateController extends BackendController
                 if ( !empty($tmp) ) {
                     $groupNameTmp = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2] . '_' . $tmp[3] . '_' . $tmp[4];
                     $groupName = $clsTemplate->get_template_name($groupNameTmp);
-                    echo '<pre>';
-                    print_r($groupName);
-                    echo '</pre>';die;
                     if ( !empty($groupName) ) {
                         $groupNameFinish = $groupName->mbt_name;
                         $s_mbt_id = $groupName->mbt_id;

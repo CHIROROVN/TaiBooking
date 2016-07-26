@@ -778,9 +778,12 @@ class BookingController extends BackendController
     {
         $date                           = Input::get('booking_date');
         $dataInput['booking_id']        = $id;
-        $dataInput['clinic_id']         = Input::get('clinic_id');
-        $dataInput['doctor_id']         = Input::get('doctor_id');
-        $dataInput['hygienist_id']      = Input::get('hygienist_id');
+        if(!empty(Input::get('clinic_id')))
+            $dataInput['clinic_id']         = Input::get('clinic_id');
+        if(!empty(Input::get('doctor_id')))
+            $dataInput['doctor_id']         = Input::get('doctor_id');
+        if (!empty(Input::get('hygienist_id')))
+            $dataInput['hygienist_id']      = Input::get('hygienist_id');
 
         switch (Input::get('week_later')) {
             case 'one_week':
@@ -806,7 +809,7 @@ class BookingController extends BackendController
                 $dataInput['booking_date_change'] = $datepicker;
                 break;
             default:
-                $dataInput['booking_recall_ym']   = date2YearMonth($date);
+                $dataInput['booking_recall_ym']   = '';
                 $dataInput['booking_date_change'] = $date;
                 break;
         }
@@ -820,6 +823,9 @@ class BookingController extends BackendController
             $dataInput['service_1_kind']    = $service_kind;
         }
 
+        if(empty($dataInput['booking_recall_ym']))
+            unset($dataInput['booking_recall_ym']);
+
         $dataInput['last_date']         = date('Y-m-d H:i:s');
         $dataInput['last_kind']         = UPDATE;
         $dataInput['last_ipadrs']       = CLIENT_IP_ADRS;
@@ -831,7 +837,6 @@ class BookingController extends BackendController
 
     public function getConfirm($id)
     {
-
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($id);
         $clsClinic                  = new ClinicModel();

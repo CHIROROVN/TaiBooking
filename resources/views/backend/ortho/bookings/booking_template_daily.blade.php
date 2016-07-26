@@ -1,7 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-
   <style>
     .td-content {
       /*display: table-cell;*/

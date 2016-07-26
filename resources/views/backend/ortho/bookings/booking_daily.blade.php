@@ -210,7 +210,6 @@
                     } else {
                       $link = route('ortho.bookings.booking.detail', $arr_bookings[$facility_id][$time]->booking_id);
                     }
-
                     if ( $arr_bookings[$facility_id][$time]->service_1_kind == 1 ) {
                       $color = 'green';
                       $br = '<br />';
@@ -220,8 +219,18 @@
                       $text = '<a href="' . $link . '">' . $arr_bookings[$facility_id][$time]->p_name . $br . @$services[$arr_bookings[$facility_id][$time]->service_1] . '</a>';
                     } elseif ( $arr_bookings[$facility_id][$time]->service_1_kind == 2 ) {
                       $color = 'blue';
-                      $text = '<a href="' . $link . '">' . '治療' . '</a>';
+                      if(empty($arr_bookings[$facility_id][$time]->p_name)){
+                        $patient = '治療';
+                      }else{
+                        $patient  = $arr_bookings[$facility_id][$time]->p_name;
+                      }
+                      $treatment = '';
+                      if(!empty($arr_bookings[$facility_id][$time]->service_1)){
+                        $treatment = '<br />' . @$treatment1s[$arr_bookings[$facility_id][$time]->service_1];
+                      }
+                      $text = '<a href="' . $link . '">' . @$patient . @$treatment . '</a>';
                     }
+
                     // if ( $arr_bookings[$facility_id][$time]->service_2_kind == 1 ) {
                     //   $color = 'green';
                     //   $br = '<br />';

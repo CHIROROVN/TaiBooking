@@ -1,7 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-
 <section id="page">
   <div class="container">
     <div class="row content-page">

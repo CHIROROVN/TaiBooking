@@ -17,9 +17,6 @@
     <div class="container">
       <div class="row content">
         <h3>予約雛形の適用と個別開閉　＞　{{ @$clinic->clinic_name }}</h3>
-
-
-
         <div class="fillter">
           <div class="col-md-12 page-left">
             {!! Form::open(array('route' => 'ortho.bookings.template.daily', 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
@@ -38,7 +35,7 @@
         </div>
 
         <div class="" align="center">
-          <div class="col-md-12 page-left">
+          <div class="col-md-12 page-left" style="top: -10px; margin-bottom: 10px;">
             <?php
             $prevDate = strtotime ( '-1 day' , strtotime ( $date ) ) ;
             $prevDate = date ( 'Y-m-d' , $prevDate );
@@ -59,9 +56,13 @@
           <table class="table table-bordered table-shift-set">
             <tr>
               <td align="center" style="width: 5%;">時間</td>
-              @foreach ( $facilitys as $facility )
-              <td align="center" style="width: 45px;">{{ $facility->facility_name }}</td>
-              @endforeach
+              @if(count($facilitys))
+                @foreach ( $facilitys as $facility )
+                <td align="center" style="width: 45px;">{{ $facility->facility_name }}</td>
+                @endforeach
+              @else
+                <td align="center">&nbsp;</td>
+              @endif
             </tr>
 
             <!-- check "brown", "green", "blue" color -->

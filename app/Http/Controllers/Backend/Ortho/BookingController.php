@@ -781,31 +781,32 @@ class BookingController extends BackendController
         $dataInput['clinic_id']         = Input::get('clinic_id');
         $dataInput['doctor_id']         = Input::get('doctor_id');
         $dataInput['hygienist_id']      = Input::get('hygienist_id');
+
         switch (Input::get('week_later')) {
             case 'one_week':
-                $dataInput['booking_recall_ym'] = date2YearMonth(booking_change_date($date, 'week_later'));
+                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'week_later'));
                 $dataInput['booking_date_change'] = booking_change_date($date, 'one_week');
                 break;
             case 'one_month':
-                $dataInput['booking_recall_ym'] = date2YearMonth(booking_change_date($date, 'one_month'));
+                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'one_month'));
                 $dataInput['booking_date_change'] = booking_change_date($date, 'one_month');
                 break;
             case 'two_month':
-                $dataInput['booking_recall_ym'] = date2YearMonth(booking_change_date($date, 'two_month'));
+                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'two_month'));
                 $dataInput['booking_date_change'] = booking_change_date($date, 'two_month');
                 break;
             case 'week_specified':
                 $date_option = Input::get('week_later_option');
-                $dataInput['booking_recall_ym'] = date2YearMonth(booking_change_date($date, $date_option));
+                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, $date_option));
                 $dataInput['booking_date_change'] = booking_change_date($date, $date_option);
                 break;
             case 'date_picker':
                 $datepicker = Input::get('date_picker_option');
-                $dataInput['booking_recall_ym'] = date2YearMonth(booking_change_date($date, $datepicker));
-                $dataInput['booking_date_change'] = booking_change_date($date, $datepicker);
+                $dataInput['booking_recall_ym']   = date('Ym', strtotime($datepicker));
+                $dataInput['booking_date_change'] = $datepicker;
                 break;
             default:
-                $dataInput['booking_recall_ym'] = date2YearMonth($date);
+                $dataInput['booking_recall_ym']   = date2YearMonth($date);
                 $dataInput['booking_date_change'] = $date;
                 break;
         }
@@ -823,13 +824,14 @@ class BookingController extends BackendController
         $dataInput['last_kind']         = UPDATE;
         $dataInput['last_ipadrs']       = CLIENT_IP_ADRS;
         $dataInput['last_user']         = Auth::user()->id;
+
         Session::put('booking_change', $dataInput);
         return redirect()->route('ortho.bookings.booking.change.confirm', [$id]);
     }
 
-
     public function getConfirm($id)
     {
+
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($id);
         $clsClinic                  = new ClinicModel();
@@ -855,18 +857,20 @@ class BookingController extends BackendController
     {
         $dataInput                  = Session::get('booking_change');
         unset($dataInput['booking_date_change']);
+        unset($dataInput['booking_id']);
         $clsBooking                 = new BookingModel();
 
-        $booking = $clsBooking->get_by_id($id);
-        $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
-        $status = true;
-        foreach ( $bookingGroups as $item ) {
-            if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
-                $status = false;
+         $booking = $clsBooking->get_by_id($id);
+         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+
+        $flag = false;
+         foreach ( $bookingGroups as $item ) {
+            if ($clsBooking->update($item->booking_id, $dataInput) ) {
+                $flag = true;
             }
         }
 
-        if ( !$status ) {
+        if ($flag) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.edit',[$id]);
         } else {

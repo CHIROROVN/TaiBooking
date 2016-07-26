@@ -140,40 +140,37 @@
         return $tmpDates;
 	}
 		//booking change date
-	function booking_change_date($date=null, $param=null){
-		if($date == '' || $param == ''){
-			return '';
-		}else{
-			switch ($param) {
+	function booking_change_date($booking_date, $week_later = null){
+		$booking_date = Carbon::parse($booking_date);
+		if(!empty($week_later)){
+			switch ($week_later) {
 				case 'one_week':
-					$result = date ( 'Y-m-d', strtotime ( '+1 week' , strtotime ( $date ) )) ;
-					break;
-				case 'one_month':
-					$result = date ( 'Y-m-d', strtotime ( '+1 month' , strtotime ( $date ) )) ;
-					break;
-				case 'two_month':
-					$result = date ( 'Y-m-d', strtotime ( '+2 month' , strtotime ( $date ) )) ;
+					return formatDate( $booking_date->addWeek()->toDateTimeString(),'-');
 					break;
 				case 'two_week':
-					$result = date ( 'Y-m-d', strtotime ( '+2 week' , strtotime ( $date ) )) ;
+					return formatDate( $booking_date->addWeeks(2)->toDateTimeString(),'-');
 					break;
 				case 'three_week':
-					$result = date ( 'Y-m-d', strtotime ( '+3 week' , strtotime ( $date ) )) ;
+					return formatDate( $booking_date->addWeeks(3)->toDateTimeString(),'-');
 					break;
 				case 'four_week':
-					$result = date ( 'Y-m-d', strtotime ( '+4 week' , strtotime ( $date ) )) ;
+					return formatDate( $booking_date->addWeeks(4)->toDateTimeString(),'-');
 					break;
 				case 'five_week':
-					$result = date ( 'Y-m-d', strtotime ( '+5 week' , strtotime ( $date ) )) ;
+					return formatDate( $booking_date->addWeeks(5)->toDateTimeString(),'-');
 					break;
-				case '':
-					$result = '';
+				case 'one_month':
+					return formatDate( $booking_date->addMonth()->toDateTimeString(),'-');
+					break;
+				case 'two_month':
+					return formatDate( $booking_date->addMonths(2)->toDateTimeString(),'-');
 					break;
 				default:
-					$result = $param;
+					return '';
 					break;
 			}
-			return $result;
+		}else{
+			return null;
 		}
 	}
 

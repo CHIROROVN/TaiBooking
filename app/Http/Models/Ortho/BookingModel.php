@@ -141,8 +141,8 @@ class BookingModel
         }
 
         // where clinic_id
-        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
-            $db = $db->where('t_booking.clinic_id', $where['clinic_id']);
+        if ( isset($where['s_clinic_id']) && !empty($where['s_clinic_id']) ) {
+            $db = $db->where('t_booking.clinic_id', $where['s_clinic_id']);
         }
 
         $db = $db->groupBy('t_booking.booking_group_id')->orderBy('t_booking.booking_date', 'asc');

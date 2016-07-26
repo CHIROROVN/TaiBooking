@@ -196,6 +196,10 @@ class BookingTemplateController extends BackendController
                         // (2)
                         $dataUpdate['clinic_service_id'] = $tmp[1];
                         $dataUpdate['template_group_id'] = (empty($tmp[3])) ? null : $tmp[3];
+                        if ( empty($dataInsert['template_group_id']) ) {
+                            // group_[mbt_id]_[clinic_id]_date
+                            $dataInsert['template_group_id'] = 'group_' . $id . '_' . $clinic_id;
+                        }
                         $update2 = $clsTemplate->update($tmpDataOld[$tmp[0] . '|' . $tmp[2]]->template_id, $dataUpdate);
                         unset($dataUpdate['clinic_service_id']);
                         unset($dataUpdate['template_group_id']);
@@ -207,6 +211,10 @@ class BookingTemplateController extends BackendController
                     $dataInsert['clinic_service_id']    = $tmp[1];
                     $dataInsert['template_time']        = $tmp[2];
                     $dataInsert['template_group_id']    = (isset($tmp[3])) ? $tmp[3] : null;
+                    if ( empty($dataInsert['template_group_id']) ) {
+                        // group_[mbt_id]_[clinic_id]_date
+                        $dataInsert['template_group_id'] = 'group_' . $id . '_' . $clinic_id;
+                    }
                     $update2 = $clsTemplate->insert($dataInsert);
                 }
             }
@@ -276,20 +284,30 @@ class BookingTemplateController extends BackendController
         foreach ( $bookings as $booking ) {
             $i++;
             // get template name
+            $groupNameFinish = null;
+            $s_mbt_id = null;
             if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
                 $groupNameFinish = '治療';
                 $s_mbt_id = null;
             } else {
                 $tmp = null;
                 $tmp = explode('_', $booking->booking_group_id);
-                if ( !empty($tmp) && count($tmp) >= 5 ) {
+                if ( !empty($tmp) && count($tmp) == 5 ) {
                     $groupNameTmp = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2] . '_' . $tmp[3] . '_' . $tmp[4];
                     $groupName = $clsTemplate->get_template_name($groupNameTmp);
                     if ( !empty($groupName) ) {
                         $groupNameFinish = $groupName->mbt_name;
                         $s_mbt_id = $groupName->mbt_id;
                     }
+                } elseif ( !empty($tmp) && count($tmp) >= 3 ) {
+                    $groupNameTmp = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2];
+                    $groupName = $clsTemplate->get_template_name($groupNameTmp);
+                    if ( !empty($groupName) ) {
+                        $groupNameFinish = $groupName->mbt_name;
+                        $s_mbt_id = $groupName->mbt_id;
+                    }
                 }
+
             }
 
             if(count($booking))

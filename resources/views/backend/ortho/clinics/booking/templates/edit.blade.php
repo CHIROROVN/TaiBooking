@@ -346,7 +346,7 @@
         }
       }
 
-      function setClear(objNew, serviceIdNew, value, group = null) {
+      function setClear(objNew, serviceIdNew, value, group) {
         tdNewCls = objNew.attr('class');
         if ( tdNewCls != 'col-brown' ) {
           objNew.removeClass(tdNewCls);

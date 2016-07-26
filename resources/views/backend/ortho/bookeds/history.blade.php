@@ -66,7 +66,7 @@
         @else
           @foreach ( $bookeds as $booked )
           <tr>
-            <td>{{ splitHourMin($booked->booking_start_time) }}</td>
+            <td>{{ $booked->booking_date }}</td>
             <td>{{ $booked->p_no }}　{{ $booked->p_name }}@if(!empty($booked->p_name_kana))（{{ $booked->p_name_kana }}）@endif</td>
             <td>
               @if ( $booked->service_1_kind == 1 )

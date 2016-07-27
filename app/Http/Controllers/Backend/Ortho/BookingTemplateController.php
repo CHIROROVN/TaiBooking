@@ -340,6 +340,7 @@ class BookingTemplateController extends BackendController
         $clsClinicService           = new ClinicServiceModel();
         $clsBookingTemplate         = new BookingTemplateModel();
         $clsClinic                  = new ClinicModel();
+        $clsBooking                 = new BookingModel();
         $data['clinic']             = $clsClinic->get_by_id(Input::get('clinic_id'));
         $data['facilitys']          = $clsFacility->getAll(@$data['clinic']->clinic_id);
         $data['facilitys_popup']    = $clsFacility->getAll(@$data['clinic']->clinic_id, 1);
@@ -353,7 +354,13 @@ class BookingTemplateController extends BackendController
         }
         $data['services']           = $arrServices;
 
-        $templates                  = $clsTemplate->get_all(Input::get('s_mbt_id'));
+        // $templates                  = $clsTemplate->get_all(Input::get('s_mbt_id'));
+        $templateBookings           = $clsTemplate->get_by_mbtId($data['s_mbt_id']);
+        $templates                  = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
+        foreach ( $templates as $key => $template ) {
+            $templates[$key]->clinic_service_id = -1;
+            $templates[$key]->template_group_id = $templateBookings->template_group_id;
+        }
         if ( empty(Input::get('s_mbt_id')) ) {
             $templates = array();
         }
@@ -363,7 +370,7 @@ class BookingTemplateController extends BackendController
             $time_replate = str_replace (':', '', $time);
             foreach ( $data['facilitys'] as $fac ) {
                 foreach ( $templates as $template ) {
-                    if ( $template->facility_id == $fac->facility_id && $template->template_time == $time_replate ) {
+                    if ( $template->facility_id == $fac->facility_id && $template->booking_start_time == $time_replate ) {
                         $arr_templates[$fac->facility_id][$time] = $template;
                     }
                 }
@@ -395,7 +402,7 @@ class BookingTemplateController extends BackendController
                 $data                           = array();
                 $data['booking_date']           = Input::get('date');
                 $data['booking_start_time']     = $template->template_time;
-                $data['booking_total_time']     = 0;
+                $data['booking_total_time']     = null;
                 $data['clinic_id']              = Input::get('clinic_id');
                 $data['facility_id']            = $template->facility_id;
                 foreach ( $clinicServices as $clinicService ) {
@@ -687,6 +694,9 @@ class BookingTemplateController extends BackendController
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
             'last_user'             => Auth::user()->id
         );
+        $bookingBlue = $clsBooking->get_blue();
+        $dataInsert['booking_group_id'] = $bookingBlue->booking_group_id;
+
         $where = array(
             'booking_start_time'    => Input::get('time'),
             'facility_id'           => Input::get('facility_id'),

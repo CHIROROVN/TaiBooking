@@ -67,6 +67,11 @@ class TemplateModel
         return DB::table($this->table)->where('template_id', $id)->first();
     }
 
+    public function get_by_mbtId($mbtId)
+    {
+        return DB::table($this->table)->where('mbt_id', $mbtId)->first();
+    }
+
     public function update($id, $data)
     {
         return DB::table($this->table)->where('template_id', $id)->update($data);

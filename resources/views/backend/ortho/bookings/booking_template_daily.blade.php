@@ -83,8 +83,8 @@
                   $text = '';
 
                   if ( isset($arr_templates[$facility_id][$time]) ) {
-                    $hour_template = substr($arr_templates[$facility->facility_id][$time]->template_time , 0, 2);
-                    $minute_template = substr($arr_templates[$facility->facility_id][$time]->template_time , 2, 2);
+                    $hour_template = substr($arr_templates[$facility->facility_id][$time]->booking_start_time , 0, 2);
+                    $minute_template = substr($arr_templates[$facility->facility_id][$time]->booking_start_time , 2, 2);
 
                     if ( $arr_templates[$facility_id][$time]->clinic_service_id > 0
                           && $hour_template == $hour

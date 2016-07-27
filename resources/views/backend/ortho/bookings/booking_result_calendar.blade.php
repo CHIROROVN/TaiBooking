@@ -218,24 +218,52 @@
 
                     if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1 ) {
                       $color = 'green';
-                      $br = '<br />';
-                      if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
-                        $br = '';
-                      }
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . @$services[$arr_bookings[$facility_id][$fullTime]->service_1] . '<span></span></a>';
+                      $booking = @$arr_bookings[$facility_id][$fullTime];
+
+                      $sDoctor = '';
+                      if(!empty($list_doctors[$booking->doctor_id]))
+                        $sDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+
+                      $sPatient = '';
+                      if(!empty($booking->p_name))
+                        $sPatient = $booking->p_name . '<br />';
+
+                      $sService = '';
+                      if(!empty($services[$booking->service_1]))
+                        $sService = @$services[$booking->service_1];
+
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sDoctor . @$sPatient . @$sService . '</span></a>';
+
                     } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
                       $color = 'blue';
-                      $booking = $arr_bookings[$facility_id][$fullTime];
+                      $booking = @$arr_bookings[$facility_id][$fullTime];
+                      $initTreatment = '治療';
+
                       if($booking->service_1 != -1){
-                        $treatment_name = @$treatment1s[$booking->service_1];
+                        $initTreatment = '';
+
+                        $tDoctor = '';
+                        if(!empty($list_doctors[$booking->doctor_id]))
+                          $initTreatment = '';
+                          $tDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+
+                        $tPatient = '';
+                        if(!empty($booking->p_name))
+                          $initTreatment = '';
+                          $tPatient = $booking->p_name . '<br />';
+
+                        $tTreatment = '';
+                        if(!empty($treatment1s[$booking->service_1]))
+                          $initTreatment = '';
+                          $tTreatment = @$treatment1s[$booking->service_1];
+
                       }else{
-                        $treatment_name = '治療';
+                        $tDoctor = '';
+                        $tPatient = '';
+                        $tTreatment = '';
                       }
-                      $br = '<br />';
-                      if ( empty($arr_bookings[$facility_id][$fullTime]->p_name) ) {
-                        $br = '';
-                      }
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . $arr_bookings[$facility_id][$fullTime]->p_name . $br . "{$treatment_name}" .'<span></span>' . '</a>';
+
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tDoctor . @$tPatient  . @$tTreatment . '</span>' . '</a>';
                     }
                   }
                 ?>

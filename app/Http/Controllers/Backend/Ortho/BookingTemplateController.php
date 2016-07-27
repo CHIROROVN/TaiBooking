@@ -356,11 +356,14 @@ class BookingTemplateController extends BackendController
 
         // $templates                  = $clsTemplate->get_all(Input::get('s_mbt_id'));
         $templateBookings           = $clsTemplate->get_by_mbtId($data['s_mbt_id']);
-        $templates                  = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
-        foreach ( $templates as $key => $template ) {
-            $templates[$key]->clinic_service_id = -1;
-            $templates[$key]->template_group_id = $templateBookings->template_group_id;
+        if ( !empty($templateBookings) ) {
+                $templates          = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
+                foreach ( $templates as $key => $template ) {
+                $templates[$key]->clinic_service_id = -1;
+                $templates[$key]->template_group_id = $templateBookings->template_group_id;
+            }
         }
+        
         if ( empty(Input::get('s_mbt_id')) ) {
             $templates = array();
         }

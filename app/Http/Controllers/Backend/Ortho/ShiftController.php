@@ -50,6 +50,7 @@ class ShiftController extends BackendController
         $data['monthNow']       = convert2Digit($monthNow);
         $data['users']          = $clsUser->get_human();
         $shifts                 = $clsShift->get_all();
+        $data['belong_kinds']   = $clsBelong->get_for_select();
 
         // set day
         $tmpDate = array();
@@ -58,7 +59,11 @@ class ShiftController extends BackendController
         }
         $data['days']           = $tmpDate;
         // set belong user
-        $tmpBelong = $clsBelong->get_for_select();
+        $where = array(
+            's_belong_kind' => Input::get('s_belong_kind', 1)
+        );
+        $data['s_belong_kind'] = $where['s_belong_kind'];
+        $tmpBelong = $clsBelong->get_for_select($where);
         $tmpUsers = array();
         foreach ( $tmpBelong as $belong ) {
             foreach ( $data['users'] as $user ) {
@@ -137,10 +142,10 @@ class ShiftController extends BackendController
 
         if ( $update ) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.shifts.list_edit');
+            return redirect()->route('ortho.shifts.list_edit', [ 's_belong_kind' => Input::get('s_belong_kind') ]);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.shifts.list_edit');
+            return redirect()->route('ortho.shifts.list_edit', [ 's_belong_kind' => Input::get('s_belong_kind') ]);
         }
     }
 

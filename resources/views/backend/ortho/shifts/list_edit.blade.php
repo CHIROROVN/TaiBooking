@@ -26,7 +26,7 @@
             @endif
           </div>
           
-          {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
+          {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'id' => 'frm-shift-edit')) !!}
           <div class="fillter">
             <div class="col-md-12" style="text-align:center;">
 
@@ -35,11 +35,26 @@
               <button type="submit" class="btn btn-sm btn-page no-border" name="next" value="" id="next">翌月 &gt;&gt;</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
           </div>
+
+          <div class="shift-list-edit-belong-kind">
+            <div width="100%" align="center">
+              <select name="s_belong_kind" class="form-control form-control--small" id="s_belong_kind">
+                <option value="1" @if($s_belong_kind == 1) selected="" @endif>医師</option>
+                <option value="2" @if($s_belong_kind == 2) selected="" @endif>衛生士（相談業務あり）</option>
+                <option value="3" @if($s_belong_kind == 3) selected="" @endif>衛生士（相談業務なし）</option>
+                <option value="4" @if($s_belong_kind == 4) selected="" @endif>事務</option>
+                <option value="5" @if($s_belong_kind == 5) selected="" @endif>受付</option>
+                <option value="6" @if($s_belong_kind == 6) selected="" @endif>放射線技師</option>
+                <option value="7" @if($s_belong_kind == 7) selected="" @endif>滅菌</option>
+              </select>
+            </div>
+          </div>
           </form>
 
           @if ( count($users) > 0 && !empty($users) )
           {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
           <input type="hidden" name="date" value="{{ $yearNow }}-{{ $monthNow }}">
+          <input type="hidden" name="s_belong_kind" value="{{ $s_belong_kind }}">
 
           <div class="row content-page">
             <div class="row">
@@ -166,6 +181,11 @@
         // $('#input-month').val(monthNowShow);
         obj.val(yearNow + '-' + monthNowShow);
       }
+
+      // change belong kind
+      $( "#s_belong_kind" ).change(function() {
+        $( "#frm-shift-edit" ).submit();
+      });
     });
   </script>
 

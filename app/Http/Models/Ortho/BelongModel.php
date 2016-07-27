@@ -29,9 +29,16 @@ class BelongModel
         return $results;
     }
 
-    public function get_for_select()
+    public function get_for_select($where = array())
     {
-        $db = DB::table($this->table)->select('belong_id', 'belong_name', 'belong_kind')->where('last_kind', '<>', DELETE)->orderBy('belong_sort_no', 'asc')->get();
+        $db = DB::table($this->table)->select('belong_id', 'belong_name', 'belong_kind')->where('last_kind', '<>', DELETE);
+
+        // belong_kind
+        if ( !empty($where['s_belong_kind']) ) {
+            $db = $db->where('belong_kind', $where['s_belong_kind']);
+        }
+
+        $db = $db->orderBy('belong_sort_no', 'asc')->get();
         return $db;
     }
 

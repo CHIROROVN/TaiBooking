@@ -360,9 +360,6 @@ class BookingTemplateController extends BackendController
 
         if ( !empty($templateBookings) ) {
             $templates          = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
-            // echo '<pre>';
-            // print_r($templates);
-            // echo '</pre>';die;
             foreach ( $templates as $key => $template ) {
                 $templates[$key]->clinic_service_id = $templateBookings->clinic_service_id;
                 if ( $template->service_1 == -1 && $template->service_1_kind == 2 ) {
@@ -389,6 +386,7 @@ class BookingTemplateController extends BackendController
             }
         }
         $data['arr_templates']       = $arr_templates;
+        // echo '<pre>';print_r($data['arr_templates']);die;
         return view('backend.ortho.bookings.booking_template_daily', $data);
     }
 

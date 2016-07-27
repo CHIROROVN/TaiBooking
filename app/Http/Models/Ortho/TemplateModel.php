@@ -69,7 +69,7 @@ class TemplateModel
 
     public function get_by_mbtId($mbtId)
     {
-        return DB::table($this->table)->where('mbt_id', $mbtId)->first();
+        return DB::table($this->table)->where('mbt_id', $mbtId)->where('t_template.last_kind', '<>', DELETE)->first();
     }
 
     public function update($id, $data)

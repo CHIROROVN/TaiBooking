@@ -391,6 +391,9 @@ class BookingModel
             }else{
                 $result = $db->whereDate('t_booking.booking_date', '=', $where['week_later']);
             }
+        }else{
+            $dateNow = formatDate(Carbon::now()->toDateTimeString(), '-');
+            $result = $db->whereDate('booking_date', '>=', $dateNow);
         }
 
         if(isset($where['clinic_service_name'])){

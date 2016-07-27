@@ -96,8 +96,12 @@ class BookingController extends BackendController
     {
         $data                   = array();
         $clinic_id              = Input::get('clinic_id');
-
         $date_current           = date('Y-m-d');
+
+        if(Input::get('cur')){
+            $date_current  = Input::get('cur');
+        }
+
         if ( !empty(Input::get('start_date')) ) {
             $date_current = Input::get('start_date');
         }
@@ -147,7 +151,6 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_daily', $data);
     }
 
-
     /**
      * get view bookingResultCalendar
      */
@@ -167,7 +170,7 @@ class BookingController extends BackendController
         $data['date_current']   = $date_current;
 
         $clinic_id = Input::get('clinic_id');
-        
+
         if ( empty($clinic_id) ) {
             return redirect()->route('ortho.bookings.booking_search');
         }
@@ -210,7 +213,6 @@ class BookingController extends BackendController
         $data['arr_bookings'] = $arr_bookings;
         return view('backend.ortho.bookings.booking_result_calendar', $data);
     }
-
 
     /**
      * get view detail
@@ -261,7 +263,6 @@ class BookingController extends BackendController
     public function bookingCancel($id){
         $clsBooking                         = new BookingModel();
         $booking                            = $clsBooking->get_by_id($id);
-
         $dataUpdate = array(
             'last_date'                 => date('y-m-d H:i:s'),
             'last_kind'                 => DELETE,
@@ -923,6 +924,7 @@ class BookingController extends BackendController
                 $condition['week_later'] = Input::get('week_later');
             }
         }
+
         if(!empty(Input::get('clinic_service_name')))
             $condition['clinic_service_name']         = Input::get('clinic_service_name');
         return redirect()->route('ortho.bookings.booking.result.list', $condition);

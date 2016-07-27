@@ -180,7 +180,7 @@ class BookingModel
         return $results;
     }
 
-    public function get_by_clinic($clinic_id, $date = '')
+    public function get_by_clinic($clinic_id, $date = null)
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')

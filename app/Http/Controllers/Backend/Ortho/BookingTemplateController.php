@@ -355,15 +355,24 @@ class BookingTemplateController extends BackendController
         $data['services']           = $arrServices;
 
         // $templates                  = $clsTemplate->get_all(Input::get('s_mbt_id'));
+        $templates = array();
         $templateBookings           = $clsTemplate->get_by_mbtId($data['s_mbt_id']);
+
         if ( !empty($templateBookings) ) {
-                $templates          = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
-                foreach ( $templates as $key => $template ) {
-                $templates[$key]->clinic_service_id = -1;
+            $templates          = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
+            // echo '<pre>';
+            // print_r($templates);
+            // echo '</pre>';die;
+            foreach ( $templates as $key => $template ) {
+                $templates[$key]->clinic_service_id = $templateBookings->clinic_service_id;
+                if ( $template->service_1 == -1 && $template->service_1_kind == 2 ) {
+                    $templates[$key]->clinic_service_id = $template->service_1;
+                }
                 $templates[$key]->template_group_id = $templateBookings->template_group_id;
+                $templates[$key]->booking_start_time = sprintf("%04d", $template->booking_start_time);
             }
         }
-        
+
         if ( empty(Input::get('s_mbt_id')) ) {
             $templates = array();
         }
@@ -398,7 +407,7 @@ class BookingTemplateController extends BackendController
         if ( !empty($mbt_id) ) {
             $templates = $clsTemplate->get_all($mbt_id);
         }
-        
+
         if ( count($templates) ) {
             foreach ( $templates as $template ) {
                 // insert to table "t_booking"
@@ -697,8 +706,13 @@ class BookingTemplateController extends BackendController
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
             'last_user'             => Auth::user()->id
         );
-        $bookingBlue = $clsBooking->get_blue();
-        $dataInsert['booking_group_id'] = $bookingBlue->booking_group_id;
+        $bookingBlue = $clsBooking->get_by_clinic($dataInsert['clinic_id'], $dataInsert['booking_date']);
+        if ( !empty($bookingBlue) ) {
+            $dataInsert['booking_group_id'] = $bookingBlue[0]->booking_group_id;
+        } else {
+            $bookingBlue = $clsBooking->get_blue();
+            $dataInsert['booking_group_id'] = (isset($bookingBlue->booking_group_id)) ? $bookingBlue->booking_group_id : null;
+        }
 
         $where = array(
             'booking_start_time'    => Input::get('time'),

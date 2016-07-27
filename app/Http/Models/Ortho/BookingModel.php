@@ -213,6 +213,17 @@ class BookingModel
         return $results;
     }
 
+    public function get_blue()
+    {
+        $results = DB::table($this->table)
+                        ->select('booking_id', 'booking_group_id')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.service_1', -1)
+                        ->where('t_booking.service_1_kind', 2)
+                        ->first();
+        return $results;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

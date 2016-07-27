@@ -192,7 +192,7 @@
 
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">
-          <input onclick="location.href='{{ route('ortho.bookings.template.set') }}'" value="月カレンダーに戻る" type="button" class="btn btn-sm btn-page">
+          <input onclick="location.href='{{ route('ortho.bookings.template.set', [ 's_clinic_id' => $clinic->clinic_id ]) }}'" value="月カレンダーに戻る" type="button" class="btn btn-sm btn-page">
         </div>
       </div>
     </div>

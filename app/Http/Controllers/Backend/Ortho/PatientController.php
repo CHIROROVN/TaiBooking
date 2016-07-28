@@ -1,5 +1,4 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
-
 use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -280,7 +279,7 @@ class PatientController extends BackendController
         $data['bookings']           = $clsBooking->getBookByPatientID($p_id);
         $clsUser                    = new UserModel();
         $data['doctors']            = $clsUser->get_list_users([1]);
-        $data['hys']                = $clsUser->get_list_users([2,3]);
+        $data['hygienists']         = $clsUser->get_list_users([2,3]);
         $clsClinicService           = new ClinicServiceModel();
         $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();

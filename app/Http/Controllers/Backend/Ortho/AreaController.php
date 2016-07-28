@@ -4,7 +4,6 @@ use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
-use Hash;
 use App\User;
 use App\Http\Models\Ortho\AreaModel;
 use App\Http\Models\Ortho\ClinicModel;
@@ -13,7 +12,6 @@ use Form;
 use Html;
 use Input;
 use Validator;
-use URL;
 use Session;
 
 class AreaController extends BackendController
@@ -143,7 +141,6 @@ class AreaController extends BackendController
         // update table area
         $dataUpdate = array(
             'area_name'         => Input::get('area_name'),
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
@@ -197,9 +194,9 @@ class AreaController extends BackendController
             } 
         }
         if ( $status_insert ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_edit_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_edit_danger'));
         }
         return redirect()->route('ortho.areas.index');
     }
@@ -228,9 +225,9 @@ class AreaController extends BackendController
         );
         
         if ( $clsClinicArea->update_by_area($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_delete_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_delete_danger'));
         }
         return redirect()->route('ortho.areas.index');
     }

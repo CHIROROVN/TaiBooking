@@ -721,7 +721,7 @@ class BookingController extends BackendController
 
                     if ( $status ) {
                         Session::flash('success', trans('common.message_regist_success'));
-                        return redirect()->route('ortho.bookings.booking.result.list');
+                        return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
                     } else {
                         Session::flash('danger', trans('common.message_regist_danger'));
                         return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
@@ -747,7 +747,7 @@ class BookingController extends BackendController
 
         if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
-            return redirect()->route('ortho.bookings.booking.result.list');
+            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
             return redirect()->route('ortho.bookings.booking.1st.regist', [$id]);

@@ -103,19 +103,13 @@ class BookingTemplateController extends BackendController
         $clsTemplate                = new TemplateModel();
         $clsService                 = new ServiceModel();
         $clsClinicService           = new ClinicServiceModel();
+        $service_available          = $clsService->service_available();
         $data['booking_template']   = $clsBookingTemplate->get_by_id($id);
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
         $data['facilitys']          = $clsFacility->getAll($clinic_id);
         $data['facilitys_popup']    = $clsFacility->getAll($clinic_id, 1);
-        $services                   = $clsClinicService->getAll($clinic_id);
+        $services                   = $clsClinicService->getAll($clinic_id, $service_available);
         $data['times']              = Config::get('constants.TIME');
-
-        $service_available          = $clsService->service_available();
-
-        echo "<pre>";
-        print_r($service_available);die;
-
-
 
         $arrServices                = array();
         foreach ( $services as $service ) {
@@ -142,7 +136,7 @@ class BookingTemplateController extends BackendController
      * 
      */
     public function postEdit($clinic_id, $id)
-    {
+    {exit;
         $clsMbt                     = new BookingTemplateModel();
         $clsTemplate                = new TemplateModel();
         $dataUpdate = array(
@@ -350,7 +344,6 @@ class BookingTemplateController extends BackendController
         $clsBooking                 = new BookingModel();
 
         $service_available          = $clsService->service_available();
-
         $data['clinic']             = $clsClinic->get_by_id(Input::get('clinic_id'));
         $data['facilitys']          = $clsFacility->getAll(@$data['clinic']->clinic_id);
         $data['facilitys_popup']    = $clsFacility->getAll(@$data['clinic']->clinic_id, 1);
@@ -697,7 +690,6 @@ class BookingTemplateController extends BackendController
         }
         echo json_encode(array('status', $status));
     }
-
 
     public function insertBookingTemplateDailyAjax()
     {

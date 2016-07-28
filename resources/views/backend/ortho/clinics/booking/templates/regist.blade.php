@@ -9,10 +9,10 @@
         <h3>医院情報管理　＞　{{ $clinic->clinic_name }}　＞　予約雛形の新規登録</h3>
         <table class="table table-bordered">
           <tr>
-            <td class="col-title"><label for="mbt_name">雛形名</label></td>
+            <td class="col-title"><label for="mbt_name">雛形名 <span class="note_required">※</span></label></td>
             <td>
               <input name="mbt_name" id="mbt_name" value="{{ old('mbt_name') }}" type="text" class="form-control form-control--default">
-              <span class="error-input">@if ($errors->first('mbt_name')) {!! $errors->first('mbt_name') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('mbt_name')) ※{!! $errors->first('mbt_name') !!} @endif</span>
               <!-- <input type="button" class="btn btn-sm btn-page no-border" name="button" value="保存する"> -->
             </td>
           </tr>

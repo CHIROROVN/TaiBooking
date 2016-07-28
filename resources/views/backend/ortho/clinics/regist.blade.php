@@ -9,14 +9,14 @@
             <div class="table-responsive clinic">
               <table class="table table-bordered">
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_name">医院名 (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_name">医院名 <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_name" id="clinic_name" class="form-control" value="{{ old('clinic_name') }}" />
                     <span class="error-input">@if ($errors->first('clinic_name')) {!! $errors->first('clinic_name') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_name_yomi">医院名よみ (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_name_yomi">医院名よみ <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_name_yomi" id="clinic_name_yomi " class="form-control" value="{{ old('clinic_name_yomi') }}" />
                     <span class="error-input">@if ($errors->first('clinic_name_yomi')) {!! $errors->first('clinic_name_yomi') !!} @endif</span>
@@ -89,7 +89,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_zip3">郵便番号 (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_zip3">郵便番号 <span class="note_required">※</span></label></td>
                   <td><input name="clinic_zip3" type="text" id="clinic_zip3" class="form-control form-control--small" maxlength="3" value="{{ old('clinic_zip3') }}" />
                     -
                     <input name="clinic_zip4" type="text" class="form-control form-control--small" maxlength="4" value="{{ old('clinic_zip4') }}" />
@@ -98,7 +98,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_address1">住所 (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_address1">住所 <span class="note_required">※</span></label></td><span class="note_required">※</span>
                   <td>
                     <input name="clinic_address1" type="text" id="clinic_address1" class="form-control" value="{{ old('clinic_address1') }}" />
                     <span class="error-input">@if ($errors->first('clinic_address1')) {!! $errors->first('clinic_address1') !!} @endif</span>
@@ -112,7 +112,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_ownername">院長名 (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_ownername">院長名 <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_ownername" id="clinic_ownername" class="form-control form-control--small" value="{{ old('clinic_ownername') }}" />
                     <span class="error-input">@if ($errors->first('clinic_ownername')) {!! $errors->first('clinic_ownername') !!} @endif</span>

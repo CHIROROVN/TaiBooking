@@ -1,8 +1,8 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-<?php echo "<pre>";print_r($communications);?>
-{!! Form::open(array('route' => ['ortho.patients.communications.edit', $patient->p_id], 'enctype'=>'multipart/form-data')) !!}
+
+{!! Form::open(array('route' => ['ortho.patients.edit', $patient->p_id], 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">

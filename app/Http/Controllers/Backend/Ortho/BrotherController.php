@@ -35,6 +35,53 @@ class BrotherController extends BackendController
         $clsPatient         = new PatientModel();
         $data['brothers']   = $clsBrother->get_all($patient_id);
         $data['patient']    = $clsPatient->get_by_id($patient_id);
+
+        // set relation brother
+        $tmpBrothers    = array();
+        if ( empty($data['brothers']) || count($data['brothers']) == 0 ) {
+            $brothers       = $clsBrother->get_all_me($patient_id);
+            foreach ( $brothers as $key => $item ) {
+                $tmpBrothers[] = $item;
+                switch ( $item->brother_relation ) {
+                    case 1:
+                        if ( $item->p_sex == 1 ) {
+                            $tmpBrothers[$key]->brother_relation = 2;
+                        } else {
+                            $tmpBrothers[$key]->brother_relation = 4;
+                        }
+                        break;
+                    case 2:
+                        if ( $item->p_sex == 1 ) {
+                            $tmpBrothers[$key]->brother_relation = 1;
+                        } else {
+                            $tmpBrothers[$key]->brother_relation = 3;
+                        }
+                        break;
+                    case 3:
+                        if ( $item->p_sex == 1 ) {
+                            $tmpBrothers[$key]->brother_relation = 2;
+                        } else {
+                            $tmpBrothers[$key]->brother_relation = 4;
+                        }
+                        break;
+                    case 4:
+                        if ( $item->p_sex == 1 ) {
+                            $tmpBrothers[$key]->brother_relation = 1;
+                        } else {
+                            $tmpBrothers[$key]->brother_relation = 3;
+                        }
+                        break;
+                    case 5:
+                        $tmpBrothers[$key]->brother_relation = 5;
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+            }
+            $data['brothers']   = $tmpBrothers;
+        }
+
         return view('backend.ortho.patients.brothers.index', $data);
     }
 
@@ -105,7 +152,7 @@ class BrotherController extends BackendController
     {
         $clsBrother                 = new BrotherModel();        
         $dataInsert                 = array(
-            'p_id'                  => Input::get('p_id'),
+            // 'p_id'                  => Input::get('p_id'),
             'p_relation_name'       => Input::get('p_relation_name'),
             'p_relation_id'         => Input::get('p_relation_id'),
             'brother_relation'      => Input::get('brother_relation'),
@@ -121,7 +168,7 @@ class BrotherController extends BackendController
 
         $validator      = Validator::make($dataInsert, $clsBrother->Rules(), $clsBrother->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.patients.brothers.edit', [ $id, $dataInsert['p_id'] ])->withErrors($validator)->withInput();
+            return redirect()->route('ortho.patients.brothers.edit', [ $id, $patient_id ])->withErrors($validator)->withInput();
         }
 
         // update
@@ -132,7 +179,7 @@ class BrotherController extends BackendController
             Session::flash('danger', trans('common.message_edit_danger'));
         }
 
-        return redirect()->route('ortho.patients.brothers.index', [ $dataInsert['p_id'] ]);
+        return redirect()->route('ortho.patients.brothers.index', [ $patient_id ]);
     }
 
     /**

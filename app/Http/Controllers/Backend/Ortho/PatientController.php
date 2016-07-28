@@ -268,6 +268,7 @@ class PatientController extends BackendController
             $tmpInterviews[$interview->patient_id] = $interview;
         }
         $data['interviews'] = $tmpInterviews;
+        
         return view('backend.ortho.patients.detail', $data);
     }
 

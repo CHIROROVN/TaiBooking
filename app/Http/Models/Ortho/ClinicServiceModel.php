@@ -14,7 +14,6 @@ class ClinicServiceModel
     {
         return DB::table($this->table)
                     ->rightJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')
-                    ->where('t1.last_kind', '<>', DELETE)
                     ->where('t_clinic_service.last_kind', '<>', DELETE)
                     ->where('t_clinic_service.clinic_id', '=', $clinic_id)
                     ->orderBy('t1.service_sort_no', 'asc')
@@ -26,7 +25,6 @@ class ClinicServiceModel
         return DB::table($this->table)
                     ->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')
                     ->select('t_clinic_service.*', 't1.service_name')
-                    ->where('t1.last_kind', '<>', DELETE)
                     ->where('t_clinic_service.last_kind', '<>', DELETE)
                     ->where('t_clinic_service.service_id', '=', $service_id)
                     ->orderBy('t_clinic_service.clinic_service_id', 'asc')

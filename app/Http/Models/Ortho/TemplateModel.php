@@ -42,7 +42,6 @@ class TemplateModel
         $db = DB::table($this->table)
                     ->leftJoin('m_booking_template as t1', 't_template.mbt_id', '=', 't1.mbt_id')
                     ->select('t_template.mbt_id', 't1.mbt_name')
-                    ->where('t1.last_kind', '<>', DELETE)
                     ->where('t_template.last_kind', '<>', DELETE);
 
         if ( !empty($template_group_id) ) {

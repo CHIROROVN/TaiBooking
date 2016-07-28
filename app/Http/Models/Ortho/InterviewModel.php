@@ -39,7 +39,6 @@ class InterviewModel
         $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_1st.patient_id', '=', 't1.p_id')
                         ->select('t_1st.*', 't1.p_name')
-                        ->where('t1.last_kind', '<>', DELETE)
                         ->where('t_1st.last_kind', '<>', DELETE)
                         ->orderBy('t_1st.first_id', 'asc')
                         ->get();

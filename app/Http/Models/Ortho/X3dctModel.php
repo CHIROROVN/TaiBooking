@@ -36,7 +36,6 @@ class X3dctModel
                     ->leftJoin('t_patient', 't_3dct.p_id', '=', 't_patient.p_id')
                     ->select('t_3dct.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
                     ->where('t_3dct.p_id', $id_patient)
-                    ->where('t_patient.last_kind', '<>', DELETE)
                     ->where('t_3dct.last_kind', '<>', DELETE)
                     ->orderBy('ct_date', 'asc')
                     ->get();

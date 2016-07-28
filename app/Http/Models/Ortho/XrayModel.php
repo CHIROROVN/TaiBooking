@@ -33,9 +33,7 @@ class XrayModel
                     ->rightJoin('t_patient as t1', 't_xray.p_id', '=', 't1.p_id')
                     ->leftJoin('t_3dct as t2', 't1.p_id', '=', 't2.p_id')
                     ->select('t_xray.*', 't1.p_id as p_patient_id', 't1.p_no', 't1.p_name', 't1.p_name_kana', 't1.p_sex', 't1.p_birthday', 't2.ct_date')
-                    ->where('t_xray.last_kind', '<>', DELETE)
-                    ->where('t1.last_kind', '<>', DELETE)
-                    ->where('t2.last_kind', '<>', DELETE);
+                    ->where('t_xray.last_kind', '<>', DELETE);
 
         // s_p_id
         if( !empty($where['s_p_id']) )
@@ -233,8 +231,6 @@ class XrayModel
                     ->leftJoin('m_clinic', 't_xray.xray_place', '=', 'm_clinic.clinic_id')
                     ->select('t_xray.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday', 'm_clinic.clinic_name')
                     ->where('t_xray.p_id', $id_patient)
-                    ->where('t_patient.last_kind', '<>', DELETE)
-                    ->where('m_clinic.last_kind', '<>', DELETE)
                     ->where('t_xray.last_kind', '<>', DELETE)
                     ->get();
 
@@ -261,7 +257,6 @@ class XrayModel
         $results = DB::table($this->table)
                         ->leftJoin('t_patient', 't_xray.p_id', '=', 't_patient.p_id')
                         ->select('t_xray.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday', 't_patient.p_dr')
-                        ->where('t_patient.last_kind', '<>', DELETE)
                         ->where('t_xray.last_kind', '<>', DELETE)
                         ->where('xray_id', $id)
                         ->first();

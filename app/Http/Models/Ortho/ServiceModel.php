@@ -75,7 +75,6 @@ class ServiceModel
     public function get_clinic_service(){
       return DB::table($this->table)
                             ->rightJoin('t_clinic_service')
-                            ->where('t_clinic_service.last_kind', '<>', DELETE)
                             ->where('last_kind', '<>', DELETE)
                             ->orderBy('service_sort_no', 'asc')
                             ->get();

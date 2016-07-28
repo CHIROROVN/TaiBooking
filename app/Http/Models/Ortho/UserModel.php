@@ -62,7 +62,6 @@ class UserModel
         $db = DB::table($this->table)
                     ->leftJoin('m_belong as t1', 'm_users.u_belong', '=', 't1.belong_id')
                     ->select('id', 'u_name')
-                    ->where('t1.last_kind', '<>', DELETE)
                     ->where('m_users.last_kind', '<>', DELETE)
                     ->whereIn('t1.belong_kind', $belong_kind)
                     ->get();
@@ -102,9 +101,6 @@ class UserModel
                     ->leftJoin('m_belong as t1', 'm_users.u_belong', '=', 't1.belong_id')
                     ->select('id', 'u_name')
                     ->where('m_users.last_kind', '<>', DELETE)
-                    ->where('t1.last_kind', '<>', DELETE)
-                    ->where('ts1.last_kind', '<>', DELETE)
-                    //->where('ts1.u_id', '=', 'm_users.id')
                     ->whereIn('t1.belong_kind', $belong_kind)
                     ->get();
     }

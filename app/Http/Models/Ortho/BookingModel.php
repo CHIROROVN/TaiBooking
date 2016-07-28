@@ -174,7 +174,6 @@ class BookingModel
         $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->select('t_booking.*', 't1.p_name')
-                        ->where('t1.last_kind', '<>', DELETE)
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_group_id', $booking_group_id)
                         ->orderBy('t_booking.booking_id', 'asc')

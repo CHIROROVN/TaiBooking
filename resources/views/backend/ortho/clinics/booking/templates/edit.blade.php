@@ -284,7 +284,7 @@
                     selectFactility = facilityIdNew;
                   }
                   tdObj = $('#td-' + selectFactility + '-' + value.time);
-                  fullValue = selectFactility + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
+                  fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
                   setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
                 } else {
                   setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);

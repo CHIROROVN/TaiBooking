@@ -374,6 +374,8 @@ class BookingTemplateController extends BackendController
             }
         }
 
+
+
         if ( empty(Input::get('s_mbt_id')) ) {
             $templates = array();
         }
@@ -390,6 +392,10 @@ class BookingTemplateController extends BackendController
             }
         }
         $data['arr_templates']       = $arr_templates;
+
+        // echo '<pre>';
+        // print_r($templates);
+        // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_template_daily', $data);
     }

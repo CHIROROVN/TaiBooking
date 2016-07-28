@@ -12,21 +12,21 @@
                   <td colspan="2" class="col-title"><label for="clinic_name">医院名 <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_name" id="clinic_name" class="form-control" value="{{ $clinic->clinic_name }}" />
-                    <span class="error-input">@if ($errors->first('clinic_name')) {!! $errors->first('clinic_name') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_name')) ※{!! $errors->first('clinic_name') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" class="col-title"><label for="clinic_name_yomi">医院名よみ <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_name_yomi" id="clinic_name_yomi " class="form-control" value="{{ $clinic->clinic_name_yomi }}" />
-                    <span class="error-input">@if ($errors->first('clinic_name_yomi')) {!! $errors->first('clinic_name_yomi') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_name_yomi')) ※{!! $errors->first('clinic_name_yomi') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_display_name">（表示用）医院名 (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_display_name">（表示用）医院名 <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_display_name" id="clinic_display_name " class="form-control" value="{{ $clinic->clinic_display_name }}" />
-                    <span class="error-input">@if ($errors->first('clinic_display_name')) {!! $errors->first('clinic_display_name') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_display_name')) ※{!! $errors->first('clinic_display_name') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
@@ -93,36 +93,36 @@
                   <td><input name="clinic_zip3" type="text" id="clinic_zip3" class="form-control form-control--small" maxlength="3" value="{{ $clinic->clinic_zip3 }}" />
                     -
                     <input name="clinic_zip4" type="text" class="form-control form-control--small" maxlength="4" value="{{ $clinic->clinic_zip4 }}" />
-                    <span class="error-input">@if ($errors->first('clinic_zip3')) {!! $errors->first('clinic_zip3') !!} @endif</span>
-                    <span class="error-input">@if ($errors->first('clinic_zip4')) {!! $errors->first('clinic_zip4') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_zip3')) ※{!! $errors->first('clinic_zip3') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_zip4')) ※{!! $errors->first('clinic_zip4') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" class="col-title"><label for="clinic_address1">住所 <span class="note_required">※</span></label></td>
                   <td>
                     <input name="clinic_address1" type="text" id="clinic_address1" class="form-control" value="{{ $clinic->clinic_address1 }}" />
-                    <span class="error-input">@if ($errors->first('clinic_address1')) {!! $errors->first('clinic_address1') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_address1')) ※{!! $errors->first('clinic_address1') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" class="col-title"><label for="clinic_address2">住所（ビル名等）</label></td>
                   <td>
                     <input name="clinic_address2" type="text" id="clinic_address2" class="form-control" value="{{ $clinic->clinic_address2 }}" />
-                    <span class="error-input">@if ($errors->first('clinic_address2')) {!! $errors->first('clinic_address2') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_address2')) ※{!! $errors->first('clinic_address2') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" class="col-title"><label for="clinic_ownername">院長名 <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_ownername" id="clinic_ownername" class="form-control form-control--small" value="{{ $clinic->clinic_ownername }}" />
-                    <span class="error-input">@if ($errors->first('clinic_ownername')) {!! $errors->first('clinic_ownername') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_ownername')) ※{!! $errors->first('clinic_ownername') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2" class="col-title"><label for="clinic_tel">TEL <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_tel" id="clinic_tel" class="form-control form-control--small" value="{{ $clinic->clinic_tel }}" />
-                    <span class="error-input">@if ($errors->first('clinic_tel')) {!! $errors->first('clinic_tel') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_tel')) ※{!! $errors->first('clinic_tel') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>
@@ -134,10 +134,10 @@
                   <td><input type="text" name="clinic_fax" id="clinic_fax" class="form-control form-control--small" value="{{ $clinic->clinic_fax }}" /></td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_email">E-mail (*)</label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_email">E-mail <span class="note_required">※</span></label></td>
                   <td>
                     <input type="text" name="clinic_email" id="clinic_email" class="form-control form-control--small" value="{{ $clinic->clinic_email }}" />
-                    <span class="error-input">@if ($errors->first('clinic_email')) {!! $errors->first('clinic_email') !!} @endif</span>
+                    <span class="error-input">@if ($errors->first('clinic_email')) ※{!! $errors->first('clinic_email') !!} @endif</span>
                   </td>
                 </tr>
                 <tr>

@@ -15,9 +15,9 @@
               <td class="col-title"><label for="p_no">カルテNo</label></td>
               <td>
                 @if ( old('p_no') )
-                <input type="text" name="p_no" id="p_no" class="form-control" value="{{ old('p_no') }}" />
+                <input type="text" name="p_no" id="p_no" class="form-control" maxlength="8" value="{{ old('p_no') }}" />
                 @else
-                <input type="text" name="p_no" id="p_no" class="form-control" value="{{ $patient->p_no }}" />
+                <input type="text" name="p_no" id="p_no" class="form-control" maxlength="8" value="{{ $patient->p_no }}" />
                 @endif
                 
                 <span class="error-input">@if ($errors->first('p_no')) {!! $errors->first('p_no') !!} @endif</span>

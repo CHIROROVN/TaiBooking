@@ -104,9 +104,9 @@ class BelongController extends BackendController
         );
 
         if ( $clsBelong->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_edit_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_edit_danger'));
         }
         return redirect()->route('ortho.belongs.index');
     }
@@ -124,9 +124,9 @@ class BelongController extends BackendController
             'last_user'         => Auth::user()->id
         );
         if ( $clsBelong->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_delete_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_delete_danger'));
         }
         return redirect()->route('ortho.belongs.index');
     }

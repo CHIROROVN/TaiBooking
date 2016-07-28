@@ -13,7 +13,7 @@
             <tr>
               <td class="col-title"><label for="p_no">カルテNo</label></td>
               <td>
-                <input type="text" name="p_no" id="p_no" class="form-control" value="{{ old('p_no') }}" />
+                <input type="text" name="p_no" id="p_no" maxlength="8" class="form-control" value="{{ old('p_no') }}" />
                 <span class="error-input">@if ($errors->first('p_no')) {!! $errors->first('p_no') !!} @endif</span>
               </td>
             </tr>
@@ -93,7 +93,7 @@
 
             <!-- p_family_dr -->
             <tr>
-              <td class="col-title"><label for="p_family_dr">かかりつけ <span class="note_required">※</span></label></td>
+              <td class="col-title"><label for="p_family_dr">かかりつけ</label></td>
               <td>
                 <input type="text" name="p_family_dr" id="p_family_dr" class="form-control" value="{{ old('p_family_dr') }}" />
                 <span class="error-input">@if ($errors->first('p_family_dr')) ※{!! $errors->first('p_family_dr') !!} @endif</span>
@@ -228,7 +228,7 @@
 
             <!-- p_tel -->
             <tr>
-              <td class="col-title"><label for="p_tel">TEL</label></td>
+              <td class="col-title"><label for="p_tel">TEL <span class="note_required">※</span></label></td>
               <td>
                 <input class="form-control" name="p_tel" value="{{ old('p_tel') }}" type="text" id="p_tel" />
                 <span class="error-input">@if ($errors->first('p_tel')) ※{!! $errors->first('p_tel') !!} @endif</span>

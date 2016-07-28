@@ -70,7 +70,19 @@
                 </tr>
                 <tr>
                   <td class="col-title">予約ステータス</td>
-                  <td>@if($bookings[0]->booking_status == 1) 通常 @endif</td>
+                  <td>
+                      @if ( $bookings[0]->booking_status == 1 )
+                      通常
+                      @elseif ( $bookings[0]->booking_status == 2 )
+                      「TEL待ち」です
+                      @elseif ( $bookings[0]->booking_status == 3 )
+                      「リコール」です→ <?php echo (empty($bookings[0]->booking_recall_ym)) ? '' : date('Y-m', strtotime($bookings[0]->booking_recall_ym)); ?>
+                      @elseif ( $bookings[0]->booking_status == 4 )
+                      未作成技工物TEL待ち
+                      @elseif ( $bookings[0]->booking_status == 5 )
+                      作成済み技工物キャンセル
+                      @endif
+                  </td>
                 </tr>
                 <tr>
                   <td class="col-title">備考</td>
@@ -218,7 +230,19 @@
                 </tr>
                 <tr>
                   <td class="col-title">予約ステータス</td>
-                  <td>@if($bookings[1]->booking_status == 1) 通常 @endif</td>
+                  <td>
+                      @if ( $bookings[1]->booking_status == 1 )
+                      通常
+                      @elseif ( $bookings[1]->booking_status == 2 )
+                      「TEL待ち」です
+                      @elseif ( $bookings[1]->booking_status == 3 )
+                      「リコール」です→ <?php echo (empty($bookings[1]->booking_recall_ym)) ? '' : date('Y-m', strtotime($bookings[1]->booking_recall_ym)); ?>
+                      @elseif ( $bookings[1]->booking_status == 4 )
+                      未作成技工物TEL待ち
+                      @elseif ( $bookings[1]->booking_status == 5 )
+                      作成済み技工物キャンセル
+                      @endif
+                  </td>
                 </tr>
                 <tr>
                   <td class="col-title">備考</td>
@@ -301,7 +325,6 @@
               @endif
             </table>
           </div>
-
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">

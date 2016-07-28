@@ -136,7 +136,7 @@ class BookingTemplateController extends BackendController
      * 
      */
     public function postEdit($clinic_id, $id)
-    {exit;
+    {
         $clsMbt                     = new BookingTemplateModel();
         $clsTemplate                = new TemplateModel();
         $dataUpdate = array(

@@ -775,7 +775,6 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.booking_change', $data);
     }
 
-
     public function postChangeDate($id)
     {
         $date                           = Input::get('booking_date');

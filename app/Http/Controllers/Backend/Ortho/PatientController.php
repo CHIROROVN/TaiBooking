@@ -276,8 +276,8 @@ class PatientController extends BackendController
      * Patient Booking List
     */
     public function bookingList($p_id){
-        $clsBooking             = new BookingModel();
-        $data['bookings']       = $clsBooking->getBookByPatientID($p_id);
+        $clsBooking                 = new BookingModel();
+        $data['bookings']           = $clsBooking->getBookByPatientID($p_id);
         $clsUser                    = new UserModel();
         $data['doctors']            = $clsUser->get_list_users([1]);
         $data['hys']                = $clsUser->get_list_users([2,3]);

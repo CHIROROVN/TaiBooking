@@ -14,6 +14,7 @@ use Input;
 use Validator;
 use Session;
 
+
 class AreaController extends BackendController
 {
     public function __construct()

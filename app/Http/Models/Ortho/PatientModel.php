@@ -104,8 +104,6 @@ class PatientModel
                         ->leftJoin('m_users', 't_patient.p_dr', '=', 'm_users.id')
                         ->leftJoin('m_clinic', 't_patient.p_hos', '=', 'm_clinic.clinic_id')
                         ->select('t_patient.*', 'm_users.u_name', 'm_clinic.clinic_name')
-                        // ->where('m_users.last_kind', '<>', DELETE)
-                        // ->where('m_clinic.last_kind', '<>', DELETE)
                         ->where('t_patient.last_kind', '<>', DELETE)
                         ->where('p_id', $id)
                         ->first();

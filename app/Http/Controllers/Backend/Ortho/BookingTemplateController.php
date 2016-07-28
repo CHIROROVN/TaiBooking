@@ -353,7 +353,7 @@ class BookingTemplateController extends BackendController
         
         $arrServices                = array();
         foreach ( $services as $service ) {
-            $arrServices[$service->clinic_service_id] = $service;
+            $arrServices[$service->service_id] = $service;
         }
 
         $data['services']           = $arrServices;
@@ -365,10 +365,10 @@ class BookingTemplateController extends BackendController
         if ( !empty($templateBookings) ) {
             $templates          = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
             foreach ( $templates as $key => $template ) {
-                $templates[$key]->clinic_service_id = $templateBookings->clinic_service_id;
-                if ( $template->service_1 == -1 && $template->service_1_kind == 2 ) {
-                    $templates[$key]->clinic_service_id = $template->service_1;
-                }
+                $templates[$key]->clinic_service_id = $template->service_1;
+                // if ( $template->service_1 == -1 && $template->service_1_kind == 2 ) {
+                //     $templates[$key]->clinic_service_id = $template->service_1;
+                // }
                 $templates[$key]->template_group_id = $templateBookings->template_group_id;
                 $templates[$key]->booking_start_time = sprintf("%04d", $template->booking_start_time);
             }
@@ -394,7 +394,7 @@ class BookingTemplateController extends BackendController
         $data['arr_templates']       = $arr_templates;
 
         // echo '<pre>';
-        // print_r($templates);
+        // print_r($data['services']);
         // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_template_daily', $data);

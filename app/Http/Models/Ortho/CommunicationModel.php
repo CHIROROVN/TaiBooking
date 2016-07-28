@@ -29,6 +29,7 @@ class CommunicationModel
                         ->leftJoin('m_users', 't_com.u_id', '=', 'm_users.id')
                         ->select('t_com.*', 'm_users.u_name')
                         ->where('p_id', $patient_id)
+                        ->where('m_users.last_kind', '<>', DELETE)
                         ->where('t_com.last_kind', '<>', DELETE);
 
         $db = $results->orderBy('com_title', 'asc')->get();

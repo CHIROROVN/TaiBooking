@@ -109,6 +109,14 @@ class BookingTemplateController extends BackendController
         $data['facilitys_popup']    = $clsFacility->getAll($clinic_id, 1);
         $services                   = $clsClinicService->getAll($clinic_id);
         $data['times']              = Config::get('constants.TIME');
+
+        $service_available          = $clsService->service_available();
+
+        echo "<pre>";
+        print_r($service_available);die;
+
+
+
         $arrServices                = array();
         foreach ( $services as $service ) {
             $arrServices[$service->clinic_service_id] = $service;
@@ -307,7 +315,6 @@ class BookingTemplateController extends BackendController
                         $s_mbt_id = $groupName->mbt_id;
                     }
                 }
-
             }
 
             if(count($booking))
@@ -341,17 +348,21 @@ class BookingTemplateController extends BackendController
         $clsBookingTemplate         = new BookingTemplateModel();
         $clsClinic                  = new ClinicModel();
         $clsBooking                 = new BookingModel();
+
+        $service_available          = $clsService->service_available();
+
         $data['clinic']             = $clsClinic->get_by_id(Input::get('clinic_id'));
         $data['facilitys']          = $clsFacility->getAll(@$data['clinic']->clinic_id);
         $data['facilitys_popup']    = $clsFacility->getAll(@$data['clinic']->clinic_id, 1);
-        $services                   = $clsClinicService->getAll(@$data['clinic']->clinic_id);
+        $services                   = $clsClinicService->getAll(@$data['clinic']->clinic_id, $service_available);
         $data['times']              = Config::get('constants.TIME');
         $data['booking_templates']  = $clsBookingTemplate->get_list();
-
+        
         $arrServices                = array();
         foreach ( $services as $service ) {
             $arrServices[$service->clinic_service_id] = $service;
         }
+
         $data['services']           = $arrServices;
 
         // $templates                  = $clsTemplate->get_all(Input::get('s_mbt_id'));

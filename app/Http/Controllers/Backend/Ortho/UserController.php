@@ -166,9 +166,9 @@ class UserController extends BackendController
         }
 
         if ( $clsUser->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_edit_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_edit_danger'));
         }
 
         return redirect()->route('ortho.users.index');
@@ -190,9 +190,9 @@ class UserController extends BackendController
         );
         
         if ( $clsUser->update($id, $dataUpdate) ) {
-            Session::flash('success', trans('common.message_regist_success'));
+            Session::flash('success', trans('common.message_delete_success'));
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
+            Session::flash('danger', trans('common.message_delete_danger'));
         }
 
         return redirect()->route('ortho.users.index');

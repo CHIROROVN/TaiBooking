@@ -31,6 +31,8 @@ class ShiftModel
                     ->leftJoin('m_users as t1', 't_shift.u_id', '=', 't1.id')
                     ->leftJoin('m_clinic as t2', 't_shift.clinic_id', '=', 't2.clinic_id')
                     ->select('t_shift.*', 't1.u_name', 't1.u_name_display', 't2.clinic_name', 't2.clinic_display_name')
+                    ->where('t1.last_kind', '<>', DELETE)
+                    ->where('t2.last_kind', '<>', DELETE)
                     ->where('t_shift.last_kind', '<>', DELETE);
 
         // where
@@ -54,6 +56,8 @@ class ShiftModel
                     ->leftJoin('m_users as t2', 't_shift.u_id', '=', 't2.id')
                     ->leftJoin('m_belong as t1', 't2.u_belong', '=', 't1.belong_id')
                     ->select('t_shift.*', 'u_name')
+                    ->where('t2.last_kind', '<>', DELETE)
+                    ->where('t1.last_kind', '<>', DELETE)
                     ->where('t_shift.last_kind', '<>', DELETE)
                     ->whereIn('t1.belong_kind', $belong_kind);
         if ( !empty($date) ) {
@@ -138,6 +142,8 @@ class ShiftModel
                     ->leftJoin('m_users as t2', 't_shift.u_id', '=', 't2.id')
                     ->leftJoin('m_belong as t1', 't2.u_belong', '=', 't1.belong_id')
                     ->select('id', 'u_name')
+                    ->where('t2.last_kind', '<>', DELETE)
+                    ->where('t1.last_kind', '<>', DELETE)
                     ->where('t_shift.last_kind', '<>', DELETE)
                     ->distinct('id')
                     ->whereIn('t1.belong_kind', $belong_kind);

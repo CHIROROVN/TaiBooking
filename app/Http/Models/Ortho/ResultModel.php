@@ -41,6 +41,7 @@ class ResultModel
                         ->leftJoin('m_clinic as t1', 't_result.clinic_id', '=', 't1.clinic_id')
                         ->select('t_result.*', 't1.clinic_name')
                         ->where('t_result.patient_id', $patient_id)
+                        ->where('t1.last_kind', '<>', DELETE)
                         ->where('t_result.last_kind', '<>', DELETE)
                         ->orderBy('t_result.result_date', 'asc')
                         ->get();

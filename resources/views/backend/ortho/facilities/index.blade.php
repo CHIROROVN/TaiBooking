@@ -65,7 +65,7 @@
         </table>
         <div class="row margin-bottom" style="display: block; float: right;">
           <div class="col-md-12 text-right">
-            <input type="submit" name="button" value="地域の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{ route('ortho.belongs.regist') }}'">
+            <input type="submit" name="button" value="設備の新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.facilities.regist',$clinic_id)}}'">
           </div>
         </div>
       </div>    

@@ -65,50 +65,52 @@
         <tr><td colspan="5" align="center">{{ trans('common.no_data_correspond') }}</td></tr>
         @else
           @foreach ( $bookeds as $booked )
-          <tr>
-            <td>{{ $booked->booking_date }}</td>
-            <td>{{ $booked->p_no }}　{{ $booked->p_name }}@if(!empty($booked->p_name_kana))（{{ $booked->p_name_kana }}）@endif</td>
-            <td>
-              @if ( $booked->service_1_kind == 1 )
-              {{ @$services[$booked->service_1] }}
-              @elseif ( $booked->service_1_kind == 2 )
-              {{ @$treatment1s[$booked->service_1] }}
-              @endif
+            @if ( !empty($booked->patient_id) )
+            <tr>
+              <td>{{ $booked->booking_date }}</td>
+              <td>{{ $booked->p_no }}　{{ $booked->p_name }}@if(!empty($booked->p_name_kana))（{{ $booked->p_name_kana }}）@endif</td>
+              <td>
+                @if ( $booked->service_1_kind == 1 )
+                {{ @$services[$booked->service_1] }}
+                @elseif ( $booked->service_1_kind == 2 )
+                {{ @$treatment1s[$booked->service_1] }}
+                @endif
 
-              @if ( !empty($booked->service_2) )
-                @if ( $booked->service_2_kind == 1 )
-                  @if( !empty($services[$booked->service_2]) )
-                    ,{{ @$services[$booked->service_2] }}
-                  @endif
-                @elseif ( $booked->service_2_kind == 2 )
-                  @if( !empty($services[$booked->service_2]) )
-                    ,{{ @$treatment1s[$booked->service_2] }}
+                @if ( !empty($booked->service_2) )
+                  @if ( $booked->service_2_kind == 1 )
+                    @if( !empty($services[$booked->service_2]) )
+                      ,{{ @$services[$booked->service_2] }}
+                    @endif
+                  @elseif ( $booked->service_2_kind == 2 )
+                    @if( !empty($services[$booked->service_2]) )
+                      ,{{ @$treatment1s[$booked->service_2] }}
+                    @endif
                   @endif
                 @endif
-              @endif
-            </td>
-            <td align="center">
-              <!-- regist -->
-              @if ( isset($results[$booked->patient_id]) )
-              <input onclick="location.href='{{ route('ortho.bookeds.history.regist', [$booked->booking_id]) }}'" value="登録" type="button" class="btn btn-xs btn-page" disabled="">
-              @else
-              <input onclick="location.href='{{ route('ortho.bookeds.history.regist', [$booked->booking_id]) }}'" value="登録" type="button" class="btn btn-xs btn-page">
-              @endif
-              <!-- edit -->
-              @if ( isset($results[$booked->patient_id]) )
-              <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page">
-              @else
-              <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page" disabled="">
-              @endif
-            </td>
-            <td align="center">
-              @if ( $booked->booking_date > $currentDay )
-              {{ formatDate($booked->booking_date) }} {{ splitHourMin($booked->booking_start_time) }}～{{ toTime($booked->booking_start_time, $booked->booking_total_time) }}
-              @else
-              <input onclick="location.href='{{ route('ortho.bookings.booking_search') }}'" value="次回予約" type="button" class="btn btn-xs btn-page">
-              @endif
-            </td>
-          </tr>
+              </td>
+              <td align="center">
+                <!-- regist -->
+                @if ( isset($results[$booked->patient_id]) )
+                <input onclick="location.href='{{ route('ortho.bookeds.history.regist', [$booked->booking_id]) }}'" value="登録" type="button" class="btn btn-xs btn-page" disabled="">
+                @else
+                <input onclick="location.href='{{ route('ortho.bookeds.history.regist', [$booked->booking_id]) }}'" value="登録" type="button" class="btn btn-xs btn-page">
+                @endif
+                <!-- edit -->
+                @if ( isset($results[$booked->patient_id]) )
+                <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page">
+                @else
+                <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page" disabled="">
+                @endif
+              </td>
+              <td align="center">
+                @if ( $booked->booking_date > $currentDay )
+                {{ formatDate($booked->booking_date) }} {{ splitHourMin($booked->booking_start_time) }}～{{ toTime($booked->booking_start_time, $booked->booking_total_time) }}
+                @else
+                <input onclick="location.href='{{ route('ortho.bookings.booking_search') }}'" value="次回予約" type="button" class="btn btn-xs btn-page">
+                @endif
+              </td>
+            </tr>
+            @endif
           @endforeach
         @endif
       </tbody>

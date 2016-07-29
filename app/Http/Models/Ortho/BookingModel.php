@@ -73,6 +73,7 @@ class BookingModel
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
                         ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
+                        ->whereNotNull('t_booking.patient_id')
                         ->where('t_booking.last_kind', '<>', DELETE);
 
         // where u_id

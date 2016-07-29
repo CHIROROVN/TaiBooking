@@ -142,7 +142,7 @@
                 </tr>
                 <tr>
                   <td colspan="2" class="col-title"><label for="clinic_memo">メモ</label></td>
-                  <td><textarea name="clinic_memo" cols="50" rows="3" id="clinic_memo" class="form-control">{{ old('clinic_memo') }}</textarea></td>
+                  <td><textarea name="clinic_memo" cols="50" rows="3" id="clinic_memo" class="form-control form-control-area">{{ old('clinic_memo') }}</textarea></td>
                 </tr>
               </table>
               <table class="table table-bordered">

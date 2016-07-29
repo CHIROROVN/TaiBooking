@@ -30,7 +30,7 @@
               <td>
                 <?php $pt = showPatient($booking->patient_id);?>
                 <input type="hidden" name="p_id" id="p_id" value="{{@$pt['p_id']}}">
-                <input type="text" name="patient" id="patient" class="input-text-mid" style="width: 250px;" value="{{@$pt['patient']}}"> &nbsp;
+                <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{@$pt['patient']}}"> &nbsp;
                 <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.1st.regist',$booking->booking_id)}}'">
               </td>
             </tr>

@@ -43,7 +43,13 @@
           <select name="s_booking_date" id="s_booking_date" class="form-control" style="margin-left: -19px;">
             <option value="">----日</option>
             @foreach ( $dates as $date )
-            <option value="{{ $date }}" @if($s_booking_date == $date) selected="" @endif>{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              @if ( $s_booking_date == $date )
+              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              @elseif ( date('Y-m-d') == $date )
+              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              @else
+              <option value="{{ $date }}">{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              @endif
             @endforeach
           </select>
 

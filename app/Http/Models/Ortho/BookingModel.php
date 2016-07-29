@@ -81,8 +81,8 @@ class BookingModel
             $db = $db->where('t_booking.doctor_id', $where['u_id']);
         }
         // where booking_date
-        if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
-            $db = $db->where('t_booking.booking_date', $where['booking_date']);
+        if ( isset($where['s_booking_date']) && !empty($where['s_booking_date']) ) {
+            $db = $db->where('t_booking.booking_date', $where['s_booking_date']);
         }
 
         // where clinic_id

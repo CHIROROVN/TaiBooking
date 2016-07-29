@@ -335,4 +335,10 @@ class PatientController extends BackendController
         }
         echo json_encode($tmp);
     }
+
+    public static function patientByID($p_id){
+        $clsPatient       = new PatientModel();
+        $patient          = $clsPatient->get_patient_by_id($p_id);
+        return $patient;
+    }
 }

@@ -13,3 +13,7 @@ span.note_required{
 .content-page .table input[type="password"],.content-page .table select,.content-page .table textarea {
   width: 60%;
 }
+
+input.input-text-mid{
+    width:250px !important;
+}

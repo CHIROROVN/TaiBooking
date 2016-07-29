@@ -32,7 +32,7 @@
           <td class="col-title" align="center">患者名ふりがな</td>
           <td class="col-title" align="center">性別</td>
           <td class="col-title" align="center">生年月日</td>
-          <td class="col-title" align="center">放射線照射録の表示</td>
+          <td class="col-title" align="center" style="min-width: 150px;">放射線照射録の表示</td>
         </tr>
         @if( empty($xrays) || count($xrays) == 0)
           <tr>
@@ -90,3 +90,4 @@
   </div>    
 </section>
 @endsection
+

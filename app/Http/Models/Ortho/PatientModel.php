@@ -118,7 +118,7 @@ class PatientModel
     public function get_patient_by_id($id)
     {
         return DB::table($this->table)
-                        ->select('t_patient.p_id', 't_patient.p_no', 't_patient.p_name')
+                        ->select('t_patient.p_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana')
                         ->where('last_kind', '<>', DELETE)
                         ->where('p_id', '=', $id)
                         ->first();

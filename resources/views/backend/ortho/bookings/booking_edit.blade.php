@@ -26,8 +26,10 @@
           <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>
-              <td>{{$booking->p_no}} {{$booking->p_name}}</td>
-            </tr>
+              <td>
+                  <?php $pt = showPatient($booking->patient_id);?>
+                  {{@$pt['patient']}}
+              </tr>
             <tr>
               <td class="col-title"><label for="textNameRead">予約日時</label></td>
               <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}

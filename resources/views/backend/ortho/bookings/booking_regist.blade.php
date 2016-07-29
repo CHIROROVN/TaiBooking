@@ -1,6 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
+
 {!! Form::open( ['id' => 'frmBookingRegist', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.bookings.booking.regist', $booking_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
 <section id="page">
       <div class="container">
@@ -26,7 +27,10 @@
           <table class="table table-bordered">
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>
-              <td>{{$booking->p_no}} {{$booking->p_name}} &nbsp;
+              <td>
+                <?php $pt = showPatient($booking->patient_id);?>
+                <input type="hidden" name="p_id" id="p_id" value="{{@$pt['p_id']}}">
+                <input type="text" name="patient" id="patient" class="input-text-mid" style="width: 250px;" value="{{@$pt['patient']}}"> &nbsp;
                 <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.1st.regist',$booking->booking_id)}}'">
               </td>
             </tr>
@@ -220,6 +224,42 @@
 <script type="text/javascript">
   $('#booking_recall_ym').click(function() {
     $('#recalling').attr("checked", "checked");
+  });
+</script>
+
+<script>
+  $(document).ready(function(){
+    $( "#patient" ).autocomplete({
+      minLength: 0,
+      // source: pamphlets,
+      source: function(request, response){
+          var key = $('#patient').val();
+          $.ajax({
+              url: "{{ route('ortho.patients.autocomplete.patient') }}",
+              beforeSend: function(){
+              },
+              method: "GET",
+              data: { key: key },
+              dataType: "json",
+              success: function(data) {
+                response(data);
+              },
+          });
+      },
+      focus: function( event, ui ) {
+        $( "#patient" ).val( ui.item.label );
+        return true;
+      },
+      select: function( event, ui ) {
+        $( "#patient" ).val( ui.item.label );
+        $( "#p_id" ).val( ui.item.value );
+        return false;
+      }
+    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+          .append( "<a>" + item.desc + "</a>" )
+          .appendTo( ul );
+    };
   });
 </script>
 @endsection

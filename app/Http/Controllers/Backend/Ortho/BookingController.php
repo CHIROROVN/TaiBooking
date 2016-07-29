@@ -429,6 +429,7 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
         $booking                    = $clsBooking->get_by_id($id);
+
         $service_1 = $service_1_kind = $service_2 = $service_2_kind = null;
 
         if(!empty(Input::get('service_1'))){
@@ -461,6 +462,7 @@ class BookingController extends BackendController
 
         $dataInput = array(
                 // 'facility_id'               => Input::get('facility_id'),
+                'patient_id'                => Input::get('p_id', null),
                 'doctor_id'                 => Input::get('doctor_id', null),
                 'hygienist_id'              => Input::get('hygienist_id', null),
                 'equipment_id'              => Input::get('equipment_id', null),

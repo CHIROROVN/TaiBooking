@@ -191,7 +191,7 @@ class BookingModel
         return $results;
     }
 
-    public function get_for_update_treatment1($booking_date, $clinic_id, $facility_id, $bookingEndTime, $begingStartTime)
+    public function get_for_update_treatment1($booking_date, $clinic_id, $facility_id, $begingStartTime, $bookingEndTime)
     {
         $results = DB::table($this->table)
                         ->where('last_kind', '<>', DELETE)
@@ -200,9 +200,8 @@ class BookingModel
                         ->where('facility_id', $facility_id)
                         ->where('service_1', -1)
                         ->where('service_1_kind', 2)
-                        ->where('booking_start_time', '<', $bookingEndTime)
                         ->where('booking_start_time', '>=', $begingStartTime)
-                        ->whereNull('booking_group_id')
+                        ->where('booking_start_time', '<=', $bookingEndTime)
                         ->orderBy('booking_start_time', 'asc')
                         ->get();
         return $results;

@@ -114,7 +114,7 @@
                 </select>
               </td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td class="col-title"><label for="service_2">業務内容-2</label></td>
               <td>
                 <select name="service_2" id="service_2" class="form-control">
@@ -135,7 +135,7 @@
                   </optgroup>
                 </select>
               </td>
-            </tr>
+            </tr> -->
             <tr>
               <td class="col-title"><label for="inspection_id">検査</label></td>
               <td>

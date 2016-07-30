@@ -481,9 +481,27 @@ class BookingController extends BackendController
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
             );
+        if ( $dataInput['patient_id'] == 0 ) {
+            $dataInput['patient_id'] = null;
+        }
+        if ( $dataInput['doctor_id'] == 0 ) {
+            $dataInput['doctor_id'] = null;
+        }
+        if ( $dataInput['hygienist_id'] == 0 ) {
+            $dataInput['hygienist_id'] = null;
+        }
+        if ( $dataInput['equipment_id'] == 0 ) {
+            $dataInput['equipment_id'] = null;
+        }
+        if ( $dataInput['inspection_id'] == 0 ) {
+            $dataInput['inspection_id'] = null;
+        }
+        if ( $dataInput['insurance_id'] == 0 ) {
+            $dataInput['insurance_id'] = null;
+        }
 
         // check total time of treatment1
-        if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
+        // if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
             if ( $service_1_kind == 2 ) {
                 $treatment1                 = $clsTreatment1->get_by_id($service_1);
                 $bookingStartTime           = $booking->booking_start_time;
@@ -492,27 +510,28 @@ class BookingController extends BackendController
                 $mm = hourMin2Min($bookingStartTime);
                 $mm = $mm + $treatment1TotalTime;
                 $hhmmBookingEndTime = (int)min2HourMin($mm);
+                // echo $hhmmBookingEndTime;die;
 
-                $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $hhmmBookingEndTime, $bookingStartTime);
+                $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
                 // update treatment1
                 $status = true;
                 if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                     // not ok check
-                    $tmpArr = array();
-                    for ( $i = 0; $i < $treatment1TotalTime/15; $i++ ) {
-                        $tmpMin = $i * 15;
-                        $tmpMin2 = hourMin2Min($bookingStartTime) + $tmpMin;
-                        $tmpArr[] = min2HourMin($tmpMin2);
-                    }
+                    // $tmpArr = array();
+                    // for ( $i = 0; $i < $treatment1TotalTime/15; $i++ ) {
+                    //     $tmpMin = $i * 15;
+                    //     $tmpMin2 = hourMin2Min($bookingStartTime) + $tmpMin;
+                    //     $tmpArr[] = min2HourMin($tmpMin2);
+                    // }
 
                     // if not continuity => NO UPDATE
-                    foreach ( $listBookingUpdate as $item ) {
-                        if ( !in_array($item->booking_start_time, $tmpArr) ) {
-                            Session::flash('danger', trans('common.message_regist_danger'));
-                            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
-                        }
-                    }
+                    // foreach ( $listBookingUpdate as $item ) {
+                    //     if ( !in_array($item->booking_start_time, $tmpArr) ) {
+                    //         Session::flash('danger', trans('common.message_regist_danger'));
+                    //         return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+                    //     }
+                    // }
 
                     // ok update
                     $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
@@ -544,27 +563,28 @@ class BookingController extends BackendController
             } elseif ( $service_2_kind == 2 ) {
                 // do something
             }
-        }
+        // }
 
         // update group
-        $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        // $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        // $status = true;
+        // foreach ( $bookingGroups as $bookingGroup ) {
+        //     if ( $bookingGroup->service_1 == -1 && $bookingGroup->service_1_kind == 2 ) {
+        //         if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
+        //             $status = false;
+        //         }
+        //     }
+        // }
 
-        $status = true;
-        foreach ( $bookingGroups as $bookingGroup ) {
-            if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
-                $status = false;
-            }
-        }
-
-        if ( $status ) {
-            $where                          = array();
-            $where['clinic_id']             = $booking->clinic_id;
-            $where['cur']                   = $booking->booking_date;
-            return redirect()->route('ortho.bookings.booking.daily', $where);
-        } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
-            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
-        }
+        // if ( $status ) {
+        //     $where                          = array();
+        //     $where['clinic_id']             = $booking->clinic_id;
+        //     $where['cur']                   = $booking->booking_date;
+        //     return redirect()->route('ortho.bookings.booking.daily', $where);
+        // } else {
+        //     Session::flash('danger', trans('common.message_regist_danger'));
+        //     return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+        // }
     }
 
     public function get1stRegist($id)
@@ -680,9 +700,27 @@ class BookingController extends BackendController
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_user'                 => Auth::user()->id
         );
+        if ( $dataInput['patient_id'] == 0 ) {
+            $dataInput['patient_id'] = null;
+        }
+        if ( $dataInput['doctor_id'] == 0 ) {
+            $dataInput['doctor_id'] = null;
+        }
+        if ( $dataInput['hygienist_id'] == 0 ) {
+            $dataInput['hygienist_id'] = null;
+        }
+        if ( $dataInput['equipment_id'] == 0 ) {
+            $dataInput['equipment_id'] = null;
+        }
+        if ( $dataInput['inspection_id'] == 0 ) {
+            $dataInput['inspection_id'] = null;
+        }
+        if ( $dataInput['insurance_id'] == 0 ) {
+            $dataInput['insurance_id'] = null;
+        }
 
         // check total time of treatment1
-        if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
+        // if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
             if ( $service_1_kind == 2 ) {
                 $treatment1                 = $clsTreatment1->get_by_id($service_1);
                 $bookingStartTime           = $booking->booking_start_time;
@@ -692,26 +730,26 @@ class BookingController extends BackendController
                 $mm = $mm + $treatment1TotalTime;
                 $hhmmBookingEndTime = (int)min2HourMin($mm);
 
-                $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $hhmmBookingEndTime, $bookingStartTime);
+                $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
                 // update treatment1
                 $status = true;
                 if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                     // not ok check
-                    $tmpArr = array();
-                    for ( $i = 0; $i < $treatment1TotalTime/15; $i++ ) {
-                        $tmpMin = $i * 15;
-                        $tmpMin2 = hourMin2Min($bookingStartTime) + $tmpMin;
-                        $tmpArr[] = min2HourMin($tmpMin2);
-                    }
+                    // $tmpArr = array();
+                    // for ( $i = 0; $i < $treatment1TotalTime/15; $i++ ) {
+                    //     $tmpMin = $i * 15;
+                    //     $tmpMin2 = hourMin2Min($bookingStartTime) + $tmpMin;
+                    //     $tmpArr[] = min2HourMin($tmpMin2);
+                    // }
 
                     // if not continuity => NO UPDATE
-                    foreach ( $listBookingUpdate as $item ) {
-                        if ( !in_array($item->booking_start_time, $tmpArr) ) {
-                            Session::flash('danger', trans('common.message_regist_danger'));
-                            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
-                        }
-                    }
+                    // foreach ( $listBookingUpdate as $item ) {
+                    //     if ( !in_array($item->booking_start_time, $tmpArr) ) {
+                    //         Session::flash('danger', trans('common.message_regist_danger'));
+                    //         return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+                    //     }
+                    // }
 
                     // ok update
                     $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
@@ -736,24 +774,24 @@ class BookingController extends BackendController
             } elseif ( $service_2_kind == 2 ) {
                 // do something
             }
-        }
+        // }
 
         // update group
-        $status = true;
-        $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
-        foreach ( $bookingGroups as $bookingGroup ) {
-            if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
-                $status = false;
-            }
-        }
+        // $status = true;
+        // $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        // foreach ( $bookingGroups as $bookingGroup ) {
+        //     if ( !$clsBooking->update($bookingGroup->booking_id, $dataInput) ) {
+        //         $status = false;
+        //     }
+        // }
 
-        if ( $status ) {
-            Session::flash('success', trans('common.message_regist_success'));
-            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
-        } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
-            return redirect()->route('ortho.bookings.booking.1st.regist', [$id]);
-        }
+        // if ( $status ) {
+        //     Session::flash('success', trans('common.message_regist_success'));
+        //     return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+        // } else {
+        //     Session::flash('danger', trans('common.message_regist_danger'));
+        //     return redirect()->route('ortho.bookings.booking.1st.regist', [$id]);
+        // }
     }
 
     public function getChangeDate($id)

@@ -243,19 +243,22 @@
                         $initTreatment = '';
 
                         $tDoctor = '';
-                        if(!empty($list_doctors[$booking->doctor_id]))
+                        if(isset($list_doctors[$booking->doctor_id]) && !empty($list_doctors[$booking->doctor_id]) && $list_doctors[$booking->doctor_id] != '') {
                           $initTreatment = '';
                           $tDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+                        }
 
                         $tPatient = '';
-                        if(!empty($booking->p_name))
+                        if(!empty($booking->p_name)) {
                           $initTreatment = '';
                           $tPatient = $booking->p_name . '<br />';
+                        }
 
                         $tTreatment = '';
-                        if(!empty($treatment1s[$booking->service_1]))
+                        if(!empty($treatment1s[$booking->service_1])) {
                           $initTreatment = '';
                           $tTreatment = @$treatment1s[$booking->service_1];
+                        }
 
                       }else{
                         $tDoctor = '';

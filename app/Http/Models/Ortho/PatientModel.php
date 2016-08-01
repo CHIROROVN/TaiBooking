@@ -109,7 +109,6 @@ class PatientModel
                         ->first();
     }
 
-
     public function update($id, $data)
     {
         return DB::table($this->table)->where('p_id', $id)->update($data);

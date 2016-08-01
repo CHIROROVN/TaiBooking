@@ -326,8 +326,10 @@ class BookingController extends BackendController
     {
         $clsBooking                 = new BookingModel();
         $booking                    = $clsBooking->get_by_id($id);
-        $bookingGroups              = $clsBooking->get_by_group($booking->booking_group_id);
-
+        $arr_gid                    = array();
+        $arr_gid[]                  = $booking->booking_group_id;
+        $bookingGroups              = $clsBooking->get_by_group($arr_gid);
+        
         $service_1 = $service_1_kind = $service_2 = $service_2_kind = '';
 
         if(!empty(Input::get('service_1'))){
@@ -344,19 +346,19 @@ class BookingController extends BackendController
             }
         }
 
-        if(!empty(Input::get('service_2'))){
-            $s2k = explode('_', Input::get('service_2'));
-            $s2_kind            = str_split($s2k[1], 3);
-            $service_2_kind     = $s2_kind[1];
+        // if(!empty(Input::get('service_2'))){
+        //     $s2k = explode('_', Input::get('service_2'));
+        //     $s2_kind            = str_split($s2k[1], 3);
+        //     $service_2_kind     = $s2_kind[1];
 
-            if($service_2_kind == 2){
-                $st2 = explode('#', $s2k[0]);
-                $service_2      = $st2[0];
-                $treatment_time_2 = $st2[1];
-            }else{
-                $service_2      = $s2k[0];
-            }
-        }
+        //     if($service_2_kind == 2){
+        //         $st2 = explode('#', $s2k[0]);
+        //         $service_2      = $st2[0];
+        //         $treatment_time_2 = $st2[1];
+        //     }else{
+        //         $service_2      = $s2k[0];
+        //     }
+        // }
 
         $dataInput = array(
                 // 'facility_id'               => Input::get('facility_id'),
@@ -365,8 +367,8 @@ class BookingController extends BackendController
                 'equipment_id'              => Input::get('equipment_id'),
                 'service_1'                 => $service_1,
                 'service_1_kind'            => $service_1_kind,
-                'service_2'                 => $service_2,
-                'service_2_kind'            => $service_2_kind,
+                // 'service_2'                 => $service_2,
+                // 'service_2_kind'            => $service_2_kind,
                 'inspection_id'             => Input::get('inspection_id'),
                 'insurance_id'              => Input::get('insurance_id'),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,

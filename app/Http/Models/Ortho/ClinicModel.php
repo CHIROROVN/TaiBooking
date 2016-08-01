@@ -47,7 +47,8 @@ class ClinicModel
             $db = $db->where('clinic_name', 'LIKE', '%' . $keyword . '%');
         }
 
-        $db = $db->orderBy('clinic_name_yomi', 'asc');
+        // $db = $db->orderBy('clinic_name_yomi', 'asc');
+        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")').'DESC');
         if($pagination)
         {
             $results = $db->simplePaginate(PAGINATION); //simplePaginate, paginate
@@ -56,17 +57,14 @@ class ClinicModel
         {
             $results = $db->get();
         }
-        
         return $results;
     }
-
 
     public function get_for_select()
     {
         $db = DB::table($this->table)->select('clinic_id', 'clinic_name')->where('last_kind', '<>', DELETE)->get();
         return $db;
     }
-
 
     public function insert($data)
     {

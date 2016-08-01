@@ -449,7 +449,7 @@ class BookingTemplateController extends BackendController
 
                 $where = array(
                     'booking_start_time'    => $template->template_time,
-                    // 'booking_group_id'      => $template->template_group_id,
+                    'booking_group_id'      => $data['booking_group_id'],
                     'booking_date'          => Input::get('date'),
                     'clinic_id'             => Input::get('clinic_id'),
                     'facility_id'           => $template->facility_id,

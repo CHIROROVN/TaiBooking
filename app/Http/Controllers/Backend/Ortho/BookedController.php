@@ -34,15 +34,27 @@ class BookedController extends BackendController
     {
         // where
         $data                       = array();
+        $clsClinic                  = new ClinicModel();
+        $data['clinics']            = $clsClinic->get_for_select();
+
         $data['s_clinic_id']        = Input::get('s_clinic_id');
         $data['s_booking_date']     = Input::get('s_booking_date');
+        if ( empty($data['s_clinic_id']) ) {
+            foreach ( $data['clinics'] as $item ) {
+                if ( $item->clinic_name == 'たい矯正歯科' ) {
+                    $data['s_clinic_id'] = $item->clinic_id;
+                }
+            }
+        }
+        if ( empty($data['s_booking_date']) ) {
+            $data['s_booking_date'] = date('Y-m-d');
+        }
+
         $clsBooking                 = new BookingModel();
-        $clsClinic                  = new ClinicModel();
         $clsService                 = new ServiceModel();
         $clsTreatment1              = new Treatment1Model();
         $clsResult                  = new ResultModel();
         $data['bookeds']            = $clsBooking->getBookedHistory($data);
-        $data['clinics']            = $clsClinic->get_for_select();
         $data['services']           = $clsService->get_list();
         $data['results']            = $clsResult->get_list();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();

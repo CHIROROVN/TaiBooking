@@ -174,7 +174,6 @@ class ClinicController extends BackendController
             $dataInsert = array(
                 'area_id'           => $areas,
                 'clinic_id'         => $clinic_id,
-
                 'last_date'         => date('y-m-d H:i:s'),
                 'last_kind'         => INSERT,
                 'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],

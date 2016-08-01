@@ -168,10 +168,6 @@ class XrayController extends BackendController
         $data['xray']               = $clsXray->get_by_id($id);
         $data['users']              = $clsUser->get_for_select();
         $data['patient']            = $clsPatient->get_by_id($patient_id);
-        // echo '<pre>';
-        // print_r($data['patient']);
-        // echo '</pre>';die;
-
         return view('backend.ortho.xrays.edit', $data);
     }
 
@@ -293,7 +289,6 @@ class XrayController extends BackendController
 
         return view('backend.ortho.xrays.detail', $data);
     }
-
 
     public function getSearch()
     {

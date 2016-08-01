@@ -47,8 +47,9 @@ class ClinicModel
             $db = $db->where('clinic_name', 'LIKE', '%' . $keyword . '%');
         }
 
-        // $db = $db->orderBy('clinic_name_yomi', 'asc');
-        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")').'DESC');
+        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc');
+        $db = $db->orderBy('clinic_name_yomi', 'asc');
+
         if($pagination)
         {
             $results = $db->simplePaginate(PAGINATION); //simplePaginate, paginate
@@ -62,7 +63,12 @@ class ClinicModel
 
     public function get_for_select()
     {
-        $db = DB::table($this->table)->select('clinic_id', 'clinic_name')->where('last_kind', '<>', DELETE)->get();
+        $db = DB::table($this->table)
+                        ->select('clinic_id', 'clinic_name')
+                        ->where('last_kind', '<>', DELETE)
+                        ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                        ->orderBy('clinic_name_yomi', 'asc')
+                        ->get();
         return $db;
     }
 
@@ -94,7 +100,8 @@ class ClinicModel
     public function get_list_clinic(){
         return DB::table($this->table)
                                 ->where('last_kind', '<>', DELETE)
-                                ->orderBy('clinic_name', 'ASC')
+                                ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                                ->orderBy('clinic_name_yomi', 'asc')
                                 ->lists('clinic_name', 'clinic_id');
     }
 }

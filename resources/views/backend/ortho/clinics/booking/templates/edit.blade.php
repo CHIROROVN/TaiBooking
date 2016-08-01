@@ -276,7 +276,6 @@
               console.log(result);
 
               // delete old value box
-              console.log(tdObjOld.find('.td-content').attr('data-group'));
               var tmpGroupOld = tdObjOld.find('.td-content').attr('data-group');
               $('.td-content').each(function(index, el) {
                 if ( $(this).attr('data-group') == tmpGroupOld ) {

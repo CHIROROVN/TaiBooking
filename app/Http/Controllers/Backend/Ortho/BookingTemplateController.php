@@ -8,6 +8,8 @@ use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
+
+
 use Request;
 use Auth;
 use Form;
@@ -276,6 +278,7 @@ class BookingTemplateController extends BackendController
         $clsClinic              = new ClinicModel();
         $clsBooking             = new BookingModel();
         $clsTemplate            = new TemplateModel();
+        $clsBookingTemplate     = new BookingTemplateModel();
         $data['clinics']        = $clsClinic->get_list_clinic();
 
         $bookings               = $clsBooking->get_all_groupby($data);
@@ -295,13 +298,11 @@ class BookingTemplateController extends BackendController
             } else {
                 $tmp = null;
                 $tmp = explode('_', $booking->booking_group_id);
-                if ( !empty($tmp) && count($tmp) >= 5 ) {
-                    $groupNameTmp = $tmp[0] . '_' . $tmp[1] . '_' . $tmp[2] . '_' . $tmp[3] . '_' . $tmp[4];
-                    $groupName = $clsTemplate->get_template_name($groupNameTmp);
-                    if ( !empty($groupName) ) {
-                        $groupNameFinish = $groupName->mbt_name;
-                        $s_mbt_id = $groupName->mbt_id;
-                    }
+                $groupNameTmp = $tmp[0];
+                $groupName = $clsBookingTemplate->get_by_id($groupNameTmp);
+                if ( !empty($groupName) ) {
+                    $groupNameFinish = $groupName->mbt_name;
+                    $s_mbt_id = $groupName->mbt_id;
                 }
             }
 
@@ -357,13 +358,17 @@ class BookingTemplateController extends BackendController
         $templateBookings           = $clsTemplate->get_by_mbtId($data['s_mbt_id']);
 
         if ( !empty($templateBookings) ) {
-            $templates          = $clsBooking->get_by_group($templateBookings->template_group_id . '_' . $data['date']);
+            // $tmpTemplateGroupId = array();
+            // foreach ( $templateBookings as $item ) {
+            //     $tmpTemplateGroupId[] = $item->template_group_id . '_' . $data['date'];
+            // }
+            $templates          = $clsBooking->get_by_group(array($data['s_mbt_id'] . '_' . $data['date']));
             foreach ( $templates as $key => $template ) {
                 $templates[$key]->clinic_service_id = $template->service_1;
                 // if ( $template->service_1 == -1 && $template->service_1_kind == 2 ) {
                 //     $templates[$key]->clinic_service_id = $template->service_1;
                 // }
-                $templates[$key]->template_group_id = $templateBookings->template_group_id;
+                $templates[$key]->template_group_id = $templateBookings[0]->template_group_id;
                 $templates[$key]->booking_start_time = sprintf("%04d", $template->booking_start_time);
             }
         }
@@ -388,7 +393,9 @@ class BookingTemplateController extends BackendController
         $data['arr_templates']       = $arr_templates;
 
         // echo '<pre>';
-        // print_r($data['services']);
+        // print_r($templateBookings);
+        // print_r('<br>'.$templateBookings[0]->template_group_id . '_' . $data['date'].'---'.count($templates));
+        // print_r($templates);
         // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_template_daily', $data);
@@ -432,7 +439,7 @@ class BookingTemplateController extends BackendController
                 if ( empty($template->template_group_id) ) {
                     $data['booking_group_id']       = null;
                 } else {
-                    $data['booking_group_id']       = $template->template_group_id . '_' . Input::get('date');
+                    $data['booking_group_id']       = $template->mbt_id . '_' . Input::get('date');
                 }
 
                 $data['last_date']              = date('y-m-d H:i:s');

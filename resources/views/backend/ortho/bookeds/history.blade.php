@@ -41,14 +41,14 @@
           </select>
           　
           <select name="s_booking_date" id="s_booking_date" class="form-control" style="margin-left: -19px;">
-            <option value="">----日</option>
+            <option value="">----</option>
             @foreach ( $dates as $date )
               @if ( $s_booking_date == $date )
-              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
               @elseif ( date('Y-m-d') == $date )
-              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
               @else
-              <option value="{{ $date }}">{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+              <option value="{{ $date }}">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
               @endif
             @endforeach
           </select>

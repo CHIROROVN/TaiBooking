@@ -13,14 +13,14 @@
             <td class="col-title" colspan="2"><label for="result_date">日付</label></td>
             <td>
               <select name="result_date" id="result_date" class="form-control form-control--medium">
-                <option value="">----日</option>
+                <option value="">----</option>
                 @foreach ( $dates as $date )
                   @if ( old('result_date') )
                   <option value="{{ $date }}" @if(old('result_date') == $date) selected="" @endif>{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
                   @elseif ( !empty($result->result_date) )
-                  <option value="{{ $date }}" @if($result->result_date == $date) selected="" @endif>{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+                  <option value="{{ $date }}" @if($result->result_date == $date) selected="" @endif>{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
                   @else
-                  <option value="{{ $date }}" @if($currentDay == $date) selected="" @endif>{{ formatDate($date, '/') }}({{ DayJp($date) }}日)</option>
+                  <option value="{{ $date }}" @if($currentDay == $date) selected="" @endif>{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
                   @endif
                 @endforeach
               </select>

@@ -95,6 +95,9 @@
             <tr>
               <td class="col-title"><label for="service_1">業務内容-1</label></td>
               <td>
+                @if ( $booking->service_1_kind == 1 )
+                {{ @$services[$booking->service_1] }}
+                @else
                 <select name="service_1" id="service_1" class="form-control">
                   <option value="">▼選択</option>
                   <optgroup label="業務名">
@@ -112,6 +115,7 @@
                         @endif
                   </optgroup>
                 </select>
+                @endif
               </td>
             </tr>
             <!-- <tr>

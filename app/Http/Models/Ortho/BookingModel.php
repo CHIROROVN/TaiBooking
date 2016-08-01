@@ -175,6 +175,16 @@ class BookingModel
         return $results;
     }
 
+    public function get_by_childGroup($booking_group_id = array())
+    {
+        $results = DB::table($this->table)
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->whereIn('t_booking.booking_group_id', $booking_group_id)
+                        ->orderBy('t_booking.booking_start_time', 'asc')
+                        ->get();
+        return $results;
+    }
+
     public function get_by_clinic($clinic_id, $date = null)
     {
         $results = DB::table($this->table)
@@ -277,6 +287,11 @@ class BookingModel
     public function update($id, $data)
     {
     	return DB::table($this->table)->where('booking_id', $id)->update($data);
+    }
+
+    public function update_by_bookingDate($booking_date, $data)
+    {
+        return DB::table($this->table)->where('booking_date', $booking_date)->where('t_booking.last_kind', '<>', DELETE)->update($data);
     }
 
     public function get_list1_list(){

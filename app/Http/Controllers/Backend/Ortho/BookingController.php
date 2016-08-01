@@ -293,6 +293,7 @@ class BookingController extends BackendController
 
     public function getEdit($id)
     {
+        $data                       = array();
         $clsBooking                 = new BookingModel();
         if($clsBooking->checkExistID($id)){
             $data                       = array();
@@ -406,6 +407,7 @@ class BookingController extends BackendController
 
     public function getRegist($id)
     {
+        $data                       = array();
         $clsBooking                 = new BookingModel();
         if($clsBooking->checkExistID($id)){
             $data                       = array();
@@ -438,6 +440,7 @@ class BookingController extends BackendController
     {
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
+        $clsTemplate                = new TemplateModel();
         $booking                    = $clsBooking->get_by_id($id);
 
         $service_1 = $service_1_kind = $service_2 = $service_2_kind = null;
@@ -478,8 +481,8 @@ class BookingController extends BackendController
                 'equipment_id'              => Input::get('equipment_id', null),
                 'service_1'                 => $service_1,
                 'service_1_kind'            => $service_1_kind,
-                'service_2'                 => $service_2,
-                'service_2_kind'            => $service_2_kind,
+                // 'service_2'                 => $service_2,
+                // 'service_2_kind'            => $service_2_kind,
                 'inspection_id'             => Input::get('inspection_id', null),
                 'insurance_id'              => Input::get('insurance_id', null),
                 'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
@@ -510,8 +513,37 @@ class BookingController extends BackendController
             $dataInput['insurance_id'] = null;
         }
 
+        if ( $booking->service_1_kind == 1 ) {
+            unset($dataInput['service_1']);
+            unset($dataInput['service_1_kind']);
+        }
+
         // check total time of treatment1
+        $status = true;
+        // update orther service_1
+        // $bookingStartTimeGroup = $booking->booking_start_time;
+        // $tmp = $booking->booking_group_id;
+        // $tmp = explode('_', $tmp);
+        // $bookingTmbId = $tmp[0];
+        // $templateGroup = $clsTemplate->get_by_mbtId_templateTime($bookingTmbId, $bookingStartTimeGroup);
+        // $templateGroupIds = $clsTemplate->get_by_templateGroupId($templateGroup->template_group_id);
+        // // $tmp
+        // $tmpArrBookings = $clsBooking->get_by_childGroup([$bookingTmbId . '_' . $tmp[1]]);
+        // foreach ( $tmpArrBookings as $item ) {
+        //     if ( $item-> ) {
+
+        //     }
+        // }
+
+        // echo '<pre>';
+        // print_r($templateGroupIds);
+        // print_r($tmpArrBookings);
+        // echo '</pre>';die;
+
+        // update service_1
         if ( $service_1_kind == 2 ) {
+            // no change service
+
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
             $treatment1TotalTime        = $treatment1->treatment_time;
@@ -523,7 +555,6 @@ class BookingController extends BackendController
             $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
             // update treatment1
-            $status = true;
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                 // ok update
                 // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
@@ -532,35 +563,35 @@ class BookingController extends BackendController
                         if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
                             $status = false;
                         }
-                    } elseif ( $key < (count($listBookingUpdate) - 1) ) {
+                    } else {
                         if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
                             $status = false;
                         }
                     }
                 }
-
-                if ( $status ) {
-                    Session::flash('success', trans('common.message_regist_success'));
-                    $where                          = array();
-                    $where['clinic_id']             = @Session::get('where_booking')['clinic_id'];
-                    $where['doctor_id']             = @Session::get('where_booking')['doctor_id'];
-                    $where['hygienist_id']          = @Session::get('where_booking')['hygienist_id'];
-                    $where['booking_date']          = @Session::get('where_booking')['booking_date'];
-                    $where['week_later']            = @Session::get('where_booking')['week_later'];
-                    $where['clinic_service_name']   = @Session::get('where_booking')['clinic_service_name'];
-                    return redirect()->route('ortho.bookings.booking.result.list', $where);
-                } else {
-                    Session::flash('danger', trans('common.message_regist_danger'));
-                    return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
-                }
             } else {
                 Session::flash('danger', trans('common.message_regist_danger'));
                 return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
             }
+        }
 
-        } elseif ( $service_1_kind == 1 ) {
-             Session::flash('danger', trans('common.message_regist_danger'));
-                return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+        if ( !$clsBooking->update($id, $dataInput) ) {
+            $status = false;
+        }
+        
+        if ( $status ) {
+            Session::flash('success', trans('common.message_regist_success'));
+            $where                          = array();
+            $where['clinic_id']             = @Session::get('where_booking')['clinic_id'];
+            $where['doctor_id']             = @Session::get('where_booking')['doctor_id'];
+            $where['hygienist_id']          = @Session::get('where_booking')['hygienist_id'];
+            $where['booking_date']          = @Session::get('where_booking')['booking_date'];
+            $where['week_later']            = @Session::get('where_booking')['week_later'];
+            $where['clinic_service_name']   = @Session::get('where_booking')['clinic_service_name'];
+            return redirect()->route('ortho.bookings.booking.result.list', $where);
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
         }
     }
 
@@ -699,6 +730,12 @@ class BookingController extends BackendController
 
         // check total time of treatment1
         if ( $service_1_kind == 2 ) {
+            // no change service
+            // if ( $booking-> ) {
+
+            // } else {
+
+            // }
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
             $treatment1TotalTime        = $treatment1->treatment_time;
@@ -738,8 +775,9 @@ class BookingController extends BackendController
                 return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
             }
 
-        } elseif ( $service_2_kind == 2 ) {
-            // do something
+        } else {
+            Session::flash('danger', trans('common.message_regist_danger'));
+            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
         }
     }
 

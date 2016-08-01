@@ -72,6 +72,16 @@ class TemplateModel
         return DB::table($this->table)->where('mbt_id', $mbtId)->groupBy('template_group_id')->where('t_template.last_kind', '<>', DELETE)->get();
     }
 
+    public function get_by_templateGroupId($templateGroupId)
+    {
+        return DB::table($this->table)->where('template_group_id', $templateGroupId)->orderBy('template_time')->where('t_template.last_kind', '<>', DELETE)->get();
+    }
+
+    public function get_by_mbtId_templateTime($mbtId, $templateTime)
+    {
+        return DB::table($this->table)->where('mbt_id', $mbtId)->where('template_time', $templateTime)->orderBy('template_time')->where('t_template.last_kind', '<>', DELETE)->first();
+    }
+
     public function update($id, $data)
     {
         return DB::table($this->table)->where('template_id', $id)->update($data);

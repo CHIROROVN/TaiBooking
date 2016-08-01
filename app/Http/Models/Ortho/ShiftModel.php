@@ -144,4 +144,11 @@ class ShiftModel
        return $db->get();
     }
 
+
+    public function autoInsert($data)
+    {
+        $results = DB::table($this->table)->insert($data);
+        return $results;
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Models\Ortho\ShiftModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\BelongModel;
 use App\Http\Models\Ortho\UserModel;
+
 use Auth;
 use Form;
 use Html;
@@ -272,4 +273,31 @@ class ShiftController extends BackendController
 
         echo json_encode(array('status', $status));
     }
+
+
+    // public function getAutoInsert()
+    // {
+    //     $clsShift = new ShiftModel();
+    //     $clsUser = new UserModel();
+    //     $users = $clsUser->get_human();
+    //     $data = array(
+    //         'clinic_id'         => 13,
+
+    //         'last_kind'         => INSERT,
+    //         'last_ipadrs'       => CLIENT_IP_ADRS,
+    //         'last_user'         => Auth::user()->id,
+    //         'last_date'         => date('y-m-d H:i:s'),
+    //     );
+
+    //     foreach ( $users as $user ) {
+    //         for ( $i = 1; $i <= 31; $i++ ) {
+    //             $data['u_id']          = $user->id;
+    //             $data['shift_date']    = '2016-08-' . sprintf("%02d", $i);
+
+    //             $clsShift->autoInsert($data);
+    //         }
+    //     }
+
+    //     echo 'ok';die;
+    // }
 }

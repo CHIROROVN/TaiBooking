@@ -373,8 +373,6 @@ class BookingTemplateController extends BackendController
             }
         }
 
-
-
         if ( empty(Input::get('s_mbt_id')) ) {
             $templates = array();
         }
@@ -391,12 +389,6 @@ class BookingTemplateController extends BackendController
             }
         }
         $data['arr_templates']       = $arr_templates;
-
-        // echo '<pre>';
-        // print_r($templateBookings);
-        // print_r('<br>'.$templateBookings[0]->template_group_id . '_' . $data['date'].'---'.count($templates));
-        // print_r($templates);
-        // echo '</pre>';die;
 
         return view('backend.ortho.bookings.booking_template_daily', $data);
     }
@@ -417,6 +409,11 @@ class BookingTemplateController extends BackendController
         }
 
         if ( count($templates) ) {
+            // delete old data
+            $dataDelete['last_kind']              = DELETE;
+            $clsBooking->update_by_bookingDate(Input::get('date'), $dataDelete);
+
+            // insert new data
             foreach ( $templates as $template ) {
                 // insert to table "t_booking"
                 $data                           = array();
@@ -447,17 +444,7 @@ class BookingTemplateController extends BackendController
                 $data['last_ipadrs']            = $_SERVER['REMOTE_ADDR'];
                 $data['last_user']              = Auth::user()->id;
 
-                $where = array(
-                    'booking_start_time'    => $template->template_time,
-                    'booking_group_id'      => $data['booking_group_id'],
-                    'booking_date'          => Input::get('date'),
-                    'clinic_id'             => Input::get('clinic_id'),
-                    'facility_id'           => $template->facility_id,
-                );
-                $booking = $clsBooking->checkExist($where);
-                if ( empty($booking) ) {
-                    $clsBooking->insert($data);
-                }
+                $clsBooking->insert($data);
             }
         }
 

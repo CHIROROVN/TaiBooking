@@ -293,29 +293,33 @@ class BookingController extends BackendController
 
     public function getEdit($id)
     {
-        $data                       = array();
         $clsBooking                 = new BookingModel();
-        $clsUser                    = new UserModel();
-        $clsClinicService           = new ClinicServiceModel();
-        $clsTreatment1              = new Treatment1Model();
-        $data['booking']            = $clsBooking->get_by_id($id);
-        $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
-        $clsService                 = new ServiceModel();
-        $data['services']           = $clsService->get_list();
-        // $clsTreatment1              = new Treatment1Model();
-        // $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
-        $clsFacility                = new FacilityModel();
-        $data['facilities']         = $clsFacility->list_facility_all();
-        $clsEquipment               = new EquipmentModel();
-        $data['equipments']         = $clsEquipment->get_list();
-        $clsInspection              = new InspectionModel();
-        $data['inspections']        = $clsInspection->get_list();
-        $clsInsurance               = new InsuranceModel();
-        $data['insurances']         = $clsInsurance->get_list();
-        return view('backend.ortho.bookings.booking_edit', $data);
+        if($clsBooking->checkExistID($id)){
+            $data                       = array();
+            $clsUser                    = new UserModel();
+            $clsClinicService           = new ClinicServiceModel();
+            $clsTreatment1              = new Treatment1Model();
+            $data['booking']            = $clsBooking->get_by_id($id);
+            $data['doctors']            = $clsUser->get_by_belong([1]);
+            $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+            $clsService                 = new ServiceModel();
+            $data['services']           = $clsService->get_list();
+            // $clsTreatment1              = new Treatment1Model();
+            // $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+            $clsTreatment1              = new Treatment1Model();
+            $data['treatment1s']        = $clsTreatment1->get_treatment_search();
+            $clsFacility                = new FacilityModel();
+            $data['facilities']         = $clsFacility->list_facility_all();
+            $clsEquipment               = new EquipmentModel();
+            $data['equipments']         = $clsEquipment->get_list();
+            $clsInspection              = new InspectionModel();
+            $data['inspections']        = $clsInspection->get_list();
+            $clsInsurance               = new InsuranceModel();
+            $data['insurances']         = $clsInsurance->get_list();
+            return view('backend.ortho.bookings.booking_edit', $data);
+        }else{
+            return response()->view('errors.404', [], 404);
+        }
     }
 
     public function postEdit($id)
@@ -400,28 +404,32 @@ class BookingController extends BackendController
 
     public function getRegist($id)
     {
-        $data                       = array();
         $clsBooking                 = new BookingModel();
-        $clsUser                    = new UserModel();
-        $clsClinicService           = new ClinicServiceModel();
-        $clsTreatment1              = new Treatment1Model();
-        $data['booking']            = $clsBooking->get_by_id($id);
-        $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hygienists']         = $clsUser->get_by_belong([2,3]);
-        $clsService                 = new ServiceModel();
-        $data['services']           = $clsService->get_list();
-        $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
-        $clsFacility                = new FacilityModel();
-        $data['facilities']         = $clsFacility->list_facility_all();
-        $clsEquipment               = new EquipmentModel();
-        $data['equipments']         = $clsEquipment->get_list();
-        $clsInspection              = new InspectionModel();
-        $data['inspections']        = $clsInspection->get_list();
-        $clsInsurance               = new InsuranceModel();
-        $data['insurances']         = $clsInsurance->get_list();
-        $data['booking_id']         = $id;
-        return view('backend.ortho.bookings.booking_regist', $data);
+        if($clsBooking->checkExistID($id)){
+            $data                       = array();
+            $clsUser                    = new UserModel();
+            $clsClinicService           = new ClinicServiceModel();
+            $clsTreatment1              = new Treatment1Model();
+            $data['booking']            = $clsBooking->get_by_id($id);
+            $data['doctors']            = $clsUser->get_by_belong([1]);
+            $data['hygienists']         = $clsUser->get_by_belong([2,3]);
+            $clsService                 = new ServiceModel();
+            $data['services']           = $clsService->get_list();
+            $clsTreatment1              = new Treatment1Model();
+            $data['treatment1s']        = $clsTreatment1->get_treatment_search();
+            $clsFacility                = new FacilityModel();
+            $data['facilities']         = $clsFacility->list_facility_all();
+            $clsEquipment               = new EquipmentModel();
+            $data['equipments']         = $clsEquipment->get_list();
+            $clsInspection              = new InspectionModel();
+            $data['inspections']        = $clsInspection->get_list();
+            $clsInsurance               = new InsuranceModel();
+            $data['insurances']         = $clsInsurance->get_list();
+            $data['booking_id']         = $id;
+            return view('backend.ortho.bookings.booking_regist', $data);
+        }else{
+            return response()->view('errors.404', [], 404);
+        }
     }
 
     public function postRegist($id)

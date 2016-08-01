@@ -79,12 +79,10 @@ class PatientModel
         return $db;
     }
 
-
     public function get_for_select()
     {
         return DB::table($this->table)->select('p_id', 'p_name')->where('last_kind', '<>', DELETE)->get();
     }
-
 
     public function insert($data)
     {
@@ -126,5 +124,16 @@ class PatientModel
     public function get_max_pid()
     {
         return DB::table($this->table)->max('p_id');
+    }
+
+    public static function checkExistID($id){
+        if (DB::table('t_patient')
+                    ->where('last_kind', '<>', DELETE)
+                    ->where('p_id', '=', $id)
+                    ->exists()) {
+            return $id;
+        }else{
+            return false;
+        }
     }
 }

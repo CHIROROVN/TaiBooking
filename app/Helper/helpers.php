@@ -1,7 +1,7 @@
 <?php
 
 function showPatient($p_id=null){
-	if(!empty($p_id)){
+	if(App\Http\Models\Ortho\PatientModel::checkExistID($p_id)){
 		$patient = App\Http\Controllers\Backend\Ortho\PatientController::patientByID($p_id);
 		$pt = $patient->p_no .' '. $patient->p_name . ' (' . $patient->p_name_kana . ')';
 		$result = ['p_id' => $patient->p_id, 'patient' => $pt];

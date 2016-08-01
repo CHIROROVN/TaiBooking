@@ -452,4 +452,15 @@ class BookingModel
                                 ->limit(2)
                                 ->get();
     }
+
+    public static function checkExistID($id){
+        if (DB::table('t_booking')
+                    ->where('last_kind', '<>', DELETE)
+                    ->where('booking_id', '=', $id)
+                    ->exists()) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

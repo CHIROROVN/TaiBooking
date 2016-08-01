@@ -257,8 +257,8 @@
             $('.' + tdObjOld.find('.td-content').attr('data-group')).each(function(index, el) {
               setClear($(this).parent(), 0);
               setBrow($(this).parent(), 0, '', '');
-              setClear($(this), 0);
-              setBrow($(this), 0, '', '');
+              $(this).attr('class', 'td-content');
+              $(this).attr('data-group', null);
             });
           } else {
             // single
@@ -274,6 +274,19 @@
             data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
             success: function(result){
               console.log(result);
+
+              // delete old value box
+              console.log(tdObjOld.find('.td-content').attr('data-group'));
+              var tmpGroupOld = tdObjOld.find('.td-content').attr('data-group');
+              $('.td-content').each(function(index, el) {
+                if ( $(this).attr('data-group') == tmpGroupOld ) {
+                  setClear($(this).parent(), 0);
+                  setBrow($(this).parent(), 0, '', '');
+                  $(this).attr('class', 'td-content');
+                  $(this).attr('data-group', null);
+                }
+              });
+
               // set color
               $(result.tmpArr).each(function( index, value ) {
                 var tdObj = $('#td-' + value.facility_id + '-' + value.time);
@@ -284,12 +297,12 @@
                     selectFactility = facilityIdNew;
                   }
                   tdObj = $('#td-' + selectFactility + '-' + value.time);
-                  fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
-                  setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
+                  fullValue = selectFactility + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
+                  // setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
+                  setGreen(tdObj, selectFactility, fullValue, serviceTextNew, value.group);
                 } else {
                   setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
                 }
-                
               });
             }
           });

@@ -479,8 +479,8 @@ class BookingController extends BackendController
                 'doctor_id'                 => Input::get('doctor_id', null),
                 'hygienist_id'              => Input::get('hygienist_id', null),
                 'equipment_id'              => Input::get('equipment_id', null),
-                'service_1'                 => $service_1,
-                'service_1_kind'            => $service_1_kind,
+                // 'service_1'                 => $service_1,
+                // 'service_1_kind'            => $service_1_kind,
                 // 'service_2'                 => $service_2,
                 // 'service_2_kind'            => $service_2_kind,
                 'inspection_id'             => Input::get('inspection_id', null),
@@ -513,10 +513,10 @@ class BookingController extends BackendController
             $dataInput['insurance_id'] = null;
         }
 
-        if ( $booking->service_1_kind == 1 ) {
-            unset($dataInput['service_1']);
-            unset($dataInput['service_1_kind']);
-        }
+        // if ( $booking->service_1_kind == 1 ) {
+        //     unset($dataInput['service_1']);
+        //     unset($dataInput['service_1_kind']);
+        // }
 
         // check total time of treatment1
         $status = true;
@@ -540,10 +540,16 @@ class BookingController extends BackendController
         // print_r($tmpArrBookings);
         // echo '</pre>';die;
 
-        // update service_1
-        if ( $service_1_kind == 2 ) {
-            // no change service
+        if ( !$clsBooking->update($id, $dataInput) ) {
+            $status = false;
+        }
 
+        // update service_1
+        $dataInput['service_1'] = $service_1;
+        $dataInput['service_1_kind'] = $service_1_kind;
+        if ( $service_1_kind == 2 ) {
+
+            // no change service
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
             $treatment1TotalTime        = $treatment1->treatment_time;
@@ -558,25 +564,36 @@ class BookingController extends BackendController
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                 // ok update
                 // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
-                foreach ( $listBookingUpdate as $key => $item ) {
-                    if ( count($listBookingUpdate) == 1 ) {
-                        if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
-                            $status = false;
-                        }
-                    } else {
-                        if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
-                            $status = false;
+                // foreach ( $listBookingUpdate as $key => $item ) {
+                // $end0 = count($listBookingUpdate);
+                $end = count($listBookingUpdate) - 1;
+                if ( $end == 0 ) {
+                    $end = 1;
+                }
+                // check continuity
+                $statusContinuity = true;
+
+                if ( $end > 1 ) {
+                    for ( $i = 0; $i < $end ; $i++ ) {
+                        if ( $listBookingUpdate[$i]->booking_start_time + 15 != $listBookingUpdate[$i + 1]->booking_start_time ) {
+                            $statusContinuity = false;
+                            break;
                         }
                     }
                 }
+                
+                if ( $statusContinuity ) {
+                    for ( $i = 0; $i < $end ; $i++ ) {
+                        if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
+                            $status = false;
+                        }
+                    }
+                } else {
+                    $status = false;
+                }
             } else {
-                Session::flash('danger', trans('common.message_regist_danger'));
-                return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+                $status = false;
             }
-        }
-
-        if ( !$clsBooking->update($id, $dataInput) ) {
-            $status = false;
         }
         
         if ( $status ) {

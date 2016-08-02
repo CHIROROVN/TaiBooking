@@ -707,3 +707,7 @@ span.note_required{
   margin-top: -37px;
   margin-bottom: 10px;
 }
+
+.backgroup-while {
+  background-color: white !important;
+}

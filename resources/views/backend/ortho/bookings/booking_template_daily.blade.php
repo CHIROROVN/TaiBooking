@@ -105,12 +105,17 @@
                       $service_id = 0;
                     }
 
-                    $fullValue = $facility_id . '|' . $service_id . '|' . $hour_template.$minute_template. '|' . $arr_templates[$facility_id][$time]->template_group_id;
+                    $fullValue = $facility_id . '|' . $service_id . '|' . $hour_template.$minute_template. '|' . $arr_templates[$facility_id][$time]->booking_childgroup_id;
                     if ( $color === 'brown' ) {
                       $fullValue = null;
                     }
 
-                    $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
+                    $clsNameGroup = $arr_templates[$facility_id][$time]->booking_childgroup_id;
+                    $clsNameDadGroup = $arr_templates[$facility_id][$time]->booking_group_id;
+                    $idBooking = $arr_templates[$facility_id][$time]->booking_id;
+                    if ( empty($clsNameGroup) ) {
+                      $clsNameGroup = $idBooking;
+                    }
                     
                   }
                 ?>
@@ -122,7 +127,7 @@
                       $clsNameGroup = null;
                     }
                   ?>
-                  <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
+                  <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}" data-dad-group="{{ @$clsNameDadGroup }}" data-booking-id="{{ @$idBooking }}">
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                     @endif
@@ -266,11 +271,11 @@
             url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
             type: 'get',
             dataType: 'json',
-            data: { 
-              booking_start_time: tdObjOld.find('.td-content').attr('data-full-time'),
-              booking_group_id: tdObjOld.find('.td-content').attr('data-group') + '_' + '{{ $date }}',
-              booking_date: '{{ $date }}',
-              clinic_id: '{{ @$clinic->clinic_id }}' 
+            data: {
+              booking_group_id: tdObjOld.find('.td-content').attr('data-dad-group'),
+              booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
+              clinic_id: '{{ @$clinic->clinic_id }}',
+              booking_id: tdObjOld.find('.td-content').attr('data-booking-id')
             },
             success: function(result){
               console.log(result);
@@ -288,13 +293,37 @@
           });
         } else {
           // select total sum time clinic service
+          console.log(tdObjOld.find('.td-content').attr('data-dad-group'));
+          console.log(tdObjOld.find('.td-content').attr('data-group'));
+          console.log(facilityIdNew);
+          // console.log(facilityIdOld);
+
           $.ajax({
             url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
             type: 'get',
             dataType: 'json',
-            data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
+            data: {
+              clinic_service_id: serviceIdNew,
+              startTime: dataFullTime,
+              booking_group_id: tdObjOld.find('.td-content').attr('data-dad-group'),
+              booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
+              facility_id: facilityIdNew,
+              clinic_id: '{{ @$clinic->clinic_id }}'
+            },
             success: function(result){
               console.log(result);
+
+              // delete old value box
+              var tmpGroupOld = tdObjOld.find('.td-content').attr('data-group');
+              $('.td-content').each(function(index, el) {
+                if ( $(this).attr('data-group') == tmpGroupOld ) {
+                  setClear($(this).parent(), 0);
+                  setBrow($(this).parent(), 0, '', '');
+                  $(this).attr('class', 'td-content');
+                  $(this).attr('data-group', null);
+                }
+              });
+
               // set color
               $(result.tmpArr).each(function( index, value ) {
                 var tdObj = $('#td-' + value.facility_id + '-' + value.time);
@@ -304,9 +333,9 @@
                   if ( facilityIdNew != 0 ) {
                     selectFactility = facilityIdNew;
                   }
-                  var tdObj = $('#td-' + selectFactility + '-' + value.time);
-                  var fullValue = selectFactility + '|' + -1 + '|' + value.time + '|' + value.group;
-                  setBlue(tdObj, selectFactility, fullValue, '治療', value.group);
+                  tdObj = $('#td-' + selectFactility + '-' + value.time);
+                  fullValue = selectFactility + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
+                  setGreen(tdObj, selectFactility, fullValue, serviceTextNew, value.group);
                 } else {
                   setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
                 }

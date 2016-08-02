@@ -279,7 +279,7 @@ class ShiftController extends BackendController
     // {
     //     $clsShift = new ShiftModel();
     //     $clsUser = new UserModel();
-    //     $users = $clsUser->get_human();
+    //     $users = $clsUser->get_by_belong([1]);
     //     $data = array(
     //         'clinic_id'         => 13,
 

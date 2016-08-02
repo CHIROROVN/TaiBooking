@@ -513,35 +513,17 @@ class BookingController extends BackendController
             $dataInput['insurance_id'] = null;
         }
 
-        // if ( $booking->service_1_kind == 1 ) {
-        //     unset($dataInput['service_1']);
-        //     unset($dataInput['service_1_kind']);
-        // }
-
-        // check total time of treatment1
         $status = true;
-        // update orther service_1
-        // $bookingStartTimeGroup = $booking->booking_start_time;
-        // $tmp = $booking->booking_group_id;
-        // $tmp = explode('_', $tmp);
-        // $bookingTmbId = $tmp[0];
-        // $templateGroup = $clsTemplate->get_by_mbtId_templateTime($bookingTmbId, $bookingStartTimeGroup);
-        // $templateGroupIds = $clsTemplate->get_by_templateGroupId($templateGroup->template_group_id);
-        // // $tmp
-        // $tmpArrBookings = $clsBooking->get_by_childGroup([$bookingTmbId . '_' . $tmp[1]]);
-        // foreach ( $tmpArrBookings as $item ) {
-        //     if ( $item-> ) {
-
-        //     }
-        // }
-
-        // echo '<pre>';
-        // print_r($templateGroupIds);
-        // print_r($tmpArrBookings);
-        // echo '</pre>';die;
-
-        if ( !$clsBooking->update($id, $dataInput) ) {
-            $status = false;
+        // update by child group
+        $whereChildGroups               = array(
+            'booking_group_id'          => $booking->booking_group_id,
+            'booking_childgroup_id'     => $booking->booking_childgroup_id,
+        );
+        $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        foreach ( $bookingChildGroups as $item ) {
+            if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                $status = false;
+            }
         }
 
         // update service_1
@@ -564,8 +546,6 @@ class BookingController extends BackendController
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                 // ok update
                 // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
-                // foreach ( $listBookingUpdate as $key => $item ) {
-                // $end0 = count($listBookingUpdate);
                 $end = count($listBookingUpdate) - 1;
                 if ( $end == 0 ) {
                     $end = 1;

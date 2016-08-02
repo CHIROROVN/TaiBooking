@@ -190,6 +190,7 @@
             </tr>
 
             <!-- check "brown", "green", "blue" color -->
+            <?php $tmpFlag = array() ?>
             @foreach ( $times as $time )
             <?php
               $tmp_arr = explode(':', $time);
@@ -207,8 +208,17 @@
                   // $service_id = 0;
                   // $fullValue = null;
                   $text = '';
+                  $clsBackgroundPatient = ''; //backgroup-while
+                  $iconFlag = '';
 
                   if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
+                    // set flag
+                    if ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
+                      $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                      $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                    } else {
+                      $iconFlag = '';
+                    }
 
                     if ( empty($arr_bookings[$facility_id][$fullTime]->patient_id) ) {
                       $link = route('ortho.bookings.booking.regist', $arr_bookings[$facility_id][$fullTime]->booking_id);
@@ -227,6 +237,10 @@
                       $sPatient = '';
                       if(!empty($booking->p_name))
                         $sPatient = $booking->p_name . '<br />';
+
+                      if ( !empty($sPatient) ) {
+                        $clsBackgroundPatient = 'backgroup-while';
+                      }
 
                       $sService = '';
                       if(!empty($services[$booking->service_1]))
@@ -254,6 +268,10 @@
                           $tPatient = $booking->p_name . '<br />';
                         }
 
+                        if ( !empty($sPatient) ) {
+                          $clsBackgroundPatient = 'backgroup-while';
+                        }
+
                         $tTreatment = '';
                         if(!empty($treatment1s[$booking->service_1])) {
                           $initTreatment = '';
@@ -272,9 +290,9 @@
                 ?>
 
                 <!-- close -->
-                <td align="center" width="50px" class="col-{{ $color }}" id="" width="142px">
+                <td align="center" width="50px" class="col-{{ $color }} {{ $clsBackgroundPatient }}" id="" width="142px">
                   <div class="td-content">
-                    {!! $text !!}
+                    {!! $iconFlag !!} {!! $text !!}
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                     @endif

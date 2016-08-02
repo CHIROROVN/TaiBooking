@@ -343,7 +343,7 @@ class BookingController extends BackendController
         
         $service_1 = $service_1_kind = '';
 
-        if(!empty(Input::get('service_1'))){
+        if(!empty(Input::get('service_1')) && Input::get('service_1') != -1){
             $s1k = explode('_', Input::get('service_1'));
             $s1_kind            = str_split($s1k[1], 3);
             $service_1_kind     = $s1_kind[1];
@@ -429,8 +429,7 @@ class BookingController extends BackendController
         $dataInput['service_1'] = $service_1;
         $dataInput['service_1_kind'] = $service_1_kind;
 
-        if ( $service_1_kind == 2 ) {
-
+        if ( $service_1 > 0 ) {
             // no change service
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
@@ -447,12 +446,8 @@ class BookingController extends BackendController
                 // ok update
                 // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
                 $end = count($listBookingUpdate) - 1;
-                if ( $end == 0 ) {
-                    $end = 1;
-                }
                 // check continuity
                 $statusContinuity = true;
-                // echo $end . '<br>';die;
                 if ( count($listBookingUpdate) > 1 ) {
                     for ( $i = 0; $i < ($end) ; $i++ ) {
                         $mm = hourMin2Min($listBookingUpdate[$i]->booking_start_time) + 15;
@@ -466,20 +461,12 @@ class BookingController extends BackendController
                 }
                 
                 if ( $statusContinuity ) {
-                    if ( count($listBookingUpdate) == 1 ) {
+                    for ( $i = 0; $i < count($listBookingUpdate); $i++ ) {
                         $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                        if ( !$clsBooking->update($listBookingUpdate[0]->booking_id, $dataInput) ) {
+                        if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
                             $status = false;
                         }
-                    } else {
-                        for ( $i = 0; $i < count($listBookingUpdate) - 1 ; $i++ ) {
-                            $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                            if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
-                                $status = false;
-                            }
-                        }
                     }
-                    
                 } else {
                     $status = false;
                 }
@@ -496,10 +483,25 @@ class BookingController extends BackendController
                 } else {
                     $status = false;
                 }
-                // echo '4';die;
+            }
+        } elseif ( Input::get('service_1') == -1 ) {
+            $dataInput['service_1']                     = -1;
+            $dataInput['service_1_kind']                = 2;
+            $dataInput['booking_childgroup_id']         = null;
+            $where                          = array(
+                'booking_group_id'          => $booking->booking_group_id,
+                'booking_childgroup_id'     => $booking->booking_childgroup_id,
+                'clinic_id'                 => $booking->clinic_id,
+            );
+            $listBookingUpdate = $clsBooking->get_where($where);
+            foreach ( $listBookingUpdate as $item ) {
+                if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                    $status = false;
+                }
                 
             }
-        } elseif ( empty($service_1_kind) ) {
+        } elseif ( empty($service_1) ) {
+            // echo 'empty';die;
             // echo '111111';die;
             // $dataInput['service_1']                     = $booking->service_1;
             // $dataInput['service_1_kind']                = $booking->service_1_kind;
@@ -657,10 +659,7 @@ class BookingController extends BackendController
         $dataInput['service_1'] = $service_1;
         $dataInput['service_1_kind'] = $service_1_kind;
 
-
-
-        if ( $service_1_kind == 2 ) {
-
+        if ( $service_1 > 0 ) {
             // no change service
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
@@ -677,12 +676,8 @@ class BookingController extends BackendController
                 // ok update
                 // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
                 $end = count($listBookingUpdate) - 1;
-                if ( $end == 0 ) {
-                    $end = 1;
-                }
                 // check continuity
                 $statusContinuity = true;
-                // echo $end . '<br>';die;
                 if ( count($listBookingUpdate) > 1 ) {
                     for ( $i = 0; $i < ($end) ; $i++ ) {
                         $mm = hourMin2Min($listBookingUpdate[$i]->booking_start_time) + 15;
@@ -696,20 +691,12 @@ class BookingController extends BackendController
                 }
                 
                 if ( $statusContinuity ) {
-                    if ( count($listBookingUpdate) == 1 ) {
+                    for ( $i = 0; $i < count($listBookingUpdate); $i++ ) {
                         $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                        if ( !$clsBooking->update($listBookingUpdate[0]->booking_id, $dataInput) ) {
+                        if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
                             $status = false;
                         }
-                    } else {
-                        for ( $i = 0; $i < count($listBookingUpdate) - 1 ; $i++ ) {
-                            $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                            if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
-                                $status = false;
-                            }
-                        }
                     }
-                    
                 } else {
                     $status = false;
                 }
@@ -726,19 +713,37 @@ class BookingController extends BackendController
                 } else {
                     $status = false;
                 }
-                // echo '4';die;
-                
             }
-        } elseif ( empty($service_1_kind) ) {
-            // $dataInput['service_1']                     = -1;
-            // $dataInput['service_1_kind']                = 2;
-            // $dataInput['booking_childgroup_id']         = null;
+        } elseif ( Input::get('service_1') == -1 ) {
+            $dataInput['service_1']                     = -1;
+            $dataInput['service_1_kind']                = 2;
+            $dataInput['booking_childgroup_id']         = null;
+            $where                          = array(
+                'booking_group_id'          => $booking->booking_group_id,
+                'booking_childgroup_id'     => $booking->booking_childgroup_id,
+                'clinic_id'                 => $booking->clinic_id,
+            );
+            $listBookingUpdate = $clsBooking->get_where($where);
+            foreach ( $listBookingUpdate as $item ) {
+                if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                    $status = false;
+                }
+            }
+        } elseif ( empty($service_1) ) {
+            // echo 'empty';die;
+            // echo '111111';die;
+            // $dataInput['service_1']                     = $booking->service_1;
+            // $dataInput['service_1_kind']                = $booking->service_1_kind;
+            // $dataInput['booking_childgroup_id']         = $booking->booking_childgroup_id;
             // $where                          = array(
             //     'booking_group_id'          => $booking->booking_group_id,
             //     'booking_childgroup_id'     => $booking->booking_childgroup_id,
             //     'clinic_id'                 => $booking->clinic_id,
             // );
             // $listBookingUpdate = $clsBooking->get_where($where);
+            // // echo '<pre>';
+            // // print_r($listBookingUpdate);
+            // // echo '</pre>';die;
             // foreach ( $listBookingUpdate as $item ) {
             //     if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
             //         $status = false;
@@ -914,10 +919,7 @@ class BookingController extends BackendController
         $dataInput['service_1'] = $service_1;
         $dataInput['service_1_kind'] = $service_1_kind;
 
-            // } else {
-
-        if ( $service_1_kind == 2 ) {
-
+        if ( $service_1 > 0 ) {
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
             $treatment1TotalTime        = $treatment1->treatment_time;
@@ -929,14 +931,10 @@ class BookingController extends BackendController
             $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
             // update treatment1
-            $status = true;
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                 // ok update
                 // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
                 $end = count($listBookingUpdate) - 1;
-                if ( $end == 0 ) {
-                    $end = 1;
-                }
                 // check continuity
                 $statusContinuity = true;
                 if ( count($listBookingUpdate) > 1 ) {
@@ -950,22 +948,14 @@ class BookingController extends BackendController
                         }
                     }
                 }
-
+                
                 if ( $statusContinuity ) {
-                    if ( count($listBookingUpdate) == 1 ) {
+                    for ( $i = 0; $i < count($listBookingUpdate); $i++ ) {
                         $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                        if ( !$clsBooking->update($listBookingUpdate[0]->booking_id, $dataInput) ) {
+                        if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
                             $status = false;
                         }
-                    } else {
-                        for ( $i = 0; $i < count($listBookingUpdate) - 1 ; $i++ ) {
-                            $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                            if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
-                                $status = false;
-                            }
-                        }
                     }
-                    
                 } else {
                     $status = false;
                 }
@@ -982,19 +972,36 @@ class BookingController extends BackendController
                 } else {
                     $status = false;
                 }
-                // echo '4';die;
-                
             }
-        } elseif ( empty($service_1_kind) ) {
-            // $dataInput['service_1']                     = -1;
-            // $dataInput['service_1_kind']                = 2;
-            // $dataInput['booking_childgroup_id']         = null;
+        } elseif ( Input::get('service_1') == -1 ) {
+            $dataInput['service_1']                     = -1;
+            $dataInput['service_1_kind']                = 2;
+            $dataInput['booking_childgroup_id']         = null;
+            $where                          = array(
+                'booking_group_id'          => $booking->booking_group_id,
+                'booking_childgroup_id'     => $booking->booking_childgroup_id,
+                'clinic_id'                 => $booking->clinic_id,
+            );
+            $listBookingUpdate = $clsBooking->get_where($where);
+            foreach ( $listBookingUpdate as $item ) {
+                if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
+                    $status = false;
+                }
+            }
+        } elseif ( empty($service_1) ) {
+            // echo '111111';die;
+            // $dataInput['service_1']                     = $booking->service_1;
+            // $dataInput['service_1_kind']                = $booking->service_1_kind;
+            // $dataInput['booking_childgroup_id']         = $booking->booking_childgroup_id;
             // $where                          = array(
             //     'booking_group_id'          => $booking->booking_group_id,
             //     'booking_childgroup_id'     => $booking->booking_childgroup_id,
             //     'clinic_id'                 => $booking->clinic_id,
             // );
             // $listBookingUpdate = $clsBooking->get_where($where);
+            // // echo '<pre>';
+            // // print_r($listBookingUpdate);
+            // // echo '</pre>';die;
             // foreach ( $listBookingUpdate as $item ) {
             //     if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
             //         $status = false;

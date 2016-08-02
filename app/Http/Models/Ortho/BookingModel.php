@@ -233,7 +233,7 @@ class BookingModel
                         ->where('service_1', -1)
                         ->where('service_1_kind', 2)
                         ->where('booking_start_time', '>=', $begingStartTime)
-                        ->where('booking_start_time', '<=', $bookingEndTime)
+                        ->where('booking_start_time', '<', $bookingEndTime)
                         ->orderBy('booking_start_time', 'asc')
                         ->get();
         return $results;

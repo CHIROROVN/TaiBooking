@@ -761,23 +761,13 @@ class BookingController extends BackendController
         }
 
         if ( $status ) {
-            Session::flash('success', trans('common.message_regist_success'));
-            // $where                          = array();
-            // $where['clinic_id']             = @Session::get('where_booking')['clinic_id'];
-            // $where['doctor_id']             = @Session::get('where_booking')['doctor_id'];
-            // $where['hygienist_id']          = @Session::get('where_booking')['hygienist_id'];
-            // $where['booking_date']          = @Session::get('where_booking')['booking_date'];
-            // $where['week_later']            = @Session::get('where_booking')['week_later'];
-            // $where['clinic_service_name']   = @Session::get('where_booking')['clinic_service_name'];
-            // return redirect()->route('ortho.bookings.booking.result.list', $where);
             $where                          = array();
             $where['clinic_id']             = $booking->clinic_id;
             $where['cur']                   = $booking->booking_date;
             return redirect()->route('ortho.bookings.booking.daily', $where);
-
         } else {
-            Session::flash('danger', trans('common.message_regist_danger'));
-            return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);
+            Session::flash('danger', trans('common.message_edit_danger'));
+            return redirect()->route('ortho.bookings.booking.edit', $id);
         }
     }
 
@@ -1026,13 +1016,9 @@ class BookingController extends BackendController
         if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
             $where                          = array();
-            $where['clinic_id']             = @Session::get('where_booking')['clinic_id'];
-            $where['doctor_id']             = @Session::get('where_booking')['doctor_id'];
-            $where['hygienist_id']          = @Session::get('where_booking')['hygienist_id'];
-            $where['booking_date']          = @Session::get('where_booking')['booking_date'];
-            $where['week_later']            = @Session::get('where_booking')['week_later'];
-            $where['clinic_service_name']   = @Session::get('where_booking')['clinic_service_name'];
-            return redirect()->route('ortho.bookings.booking.result.list', $where);
+            $where['clinic_id']             = $booking->clinic_id;
+            $where['cur']                   = $booking->booking_date;
+            return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
             return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);

@@ -106,10 +106,10 @@ class UserModel
     {
         return DB::table($this->table)
                     ->leftJoin('m_belong as t1', 'm_users.u_belong', '=', 't1.belong_id')
-                    ->select('id', 'u_name')
+                    ->select('id', 'u_name_display')
                     ->where('t1.last_kind', '<>', DELETE)
                     ->where('m_users.last_kind', '<>', DELETE)
                     ->whereIn('t1.belong_kind', $belong_kind)
-                    ->lists('u_name', 'id');
+                    ->lists('u_name_display', 'id');
     }
 }

@@ -417,6 +417,7 @@ class BookingController extends BackendController
         $whereChildGroups               = array(
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'clinic_id'                 => $booking->clinic_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         foreach ( $bookingChildGroups as $item ) {
@@ -432,67 +433,119 @@ class BookingController extends BackendController
         if ( $service_1 > 0 ) {
             // change service
             if ( $booking->service_1 != -1 ) {
-                $treatment_current = $clsTreatment1->get_by_id($booking->service_1);
-                $treatment_new = $clsTreatment1->get_by_id($dataInput['service_1']);
-                if ( $treatment_new->treatment_time > $treatment_current->treatment_time ) {
-                    $status = false;
+                // $where = arrary(
+                //     'booking_group_id'          => $booking->booking_group_id,
+                //     'booking_childgroup_id'     => $booking->booking_childgroup_id,
+                //     'clinic_id'                 => $booking->clinic_id,
+                // );
+                // $bookingGroupCurrents       = $clsBooking->get_where($where);
+                // $treatment_current      = $clsTreatment1->get_by_id($booking->service_1);
+                // $treatment_new          = $clsTreatment1->get_by_id($dataInput['service_1']);
+
+                // treatment time new > treatment time old
+                // if ( $treatment_new->treatment_time > $treatment_current->treatment_time ) {
+                //     // if have some box, ok
+                //     // update service_1
+                //     if ( 1 < 2 ) {
+
+                //     // if don't have box, not ok
+                //     } else {
+                //         $status = false;
+                //     }
+                // // treatment time new <= treatment time old
+                // } else {
+
+                // }
+
+                foreach ( $bookingChildGroups as $item ) {
+                    $dataDelete = array(
+                        'service_1'                 => -1,
+                        'booking_childgroup_id'     => null,
+
+                        'last_date'                 => date('y-m-d H:i:s'),
+                        'last_kind'                 => UPDATE,
+                        'last_ipadrs'               => CLIENT_IP_ADRS,
+                        'last_user'                 => Auth::user()->id
+                    );
+                    $clsBooking->update($item->booking_id, $dataDelete);
                 }
-            }
 
-            // no change service
-            $treatment1                 = $clsTreatment1->get_by_id($service_1);
-            $bookingStartTime           = $booking->booking_start_time;
-            $treatment1TotalTime        = $treatment1->treatment_time;
+            // add new service
+            } 
+            // else {
+                $treatment1                 = $clsTreatment1->get_by_id($service_1);
+                $bookingStartTime           = $booking->booking_start_time;
+                $treatment1TotalTime        = $treatment1->treatment_time;
 
-            $mm = hourMin2Min($bookingStartTime);
-            $mm = $mm + $treatment1TotalTime;
-            $hhmmBookingEndTime = (int)min2HourMin($mm);
+                $mm = hourMin2Min($bookingStartTime);
+                $mm = $mm + $treatment1TotalTime;
+                $hhmmBookingEndTime = (int)min2HourMin($mm);
 
-            $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
+                $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
+// echo '<pre>';print_r($listBookingUpdate);die;
+                // update treatment1
+                if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
+                    // ok update
+                    // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
+                    $end = count($listBookingUpdate) - 1;
+                    // check continuity
+                    $statusContinuity = true;
+                    if ( count($listBookingUpdate) > 1 ) {
+                        for ( $i = 0; $i < ($end) ; $i++ ) {
+                            $mm = hourMin2Min($listBookingUpdate[$i]->booking_start_time) + 15;
+                            $mmNext = hourMin2Min($listBookingUpdate[$i+1]->booking_start_time);
 
-            // update treatment1
-            if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
-                // ok update
-                // $dataInput['booking_group_id'] = 'group_' . $booking->booking_start_time . '_' . $hhmmBookingEndTime . '_' . $booking->clinic_id . '_' . $booking->facility_id . '_' . $booking->booking_date;
-                $end = count($listBookingUpdate) - 1;
-                // check continuity
-                $statusContinuity = true;
-                if ( count($listBookingUpdate) > 1 ) {
-                    for ( $i = 0; $i < ($end) ; $i++ ) {
-                        $mm = hourMin2Min($listBookingUpdate[$i]->booking_start_time) + 15;
-                        $mmNext = hourMin2Min($listBookingUpdate[$i+1]->booking_start_time);
-
-                        if ( $mm != $mmNext ) {
-                            $statusContinuity = false;
-                            break;
+                            if ( $mm != $mmNext ) {
+                                $statusContinuity = false;
+                                break;
+                            }
                         }
                     }
-                }
-                
-                if ( $statusContinuity ) {
-                    for ( $i = 0; $i < count($listBookingUpdate); $i++ ) {
-                        $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                        if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
-                            $status = false;
+                    
+                    if ( $statusContinuity ) {
+                        for ( $i = 0; $i < count($listBookingUpdate); $i++ ) {
+                            $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
+                            $dataInput['patient_id'] = $listBookingUpdate[$i]->patient_id;
+                            if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
+                                $status = false;
+                            }
                         }
+                    } else {
+                        $status = false;
                     }
                 } else {
-                    $status = false;
-                }
-            } else {
-                if ( $booking->service_1 == $service_1 ) {
-                    unset($dataInput['service_1']);
-                    unset($dataInput['service_1_kind']);
-                    for ( $i = 0; $i < count($listBookingUpdate) - 1 ; $i++ ) {
-                        $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
-                        if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
-                            $status = false;
+                    if ( $booking->service_1 == $service_1 ) {
+                        unset($dataInput['service_1']);
+                        unset($dataInput['service_1_kind']);
+                        for ( $i = 0; $i < count($listBookingUpdate) - 1 ; $i++ ) {
+                            $dataInput['booking_childgroup_id'] = 'group_' . $listBookingUpdate[0]->booking_start_time;
+                            if ( !$clsBooking->update($listBookingUpdate[$i]->booking_id, $dataInput) ) {
+                                $status = false;
+                            }
                         }
+                    } else {
+                        $status = false;
                     }
-                } else {
-                    $status = false;
                 }
-            }
+
+                if ( !$status ) {
+                    // return back $bookingChildGroups
+                    foreach ( $bookingChildGroups as $item ) {
+                        $dataBack = array(
+                            'service_1'                 => $item->service_1,
+                            'booking_childgroup_id'     => $item->booking_childgroup_id,
+                            'patient_id'                => $item->patient_id,
+
+                            'last_date'                 => date('y-m-d H:i:s'),
+                            'last_kind'                 => UPDATE,
+                            'last_ipadrs'               => CLIENT_IP_ADRS,
+                            'last_user'                 => Auth::user()->id
+                        );
+                        $clsBooking->update($item->booking_id, $dataBack);
+                    }
+                }
+            // }
+            
         } elseif ( Input::get('service_1') == -1 ) {
             $dataInput['service_1']                     = -1;
             $dataInput['service_1_kind']                = 2;

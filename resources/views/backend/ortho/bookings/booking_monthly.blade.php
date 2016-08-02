@@ -22,8 +22,8 @@
             </select>
             <select name="u_id" id="u_id" class="form-control form-control--small">
               <option value="">▼Dr</option>
-              @foreach ( $users as $user )
-              <option value="{{ $user->id }}" @if($u_id == $user->id) selected="" @endif>{{ $user->u_name }}</option>
+              @foreach ( $doctors as $doctor )
+              <option value="{{ $doctor->id }}" @if($u_id == $doctor->id) selected="" @endif>{{ $doctor->u_name }}</option>
               @endforeach
             </select>
             <input type="submit" class="btn btn-sm btn-page no-border" name="" value="絞込表示">

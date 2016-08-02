@@ -430,6 +430,15 @@ class BookingController extends BackendController
         $dataInput['service_1_kind'] = $service_1_kind;
 
         if ( $service_1 > 0 ) {
+            // change service
+            if ( $booking->service_1 != -1 ) {
+                $treatment_current = $clsTreatment1->get_by_id($booking->service_1);
+                $treatment_new = $clsTreatment1->get_by_id($dataInput['service_1']);
+                if ( $treatment_new->treatment_time > $treatment_current->treatment_time ) {
+                    $status = false;
+                }
+            }
+
             // no change service
             $treatment1                 = $clsTreatment1->get_by_id($service_1);
             $bookingStartTime           = $booking->booking_start_time;
@@ -498,7 +507,6 @@ class BookingController extends BackendController
                 if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
                     $status = false;
                 }
-                
             }
         } elseif ( empty($service_1) ) {
             // echo 'empty';die;

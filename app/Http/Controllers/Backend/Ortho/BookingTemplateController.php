@@ -683,7 +683,9 @@ class BookingTemplateController extends BackendController
         $bookingChildGroupId = Input::get('booking_childgroup_id');
         if ( !strpos($bookingChildGroupId, '_') ) {
             $booking = $clsBooking->get_by_id(Input::get('booking_id'));
-            $status = $clsBooking->update($booking->booking_id, $dataUpdate);
+            if ( !empty($booking) ) {
+                $status = $clsBooking->update($booking->booking_id, $dataUpdate);
+            }
         // many
         } else {
             $bookings = $clsBooking->get_where($where);

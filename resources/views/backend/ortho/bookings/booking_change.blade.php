@@ -142,13 +142,11 @@
                   @else
                     <select name="clinic_service_name" id="clinic_service_name" class="form-control">
                       <option value="" selected="selected">指定なし</option>
-                      <optgroup label="治療内容">
                           @if(count($treatment1s) > 0)
                             @foreach($treatment1s as $key12 => $treatment12)
                               <option value="{{$key12}}" @if($booking->service_1 == $key12) selected="" @endif >{{$treatment12}}</option>
                             @endforeach
                           @endif
-                      </optgroup>
                     </select>
                     @endif
                   </td>

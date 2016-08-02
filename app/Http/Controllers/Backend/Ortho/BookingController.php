@@ -580,7 +580,7 @@ class BookingController extends BackendController
         $clsTemplate                = new TemplateModel();
         $booking                    = $clsBooking->get_by_id($id);
 
-        $service_1 = $service_1_kind = $service_2 = $service_2_kind = null;
+        $service_1 = $service_1_kind = null;
 
         if(!empty(Input::get('service_1'))){
             $s1k = explode('_', Input::get('service_1'));
@@ -596,19 +596,19 @@ class BookingController extends BackendController
             }
         }
 
-        if(!empty(Input::get('service_2'))){
-            $s2k = explode('_', Input::get('service_2'));
-            $s2_kind            = str_split($s2k[1], 3);
-            $service_2_kind     = $s2_kind[1];
+        // if(!empty(Input::get('service_2'))){
+        //     $s2k = explode('_', Input::get('service_2'));
+        //     $s2_kind            = str_split($s2k[1], 3);
+        //     $service_2_kind     = $s2_kind[1];
 
-            if($service_2_kind == 2){
-                $st2 = explode('#', $s2k[0]);
-                $service_2      = $st2[0];
-                $treatment_time_2 = $st2[1];
-            }else{
-                $service_2      = $s2k[0];
-            }
-        }
+        //     if($service_2_kind == 2){
+        //         $st2 = explode('#', $s2k[0]);
+        //         $service_2      = $st2[0];
+        //         $treatment_time_2 = $st2[1];
+        //     }else{
+        //         $service_2      = $s2k[0];
+        //     }
+        // }
 
         $dataInput = array(
                 // 'facility_id'               => Input::get('facility_id'),
@@ -762,14 +762,19 @@ class BookingController extends BackendController
 
         if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
+            // $where                          = array();
+            // $where['clinic_id']             = @Session::get('where_booking')['clinic_id'];
+            // $where['doctor_id']             = @Session::get('where_booking')['doctor_id'];
+            // $where['hygienist_id']          = @Session::get('where_booking')['hygienist_id'];
+            // $where['booking_date']          = @Session::get('where_booking')['booking_date'];
+            // $where['week_later']            = @Session::get('where_booking')['week_later'];
+            // $where['clinic_service_name']   = @Session::get('where_booking')['clinic_service_name'];
+            // return redirect()->route('ortho.bookings.booking.result.list', $where);
             $where                          = array();
-            $where['clinic_id']             = @Session::get('where_booking')['clinic_id'];
-            $where['doctor_id']             = @Session::get('where_booking')['doctor_id'];
-            $where['hygienist_id']          = @Session::get('where_booking')['hygienist_id'];
-            $where['booking_date']          = @Session::get('where_booking')['booking_date'];
-            $where['week_later']            = @Session::get('where_booking')['week_later'];
-            $where['clinic_service_name']   = @Session::get('where_booking')['clinic_service_name'];
-            return redirect()->route('ortho.bookings.booking.result.list', $where);
+            $where['clinic_id']             = $booking->clinic_id;
+            $where['cur']                   = $booking->booking_date;
+            return redirect()->route('ortho.bookings.booking.daily', $where);
+
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
             return redirect()->route('ortho.bookings.booking.regist', ['booking_id' => $id]);

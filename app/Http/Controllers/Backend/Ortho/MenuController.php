@@ -27,17 +27,18 @@ class MenuController extends BackendController
      */
     public function index()
     {
-        $data = array();
-        $clsClinic  = new ClinicModel();
-        $clinic     = $clsClinic->get_id_by_name('たい矯正歯科');
+        $clsClinic     = new ClinicModel();
+        $clinic        = $clsClinic->get_id_by_name('たい矯正歯科');
         $clsClinicArea = new ClinicAreaModel();
-        if ( !empty($clinic) ) {
-            $area_clinic = $clsClinicArea->get_clinic_area($clinic->clinic_id);
-            $data['ca_id']      = $area_clinic->ca_id;
+        $data          = array();
+        $area_clinic   = $clsClinicArea->get_clinic_area($clinic->clinic_id);
+        if(!empty($area_clinic)){
             $data['area_id']    = $area_clinic->area_id;
             $data['clinic_id']  = $area_clinic->clinic_id;
+        }else{
+            $data['area_id']    = null;
+            $data['clinic_id']  = null;
         }
-        
         return view('backend.ortho.menus.index', $data);
     }
 }

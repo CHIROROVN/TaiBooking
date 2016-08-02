@@ -53,12 +53,12 @@ class BookingController extends BackendController
         $clsShift               = new ShiftModel();
         $clsAreaModel           = new AreaModel();
         $clsUser                = new UserModel();
+         $tmp_arr                = array();
         // $bookings               = $clsBooking->get_all($data);
         $data['areas']          = $clsAreaModel->get_list();
-        $data['users']          = $clsUser->get_all();
-        $shifts                 = $clsShift->get_all($data);
+        $data['doctors']          = $clsUser->get_by_belong([1]);
 
-        $tmp_arr                = array();
+        $shifts                 = $clsShift->get_all($data);
         foreach ( $shifts as $shift ) {
             // $booking_id     = $shift->booking_id;
             $clinic_id              = $shift->clinic_id;

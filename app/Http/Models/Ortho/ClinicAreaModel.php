@@ -113,4 +113,14 @@ class ClinicAreaModel
             return null;
         }
     }
+
+    public function get_clinic_area($clinic=null)
+    {
+        $results = DB::table($this->table)
+                        ->select('ca_id', 'area_id', 'clinic_id')
+                        ->where('last_kind', '<>', DELETE)
+                        ->where('clinic_id', '=', $clinic)
+                        ->first();
+        return $results;
+    }
 }

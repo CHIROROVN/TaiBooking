@@ -104,4 +104,14 @@ class ClinicModel
                                 ->orderBy('clinic_name_yomi', 'asc')
                                 ->lists('clinic_name', 'clinic_id');
     }
+
+    public function get_id_by_name($clinic_name=null)
+    {
+        $results = DB::table($this->table)
+                        ->select('clinic_id')
+                        ->where('last_kind', '<>', DELETE)
+                        ->where('clinic_name', 'LIKE', '%' . $clinic_name . '%')
+                        ->first();
+        return $results;
+    }
 }

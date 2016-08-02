@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Session;
 use App\Http\Models\Ortho\ClinicModel;
+use App\Http\Models\Ortho\ClinicAreaModel;
 use Form;
 use Html;
 use Input;
@@ -26,6 +27,13 @@ class MenuController extends BackendController
      */
     public function index()
     {
-        return view('backend.ortho.menus.index');
+        $clsClinic  = new ClinicModel();
+        $clinic     = $clsClinic->get_id_by_name('たい矯正歯科');
+        $clsClinicArea = new ClinicAreaModel();
+        $area_clinic = $clsClinicArea->get_clinic_area($clinic->clinic_id);
+        $data['ca_id']      = $area_clinic->ca_id;
+        $data['area_id']    = $area_clinic->area_id;
+        $data['clinic_id']  = $area_clinic->clinic_id;
+        return view('backend.ortho.menus.index', $data);
     }
 }

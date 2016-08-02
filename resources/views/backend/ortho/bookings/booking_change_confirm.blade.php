@@ -1,8 +1,6 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-<?php //echo "<pre>"; print_r($booking);?>
-<?php //echo "<pre>"; print_r($booking_change);?>
 <section id="page">
   <div class="container content-page">
     <h3>予約の変更</h3>
@@ -45,10 +43,6 @@
               <td class="col-title">業務内容-1</td>
               <td>@if($booking->service_1_kind == 1){{@$services[$booking->service_1]}}@elseif($booking->service_1_kind == 2){{@$treatment1s[$booking->service_1]}}@endif</td>
             </tr>
-            <!-- <tr>
-              <td class="col-title">業務内容-2</td>
-              <td>@if($booking->service_2_kind == 1){{@$services[$booking->service_2]}}@elseif($booking->service_2_kind == 2){{@$treatment1s[$booking->service_2]}}@endif</td>
-            </tr> -->
             <tr>
               <td class="col-title">検査</td>
               <td>{{$booking->inspection_name}}</td>

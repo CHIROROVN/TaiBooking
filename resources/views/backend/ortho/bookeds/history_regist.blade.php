@@ -151,7 +151,7 @@
                 @if(count($services) > 0)
                   @foreach($services as $service)
                     @if ( old('service_2') )
-                    <option value="1|{{ $service->service_id }}" @if(old(service_2) == $service->service_id) selected="" @endif >{{ $service->service_name }}</option>
+                    <option value="1|{{ $service->service_id }}" @if(old('service_2') == $service->service_id) selected="" @endif >{{ $service->service_name }}</option>
                     @else
                     <option value="1|{{ $service->service_id }}">{{ $service->service_name }}</option>
                     @endif

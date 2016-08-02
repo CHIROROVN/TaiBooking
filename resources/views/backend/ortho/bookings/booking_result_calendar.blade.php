@@ -216,6 +216,8 @@
                     if ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
                       $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
                       $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                    } elseif ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                      $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                     } else {
                       $iconFlag = '';
                     }

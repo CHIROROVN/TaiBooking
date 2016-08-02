@@ -181,81 +181,111 @@
             </tr>
 
             <!-- check "brown", "green", "blue" color -->
+            <?php $tmpFlag = array() ?>
             @foreach ( $times as $time )
             <?php
               $tmp_arr = explode(':', $time);
-              $hour = $tmp_arr[0]; // printf( "%02d", $tmp_arr[0] );
-              $minute = $tmp_arr[1]; //printf( "%02d", $tmp_arr[1] );
+              $hour = $tmp_arr[0];
+              $minute = $tmp_arr[1];
+              $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" width="6%">{{ $time }}～</td>
-              @if ( empty($facilitys) )
-              <td align="center">&nbsp;</td>
-              @endif
+              <td align="center" style="">{{ $time }}～</td>
               @foreach ( $facilitys as $facility )
                 <?php
-                  $common_id = $facility->facility_id . '-' . $hour.$minute;
+                  // $common_id = $facility->facility_id . '-' . $hour.$minute;
                   $facility_id = $facility->facility_id;
                   $color = 'brown';
-                  $service_id = 0;
-                  $fullValue = null;
+                  // $service_id = 0;
+                  // $fullValue = null;
                   $text = '';
+                  $clsBackgroundPatient = ''; //backgroup-while
+                  $iconFlag = '';
 
-                  if ( isset($arr_bookings[$facility_id][$time]) ) {
-                    $hour_template = substr($arr_bookings[$facility->facility_id][$time]->booking_start_time , 0, 2);
-                    $minute_template = substr($arr_bookings[$facility->facility_id][$time]->booking_start_time , 2, 2);
-
-                    if ( empty($arr_bookings[$facility_id][$time]->patient_id) ) {
-                      $link = route('ortho.bookings.booking.regist', $arr_bookings[$facility_id][$time]->booking_id);
+                  if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
+                    // set flag
+                    if ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
+                      $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                      $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                    } elseif ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                      $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                     } else {
-                      $link = route('ortho.bookings.booking.detail', $arr_bookings[$facility_id][$time]->booking_id);
+                      $iconFlag = '';
                     }
-                    if ( $arr_bookings[$facility_id][$time]->service_1_kind == 1 ) {
+
+                    if ( empty($arr_bookings[$facility_id][$fullTime]->patient_id) ) {
+                      $link = route('ortho.bookings.booking.regist', $arr_bookings[$facility_id][$fullTime]->booking_id);
+                    } else {
+                      $link = route('ortho.bookings.booking.detail', $arr_bookings[$facility_id][$fullTime]->booking_id);
+                    }
+
+                    if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1 ) {
                       $color = 'green';
-                      $sdoctor = '';
-                      if(!empty($list_doctors[$arr_bookings[$facility_id][$time]->doctor_id])){
-                        $sdoctor = @$list_doctors[$arr_bookings[$facility_id][$time]->doctor_id];
-                      }
-                      $spatient = '';
-                      if (!empty($arr_bookings[$facility_id][$time]->p_name) ) {
-                        $spatient =  '<br />' . $arr_bookings[$facility_id][$time]->p_name . '<br />';
-                      }
-                      $sservice = '';
-                      if(!empty($services[$arr_bookings[$facility_id][$time]->service_1])){
-                        $sservice = @$services[$arr_bookings[$facility_id][$time]->service_1];
+                      $booking = @$arr_bookings[$facility_id][$fullTime];
+
+                      $sDoctor = '';
+                      if(!empty($list_doctors[$booking->doctor_id]))
+                        $sDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+
+                      $sPatient = '';
+                      if(!empty($booking->p_name))
+                        $sPatient = $booking->p_name . '<br />';
+
+                      if ( !empty($sPatient) ) {
+                        $clsBackgroundPatient = 'backgroup-while';
                       }
 
-                      $text = '<a href="' . $link . '">' . @$sdoctor . @$spatient . @$sservice . '</a>';
+                      $sService = '';
+                      if(!empty($services[$booking->service_1]))
+                        $sService = @$services[$booking->service_1];
 
-                    } elseif ( $arr_bookings[$facility_id][$time]->service_1_kind == 2 ) {
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sDoctor . @$sPatient . @$sService . '</span></a>';
+
+                    } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
                       $color = 'blue';
-                      $setTreatment = '治療';
-                      $tdoctor    = '';
-                      if(!empty($list_doctors[$arr_bookings[$facility_id][$time]->doctor_id])){
-                        $setTreatment = '';
-                        $tdoctor    = @$list_doctors[$arr_bookings[$facility_id][$time]->doctor_id] .'<br />';
-                      }
-                      $tpatient = '';
-                      if(!empty($arr_bookings[$facility_id][$time]->p_name)){
-                        $setTreatment = '';
-                        $tpatient  = $arr_bookings[$facility_id][$time]->p_name .'<br />';
+                      $booking = @$arr_bookings[$facility_id][$fullTime];
+                      $initTreatment = '治療';
+
+                      if($booking->service_1 != -1){
+                        $initTreatment = '';
+
+                        $tDoctor = '';
+                        if(isset($list_doctors[$booking->doctor_id]) && !empty($list_doctors[$booking->doctor_id]) && $list_doctors[$booking->doctor_id] != '') {
+                          $initTreatment = '';
+                          $tDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+                        }
+
+                        $tPatient = '';
+                        if(!empty($booking->p_name)) {
+                          $initTreatment = '';
+                          $tPatient = $booking->p_name . '<br />';
+                        }
+
+                        if ( !empty($tPatient) ) {
+                          $clsBackgroundPatient = 'backgroup-while';
+                        }
+
+                        $tTreatment = '';
+                        if(!empty($treatment1s[$booking->service_1])) {
+                          $initTreatment = '';
+                          $tTreatment = @$treatment1s[$booking->service_1];
+                        }
+
+                      }else{
+                        $tDoctor = '';
+                        $tPatient = '';
+                        $tTreatment = '';
                       }
 
-                      $ttreatment = '';
-                      if(!empty($treatment1s[$arr_bookings[$facility_id][$time]->service_1])){
-                        $setTreatment = '';
-                        $ttreatment = @$treatment1s[$arr_bookings[$facility_id][$time]->service_1];
-                      }
-
-                      $text = '<a href="' . $link . '">' . @$setTreatment . @$tdoctor . @$tpatient . @$ttreatment . '</a>';
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tDoctor . @$tPatient  . @$tTreatment . '</span>' . '</a>';
                     }
                   }
                 ?>
 
                 <!-- close -->
-                <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}" width="142px">
-                  <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
-                    {!! $text !!}
+                <td align="center" width="50px" class="col-{{ $color }} {{ $clsBackgroundPatient }}" id="" width="142px">
+                  <div class="td-content">
+                    {!! $iconFlag !!} {!! $text !!}
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                     @endif

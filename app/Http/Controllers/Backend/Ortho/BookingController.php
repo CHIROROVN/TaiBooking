@@ -331,7 +331,7 @@ class BookingController extends BackendController
         $arr_gid[]                  = $booking->booking_group_id;
         $bookingGroups              = $clsBooking->get_by_group($arr_gid);
         
-        $service_1 = $service_1_kind = $service_2 = $service_2_kind = '';
+        $service_1 = $service_1_kind = '';
 
         if(!empty(Input::get('service_1'))){
             $s1k = explode('_', Input::get('service_1'));
@@ -780,10 +780,8 @@ class BookingController extends BackendController
 
     public function getChangeDate($id)
     {
-        if (Session::has('booking_change'))
-        {
+        if (Session::has('booking_change')) 
             Session::forget('booking_change');
-        }
 
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($id);
@@ -889,9 +887,9 @@ class BookingController extends BackendController
         unset($dataInput['booking_date_change']);
         unset($dataInput['booking_id']);
         $clsBooking                 = new BookingModel();
-
-         $booking = $clsBooking->get_by_id($id);
-         $bookingGroups = $clsBooking->get_by_group($booking->booking_group_id);
+        $booking                   = $clsBooking->get_by_id($id);
+        $booking_id_arr[]          = $booking->booking_group_id;
+        $bookingGroups = $clsBooking->get_by_group($booking_id_arr);
 
         $flag = false;
          foreach ( $bookingGroups as $item ) {

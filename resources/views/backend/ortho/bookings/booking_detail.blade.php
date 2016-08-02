@@ -77,7 +77,7 @@
             @endif
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td class="col-title">処置内容-2</td>
           <td>
             @if($booking->service_2_kind == '1')
@@ -86,7 +86,7 @@
             {{@$treatment1s[$booking->service_2]}}
             @endif
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td class="col-title">検査</td>
           <td>{{ $booking->inspection_name }}</td>

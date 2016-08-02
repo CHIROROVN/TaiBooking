@@ -45,10 +45,10 @@
               <td class="col-title">業務内容-1</td>
               <td>@if($booking->service_1_kind == 1){{@$services[$booking->service_1]}}@elseif($booking->service_1_kind == 2){{@$treatment1s[$booking->service_1]}}@endif</td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td class="col-title">業務内容-2</td>
               <td>@if($booking->service_2_kind == 1){{@$services[$booking->service_2]}}@elseif($booking->service_2_kind == 2){{@$treatment1s[$booking->service_2]}}@endif</td>
-            </tr>
+            </tr> -->
             <tr>
               <td class="col-title">検査</td>
               <td>{{$booking->inspection_name}}</td>
@@ -64,7 +64,7 @@
             <tr>
               <?php $arrStatus = array('1'=>'通常','2'=>'「TEL待ち」です','3'=>'「リコール」です','未作成技工物TEL待ち','作成済み技工物キャンセル') ?>
               <td class="col-title">予約ステータス</td>
-              <td>{{$arrStatus[$booking->booking_status]}}</td>
+              <td>{{@$arrStatus[$booking->booking_status]}}</td>
             </tr>
             <tr>
               <td class="col-title">備考</td>
@@ -114,7 +114,7 @@
                     }
                 ?></td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td class="col-title">業務内容-2</td>
               <td><?php if(isset($booking_change['service_2_kind']) && $booking_change['service_2_kind'] == 1){
                       echo @$services[$booking_change['service_1']];
@@ -122,7 +122,7 @@
                       echo @$treatment1s[$booking_change['service_2']];
                     }
                 ?></td>
-            </tr>
+            </tr> -->
             <tr>
               <td class="col-title">検査</td>
               <td>{{$booking->inspection_name}}</td>
@@ -138,7 +138,7 @@
             <tr>
             <?php $arrStatus = array('1'=>'通常','2'=>'「TEL待ち」です','3'=>'「リコール」です','未作成技工物TEL待ち','作成済み技工物キャンセル') ?>
               <td class="col-title">予約ステータス</td>
-              <td>{{$arrStatus[$booking->booking_status]}}</td>
+              <td>{{@$arrStatus[$booking->booking_status]}}</td>
             </tr>
             <tr>
               <td class="col-title">備考</td>

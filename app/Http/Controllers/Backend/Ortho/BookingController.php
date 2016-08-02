@@ -575,7 +575,7 @@ class BookingController extends BackendController
                 $status = false;
             }
         }
-        
+
         if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
             $where                          = array();
@@ -838,12 +838,11 @@ class BookingController extends BackendController
         }
 
         if(!empty(Input::get('clinic_service_name'))){
-            $sk = explode('_', Input::get('clinic_service_name'));
-            $service                        = $sk[0];
-            $s_kind                         = str_split($sk[1], 3);
-            $service_kind                   = $s_kind[1];
-            $dataInput['service_1']         = $service;
-            $dataInput['service_1_kind']    = $service_kind;
+            $dataInput['service_1']         = Input::get('clinic_service_name');
+            $dataInput['service_1_kind']    = 2; //Treatment
+        }else{
+            $dataInput['service_1']         = Input::get('service_1');
+            $dataInput['service_1_kind']    = 1; //Service
         }
 
         if(empty($dataInput['booking_recall_ym']))

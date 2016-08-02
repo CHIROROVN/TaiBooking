@@ -204,14 +204,10 @@
                 <optgroup label="業務名">
                 @if(count($services) > 0)
                   @foreach($services as $service)
-                    @if ( old('service_2') )
-                    <option value="1|{{ $service->service_id }}" @if(old(service_2) == $service->service_id) selected="" @endif >{{ $service->service_name }}</option>
+                    @if ( @$result->service_2_kind == 1 )
+                    <option value="1|{{ $service->service_id }}" @if($result->service_2 == $service->service_id) selected @endif >{{ $service->service_name }}</option>
                     @else
-                      @if ( @$result->service_2_kind == 1 )
-                      <option value="1|{{ $service->service_id }}" @if($result->service_2 == $service->service_id) selected="" @endif >{{ $service->service_name }}</option>
-                      @else
-                      <option value="1|{{ $service->service_id }}">{{ $service->service_name }}</option>
-                      @endif
+                    <option value="1|{{ $service->service_id }}">{{ $service->service_name }}</option>
                     @endif
                 @endforeach
                 @endif
@@ -219,14 +215,10 @@
                 <optgroup label="治療内容">
                 @if(count($treatment1s) > 0)
                   @foreach($treatment1s as $key => $treatment1)
-                    @if ( old('service_2') )
-                    <option value="2|{{ $key }}" @if(old('service_2') == $key) selected="" @endif>{{ $treatment1 }}</option>
+                    @if ( @$result->service_2_kind == 2 )
+                    <option value="2|{{ $key }}" @if($result->service_2 == $key) selected @endif>{{ $treatment1 }}</option>
                     @else
-                      @if ( @$result->service_2_kind == 2 )
-                      <option value="2|{{ $key }}" @if($result->service_2 == $key) selected="" @endif>{{ $treatment1 }}</option>
-                      @else
-                      <option value="2|{{ $key }}">{{ $treatment1 }}</option>
-                      @endif
+                    <option value="2|{{ $key }}">{{ $treatment1 }}</option>
                     @endif
                   @endforeach
                 @endif

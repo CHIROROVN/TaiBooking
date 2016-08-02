@@ -203,6 +203,10 @@ class BookedController extends BackendController
         $data['result']             = $clsResult->get_by_patient_id($data['booked']->patient_id);
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
+
+        // echo '<pre>';
+        // print_r($data['booked']);
+        // echo '</pre>';die;
         return view('backend.ortho.bookeds.history_edit', $data);
     }
 

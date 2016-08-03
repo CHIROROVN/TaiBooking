@@ -136,4 +136,19 @@ class PatientModel
             return false;
         }
     }
+
+    public function get_p_sex_by_id($id)
+    {
+        $patient = DB::table($this->table)
+                        ->select('t_patient.p_sex')
+                        ->where('last_kind', '<>', DELETE)
+                        ->where('p_id', '=', $id)
+                        ->first();
+        if(!empty($patient)){
+            $psex = $patient->p_sex;
+            return $psex;
+        }else{
+            return null;
+        }
+    }
 }

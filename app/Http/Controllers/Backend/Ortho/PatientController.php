@@ -341,4 +341,12 @@ class PatientController extends BackendController
         $patient          = $clsPatient->get_patient_by_id($p_id);
         return $patient;
     }
+
+    public static function getSexByID(){
+        $p_id = Input::get('p_id');
+        $clsPatient       = new PatientModel();
+        $patient          = $clsPatient->get_p_sex_by_id($p_id);
+        return response()->json(array('p_sex'=>$patient));
+
+    }
 }

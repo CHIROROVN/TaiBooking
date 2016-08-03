@@ -746,7 +746,7 @@ class BookingController extends BackendController
                     $clsBooking->update($item->booking_id, $dataDelete);
                 }
             }
-            
+
             if ( $booking->service_1 != -1 ) {
                 $whereChildGroupsTreatment      = array(
                     'booking_group_id'          => $booking->booking_group_id,
@@ -845,11 +845,11 @@ class BookingController extends BackendController
             else {
                 foreach ( $listBookingUpdate as $item2 ) {
                     $dataBack = array(
-                        'patient_id'                => $bookingChildGroupsTreatment[0]->patient_id,
-                        'hygienist_id'              => $bookingChildGroupsTreatment[0]->hygienist_id,
-                        'equipment_id'              => $bookingChildGroupsTreatment[0]->equipment_id,
-                        'inspection_id'             => $bookingChildGroupsTreatment[0]->inspection_id,
-                        'insurance_id'              => $bookingChildGroupsTreatment[0]->insurance_id,
+                        'patient_id'                => @$bookingChildGroupsTreatment[0]->patient_id,
+                        'hygienist_id'              => @$bookingChildGroupsTreatment[0]->hygienist_id,
+                        'equipment_id'              => @$bookingChildGroupsTreatment[0]->equipment_id,
+                        'inspection_id'             => @$bookingChildGroupsTreatment[0]->inspection_id,
+                        'insurance_id'              => @$bookingChildGroupsTreatment[0]->insurance_id,
 
                         'last_date'                 => date('y-m-d H:i:s'),
                         'last_kind'                 => UPDATE,

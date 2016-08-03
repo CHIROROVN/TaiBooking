@@ -13,17 +13,17 @@
 
             <!-- p_relation_id -->
             <tr>
-              <td class="col-title"><label for="p_relation_id">対象者の名前</label></td>
+              <td class="col-title"><label for="p_relation_id">対象者の名前 <span class="note_required">※</span></label></td>
               <td>
                 <input name="p_relation_name" id="p_relation_id" type="text" class="form-control" value="{{ $brother->p_no }} {{ $brother->p_name }}({{ $brother->p_name_kana }})">
                 <input name="p_relation_id" type="hidden" id="p_relation_id-id" value="{{ $brother->p_relation_id }}">
-                <span class="error-input">@if ($errors->first('p_relation_id')) {!! $errors->first('p_relation_id') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('p_relation_id')) ※{!! $errors->first('p_relation_id') !!} @endif</span>
               </td>
             </tr>
 
             <!-- brother_relation -->
             <tr>
-              <td class="col-title">関係</td>
+              <td class="col-title">関係 <span class="note_required">※</span></td>
               <td>
                 <div class="radio">
                   <label><input type="radio" class="male" name="brother_relation" value="1" @if($brother->brother_relation == 1) checked="" @endif />兄　　　</label>
@@ -40,7 +40,7 @@
                 <div class="radio">
                   <label><input type="radio" name="brother_relation" value="5" @if($brother->brother_relation == 5) checked="" @endif />いとこ</label>
                 </div>
-                <span class="error-input">@if ($errors->first('brother_relation')) {!! $errors->first('brother_relation') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('brother_relation')) ※{!! $errors->first('brother_relation') !!} @endif</span>
               </td>
             </tr>
           </table>

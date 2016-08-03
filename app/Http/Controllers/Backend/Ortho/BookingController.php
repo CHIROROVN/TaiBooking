@@ -420,6 +420,16 @@ class BookingController extends BackendController
             'clinic_id'                 => $booking->clinic_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        if ( empty($booking->booking_childgroup_id) ) {
+            $tmpBookingChildGroups = array();
+            foreach ( $bookingChildGroups as $item ) {
+                if ( empty($item->booking_childgroup_id) ) {
+                    $tmpBookingChildGroups[] = $item;
+                }
+            }
+            $bookingChildGroups = $tmpBookingChildGroups;
+        }
+
         foreach ( $bookingChildGroups as $item ) {
             if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
                 $status = false;
@@ -430,6 +440,7 @@ class BookingController extends BackendController
         $dataInput['service_1'] = $service_1;
         $dataInput['service_1_kind'] = $service_1_kind;
 
+        $bookingChildGroupsTreatment = array();
         if ( $service_1 > 0 ) {
             // change service
             if ( $booking->service_1 != -1 ) {
@@ -531,11 +542,11 @@ class BookingController extends BackendController
             else {
                 foreach ( $listBookingUpdate as $item2 ) {
                     $dataBack = array(
-                        'patient_id'                => $bookingChildGroupsTreatment[0]->patient_id,
-                        'hygienist_id'              => $bookingChildGroupsTreatment[0]->hygienist_id,
-                        'equipment_id'              => $bookingChildGroupsTreatment[0]->equipment_id,
-                        'inspection_id'             => $bookingChildGroupsTreatment[0]->inspection_id,
-                        'insurance_id'              => $bookingChildGroupsTreatment[0]->insurance_id,
+                        'patient_id'                => @$bookingChildGroupsTreatment[0]->patient_id,
+                        'hygienist_id'              => @$bookingChildGroupsTreatment[0]->hygienist_id,
+                        'equipment_id'              => @$bookingChildGroupsTreatment[0]->equipment_id,
+                        'inspection_id'             => @$bookingChildGroupsTreatment[0]->inspection_id,
+                        'insurance_id'              => @$bookingChildGroupsTreatment[0]->insurance_id,
 
                         'last_date'                 => date('y-m-d H:i:s'),
                         'last_kind'                 => UPDATE,
@@ -584,6 +595,32 @@ class BookingController extends BackendController
             //     }
             // }
             $status = true;
+        }
+
+        //remove patient id
+        $whereChildGroups               = array(
+            'booking_group_id'          => $booking->booking_group_id,
+            'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'clinic_id'                 => $booking->clinic_id,
+        );
+        $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        foreach ( $bookingChildGroups as $bookingChildGroup ) {
+            if ( $bookingChildGroup->service_1 == -1 ) {
+                $dataBack = array(
+                    'patient_id'                => null,
+                    'doctor_id'                 => null,
+                    'inspection_id'             => null,
+                    'insurance_id'              => null,
+                    'equipment_id'              => null,
+                    'hygienist_id'              => null,
+
+                    'last_date'                 => date('y-m-d H:i:s'),
+                    'last_kind'                 => UPDATE,
+                    'last_ipadrs'               => CLIENT_IP_ADRS,
+                    'last_user'                 => Auth::user()->id
+                );
+                $clsBooking->update($bookingChildGroup->booking_id, $dataBack);
+            }
         }
 
         if ( $status ) {
@@ -710,8 +747,19 @@ class BookingController extends BackendController
         $whereChildGroups               = array(
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'clinic_id'                 => $booking->clinic_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        if ( empty($booking->booking_childgroup_id) ) {
+            $tmpBookingChildGroups = array();
+            foreach ( $bookingChildGroups as $item ) {
+                if ( empty($item->booking_childgroup_id) ) {
+                    $tmpBookingChildGroups[] = $item;
+                }
+            }
+            $bookingChildGroups = $tmpBookingChildGroups;
+        }
+
         foreach ( $bookingChildGroups as $item ) {
             if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
                 $status = false;
@@ -722,6 +770,7 @@ class BookingController extends BackendController
         $dataInput['service_1'] = $service_1;
         $dataInput['service_1_kind'] = $service_1_kind;
 
+        $bookingChildGroupsTreatment = array();
         if ( $service_1 > 0 ) {
             // change service
             if ( $booking->service_1 != -1 ) {
@@ -743,6 +792,9 @@ class BookingController extends BackendController
                         'last_ipadrs'               => CLIENT_IP_ADRS,
                         'last_user'                 => Auth::user()->id
                     );
+                    if ( empty($booking->patient_id) ) {
+                        unset($dataDelete['patient_id']);
+                    }
                     $clsBooking->update($item->booking_id, $dataDelete);
                 }
             }
@@ -856,6 +908,9 @@ class BookingController extends BackendController
                         'last_ipadrs'               => CLIENT_IP_ADRS,
                         'last_user'                 => Auth::user()->id
                     );
+                    if ( empty($booking->patient_id) ) {
+                        unset($dataBack['patient_id']);
+                    }
                     $clsBooking->update($item2->booking_id, $dataBack);
                 }
             }
@@ -896,6 +951,32 @@ class BookingController extends BackendController
             //     }
             // }
             $status = true;
+        }
+
+        //remove patient id
+        $whereChildGroups               = array(
+            'booking_group_id'          => $booking->booking_group_id,
+            'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'clinic_id'                 => $booking->clinic_id,
+        );
+        $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        foreach ( $bookingChildGroups as $bookingChildGroup ) {
+            if ( $bookingChildGroup->service_1 == -1 ) {
+                $dataBack = array(
+                    'patient_id'                => null,
+                    'doctor_id'                 => null,
+                    'inspection_id'             => null,
+                    'insurance_id'              => null,
+                    'equipment_id'              => null,
+                    'hygienist_id'              => null,
+
+                    'last_date'                 => date('y-m-d H:i:s'),
+                    'last_kind'                 => UPDATE,
+                    'last_ipadrs'               => CLIENT_IP_ADRS,
+                    'last_user'                 => Auth::user()->id
+                );
+                $clsBooking->update($bookingChildGroup->booking_id, $dataBack);
+            }
         }
 
         if ( $status ) {
@@ -1018,8 +1099,19 @@ class BookingController extends BackendController
         $whereChildGroups               = array(
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'clinic_id'                 => $booking->clinic_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        if ( empty($booking->booking_childgroup_id) ) {
+            $tmpBookingChildGroups = array();
+            foreach ( $bookingChildGroups as $item ) {
+                if ( empty($item->booking_childgroup_id) ) {
+                    $tmpBookingChildGroups[] = $item;
+                }
+            }
+            $bookingChildGroups = $tmpBookingChildGroups;
+        }
+
         foreach ( $bookingChildGroups as $item ) {
             if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
                 $status = false;
@@ -1030,6 +1122,7 @@ class BookingController extends BackendController
         $dataInput['service_1'] = $service_1;
         $dataInput['service_1_kind'] = $service_1_kind;
 
+        $bookingChildGroupsTreatment = array();
         if ( $service_1 > 0 ) {
             // change service
             if ( $booking->service_1 != -1 ) {
@@ -1051,10 +1144,13 @@ class BookingController extends BackendController
                         'last_ipadrs'               => CLIENT_IP_ADRS,
                         'last_user'                 => Auth::user()->id
                     );
+                    if ( empty($booking->patient_id) ) {
+                        unset($dataDelete['patient_id']);
+                    }
                     $clsBooking->update($item->booking_id, $dataDelete);
                 }
             }
-            
+
             if ( $booking->service_1 != -1 ) {
                 $whereChildGroupsTreatment      = array(
                     'booking_group_id'          => $booking->booking_group_id,
@@ -1153,17 +1249,20 @@ class BookingController extends BackendController
             else {
                 foreach ( $listBookingUpdate as $item2 ) {
                     $dataBack = array(
-                        'patient_id'                => $bookingChildGroupsTreatment[0]->patient_id,
-                        'hygienist_id'              => $bookingChildGroupsTreatment[0]->hygienist_id,
-                        'equipment_id'              => $bookingChildGroupsTreatment[0]->equipment_id,
-                        'inspection_id'             => $bookingChildGroupsTreatment[0]->inspection_id,
-                        'insurance_id'              => $bookingChildGroupsTreatment[0]->insurance_id,
+                        'patient_id'                => @$bookingChildGroupsTreatment[0]->patient_id,
+                        'hygienist_id'              => @$bookingChildGroupsTreatment[0]->hygienist_id,
+                        'equipment_id'              => @$bookingChildGroupsTreatment[0]->equipment_id,
+                        'inspection_id'             => @$bookingChildGroupsTreatment[0]->inspection_id,
+                        'insurance_id'              => @$bookingChildGroupsTreatment[0]->insurance_id,
 
                         'last_date'                 => date('y-m-d H:i:s'),
                         'last_kind'                 => UPDATE,
                         'last_ipadrs'               => CLIENT_IP_ADRS,
                         'last_user'                 => Auth::user()->id
                     );
+                    if ( empty($booking->patient_id) ) {
+                        unset($dataBack['patient_id']);
+                    }
                     $clsBooking->update($item2->booking_id, $dataBack);
                 }
             }
@@ -1204,6 +1303,33 @@ class BookingController extends BackendController
             //     }
             // }
             $status = true;
+        }
+
+        //remove patient id
+        // if patient_id not already, remove infomation order
+        $whereChildGroups               = array(
+            'booking_group_id'          => $booking->booking_group_id,
+            'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'clinic_id'                 => $booking->clinic_id,
+        );
+        $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+        foreach ( $bookingChildGroups as $bookingChildGroup ) {
+            if ( $bookingChildGroup->service_1 == -1 ) {
+                $dataBack = array(
+                    'patient_id'                => null,
+                    'doctor_id'                 => null,
+                    'inspection_id'             => null,
+                    'insurance_id'              => null,
+                    'equipment_id'              => null,
+                    'hygienist_id'              => null,
+
+                    'last_date'                 => date('y-m-d H:i:s'),
+                    'last_kind'                 => UPDATE,
+                    'last_ipadrs'               => CLIENT_IP_ADRS,
+                    'last_user'                 => Auth::user()->id
+                );
+                $clsBooking->update($bookingChildGroup->booking_id, $dataBack);
+            }
         }
 
         if ( $status ) {

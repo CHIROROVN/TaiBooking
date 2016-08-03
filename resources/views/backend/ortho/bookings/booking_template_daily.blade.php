@@ -155,7 +155,7 @@
                               <td align="left">業務の選択</td>
                               <td align="left">
                                 <select name="" id="clinic_service_id-{{ $common_id }}">
-                                  <option value="0">Close</option>
+                                  <option value="0">閉じる</option>
                                   <option value="-1">治療</option>
                                   @foreach ( $services as $service )
                                   <option value="{{ $service->clinic_service_id }}">{{ $service->service_name }}</option>

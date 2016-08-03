@@ -202,7 +202,7 @@ class BookingTemplateController extends BackendController
                         $dataUpdate['template_group_id'] = (empty($tmp[3])) ? null : $tmp[3];
                         if ( empty($dataInsert['template_group_id']) ) {
                             // group_[mbt_id]_[clinic_id]_date
-                            $dataInsert['template_group_id'] = 'group_' . $id . '_' . $clinic_id;
+                            $dataInsert['template_group_id'] = null;
                         }
                         $update2 = $clsTemplate->update($tmpDataOld[$tmp[0] . '|' . $tmp[2]]->template_id, $dataUpdate);
                         unset($dataUpdate['clinic_service_id']);
@@ -217,7 +217,7 @@ class BookingTemplateController extends BackendController
                     $dataInsert['template_group_id']    = (isset($tmp[3])) ? $tmp[3] : null;
                     if ( empty($dataInsert['template_group_id']) ) {
                         // group_[mbt_id]_[clinic_id]_date
-                        $dataInsert['template_group_id'] = 'group_' . $id . '_' . $clinic_id;
+                        $dataInsert['template_group_id'] = null;
                     }
                     $update2 = $clsTemplate->insert($dataInsert);
                 }
@@ -437,6 +437,9 @@ class BookingTemplateController extends BackendController
                 if ( empty($template->template_group_id) ) {
                     $data['booking_group_id']       = null;
                     $data['booking_childgroup_id']  = null;
+                    if ( $template->clinic_service_id == -1 ) {
+                        $data['booking_group_id']       = $template->mbt_id . '_' . Input::get('date');
+                    }
                 } else {
                     $data['booking_group_id']       = $template->mbt_id . '_' . Input::get('date');
                     $data['booking_childgroup_id']  = $template->template_group_id;

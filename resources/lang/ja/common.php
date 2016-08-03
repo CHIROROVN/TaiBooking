@@ -60,7 +60,7 @@ return [
     | Text in page booking template set
     |--------------------------------------------------------------------------
     */
-    'text_not_yet'                      => 'Not yet!',
+    'text_not_yet'                      => '未登録',
 
 
     /*
@@ -69,6 +69,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'popup_header'                      => 'Popover Header',
-    'select_reset'                      => 'Reset',
+    'select_reset'                      => 'リセットする',
     
 ];

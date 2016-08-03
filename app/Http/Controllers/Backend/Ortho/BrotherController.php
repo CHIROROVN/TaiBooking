@@ -182,6 +182,9 @@ class BrotherController extends BackendController
         $data                       = array();
         $data['brother']            = $clsBrother->get_by_id($id);
         $data['patient_id']         = $patient_id;
+        $clsPatient         = new PatientModel();
+        $patient            = $clsPatient->get_by_id($patient_id);
+        $data['p_sex']      = $patient->p_sex;
         return view('backend.ortho.patients.brothers.edit', $data);
     }
 

@@ -26,16 +26,16 @@
               <td class="col-title">関係</td>
               <td>
                 <div class="radio">
-                  <label><input type="radio" name="brother_relation" value="1" @if($brother->brother_relation == 1) checked="" @endif />兄　　　</label>
+                  <label><input type="radio" class="male" name="brother_relation" value="1" @if($brother->brother_relation == 1) checked="" @endif />兄　　　</label>
                 </div>
                 <div class="radio">
-                  <label><input type="radio" name="brother_relation" value="2" @if($brother->brother_relation == 2) checked="" @endif />弟　　　　　</label>
+                  <label><input type="radio" class="male" name="brother_relation" value="2" @if($brother->brother_relation == 2) checked="" @endif />弟　　　　　</label>
                 </div>
                 <div class="radio">
-                  <label><input type="radio" name="brother_relation" value="3" @if($brother->brother_relation == 3) checked="" @endif />姉　　　　　</label>
+                  <label><input type="radio" class="female" name="brother_relation" value="3" @if($brother->brother_relation == 3) checked="" @endif />姉　　　　　</label>
                 </div>
                 <div class="radio">
-                  <label><input type="radio" name="brother_relation" value="4" @if($brother->brother_relation == 4) checked="" @endif />妹　　　　　</label>
+                  <label><input type="radio" class="female" name="brother_relation" value="4" @if($brother->brother_relation == 4) checked="" @endif />妹　　　　　</label>
                 </div>
                 <div class="radio">
                   <label><input type="radio" name="brother_relation" value="5" @if($brother->brother_relation == 5) checked="" @endif />いとこ</label>
@@ -90,6 +90,15 @@
       select: function( event, ui ) {
         $( "#p_relation_id" ).val( ui.item.label );
         $( "#p_relation_id-id" ).val( ui.item.value );
+        var patient_id = ui.item.value;
+        if(patient_id != null){
+          var url_psex = "{{route('ortho.patients.ajax.psex_ajax')}}" + "?p_id=" + patient_id;
+          $.get(url_psex, function(data){
+            var p_sex = "{{$p_sex}}";
+            relationShip(p_sex, data.p_sex);
+          });
+        }
+
         // $( "#p_relation_id-description" ).html( ui.item.desc );
         return false;
       }
@@ -99,7 +108,25 @@
           .append( "<a>" + item.desc + "</a>" )
           .appendTo( ul );
     };
+    $('#p_relation_id').keyup(function() {
+      if($(this).val() == ''){
+        $('input[class=female]').attr("disabled",false);
+        $('input[class=male]').attr("disabled",false);
+      }
+    });
   });
+
+  function relationShip($primary_sex, $second_sex){
+    if($primary_sex == 1 && $second_sex == 1){
+      $('input[class=female]').attr("disabled",true);
+    }else if($primary_sex == 2 && $second_sex == 2){
+      $('input[class=male]').attr("disabled",true);
+    }else{
+      $('input[class=female]').attr("disabled",false);
+      $('input[class=male]').attr("disabled",false);
+    }
+  }
+
 </script>
 
 @endsection

@@ -74,19 +74,7 @@
             <td>{{ $brother->p_name_kana }}</td>
             <td><?php echo ($brother->p_sex == 1) ? '男' : '女'; ?></td>
             <td>{{ date('Y/m/d', strtotime($brother->p_birthday)) }}</td>
-            <td>
-              @if ( $brother->brother_relation == 1 )
-              兄
-              @elseif ( $brother->brother_relation == 2 )
-              弟
-              @elseif ( $brother->brother_relation == 3 )
-              姉
-              @elseif ( $brother->brother_relation == 4 )
-              妹
-              @elseif ( $brother->brother_relation == 5 )
-              いとこ
-              @endif
-            </td>
+            <td>{{relationship($patient->p_sex,$brother->p_sex , $brother->brother_relation)}}</td>
             <td align="center"><input type="button" onclick="location.href='{{ route('ortho.patients.brothers.edit', [ $brother->brother_id, $patient->p_id ]) }}'" value="編集" class="btn btn-xs btn-page"/></td>
             <td align="center">
               <!-- Trigger the modal with a button -->

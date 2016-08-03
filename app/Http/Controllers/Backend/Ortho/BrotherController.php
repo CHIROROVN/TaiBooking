@@ -120,7 +120,6 @@ class BrotherController extends BackendController
             }
         }
         $data['brothers']   = $tmpBrothers;
-
         return view('backend.ortho.patients.brothers.index', $data);
     }
 
@@ -130,6 +129,9 @@ class BrotherController extends BackendController
     public function getRegist($patient_id)
     {
         $data               = array();
+        $clsPatient         = new PatientModel();
+        $patient            = $clsPatient->get_by_id($patient_id);
+        $data['p_sex']      = $patient->p_sex;
         $data['patient_id'] = $patient_id;
         return view('backend.ortho.patients.brothers.regist', $data);
     }
@@ -189,7 +191,7 @@ class BrotherController extends BackendController
      */
     public function postEdit($id, $patient_id)
     {
-        $clsBrother                 = new BrotherModel();        
+        $clsBrother                 = new BrotherModel();
         $dataInsert                 = array(
             // 'p_id'                  => Input::get('p_id'),
             'p_relation_name'       => Input::get('p_relation_name'),

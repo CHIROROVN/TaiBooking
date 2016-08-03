@@ -388,11 +388,83 @@ function showPatient($p_id=null){
 		return $hh * 60 + $mm;
 	}
 
-
 	function min2HourMin($mm)
 	{
 		$tmpHh = sprintf('%02d', floor($mm / 60));
 		$tmpMm = sprintf('%02d', $mm % 60);
 
 		return $tmpHh . $tmpMm;
+	}
+
+	function relationship($primary_sex = null, $second_sex = null, $brother_relation = null){
+		switch ($brother_relation) {
+			//兄
+			case '1':
+				if($primary_sex == 1){
+					if($second_sex == 1){
+						return '兄'; //anh trai <-> em trai
+					}else{
+						return '姉'; //anh trai <-> chi gai
+					}
+				}else{
+					if($second_sex == 1){
+						return '兄'; //em gai <-> anh trai
+					}else{
+						return '姉'; // em gai <-> chi gai
+					}
+				}
+				break;
+			//弟
+			case '2':
+				if($primary_sex == 1){
+					if($second_sex == 1){
+						return '弟'; //em trai <-> anh trai
+					}else{
+						return '妹'; //em gai <-> anh trai
+					}
+				}else{
+					if($second_sex == 1){
+						return '兄'; //em trai <-> chi gai
+					}else{
+						return '姉'; // em gai <-> chi gai
+					}
+				}
+				break;
+			//姉
+			case '3':
+				if($primary_sex == 1){
+					if($second_sex == 1){
+						return '兄'; //anh trai <-> em trai
+					}else{
+						return '姉'; //chi gai <-> em trai
+					}
+				}else{
+					if($second_sex == 1){
+						return '弟'; //em trai <-> chi gai
+					}else{
+						return '弟'; // chi gai <-> em gai
+					}
+				}
+				break;
+			//妹　
+			case '4':
+				if($primary_sex == 1){
+					if($second_sex == 1){
+						return '弟'; //em trai <-> anh trai
+					}else{
+						return '妹'; //em gai <-> anh trai
+					}
+				}else{
+					if($second_sex == 1){
+						return '弟'; //em trai <-> chi gai
+					}else{
+						return '妹'; // em gai <-> chi gai
+					}
+				}
+				break;
+			//いとこ
+			default:
+				return 'いとこ';
+				break;
+		}
 	}

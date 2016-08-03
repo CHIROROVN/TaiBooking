@@ -319,6 +319,10 @@
     
     // set value from popup
     $('.popup').click(function(event) {
+      // reset
+      $('.popover').hide();
+      $(this).parent().find('.popover').show();
+      
       var objPopup = $(this);
       var facility_id = $(this).attr('data-facility-id');
       var u_id_old = $(this).attr('data-u-id');

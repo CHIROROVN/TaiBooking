@@ -711,3 +711,12 @@ span.note_required{
 .backgroup-while {
   background-color: white !important;
 }
+
+.popover {
+  width: 500px;
+}
+
+.popover li {
+  display: inline-block;
+  width: 50%;
+}

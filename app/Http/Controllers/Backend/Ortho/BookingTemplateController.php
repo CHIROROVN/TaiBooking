@@ -344,7 +344,10 @@ class BookingTemplateController extends BackendController
         $data['facilitys_popup']    = $clsFacility->getAll(@$data['clinic']->clinic_id, 1);
         $services                   = $clsClinicService->getAll(@$data['clinic']->clinic_id, $service_available);
         $data['times']              = Config::get('constants.TIME');
-        $data['booking_templates']  = $clsBookingTemplate->get_list();
+        $where = array(
+            'clinic_id' => Input::get('clinic_id')
+        );
+        $data['booking_templates']  = $clsBookingTemplate->get_list($where);
         
         $arrServices                = array();
         foreach ( $services as $service ) {

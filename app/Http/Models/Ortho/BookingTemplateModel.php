@@ -31,8 +31,15 @@ class BookingTemplateModel
                                 ->get();
     }
 
-    public function get_list(){
-        return DB::table($this->table)->where('last_kind', '<>', DELETE)->lists('mbt_name', 'mbt_id');
+    public function get_list($where = array()){
+        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('clinic_id', $where['clinic_id']);
+        }
+
+        $db = $db->lists('mbt_name', 'mbt_id');
+        return $db;
     }
 
     public function insert($data)

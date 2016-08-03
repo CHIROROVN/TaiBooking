@@ -4,7 +4,7 @@
    <section id="page">
         <div class="container">
           <div class="row content-page">
-            <h3>予約管理　＞　予約日時の変更</h3>
+            <h3>予約管理　＞　予約の検索</h3>
               <table class="table table-bordered">
                 <tr>
                   <td class="col-title"><label for="textName">医院</label></td>

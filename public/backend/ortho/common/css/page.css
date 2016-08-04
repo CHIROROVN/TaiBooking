@@ -720,3 +720,22 @@ span.note_required{
   display: inline-block;
   width: 50%;
 }
+
+.form-control-full {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu.usetwentyfour span.year {
+  // background-color: red !important;
+  width: 45px;
+  display: inline-block;
+  text-align: center;
+} 
+
+.bootstrap-datetimepicker-widget.dropdown-menu.usetwentyfour span.month {
+  // background-color: red !important;
+  width: 45px;
+  display: inline-block;
+  text-align: center;
+} 

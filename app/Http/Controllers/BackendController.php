@@ -10,7 +10,7 @@ class BackendController extends Controller
 	{
 		parent::__construct();
 		$this->middleware('auth');
-
+        LaravelLocalization::setLocale('ja');
 		$ipaddress = '';
         if (isset($_SERVER['HTTP_CLIENT_IP']))
             $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
@@ -27,9 +27,6 @@ class BackendController extends Controller
         else
             $ipaddress = 'UNKNOWN';
         define('CLIENT_IP_ADRS', $ipaddress);
-
-        LaravelLocalization::setLocale('ja');
-
 
         $configs = Config::get('constants.DEFINE');
         foreach($configs as $key => $value)

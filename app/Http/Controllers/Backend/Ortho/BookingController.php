@@ -283,7 +283,12 @@ class BookingController extends BackendController
             'last_user'                 => Auth::user()->id
         );
 
-        $listBookingGroup = $clsBooking->get_by_group($booking->booking_group_id);
+        $where = array(
+            'clinic_id'                 => $booking->clinic_id,
+            'booking_group_id'          => $booking->booking_group_id,
+            'booking_childgroup_id'     => $booking->booking_childgroup_id
+        );
+        $listBookingGroup = $clsBooking->get_where($where);
         $status = true;
         foreach ( $listBookingGroup as $item ) {
             if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {

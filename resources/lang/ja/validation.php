@@ -180,7 +180,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'error_facility_name_required'                          => '施設名を入力してください。',
-    'error_facility_kind_required'                          => 'Please choose treatment kind.',
+    'error_facility_kind_required'                          => '治療の種類を選択してください。',
 
     /*
     |--------------------------------------------------------------------------

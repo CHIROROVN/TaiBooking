@@ -285,7 +285,7 @@ class BookingController extends BackendController
 
         $where = array(
             'clinic_id'                 => $booking->clinic_id,
-            'booking_group_id'          => $booking->booking_group_id,
+            // 'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id
         );
         $listBookingGroup = $clsBooking->get_where($where);

@@ -290,9 +290,15 @@ class BookingController extends BackendController
         );
         $listBookingGroup = $clsBooking->get_where($where);
         $status = true;
-        foreach ( $listBookingGroup as $item ) {
-            if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
+        if ( empty($booking->booking_childgroup_id) ) {
+            if ( !$clsBooking->update($booking->booking_id, $dataUpdate) ) {
                 $status = false;
+            }
+        } else {
+            foreach ( $listBookingGroup as $item ) {
+                if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
+                    $status = false;
+                }
             }
         }
 

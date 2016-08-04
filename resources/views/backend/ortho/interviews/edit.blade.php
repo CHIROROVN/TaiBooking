@@ -2796,6 +2796,7 @@
   $(document).ready(function(){
     // 1
     $(function () {
+      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
       $('#q0_1_date').datepicker({
         // viewMode: 'years',
         dateFormat: 'yy/mm/dd'

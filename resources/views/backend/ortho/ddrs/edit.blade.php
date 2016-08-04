@@ -92,7 +92,7 @@
         <div class="table-responsive">
           <table class="table table-bordered">
             <tr>
-              <td class="col-title">開始日時 <span class="note-required">(※)</span></td>
+              <td class="col-title">開始日時 <span class="note-required">(<span class="note_required">※</span>)</span></td>
               <td>
 
                 <!-- ddr_start_date -->
@@ -136,7 +136,7 @@
                   @endif
                 </select>
                 から
-                <span class="error-input">@if ($errors->first('ddr_start_date')) {!! $errors->first('ddr_start_date') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('ddr_start_date')) ※{!! $errors->first('ddr_start_date') !!} @endif</span>
               </td>
             </tr>
             <tr>
@@ -295,6 +295,7 @@
 
     // datepicker
     $(function() {
+      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
       $( "#datepicker" ).datepicker({
         showOn: "button",
         buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
@@ -325,6 +326,7 @@
 
     // datepicker 1
     $(function() {
+      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
       $( "#datepicker1" ).datepicker({
         showOn: "button",
         buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",

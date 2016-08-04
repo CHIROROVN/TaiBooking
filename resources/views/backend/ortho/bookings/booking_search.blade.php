@@ -171,6 +171,7 @@
     }
 
     $(document).ready(function() {
+      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
       $(".datepicker").datepicker({
           showOn: 'both',
           buttonText: 'カレンダー',

@@ -30,7 +30,6 @@
         </tr>
       </table>
       <div class="table-responsive">
-        @if ( !empty($list2s) && count($list2s) > 0 )
         <table class="table table-bordered table-striped">
           <tbody>
             <tr>
@@ -40,10 +39,11 @@
               <td class="col-title" align="center">カルテNo</td>
               <td class="col-title" align="center">患者名</td>
               <td class="col-title" align="center">電話番号</td>
-              <td class="col-title" align="center">最終処置内容-1-2</td>
-              <td class="col-title" align="center">備考</td>
-              <td class="col-title" align="center">予約情報の編集</td>
+              <td class="col-title" align="center" style="min-width:135px;">最終処置内容-1-2</td>
+              <td class="col-title" align="center" style="min-width:50px;">備考</td>
+              <td class="col-title" align="center" style="min-width:120px;">予約情報の編集</td>
             </tr>
+            @if ( !empty($list2s) && count($list2s) > 0 )
             @foreach ( $list2s as $list2 )
             <tr>
               <td>{{ $list2->clinic_name }}</td>
@@ -70,9 +70,11 @@
               <td align="center"><input onclick="location.href='{{ route('ortho.bookings.booking.edit', [ $list2->booking_id ]) }}'" value="予約情報の編集" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
             @endforeach
+            @else
+            <tr><td colspan="9" style="text-align: center;">該当するデータがありません。</td></tr>
+            @endif
           </tbody>
         </table>
-        @endif
       </div>
     </div>    
   </section>

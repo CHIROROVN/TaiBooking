@@ -21,7 +21,7 @@
       </tr>
 
       <tr>
-        <td width="20%">ふりがな</td>
+        <td width="20%">ふりがな <span class="note_required">※</span></td>
         <td>
           <div class="row">
             
@@ -30,7 +30,7 @@
               <label class="control-label col-sm-2" for="q1_1_sei">せい：</label>
               <div class="col-sm-10">
                 <input class="form-control" type="text" name="q1_1_sei" id="q1_1_sei" value="{{ old('q1_1_sei') }}" />
-                <span class="error-input">@if ($errors->first('q1_1_sei')) {!! $errors->first('q1_1_sei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_1_sei')) ※{!! $errors->first('q1_1_sei') !!} @endif</span>
               </div>
             </div>
 
@@ -39,7 +39,7 @@
               <label class="control-label col-sm-2" for="q1_1_mei"> めい：</label>
               <div class="col-sm-10">
                 <input class="form-control" type="text" name="q1_1_mei" id="q1_1_mei" value="{{ old('q1_1_mei') }}" />
-                <span class="error-input">@if ($errors->first('q1_1_mei')) {!! $errors->first('q1_1_mei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_1_mei')) ※{!! $errors->first('q1_1_mei') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -47,7 +47,7 @@
       </tr>
 
       <tr>
-        <td>お名前</td>
+        <td>お名前 <span class="note_required">※</span></td>
         <td>
           <div class="row">
 
@@ -56,7 +56,7 @@
               <label class="control-label col-sm-2" for="q1_2_sei">姓：</label>
               <div class="col-sm-10">
                 <input class="form-control" type="text" name="q1_2_sei" id="q1_2_sei" value="{{ old('q1_2_sei') }}" />
-                <span class="error-input">@if ($errors->first('q1_2_sei')) {!! $errors->first('q1_2_sei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_2_sei')) ※{!! $errors->first('q1_2_sei') !!} @endif</span>
               </div>
             </div>
 
@@ -65,7 +65,7 @@
               <label class="control-label col-sm-2" for="q1_2_mei">名：</label>
               <div class="col-sm-10">
                 <input class="form-control" type="text" name="q1_2_mei" id="q1_2_mei" value="{{ old('q1_2_mei') }}" />
-                <span class="error-input">@if ($errors->first('q1_2_mei')) {!! $errors->first('q1_2_mei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_2_mei')) ※{!! $errors->first('q1_2_mei') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -133,11 +133,11 @@
 
       <!-- q1_6 -->
       <tr>
-          <td>電話番号</td>
+          <td>電話番号 <span class="note_required">※</span></td>
           <td>
             <div class="row"><div class="col-sm-6">
               <input class="form-control" type="text" name="q1_6" id="q1_6" value="{{ old('q1_6') }}" />
-              <span class="error-input">@if ($errors->first('q1_6')) {!! $errors->first('q1_6') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q1_6')) ※{!! $errors->first('q1_6') !!} @endif</span>
             </div></div>
           </td>
       </tr>
@@ -164,11 +164,11 @@
 
       <!-- q1_9 -->
       <tr>
-          <td>メールアドレス</td>
+          <td>メールアドレス <span class="note_required">※</span></td>
           <td>
             <div class="row"><div class="col-sm-6">
               <input class="form-control" type="text" name="q1_9" id="q1_9" placeholder="例）example@domain.co.jp" value="{{ old('q1_9') }}" />
-              <span class="error-input">@if ($errors->first('q1_9')) {!! $errors->first('q1_9') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q1_9')) ※{!! $errors->first('q1_9') !!} @endif</span>
             </div></div>
           </td>
       </tr>

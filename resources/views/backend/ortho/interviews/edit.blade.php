@@ -34,7 +34,7 @@
                   @endif
                 @endforeach
               </select>
-              <span class="error-input">@if ($errors->first('q0_1_clinic')) {!! $errors->first('q0_1_clinic') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q0_1_clinic')) ※{!! $errors->first('q0_1_clinic') !!} @endif</span>
             </div>
 
             <!-- q0_1_date -->
@@ -48,7 +48,7 @@
                 @else
                 <input class="form-control" type="text" name="q0_1_date" id="q0_1_date" value="" />
                 @endif
-                <span class="error-input">@if ($errors->first('q0_1_date')) {!! $errors->first('q0_1_date') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q0_1_date')) ※{!! $errors->first('q0_1_date') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
                   @endif
                 @endforeach
               </select>
-              <span class="error-input">@if ($errors->first('q0_2_clinic')) {!! $errors->first('q0_2_clinic') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q0_2_clinic')) ※{!! $errors->first('q0_2_clinic') !!} @endif</span>
             </div>
 
             <!-- q0_2_date -->
@@ -94,7 +94,7 @@
                 @else
                 <input class="form-control" type="text" name="q0_2_date" id="q0_2_date" value="" />
                 @endif
-                <span class="error-input">@if ($errors->first('q0_2_date')) {!! $errors->first('q0_2_date') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q0_2_date')) ※{!! $errors->first('q0_2_date') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@
               @endif
             @endforeach
           </select>
-          <span class="error-input">@if ($errors->first('q0_3_user')) {!! $errors->first('q0_3_user') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('q0_3_user')) ※{!! $errors->first('q0_3_user') !!} @endif</span>
         </td>
       </tr>
 
@@ -147,7 +147,7 @@
                   @endif
                 @endforeach
               </select>
-              <span class="error-input">@if ($errors->first('q0_4_clinic')) {!! $errors->first('q0_4_clinic') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q0_4_clinic')) ※{!! $errors->first('q0_4_clinic') !!} @endif</span>
             </div>
 
             <!-- q0_4_date -->
@@ -161,7 +161,7 @@
                 @else
                 <input class="form-control" type="text" name="q0_4_date" id="q0_4_date" value="" />
                 @endif
-                <span class="error-input">@if ($errors->first('q0_4_clinic')) {!! $errors->first('q0_4_clinic') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q0_4_clinic')) ※{!! $errors->first('q0_4_clinic') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@
           @else
           <textarea name="q0_5" class="form-control form-control-area">{{ $interview->q0_5 }}</textarea>
           @endif
-          <span class="error-input">@if ($errors->first('q0_5')) {!! $errors->first('q0_5') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('q0_5')) ※{!! $errors->first('q0_5') !!} @endif</span>
         </td>
       </tr>
 
@@ -190,7 +190,7 @@
           @else
           <textarea name="q0_6" class="form-control form-control-area">{{ $interview->q0_6 }}</textarea>
           @endif
-          <span class="error-input">@if ($errors->first('q0_6')) {!! $errors->first('q0_6') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('q0_6')) ※{!! $errors->first('q0_6') !!} @endif</span>
         </td>
       </tr>
 
@@ -203,7 +203,7 @@
           @else
           <textarea name="q0_7" class="form-control form-control-area">{{ $interview->q0_7 }}</textarea>
           @endif
-          <span class="error-input">@if ($errors->first('q0_7')) {!! $errors->first('q0_7') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('q0_7')) ※{!! $errors->first('q0_7') !!} @endif</span>
         </td>
       </tr>
 
@@ -216,7 +216,7 @@
           @else
           <textarea name="q0_8" class="form-control form-control-area">{{ $interview->q0_8 }}</textarea>
           @endif
-          <span class="error-input">@if ($errors->first('q0_8')) {!! $errors->first('q0_8') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('q0_8')) ※{!! $errors->first('q0_8') !!} @endif</span>
         </td>
       </tr>
 
@@ -229,7 +229,7 @@
           @else
           <textarea name="q0_9" class="form-control form-control-area">{{ $interview->q0_9 }}</textarea>
           @endif
-          <span class="error-input">@if ($errors->first('q0_9')) {!! $errors->first('q0_9') !!} @endif</span>
+          <span class="error-input">@if ($errors->first('q0_9')) ※{!! $errors->first('q0_9') !!} @endif</span>
         </td>
       </tr>
 
@@ -238,7 +238,7 @@
         <td colspan="2"  class="col-title"><span class="span-q">Q1</span>　ご本人様について</td>
       </tr>
       <tr>
-        <td width="20%">ふりがな</td>
+        <td width="20%">ふりがな <span class="note_required">※</span></td>
         <td>
           <div class="row">
             
@@ -251,7 +251,7 @@
                 @else
                 <input class="form-control" type="text" name="q1_1_sei" id="q1_1_sei" value="{{ @$interview->q1_1_sei }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('q1_1_sei')) {!! $errors->first('q1_1_sei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_1_sei')) ※{!! $errors->first('q1_1_sei') !!} @endif</span>
               </div>
             </div>
 
@@ -264,7 +264,7 @@
                 @else
                 <input class="form-control" type="text" name="q1_1_mei" id="q1_1_mei" value="{{ @$interview->q1_1_mei }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('q1_1_mei')) {!! $errors->first('q1_1_mei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_1_mei')) ※{!! $errors->first('q1_1_mei') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -272,7 +272,7 @@
       </tr>
 
       <tr>
-        <td>お名前</td>
+        <td>お名前 <span class="note_required">※</span></td>
         <td>
           <div class="row">
 
@@ -285,7 +285,7 @@
                 @else
                 <input class="form-control" type="text" name="q1_2_sei" id="q1_2_sei" value="{{ @$interview->q1_2_sei }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('q1_2_sei')) {!! $errors->first('q1_2_sei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_2_sei')) ※{!! $errors->first('q1_2_sei') !!} @endif</span>
               </div>
             </div>
 
@@ -298,7 +298,7 @@
                 @else
                 <input class="form-control" type="text" name="q1_2_mei" id="q1_2_mei" value="{{ @$interview->q1_2_mei }}" />
                 @endif
-                <span class="error-input">@if ($errors->first('q1_2_mei')) {!! $errors->first('q1_2_mei') !!} @endif</span>
+                <span class="error-input">@if ($errors->first('q1_2_mei')) ※{!! $errors->first('q1_2_mei') !!} @endif</span>
               </div>
             </div>
           </div>
@@ -396,7 +396,7 @@
 
       <!-- q1_6 -->
       <tr>
-          <td>電話番号</td>
+          <td>電話番号 <span class="note_required">※</span></td>
           <td>
             <div class="row"><div class="col-sm-6">
               @if ( old('q1_6') )
@@ -404,7 +404,7 @@
               @else
               <input class="form-control" type="text" name="q1_6" id="q1_6" value="{{ @$interview->q1_6 }}" />
               @endif
-              <span class="error-input">@if ($errors->first('q1_6')) {!! $errors->first('q1_6') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q1_6')) ※{!! $errors->first('q1_6') !!} @endif</span>
             </div></div>
           </td>
       </tr>
@@ -439,7 +439,7 @@
 
       <!-- q1_9 -->
       <tr>
-          <td>メールアドレス</td>
+          <td>メールアドレス <span class="note_required">※</span></td>
           <td>
             <div class="row"><div class="col-sm-6">
               @if ( old('q1_9') )
@@ -447,7 +447,7 @@
               @else
               <input class="form-control" type="text" name="q1_9" id="q1_9" placeholder="例）example@domain.co.jp" value="{{ @$interview->q1_9 }}" />
               @endif
-              <span class="error-input">@if ($errors->first('q1_9')) {!! $errors->first('q1_9') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('q1_9')) ※{!! $errors->first('q1_9') !!} @endif</span>
             </div></div>
           </td>
       </tr>

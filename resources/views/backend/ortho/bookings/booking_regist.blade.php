@@ -99,7 +99,7 @@
                 {{ @$services[$booking->service_1] }}
                 @else
                 <select name="service_1" id="service_1" class="form-control">
-                  <option value="">▼選択</option>
+                  <option value="-1">▼選択</option>
                   @if(count($treatment1s) > 0)
                     @foreach($treatment1s as $treatment12)
                         <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if($booking->service_1 == $treatment12->treatment_id) selected @endif>{{$treatment12->treatment_name}}</option>

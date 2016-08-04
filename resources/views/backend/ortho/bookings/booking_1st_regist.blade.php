@@ -158,21 +158,12 @@
                 {{ @$services[$booking->service_1] }}
                 @else
                 <select name="service_1" id="service_1" class="form-control">
-                  <option value="">▼選択</option>
-                  <optgroup label="業務名">
-                      @if(count($services) > 0)
-                        @foreach($services as $key11 => $service11)
-                        <option value="{{$key11}}#sk11" @if($booking->service_1 == $key11) selected @endif >{{$service11}}</option>
+                  <option value="-1">▼選択</option>
+                    @if(count($treatment1s) > 0)
+                      @foreach($treatment1s as $key12 => $treatment12)
+                        <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
                       @endforeach
-                      @endif
-                  </optgroup>
-                  <optgroup label="治療内容">
-                        @if(count($treatment1s) > 0)
-                          @foreach($treatment1s as $key12 => $treatment12)
-                            <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
-                          @endforeach
-                        @endif
-                  </optgroup>
+                    @endif
                 </select>
                 @endif
               </td>

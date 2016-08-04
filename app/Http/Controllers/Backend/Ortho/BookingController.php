@@ -679,7 +679,7 @@ class BookingController extends BackendController
 
         $service_1 = $service_1_kind = null;
 
-        if(!empty(Input::get('service_1'))){
+        if(!empty(Input::get('service_1')) && Input::get('service_1') != -1 ){
             $s1k = explode('_', Input::get('service_1'));
             $s1_kind            = str_split($s1k[1], 3);
             $service_1_kind     = $s1_kind[1];
@@ -1031,7 +1031,7 @@ class BookingController extends BackendController
 
         $service_1 = $service_1_kind = null;
 
-        if(!empty(Input::get('service_1'))){
+        if(!empty(Input::get('service_1')) && Input::get('service_1') != -1 ){
             $s1k = explode('_', Input::get('service_1'));
             $s1_kind            = str_split($s1k[1], 3);
             $service_1_kind     = $s1_kind[1];

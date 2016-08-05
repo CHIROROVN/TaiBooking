@@ -139,7 +139,7 @@ class DdrController extends BackendController
         $data['ddr_start_date_d']   = date('d', strtotime($ddr_start_date));
         // set hour
         $tmpHours = array();
-        for ( $i = 1; $i <= 12; $i++ ) {
+        for ( $i = 0; $i <= 23; $i++ ) {
             $tmpHours[$i] = convert2Digit($i);
         }
         $data['hours'] = $tmpHours;
@@ -229,7 +229,7 @@ class DdrController extends BackendController
 
         // set hour
         $tmpHours = array();
-        for ( $i = 1; $i <= 12; $i++ ) {
+        for ( $i = 0; $i <= 23; $i++ ) {
             $tmpHours[$i] = convert2Digit($i);
         }
         $data['hours'] = $tmpHours;

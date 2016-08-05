@@ -1038,54 +1038,31 @@ class BookingController extends BackendController
         $service_1 = $service_1_kind = null;
 
         if(!empty(Input::get('service_1')) && Input::get('service_1') != -1 ){
-            $s1k = explode('_', Input::get('service_1'));
+            $s1k = explode('#', Input::get('service_1'));
             $s1_kind            = str_split($s1k[1], 3);
             $service_1_kind     = $s1_kind[1];
-
-            if($service_1_kind == 2){
-                $st1 = explode('#', $s1k[0]);
-                $service_1      = $st1[0];
-                $treatment_time_1 = $st1[1];
-            }else{
-                $service_1      = $s1k[0];
-            }
+            $service_1      = $s1k[0];
         }
 
-        // if(!empty(Input::get('service_2'))){
-        //     $s2k = explode('_', Input::get('service_2'));
-        //     $s2_kind            = str_split($s2k[1], 3);
-        //     $service_2_kind     = $s2_kind[1];
+        $dataInput['patient_id']            = Input::get('p_id', null);
+        $dataInput['doctor_id']             = Input::get('doctor_id', null);
+        $dataInput['hygienist_id']          = Input::get('hygienist_id', null);
+        $dataInput['equipment_id']          = Input::get('equipment_id', null);
+        if(!empty($service_1))
+            $dataInput['service_1']             = $service_1;
+        if(!empty($service_1_kind))
+            $dataInput['service_1_kind']        = $service_1_kind;
+        $dataInput['inspection_id']         = Input::get('inspection_id', null);
+        $dataInput['insurance_id']          = Input::get('insurance_id', null);
+        $dataInput['emergency_flag']        = Input::get('emergency_flag', null);
+        $dataInput['booking_status']        = Input::get('booking_status', null);
+        $dataInput['booking_recall_ym']     = Input::get('booking_recall_ym', null);
+        $dataInput['booking_memo']          = Input::get('booking_memo', null);
+        $dataInput['last_date']             = date('y-m-d H:i:s');
+        $dataInput['last_kind']             = UPDATE;
+        $dataInput['last_ipadrs']           = CLIENT_IP_ADRS;
+        $dataInput['last_user']             = Auth::user()->id;
 
-        //     if($service_2_kind == 2){
-        //         $st2 = explode('#', $s2k[0]);
-        //         $service_2      = $st2[0];
-        //         $treatment_time_2 = $st2[1];
-        //     }else{
-        //         $service_2      = $s2k[0];
-        //     }
-        // }
-
-        $dataInput = array(
-                // 'facility_id'               => Input::get('facility_id'),
-                'patient_id'                => Input::get('p_id', null),
-                'doctor_id'                 => Input::get('doctor_id', null),
-                'hygienist_id'              => Input::get('hygienist_id', null),
-                'equipment_id'              => Input::get('equipment_id', null),
-                // 'service_1'                 => $service_1,
-                // 'service_1_kind'            => $service_1_kind,
-                // 'service_2'                 => $service_2,
-                // 'service_2_kind'            => $service_2_kind,
-                'inspection_id'             => Input::get('inspection_id', null),
-                'insurance_id'              => Input::get('insurance_id', null),
-                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
-                'booking_status'            => Input::get('booking_status'),
-                'booking_recall_ym'         => Input::get('booking_recall_ym'),
-                'booking_memo'              => Input::get('booking_memo'),
-                'last_date'                 => date('y-m-d H:i:s'),
-                'last_kind'                 => UPDATE,
-                'last_ipadrs'               => CLIENT_IP_ADRS,
-                'last_user'                 => Auth::user()->id
-            );
         if ( $dataInput['patient_id'] == 0 ) {
             $dataInput['patient_id'] = null;
         }

@@ -246,7 +246,7 @@
                 </div>
                 <div class="radio">
                   <label>
-                    <input name="booking_status" value="3" type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
+                    <input name="booking_status" value="3" id="recalling" type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
                     <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
                     <?php $year =  date('Y', strtotime($booking->booking_date))?>
                       <option value="" selected>▼選択</option>
@@ -289,5 +289,9 @@
   </div>
 </section>
 </form>
-
+<script type="text/javascript">
+  $('#booking_recall_ym').click(function() {
+    $('#recalling').attr("checked", "checked");
+  });
+</script>
 @endsection

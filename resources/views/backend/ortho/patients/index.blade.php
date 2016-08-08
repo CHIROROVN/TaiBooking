@@ -29,7 +29,20 @@
       <div class="col-md-6">
         <input name="keyword" type="text" id="keyword_id" class="form-control form-control--default" value="{{ $keyword }}">
         <input type="hidden" name="keyword_id" id="keyword_id-id" value="{{ $keyword_id }}">
-        <input name="" value="検索" type="submit" class="btn btn-sm btn-page">
+       <!--  <input name="" value="検索" type="submit" class="btn btn-sm btn-page"> -->
+
+    <div class="btn-group btn-page">
+      <button type="submit" class="btn btn-mini btn-page" style="width: 85px;">検索</button>
+      <button class="btn btn-mini dropdown-toggle btn-page" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+          <li>
+            <a href="#">Search Advanced</a>
+          </li>
+      </ul>
+    </div>
+
       </div>
       </form>
 

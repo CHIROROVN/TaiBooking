@@ -272,6 +272,7 @@
                           $tPatient .= $booking->p_no . '<br />';
                           $tPatient .= $booking->p_name . '<br />';
                         }
+                        
 
                         if ( !empty($sPatient) ) {
                           $clsBackgroundPatient = 'backgroup-while';

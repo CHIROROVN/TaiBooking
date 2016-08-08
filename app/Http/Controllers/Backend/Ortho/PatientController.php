@@ -82,7 +82,6 @@ class PatientController extends BackendController
     public function postRegist()
     {
         $clsPatient                 = new PatientModel();
-        
         $dataInsert                 = array(
             'p_no'                  => Input::get('p_no'),
             'p_dr'                  => Input::get('p_dr'),
@@ -153,7 +152,6 @@ class PatientController extends BackendController
         $data['clinics']            = $clsClinic->get_for_select();
         $data['user_doctors']       = $clsUser->get_for_select();
         $data['prefs']              = Config::get('constants.PREF');
-
         return view('backend.ortho.patients.edit', $data);
     }
 
@@ -164,7 +162,10 @@ class PatientController extends BackendController
     public function postEdit($id)
     {
         $clsPatient                 = new PatientModel();
-        
+        $rules                      = $clsPatient->Rules();
+        $cur_p_no                   = Input::get('cur_p_no');
+        if($cur_p_no == Input::get('p_no')) unset($rules['p_no']);
+
         $dataInsert                 = array(
             'p_no'                  => Input::get('p_no'),
             'p_dr'                  => Input::get('p_dr'),
@@ -206,9 +207,9 @@ class PatientController extends BackendController
             'last_user'             => Auth::user()->id
         );
 
-        $validator      = Validator::make($dataInsert, $clsPatient->Rules(), $clsPatient->Messages());
+        $validator      = Validator::make($dataInsert, $rules, $clsPatient->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.patients.regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.patients.edit', $id)->withErrors($validator)->withInput();
         }
 
         // update
@@ -222,6 +223,8 @@ class PatientController extends BackendController
             'keyword'       => Session::get('where')['keyword'],
             'keyword_id'    => Session::get('where')['keyword_id']
         ]);
+
+        if(Session::has('where')) Session::forget('where');
     }
 
     /**

@@ -106,6 +106,7 @@ return [
     | Model Patient
     |--------------------------------------------------------------------------
     */
+    'error_p_no_unique'                                     => 'This カルテNo existed, try again!',
     'error_p_no_required'                                   => 'カルテNoを入力してください。',
     'error_p_dr_required'                                   => '担当を選択してください。',
     'error_p_hos_memo_required'                             => 'HOSを入力してください。',

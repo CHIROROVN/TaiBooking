@@ -11,6 +11,7 @@ class PatientModel
     public function Rules()
     {
     	return array(
+            'p_no'                  => 'unique:t_patient',
             'p_name'                => 'required',
             'p_name_kana'           => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'p_sex'                 => 'required',
@@ -23,6 +24,7 @@ class PatientModel
     public function Messages()
     {
     	return array(
+            'p_no.unique'                       => trans('validation.error_p_no_unique'),
             'p_name.required'                   => trans('validation.error_p_name_required'),
             'p_name_kana.required'              => trans('validation.error_p_name_kana_required'),
             'p_name_kana.regex'                 => trans('validation.error_p_name_kana_regex'),

@@ -31,17 +31,17 @@
         <input type="hidden" name="keyword_id" id="keyword_id-id" value="{{ $keyword_id }}">
        <!--  <input name="" value="検索" type="submit" class="btn btn-sm btn-page"> -->
 
-    <div class="btn-group btn-page">
-      <button type="submit" class="btn btn-mini btn-page" style="width: 85px;">検索</button>
-      <button class="btn btn-mini dropdown-toggle btn-page" data-toggle="dropdown">
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-          <li>
-            <a href="#">検索高度な</a>
-          </li>
-      </ul>
-    </div>
+        <div class="btn-group btn-page">
+          <button type="submit" class="btn btn-mini btn-page" style="width: 85px;">検索</button>
+          <button class="btn btn-mini dropdown-toggle btn-page" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+              <li>
+                <a href="#">検索高度な</a>
+              </li>
+          </ul>
+        </div>
 
       </div>
       </form>

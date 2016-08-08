@@ -7,7 +7,6 @@ class PatientModel
 
     protected $table = 't_patient';
 
-
     public function Rules()
     {
     	return array(
@@ -19,7 +18,6 @@ class PatientModel
             'p_email'               => 'email',
 		);
     }
-
 
     public function Messages()
     {
@@ -33,7 +31,6 @@ class PatientModel
             'p_email.email'                     => trans('validation.error_p_email_email'),
 		);
     }
-
 
     public function get_all($where = array(), $paging = true)
     {

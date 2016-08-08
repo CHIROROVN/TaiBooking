@@ -1,16 +1,14 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
 
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
 use Auth;
 use Hash;
 use App\User;
 use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\BelongModel;
-
 use Form;
 use Html;
 use Input;
@@ -49,7 +47,8 @@ class UserController extends BackendController
     {
         $clsBelong          = new BelongModel();
         $data['belongs']    = $clsBelong->get_all();
-
+        $clsClinic                  = new ClinicModel();
+        $data['clinics']            = $clsClinic->get_list_clinic();
         return view('backend.ortho.users.regist', $data);
     }
 

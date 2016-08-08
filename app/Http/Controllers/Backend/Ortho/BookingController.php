@@ -277,8 +277,21 @@ class BookingController extends BackendController
         $clsBooking                         = new BookingModel();
         $booking                            = $clsBooking->get_by_id($id);
         $dataUpdate = array(
+            'service_1'                 => -1,
+            'service_1_kind'            => 2,
+            'service_2'                 => null,
+            'service_2_kind'            => null,
+            'patient_id'                => null,
+            'booking_childgroup_id'     => null,
+            'doctor_id'                 => null,
+            'hygienist_id'              => null,
+            'equipment_id'              => null,
+            'inspection_id'             => null,
+            'insurance_id'              => null,
+            'booking_memo'              => null,
+
             'last_date'                 => date('y-m-d H:i:s'),
-            'last_kind'                 => DELETE,
+            'last_kind'                 => UPDATE,
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_user'                 => Auth::user()->id
         );
@@ -304,7 +317,7 @@ class BookingController extends BackendController
 
         if ( $status ) {
             Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.bookings.booking.result.list');
+            return redirect()->route('ortho.bookings.booking.daily', [ 'clinic_id' => $booking->clinic_id ]);
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
             return redirect()->route('ortho.ortho.bookings.booking_cancel_cnf', $id);

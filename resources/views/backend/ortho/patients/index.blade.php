@@ -38,7 +38,7 @@
       </button>
       <ul class="dropdown-menu">
           <li>
-            <a href="#">Search Advanced</a>
+            <a href="#">検索高度な</a>
           </li>
       </ul>
     </div>

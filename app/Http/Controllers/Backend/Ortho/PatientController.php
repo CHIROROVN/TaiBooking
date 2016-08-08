@@ -43,6 +43,11 @@ class PatientController extends BackendController
         $where                  = array();
         $where['keyword']       = $keyword;
         $where['keyword_id']    = $keyword_id;
+
+        $where['p_no']          = Input::get('p_no');
+        $where['p_tel']         = Input::get('p_tel');
+        $where['p_hos']         = Input::get('p_hos');
+        $where['p_hos_memo']    = Input::get('p_hos_memo');
         // set where
         Session::put('where', $where);
 
@@ -51,6 +56,10 @@ class PatientController extends BackendController
         $data['patients']       = $clsPatient->get_all($where);
         $data['keyword']        = $keyword;
         $data['keyword_id']     = $keyword_id;
+        $data['p_no']           = Input::get('p_no');
+        $data['p_tel']          = Input::get('p_tel');
+        $data['p_hos']          = Input::get('p_hos');
+        $data['p_hos_memo']     = Input::get('p_hos_memo');
 
         $interviews = $clsInterview->get_all();
         $tmpInterviews = array();
@@ -272,6 +281,21 @@ class PatientController extends BackendController
         $data['interviews'] = $tmpInterviews;
         
         return view('backend.ortho.patients.detail', $data);
+    }
+
+
+    public function getSearch()
+    {
+        $data                       = array();
+        $data['p_no']               = Input::get('p_no');
+        $data['p_tel']              = Input::get('p_tel');
+        $data['p_hos']              = Input::get('p_hos');
+        $data['p_hos_memo']         = Input::get('p_hos_memo');
+
+        $clsClinic                  = new ClinicModel();
+        $data['clinics']            = $clsClinic->get_for_select();
+
+        return view('backend.ortho.patients.search', $data);
     }
 
     /**

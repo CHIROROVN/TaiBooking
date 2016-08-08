@@ -31,17 +31,17 @@
         <input type="hidden" name="keyword_id" id="keyword_id-id" value="{{ $keyword_id }}">
        <!--  <input name="" value="検索" type="submit" class="btn btn-sm btn-page"> -->
 
-        <div class="btn-group btn-page">
-          <button type="submit" class="btn btn-mini btn-page" style="width: 85px;">検索</button>
-          <button class="btn btn-mini dropdown-toggle btn-page" data-toggle="dropdown">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-              <li>
-                <a href="#">検索高度な</a>
-              </li>
-          </ul>
-        </div>
+    <div class="btn-group btn-page">
+      <button type="submit" class="btn btn-mini btn-page" style="width: 85px;">検索</button>
+      <button class="btn btn-mini dropdown-toggle btn-page" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+          <li>
+            <a href="{{ route('ortho.patients.search', [ 'p_no' => $p_no, 'p_tel' => $p_tel, 'p_hos' => $p_hos, 'p_hos_memo' => $p_hos_memo ]) }}">検索高度な</a>
+          </li>
+      </ul>
+    </div>
 
       </div>
       </form>
@@ -102,7 +102,11 @@
       <div class="col-md-12 text-center">
         {!! $patients->appends([
           'keyword'     => $keyword,
-          'keyword_id'  => $keyword_id
+          'keyword_id'  => $keyword_id,
+          'p_no'        => $p_no,
+          'p_tel'       => $p_tel,
+          'p_hos'       => $p_hos,
+          'p_hos_memo'  => $p_hos_memo
         ])->render(new App\Pagination\SimplePagination($patients)) !!}
       </div>
     </div>

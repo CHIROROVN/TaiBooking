@@ -7,6 +7,7 @@ class PatientModel
 
     protected $table = 't_patient';
 
+
     public function Rules()
     {
     	return array(
@@ -18,6 +19,7 @@ class PatientModel
             'p_email'               => 'email',
 		);
     }
+
 
     public function Messages()
     {
@@ -32,6 +34,7 @@ class PatientModel
 		);
     }
 
+
     public function get_all($where = array(), $paging = true)
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE);
@@ -44,8 +47,29 @@ class PatientModel
             });
         }
 
+        // keyword_id
         if ( !empty($where['keyword_id']) ) {
             $results = $results->orWhere('p_id', $where['keyword_id']);
+        }
+
+        // p_no
+        if ( !empty($where['p_no']) ) {
+            $results = $results->where('p_no', 'like', '%' . $where['p_no'] . '%');
+        }
+
+        // p_tel
+        if ( !empty($where['p_tel']) ) {
+            $results = $results->where('p_tel', 'like', '%' . $where['p_tel'] . '%');
+        }
+
+        // p_hos
+        if ( !empty($where['p_hos']) ) {
+            $results = $results->where('p_hos', $where['p_hos']);
+        }
+
+        // p_hos_memo
+        if ( !empty($where['p_hos_memo']) ) {
+            $results = $results->where('p_hos_memo', 'like', '%' . $where['p_hos_memo'] . '%');
         }
 
         $results = $results->orderBy('p_no', 'asc');

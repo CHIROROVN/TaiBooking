@@ -320,12 +320,13 @@ class BookingModel
         return DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
-                        ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
-                        ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 'ms1.service_name', 'ms2.service_name')
+                        // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
+                        // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
+                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_status', '=', 2)
-                        ->orderBy('t_booking.booking_id', 'asc')
+                        ->orderBy('t_booking.booking_date', 'desc')
+                        ->groupBy('t_booking.booking_childgroup_id')
                         ->get();
     }
 
@@ -337,7 +338,8 @@ class BookingModel
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
                         ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
-                        ->where('t_booking.last_kind', '<>', DELETE);
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.booking_status', '=', 6);
 
         if ( !empty($where['booking_date_year']) && !empty($where['booking_date_month']) ) {
             $db = $db->whereYEAR('t_booking.booking_date', '=', $where['booking_date_year'])
@@ -347,7 +349,7 @@ class BookingModel
         } elseif ( empty($where['booking_date_year']) && !empty($where['booking_date_month']) ) {
             $db = $db->whereMONTH('t_booking.booking_date', '=', $where['booking_date_month']);
         }
-        
+
         $db = $db->groupBy('t_booking.booking_childgroup_id')->orderBy('t2.result_date', 'desc')->get();
         return $db;
     }

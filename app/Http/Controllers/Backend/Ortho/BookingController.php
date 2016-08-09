@@ -1567,7 +1567,9 @@ class BookingController extends BackendController
         $clsBooking             = new BookingModel();
         $data['list1']          = $clsBooking->get_list1_list();
         $clsService             = new ServiceModel();
-        $data['sercices']       = $clsService->get_list();
+        $data['services']       = $clsService->get_list();
+        $clsTreatment1          = new Treatment1Model();
+        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
         return view('backend.ortho.bookings.list1_list', $data);
     }
 

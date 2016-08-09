@@ -62,10 +62,10 @@
                 <?php endif; ?>
                 <!-- service 2 -->
                 <?php if( $list3->service_2_kind == 1 ): ?>
-                  <?php echo e(@$services[$list3->service_2]); ?>
+                  <?php if(!empty($services[$list3->service_1]) || !empty($treatment1s[$list3->service_1])): ?>、<?php endif; ?> <?php echo e(@$services[$list3->service_2]); ?>
 
                 <?php elseif( $list3->service_2_kind == 2 ): ?>
-                  <?php echo e(@$treatment1s[$list3->service_2]); ?>
+                  <?php if(!empty($services[$list3->service_1]) || !empty($treatment1s[$list3->service_1])): ?>、<?php endif; ?> <?php echo e(@$treatment1s[$list3->service_2]); ?>
 
                 <?php endif; ?>
               </td>

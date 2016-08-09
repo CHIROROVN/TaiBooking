@@ -37,9 +37,9 @@
                   @endif
                   <!-- service 2 -->
                   @if ( $list4->service_2_kind == 1 )
-                    {{ @$services[$list4->service_2] }}
+                    @if(!empty($services[$list4->service_1]) || !empty($treatment1s[$list4->service_1]))、@endif {{ @$services[$list4->service_2] }}
                   @elseif ( $list4->service_2_kind == 2 )
-                    {{ @$treatment1s[$list4->service_2] }}
+                    @if(!empty($services[$list4->service_1]) || !empty($treatment1s[$list4->service_1]))、@endif {{ @$treatment1s[$list4->service_2] }}
                   @endif
                 </td>
                 <td>{{ $list4->result_memo }}</td>

@@ -1,6 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
+
 	<!-- content list1 list -->
   <section id="page">
     <div class="container content-page">
@@ -61,9 +62,9 @@
                 @endif
                 <!-- service 2 -->
                 @if ( $list2->service_2_kind == 1 )
-                  {{ @$services[$list2->service_2] }}
+                  @if(!empty($services[$list2->service_1]) || !empty($treatment1s[$list2->service_1]))、@endif {{ @$services[$list2->service_2] }}
                 @elseif ( $list2->service_2_kind == 2 )
-                  {{ @$treatment1s[$list2->service_2] }}
+                  @if(!empty($services[$list2->service_1]) || !empty($treatment1s[$list2->service_1]))、@endif {{ @$treatment1s[$list2->service_2] }}
                 @endif
               </td>
               <td>{{ $list2->result_memo }}</td>

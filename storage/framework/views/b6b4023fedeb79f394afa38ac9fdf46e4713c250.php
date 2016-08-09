@@ -1,4 +1,5 @@
 <?php $__env->startSection('content'); ?>
+
 	<!-- content list1 list -->
   <section id="page">
     <div class="container content-page">
@@ -62,10 +63,10 @@
                 <?php endif; ?>
                 <!-- service 2 -->
                 <?php if( $list2->service_2_kind == 1 ): ?>
-                  <?php echo e(@$services[$list2->service_2]); ?>
+                  <?php if(!empty($services[$list2->service_1]) || !empty($treatment1s[$list2->service_1])): ?>、<?php endif; ?> <?php echo e(@$services[$list2->service_2]); ?>
 
                 <?php elseif( $list2->service_2_kind == 2 ): ?>
-                  <?php echo e(@$treatment1s[$list2->service_2]); ?>
+                  <?php if(!empty($services[$list2->service_1]) || !empty($treatment1s[$list2->service_1])): ?>、<?php endif; ?> <?php echo e(@$treatment1s[$list2->service_2]); ?>
 
                 <?php endif; ?>
               </td>

@@ -26,7 +26,24 @@
 		                <td><?php echo e($l1->p_no); ?></td>
 		                <td><?php echo e($l1->p_name); ?></td>
 		                <td><?php echo e($l1->p_tel); ?></td>
-		                <td><?php echo e(@$sercices[$l1->service_1]); ?> <?php if(!empty($sercices[$l1->service_2]) && !empty($sercices[$l1->service_1])): ?>、<?php endif; ?><?php echo e(@$sercices[$l1->service_2]); ?></td>
+                    <td>
+                      <!-- service 1 -->
+                      <?php if( $l1->service_1_kind == 1 ): ?>
+                        <?php echo e(@$services[$l1->service_1]); ?>
+
+                      <?php elseif( $l1->service_1_kind == 2 ): ?>
+                        <?php echo e(@$treatment1s[$l1->service_1]); ?>
+
+                      <?php endif; ?>
+                      <!-- service 2 -->
+                      <?php if( $l1->service_2_kind == 1 ): ?>
+                         <?php if(!empty($services[$l1->service_1]) || !empty($treatment1s[$l1->service_1])): ?>、<?php endif; ?> <?php echo e(@$services[$l1->service_2]); ?>
+
+                      <?php elseif( $l1->service_2_kind == 2 ): ?>
+                        <?php if(!empty($services[$l1->service_1]) || !empty($treatment1s[$l1->service_1])): ?>、<?php endif; ?> <?php echo e(@$treatment1s[$l1->service_2]); ?>
+
+                      <?php endif; ?>
+                    </td>
 		                <td><?php echo e($l1->booking_memo); ?></td>
 		                <td align="center"><input onclick="location.href='<?php echo e(route('ortho.bookings.booking.edit', $l1->booking_id)); ?>'" value="予約情報の編集" type="button" class="btn btn-xs btn-page"/></td>
 		              </tr>

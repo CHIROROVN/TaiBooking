@@ -93,7 +93,7 @@
               <td class="col-title"><label for="service_1">業務内容-1</label></td>
               <td>
                 <?php if( $booking->service_1_kind == 1 ): ?>
-                <?php echo e($services[$booking->service_1]); ?>
+                <?php echo e(@$services[$booking->service_1]); ?>
 
                 <?php else: ?>
                 <select name="service_1" id="service_1" class="form-control">

@@ -65,8 +65,10 @@
             <h2>各種リスト表示</h2>
             <ul>
               <li><a href="<?php echo e(route('ortho.bookings.list1_list')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「TEL待ち」リストの表示</a></li>
-              <li><a href="<?php echo e(route('ortho.bookings.list2_list')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「無断キャンセル」リストの表示</a></li>
-              <li><a href="<?php echo e(route('ortho.bookings.list3_list')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「リコール」リストの表示</a></li>
+              <li><a href="<?php echo e(route('ortho.bookings.list2_list',['booking_date_year'=>date('Y'), 
+              'booking_date_month'=>date('m')])); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「無断キャンセル」リストの表示</a></li>
+              <li><a href="<?php echo e(route('ortho.bookings.list3_list',['booking_recall_yy'=>date('Y'), 
+              'booking_recall_mm'=>date('m')])); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「リコール」リストの表示</a></li>
               <li><a href="<?php echo e(route('ortho.bookings.list4_list')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「未作成技工物TEL待ち」リストの表示</a></li>
               <li><a href="<?php echo e(route('ortho.bookings.list5_list')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「作成済み技工物キャンセル」リストの表示</a></li>
             </ul>

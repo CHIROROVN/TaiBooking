@@ -4,11 +4,12 @@
         <div class="row content content--menu">
           <h1>メニュー</h1>
           <div class="col-md-4 col-lg-4">
+          
             <!-- power 1 -->
             <?php if(!empty(Auth::user()->u_power1)): ?>
             <h2>患者管理</h2>
             <ul>
-              <li><a href="<?php echo e(route('ortho.patients.index')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>患者の新規登録・一覧・変更・削除・予約表示・来院履歴・コミュニケーションノート</a></li>
+              <li><a href="<?php echo e(route('ortho.patients.search')); ?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>患者の新規登録・一覧・変更・削除・予約表示・来院履歴・コミュニケーションノート</a></li>
             </ul>
             <?php endif; ?>
 

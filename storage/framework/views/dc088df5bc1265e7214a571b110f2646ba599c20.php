@@ -6,6 +6,24 @@
       <table class="table table-bordered">
         <tbody>
           <tr>
+            <td class="col-title">医院 <span class="note_required">※</span></td>
+            <td>
+              <select name="clinic_id" id="clinic_id" class="form-control">
+                  <option value="">▼選択</option>
+                  <?php if(count($clinics) > 0): ?>
+                    <?php foreach($clinics as $cl): ?>
+                      <option value="<?php echo e($cl->clinic_id); ?>" 
+                      <?php if($cl->clinic_id == $user->clinic_id): ?> selected=""
+                      <?php elseif($cl->clinic_name == 'たい矯正歯科'): ?> selected="" <?php endif; ?>
+                      ><?php echo e($cl->clinic_name); ?></option>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+              </select>
+              <span class="error-input"><?php if($errors->first('clinic_id')): ?> ※<?php echo $errors->first('clinic_id'); ?> <?php endif; ?></span>
+            </td>
+          </tr>
+
+          <tr>
             <td class="col-title">氏名 <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="text" name="u_name" id="u_name" value="<?php echo e($user->u_name); ?>" />

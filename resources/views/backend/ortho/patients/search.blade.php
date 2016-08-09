@@ -4,7 +4,7 @@
   <section id="page">
     <div class="container">
       <div class="row content-page">
-        <h3>予約管理　＞　予約の検索</h3>
+        <h3>患者管理　＞　検索患者</h3>
 
         <table class="table table-bordered">
           <tr>
@@ -45,7 +45,7 @@
 
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">
-          <input name="" id="" value="検索開始（カレンダー表示）" type="submit" class="btn btn-sm btn-page mar-right">
+          <input name="" id="" value="検索開始（一覧表表示）" type="submit" class="btn btn-sm btn-page mar-right">
           <input name="Reset" id="btnReset" value="条件クリア" type="reset" class="btn btn-sm btn-page mar-right">
         </div>
       </div>

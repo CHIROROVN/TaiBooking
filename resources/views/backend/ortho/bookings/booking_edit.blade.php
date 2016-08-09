@@ -188,6 +188,9 @@
             <div class="radio">
               <label><input name="booking_status" value="5" type="radio" @if($booking->booking_status == 5) checked @endif>作成済み技工物キャンセル</label>
             </div>
+            <div class="radio">
+              <label><input name="booking_status" value="6" type="radio" @if($booking->booking_status == 6) checked @endif>無断キャンセル</label>
+            </div>
           </td>
             </tr>
             <tr>

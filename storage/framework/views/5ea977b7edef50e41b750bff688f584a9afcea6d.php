@@ -233,11 +233,13 @@
 
                       $sDoctor = '';
                       if(!empty($list_doctors[$booking->doctor_id]))
-                        $sDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+                        $sDoctor = @$list_doctors[$booking->doctor_id];
 
                       $sPatient = '';
-                      if(!empty($booking->p_name))
-                        $sPatient = $booking->p_name . '<br />';
+                      if(!empty($booking->p_name) && !empty($booking->p_no)) {
+                        $sPatient .= $booking->p_no . '<br />';
+                        $sPatient .= $booking->p_name . '<br />';
+                      }
 
                       if ( !empty($sPatient) ) {
                         $clsBackgroundPatient = 'backgroup-while';
@@ -245,9 +247,9 @@
 
                       $sService = '';
                       if(!empty($services[$booking->service_1]))
-                        $sService = @$services[$booking->service_1];
+                        $sService = @$services[$booking->service_1] . '<br />';
 
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sDoctor . @$sPatient . @$sService . '</span></a>';
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
 
                     } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
                       $color = 'blue';
@@ -260,13 +262,14 @@
                         $tDoctor = '';
                         if(isset($list_doctors[$booking->doctor_id]) && !empty($list_doctors[$booking->doctor_id]) && $list_doctors[$booking->doctor_id] != '') {
                           $initTreatment = '';
-                          $tDoctor = @$list_doctors[$booking->doctor_id] . '<br />';
+                          $tDoctor = @$list_doctors[$booking->doctor_id];
                         }
 
                         $tPatient = '';
-                        if(!empty($booking->p_name)) {
+                        if(!empty($booking->p_name) && !empty($booking->p_no)) {
                           $initTreatment = '';
-                          $tPatient = $booking->p_name . '<br />';
+                          $tPatient .= $booking->p_no . '<br />';
+                          $tPatient .= $booking->p_name . '<br />';
                         }
 
                         if ( !empty($tPatient) ) {
@@ -276,7 +279,7 @@
                         $tTreatment = '';
                         if(!empty($treatment1s[$booking->service_1])) {
                           $initTreatment = '';
-                          $tTreatment = @$treatment1s[$booking->service_1];
+                          $tTreatment = @$treatment1s[$booking->service_1] . '<br />';
                         }
 
                       }else{
@@ -285,7 +288,7 @@
                         $tTreatment = '';
                       }
 
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tDoctor . @$tPatient  . @$tTreatment . '</span>' . '</a>';
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
                     }
                   }
                 ?>

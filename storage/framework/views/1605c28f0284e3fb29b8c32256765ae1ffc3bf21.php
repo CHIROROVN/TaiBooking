@@ -8,7 +8,14 @@
           <tr>
             <td class="col-title">医院 <span class="note_required">※</span></td>
             <td>
-              <input class="form-control" type="text" name="clinic_id" id="clinic_id" value="<?php echo e(old('clinic_id')); ?>" />
+              <select name="clinic_id" id="clinic_id" class="form-control">
+                  <option value="">▼選択</option>
+                  <?php if(count($clinics) > 0): ?>
+                    <?php foreach($clinics as $cl): ?>
+                      <option value="<?php echo e($cl->clinic_id); ?>" <?php if($cl->clinic_name == 'たい矯正歯科'): ?> selected="" <?php endif; ?>><?php echo e($cl->clinic_name); ?></option>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+              </select>
               <span class="error-input"><?php if($errors->first('clinic_id')): ?> ※<?php echo $errors->first('clinic_id'); ?> <?php endif; ?></span>
             </td>
           </tr>

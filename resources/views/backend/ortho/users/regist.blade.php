@@ -9,7 +9,14 @@
           <tr>
             <td class="col-title">医院 <span class="note_required">※</span></td>
             <td>
-              <input class="form-control" type="text" name="clinic_id" id="clinic_id" value="{{ old('clinic_id') }}" />
+              <select name="clinic_id" id="clinic_id" class="form-control">
+                  <option value="">▼選択</option>
+                  @if(count($clinics) > 0)
+                    @foreach($clinics as $cl)
+                      <option value="{{$cl->clinic_id}}" @if($cl->clinic_name == 'たい矯正歯科') selected="" @endif>{{$cl->clinic_name}}</option>
+                    @endforeach
+                  @endif
+              </select>
               <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
             </td>
           </tr>

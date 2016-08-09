@@ -7,6 +7,24 @@
       <table class="table table-bordered">
         <tbody>
           <tr>
+            <td class="col-title">医院 <span class="note_required">※</span></td>
+            <td>
+              <select name="clinic_id" id="clinic_id" class="form-control">
+                  <option value="">▼選択</option>
+                  @if(count($clinics) > 0)
+                    @foreach($clinics as $cl)
+                      <option value="{{$cl->clinic_id}}" 
+                      @if($cl->clinic_id == $user->clinic_id) selected=""
+                      @elseif($cl->clinic_name == 'たい矯正歯科') selected="" @endif
+                      >{{$cl->clinic_name}}</option>
+                    @endforeach
+                  @endif
+              </select>
+              <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
+            </td>
+          </tr>
+
+          <tr>
             <td class="col-title">氏名 <span class="note_required">※</span></td>
             <td>
               <input class="form-control" type="text" name="u_name" id="u_name" value="{{ $user->u_name }}" />

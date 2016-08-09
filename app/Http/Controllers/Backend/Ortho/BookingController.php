@@ -1120,8 +1120,8 @@ class BookingController extends BackendController
         }
 
         // update service_1
-        $dataInput['service_1'] = $service_1;
-        $dataInput['service_1_kind'] = $service_1_kind;
+        // $dataInput['service_1'] = $service_1;
+        // $dataInput['service_1_kind'] = $service_1_kind;
 
         $bookingChildGroupsTreatment = array();
         if ( $service_1 > 0 ) {

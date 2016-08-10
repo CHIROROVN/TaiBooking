@@ -91,7 +91,10 @@
                       $fullValue = null;
                     }
 
-                    $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
+                    $clsNameGroup = null;
+                    if ( isset($arr_templates[$facility_id][$time]->template_group_id) ) {
+                      $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
+                    }
                   }
                 ?>
 
@@ -158,6 +161,7 @@
                 </td>
                 <!-- end close -->
               @endforeach
+              <?php $clsNameGroup = ''; ?>
 
             </tr>
             @endforeach
@@ -217,7 +221,6 @@
 
         var dataId = $(this).attr('data-id');
         tdObjOld = $('#td-' + dataId);
-        console.log(serviceIdOld);
 
         // ser selected for select option
         $('#clinic_service_id-' + dataId + ' option').each(function() {
@@ -273,18 +276,20 @@
             dataType: 'json',
             data: { clinic_service_id: serviceIdNew, startTime: dataFullTime },
             success: function(result){
-              console.log(result);
+              // console.log(result);
 
               // delete old value box
               var tmpGroupOld = tdObjOld.find('.td-content').attr('data-group');
-              $('.td-content').each(function(index, el) {
-                if ( $(this).attr('data-group') == tmpGroupOld ) {
-                  setClear($(this).parent(), 0);
-                  setBrow($(this).parent(), 0, '', '');
-                  $(this).attr('class', 'td-content');
-                  $(this).attr('data-group', null);
-                }
-              });
+              if ( tmpGroupOld.length ) {
+                $('.td-content').each(function(index, el) {
+                  if ( $(this).attr('data-group') == tmpGroupOld ) {
+                    setClear($(this).parent(), 0);
+                    setBrow($(this).parent(), 0, '', '');
+                    $(this).attr('class', 'td-content');
+                    $(this).attr('data-group', null);
+                  }
+                });
+              }
 
               // set color
               $(result.tmpArr).each(function( index, value ) {
@@ -303,7 +308,8 @@
                   setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
                 }
               });
-            }
+
+            } //success
           });
         }
 

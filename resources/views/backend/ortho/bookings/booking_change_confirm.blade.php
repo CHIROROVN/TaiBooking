@@ -52,7 +52,7 @@
               <td>{{$booking->insurance_name}}</td>
             </tr>
             <tr>
-              <td class="col-title">救急1</td>
+              <td class="col-title">救急</td>
               <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>
@@ -126,7 +126,7 @@
               <td>{{$booking->insurance_name}}</td>
             </tr>
             <tr>
-              <td class="col-title">救急2</td>
+              <td class="col-title">救急</td>
               <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>

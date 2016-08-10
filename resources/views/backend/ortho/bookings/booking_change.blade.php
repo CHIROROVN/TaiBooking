@@ -138,8 +138,8 @@
                   <td class="col-title">業務</td>
                   <td>
                   @if($booking->service_1_kind == 1)
-                  <input type="hidden" name="service_1" value="{{$booking->service_1}}">
-                    {{$services[$booking->service_1]}}
+                  <input type="hidden" name="service_1" value="{{@$booking->service_1}}">
+                    {{@$services[$booking->service_1]}}
                   @else
                     <select name="clinic_service_name" id="clinic_service_name" class="form-control">
                       <option value="" selected="selected">指定なし</option>

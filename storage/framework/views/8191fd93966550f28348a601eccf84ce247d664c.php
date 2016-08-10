@@ -137,8 +137,8 @@
                   <td class="col-title">業務</td>
                   <td>
                   <?php if($booking->service_1_kind == 1): ?>
-                  <input type="hidden" name="service_1" value="<?php echo e($booking->service_1); ?>">
-                    <?php echo e($services[$booking->service_1]); ?>
+                  <input type="hidden" name="service_1" value="<?php echo e(@$booking->service_1); ?>">
+                    <?php echo e(@$services[$booking->service_1]); ?>
 
                   <?php else: ?>
                     <select name="clinic_service_name" id="clinic_service_name" class="form-control">

@@ -17,7 +17,7 @@
             </tr>
             <tr>
               <td class="col-title">予約日時</td>
-              <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
+              <td>{{formatDateJp($booking->booking_date)}} ({{DayJp($booking->booking_date)}})　{{splitHourMin($booking->booking_start_time)}}<!-- ～{{toTime($booking->booking_start_time, $booking->booking_total_time)}} --></td>
             </tr>
             <tr>
               <td class="col-title">医院</td>
@@ -52,8 +52,8 @@
               <td>{{$booking->insurance_name}}</td>
             </tr>
             <tr>
-              <td class="col-title">救急</td>
-              <td>@if($booking->emergency_flag == 1)救急です @endif</td>
+              <td class="col-title">救急1</td>
+              <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>
               <?php $arrStatus = array('1'=>'通常','2'=>'「TEL待ち」です','3'=>'「リコール」です','未作成技工物TEL待ち','作成済み技工物キャンセル') ?>
@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <td class="col-title">予約日時</td>
-              <td>{{formatDateJp(@$booking_change['booking_date'])}} ({{DayJp(@$booking_change['booking_date'])}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
+              <td>{{formatDateJp(@$booking_change['booking_date'])}} ({{DayJp(@$booking_change['booking_date'])}})　{{splitHourMin($booking->booking_start_time)}}<!-- ～{{toTime($booking->booking_start_time, $booking->booking_total_time)}} --></td>
             </tr>
             <tr>
               <td class="col-title">医院</td>
@@ -126,7 +126,7 @@
               <td>{{$booking->insurance_name}}</td>
             </tr>
             <tr>
-              <td class="col-title">救急</td>
+              <td class="col-title">救急2</td>
               <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>

@@ -6,7 +6,7 @@
       <h3>ユーザー管理　＞　ユーザーの新規登録</h3>
       <table class="table table-bordered">
         <tbody>
-          <tr>
+<!--           <tr>
             <td class="col-title">医院 <span class="note_required">※</span></td>
             <td>
               <select name="clinic_id" id="clinic_id" class="form-control">
@@ -22,7 +22,7 @@
               </select>
               <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
             </td>
-          </tr>
+          </tr> -->
 
           <tr>
             <td class="col-title">氏名 <span class="note_required">※</span></td>

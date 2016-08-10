@@ -1377,29 +1377,29 @@ class BookingController extends BackendController
         switch (Input::get('week_later')) {
             case 'one_week':
                 $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'week_later'));
-                $dataInput['booking_date_change'] = booking_change_date($date, 'one_week');
+                $dataInput['booking_date'] = booking_change_date($date, 'one_week');
                 break;
             case 'one_month':
                 $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'one_month'));
-                $dataInput['booking_date_change'] = booking_change_date($date, 'one_month');
+                $dataInput['booking_date'] = booking_change_date($date, 'one_month');
                 break;
             case 'two_month':
                 $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'two_month'));
-                $dataInput['booking_date_change'] = booking_change_date($date, 'two_month');
+                $dataInput['booking_date'] = booking_change_date($date, 'two_month');
                 break;
             case 'week_specified':
                 $date_option = Input::get('week_later_option');
                 $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, $date_option));
-                $dataInput['booking_date_change'] = booking_change_date($date, $date_option);
+                $dataInput['booking_date'] = booking_change_date($date, $date_option);
                 break;
             case 'date_picker':
                 $datepicker = Input::get('date_picker_option');
                 $dataInput['booking_recall_ym']   = date('Ym', strtotime($datepicker));
-                $dataInput['booking_date_change'] = $datepicker;
+                $dataInput['booking_date'] = $datepicker;
                 break;
             default:
                 $dataInput['booking_recall_ym']   = '';
-                $dataInput['booking_date_change'] = $date;
+                $dataInput['booking_date'] = $date;
                 break;
         }
 
@@ -1425,6 +1425,7 @@ class BookingController extends BackendController
 
     public function getConfirm($id)
     {
+
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($id);
         $clsClinic                  = new ClinicModel();
@@ -1449,7 +1450,6 @@ class BookingController extends BackendController
     public function postConfirm($id)
     {
         $dataInput                  = Session::get('booking_change');
-        unset($dataInput['booking_date_change']);
         unset($dataInput['booking_id']);
         $clsBooking                 = new BookingModel();
         $booking                   = $clsBooking->get_by_id($id);

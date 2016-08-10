@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <td class="col-title">予約日時</td>
-              <td>{{formatDateJp(@$booking_change['booking_date_change'])}} ({{DayJp(@$booking_change['booking_date_change'])}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
+              <td>{{formatDateJp(@$booking_change['booking_date'])}} ({{DayJp(@$booking_change['booking_date'])}})　{{splitHourMin($booking->booking_start_time)}}～{{toTime($booking->booking_start_time, $booking->booking_total_time)}}</td>
             </tr>
             <tr>
               <td class="col-title">医院</td>

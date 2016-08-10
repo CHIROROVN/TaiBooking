@@ -1,4 +1,5 @@
 <?php $__env->startSection('content'); ?>
+
 <?php echo Form::open(array('route' => ['ortho.bookings.booking.change', $booking->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')); ?>
 
    <section id="page">

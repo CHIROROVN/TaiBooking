@@ -161,7 +161,7 @@
                   <option value="-1">▼選択</option>
                     @if(count($treatment1s) > 0)
                       @foreach($treatment1s as $key12 => $treatment12)
-                        <option value="{{$key12}}#sk12" @if($booking->service_1 == $key12) selected @endif>{{$treatment12}}</option>
+                        <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if($booking->service_1 == $treatment12->treatment_id) selected @endif>{{$treatment12->treatment_name}}</option>
                       @endforeach
                     @endif
                 </select>

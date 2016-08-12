@@ -1027,7 +1027,7 @@ class BookingController extends BackendController
         $clsService                 = new ServiceModel();
         $data['services']           = $clsService->get_list();
         $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
         $clsFacility                = new FacilityModel();
         $data['facilities']         = $clsFacility->list_facility_all();
         $clsEquipment               = new EquipmentModel();
@@ -1051,10 +1051,17 @@ class BookingController extends BackendController
         $service_1 = $service_1_kind = null;
 
         if(!empty(Input::get('service_1')) && Input::get('service_1') != -1 ){
-            $s1k = explode('#', Input::get('service_1'));
+            $s1k = explode('_', Input::get('service_1'));
             $s1_kind            = str_split($s1k[1], 3);
             $service_1_kind     = $s1_kind[1];
-            $service_1      = $s1k[0];
+
+            if($service_1_kind == 2){
+                $st1 = explode('#', $s1k[0]);
+                $service_1      = $st1[0];
+                $treatment_time_1 = $st1[1];
+            }else{
+                $service_1      = $s1k[0];
+            }
         }
 
         $dataInput['patient_id']            = Input::get('p_id', null);
@@ -1120,8 +1127,8 @@ class BookingController extends BackendController
         }
 
         // update service_1
-        // $dataInput['service_1'] = $service_1;
-        // $dataInput['service_1_kind'] = $service_1_kind;
+        $dataInput['service_1'] = $service_1;
+        $dataInput['service_1_kind'] = $service_1_kind;
 
         $bookingChildGroupsTreatment = array();
         if ( $service_1 > 0 ) {
@@ -1334,6 +1341,31 @@ class BookingController extends BackendController
         }
 
         if ( $status ) {
+            // insert patient
+            $dataPatient = array(
+                'p_name'                    => Input::get('p_name'),
+                'p_name_kana'               => Input::get('p_name_kana'),
+                'p_sex'                     => Input::get('p_name'),
+                'p_tel'                     => Input::get('p_tel'),
+
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => UPDATE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+            $p_id = $clsPatient->insert_get_id($dataPatient);
+
+            // update patient id in booking
+            $dataUpdate = array(
+                'patient_id'                => $p_id,
+
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => UPDATE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+            $clsBooking->update($id, $dataUpdate);
+            
             $where                          = array();
             $where['clinic_id']             = $booking->clinic_id;
             $where['cur']                   = $booking->booking_date;

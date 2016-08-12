@@ -85,10 +85,10 @@
                 <select name="equipment_id" id="equipment_id" class="form-control">
                   <option value="">▼選択</option>
                   @if(count($equipments) > 0)
-                  @foreach($equipments as $key => $equipment)
-                    <option value="{{$key}}" @if($booking->equipment_id == $key) selected @endif>{{$equipment}}</option>
-                  @endforeach
-                @endif
+                    @foreach($equipments as $key => $equipment)
+                      <option value="{{$key}}" @if($booking->equipment_id == $key) selected @endif>{{$equipment}}</option>
+                    @endforeach
+                  @endif
                 </select>
               </td>
             </tr>

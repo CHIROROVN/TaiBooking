@@ -3,7 +3,13 @@
 function showPatient($p_id=null){
 	if(App\Http\Models\Ortho\PatientModel::checkExistID($p_id)){
 		$patient = App\Http\Controllers\Backend\Ortho\PatientController::patientByID($p_id);
-		$pt = $patient->p_no .' '. $patient->p_name . ' (' . $patient->p_name_kana . ')';
+		if ( empty($patient->p_name_kana) ) {
+			$p_name_kana = '';
+		} else {
+			$p_name_kana = '(' . $patient->p_name_kana . ')';
+		}
+		
+		$pt = $patient->p_no .' '. $patient->p_name . ' ' . $p_name_kana;
 		$result = ['p_id' => $patient->p_id, 'patient' => $pt];
 		return $result;
 	}else{

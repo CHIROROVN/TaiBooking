@@ -159,6 +159,7 @@ class BookingController extends BackendController
             }
         }
         $data['arr_bookings']       = $arr_bookings;
+
         return view('backend.ortho.bookings.booking_daily', $data);
     }
 
@@ -1046,6 +1047,7 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
         $clsTemplate                = new TemplateModel();
+        $clsPatient                 = new PatientModel();
         $booking                    = $clsBooking->get_by_id($id);
 
         $service_1 = $service_1_kind = null;
@@ -1064,28 +1066,42 @@ class BookingController extends BackendController
             }
         }
 
-        $dataInput['patient_id']            = Input::get('p_id', null);
-        $dataInput['doctor_id']             = Input::get('doctor_id', null);
-        $dataInput['hygienist_id']          = Input::get('hygienist_id', null);
-        $dataInput['equipment_id']          = Input::get('equipment_id', null);
-        if(!empty($service_1))
-            $dataInput['service_1']             = $service_1;
-        if(!empty($service_1_kind))
-            $dataInput['service_1_kind']        = $service_1_kind;
-        $dataInput['inspection_id']         = Input::get('inspection_id', null);
-        $dataInput['insurance_id']          = Input::get('insurance_id', null);
-        $dataInput['emergency_flag']        = Input::get('emergency_flag', null);
-        $dataInput['booking_status']        = Input::get('booking_status', null);
-        $dataInput['booking_recall_ym']     = Input::get('booking_recall_ym', null);
-        $dataInput['booking_memo']          = Input::get('booking_memo', null);
-        $dataInput['last_date']             = date('y-m-d H:i:s');
-        $dataInput['last_kind']             = UPDATE;
-        $dataInput['last_ipadrs']           = CLIENT_IP_ADRS;
-        $dataInput['last_user']             = Auth::user()->id;
+        // insert new patient
+        $dataPatient = array(
+            'p_name'                    => Input::get('p_name'),
+            'p_name_kana'               => Input::get('p_name_kana'),
+            'p_sex'                     => Input::get('p_name'),
+            'p_tel'                     => Input::get('p_tel'),
 
-        if ( $dataInput['patient_id'] == 0 ) {
-            $dataInput['patient_id'] = null;
-        }
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id
+        );
+        $p_id = $clsPatient->insert_get_id($dataPatient);
+
+        $dataInput = array(
+            // 'facility_id'               => Input::get('facility_id'),
+            'patient_id'                => $p_id,
+            'doctor_id'                 => Input::get('doctor_id', null),
+            'hygienist_id'              => Input::get('hygienist_id', null),
+            'equipment_id'              => Input::get('equipment_id', null),
+            // 'service_1'                 => $service_1,
+            // 'service_1_kind'            => $service_1_kind,
+            // 'service_2'                 => $service_2,
+            // 'service_2_kind'            => $service_2_kind,
+            'inspection_id'             => Input::get('inspection_id', null),
+            'insurance_id'              => Input::get('insurance_id', null),
+            'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+            'booking_status'            => Input::get('booking_status'),
+            'booking_recall_ym'         => Input::get('booking_recall_ym'),
+            'booking_memo'              => Input::get('booking_memo'),
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id
+        );
+
         if ( $dataInput['doctor_id'] == 0 ) {
             $dataInput['doctor_id'] = null;
         }
@@ -1341,36 +1357,19 @@ class BookingController extends BackendController
         }
 
         if ( $status ) {
-            // insert patient
-            $dataPatient = array(
-                'p_name'                    => Input::get('p_name'),
-                'p_name_kana'               => Input::get('p_name_kana'),
-                'p_sex'                     => Input::get('p_name'),
-                'p_tel'                     => Input::get('p_tel'),
-
-                'last_date'                 => date('y-m-d H:i:s'),
-                'last_kind'                 => UPDATE,
-                'last_ipadrs'               => CLIENT_IP_ADRS,
-                'last_user'                 => Auth::user()->id
-            );
-            $p_id = $clsPatient->insert_get_id($dataPatient);
-
-            // update patient id in booking
-            $dataUpdate = array(
-                'patient_id'                => $p_id,
-
-                'last_date'                 => date('y-m-d H:i:s'),
-                'last_kind'                 => UPDATE,
-                'last_ipadrs'               => CLIENT_IP_ADRS,
-                'last_user'                 => Auth::user()->id
-            );
-            $clsBooking->update($id, $dataUpdate);
-            
             $where                          = array();
             $where['clinic_id']             = $booking->clinic_id;
             $where['cur']                   = $booking->booking_date;
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
+            $dataDeletePatient = array(
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => DELETE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+            $clsPatient->update($p_id, $dataDeletePatient);
+
             Session::flash('danger', trans('common.message_edit_danger'));
             return redirect()->route('ortho.bookings.booking.edit', $id);
         }

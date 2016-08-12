@@ -54,12 +54,12 @@ class BookingTemplateModel
 
     public function get_by_id($id)
     {
-        return DB::table($this->table)->where('mbt_id', $id)->first();
+        return DB::table($this->table)->where('mbt_id', $id)->where('last_kind', '<>', DELETE)->first();
     }
 
     public function update($id, $data)
     {
-        return DB::table($this->table)->where('mbt_id', $id)->update($data);
+        return DB::table($this->table)->where('mbt_id', $id)->where('last_kind', '<>', DELETE)->update($data);
     }
 
     public function get_min()

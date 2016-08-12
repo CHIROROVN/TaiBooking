@@ -288,17 +288,13 @@ class BookingTemplateController extends BackendController
         if ( empty(Input::get('s_clinic_id')) ) {
             $bookings = array();
         }
+
         $tmpBookings            = array();
-        $i = 0;
         foreach ( $bookings as $booking ) {
-            $i++;
             // get template name
             $groupNameFinish = null;
             $s_mbt_id = null;
-            if ( empty($booking->booking_group_id) || $booking->booking_group_id == '' ) {
-                $groupNameFinish = '治療';
-                $s_mbt_id = null;
-            } else {
+            if ( !empty($booking->booking_group_id) && $booking->booking_group_id != '' ) {
                 $tmp = null;
                 $tmp = explode('_', $booking->booking_group_id);
                 $groupNameTmp = $tmp[0];
@@ -309,7 +305,7 @@ class BookingTemplateController extends BackendController
                 }
             }
 
-            if(count($booking))
+            if(count($booking)) {
                 $tmpBookings[]      = array(
                     'title'         => $groupNameFinish,
                     'start'         => $booking->booking_date,
@@ -317,6 +313,7 @@ class BookingTemplateController extends BackendController
                     'url'           => route('ortho.bookings.template.daily', [ 'date' => $booking->booking_date, 'clinic_id' => $booking->clinic_id, 's_mbt_id' => $s_mbt_id ]),
                     'className'     => 'booking-template-set',
                 );
+            }
         }
         $data['bookings']      = json_encode($tmpBookings);
 

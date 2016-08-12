@@ -777,6 +777,8 @@ class BookingTemplateController extends BackendController
         $status = '';
         if ( empty($booking) ) {
             $status = $clsBooking->insert($dataInsert);
+        } else {
+            $status = 'xxxx';
         }
         echo json_encode(array('status', $status));
     }

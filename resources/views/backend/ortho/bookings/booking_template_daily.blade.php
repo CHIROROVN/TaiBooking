@@ -287,17 +287,17 @@
             if ( $(this).attr('data-group') == groupDelete ) {
               setClear($(this).parent(), 0);
               setBrow($(this).parent(), 0, '');
-              setClear($(this), 0);
-              setBrow($(this), 0, '');
+              // setClear($(this), 0);
+              // setBrow($(this), 0, '');
+              // $(this).attr('class', 'col-brown');
+              // $(this).attr('data-service-id', '');
+              // $(this).attr('data-group', '');
+              // $(this).find('.input').val('');
+              // $(this).find('.input').attr('name', '');
             }
           });
         } else {
           // select total sum time clinic service
-          console.log(tdObjOld.find('.td-content').attr('data-dad-group'));
-          console.log(tdObjOld.find('.td-content').attr('data-group'));
-          console.log(facilityIdNew);
-          // console.log(facilityIdOld);
-
           $.ajax({
             url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
             type: 'get',
@@ -352,6 +352,7 @@
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-green');
+        // objNew.children().attr('class', 'td-content');
         objNew.find('.td-content').html(' ');
         objNew.find('.td-content').append('');
         // set service id
@@ -368,6 +369,7 @@
         tdNewCls = objNew.attr('class');
         objNew.removeClass(tdNewCls);
         objNew.addClass('col-blue');
+        // objNew.children().attr('class', 'td-content');
         objNew.find('.td-content').html('');
         objNew.find('.td-content').append('');
         // set service id
@@ -403,12 +405,12 @@
           objNew.addClass('col-brown');
           objNew.find('.td-content').html('');
           objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
-        // set service id
-        objNew.find('.td-content').attr('data-service-id', serviceIdNew);
-        // set group
-        objNew.find('.td-content').attr('data-group', '');
-        objNew.find('.td-content > .input').val('');
-        objNew.find('.td-content > .input').attr('name', '');
+          // set service id
+          objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+          // set group
+          objNew.find('.td-content').attr('data-group', '');
+          objNew.find('.td-content > .input').val('');
+          objNew.find('.td-content > .input').attr('name', '');
         }
       }
     });

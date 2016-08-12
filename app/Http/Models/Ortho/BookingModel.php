@@ -279,7 +279,7 @@ class BookingModel
 
     public function checkExist($where = array())
     {
-        $db = DB::table($this->table);
+        $db = DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE);
 
         // booking_start_time
         if ( !empty($where['booking_start_time']) ) {
@@ -308,7 +308,7 @@ class BookingModel
 
     public function update($id, $data)
     {
-    	return DB::table($this->table)->where('booking_id', $id)->update($data);
+    	return DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE)->where('booking_id', $id)->update($data);
     }
 
     public function update_by_bookingDate($booking_date, $data)

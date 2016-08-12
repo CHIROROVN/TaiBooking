@@ -93,7 +93,7 @@
             <td class="col-title">所属医院</td>
             <td>
               <select name="clinic_id" id="clinic_id" class="form-control">
-                  <option value="">全ての医院</option>
+                  <option value="-1">全ての医院</option>
                   <?php if(count($clinics) > 0): ?>
                     <?php foreach($clinics as $cl): ?>
                       <option value="<?php echo e($cl->clinic_id); ?>" <?php if($cl->clinic_id == $user->u_power_booking): ?> selected="" <?php endif; ?>><?php echo e($cl->clinic_name); ?></option>

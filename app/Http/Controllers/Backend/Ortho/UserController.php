@@ -83,6 +83,7 @@ class UserController extends BackendController
             'u_power8'          => Input::get('u_power8'),
             'u_power9'          => Input::get('u_power9'),
             'u_power10'         => Input::get('u_power10'),
+            'u_power_booking'   => Input::get('clinic_id'),
             'u_human_flg'       => Input::get('u_human_flg'),
 
             'last_date'         => date('y-m-d H:i:s'),
@@ -154,6 +155,7 @@ class UserController extends BackendController
             'u_power8'          => Input::get('u_power8'),
             'u_power9'          => Input::get('u_power9'),
             'u_power10'         => Input::get('u_power10'),
+            'u_power_booking'   => Input::get('clinic_id'),
             'u_human_flg'       => Input::get('u_human_flg'),
 
             'last_date'         => date('y-m-d H:i:s'),

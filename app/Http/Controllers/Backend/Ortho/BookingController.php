@@ -1344,83 +1344,85 @@ class BookingController extends BackendController
         }
     }
 
-    public function getChangeDate($id)
+    public function getBookingChange()
     {
-        if (Session::has('booking_change')) 
-            Session::forget('booking_change');
-
-        $clsBooking                 = new BookingModel();
-        $data['booking']            = $clsBooking->get_by_id($id);
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_list_clinic();
         $clsUser                    = new UserModel();
         $data['doctors']            = $clsUser->get_by_belong([1]);
         $data['hygienists']         = $clsUser->get_by_belong([2,3]);
-        $clsService                 = new ServiceModel();
-        $data['services']           = $clsService->get_list();
+        $clsClinicService           = new ClinicServiceModel();
+        $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['treatment1s']        = $clsTreatment1->get_treatment_search();
         return view('backend.ortho.bookings.booking_change', $data);
     }
 
-    public function postChangeDate($id)
+    public function postBookingChange()
     {
-        $date                           = Input::get('booking_date');
-        $dataInput['booking_id']        = $id;
+        $condition = array();
         if(!empty(Input::get('clinic_id')))
-            $dataInput['clinic_id']         = Input::get('clinic_id');
+            $condition['clinic_id']         = Input::get('clinic_id');
         if(!empty(Input::get('doctor_id')))
-            $dataInput['doctor_id']         = Input::get('doctor_id');
-        if (!empty(Input::get('hygienist_id')))
-            $dataInput['hygienist_id']      = Input::get('hygienist_id');
+            $condition['doctor_id']         = Input::get('doctor_id');
+        if(!empty(Input::get('hygienist_id')))
+            $condition['hygienist_id']      = Input::get('hygienist_id');
+        if(!empty(Input::get('booking_date')))
+            $condition['booking_date'] = Input::get('booking_date');
 
-        switch (Input::get('week_later')) {
-            case 'one_week':
-                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'week_later'));
-                $dataInput['booking_date'] = booking_change_date($date, 'one_week');
-                break;
-            case 'one_month':
-                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'one_month'));
-                $dataInput['booking_date'] = booking_change_date($date, 'one_month');
-                break;
-            case 'two_month':
-                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, 'two_month'));
-                $dataInput['booking_date'] = booking_change_date($date, 'two_month');
-                break;
-            case 'week_specified':
-                $date_option = Input::get('week_later_option');
-                $dataInput['booking_recall_ym']   = date2YearMonth(booking_change_date($date, $date_option));
-                $dataInput['booking_date'] = booking_change_date($date, $date_option);
-                break;
-            case 'date_picker':
-                $datepicker = Input::get('date_picker_option');
-                $dataInput['booking_recall_ym']   = date('Ym', strtotime($datepicker));
-                $dataInput['booking_date'] = $datepicker;
-                break;
-            default:
-                $dataInput['booking_recall_ym']   = '';
-                $dataInput['booking_date'] = $date;
-                break;
+        if(!empty(Input::get('week_later'))){
+            if(Input::get('week_later') == 'week_specified'){
+            $condition['week_later'] = Input::get('week_later_option');
+            }elseif (Input::get('week_later') == 'date_picker') {
+                $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
+            }else{
+                $condition['week_later'] = Input::get('week_later');
+            }
         }
 
-        if(!empty(Input::get('clinic_service_name'))){
-            $dataInput['service_1']         = Input::get('clinic_service_name');
-            $dataInput['service_1_kind']    = 2; //Treatment
-        }else{
-            $dataInput['service_1']         = Input::get('service_1');
-            $dataInput['service_1_kind']    = 1; //Service
+        if(!empty(Input::get('clinic_service_name')))
+            $condition['clinic_service_name']         = Input::get('clinic_service_name');
+        return redirect()->route('ortho.bookings.change_list', $condition);
+    }
+
+    public function bookingChangeList()
+    {
+        $where = array();
+        if(Input::get('clinic_id') != null){
+            $where['clinic_id']           = Input::get('clinic_id');
+            $data['clinic_id']            = Input::get('clinic_id');
         }
+        if(Input::get('doctor_id') != null){
+            $where['doctor_id']           = Input::get('doctor_id');
+            $data['doctor_id']            = Input::get('doctor_id');
+        }
+        if(Input::get('hygienist_id') != null){
+            $where['hygienist_id']        = Input::get('hygienist_id');
+            $data['hygienist_id']         = Input::get('hygienist_id');
+        }
+        if(Input::get('booking_date') != null){
+            $where['booking_date']        = Input::get('booking_date');
+            $data['booking_date']         = Input::get('booking_date');
+        }
+        if(Input::get('week_later') != null){
+            $where['week_later']          = Input::get('week_later');
+            $data['week_later']           = Input::get('week_later');
+        }
+        if(Input::get('clinic_service_name') != null){
+            $where['clinic_service_name'] = Input::get('clinic_service_name');
+            $data['clinic_service_name']  = Input::get('clinic_service_name');
+        }
+        //Session::put('where_booking', $where);
 
-        if(empty($dataInput['booking_recall_ym']))
-            unset($dataInput['booking_recall_ym']);
-
-        $dataInput['last_date']         = date('Y-m-d H:i:s');
-        $dataInput['last_kind']         = UPDATE;
-        $dataInput['last_ipadrs']       = CLIENT_IP_ADRS;
-        $dataInput['last_user']         = Auth::user()->id;
-
-        Session::put('booking_change', $dataInput);
-        return redirect()->route('ortho.bookings.booking.change.confirm', [$id]);
+        $clsBooking                       = new BookingModel();
+        $data['bookings']                 = $clsBooking->get_booking_list($where);
+        $clsFacility                      = new FacilityModel();
+        $data['facilities']               = $clsFacility->list_facility_all();
+        $clsTreatment1                    = new Treatment1Model();
+        $data['treatment1s']              = $clsTreatment1->get_list_treatment();
+        $clsService                       = new ServiceModel();
+        $data['services']                 = $clsService->get_list();
+        return view('backend.ortho.bookings.booking_result_list', $data);
     }
 
     public function getConfirm($id)

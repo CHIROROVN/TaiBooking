@@ -231,7 +231,6 @@
     $('#none_week').attr("checked", "checked");
   });
 
-  
 </script>
 
 <?php $__env->stopSection(); ?>

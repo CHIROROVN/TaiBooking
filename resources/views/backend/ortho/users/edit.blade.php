@@ -6,24 +6,6 @@
       <h3>ユーザー管理　＞　ユーザーの新規登録</h3>
       <table class="table table-bordered">
         <tbody>
-<!--           <tr>
-            <td class="col-title">医院 <span class="note_required">※</span></td>
-            <td>
-              <select name="clinic_id" id="clinic_id" class="form-control">
-                  <option value="">▼選択</option>
-                  @if(count($clinics) > 0)
-                    @foreach($clinics as $cl)
-                      <option value="{{$cl->clinic_id}}" 
-                      @if($cl->clinic_id == $user->clinic_id) selected=""
-                      @elseif($cl->clinic_name == 'たい矯正歯科') selected="" @endif
-                      >{{$cl->clinic_name}}</option>
-                    @endforeach
-                  @endif
-              </select>
-              <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
-            </td>
-          </tr> -->
-
           <tr>
             <td class="col-title">氏名 <span class="note_required">※</span></td>
             <td>
@@ -106,6 +88,20 @@
               <div class="checkbox">
                 <label><input type="checkbox" name="u_power10" @if($user->u_power10 == 1) {{'checked'}} @endif value="1">初診業務</label>
               </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-title">所属医院</td>
+            <td>
+              <select name="clinic_id" id="clinic_id" class="form-control">
+                  <option value="">全ての医院</option>
+                  @if(count($clinics) > 0)
+                    @foreach($clinics as $cl)
+                      <option value="{{$cl->clinic_id}}" @if($cl->clinic_id == $user->u_power_booking) selected="" @endif>{{$cl->clinic_name}}</option>
+                    @endforeach
+                  @endif
+              </select>
+              <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
             </td>
           </tr>
           <tr>

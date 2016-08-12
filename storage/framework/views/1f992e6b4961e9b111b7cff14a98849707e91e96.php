@@ -34,7 +34,7 @@
               <td class="col-title"><label for="textNameRead">予約日時</label></td>
               <td><?php echo e(formatDateJp($booking->booking_date)); ?> (<?php echo e(DayJp($booking->booking_date)); ?>)　<?php echo e(splitHourMin($booking->booking_start_time)); ?>
 
-              <input type="button" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='<?php echo e(route('ortho.bookings.booking.change', $booking->booking_id)); ?>'"></td>
+              <input type="button" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='<?php echo e(route('ortho.bookings.booking.change')); ?>'"></td>
             </tr>
             <tr>
               <td class="col-title">医院</td>

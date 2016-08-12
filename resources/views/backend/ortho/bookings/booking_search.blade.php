@@ -230,7 +230,6 @@
     $('#none_week').attr("checked", "checked");
   });
 
-  
 </script>
 
 @endsection

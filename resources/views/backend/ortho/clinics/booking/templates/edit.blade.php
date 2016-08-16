@@ -33,6 +33,82 @@
           </tr>
         </table>
 
+        <!-- set some box fast -->
+        <div class="set-some-boxs">
+          <button type="button" class="btn btn-sm btn-page no-border" id="btn-set-some-box" data-toggle="modal" data-target="#modal-set-some-box">{{ trans('common.set_some_box') }}</button>
+          <!-- Modal -->
+          <div class="modal fade" id="modal-set-some-box" role="dialog">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">{{trans('common.modal_header_popup_edit_clinic_booking_template')}}</h4>
+                </div>
+                <div class="modal-body">
+                  <!-- child table -->
+                  <table class="table table-bordered" style="margin-top: 20px;">
+                    <!-- facility -->
+                    <tr>
+                      <td align="left">チェアの選択</td>
+                      <td align="left">
+                        <select name="set_some_box_facility" id="set-some-box-facility">
+                          @foreach ( $facilitys_popup as $item )
+                          <option value="{{ $item->facility_id }}">{{ $item->facility_name }}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                    </tr>
+                    
+                    <!-- start time -->
+                    <tr>
+                      <td align="left">Start time</td>
+                      <td align="left">
+                        <select name="start_hh" id="start_hh">
+                          @for ( $i = 9; $i <= 22; $i++ )
+                          <option value="{{ sprintf('%02d',$i) }}">{{ sprintf("%02d",$i) }}</option>
+                          @endfor
+                        </select>
+                        <select name="start_mm" id="start_mm">
+                          <option value="00">00</option>
+                          <option value="15">15</option>
+                          <option value="30">30</option>
+                          <option value="45">45</option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <!-- end time -->
+                    <tr>
+                      <td align="left">End time</td>
+                      <td align="left">
+                        <select name="end_hh" id="end_hh">
+                          @for ( $i = 9; $i <= 22; $i++ )
+                          <option value="{{ sprintf('%02d',$i) }}">{{ sprintf("%02d",$i) }}</option>
+                          @endfor
+                        </select>
+                        <select name="end_mm" id="end_mm">
+                          <option value="00">00</option>
+                          <option value="15">15</option>
+                          <option value="30">30</option>
+                          <option value="45">45</option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="2">
+                        <button type="button" class="btn btn-sm btn-page" data-id="" data-full-time="" id="btn-set">{{ trans('common.set') }}</button>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- end child table -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Modal -->
+        </div>
+
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set">
             <tr>
@@ -226,6 +302,35 @@
         $('#clinic_service_id-' + dataId + ' option').each(function() {
           if ( $(this).val() == serviceIdOld ) {
             $(this).prop("selected", true);
+          }
+        });
+      });
+
+
+      // button set
+      $('#btn-set').click(function(event) {
+        $("#modal-set-some-box").modal("hide");
+
+        // something
+        var facility = $('#set-some-box-facility option:selected').val();
+        var start_hh = $('#start_hh option:selected').val();
+        var start_mm = $('#start_mm option:selected').val();
+        var end_hh = $('#end_hh option:selected').val();
+        var end_mm = $('#end_mm option:selected').val();
+        var fullTimeStart = start_hh + start_mm;
+        var fullTimeEnd = end_hh + end_mm;
+
+        // object = td-content 
+        $('.td-content').each(function(index, el) {
+          var data_full_time = $(this).attr('data-full-time');
+          if ( $(this).attr('data-facility-id') == facility ) {
+            // setClear(tdObjOld, 0);
+            if ( parseInt(data_full_time) >= parseInt(fullTimeStart) && parseInt(data_full_time) < parseInt(fullTimeEnd) ) {
+              if ( $(this).parent().attr('class') === 'col-brown' ) {
+                var fullValue = facility + '|' + -1 + '|' + data_full_time;
+                setBlue($(this).parent(), -1, fullValue, '治療');
+              }
+            }
           }
         });
       });

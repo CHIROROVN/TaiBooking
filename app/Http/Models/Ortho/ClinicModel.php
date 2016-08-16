@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models\Ortho;
 
 use DB;
+use Auth;
 
 class ClinicModel
 {
@@ -47,6 +48,10 @@ class ClinicModel
             $db = $db->where('clinic_name', 'LIKE', '%' . $keyword . '%');
         }
 
+        if ( Auth::user()->u_power_booking != -1 ) {
+            $db = $db->where('clinic_id', Auth::user()->u_power_booking);
+        }
+
         $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc');
         $db = $db->orderBy('clinic_name_yomi', 'asc');
 
@@ -65,8 +70,13 @@ class ClinicModel
     {
         $db = DB::table($this->table)
                         ->select('clinic_id', 'clinic_name')
-                        ->where('last_kind', '<>', DELETE)
-                        ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                        ->where('last_kind', '<>', DELETE);
+        
+        if ( Auth::user()->u_power_booking != -1 ) {
+            $db = $db->where('clinic_id', Auth::user()->u_power_booking);
+        }
+
+        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
                         ->orderBy('clinic_name_yomi', 'asc')
                         ->get();
         return $db;
@@ -98,11 +108,16 @@ class ClinicModel
 
     //get list clinic
     public function get_list_clinic(){
-        return DB::table($this->table)
-                                ->where('last_kind', '<>', DELETE)
-                                ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+        
+        if ( Auth::user()->u_power_booking != -1 ) {
+            $db = $db->where('clinic_id', Auth::user()->u_power_booking);
+        }
+
+        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
                                 ->orderBy('clinic_name_yomi', 'asc')
                                 ->lists('clinic_name', 'clinic_id');
+        return $db;
     }
 
     public function get_id_by_name($clinic_name=null)

@@ -315,22 +315,32 @@
         var end_mm = $('#end_mm option:selected').val();
         var fullTimeStart = start_hh + start_mm;
         var fullTimeEnd = end_hh + end_mm;
-        console.log('facility:' + facility);
-        console.log('start_hh:' + start_hh);
-        console.log('start_mm:' + start_mm);
-        console.log('end_hh:' + end_hh);
-        console.log('end_mm:' + end_mm);
-        console.log('fullTimeStart:' + fullTimeStart);
-        console.log('fullTimeEnd:' + fullTimeEnd);
+
         // object = td-content 
         $('.td-content').each(function(index, el) {
           var data_full_time = $(this).attr('data-full-time');
           if ( $(this).attr('data-facility-id') == facility ) {
             // setClear(tdObjOld, 0);
-            if ( parseInt(data_full_time) >= parseInt(fullTimeStart) && parseInt(data_full_time) <= parseInt(fullTimeEnd) ) {
-              console.log('1111');
-              var fullValue = facility + '|' + -1 + '|' + data_full_time;
-              setBlue($(this).parent(), -1, fullValue, '治療');
+            if ( parseInt(data_full_time) >= parseInt(fullTimeStart) && parseInt(data_full_time) < parseInt(fullTimeEnd) ) {
+              if ( $(this).parent().attr('class') === 'col-brown' ) {
+                var fullValue = facility + '|' + -1 + '|' + data_full_time;
+                setBlue($(this).parent(), -1, fullValue, '治療');
+                // insert to t-booking
+                $.ajax({
+                  url: "{{ route('ortho.bookings.template.daily.insert.ajax') }}",
+                  type: 'get',
+                  dataType: 'json',
+                  data: { 
+                    facility_id: facility,
+                    time: data_full_time,
+                    booking_date: '{{ $date }}',
+                    clinic_id: '{{ @$clinic->clinic_id }}' 
+                  },
+                  success: function(result){
+                    console.log(result);
+                  }
+                });
+              }
             }
           }
         });

@@ -51,6 +51,12 @@ class MemoModel
         return $results;
     }
 
+    public function get_list_by_memo_date($memo_date)
+    {
+        $results = DB::table($this->table)->where('memo_date', $memo_date)->where('last_kind', '<>', DELETE)->get();
+        return $results;
+    }
+
     public function update($id, $data)
     {
     	$results = DB::table($this->table)->where('memo_id', $id)->update($data);

@@ -23,6 +23,7 @@ use App\Http\Models\Ortho\AreaModel;
 use App\Http\Models\Ortho\ClinicAreaModel;
 use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\DdrModel;
+use App\Http\Models\Ortho\MemoModel;
 
 use Form;
 use Html;
@@ -128,6 +129,7 @@ class BookingController extends BackendController
         $clsClinicService       = new ClinicServiceModel();
         $clsUser                = new UserModel();
         $clsDdr                 = new DdrModel();
+        $clsMemo                = new MemoModel();
 
         $data['list_doctors']   = $clsUser->get_list_users([1]);
         $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
@@ -140,6 +142,10 @@ class BookingController extends BackendController
         $templates              = $clsTemplate->get_all();
         $bookings               = $clsBooking->get_by_clinic($clinic_id, $date_current);
         $data['ddrs']           = $clsDdr->get_by_start_date($date_current);
+        $data['memos']          = $clsMemo->get_list_by_memo_date($date_current);
+        // echo '<pre>';
+        // print_r($data['memos']->memo_contents);
+        // echo '</pre>';die;
 
         $where['clinic_id']     = $clinic_id;
         $where['booking_date']  = $date_current;

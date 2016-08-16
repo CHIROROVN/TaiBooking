@@ -237,8 +237,10 @@
                         $sDoctor = @$list_doctors[$booking->doctor_id];
 
                       $sPatient = '';
-                      if(!empty($booking->p_name) && !empty($booking->p_no) ) {
+                      if( !empty($booking->p_no) ) {
                         $sPatient .= $booking->p_no . '<br />';
+                      }
+                      if( !empty($booking->p_name) ) {
                         $sPatient .= $booking->p_name . '<br />';
                       }
 
@@ -267,14 +269,16 @@
                         }
 
                         $tPatient = '';
-                        if(!empty($booking->p_name) && !empty($booking->p_no)) {
+                        if( !empty($booking->p_no) ) {
                           $initTreatment = '';
                           $tPatient .= $booking->p_no . '<br />';
+                        }
+                        if( !empty($booking->p_name) ) {
                           $tPatient .= $booking->p_name . '<br />';
                         }
                         
 
-                        if ( !empty($sPatient) ) {
+                        if ( !empty($tPatient) ) {
                           $clsBackgroundPatient = 'backgroup-while';
                         }
 

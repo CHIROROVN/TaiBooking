@@ -743,3 +743,12 @@ span.note_required{
 .ddr-infomation {
   margin-top: 15px;
 }
+.ddr-infomation .ddr-infomation-child {
+  display: inline-block;
+  margin-right: 15px;
+  vertical-align: top;
+}
+
+.set-some-boxs {
+  margin: 15px 0;
+}

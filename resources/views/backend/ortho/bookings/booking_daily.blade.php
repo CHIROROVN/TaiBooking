@@ -56,22 +56,42 @@
               '4' => '#390',
               '5' => '#F90'
             );
-            $text = '院長カレンダー <br>';
-            foreach ( $ddrs as $item ) {
-              $kind = '<span style="color: ' . $color[$item->ddr_kind] . ';">■</span>';
-              $start_time = splitHourMin($item->ddr_start_time);
-              $end_time = splitHourMin($item->ddr_end_time);
-              if ( $start_time == '00:00' ) {
-                  $start_time = null;
+            $text = '院長カレンダー<br>';
+            if ( empty($ddrs) ) {
+              $text = null;
+            } else {
+              foreach ( $ddrs as $item ) {
+                $kind = '<span style="color: ' . $color[$item->ddr_kind] . ';">■</span>';
+                $start_time = splitHourMin($item->ddr_start_time);
+                $end_time = splitHourMin($item->ddr_end_time);
+                if ( $start_time == '00:00' ) {
+                    $start_time = null;
+                }
+                if ( $end_time == '00:00' ) {
+                    $end_time = null;
+                }
+                $text .= $kind . ' ' . $start_time . '~' . $end_time . ' ' . $item->ddr_contents . '<br />';
               }
-              if ( $end_time == '00:00' ) {
-                  $end_time = null;
+            }
+          ?>
+          <!-- memo infomation -->
+          <?php
+            $text2 = '伝言メモ<br>';
+            if ( empty($memos) ) {
+              $text2 = null;
+            } else {
+              foreach ( $memos as $key => $item ) {
+                $text2 .= $item->memo_contents . '<br />';
               }
-              $text .= $kind . ' ' . $start_time . '~' . $end_time . ' ' . $item->ddr_contents . '<br />';
             }
           ?>
           <div class="ddr-infomation">
-            {!! $text !!}
+            <div class="ddr-infomation-child">
+              {!! $text !!}
+            </div>
+            <div class="ddr-infomation-child">
+              {!! $text2 !!}
+            </div>
           </div>
 
           <h3 class="text-center mar-top20">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>

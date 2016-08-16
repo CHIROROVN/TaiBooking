@@ -362,8 +362,8 @@ class BookingModel
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
                         ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
-                        ->where('t_booking.last_kind', '<>', DELETE)
-                        ->where('t_booking.booking_status', 3);
+                        ->where('t_booking.last_kind', '<>', DELETE);
+                        // ->where('t_booking.booking_status', 3);
 
         if ( !empty($where['booking_recall_yy']) && !empty($where['booking_recall_mm']) ) {
             $db = $db->whereYEAR('t_booking.booking_recall_ym', '=', $where['booking_recall_yy'])

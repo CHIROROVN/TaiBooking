@@ -21,6 +21,7 @@
 	 <section id="page">
       <div class="container">
         <div class="row content-page">
+
           <h3>予約簿の表示</h3>
             <div class="mar-top20">
             <?php
@@ -45,6 +46,33 @@
             <input type="hidden" name="next" value="{{ $nextDate }}">
             <input type="submit" name="" value="翌日 &gt;&gt;" class="btn btn-sm btn-page">
           </form>
+          
+          <!-- ddr infomation -->
+          <?php
+            $color = array(
+              '1' => '#000',
+              '2' => '#F00',
+              '3' => '#00F',
+              '4' => '#390',
+              '5' => '#F90'
+            );
+            $text = '院長カレンダー <br>';
+            foreach ( $ddrs as $item ) {
+              $kind = '<span style="color: ' . $color[$item->ddr_kind] . ';">■</span>';
+              $start_time = splitHourMin($item->ddr_start_time);
+              $end_time = splitHourMin($item->ddr_end_time);
+              if ( $start_time == '00:00' ) {
+                  $start_time = null;
+              }
+              if ( $end_time == '00:00' ) {
+                  $end_time = null;
+              }
+              $text .= $kind . ' ' . $start_time . '~' . $end_time . ' ' . $item->ddr_contents . '<br />';
+            }
+          ?>
+          <div class="ddr-infomation">
+            {!! $text !!}
+          </div>
 
           <h3 class="text-center mar-top20">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
               <p>{{ @$clinic->clinic_name }}</p>

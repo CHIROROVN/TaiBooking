@@ -738,4 +738,8 @@ span.note_required{
   width: 45px;
   display: inline-block;
   text-align: center;
-} 
+}
+
+.ddr-infomation {
+  margin-top: 15px;
+}

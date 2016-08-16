@@ -117,7 +117,7 @@
         </tr>
         <tr>
           <td class="col-title">備考</td>
-          <td>{{ $booking->booking_memo }}</td>
+          <td><?php echo $booking->booking_memo ?></td>
         </tr>
         <tr>
           <td colspan="2" align="center">

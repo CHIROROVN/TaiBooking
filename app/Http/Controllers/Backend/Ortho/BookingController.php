@@ -22,6 +22,7 @@ use App\Http\Models\Ortho\ResultModel;
 use App\Http\Models\Ortho\AreaModel;
 use App\Http\Models\Ortho\ClinicAreaModel;
 use App\Http\Models\Ortho\TemplateModel;
+use App\Http\Models\Ortho\DdrModel;
 
 use Form;
 use Html;
@@ -125,8 +126,9 @@ class BookingController extends BackendController
         $clsTreatment1          = new Treatment1Model();
         $clsService             = new ServiceModel();
         $clsClinicService       = new ClinicServiceModel();
-
         $clsUser                = new UserModel();
+        $clsDdr                 = new DdrModel();
+
         $data['list_doctors']   = $clsUser->get_list_users([1]);
         $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
@@ -137,6 +139,7 @@ class BookingController extends BackendController
         $data['services']       = $clsService->get_list();
         $templates              = $clsTemplate->get_all();
         $bookings               = $clsBooking->get_by_clinic($clinic_id, $date_current);
+        $data['ddrs']           = $clsDdr->get_by_start_date($date_current);
 
         $where['clinic_id']     = $clinic_id;
         $where['booking_date']  = $date_current;

@@ -28,6 +28,12 @@ class DdrModel
         return $results;
     }
 
+    public function get_by_start_date($start_date = null)
+    {
+        $results = DB::table($this->table)->where('ddr_start_date', $start_date)->where('last_kind', '<>', DELETE)->orderBy('ddr_start_date', 'asc')->orderBy('ddr_start_time', 'asc')->get();
+        return $results;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

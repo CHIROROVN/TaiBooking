@@ -129,6 +129,7 @@
                 <span class="error-input">@if ($errors->first('ddr_start_date')) ※{!! $errors->first('ddr_start_date') !!} @endif</span>
               </td>
             </tr>
+
             <tr>
               <td class="col-title">終了日時</td>
               <td>
@@ -136,7 +137,7 @@
                 <select name="ddr_end_year" id="ddr_end_year" class="form-control form-control--small" onchange="getMonths('ddr_end_month', $(this).val(), '')">
                   <option value="">---年</option>
                   @foreach ( $years as $year )
-                  <option value="{{ $year }}">{{ $year }}</option>
+                  <option value="{{ $year }}" @if($ddr_start_date_y == $year) selected="" @endif>{{ $year }}</option>
                   @endforeach
                 </select>
                 <select name="ddr_end_month" id="ddr_end_month" class="form-control form-control--small" onchange="getDays('ddr_end_day', $(this).val(), '')">
@@ -165,6 +166,7 @@
                 まで
               </td>
             </tr>
+            
             <tr>
               <td class="col-title">内容</td>
               <td>
@@ -200,6 +202,8 @@
 
     getMonths('ddr_start_month', editYearStar, editMonthStar);
     getDays('ddr_start_day', editMonthStar, editDayStar);
+    getMonths('ddr_end_month', editYearStar, editMonthStar);
+    getDays('ddr_end_day', editMonthStar, editDayStar);
 
     // start date
     $('#ddr_start_year').change(function() {

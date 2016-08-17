@@ -288,7 +288,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	Route::get('bookings/booking-change', ['as' => 'ortho.bookings.booking.change', 'uses' => 'BookingController@getBookingChange']);
 	Route::post('bookings/booking-change', ['as' => 'ortho.bookings.booking.change', 'uses' => 'BookingController@postBookingChange']);
-	Route::get('bookings/change-list', ['as' => 'ortho.bookings.change_list', 'uses' => 'BookingController@bookingChangeList']);
+	Route::get('bookings/change-list', ['as' => 'ortho.bookings.booking_change_list', 'uses' => 'BookingController@bookingChangeList']);
+	Route::get('bookings/change-date/{id}', ['as' => 'ortho.bookings.booking_change_date', 'uses' => 'BookingController@getChangeDate']);
+	Route::post('bookings/change-date/{id}', ['as' => 'ortho.bookings.booking_change_date', 'uses' => 'BookingController@postChangeDate']);
 
 	Route::get('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@getSearch']);
 

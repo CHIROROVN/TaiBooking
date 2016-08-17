@@ -474,3 +474,21 @@ function showPatient($p_id=null){
 				break;
 		}
 	}
+
+	//convert time 3 digit to 4 digit
+	function time2D4($time){
+		if ( strlen($time) <= 3 )
+			$time  = sprintf('%04d', $time);
+
+		$result = array(
+			'hh' => '00',
+			'mm' => '00'
+		);
+
+		if ( strlen($time) == 4 ) {
+			$result['hh'] = substr($time, 0, 2);
+			$result['mm'] = substr($time, 2, 2);
+		}
+
+		return $result;
+	}

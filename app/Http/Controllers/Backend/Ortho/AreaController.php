@@ -14,7 +14,6 @@ use Input;
 use Validator;
 use Session;
 
-
 class AreaController extends BackendController
 {
     public function __construct()
@@ -61,7 +60,6 @@ class AreaController extends BackendController
         $max = $clsArea->get_max();
         $dataInsert = array(
             'area_name'         => Input::get('area_name'),
-
             'last_date'         => date('y-m-d H:i:s'),
             'area_sort_no'      => $max + 1,
             'last_kind'         => INSERT,

@@ -112,12 +112,14 @@
             未作成技工物TEL待ち
             @elseif ( $booking->booking_status == 5 )
             作成済み技工物キャンセル
+            @elseif ( $booking->booking_status == 6 )
+            無断キャンセル
             @endif
           </td>
         </tr>
         <tr>
           <td class="col-title">備考</td>
-          <td><?php echo $booking->booking_memo ?></td>
+          <td><?php echo @$booking->booking_memo ?></td>
         </tr>
         <tr>
           <td colspan="2" align="center">

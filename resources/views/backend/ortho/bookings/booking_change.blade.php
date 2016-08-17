@@ -153,7 +153,7 @@
           <div class="row margin-bottom">
             <div class="col-md-12 text-center">
               
-              <input name="BookingCalendar" id="BookingCalendar" onclick="goBookingSearch();" value="検索開始（カレンダー表示）" type="button" class="btn btn-sm btn-page mar-right">
+              <input name="BookingCalendar" id="BookingCalendar" value="検索開始（カレンダー表示）" type="submit" class="btn btn-sm btn-page mar-right">
 
               <input name="BookingList" id="BookingList" value="検索開始（一覧表表示）" type="submit" class="btn btn-sm btn-page mar-right">
 
@@ -165,11 +165,11 @@
 {!! Form::close() !!}
 
 <script type="text/javascript">
-    function goBookingSearch() {
-      var clinic_id = $("#clinic_id option:selected").val();
-      var link = "{{route('ortho.bookings.booking.result.calendar')}}?clinic_id=" + clinic_id;
-      window.location.href = link;
-    }
+    // function goBookingSearch() {
+    //   var clinic_id = $("#clinic_id option:selected").val();
+    //   var link = "{{route('ortho.bookings.booking.result.calendar')}}?clinic_id=" + clinic_id;
+    //   window.location.href = link;
+    // }
 
     $(document).ready(function() {
       $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );

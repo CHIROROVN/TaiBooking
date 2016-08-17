@@ -1401,14 +1401,32 @@ class BookingController extends BackendController
     public function postBookingChange()
     {
         $condition = array();
-        if(!empty(Input::get('clinic_id')))
-            $condition['clinic_id']         = Input::get('clinic_id');
-        if(!empty(Input::get('doctor_id')))
-            $condition['doctor_id']         = Input::get('doctor_id');
-        if(!empty(Input::get('hygienist_id')))
-            $condition['hygienist_id']      = Input::get('hygienist_id');
-        if(!empty(Input::get('booking_date')))
-            $condition['booking_date'] = Input::get('booking_date');
+        if(Input::has('BookingCalendar')){
+            if(!empty(Input::get('clinic_id'))){
+                $condition['clinic_id']         = Input::get('clinic_id');
+            }
+
+            if(!empty(Input::get('week_later'))){
+                if(Input::get('week_later') == 'week_specified'){
+                    $condition['date_current'] = Input::get('week_later_option');
+                }elseif (Input::get('week_later') == 'date_picker') {
+                    $condition['next'] = formatDate(Input::get('date_picker_option'), '-');
+                }else{
+                    $condition['next'] = Input::get('week_later');
+                }
+            }
+
+            return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
+
+        }else if(Input::has('BookingList')){
+            if(!empty(Input::get('clinic_id')))
+                $condition['clinic_id']         = Input::get('clinic_id');
+            if(!empty(Input::get('doctor_id')))
+                $condition['doctor_id']         = Input::get('doctor_id');
+            if(!empty(Input::get('hygienist_id')))
+                $condition['hygienist_id']      = Input::get('hygienist_id');
+            if(!empty(Input::get('booking_date')))
+                $condition['booking_date'] = Input::get('booking_date');
 
         if(!empty(Input::get('week_later'))){
             if(Input::get('week_later') == 'week_specified'){
@@ -1420,9 +1438,12 @@ class BookingController extends BackendController
             }
         }
 
-        if(!empty(Input::get('clinic_service_name')))
-            $condition['clinic_service_name']         = Input::get('clinic_service_name');
-        return redirect()->route('ortho.bookings.change_list', $condition);
+            if(!empty(Input::get('clinic_service_name')))
+                $condition['clinic_service_name']         = Input::get('clinic_service_name');
+
+            return redirect()->route('ortho.bookings.booking_change_list', $condition);
+        }
+
     }
 
     public function bookingChangeList()
@@ -1462,7 +1483,49 @@ class BookingController extends BackendController
         $data['treatment1s']              = $clsTreatment1->get_list_treatment();
         $clsService                       = new ServiceModel();
         $data['services']                 = $clsService->get_list();
-        return view('backend.ortho.bookings.booking_result_list', $data);
+        return view('backend.ortho.bookings.booking_change_list', $data);
+    }
+
+    public function getChangeDate($id)
+    {
+        $clsBooking                 = new BookingModel();
+        if($clsBooking->checkExistID($id)){
+            $data                       = array();
+            $clsBooking                 = new BookingModel();
+            $clsUser                    = new UserModel();
+            $clsClinicService           = new ClinicServiceModel();
+            $clsTreatment1              = new Treatment1Model();
+            $data['booking']            = $clsBooking->get_by_id($id);
+
+            $data['doctors']            = $clsUser->get_by_belong([1]);
+            $data['hys']                = $clsUser->get_by_belong([2,3]);
+            $data['start_date']         = Input::get('start_date');
+            $clsService                 = new ServiceModel();
+            $data['services']           = $clsService->get_list();
+            $clsTreatment1              = new Treatment1Model();
+            $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+            return view('backend.ortho.bookings.booking_change_date', $data);
+        }else{
+            return response()->view('errors.404', [], 404);
+        }
+    }
+
+    public function postChangeDate($id)
+    {
+        $data = array();
+        if(!empty(Input::get('booking_date')))
+            $data['booking_date'] = Input::get('booking_date');
+
+        if(!empty(Input::get('hour_start'))){
+            $mm = Input::get('min_start');
+            if($mm == null){
+                $mm = '00';
+            }
+
+            $data['booking_start_time']  = Input::get('hour_start').$mm;
+        }
+        Session::put('booking_change', $data);
+        return redirect()->route('ortho.bookings.booking.change.confirm', $id);
     }
 
     public function getConfirm($id)
@@ -1494,8 +1557,10 @@ class BookingController extends BackendController
         $dataInput                  = Session::get('booking_change');
         unset($dataInput['booking_id']);
         $clsBooking                 = new BookingModel();
-        $booking                   = $clsBooking->get_by_id($id);
-        $booking_id_arr[]          = $booking->booking_group_id;
+        $booking                    = $clsBooking->get_by_id($id);
+        $clinic_id                  = $booking->clinic_id;
+        $next                       = $dataInput['booking_date'];
+        $booking_id_arr[]           = $booking->booking_group_id;
         $bookingGroups = $clsBooking->get_by_group($booking_id_arr);
 
         $flag = false;
@@ -1507,7 +1572,7 @@ class BookingController extends BackendController
 
         if ($flag) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.bookings.booking.edit',[$id]);
+            return redirect()->route('ortho.bookings.booking.result.calendar',[$clinic_id, $next]);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
             return redirect()->route('ortho.bookings.booking.change', $id);

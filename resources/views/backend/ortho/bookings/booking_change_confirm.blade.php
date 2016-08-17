@@ -1,5 +1,4 @@
 @extends('backend.ortho.ortho')
-
 @section('content')
 <section id="page">
   <div class="container content-page">
@@ -81,7 +80,7 @@
             </tr>
             <tr>
               <td class="col-title">医院</td>
-              <td>{{@$clinics[$booking_change['clinic_id']]}}</td>
+              <td>{{@$clinics[$booking->clinic_id]}}</td>
             </tr>
             <tr>
               <td class="col-title">チェアー</td>
@@ -89,11 +88,11 @@
             </tr>
             <tr>
               <td class="col-title">ドクター</td>
-              <td>{{@$doctors[$booking_change['doctor_id']]}}</td>
+              <td>{{@$doctors[$booking->doctor_id]}}</td>
             </tr>
             <tr>
               <td class="col-title">衛生士</td>
-              <td>{{@$hygienists[$booking_change['hygienist_id']]}}</td>
+              <td>{{@$hygienists[$booking->hygienist_id]}}</td>
             </tr>
             <tr>
               <td class="col-title">装置</td>
@@ -101,22 +100,13 @@
             </tr>
             <tr>
               <td class="col-title">業務内容-1</td>
-              <td><?php if(isset($booking_change['service_1_kind']) && $booking_change['service_1_kind'] == 1){
-                      echo @$services[$booking_change['service_1']];
-                    }elseif(isset($booking_change['service_1_kind']) && $booking_change['service_1_kind'] == 2){
-                      echo @$treatment1s[$booking_change['service_1']];
+              <td><?php if(isset($booking->service_1_kind) && $booking->service_1_kind == 1){
+                      echo @$services[$booking->service_1];
+                    }elseif(isset($booking->service_1_kind) && $booking->service_1_kind == 2){
+                      echo @$treatment1s[$booking->service_1];
                     }
                 ?></td>
             </tr>
-            <!-- <tr>
-              <td class="col-title">業務内容-2</td>
-              <td><?php if(isset($booking_change['service_2_kind']) && $booking_change['service_2_kind'] == 1){
-                      echo @$services[$booking_change['service_1']];
-                    }elseif(isset($booking_change['service_2_kind']) && $booking_change['service_2_kind'] == 2){
-                      echo @$treatment1s[$booking_change['service_2']];
-                    }
-                ?></td>
-            </tr> -->
             <tr>
               <td class="col-title">検査</td>
               <td>{{$booking->inspection_name}}</td>
@@ -144,8 +134,8 @@
     </div>
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        <input value="変更する（確認済）" onclick="location.href='{{route('ortho.bookings.booking.update.confirm', [$booking->booking_id])}}'" name="btnSave" type="button" class="btn btn-sm btn-page">
-        <input value="キャンセル" onclick="location.href='{{route('ortho.bookings.booking.change', [$booking->booking_id])}}'" name="btnCancel" type="button" class="btn btn-sm btn-page">
+        <input value="変更する（確認済）" name="btnSave" type="submit" class="btn btn-sm btn-page">
+        <input value="キャンセル" onclick="location.href='{{route('ortho.bookings.booking_change_date', [$booking->booking_id])}}'" name="btnCancel" type="button" class="btn btn-sm btn-page">
       </div>
     </div>
     {!! Form::close() !!}

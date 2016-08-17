@@ -41,8 +41,7 @@
              ?>
                 <label class="radio-inline">
                 予約日 <input type="calendar" name="booking_date" id="date_picker_option" class="datepicker" style="width: 130px;" value="{{@$booking->booking_date}}"></label>
-                <label class="radio-inline">
-                始まる時間 <select name="hour_start"  id="hour_start" style="width: 60px;">
+                <label class="radio-inline">予約時間 <select name="hour_start"  id="hour_start" style="width: 60px;">
                         <option value="">-- 時</option>
                         <option value="00" @if($hh == '00') selected="" @endif >00 時</option>
                         <option value="01" @if($hh == '01') selected="" @endif >01 時</option>

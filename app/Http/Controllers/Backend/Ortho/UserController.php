@@ -57,6 +57,7 @@ class UserController extends BackendController
      */
     public function postRegist()
     {
+
         $clsUser        = new UserModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsUser->Rules(), $clsUser->Messages());
@@ -83,9 +84,10 @@ class UserController extends BackendController
             'u_power8'          => Input::get('u_power8'),
             'u_power9'          => Input::get('u_power9'),
             'u_power10'         => Input::get('u_power10'),
+            'u_power11'         => !empty(Input::get('u_power11')) ? Input::get('u_power11') : NULL,
+            'u_power12'         => Input::get('u_power12'),
             'u_power_booking'   => Input::get('clinic_id'),
             'u_human_flg'       => Input::get('u_human_flg'),
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
@@ -155,6 +157,8 @@ class UserController extends BackendController
             'u_power8'          => Input::get('u_power8'),
             'u_power9'          => Input::get('u_power9'),
             'u_power10'         => Input::get('u_power10'),
+            'u_power11'         => !empty(Input::get('u_power11')) ? Input::get('u_power11') : NULL,
+            'u_power12'         => Input::get('u_power12'),
             'u_power_booking'   => Input::get('clinic_id'),
             'u_human_flg'       => Input::get('u_human_flg'),
 

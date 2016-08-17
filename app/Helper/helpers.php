@@ -492,3 +492,37 @@ function showPatient($p_id=null){
 
 		return $result;
 	}
+
+		function cal_date($week_later = null){
+		$datenow = Carbon::now();
+		if(!empty($week_later)){
+			switch ($week_later) {
+				case 'one_week':
+					return formatDate($datenow->addWeek()->toDateTimeString(),'-');
+					break;
+				case 'two_week':
+					return formatDate($datenow->addWeeks(2)->toDateTimeString(),'-');
+					break;
+				case 'three_week':
+					return formatDate($datenow->addWeeks(3)->toDateTimeString(),'-');
+					break;
+				case 'four_week':
+					return formatDate($datenow->addWeeks(4)->toDateTimeString(),'-');
+					break;
+				case 'five_week':
+					return formatDate($datenow->addWeeks(5)->toDateTimeString(),'-');
+					break;
+				case 'one_month':
+					return formatDate($datenow->addMonth()->toDateTimeString(),'-');
+					break;
+				case 'two_month':
+					return formatDate($datenow->addMonths(2)->toDateTimeString(),'-');
+					break;
+				default:
+					return '';
+					break;
+			}
+		}else{
+			return null;
+		}
+	}

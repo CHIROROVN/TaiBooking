@@ -1408,11 +1408,11 @@ class BookingController extends BackendController
 
             if(!empty(Input::get('week_later'))){
                 if(Input::get('week_later') == 'week_specified'){
-                    $condition['date_current'] = Input::get('week_later_option');
+                    $condition['next'] = cal_date(Input::get('week_later_option'));
                 }elseif (Input::get('week_later') == 'date_picker') {
                     $condition['next'] = formatDate(Input::get('date_picker_option'), '-');
                 }else{
-                    $condition['next'] = Input::get('week_later');
+                    $condition['next'] = cal_date(Input::get('week_later'));
                 }
             }
 
@@ -1600,28 +1600,44 @@ class BookingController extends BackendController
     public function postSearch()
      {
         $condition = array();
-        if(!empty(Input::get('clinic_id')))
-            $condition['clinic_id']         = Input::get('clinic_id');
-        if(!empty(Input::get('doctor_id')))
-            $condition['doctor_id']         = Input::get('doctor_id');
-        if(!empty(Input::get('hygienist_id')))
-            $condition['hygienist_id']      = Input::get('hygienist_id');
-        if(!empty(Input::get('booking_date')))
-            $condition['booking_date'] = Input::get('booking_date');
+        if(Input::has('BookingCalendar')){
+            if(!empty(Input::get('clinic_id')))
+                $condition['clinic_id'] = Input::get('clinic_id');
 
-        if(!empty(Input::get('week_later'))){
-            if(Input::get('week_later') == 'week_specified'){
-            $condition['week_later'] = Input::get('week_later_option');
-            }elseif (Input::get('week_later') == 'date_picker') {
-                $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
-            }else{
-                $condition['week_later'] = Input::get('week_later');
+            if(!empty(Input::get('week_later'))){
+                if(Input::get('week_later') == 'week_specified'){
+                $condition['next'] = cal_date(Input::get('week_later_option'));
+                }elseif (Input::get('week_later') == 'date_picker') {
+                    $condition['next'] = formatDate(Input::get('date_picker_option'), '-');
+                }else{
+                    $condition['next'] = cal_date(Input::get('week_later'));
+                }
             }
-        }
+            return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
+        }else if(Input::has('BookingList')){
+             if(!empty(Input::get('clinic_id')))
+            $condition['clinic_id']         = Input::get('clinic_id');
+            if(!empty(Input::get('doctor_id')))
+                $condition['doctor_id']         = Input::get('doctor_id');
+            if(!empty(Input::get('hygienist_id')))
+                $condition['hygienist_id']      = Input::get('hygienist_id');
+            if(!empty(Input::get('booking_date')))
+                $condition['booking_date'] = Input::get('booking_date');
 
-        if(!empty(Input::get('clinic_service_name')))
-            $condition['clinic_service_name']         = Input::get('clinic_service_name');
-        return redirect()->route('ortho.bookings.booking.result.list', $condition);
+            if(!empty(Input::get('week_later'))){
+                if(Input::get('week_later') == 'week_specified'){
+                $condition['week_later'] = Input::get('week_later_option');
+                }elseif (Input::get('week_later') == 'date_picker') {
+                    $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
+                }else{
+                    $condition['week_later'] = Input::get('week_later');
+                }
+            }
+
+            if(!empty(Input::get('clinic_service_name')))
+                $condition['clinic_service_name']         = Input::get('clinic_service_name');
+            return redirect()->route('ortho.bookings.booking.result.list', $condition);
+            }
      }
 
     /**

@@ -91,7 +91,7 @@
                 <tr>
                   <td colspan="2" class="text-center">
                     <input onclick="location.href='{{route('ortho.bookings.booking.edit',[$bookings[0]->booking_id])}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href='{{route('ortho.bookings.booking.change',[$bookings[0]->booking_id])}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking.change')}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
                     <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf',[$bookings[0]->booking_id])}}'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
@@ -251,7 +251,7 @@
                 <tr>
                   <td colspan="2" class="text-center">
                     <input onclick="location.href='{{route('ortho.bookings.booking.edit',[$bookings[1]->booking_id])}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href='{{route('ortho.bookings.booking.change',[$bookings[1]->booking_id])}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking.change')}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
                     <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf',[$bookings[1]->booking_id])}}'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>

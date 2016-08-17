@@ -124,7 +124,7 @@
         <tr>
           <td colspan="2" align="center">
             <input onclick="location.href='{{ route('ortho.bookings.booking.edit', [ $booking->booking_id ]) }}'" value="予約内容を修正する" type="button" class="btn btn-sm btn-page mar-right">
-            <input onclick="location.href='{{ route('ortho.bookings.booking.change', [ $booking->booking_id ]) }}'" value="予約日時を変更する" type="button" class="btn btn-sm btn-page mar-right">
+            <input onclick="location.href='{{ route('ortho.bookings.booking.change') }}'" value="予約日時を変更する" type="button" class="btn btn-sm btn-page mar-right">
             <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf', [ $booking->booking_id ])}}'" value="予約をキャンセルする" type="button" class="btn btn-sm btn-page">
           </td>
         </tr>

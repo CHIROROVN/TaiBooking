@@ -9,7 +9,6 @@ use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
 
-
 use Request;
 use Auth;
 use Form;

@@ -21,14 +21,13 @@ class ForumController extends BackendController
         //$this->middleware('auth');
     }
 
-
     /**
      * get list inspections
      */
     public function index()
     {
         $data             = array();
-        return view('backend.ortho.inspections.index', $data);
+        return view('backend.ortho.forums.forum_list', $data);
     }
 
     /**

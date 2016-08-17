@@ -330,6 +330,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	// Route::post('bookings/edit/{id}', ['as' => 'ortho.bookings.edit', 'uses' => 'BookingController@postEdit']);
 	// Route::get('bookings/delete/{id}', ['as' => 'ortho.bookings.delete', 'uses' => 'BookingController@getDelete']);
 
+	//Forum
+	Route::get('forums', ['as' => 'ortho.forums.forum_list', 'uses' => 'ForumController@index']);
 
 	// memos
 	Route::any('memos-calendar', ['as' => 'ortho.memos.calendar', 'uses' => 'MemoController@calendar']);

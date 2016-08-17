@@ -13,7 +13,8 @@ class UserModel
     		'u_name'            => 'required',
             'u_name_yomi'       => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'u_name_display'    => 'required',
-            'u_login'           => 'required|unique:m_users,u_login,NULL,id,last_kind,<>' . DELETE,
+            //'u_login'           => 'required|unique:m_users,u_login,NULL,id,last_kind,<>' . DELETE,
+            'u_login'           => 'required|unique:m_users',
             'password'          => 'required',
 		);
     }

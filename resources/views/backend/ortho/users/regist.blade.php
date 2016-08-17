@@ -102,7 +102,7 @@
                   <option value="">正常</option>
                   <option value="1">伝言板</option>
                   <option value="2">伝言板</option>
-                </select>  <label>伝言板/power12</label>
+                </select>  <span class="power">伝言板/power12</span>
               </div>
             </td>
           </tr>

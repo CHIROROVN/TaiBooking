@@ -96,7 +96,7 @@
                   <option value="" @if($user->u_power12 == '') selected="" @endif >正常</option>
                   <option value="1" @if($user->u_power12 == 1) selected="" @endif >伝言板</option>
                   <option value="2" @if($user->u_power12 == 2) selected="" @endif >伝言板</option>
-                </select>  <label>伝言板/power12</label>
+                </select>  <span class="power">伝言板/power12</span>
               </div>
             </td>
           </tr>

@@ -82,6 +82,18 @@ class ClinicModel
         return $db;
     }
 
+    public function get_for_select_only_user()
+    {
+        $db = DB::table($this->table)
+                        ->select('clinic_id', 'clinic_name')
+                        ->where('last_kind', '<>', DELETE);
+
+        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                        ->orderBy('clinic_name_yomi', 'asc')
+                        ->get();
+        return $db;
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

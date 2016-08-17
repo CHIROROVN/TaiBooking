@@ -48,7 +48,7 @@ class UserController extends BackendController
         $clsBelong          = new BelongModel();
         $data['belongs']    = $clsBelong->get_all();
         $clsClinic                  = new ClinicModel();
-        $data['clinics']            = $clsClinic->get_for_select();
+        $data['clinics']            = $clsClinic->get_for_select_only_user();
         return view('backend.ortho.users.regist', $data);
     }
 
@@ -111,7 +111,7 @@ class UserController extends BackendController
         $data['user']       = $clsUser->get_by_id($id);
         $data['belongs']    = $clsBelong->get_all();
         $clsClinic                  = new ClinicModel();
-        $data['clinics']            = $clsClinic->get_for_select();
+        $data['clinics']            = $clsClinic->get_for_select_only_user();
         return view('backend.ortho.users.edit', $data);
     }
 

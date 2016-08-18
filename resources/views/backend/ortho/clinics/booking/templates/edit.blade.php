@@ -168,14 +168,20 @@
                     }
 
                     $clsNameGroup = null;
-                    if ( isset($arr_templates[$facility_id][$time]->template_group_id) ) {
-                      $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
+                    $clsNameGroup = $arr_templates[$facility_id][$time]->template_group_id;
+                    if ( empty($clsNameGrou) ) {
+                      $clsNameGroup = null;
                     }
                   }
                 ?>
 
                 <!-- close -->
                 <td align="center" class="col-{{ $color }}" id="td-{{ $common_id }}">
+                  <?php
+                  if ( $color === 'brown' ) {
+                      $clsNameGroup = null;
+                    }
+                  ?>
                   <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}">
                     @if ( $color === 'brown' )
                     <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />

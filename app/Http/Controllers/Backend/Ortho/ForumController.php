@@ -5,7 +5,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
-
+use App\Http\Models\Ortho\ForumModel;
 use Form;
 use Html;
 use Input;
@@ -18,7 +18,7 @@ class ForumController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        //$this->middleware('auth');
+        $this->middleware('auth', ['except' => ['index', 'getRegist', 'postRegist']]);
     }
 
     /**
@@ -26,8 +26,16 @@ class ForumController extends BackendController
      */
     public function index()
     {
-        $data             = array();
+        $data                 = array();
+        $clsForumModel        = new ForumModel();
+        $data['forums']       = $clsForumModel->getAllForum();
         return view('backend.ortho.forums.forum_list', $data);
+    }
+
+    public static function countReply($forum_id)
+    {
+        $clsForumModel        = new ForumModel();
+        return $clsForumModel->countComments($forum_id);
     }
 
     /**

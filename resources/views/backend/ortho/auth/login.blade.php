@@ -53,6 +53,12 @@
                   <button type="submit" class="btn btn-login" name="login" value="login">ログイン</button>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-6"></div>
+                <div class="col-xs-12 col-md-6" style="top: 70px; left: -62px; width: 121px;">
+                  [<a class="cls-forum" href="{{route('ortho.forums.forum_list')}}"> <strong>フォーラム</strong></a>]
+                </div>
+              </div>
 
             {!! Form::close() !!}
           </div>

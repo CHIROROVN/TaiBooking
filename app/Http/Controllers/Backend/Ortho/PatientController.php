@@ -45,6 +45,10 @@ class PatientController extends BackendController
         $where['keyword_id']    = $keyword_id;
 
         $where['p_no']          = Input::get('p_no');
+        $where['p_name_f']      = Input::get('p_name_f');
+        $where['p_name_g']      = Input::get('p_name_g');
+        $where['p_name_f_kana'] = Input::get('p_name_f_kana');
+        $where['p_name_g_kana'] = Input::get('p_name_g_kana');
         $where['p_tel']         = Input::get('p_tel');
         $where['p_hos']         = Input::get('p_hos');
         $where['p_hos_memo']    = Input::get('p_hos_memo');
@@ -57,6 +61,10 @@ class PatientController extends BackendController
         $data['keyword']        = $keyword;
         $data['keyword_id']     = $keyword_id;
         $data['p_no']           = Input::get('p_no');
+        $data['p_name_f']       = Input::get('p_name_f');
+        $data['p_name_g']       = Input::get('p_name_g');
+        $data['p_name_f_kana']  = Input::get('p_name_f_kana');
+        $data['p_name_g_kana']  = Input::get('p_name_g_kana');
         $data['p_tel']          = Input::get('p_tel');
         $data['p_hos']          = Input::get('p_hos');
         $data['p_hos_memo']     = Input::get('p_hos_memo');
@@ -96,8 +104,12 @@ class PatientController extends BackendController
             'p_dr'                  => Input::get('p_dr'),
             'p_hos_memo'            => Input::get('p_hos_memo'),
             'p_hos'                 => Input::get('p_hos'),
-            'p_name'                => Input::get('p_name'),
-            'p_name_kana'           => Input::get('p_name_kana'),
+            // 'p_name'                => Input::get('p_name'),
+            // 'p_name_kana'           => Input::get('p_name_kana'),
+            'p_name_f'              => Input::get('p_name_f'),
+            'p_name_g'              => Input::get('p_name_g'),
+            'p_name_f_kana'         => Input::get('p_name_f_kana'),
+            'p_name_g_kana'         => Input::get('p_name_g_kana'),
             'p_sex'                 => Input::get('p_sex'),
             'p_birthday'            => date('Y-m-d', strtotime(Input::get('p_birthday'))),
             'p_family_dr'           => Input::get('p_family_dr'),
@@ -180,8 +192,12 @@ class PatientController extends BackendController
             'p_dr'                  => Input::get('p_dr'),
             'p_hos_memo'            => Input::get('p_hos_memo'),
             'p_hos'                 => Input::get('p_hos'),
-            'p_name'                => Input::get('p_name'),
-            'p_name_kana'           => Input::get('p_name_kana'),
+            // 'p_name'                => Input::get('p_name'),
+            // 'p_name_kana'           => Input::get('p_name_kana'),
+            'p_name_f'              => Input::get('p_name_f'),
+            'p_name_g'              => Input::get('p_name_g'),
+            'p_name_f_kana'         => Input::get('p_name_f_kana'),
+            'p_name_g_kana'         => Input::get('p_name_g_kana'),
             'p_sex'                 => Input::get('p_sex'),
             'p_birthday'            => date('Y-m-d', strtotime(Input::get('p_birthday'))),
             'p_family_dr'           => Input::get('p_family_dr'),
@@ -288,6 +304,10 @@ class PatientController extends BackendController
     {
         $data                       = array();
         $data['p_no']               = Input::get('p_no');
+        $data['p_name_f']           = Input::get('p_name_f');
+        $data['p_name_g']           = Input::get('p_name_g');
+        $data['p_name_f_kana']      = Input::get('p_name_f_kana');
+        $data['p_name_g_kana']      = Input::get('p_name_g_kana');
         $data['p_tel']              = Input::get('p_tel');
         $data['p_hos']              = Input::get('p_hos');
         $data['p_hos_memo']         = Input::get('p_hos_memo');
@@ -356,8 +376,8 @@ class PatientController extends BackendController
         foreach ( $patients as $patient ) {
             $tmp[] = (object)array(
                 'value'     => $patient->p_id,
-                'label'     => $patient->p_no . ' ' . $patient->p_name . '(' . $patient->p_name_kana . ')',
-                'desc'      => $patient->p_no . ' ' . $patient->p_name . '(' . $patient->p_name_kana . ')',
+                'label'     => $patient->p_no . ' ' . $patient->p_name_f . ' ' . $patient->p_name_g . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')',
+                'desc'      => $patient->p_no . ' ' . $patient->p_name_f . ' ' . $patient->p_name_g . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')',
             );
         }
         echo json_encode($tmp);

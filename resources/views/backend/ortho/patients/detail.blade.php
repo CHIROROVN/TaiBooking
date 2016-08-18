@@ -48,11 +48,11 @@
         </tr>
         <tr>
           <td class="col-title">氏名</td>
-          <td>{{ $patient->p_name }}</td>
+          <td>{{ $patient->p_name_f }} {{ $patient->p_name_g }}</td>
         </tr>
         <tr>
           <td class="col-title">氏名（よみ）</td>
-          <td>{{ $patient->p_name_kana }}</td>
+          <td>{{ $patient->p_name_f_kana }} {{ $patient->p_name_g_kana }}</td>
         </tr>
         <tr>
           <td class="col-title">性別</td>

@@ -28,7 +28,7 @@
       <table class="table table-bordered treatment2-list">
         <tr>
           <td class="col-title">患者名</td>
-          <td>{{ $booking->p_no }} {{ $booking->p_name }}</td>
+          <td>{{ $booking->p_no }} {{ $booking->p_name_f }} {{ $booking->p_name_g }}</td>
         </tr>
         <tr>
           <td class="col-title">予約日時</td>

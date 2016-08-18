@@ -12,7 +12,7 @@
           <tr><td colspan="2">変更前</td></tr>
             <tr>
               <td class="col-title" style="width:30%">患者名</td>
-              <td>{{$booking->p_no}} {{$booking->p_name}}</td>
+              <td>{{$booking->p_no}} {{ $booking->p_name_f }} {{ $booking->p_name_g }}</td>
             </tr>
             <tr>
               <td class="col-title">予約日時</td>
@@ -72,7 +72,7 @@
           <tr><td colspan="2" style="color: red;">変更後</td></tr>
             <tr>
               <td class="col-title" style="width:30%">患者名</td>
-              <td>{{$booking->p_no}} {{$booking->p_name}}</td>
+              <td>{{$booking->p_no}} {{$booking->p_name_f}} {{ $booking->p_name_g }}</td>
             </tr>
             <tr>
               <td class="col-title">予約日時</td>

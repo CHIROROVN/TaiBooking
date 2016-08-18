@@ -10,7 +10,7 @@
           <tbody>
             <tr>
               <td class="col-title">患者名</td>
-              <td><span class="mar-right">{{ $patient->p_name }}</span> <input onclick="location.href='{{ route('ortho.patients.detail', [ $patient->p_id ]) }}'" value="詳細表示" type="button"class="btn btn-xs btn-page"></td>
+              <td><span class="mar-right">{{ $patient->p_name_f }} {{ $patient->p_name_g }}</span> <input onclick="location.href='{{ route('ortho.patients.detail', [ $patient->p_id ]) }}'" value="詳細表示" type="button"class="btn btn-xs btn-page"></td>
             </tr>
             <tr>
               <td class="col-title">担当</td>

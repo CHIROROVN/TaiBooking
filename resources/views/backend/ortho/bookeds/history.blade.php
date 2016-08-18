@@ -74,7 +74,7 @@
             @if ( !empty($booked->patient_id) )
             <tr>
               <td>{{ $booked->booking_date }}</td>
-              <td>{{ $booked->p_no }}　{{ $booked->p_name }}@if(!empty($booked->p_name_kana))（{{ $booked->p_name_kana }}）@endif</td>
+              <td>{{ $booked->p_no }}　{{ $booked->p_name_f . ' ' . $booked->p_name_g }}@if(!empty($booked->p_name_f_kana))（{{ $booked->p_name_f_kana . ' ' . $booked->p_name_g_kana }}）@endif</td>
               <td>
                 @if ( $booked->service_1_kind == 1 )
                 {{ @$services[$booked->service_1] }}

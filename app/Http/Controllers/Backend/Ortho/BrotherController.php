@@ -259,8 +259,8 @@ class BrotherController extends BackendController
         foreach ( $patients as $patient ) {
             $tmp[] = (object)array(
                 'value'     => $patient->p_id,
-                'label'     => $patient->p_no . ' ' . $patient->p_name . '(' . $patient->p_name_kana . ')',
-                'desc'      => $patient->p_no . ' ' . $patient->p_name . '(' . $patient->p_name_kana . ')',
+                'label'     => $patient->p_no . ' ' . $patient->p_name_f . ' ' . $patient->p_name_g . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')',
+                'desc'      => $patient->p_no . ' ' . $patient->p_name_f . ' ' . $patient->p_name_g . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')',
             );
         }
         echo json_encode($tmp);

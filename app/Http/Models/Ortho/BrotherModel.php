@@ -29,7 +29,7 @@ class BrotherModel
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient', 't_brother.p_relation_id', '=', 't_patient.p_id')
-                        ->select('t_brother.*', 't_patient.p_id as patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
+                        ->select('t_brother.*', 't_patient.p_id as patient_id', 't_patient.p_no', 't_patient.p_name_f', 't_patient.p_name_g', 't_patient.p_name_f_kana', 't_patient.p_name_g_kana', 't_patient.p_sex', 't_patient.p_birthday')
                         ->where('t_brother.p_id', $patient_id)
                         ->where('t_patient.p_id', '<>', $patient_id)
                         ->where('t_brother.last_kind', '<>', DELETE);
@@ -44,7 +44,7 @@ class BrotherModel
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient', 't_brother.p_id', '=', 't_patient.p_id')
-                        ->select('t_brother.*', 't_patient.p_id as patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
+                        ->select('t_brother.*', 't_patient.p_id as patient_id', 't_patient.p_no', 't_patient.p_name_f', 't_patient.p_name_g', 't_patient.p_name_f_kana', 't_patient.p_name_g_kana', 't_patient.p_sex', 't_patient.p_birthday')
                         ->where('t_brother.p_relation_id', $patient_id)
                         ->where('t_patient.p_id', '<>', $patient_id)
                         ->where('t_patient.last_kind', '<>', DELETE)
@@ -74,7 +74,7 @@ class BrotherModel
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient', 't_brother.p_relation_id', '=', 't_patient.p_id')
-                        ->select('t_brother.*', 't_patient.p_id as patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
+                        ->select('t_brother.*', 't_patient.p_id as patient_id', 't_patient.p_no', 't_patient.p_name_f', 't_patient.p_name_g', 't_patient.p_name_f_kana', 't_patient.p_name_g_kana', 't_patient.p_sex', 't_patient.p_birthday')
                         ->where('t_patient.last_kind', '<>', DELETE)
                         ->where('t_brother.last_kind', '<>', DELETE)
                         ->where('brother_id', $id)->first();

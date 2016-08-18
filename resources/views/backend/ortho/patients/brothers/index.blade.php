@@ -27,7 +27,7 @@
       <tbody>
         <tr>
           <td class="col-title">患者名</td>
-          <td><span class="mar-right">{{ $patient->p_name }}</span> <input onclick="location.href='{{ route('ortho.patients.detail', [ $patient->p_id ]) }}'" value="詳細表示" type="button"class="btn btn-xs btn-page"></td>
+          <td><span class="mar-right">{{ $patient->p_name_f }} {{ $patient->p_name_g }}</span> <input onclick="location.href='{{ route('ortho.patients.detail', [ $patient->p_id ]) }}'" value="詳細表示" type="button"class="btn btn-xs btn-page"></td>
         </tr>
         <tr>
           <td class="col-title">担当</td>
@@ -70,8 +70,8 @@
           @foreach ( $brothers as $brother )
           <tr>
             <td align="right">{{ $brother->p_no }}</td>
-            <td>{{ $brother->p_name }}</td>
-            <td>{{ $brother->p_name_kana }}</td>
+            <td>{{ $brother->p_name_f }} {{ $brother->p_name_g }}</td>
+            <td>{{ $brother->p_name_f_kana }} {{ $brother->p_name_g_kana }}</td>
             <td><?php echo ($brother->p_sex == 1) ? '男' : '女'; ?></td>
             <td>{{ date('Y/m/d', strtotime($brother->p_birthday)) }}</td>
             <td>{{relationship($patient->p_sex,$brother->p_sex , $brother->brother_relation)}}</td>

@@ -12,7 +12,7 @@
               <tbody>
                 <tr>
                   <td class="col-title" style="width:30%">患者名</td>
-                  <td>{{$bookings[0]->p_no}} {{$bookings[0]->p_name}}</td>
+                  <td>{{$bookings[0]->p_no}} {{$bookings[0]->p_name_f}} {{$bookings[0]->p_name_g}}</td>
                 </tr>
                 <tr>
                   <td class="col-title">予約日時</td>
@@ -172,7 +172,7 @@
               <tbody>
                 <tr>
                   <td class="col-title" style="width:30%">患者名</td>
-                  <td>{{$bookings[1]->p_no}} {{$bookings[1]->p_name}}</td>
+                  <td>{{$bookings[1]->p_no}} {{$bookings[1]->p_name_f}} {{$bookings[1]->p_name_g}}</td>
                 </tr>
                 <tr>
                   <td class="col-title">予約日時</td>

@@ -18,7 +18,7 @@ class ForumController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth', ['except' => ['index', 'getRegist', 'postRegist']]);
+        $this->middleware('auth', ['except' => ['index', 'getAddComment', 'postAddComment']]);
     }
 
     /**
@@ -41,40 +41,58 @@ class ForumController extends BackendController
     /**
      * get view regist
      */
-    public function getRegist()
+    public function getAddComment()
     {
-        return view('backend.ortho.inspections.regist');
+        return view('backend.ortho.forums.forum_regist');
     }
 
     /**
      * insert database to table
      */
-    public function postRegist()
+    public function postAddComment()
     {
-        $clsInspection          = new InspectionModel();
+        $dataInput              = array();
+        $clsForum               = new ForumModel();
         $inputs                 = Input::all();
-        $validator              = Validator::make($inputs, $clsInspection->Rules(), $clsInspection->Messages());
+        $validator              = Validator::make($inputs, $clsForum->Rules(), $clsForum->Messages());
         if ($validator->fails()) {
-            return redirect()->route('ortho.inspections.regist')->withErrors($validator)->withInput();
+            return redirect()->route('ortho.forums.forum_regist')->withErrors($validator)->withInput();
         }
 
-        // insert
-        $max = $clsInspection->get_max();
-        $dataInsert = array(
-            'inspection_name'           => Input::get('inspection_name'),
-            'inspection_sort_no'        => $max + 1,
-            'last_date'                 => date('y-m-d H:i:s'),
-            'last_kind'                 => INSERT,
-            'last_ipadrs'               => $_SERVER['REMOTE_ADDR'],
-            'last_user'                 => Auth::user()->id
-        );
+        $dataInput['forum_title']               = Input::get('forum_title');
+        $dataInput['forum_contents']            = Input::get('forum_contents');
+        $dataInput['forum_file_name']           = Input::get('forum_file_name');
 
-        if ( $clsInspection->insert($dataInsert) ) {
+        if (Input::hasFile('forum_file_path')){
+            $forum_file = Input::file('forum_file_path');
+            $extFile  = $forum_file->getClientOriginalExtension();
+            if(!empty(Input::get('forum_file_name'))){
+                $flag  = $clsForum->checkFileValid(trim(Input::get('forum_file_name')));
+                if($flag == true){
+                    $fn = Input::get('forum_file_name').'.'.$extFile;
+                }else{
+                    $fn = Input::get('forum_file_name').'_'.rand(9999,9999).$extFile;
+                }
+            }else{
+                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+            }
+
+            $path_file = public_path().'/backend/uploads/comments/';
+            $forum_file->move($path_file, $fn);
+            $dataInput['forum_file_path'] = $path_file.$fn;
+         }
+
+         $dataInput['last_date']          = date('y-m-d H:i:s');
+         $dataInput['last_kind']          = INSERT;
+         $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
+         $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+
+        if ( $clsForum->insert($dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-        return redirect()->route('ortho.inspections.index');
+        return redirect()->route('ortho.forums.forum_list');
     }
 
     /**

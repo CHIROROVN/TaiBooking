@@ -324,6 +324,7 @@
             if ( parseInt(data_full_time) >= parseInt(fullTimeStart) && parseInt(data_full_time) < parseInt(fullTimeEnd) ) {
               if ( $(this).parent().attr('class') === 'col-brown' ) {
                 var fullValue = facility + '|' + -1 + '|' + data_full_time;
+                var obj = $(this);
                 setBlue($(this).parent(), -1, fullValue, '治療');
                 // insert to t-booking
                 $.ajax({
@@ -337,7 +338,9 @@
                     clinic_id: '{{ @$clinic->clinic_id }}' 
                   },
                   success: function(result){
-                    console.log(result);
+                    obj.addClass(result[1].booking_id);
+                    obj.attr('data-group', result[1].booking_id);
+                    obj.attr('data-booking-id', result[1].booking_id);
                   }
                 });
               }
@@ -402,19 +405,17 @@
           });
           // reset html
           var groupDelete = tdObjOld.find('.td-content').attr('data-group');
-          $('.td-content').each(function(index, el) {
-            if ( $(this).attr('data-group') == groupDelete ) {
-              setClear($(this).parent(), 0);
-              setBrow($(this).parent(), 0, '');
-              // setClear($(this), 0);
-              // setBrow($(this), 0, '');
-              // $(this).attr('class', 'col-brown');
-              // $(this).attr('data-service-id', '');
-              // $(this).attr('data-group', '');
-              // $(this).find('.input').val('');
-              // $(this).find('.input').attr('name', '');
-            }
-          });
+          if ( groupDelete.length ) {
+            $('.td-content').each(function(index, el) {
+              if ( $(this).attr('data-group') == groupDelete ) {
+                setClear($(this).parent(), 0);
+                setBrow($(this).parent(), 0, '');
+              }
+            });
+          } else {
+            setClear(tdObjOld, 0);
+            setBrow(tdObjOld, 0, '');
+          }
         } else {
           // select total sum time clinic service
           $.ajax({

@@ -775,10 +775,10 @@ class BookingTemplateController extends BackendController
         $booking = $clsBooking->checkExist($where);
         $status = '';
         if ( empty($booking) ) {
-            $status = $clsBooking->insert($dataInsert);
-        } else {
-            $status = 'xxxx';
+            $id = $clsBooking->insert_get_id($dataInsert);
+            $status = $clsBooking->get_by_id($id);
         }
+
         echo json_encode(array('status', $status));
     }
 }

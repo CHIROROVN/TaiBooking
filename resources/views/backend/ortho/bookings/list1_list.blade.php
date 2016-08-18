@@ -26,7 +26,7 @@
 		                <td>{{$l1->clinic_name}}</td>
 		                <td>{{formatDate($l1->booking_date)}}</td>
 		                <td>{{$l1->p_no}}</td>
-		                <td>{{$l1->p_name}}</td>
+		                <td>{{$l1->p_name_f}} {{ $l1->p_name_g }}</td>
 		                <td>{{$l1->p_tel}}</td>
                     <td>
                       <!-- service 1 -->

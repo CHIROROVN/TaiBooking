@@ -15,7 +15,7 @@
             <tr>
               <td class="col-title"><label for="p_relation_id">対象者の名前 <span class="note_required">※</span></label></td>
               <td>
-                <input name="p_relation_name" id="p_relation_id" type="text" class="form-control" value="{{ $brother->p_no }} {{ $brother->p_name }}({{ $brother->p_name_kana }})">
+                <input name="p_relation_name" id="p_relation_id" type="text" class="form-control" value="{{ $brother->p_no }} {{ $brother->p_name_f }} {{ $brother->p_name_g }}({{ $brother->p_name_f_kana }} {{ $brother->p_name_g_kana }})">
                 <input name="p_relation_id" type="hidden" id="p_relation_id-id" value="{{ $brother->p_relation_id }}">
                 <span class="error-input">@if ($errors->first('p_relation_id')) ※{!! $errors->first('p_relation_id') !!} @endif</span>
               </td>

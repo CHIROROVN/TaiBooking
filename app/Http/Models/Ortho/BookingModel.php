@@ -39,7 +39,7 @@ class BookingModel
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_name_f_kana', 't1.p_name_g_kana', 'm_clinic.clinic_name')
                         ->where('t_booking.last_kind', '<>', DELETE);
 
         // where u_id
@@ -72,7 +72,7 @@ class BookingModel
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_name_f_kana', 't1.p_name_g_kana', 'm_clinic.clinic_name')
                         ->whereNotNull('t_booking.patient_id')
                         ->where('t_booking.last_kind', '<>', DELETE);
 
@@ -123,7 +123,7 @@ class BookingModel
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_name_kana', 'm_clinic.clinic_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_name_f_kana', 't1.p_name_g_kana', 'm_clinic.clinic_name')
                         ->where('t_booking.last_kind', '<>', DELETE);
 
         // where u_id
@@ -177,7 +177,7 @@ class BookingModel
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-                        ->select('t_booking.*', 't1.p_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_date', date('Y-m-d'))
                         ->orderBy('t_booking.booking_id', 'asc')
@@ -189,7 +189,7 @@ class BookingModel
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-                        ->select('t_booking.*', 't1.p_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->whereIn('t_booking.booking_group_id', $booking_group_id)
                         ->orderBy('t_booking.booking_id', 'asc')
@@ -211,7 +211,7 @@ class BookingModel
     {
         $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-                        ->select('t_booking.*', 't1.p_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.clinic_id', $clinic_id);
 
@@ -271,7 +271,7 @@ class BookingModel
                         ->leftJoin('m_equipment as t4', 't_booking.equipment_id', '=', 't4.equipment_id')
                         ->leftJoin('m_inspection as t5', 't_booking.inspection_id', '=', 't5.inspection_id')
                         ->leftJoin('m_insurance as t6', 't_booking.insurance_id', '=', 't6.insurance_id')
-                        ->select('t_booking.*', 't1.p_no', 't1.p_name', 't2.clinic_name', 't3.facility_name', 't4.equipment_name', 't5.inspection_name', 't6.insurance_name')
+                        ->select('t_booking.*', 't1.p_no', 't1.p_name_f', 't1.p_name_g', 't2.clinic_name', 't3.facility_name', 't4.equipment_name', 't5.inspection_name', 't6.insurance_name')
                         ->where('booking_id', $id)
                         ->first();
         return $results;
@@ -322,7 +322,7 @@ class BookingModel
                         ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_status', '=', 2)
                         ->orderBy('t_booking.booking_date', 'desc')
@@ -337,7 +337,7 @@ class BookingModel
                         ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_status', '=', 6);
 
@@ -361,7 +361,7 @@ class BookingModel
                         ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
                         ->where('t_booking.last_kind', '<>', DELETE);
                         // ->where('t_booking.booking_status', 3);
 
@@ -385,7 +385,7 @@ class BookingModel
                         ->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
                         // ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
                         // ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-                        ->select('t_booking.*', 't1.p_name', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_status', $booking_status);
         
@@ -485,7 +485,7 @@ class BookingModel
                                 ->leftJoin('m_insurance as insu', 't_booking.insurance_id', '=', 'insu.insurance_id')
                                 ->leftJoin('m_inspection as insp', 't_booking.inspection_id', '=', 'insp.inspection_id')
                                 ->leftJoin('m_equipment as equi', 't_booking.equipment_id', '=', 'equi.equipment_id')
-                                ->select('t_booking.*', 'cl.clinic_name', 'pt.p_no', 'pt.p_name','fl.facility_name','insu.insurance_name', 'insp.inspection_name','equi.equipment_name')
+                                ->select('t_booking.*', 'cl.clinic_name', 'pt.p_no', 'pt.p_name_f', 'pt.p_name_g','fl.facility_name','insu.insurance_name', 'insp.inspection_name','equi.equipment_name')
                                 ->where('t_booking.last_kind', '<>', DELETE)
                                 ->where('t_booking.patient_id', '=', $p_id)
                                 ->where('t_booking.booking_date', '>=', 'NOW()')

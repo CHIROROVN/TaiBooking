@@ -240,8 +240,8 @@
                       if( !empty($booking->p_no) ) {
                         $sPatient .= $booking->p_no . '<br />';
                       }
-                      if( !empty($booking->p_name) ) {
-                        $sPatient .= $booking->p_name . '<br />';
+                      if( !empty($booking->p_name_f) || !empty($booking->p_name_g) ) {
+                        $sPatient .= $booking->p_name_f . ' ' . $booking->p_name_g . '<br />';
                       }
 
                       if ( !empty($sPatient) ) {
@@ -273,8 +273,8 @@
                           $initTreatment = '';
                           $tPatient .= $booking->p_no . '<br />';
                         }
-                        if( !empty($booking->p_name) ) {
-                          $tPatient .= $booking->p_name . '<br />';
+                        if( !empty($booking->p_name_f) || !empty($booking->p_name_g) ) {
+                          $tPatient .= $booking->p_name_f . ' ' . $booking->p_name_g . '<br />';
                         }
                         
 

@@ -8,9 +8,25 @@
 
         <table class="table table-bordered">
           <tr>
-            <td class="col-title"><label for="textName">カルテNo</label></td>
+            <td class="col-title"><label for="p_no">カルテNo</label></td>
             <td>
-              <input type="text" name="p_no" id="p_no" maxlength="8" class="form-control" value="{{ @$p_no }}">
+              <input type="text" name="p_no" id="p_no" maxlength="8" class="form-control" value="{{ $p_no }}">
+            </td>
+          </tr>
+
+          <tr>
+            <td class="col-title"><label for="p_name_f">Name</label></td>
+            <td>
+              <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--medium" value="{{ $p_name_f }}">
+              <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--medium" value="{{ $p_name_g }}">
+            </td>
+          </tr>
+
+          <tr>
+            <td class="col-title"><label for="p_name_f_kana">Name (kana)</label></td>
+            <td>
+              <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--medium" value="{{ $p_name_f_kana }}">
+              <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--medium" value="{{ $p_name_g_kana }}">
             </td>
           </tr>
 

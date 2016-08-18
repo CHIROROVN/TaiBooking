@@ -317,6 +317,7 @@
         var fullTimeEnd = end_hh + end_mm;
 
         // object = td-content 
+        var myArr = [];
         $('.td-content').each(function(index, el) {
           var data_full_time = $(this).attr('data-full-time');
           if ( $(this).attr('data-facility-id') == facility ) {
@@ -325,28 +326,40 @@
               if ( $(this).parent().attr('class') === 'col-brown' ) {
                 var fullValue = facility + '|' + -1 + '|' + data_full_time;
                 var obj = $(this);
-                setBlue($(this).parent(), -1, fullValue, '治療');
+                setBlue($(this).parent(), -1, fullValue, '治療', 0);
                 // insert to t-booking
-                $.ajax({
-                  url: "{{ route('ortho.bookings.template.daily.insert.ajax') }}",
-                  type: 'get',
-                  dataType: 'json',
-                  data: { 
-                    facility_id: facility,
-                    time: data_full_time,
-                    booking_date: '{{ $date }}',
-                    clinic_id: '{{ @$clinic->clinic_id }}' 
-                  },
-                  success: function(result){
-                    obj.addClass(result[1].booking_id);
-                    obj.attr('data-group', result[1].booking_id);
-                    obj.attr('data-booking-id', result[1].booking_id);
-                  }
+                myArr.push({
+                  facility_id: facility,
+                  time: data_full_time,
+                  booking_date: '{{ $date }}',
+                  clinic_id: '{{ @$clinic->clinic_id }}'
                 });
               }
             }
           }
         });
+        // delete list array
+        $.ajax({
+          url: "{{ route('ortho.bookings.template.daily.insert.ajax.big') }}",
+          type: 'get',
+          dataType: 'json',
+          data: { 
+            arr: myArr
+          },
+          success: function(result){
+            $.each(result[1], function (index, value) {
+              var data_id = value.facility_id + '-' + value.booking_start_time;
+              $('.td-content').each(function(index, el) {
+                if ( $(this).attr('data-id') === data_id ) {
+                  $(this).addClass(value.booking_id);
+                  $(this).attr('data-group', value.booking_id);
+                  $(this).attr('data-booking-id', value.booking_id);
+                }
+              });
+            });
+          }
+        });
+        // console.log(myArr);
       });
 
       // button save

@@ -34,7 +34,7 @@ class X3dctModel
     {
         $db = DB::table($this->table)
                     ->leftJoin('t_patient', 't_3dct.p_id', '=', 't_patient.p_id')
-                    ->select('t_3dct.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name', 't_patient.p_name_kana', 't_patient.p_sex', 't_patient.p_birthday')
+                    ->select('t_3dct.*', 't_patient.p_id as p_patient_id', 't_patient.p_no', 't_patient.p_name_f', 't_patient.p_name_g', 't_patient.p_name_f_kana', 't_patient.p_name_g_kana', 't_patient.p_sex', 't_patient.p_birthday')
                     ->where('t_3dct.p_id', $id_patient)
                     ->where('t_3dct.last_kind', '<>', DELETE)
                     ->orderBy('ct_date', 'asc')

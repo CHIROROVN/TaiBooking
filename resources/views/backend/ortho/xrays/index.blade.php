@@ -52,8 +52,8 @@
               @endif
             </td>
             <td>{{ $xray->p_no }}</td>
-            <td>{{ $xray->p_name }}</td>
-            <td>{{ $xray->p_name_kana }}</td>
+            <td>{{ $xray->p_name_f }} {{ $xray->p_name_g }}</td>
+            <td>{{ $xray->p_name_f_kana }} {{ $xray->p_name_g_kana }}</td>
             <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
             <td>{{ date('Y/m/d', strtotime($xray->p_birthday)) }}</td>
             <td align="center">

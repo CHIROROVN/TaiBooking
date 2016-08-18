@@ -11,19 +11,23 @@
         <table class="table table-bordered">
           <!-- p_name -->
           <tr>
-            <td class="col-title"><label for="p_name">初診者の名前 <span class="note_required">※</span></label></td>
+            <td class="col-title"><label for="p_name_f">初診者の名前 <span class="note_required">※</span></label></td>
             <td>
-              <input type="text" name="p_name" id="p_name" class="form-control" value="{{ old('p_name') }}" />
-              <span class="error-input">@if ($errors->first('p_name')) ※{!! $errors->first('p_name') !!} @endif</span>
+              <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--medium" value="{{ old('p_name_f') }}" />
+              <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--medium" value="{{ old('p_name_g') }}" />
+              <span class="error-input">@if ($errors->first('p_name_f')) ※{!! $errors->first('p_name_f') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('p_name_g')) ※{!! $errors->first('p_name_g') !!} @endif</span>
             </td>
           </tr>
 
           <!-- p_name_kana -->
           <tr>
-            <td class="col-title"><label for="p_name_kana">初診者よみ <span class="note_required">※</span></label></td>
+            <td class="col-title"><label for="p_name_f_kana">初診者よみ <span class="note_required">※</span></label></td>
             <td>
-              <input type="text" name="p_name_kana" id="p_name_kana" class="form-control" value="{{ old('p_name_kana') }}" />
-              <span class="error-input">@if ($errors->first('p_name_kana')) ※{!! $errors->first('p_name_kana') !!} @endif</span>
+              <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--medium" value="{{ old('p_name_f_kana') }}" />
+              <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--medium" value="{{ old('p_name_g_kana') }}" />
+              <span class="error-input">@if ($errors->first('p_name_f_kana')) ※{!! $errors->first('p_name_f_kana') !!} @endif</span>
+              <span class="error-input">@if ($errors->first('p_name_g_kana')) ※{!! $errors->first('p_name_g_kana') !!} @endif</span>
             </td>
           </tr>
 

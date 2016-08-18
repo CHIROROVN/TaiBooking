@@ -38,7 +38,7 @@
       </button>
       <ul class="dropdown-menu">
           <li>
-            <a href="{{ route('ortho.patients.search', [ 'p_no' => $p_no, 'p_tel' => $p_tel, 'p_hos' => $p_hos, 'p_hos_memo' => $p_hos_memo ]) }}">検索高度な</a>
+            <a href="{{ route('ortho.patients.search', [ 'p_no' => $p_no, 'p_name_f' => $p_name_f, 'p_name_g' => $p_name_g, 'p_name_f_kana' => $p_name_f_kana, 'p_name_g_kana' => $p_name_g_kana, 'p_tel' => $p_tel, 'p_hos' => $p_hos, 'p_hos_memo' => $p_hos_memo ]) }}">検索高度な</a>
           </li>
       </ul>
     </div>
@@ -76,8 +76,8 @@
             @foreach ( $patients as $patient )
             <tr>
               <td align="right">{{ $patient->p_no }}</td>
-              <td>{{ $patient->p_name }}</td>
-              <td>{{ $patient->p_name_kana }}</td>
+              <td>{{ $patient->p_name_f }} {{ $patient->p_name_g }}</td>
+              <td>{{ $patient->p_name_f_kana }} {{ $patient->p_name_g_kana }}</td>
               <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
               <td>{{ date('Y/m/d', strtotime($patient->p_birthday)) }}</td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.detail', [$patient->p_id]) }}'" value="詳細" type="button" class="btn btn-xs btn-page"></td>
@@ -101,12 +101,16 @@
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
         {!! $patients->appends([
-          'keyword'     => $keyword,
-          'keyword_id'  => $keyword_id,
-          'p_no'        => $p_no,
-          'p_tel'       => $p_tel,
-          'p_hos'       => $p_hos,
-          'p_hos_memo'  => $p_hos_memo
+          'keyword'       => $keyword,
+          'keyword_id'    => $keyword_id,
+          'p_no'          => $p_no,
+          'p_name_f'      => $p_name_f,
+          'p_name_g'      => $p_name_g,
+          'p_name_f_kana' => $p_name_f_kana,
+          'p_name_g_kana' => $p_name_g_kana,
+          'p_tel'         => $p_tel,
+          'p_hos'         => $p_hos,
+          'p_hos_memo'    => $p_hos_memo
         ])->render(new App\Pagination\SimplePagination($patients)) !!}
       </div>
     </div>

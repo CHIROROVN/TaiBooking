@@ -45,7 +45,7 @@
         @else
           @foreach ( $bookings as $booking )
           <tr>
-            <td>{{ $booking->p_name }}</td>
+            <td>{{ $booking->p_name_f }} {{ $booking->p_name_g }}</td>
             <td align="center"><a href="{{ route('ortho.interviews.regist', [ 'patient_id' => $booking->patient_id, 'booking_id' => $booking->booking_id, 'clinic_id' => $booking->clinic_id ]) }}" class="btn btn-xs btn-page" target="_blank">問診票の入力</a></td>
             <td align="center">
               <!-- <a href="interview_cancel.html" class="btn btn-xs btn-page" target="_blank">取消</a> -->

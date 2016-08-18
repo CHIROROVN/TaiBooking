@@ -51,7 +51,7 @@
               <td>{{ formatDate($list2->result_date, '/') }}</td>
               <td>{{ formatDate($list2->booking_date, '/') }} {{splitHourMin($list2->booking_start_time)}}～{{toTime($list2->booking_start_time, $list2->booking_total_time)}}</td>
               <td>{{ $list2->p_no }}</td>
-              <td>{{ $list2->p_name }}</td>
+              <td>{{ $list2->p_name_f }} {{ $list2->p_name_g }}</td>
               <td>{{ $list2->p_tel }}</td>
               <td>
                 <!-- service 1 -->

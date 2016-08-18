@@ -781,4 +781,48 @@ class BookingTemplateController extends BackendController
 
         echo json_encode(array('status', $status));
     }
+
+    public function insertBookingTemplateDailyAjaxBig()
+    {
+        $clsBooking = new BookingModel();
+        $status = array();
+        foreach ( Input::get('arr') as $item ) {
+            $dataInsert = array(
+                'booking_date'          => $item['booking_date'],
+                'booking_start_time'    => $item['time'],
+                'clinic_id'             => $item['clinic_id'],
+                'facility_id'           => $item['facility_id'],
+                'service_1'             => -1,
+                'service_1_kind'        => 2,
+                'last_date'             => date('y-m-d H:i:s'),
+                'last_kind'             => INSERT,
+                'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+                'last_user'             => Auth::user()->id
+            );
+            $bookingBlue = $clsBooking->get_by_clinic($dataInsert['clinic_id'], $dataInsert['booking_date']);
+            if ( !empty($bookingBlue) ) {
+                $dataInsert['booking_group_id'] = $bookingBlue[0]->booking_group_id;
+            } else {
+                $bookingBlue = $clsBooking->get_blue();
+                $dataInsert['booking_group_id'] = (isset($bookingBlue->booking_group_id)) ? $bookingBlue->booking_group_id : null;
+            }
+
+            $where = array(
+                'booking_start_time'    => $item['time'],
+                'facility_id'           => $item['facility_id'],
+                'booking_date'          => $item['booking_date'],
+                'clinic_id'             => $item['clinic_id'],
+            );
+            $booking = $clsBooking->checkExist($where);
+            if ( empty($booking) ) {
+                $id = $clsBooking->insert_get_id($dataInsert);
+
+                $tmp = $clsBooking->get_by_id($id);
+                $tmp->booking_start_time = sprintf("%04d", $tmp->booking_start_time);
+                $status[] = $tmp;
+            }
+        }
+
+        echo json_encode(array('status', $status));
+    }
 }

@@ -1077,8 +1077,12 @@ class BookingController extends BackendController
 
         // insert new patient
         $dataPatient = array(
-            'p_name'                    => Input::get('p_name'),
-            'p_name_kana'               => Input::get('p_name_kana'),
+            // 'p_name'                 => Input::get('p_name'),
+            // 'p_name_kana'            => Input::get('p_name_kana'),
+            'p_name_f'                  => Input::get('p_name_f'),
+            'p_name_g'                  => Input::get('p_name_g'),
+            'p_name_f_kana'             => Input::get('p_name_f_kana'),
+            'p_name_g_kana'             => Input::get('p_name_g_kana'),
             'p_sex'                     => Input::get('p_name'),
             'p_tel'                     => Input::get('p_tel'),
 

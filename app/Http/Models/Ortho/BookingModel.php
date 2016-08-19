@@ -173,6 +173,32 @@ class BookingModel
         return $db;
     }
 
+    public function get_where_single($where = array())
+    {
+        $db = DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE);
+
+        // where clinic_id
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('t_booking.clinic_id', $where['clinic_id']);
+        }
+        // where booking_date
+        if ( isset($where['booking_date']) && !empty($where['booking_date']) ) {
+            $db = $db->where('t_booking.booking_date', $where['booking_date']);
+        }
+        // where booking_start_time
+        if ( isset($where['booking_start_time']) && !empty($where['booking_start_time']) ) {
+            $db = $db->where('t_booking.booking_start_time', $where['booking_start_time']);
+        }
+        // where facility_id
+        if ( isset($where['facility_id']) && !empty($where['facility_id']) ) {
+            $db = $db->where('t_booking.facility_id', $where['facility_id']);
+        }
+
+        $db = $db->orderBy('t_booking.booking_childgroup_id', 'asc')->first();
+
+        return $db;
+    }
+
     public function get_by_today()
     {
         $results = DB::table($this->table)

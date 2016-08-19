@@ -430,6 +430,7 @@
             setBrow(tdObjOld, 0, '');
           }
         } else {
+          // green
           // select total sum time clinic service
           $.ajax({
             url: "{{ route('ortho.clinics.booking.templates.edit.get_total_time_clinic_service') }}",
@@ -441,7 +442,8 @@
               booking_group_id: tdObjOld.find('.td-content').attr('data-dad-group'),
               booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
               facility_id: facilityIdNew,
-              clinic_id: '{{ @$clinic->clinic_id }}'
+              clinic_id: '{{ @$clinic->clinic_id }}',
+              booking_template_daily: 1
             },
             success: function(result){
               console.log(result);
@@ -458,6 +460,7 @@
               });
 
               // set color
+              var myArr = [];
               $(result.tmpArr).each(function( index, value ) {
                 var tdObj = $('#td-' + value.facility_id + '-' + value.time);
                 var fullValue = value.facility_id + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
@@ -469,10 +472,41 @@
                   tdObj = $('#td-' + selectFactility + '-' + value.time);
                   fullValue = selectFactility + '|' + value.clinic_service + '|' + value.time + '|' + value.group;
                   setGreen(tdObj, selectFactility, fullValue, serviceTextNew, value.group);
+                  myArr.push({
+                    facility_id: selectFactility,
+                    time: value.time,
+                    booking_date: '{{ $date }}',
+                    clinic_id: '{{ @$clinic->clinic_id }}',
+                    clinic_service: value.clinic_service,
+                    group: value.group,
+                    dad_group: tdObjOld.find('.td-content').attr('data-dad-group')
+                  });
                 } else {
                   setGreen(tdObj, value.facility_id, fullValue, serviceTextNew, value.group);
+                  myArr.push({
+                    facility_id: value.facility_id,
+                    time: value.time,
+                    booking_date: '{{ $date }}',
+                    clinic_id: '{{ @$clinic->clinic_id }}',
+                    clinic_service: value.clinic_service,
+                    group: value.group,
+                    dad_group: tdObjOld.find('.td-content').attr('data-dad-group')
+                  });
                 }
                 
+              });
+              // update to table t_booking
+              console.log(myArr);
+              $.ajax({
+                url: "{{ route('ortho.clinics.booking.templates.edit.update_service_booking') }}",
+                type: 'get',
+                dataType: 'json',
+                data: { 
+                  arr: myArr
+                },
+                success: function(result){
+                  console.log(result);
+                }
               });
             }
           });

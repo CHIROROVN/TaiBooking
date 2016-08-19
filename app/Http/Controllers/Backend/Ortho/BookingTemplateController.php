@@ -223,7 +223,7 @@ class BookingTemplateController extends BackendController
                 }
             }
         }
-        
+
         // delete old
         if ( count($tmpDataOld) ) {
             foreach ( $tmpDataOld as $itemOld => $keyOld ) {
@@ -663,6 +663,7 @@ class BookingTemplateController extends BackendController
         }
 
         // update to table t-booking
+        // blue only
         $clsBooking = new BookingModel();
         $clsFacility                = new FacilityModel();
         $facilitys_popup            = $clsFacility->getAll(Input::get('clinic_id'), 1);
@@ -677,6 +678,12 @@ class BookingTemplateController extends BackendController
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
             'last_user'             => Auth::user()->id
         );
+        if ( Input::get('booking_template_daily') ) {
+            $dataUpdate['service_1']                = $clinicService->service_id;
+            $dataUpdate['service_1_kind']           = 1;
+            $dataUpdate['booking_group_id']         = Input::get('booking_group_id');
+            $dataUpdate['booking_childgroup_id']    = 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id;
+        }
         $where = array(
             'booking_group_id'      => Input::get('booking_group_id'),
             'booking_childgroup_id' => Input::get('booking_childgroup_id'),
@@ -704,7 +711,55 @@ class BookingTemplateController extends BackendController
         }
         // end update to table t-booking
 
-        echo json_encode(['tmpArr' => $tmpArr, 'totalTime' => $totalTime]);
+        echo json_encode(['tmpArr' => $tmpArr, 'totalTime' => $totalTime, 'status' => $clinicService]);
+    }
+
+    public function getUpdateServiceBooking()
+    {
+        $clsBooking             = new BookingModel();
+        $clsClinicService       = new ClinicServiceModel();
+        $clinicService          = $clsClinicService->get_by_id(Input::get('arr')[0]['clinic_service']);
+
+        $status = array();
+        foreach ( Input::get('arr') as $item ) {
+            $dataUpdate = array(
+                'service_1'             => $clinicService->service_id,
+                'service_1_kind'        => 1,
+                'booking_childgroup_id' => $item['group'],
+                'booking_date'          => $item['booking_date'],
+                'booking_start_time'    => $item['time'],
+                'clinic_id'             => $item['clinic_id'],
+                'facility_id'           => $item['facility_id'],
+                'booking_group_id'      => $item['dad_group'],
+
+                'last_date'             => date('y-m-d H:i:s'),
+                'last_kind'             => UPDATE,
+                'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+                'last_user'             => Auth::user()->id
+            );
+
+            $where = array(
+                'booking_date'          => $item['booking_date'],
+                'booking_start_time'    => $item['time'],
+                'clinic_id'             => $item['clinic_id'],
+                'facility_id'           => $item['facility_id']
+            );
+            $bookings = $clsBooking->get_where_single($where);
+
+            if ( empty($bookings) ) {
+                // insert
+                $dataUpdate['last_kind'] = INSERT;
+                $status = $clsBooking->insert($dataUpdate);
+            } else {
+                // update
+                $dataUpdate['last_kind'] = UPDATE;
+                $dataUpdate['booking_group_id'] = $bookings->booking_group_id;
+                $status = $clsBooking->update($bookings->booking_id, $dataUpdate);
+            }
+        }
+        
+
+        echo json_encode(['status' => $status]);
     }
 
     public function editBookingTemplateDailyAjax()
@@ -773,9 +828,9 @@ class BookingTemplateController extends BackendController
         );
         $booking = $clsBooking->checkExist($where);
         $status = '';
-        if ( empty($booking) ) {
-            $id = $clsBooking->insert_get_id($dataInsert);
-            $status = $clsBooking->get_by_id($id);
+        if ( !empty($booking) ) {
+            $clsBooking->update($booking->booking_id, $dataInsert);
+            $status = $booking;
         }
 
         echo json_encode(array('status', $status));

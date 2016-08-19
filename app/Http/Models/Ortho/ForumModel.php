@@ -11,12 +11,21 @@ class ForumModel
     public function Rules()
     {
         return array(
+                'forum_title'                       => 'required',
+                'forum_contents'                    => 'required',
+                'forum_file_path'                   => 'max:10000|mimes:jpeg,bmp,png,gif,doc,docx,pdf,dxf,xlsx',
+                'forum_file_name'                   => 'required',
         );
     }
 
     public function Messages()
     {
         return array(
+                'forum_title.required'              => trans('validation.error_forum_title_required'),
+                'forum_contents.required'           => trans('validation.error_forum_contents_required'),
+                'forum_file_path.max'               => trans('validation.error_forum_file_path_max'),
+                'forum_file_path.mimes'             => trans('validation.error_forum_file_path_mimes'),
+                'forum_file_name.required'          => trans('validation.error_forum_file_name_required'),
         );
     }
 

@@ -54,7 +54,13 @@ class ForumController extends BackendController
         $dataInput              = array();
         $clsForum               = new ForumModel();
         $inputs                 = Input::all();
-        $validator              = Validator::make($inputs, $clsForum->Rules(), $clsForum->Messages());
+        $rules                  = $clsForum->Rules();
+        if(!Input::hasFile('forum_file_path')){
+            unset($rules['forum_file_path']);
+            unset($rules['forum_file_name']);
+        }
+
+        $validator              = Validator::make($inputs, $rules, $clsForum->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.forums.forum_regist')->withErrors($validator)->withInput();
         }

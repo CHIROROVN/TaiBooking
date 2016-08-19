@@ -29,15 +29,33 @@ class ForumModel
         );
     }
 
-    public function getAllForum()
+    public function getAllForum($keyword=null, $forum_parent_id=null)
     {
-        $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
-                                        ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
-                                        ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
-                                        ->where('t_forum.last_kind', '<>', DELETE)
-                                        ->whereNull('t_forum.forum_parent_id');
-                                        //->where('fr.last_kind', '<>', DELETE);
-        return $query->orderBy('forum_time', 'asc')->simplePaginate(PAGINATION);
+        if(!empty($forum_parent_id)){
+            $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
+                                            ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
+                                            ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
+                                            ->where('t_forum.last_kind', '<>', DELETE)
+                                            ->where('t_forum.forum_parent_id', '=', $forum_parent_id);
+            return $query->orderBy('forum_time', 'asc')->get();
+        }else if(!empty($keyword)){
+            $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
+                                            ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
+                                            ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
+                                            ->where('t_forum.last_kind', '<>', DELETE)
+                                            ->whereNull('t_forum.forum_parent_id')
+                                            ->where('t_forum.forum_title', 'LIKE', '%'.$keyword.'%')
+                                            ->orWhere('t_forum.forum_contents', 'LIKE', '%'.$keyword.'%')
+                                            ->orWhere('t_forum.forum_contents', 'LIKE', '%'.$keyword.'%');
+            return $query->orderBy('forum_time', 'asc')->simplePaginate(PAGINATION);
+        }else{
+            $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
+                                            ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
+                                            ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
+                                            ->where('t_forum.last_kind', '<>', DELETE)
+                                            ->whereNull('t_forum.forum_parent_id');
+            return $query->orderBy('forum_time', 'asc')->simplePaginate(PAGINATION);
+        }
     }
 
     public function countComments($forum_id=null)
@@ -72,6 +90,9 @@ class ForumModel
 
     public function get_by_id($id)
     {
-        return DB::table($this->table)->where('forum_id', $id)->first();
+        return DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
+                                    ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
+                                    ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
+                                    ->where('t_forum.forum_id', $id)->first();
     }
 }

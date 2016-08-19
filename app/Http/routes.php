@@ -337,7 +337,15 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('forums/comments/regist', ['as' => 'ortho.forums.forum_regist', 'uses' => 'ForumController@getAddComment']);
 	Route::post('forums/comments/regist', ['as' => 'ortho.forums.forum_regist', 'uses' => 'ForumController@postAddComment']);
 	Route::get('forums/comments/detail/{id}', ['as' => 'ortho.forums.forum_detail', 'uses' => 'ForumController@detail']);
-
+	Route::get('forums/comments/delete_confirm/{id}', ['as' => 'ortho.forums.forum_delete_cnf', 'uses' => 'ForumController@deleteCnf']);
+	Route::get('forums/comments/delete/{id}', ['as' => 'ortho.forums.forum_delete', 'uses' => 'ForumController@delete']);
+	Route::get('forums/comments/update/{id}', ['as' => 'ortho.forums.forum_edit', 'uses' => 'ForumController@getEditComment']);
+	Route::post('forums/comments/update/{id}', ['as' => 'ortho.forums.forum_edit', 'uses' => 'ForumController@postEditComment']);
+	Route::get('forums/comments/reply/{id}', ['as' => 'ortho.forums.forum_reply', 'uses' => 'ForumController@getReplyComment']);
+	Route::post('forums/comments/reply/{id}', ['as' => 'ortho.forums.forum_reply', 'uses' => 'ForumController@postReplyComment']);
+	Route::get('forums/comments/detail2/{id}', ['as' => 'ortho.forums.forum_detail2', 'uses' => 'ForumController@detail2']);
+	Route::get('forums/search', ['as' => 'ortho.forums.forum_search', 'uses' => 'ForumController@getSearch']);
+	Route::post('forums/search', ['as' => 'ortho.forums.forum_search', 'uses' => 'ForumController@postSearch']);
 
 	// memos
 	Route::any('memos-calendar', ['as' => 'ortho.memos.calendar', 'uses' => 'MemoController@calendar']);

@@ -249,17 +249,21 @@ class BookingController extends BackendController
         $clsClinicService           = new ClinicServiceModel();
         $clsTreatment1              = new Treatment1Model();
         $data['booking']            = $clsBooking->get_by_id($id);
-        $data['doctors']            = $clsUser->get_by_belong([1]);
-        $data['hys']                = $clsUser->get_by_belong([2,3]);
-        //$data['clinic_services']    = $clsClinicService->getAll(1);
-        //$data['treatment1s']        = $clsTreatment1->get_all();
-        $data['start_date']         = Input::get('start_date');
-        $clsService                 = new ServiceModel();
-        $data['services']           = $clsService->get_list();
-        $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        if ( !empty($data['booking']) ) {
+            $data['doctors']            = $clsUser->get_by_belong([1]);
+            $data['hys']                = $clsUser->get_by_belong([2,3]);
+            //$data['clinic_services']    = $clsClinicService->getAll(1);
+            //$data['treatment1s']        = $clsTreatment1->get_all();
+            $data['start_date']         = Input::get('start_date');
+            $clsService                 = new ServiceModel();
+            $data['services']           = $clsService->get_list();
+            $clsTreatment1              = new Treatment1Model();
+            $data['treatment1s']        = $clsTreatment1->get_list_treatment();
 
-        return view('backend.ortho.bookings.booking_detail', $data);
+            return view('backend.ortho.bookings.booking_detail', $data);
+        }else{
+            return response()->view('errors.404', [], 404);
+        }
     }
 
     public function bookingCancelCnf($id)

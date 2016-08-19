@@ -272,6 +272,7 @@ class BookingModel
                         ->leftJoin('m_inspection as t5', 't_booking.inspection_id', '=', 't5.inspection_id')
                         ->leftJoin('m_insurance as t6', 't_booking.insurance_id', '=', 't6.insurance_id')
                         ->select('t_booking.*', 't1.p_no', 't1.p_name_f', 't1.p_name_g', 't2.clinic_name', 't3.facility_name', 't4.equipment_name', 't5.inspection_name', 't6.insurance_name')
+                        ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('booking_id', $id)
                         ->first();
         return $results;

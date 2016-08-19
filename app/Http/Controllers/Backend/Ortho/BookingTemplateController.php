@@ -130,9 +130,7 @@ class BookingTemplateController extends BackendController
             }
         }
         $data['arr_templates']       = $arr_templates;
-        // echo '<pre>';
-        // print_r($arr_templates);
-        // echo '</pre>';//die;
+
         return view('backend.ortho.clinics.booking.templates.edit', $data);
     }
 
@@ -225,6 +223,7 @@ class BookingTemplateController extends BackendController
                 }
             }
         }
+        
         // delete old
         if ( count($tmpDataOld) ) {
             foreach ( $tmpDataOld as $itemOld => $keyOld ) {

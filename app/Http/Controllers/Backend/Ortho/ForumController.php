@@ -77,7 +77,7 @@ class ForumController extends BackendController
                 if($flag == true){
                     $fn = Input::get('forum_file_name').'.'.$extFile;
                 }else{
-                    $fn = Input::get('forum_file_name').'_'.rand(9999,9999).$extFile;
+                    $fn = Input::get('forum_file_name').'_'.rand(9999,9999).'.'.$extFile;
                 }
             }else{
                 $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;

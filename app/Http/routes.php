@@ -335,6 +335,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('forums', ['as' => 'ortho.forums.forum_list', 'uses' => 'ForumController@index']);
 	Route::get('forums/comments/regist', ['as' => 'ortho.forums.forum_regist', 'uses' => 'ForumController@getAddComment']);
 	Route::post('forums/comments/regist', ['as' => 'ortho.forums.forum_regist', 'uses' => 'ForumController@postAddComment']);
+	Route::get('forums/comments/detail/{id}', ['as' => 'ortho.forums.forum_detail', 'uses' => 'ForumController@detail']);
+
 
 	// memos
 	Route::any('memos-calendar', ['as' => 'ortho.memos.calendar', 'uses' => 'MemoController@calendar']);

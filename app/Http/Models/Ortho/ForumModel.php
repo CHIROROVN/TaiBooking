@@ -51,7 +51,8 @@ class ForumModel
     public function checkFileValid($forum_file_name=null)
     {
         $query = DB::table($this->table)->where('t_forum.last_kind', '<>', DELETE)
-                                        ->where('t_forum.forum_file_name', '=', $forum_file_name);
+                                        ->where('t_forum.forum_file_name', '=', $forum_file_name)
+                                        ->get();
         if(empty($query)){
             return true;
         }else{
@@ -64,8 +65,13 @@ class ForumModel
         return DB::table($this->table)->insert($data);
     }
 
-   public function update($id, $data)
+    public function update($id, $data)
     {
         return DB::table($this->table)->where('forum_id', $id)->update($data);
+    }
+
+    public function get_by_id($id)
+    {
+        return DB::table($this->table)->where('forum_id', $id)->first();
     }
 }

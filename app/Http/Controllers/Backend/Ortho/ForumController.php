@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Http\Models\Ortho\ForumModel;
+use App\Http\Models\Ortho\ForumReadModel;
+use Carbon;
 use Form;
 use Html;
 use Input;
@@ -31,6 +33,12 @@ class ForumController extends BackendController
         $clsForumModel        = new ForumModel();
         $data['forums']       = $clsForumModel->getAllForum();
         return view('backend.ortho.forums.forum_list', $data);
+    }
+
+    public static function reader($forum_id)
+    {
+        $clsForumRead                 = new ForumReadModel();
+        return $clsForumRead->read_comment($forum_id);
     }
 
     public static function countReply($forum_id)
@@ -70,7 +78,8 @@ class ForumController extends BackendController
         $dataInput['forum_contents']            = Input::get('forum_contents');
         $dataInput['forum_file_name']           = Input::get('forum_file_name');
 
-        if (Input::hasFile('forum_file_path')){
+        if (Input::hasFile('forum_file_path'))
+        {
             $forum_file = Input::file('forum_file_path');
             $extFile  = $forum_file->getClientOriginalExtension();
             if(!empty(Input::get('forum_file_name'))){
@@ -87,14 +96,30 @@ class ForumController extends BackendController
             $path = '/backend/ortho/forums/comments/detail/files/';
             $forum_file->move(public_path().$path, $fn);
             $dataInput['forum_file_path'] = '/public'.$path.$fn;
-         }
+        }
 
-         $dataInput['last_date']          = date('y-m-d H:i:s');
-         $dataInput['last_kind']          = INSERT;
-         $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
-         $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $dataInput['forum_time']          = date('y-m-d H:i:s');
+        $dataInput['last_date']          = date('y-m-d H:i:s');
+        $dataInput['last_kind']          = INSERT;
+        $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
+        $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+
+        //insert to t_forum_read
+        $fread                       = array();
+        $fread['forum_id']           = $clsForum->get_max() + 1;
+        $fread['last_date']          = date('y-m-d H:i:s');
+        $fread['last_kind']          = INSERT;
+        $fread['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
+        $fread['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+
+
+
 
         if ( $clsForum->insert($dataInput) ) {
+            //insert to t_forum_read
+            $clsForumRead                = new ForumReadModel();
+            $clsForumRead->insert($fread);
+
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
@@ -104,9 +129,23 @@ class ForumController extends BackendController
 
     public function detail($id)
     {
+
+        $clsForumRead                 = new ForumReadModel();
+        $fread                        = array();
+        $fread['forum_read_user_id']  = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $fread['forum_read_time']     = date('y-m-d H:i:s');
+        $fread['last_date']           = date('y-m-d H:i:s');
+        $fread['last_kind']           = UPDATE;
+        $fread['last_ipadrs']         = $_SERVER['REMOTE_ADDR'];
+        $fread['last_user']           = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $clsForumRead->read($id, $fread);
+
         $data                   = array();
         $clsForum               = new ForumModel();
         $data['comment']        = $clsForum->get_by_id($id);
+
+        //update count view comment
+        $clsForum->view($id);
         return view('backend.ortho.forums.forum_detail', $data);
     }
 
@@ -190,11 +229,11 @@ class ForumController extends BackendController
             $forum_file->move(public_path().$path, $fn);
             $dataInput['forum_file_path'] = '/public'.$path.$fn;
          }
-
-         $dataInput['last_date']          = date('y-m-d H:i:s');
-         $dataInput['last_kind']          = UPDATE;
-         $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
-         $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $dataInput['forum_time']          = date('y-m-d H:i:s');
+        $dataInput['last_date']           = date('y-m-d H:i:s');
+        $dataInput['last_kind']           = UPDATE;
+        $dataInput['last_ipadrs']         = $_SERVER['REMOTE_ADDR'];
+        $dataInput['last_user']           = !empty(Auth::user()->id) ? Auth::user()->id : '';
 
         if ( $clsForum->update($id, $dataInput) ) {
             Session::flash('success', trans('common.message_edit_success'));
@@ -253,10 +292,10 @@ class ForumController extends BackendController
             $dataInput['forum_file_path'] = '/public'.$path.$fn;
          }
 
-         $dataInput['last_date']          = date('y-m-d H:i:s');
-         $dataInput['last_kind']          = INSERT;
-         $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
-         $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $dataInput['last_date']          = date('y-m-d H:i:s');
+        $dataInput['last_kind']          = INSERT;
+        $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
+        $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
 
         if ( $clsForum->insert($dataInput) ) {
             Session::flash('success', trans('common.message_regist_success'));

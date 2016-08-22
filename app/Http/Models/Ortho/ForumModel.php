@@ -95,4 +95,17 @@ class ForumModel
                                     ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
                                     ->where('t_forum.forum_id', $id)->first();
     }
+
+    public function get_max()
+    {
+        return DB::table($this->table)->max('forum_id');
+    }
+
+    public function view($forum_id)
+    {
+        $view       = DB::table($this->table)->select('forum_view')->where('forum_id', '=', $forum_id)->first();
+        $cv         = $view->forum_view;
+        $forum_view = (int)$cv + 1;
+        return DB::table($this->table)->where('forum_id', '=', $forum_id)->update(array('forum_view'=>$forum_view));
+    }
 }

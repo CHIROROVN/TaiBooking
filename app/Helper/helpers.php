@@ -540,3 +540,7 @@ function showPatient($p_id=null){
 	function countReply($forum_id){
 		return App\Http\Controllers\Backend\Ortho\ForumController::countReply($forum_id);
 	}
+
+	function reader($forum_id){
+		return App\Http\Controllers\Backend\Ortho\ForumController::reader($forum_id);
+	}

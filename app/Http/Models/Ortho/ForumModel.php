@@ -128,4 +128,14 @@ class ForumModel
         $forum_view = (int)$cv + 1;
         return DB::table($this->table)->where('forum_id', '=', $forum_id)->update(array('forum_view'=>$forum_view));
     }
+
+    public function checkOwn($user_id, $forum_id)
+    {
+        $result = DB::table($this->table)->where('forum_id', '=', $forum_id)
+                               ->where('forum_user_id', '=', $user_id)->first();
+        if(!empty($result))
+            return true;
+        return false;
+
+    }
 }

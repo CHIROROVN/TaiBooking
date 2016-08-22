@@ -544,3 +544,7 @@ function showPatient($p_id=null){
 	function reader($forum_id){
 		return App\Http\Controllers\Backend\Ortho\ForumController::reader($forum_id);
 	}
+
+	function checkOwn($user_id, $forum_id){
+		return App\Http\Controllers\Backend\Ortho\ForumController::checkOwnValid($user_id, $forum_id);
+	}

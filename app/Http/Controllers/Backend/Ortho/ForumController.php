@@ -321,4 +321,10 @@ class ForumController extends BackendController
         return view('backend.ortho.forums.forum_list', $data);
     }
 
+    public static function checkOwnValid($user_id, $forum_id)
+    {
+        $clsForumModel        = new ForumModel();
+        return $clsForumModel->checkOwn($user_id, $forum_id);
+    }
+
 }

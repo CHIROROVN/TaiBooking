@@ -201,6 +201,7 @@
                   <?php
                   if ( $color === 'brown' ) {
                       $clsNameGroup = null;
+                      $idBooking = null;
                     }
                   ?>
                   <div class="td-content {{ @$clsNameGroup }}" data-id="{{ $common_id }}" data-service-id="{{ $service_id }}" data-facility-id="{{ $facility_id }}" data-full-time="{{ $hour.$minute }}" data-hour="{{ $hour }}" data-minute="{{ $minute }}" data-toggle="modal" data-target="#myModal-{{ $common_id }}" data-group="{{ @$clsNameGroup }}" data-dad-group="{{ @$clsNameDadGroup }}" data-booking-id="{{ @$idBooking }}">
@@ -377,6 +378,7 @@
 
         // set color td
         var tdObjNew = $('#td-' + facilityIdNew + '-' + dataFullTime);
+        console.log(tdObjNew.children().attr('class'));
 
         // green
         if ( serviceIdNew < 0 ) {
@@ -396,7 +398,7 @@
               clinic_id: '{{ @$clinic->clinic_id }}' 
             },
             success: function(result){
-              console.log(result);
+              tdObjNew.children().attr('data-booking-id', result[1].booking_id);
             }
           });
         } else if ( serviceIdNew == 0 ) {
@@ -576,6 +578,7 @@
           objNew.find('.td-content').attr('data-service-id', serviceIdNew);
           // set group
           objNew.find('.td-content').attr('data-group', '');
+          objNew.find('.td-content').attr('data-booking-id', '');
           objNew.find('.td-content > .input').val('');
           objNew.find('.td-content > .input').attr('name', '');
         }

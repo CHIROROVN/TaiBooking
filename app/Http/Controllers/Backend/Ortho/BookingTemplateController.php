@@ -446,6 +446,8 @@ class BookingTemplateController extends BackendController
                     $data['booking_childgroup_id']  = $template->template_group_id;
                 }
 
+                $data['booking_rev']            = $clsBooking->getLastBookingRev();
+
                 $data['last_date']              = date('y-m-d H:i:s');
                 $data['last_kind']              = INSERT;
                 $data['last_ipadrs']            = $_SERVER['REMOTE_ADDR'];
@@ -807,6 +809,8 @@ class BookingTemplateController extends BackendController
             'facility_id'           => Input::get('facility_id'),
             'service_1'             => -1,
             'service_1_kind'        => 2,
+            // 'booking_rev'           => $clsBooking->getLastBookingRev() + 1,
+
             'last_date'             => date('y-m-d H:i:s'),
             'last_kind'             => INSERT,
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -815,9 +819,11 @@ class BookingTemplateController extends BackendController
         $bookingBlue = $clsBooking->get_by_clinic($dataInsert['clinic_id'], $dataInsert['booking_date']);
         if ( !empty($bookingBlue) ) {
             $dataInsert['booking_group_id'] = $bookingBlue[0]->booking_group_id;
+            $dataInsert['booking_rev']      = $bookingBlue[0]->booking_rev;
         } else {
             $bookingBlue = $clsBooking->get_blue();
             $dataInsert['booking_group_id'] = (isset($bookingBlue->booking_group_id)) ? $bookingBlue->booking_group_id : null;
+            $dataInsert['booking_rev']      = (isset($bookingBlue->booking_rev)) ? $bookingBlue->booking_rev : null;
         }
 
         $where = array(
@@ -829,9 +835,15 @@ class BookingTemplateController extends BackendController
         $booking = $clsBooking->checkExist($where);
         $status = '';
         if ( !empty($booking) ) {
+            $dataInsert['last_kind'] = UPDATE;
+            $dataInsert['booking_rev'] = $booking->booking_rev + 1;
             $clsBooking->update($booking->booking_id, $dataInsert);
             $status = $booking;
+        } else {
+            $id = $clsBooking->insert_get_id($dataInsert);
+            $status = $clsBooking->get_by_id($id);
         }
+        
 
         echo json_encode(array('status', $status));
     }
@@ -848,6 +860,8 @@ class BookingTemplateController extends BackendController
                 'facility_id'           => $item['facility_id'],
                 'service_1'             => -1,
                 'service_1_kind'        => 2,
+                // 'booking_rev'           => $clsBooking->getLastBookingRev() + 1,
+
                 'last_date'             => date('y-m-d H:i:s'),
                 'last_kind'             => INSERT,
                 'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
@@ -856,9 +870,11 @@ class BookingTemplateController extends BackendController
             $bookingBlue = $clsBooking->get_by_clinic($dataInsert['clinic_id'], $dataInsert['booking_date']);
             if ( !empty($bookingBlue) ) {
                 $dataInsert['booking_group_id'] = $bookingBlue[0]->booking_group_id;
+                $dataInsert['booking_rev']      = $bookingBlue[0]->booking_rev;
             } else {
                 $bookingBlue = $clsBooking->get_blue();
                 $dataInsert['booking_group_id'] = (isset($bookingBlue->booking_group_id)) ? $bookingBlue->booking_group_id : null;
+                $dataInsert['booking_rev']      = (isset($bookingBlue->booking_rev)) ? $bookingBlue->booking_rev : null;
             }
 
             $where = array(

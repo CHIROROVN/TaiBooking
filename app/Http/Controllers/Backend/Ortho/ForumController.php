@@ -19,7 +19,7 @@ class ForumController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth', ['except' => ['index', 'getAddComment', 'postAddComment', 'detail','countReply','deleteCnf', 'delete','getEditComment','postEditComment']]);
+        $this->middleware('auth', ['except' => ['index', 'getAddComment', 'postAddComment', 'detail','countReply','deleteCnf', 'delete','getEditComment','getReplyComment','postReplyComment','postEditComment','getSearch','postSearch','detail2']]);
     }
 
     /**
@@ -115,7 +115,7 @@ class ForumController extends BackendController
         $data                   = array();
         $clsForum               = new ForumModel();
         $data['comment']        = $clsForum->get_by_id($id);
-        $data['commentrs']      = $clsForum->getAllForum($id);
+        $data['commentrs']      = $clsForum->getAllForum(null, $id);
         return view('backend.ortho.forums.forum_detail2', $data);
     }
 

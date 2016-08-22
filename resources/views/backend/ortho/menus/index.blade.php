@@ -42,6 +42,11 @@
               <li><a href="{{ route('ortho.memos.calendar') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>カレンダー表示・メモの新規登録・変更・削除</a></li>
             </ul>
 
+            <h2>フォーラム</h2>
+            <ul>
+              <li><a href="{{ route('ortho.forums.forum_list') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Post comments, reply comments</a></li>
+            </ul>
+
           </div>
           <div class="col-md-4 col-lg-4">
 

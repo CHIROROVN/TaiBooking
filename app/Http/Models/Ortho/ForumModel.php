@@ -39,14 +39,34 @@ class ForumModel
                                             ->where('t_forum.forum_parent_id', '=', $forum_parent_id);
             return $query->orderBy('forum_time', 'asc')->get();
         }else if(!empty($keyword)){
-            $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
+            $countSpace = substr_count($keyword, ' ');
+            if($countSpace >= 1){
+                $arrKeyWord = explode(' ', $keyword);
+                $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
                                             ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
                                             ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
                                             ->where('t_forum.last_kind', '<>', DELETE)
                                             ->whereNull('t_forum.forum_parent_id')
-                                            ->where('t_forum.forum_title', 'LIKE', '%'.$keyword.'%')
-                                            ->orWhere('t_forum.forum_contents', 'LIKE', '%'.$keyword.'%')
-                                            ->orWhere('t_forum.forum_contents', 'LIKE', '%'.$keyword.'%');
+                                            ->where(function($q) use($arrKeyWord,$countSpace){
+                                                for($i = 0; $i< $countSpace; $i++){
+                                                    $q->where('t_forum.forum_title', 'LIKE', '%'. $arrKeyWord[$i] .'%');
+                                                    $q->orWhere('t_forum.forum_contents', 'LIKE', '%'. $arrKeyWord[$i] .'%');
+                                                    $q->orWhere('t_forum.forum_file_name', 'LIKE', '%'. $arrKeyWord[$i] .'%');
+                                                }
+                                            });
+            }else{
+                $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
+                                            ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
+                                            ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
+                                            ->where('t_forum.last_kind', '<>', DELETE)
+                                            ->whereNull('t_forum.forum_parent_id')
+                                            ->where(function($sq) use($keyword){
+                                                $sq->where('t_forum.forum_title', 'LIKE', '%'.$keyword.'%');
+                                                $sq->orWhere('t_forum.forum_contents', 'LIKE', '%'.$keyword.'%');
+                                                $sq->orWhere('t_forum.forum_file_name', 'LIKE', '%'.$keyword.'%');
+                                            });
+            }
+
             return $query->orderBy('forum_time', 'asc')->simplePaginate(PAGINATION);
         }else{
             $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')

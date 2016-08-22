@@ -97,12 +97,12 @@ class ForumController extends BackendController
             $forum_file->move(public_path().$path, $fn);
             $dataInput['forum_file_path'] = '/public'.$path.$fn;
         }
-
+        $dataInput['forum_user_id']       = !empty(Auth::user()->id) ? Auth::user()->id : '';
         $dataInput['forum_time']          = date('y-m-d H:i:s');
-        $dataInput['last_date']          = date('y-m-d H:i:s');
-        $dataInput['last_kind']          = INSERT;
-        $dataInput['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
-        $dataInput['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $dataInput['last_date']           = date('y-m-d H:i:s');
+        $dataInput['last_kind']           = INSERT;
+        $dataInput['last_ipadrs']         = $_SERVER['REMOTE_ADDR'];
+        $dataInput['last_user']           = !empty(Auth::user()->id) ? Auth::user()->id : '';
 
         //insert to t_forum_read
         $fread                       = array();
@@ -228,7 +228,9 @@ class ForumController extends BackendController
             $path = '/backend/ortho/forums/comments/detail/files/';
             $forum_file->move(public_path().$path, $fn);
             $dataInput['forum_file_path'] = '/public'.$path.$fn;
-         }
+        }
+
+        $dataInput['forum_user_id']       = !empty(Auth::user()->id) ? Auth::user()->id : '';
         $dataInput['forum_time']          = date('y-m-d H:i:s');
         $dataInput['last_date']           = date('y-m-d H:i:s');
         $dataInput['last_kind']           = UPDATE;
@@ -267,7 +269,7 @@ class ForumController extends BackendController
         if ($validator->fails()) {
             return redirect()->route('ortho.forums.forum_reply', $id)->withErrors($validator)->withInput();
         }
-
+        $dataInput['forum_user_id']             = !empty(Auth::user()->id) ? Auth::user()->id : '';
         $dataInput['forum_title']               = Input::get('forum_title');
         $dataInput['forum_contents']            = Input::get('forum_contents');
         $dataInput['forum_file_name']           = Input::get('forum_file_name');
@@ -315,7 +317,7 @@ class ForumController extends BackendController
         $data                 = array();
         $keyword              = trim(Input::get('keyword'));
         $clsForumModel        = new ForumModel();
-        $data['forums']       = $clsForumModel->getAllForum($keyword);
+        $data['forums']       = $clsForumModel->getAllForum($keyword, null);
         return view('backend.ortho.forums.forum_list', $data);
     }
 

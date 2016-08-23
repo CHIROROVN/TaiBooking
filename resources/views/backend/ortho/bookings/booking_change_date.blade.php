@@ -228,6 +228,13 @@
         <input value="変化する" type="submit" class="btn btn-sm btn-page">
       </div>
     </div>
+
+    <div class="row margin-bottom mar-top20">
+      <div class="col-md-12 text-center">
+        <input onclick="location.href='{{route('ortho.bookings.booking.change')}}'" value="検索変更予約" type="button" class="btn btn-sm btn-page">
+      </div>
+    </div>
+        
   </div>
 </section>
 {!! Form::close() !!}

@@ -257,7 +257,7 @@ return [
     */
     'error_forum_title_required'                                => 'タイトルを入力してください。',
     'error_forum_contents_required'                             => '内容を入力してください。',
-    'error_forum_file_path_max'                                 => 'ファイルは 10MB 未満にしてください。',
+    'error_forum_file_path_max'                                 => 'ファイルは 15MB 未満にしてください。',
     'error_forum_file_path_mimes'                               => 'ファイル形式は .jpeg, .bmp, .png, .gif, .pdf, .doc, .docx, .dxf, .xlsx のいずれかにしてください。',
     'error_forum_file_name_required'                            => 'ファイル名を入力してください。',
 

@@ -13,7 +13,7 @@ class ForumModel
         return array(
                 'forum_title'                       => 'required',
                 'forum_contents'                    => 'required',
-                'forum_file_path'                   => 'max:10000|mimes:jpeg,bmp,png,gif,doc,docx,pdf,dxf,xlsx',
+                'forum_file_path'                   => 'max:15000|mimes:jpeg,bmp,png,gif,doc,docx,pdf,dxf,xlsx',
                 'forum_file_name'                   => 'required',
         );
     }

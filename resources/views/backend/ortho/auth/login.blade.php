@@ -55,7 +55,7 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6"></div>
-                <div class="col-xs-12 col-md-6" style="top: 70px; left: -62px; width: 121px;">
+                <div class="col-xs-12 col-md-6" style="width: 131px;">
                   [<a class="cls-forum" href="{{route('ortho.forums.forum_list')}}"> <strong>フォーラム</strong></a>]
                 </div>
               </div>

@@ -28,7 +28,7 @@
           </div>
         </div>
         <table class="table table-bordered table-striped treatment2-list">
-          <tbody>            
+          <tbody>
                 <tr>
                   <td class="col-title" align="center" style="width:50px"></td>
                   <td class="col-title" align="center" style="width:30%;">話題</td>
@@ -51,7 +51,7 @@
               </td>
               <td><a href="{{route('ortho.forums.forum_detail', $forum->forum_id)}}">{{$forum->forum_title}}</a></td>
               <td align="center">{{countReply($forum->forum_id)}}</td>
-              <td align="center">{{$forum->forum_view}}</td>
+              <td align="center">@if(!empty($forum->forum_view)){{$forum->forum_view}}@else 0 @endif</td>
               <td align="center">@if(empty($forum->forum_user_id))不明 @else {{$forum->u_name_display}} @endif</td>
               <td align="center">{{formatDateTime($forum->forum_time, '/')}}</td>
             </tr>

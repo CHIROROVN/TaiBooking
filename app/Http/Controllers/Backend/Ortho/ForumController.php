@@ -222,7 +222,10 @@ class ForumController extends BackendController
                     $fn = Input::get('forum_file_name').'_'.rand(time(),time()).'.'.$extFile;
                 }
             }else{
-                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+                $flag  = $clsForum->checkFileValid(trim($forum_file->getClientOriginalName()));
+                if($flag == true)
+                    $fn       = $forum_file->getClientOriginalName().'.'.$extFile;
+                $fn       = $forum_file->getClientOriginalName().'_'.rand(time(),time()).'.'.$extFile;
             }
 
             $path = '/backend/ortho/forums/comments/detail/files/';
@@ -262,7 +265,7 @@ class ForumController extends BackendController
         $rules                  = $clsForum->Rules();
         if(!Input::hasFile('forum_file_path')){
             unset($rules['forum_file_path']);
-            unset($rules['forum_file_name']);
+//            unset($rules['forum_file_name']);
         }
 
         $validator              = Validator::make($inputs, $rules, $clsForum->Messages());
@@ -286,7 +289,10 @@ class ForumController extends BackendController
                     $fn = Input::get('forum_file_name').'_'.rand(time(),time()).'.'.$extFile;
                 }
             }else{
-                $fn       = 'file'.'_'.rand(time(),time()).'.'.$extFile;
+                $flag  = $clsForum->checkFileValid(trim($forum_file->getClientOriginalName()));
+                if($flag == true)
+                    $fn       = $forum_file->getClientOriginalName().'.'.$extFile;
+                $fn       = $forum_file->getClientOriginalName().'_'.rand(time(),time()).'.'.$extFile;
             }
 
             $path = '/backend/ortho/forums/comments/detail/files/';

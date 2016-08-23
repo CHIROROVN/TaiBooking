@@ -46,6 +46,11 @@
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
+            <input type="button" onclick="location.href='{{route('ortho.forums.forum_detail2',$comment->forum_id)}}'" value="このトピックのコメント一覧" class="btn btn-sm btn-page">
+          </div>
+        </div>
+        <div class="row margin-bottom">
+          <div class="col-md-12 text-center">
             <input type="button" onclick="location.href='{{route('ortho.forums.forum_list')}}'" value="登録済み話題一覧に戻る" class="btn btn-sm btn-page">
           </div>
         </div>

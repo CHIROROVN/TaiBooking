@@ -155,7 +155,7 @@ class BookingModel
         return $results;
     }
 
-    public function get_where($where = array(), $lastBookingVer = true)
+    public function get_where($where = array(), $lastBookingVer = true, $orderBy = 'booking_childgroup_id')
     {
         $db = DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE);
 
@@ -180,7 +180,7 @@ class BookingModel
             $db = $db->where('t_booking.booking_date', $where['booking_date']);
         }
 
-        $db = $db->orderBy('t_booking.booking_childgroup_id', 'asc')->get();
+        $db = $db->orderBy($orderBy, 'asc')->get();
 
         return $db;
     }
@@ -355,6 +355,11 @@ class BookingModel
     public function update($id, $data)
     {
     	return DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE)->where('booking_id', $id)->update($data);
+    }
+
+    public function delete($id)
+    {
+        return DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE)->where('booking_id', $id)->delete();
     }
 
     public function update_by_bookingDate($booking_date, $data)

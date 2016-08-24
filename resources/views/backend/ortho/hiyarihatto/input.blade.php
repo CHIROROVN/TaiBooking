@@ -88,8 +88,11 @@
               </div>
               <div class="col-md-2">
                 <div class="radio">
-                年齢 <input name="age" value="{{old('age')}}" class="form-control form-control--xs" type="text">  歳
+                年齢 <input name="age" value="{{old('age')}}" class="form-control form-control--xs" type="text" maxlength="3">  歳
                 </div>
+                @if ($errors->first('age'))
+                    <span class="error-input">※ {!! $errors->first('age') !!}</span>
+              @endif
               </div>
             </div>
           </li>

@@ -59,7 +59,6 @@
                   [<a class="cls-forum" href="{{route('ortho.forums.forum_list')}}"> <strong>フォーラム</strong></a>]&nbsp;[<a class="cls-forum" href="{{route('ortho.hiyarihatto.input')}}"> <strong>ヒヤリハットフォーム</strong></a>]
                 </div>
               </div>
-
             {!! Form::close() !!}
           </div>
         </div>

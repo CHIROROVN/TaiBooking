@@ -8,6 +8,11 @@
 
 
 @import url("bootstrap.min.css");
+@import url("font-awesome.css");
+@import url("http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css");
+@import url("http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css");
+@import url("bootstrap-datetimepicker.min.css");
+
 @import url("common.css");
 @import url("page.css");
 @import url("second.css");

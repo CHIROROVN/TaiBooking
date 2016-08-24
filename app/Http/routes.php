@@ -364,6 +364,12 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@getEdit']);
 	Route::post('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@postEdit']);
 	Route::get('ddrs/delete/{id}', ['as' => 'ortho.ddrs.delete', 'uses' => 'DdrController@getDelete']);
+//Hiyarihatto
+	Route::get('hiyarihatto/input', ['as' => 'ortho.hiyarihatto.input', 'uses' => 'HiyarihattoController@getInput']);
+	Route::post('hiyarihatto/input', ['as' => 'ortho.hiyarihatto.input', 'uses' => 'HiyarihattoController@postInput']);
+	Route::get('hiyarihatto/confirm', ['as' => 'ortho.hiyarihatto.confirm', 'uses' => 'HiyarihattoController@confirm']);
+	Route::get('hiyarihatto/sent', ['as' => 'ortho.hiyarihatto.sent', 'uses' => 'HiyarihattoController@sent']);
+
 
 
 

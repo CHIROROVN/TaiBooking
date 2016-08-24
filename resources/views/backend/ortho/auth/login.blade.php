@@ -53,10 +53,10 @@
                   <button type="submit" class="btn btn-login" name="login" value="login">ログイン</button>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-xs-12 col-md-6"></div>
-                <div class="col-xs-12 col-md-6" style="width: 131px;">
-                  [<a class="cls-forum" href="{{route('ortho.forums.forum_list')}}"> <strong>フォーラム</strong></a>]
+              <div class="row" style="margin-top: 30px;">
+                <div class="col-xs-12 col-md-5"></div>
+                <div class="col-xs-16 col-md-5">
+                  [<a class="cls-forum" href="{{route('ortho.forums.forum_list')}}"> <strong>フォーラム</strong></a>]&nbsp;[<a class="cls-forum" href="{{route('ortho.hiyarihatto.input')}}"> <strong>ヒヤリハットフォーム</strong></a>]
                 </div>
               </div>
 

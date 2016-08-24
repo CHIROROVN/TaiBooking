@@ -426,6 +426,20 @@ class BookingController extends BackendController
         //     }
         // }
 
+        $rules = array(
+            'service_1' => 'required'
+        );
+        $messages = array(
+            'service_1.required'     => trans('validation.error_service_1_required'),
+        );
+        $val = array(
+            'service_1' => $service_1
+        );
+        $validator      = Validator::make($val, $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->route('ortho.bookings.booking.edit', $id)->withErrors($validator)->withInput();
+        }
+
         $dataInput = array(
             // 'facility_id'               => Input::get('facility_id'),
             'doctor_id'                 => Input::get('doctor_id'),
@@ -748,6 +762,20 @@ class BookingController extends BackendController
         //     }
         // }
 
+        $rules = array(
+            'service_1' => 'required'
+        );
+        $messages = array(
+            'service_1.required'     => trans('validation.error_service_1_required'),
+        );
+        $val = array(
+            'service_1' => $service_1
+        );
+        $validator      = Validator::make($val, $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->route('ortho.bookings.booking.regist', $id)->withErrors($validator)->withInput();
+        }
+
         $dataInput = array(
                 // 'facility_id'               => Input::get('facility_id'),
                 'patient_id'                => Input::get('p_id'),
@@ -985,25 +1013,6 @@ class BookingController extends BackendController
                 }
             }
         } elseif ( empty($service_1) ) {
-            // echo 'empty';die;
-            // echo '111111';die;
-            // $dataInput['service_1']                     = $booking->service_1;
-            // $dataInput['service_1_kind']                = $booking->service_1_kind;
-            // $dataInput['booking_childgroup_id']         = $booking->booking_childgroup_id;
-            // $where                          = array(
-            //     'booking_group_id'          => $booking->booking_group_id,
-            //     'booking_childgroup_id'     => $booking->booking_childgroup_id,
-            //     'clinic_id'                 => $booking->clinic_id,
-            // );
-            // $listBookingUpdate = $clsBooking->get_where($where);
-            // // echo '<pre>';
-            // // print_r($listBookingUpdate);
-            // // echo '</pre>';die;
-            // foreach ( $listBookingUpdate as $item ) {
-            //     if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
-            //         $status = false;
-            //     }
-            // }
             $status = true;
         }
 
@@ -1040,7 +1049,7 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.bookings.booking.edit', $id);
+            return redirect()->route('ortho.bookings.booking.regist', $id);
         }
     }
 
@@ -1093,6 +1102,20 @@ class BookingController extends BackendController
             }else{
                 $service_1      = $s1k[0];
             }
+        }
+
+        $rules = array(
+            'service_1' => 'required'
+        );
+        $messages = array(
+            'service_1.required'     => trans('validation.error_service_1_required'),
+        );
+        $val = array(
+            'service_1' => $service_1
+        );
+        $validator      = Validator::make($val, $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->route('ortho.bookings.booking.1st.regist', $id)->withErrors($validator)->withInput();
         }
 
         // insert new patient
@@ -1340,25 +1363,6 @@ class BookingController extends BackendController
                 }
             }
         } elseif ( empty($service_1) ) {
-            // echo 'empty';die;
-            // echo '111111';die;
-            // $dataInput['service_1']                     = $booking->service_1;
-            // $dataInput['service_1_kind']                = $booking->service_1_kind;
-            // $dataInput['booking_childgroup_id']         = $booking->booking_childgroup_id;
-            // $where                          = array(
-            //     'booking_group_id'          => $booking->booking_group_id,
-            //     'booking_childgroup_id'     => $booking->booking_childgroup_id,
-            //     'clinic_id'                 => $booking->clinic_id,
-            // );
-            // $listBookingUpdate = $clsBooking->get_where($where);
-            // // echo '<pre>';
-            // // print_r($listBookingUpdate);
-            // // echo '</pre>';die;
-            // foreach ( $listBookingUpdate as $item ) {
-            //     if ( !$clsBooking->update($item->booking_id, $dataInput) ) {
-            //         $status = false;
-            //     }
-            // }
             $status = true;
         }
 
@@ -1404,7 +1408,7 @@ class BookingController extends BackendController
             $clsPatient->update($p_id, $dataDeletePatient);
 
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.bookings.booking.edit', $id);
+            return redirect()->route('ortho.bookings.booking.1st.regist', $id);
         }
     }
 

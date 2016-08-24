@@ -36,12 +36,15 @@
               <li><a href="{{ route('ortho.ddrs.calendar') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>院長予定のカレンダー表示・新規登録・変更・削除</a></li>
             </ul>
             @endif
+
+            <!-- power 11 -->
             @if(!empty(Auth::user()->u_power11))
             <h2>メモ管理</h2>
             <ul>
               <li><a href="{{ route('ortho.memos.calendar') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>カレンダー表示・メモの新規登録・変更・削除</a></li>
             </ul>
             @endif
+            
             <h2>フォーラム</h2>
             <ul>
               <li><a href="{{ route('ortho.forums.forum_list') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Post comments, reply comments</a></li>

@@ -160,7 +160,7 @@
 
               <!-- service_1 -->
             <tr>
-              <td class="col-title"><label for="service_1">業務内容-1</label></td>
+              <td class="col-title"><label for="service_1">業務内容-1 <span class="note_required">※</span></label></td>
               <td>
                 @if ( $booking->service_1_kind == 1 )
                 {{ @$services[$booking->service_1] }}
@@ -174,6 +174,7 @@
                     @endif
                 </select>
                 @endif
+                <span class="error-input">@if ($errors->first('service_1')) {!! $errors->first('service_1') !!} @endif</span>
               </td>
             </tr>
 

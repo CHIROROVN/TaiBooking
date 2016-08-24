@@ -17,3 +17,7 @@ span.note_required{
 input.input-text-mid{
     width:250px !important;
 }
+
+.space-line{
+    margin-left: 55px;
+}

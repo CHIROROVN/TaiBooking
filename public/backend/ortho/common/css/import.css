@@ -13,6 +13,7 @@
 @import url("http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css");
 @import url("bootstrap-datetimepicker.min.css");
 
+@import url("style.css");
 @import url("common.css");
 @import url("page.css");
 @import url("second.css");

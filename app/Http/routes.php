@@ -367,8 +367,12 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 //Hiyarihatto
 	Route::get('hiyarihatto/input', ['as' => 'ortho.hiyarihatto.input', 'uses' => 'HiyarihattoController@getInput']);
 	Route::post('hiyarihatto/input', ['as' => 'ortho.hiyarihatto.input', 'uses' => 'HiyarihattoController@postInput']);
-	Route::get('hiyarihatto/confirm', ['as' => 'ortho.hiyarihatto.confirm', 'uses' => 'HiyarihattoController@confirm']);
+	Route::get('hiyarihatto/confirm', ['as' => 'ortho.hiyarihatto.confirm', 'uses' => 'HiyarihattoController@confirmHiyar']);
+	
 	Route::get('hiyarihatto/sent', ['as' => 'ortho.hiyarihatto.sent', 'uses' => 'HiyarihattoController@sent']);
+	Route::get('hiyarihatto/sent-email', ['as' => 'ortho.hiyarihatto.sent_email', 'uses' => 'HiyarihattoController@sendEmail']);
+	Route::get('hiyarihatto/complete', ['as' => 'ortho.hiyarihatto.complete', 'uses' => 'HiyarihattoController@complete']);
+
 
 
 

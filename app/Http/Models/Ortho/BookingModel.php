@@ -524,9 +524,14 @@ class BookingModel
         }
 
         if(isset($where['clinic_service_name']) && $service_kind == 2){
-            return $db->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+            return $db->orderBy('t_booking.booking_date', 'asc')
+                        ->orderBy('t_booking.booking_start_time', 'asc')
+                        ->orderBy('tf1.facility_name', 'asc')->simplePaginate(PAGINATION);
         }else{
-            return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_id', 'asc')->simplePaginate(PAGINATION);
+            return $db->groupBy('booking_group_id')->orderBy('t_booking.booking_date', 'asc')
+                                                    ->orderBy('t_booking.booking_start_time', 'asc')
+                                                    ->orderBy('tf1.facility_name', 'asc')
+                                                    ->simplePaginate(PAGINATION);
         }
     }
 

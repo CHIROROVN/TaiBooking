@@ -373,27 +373,27 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
         $booking                    = $clsBooking->get_by_id($id);
-        $arr_gid                    = array();
-        $arr_gid[]                  = $booking->booking_group_id;
-        $bookingGroups              = $clsBooking->get_by_group($arr_gid);
+        // $arr_gid                    = array();
+        // $arr_gid[]                  = $booking->booking_group_id;
+        // $bookingGroups              = $clsBooking->get_by_group($arr_gid);
 
         // old version
-        $whereOld = array(
-            'booking_group_id'      => $booking->booking_group_id,
-            'clinic_id'             => $booking->clinic_id,
-            'booking_date'          => $booking->booking_date
-        );
-        $oldBooking                 = $clsBooking->get_where($whereOld, true, 'booking_id');
+        // $whereOld = array(
+        //     'booking_group_id'      => $booking->booking_group_id,
+        //     'clinic_id'             => $booking->clinic_id,
+        //     'booking_date'          => $booking->booking_date
+        // );
+        // $oldBooking                 = $clsBooking->get_where($whereOld, true, 'booking_id');
         // copy old version to insert new version
         // after update new version
-        $idNewVerBooking = array();
-        $lastBookingVer = $clsBooking->getLastBookingRev();
-        foreach ( $oldBooking as $item ) {
-            $arr = (array)$item;
-            $arr['booking_rev'] = $lastBookingVer + 1;
-            unset($arr['booking_id']);
-            $idNewVerBooking[] = $clsBooking->insert_get_id($arr);
-        }
+        // $idNewVerBooking = array();
+        // $lastBookingVer = $clsBooking->getLastBookingRev();
+        // foreach ( $oldBooking as $item ) {
+        //     $arr = (array)$item;
+        //     $arr['booking_rev'] = $lastBookingVer + 1;
+        //     unset($arr['booking_id']);
+        //     $idNewVerBooking[] = $clsBooking->insert_get_id($arr);
+        // }
 
         
         $service_1 = $service_1_kind = '';
@@ -493,7 +493,9 @@ class BookingController extends BackendController
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
             'clinic_id'                 => $booking->clinic_id,
+            'facility_id'               => $booking->facility_id,
         );
+
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         if ( empty($booking->booking_childgroup_id) ) {
             $tmpBookingChildGroups = array();
@@ -523,6 +525,7 @@ class BookingController extends BackendController
                     'booking_group_id'          => $booking->booking_group_id,
                     'booking_childgroup_id'     => $booking->booking_childgroup_id,
                     'clinic_id'                 => $booking->clinic_id,
+                    'facility_id'               => $booking->facility_id,
                 );
                 $bookingChildGroupsTreatment = $clsBooking->get_where($whereChildGroupsTreatment);
 
@@ -597,11 +600,11 @@ class BookingController extends BackendController
 
             if ( !$status ) {
                 // if treatment update error, delete version last insert
-                if ( !empty($idNewVerBooking) ) {
-                    foreach ( $idNewVerBooking as $item ) {
-                        $clsBooking->delete($item);
-                    }
-                }
+                // if ( !empty($idNewVerBooking) ) {
+                //     foreach ( $idNewVerBooking as $item ) {
+                //         $clsBooking->delete($item);
+                //     }
+                // }
                 
                 // return back $bookingChildGroups
                 foreach ( $bookingChildGroupsTreatment as $item ) {
@@ -646,6 +649,7 @@ class BookingController extends BackendController
                 'booking_group_id'          => $booking->booking_group_id,
                 'booking_childgroup_id'     => $booking->booking_childgroup_id,
                 'clinic_id'                 => $booking->clinic_id,
+                'facility_id'               => $booking->facility_id,
             );
             $listBookingUpdate = $clsBooking->get_where($where);
             foreach ( $listBookingUpdate as $item ) {
@@ -662,6 +666,7 @@ class BookingController extends BackendController
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
             'clinic_id'                 => $booking->clinic_id,
+            'facility_id'               => $booking->facility_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         foreach ( $bookingChildGroups as $bookingChildGroup ) {
@@ -829,6 +834,7 @@ class BookingController extends BackendController
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
             'clinic_id'                 => $booking->clinic_id,
+            'facility_id'               => $booking->facility_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         if ( empty($booking->booking_childgroup_id) ) {
@@ -860,6 +866,7 @@ class BookingController extends BackendController
                     'booking_group_id'          => $booking->booking_group_id,
                     'booking_childgroup_id'     => $booking->booking_childgroup_id,
                     'clinic_id'                 => $booking->clinic_id,
+                    'facility_id'               => $booking->facility_id,
                 );
                 $bookingChildGroupsTreatment = $clsBooking->get_where($whereChildGroupsTreatment);
 
@@ -886,6 +893,7 @@ class BookingController extends BackendController
                     'booking_group_id'          => $booking->booking_group_id,
                     'booking_childgroup_id'     => $booking->booking_childgroup_id,
                     'clinic_id'                 => $booking->clinic_id,
+                    'facility_id'               => $booking->facility_id,
                 );
                 $bookingChildGroupsTreatment = $clsBooking->get_where($whereChildGroupsTreatment);
 
@@ -1005,6 +1013,7 @@ class BookingController extends BackendController
                 'booking_group_id'          => $booking->booking_group_id,
                 'booking_childgroup_id'     => $booking->booking_childgroup_id,
                 'clinic_id'                 => $booking->clinic_id,
+                'facility_id'               => $booking->facility_id,
             );
             $listBookingUpdate = $clsBooking->get_where($where);
             foreach ( $listBookingUpdate as $item ) {
@@ -1021,6 +1030,7 @@ class BookingController extends BackendController
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
             'clinic_id'                 => $booking->clinic_id,
+            'facility_id'               => $booking->facility_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         foreach ( $bookingChildGroups as $bookingChildGroup ) {
@@ -1180,6 +1190,7 @@ class BookingController extends BackendController
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
             'clinic_id'                 => $booking->clinic_id,
+            'facility_id'               => $booking->facility_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         if ( empty($booking->booking_childgroup_id) ) {
@@ -1210,6 +1221,7 @@ class BookingController extends BackendController
                     'booking_group_id'          => $booking->booking_group_id,
                     'booking_childgroup_id'     => $booking->booking_childgroup_id,
                     'clinic_id'                 => $booking->clinic_id,
+                    'facility_id'               => $booking->facility_id,
                 );
                 $bookingChildGroupsTreatment = $clsBooking->get_where($whereChildGroupsTreatment);
 
@@ -1236,6 +1248,7 @@ class BookingController extends BackendController
                     'booking_group_id'          => $booking->booking_group_id,
                     'booking_childgroup_id'     => $booking->booking_childgroup_id,
                     'clinic_id'                 => $booking->clinic_id,
+                    'facility_id'               => $booking->facility_id,
                 );
                 $bookingChildGroupsTreatment = $clsBooking->get_where($whereChildGroupsTreatment);
 
@@ -1355,6 +1368,7 @@ class BookingController extends BackendController
                 'booking_group_id'          => $booking->booking_group_id,
                 'booking_childgroup_id'     => $booking->booking_childgroup_id,
                 'clinic_id'                 => $booking->clinic_id,
+                'facility_id'               => $booking->facility_id,
             );
             $listBookingUpdate = $clsBooking->get_where($where);
             foreach ( $listBookingUpdate as $item ) {
@@ -1372,6 +1386,7 @@ class BookingController extends BackendController
             'booking_group_id'          => $booking->booking_group_id,
             'booking_childgroup_id'     => $booking->booking_childgroup_id,
             'clinic_id'                 => $booking->clinic_id,
+            'facility_id'               => $booking->facility_id,
         );
         $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
         foreach ( $bookingChildGroups as $bookingChildGroup ) {

@@ -79,4 +79,6 @@ return [
     */
     'set_some_box'                      => 'Set some box',
     'set'                               => 'Set',
+    'start_time'                        => 'Start time',
+    'end_time'                          => 'End time'
 ];

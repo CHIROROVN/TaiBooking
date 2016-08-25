@@ -224,6 +224,7 @@ class BookingModel
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.booking_date', date('Y-m-d'))
                         // ->where('t_booking.booking_rev', $this->getLastBookingRev())
+                        ->groupBy('t_booking.patient_id')
                         ->orderBy('t_booking.booking_id', 'asc')
                         ->get();
         return $results;

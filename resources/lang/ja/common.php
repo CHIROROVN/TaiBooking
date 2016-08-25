@@ -10,7 +10,7 @@ return [
     'modal_content_delete'				                   => '削除してよろしいですか？',
     'modal_btn_delete'					                   => '削除する(確認済)',
     'modal_btn_cancel'					                   => '削除しない',
-    'modal_header_popup_edit_clinic_booking_template'      => 'テンプレートの設定を予約',
+    'modal_header_popup_edit_clinic_booking_template'      => '複数治療枠選択',
     'modal_btn_ok'                                         => '保存する',
 
     /*
@@ -31,7 +31,7 @@ return [
     / if don't have permisstion, return to menu page
     |--------------------------------------------------------------------------
     */
-    'message_permission_no_access'          => 'You do not have access!',
+    'message_permission_no_access'          => 'アクセス権がありません。',
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ return [
     | Text popup select doctor, hygienist
     |--------------------------------------------------------------------------
     */
-    'popup_header'                      => 'Popover Header',
+    'popup_header'                      => 'ポップアップ',
     'select_reset'                      => 'リセットする',
 
 
@@ -77,8 +77,8 @@ return [
     | Text set some boxs
     |--------------------------------------------------------------------------
     */
-    'set_some_box'                      => 'Set some box',
-    'set'                               => 'Set',
-    'start_time'                        => 'Start time',
-    'end_time'                          => 'End time'
+    'set_some_box'                      => '複数治療枠選択',
+    'set'                               => 'セットする',
+    'start_time'                        => '開始時刻',
+    'end_time'                          => '終了時刻'
 ];

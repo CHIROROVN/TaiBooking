@@ -15,7 +15,7 @@
           </tr>
 
           <tr>
-            <td class="col-title"><label for="p_name_f">Name</label></td>
+            <td class="col-title"><label for="p_name_f">氏名</label></td>
             <td>
               <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--medium" value="{{ $p_name_f }}">
               <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--medium" value="{{ $p_name_g }}">
@@ -23,7 +23,7 @@
           </tr>
 
           <tr>
-            <td class="col-title"><label for="p_name_f_kana">Name (kana)</label></td>
+            <td class="col-title"><label for="p_name_f_kana">氏名（ひらがな）</label></td>
             <td>
               <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--medium" value="{{ $p_name_f_kana }}">
               <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--medium" value="{{ $p_name_g_kana }}">
@@ -38,14 +38,14 @@
           </tr>
 
           <tr>
-            <td class="col-title">HOS Memo</td>
+            <td class="col-title">HOS（テキスト入力）</td>
             <td>
               <input type="text" name="p_hos_memo" id="p_hos_memo" maxlength="12" class="form-control" value="{{ @$p_hos_memo }}">
             </td>
           </tr>
 
           <tr>
-            <td class="col-title">HOS</td>
+            <td class="col-title">HOS（プルダウン選択）</td>
             <td>
               <select  name="p_hos" class="form-control" title="▼選択">
                 <option data-hidden="true"></option>

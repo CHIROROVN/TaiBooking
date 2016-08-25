@@ -61,7 +61,7 @@
                     
                     <!-- start time -->
                     <tr>
-                      <td align="left">{{ trans('.common.start_time') }}</td>
+                      <td align="left">{{ trans('common.start_time') }}</td>
                       <td align="left">
                         <select name="start_hh" id="start_hh">
                           @for ( $i = 9; $i <= 22; $i++ )
@@ -79,7 +79,7 @@
 
                     <!-- end time -->
                     <tr>
-                      <td align="left">{{ trans('.common.end_time') }}</td>
+                      <td align="left">{{ trans('common.end_time') }}</td>
                       <td align="left">
                         <select name="end_hh" id="end_hh">
                           @for ( $i = 9; $i <= 22; $i++ )

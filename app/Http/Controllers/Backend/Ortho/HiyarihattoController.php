@@ -42,24 +42,23 @@ class HiyarihattoController extends BackendController
             !empty(Input::get('hygienist')) || 
             !empty(Input::get('technician')) || 
             !empty(Input::get('nurse')) || 
-            !empty(Input::get('secretary')) || 
-            !empty(Input::get('other_chk')) )
+            !empty(Input::get('secretary')) )
         {
             unset($rules['dentist']);
             unset($rules['hygienist']);
             unset($rules['technician']);
             unset($rules['nurse']);
             unset($rules['secretary']);
-            unset($rules['other_chk']);
-            unset($rules['other_input']);
-        }else if( !empty(Input::get('other_chk')) )
+            unset($rules['other_cb']);
+            unset($rules['other_input_job']);
+        }else if( !empty(Input::get('other_cb')) )
         {
             unset($rules['dentist']);
             unset($rules['hygienist']);
             unset($rules['technician']);
             unset($rules['nurse']);
             unset($rules['secretary']);
-            unset($rules['other_chk']);
+            unset($rules['other_cb']);
         }
 //7.
         if( !empty(Input::get('party')) )
@@ -338,9 +337,7 @@ class HiyarihattoController extends BackendController
             unset($rules['other']);
         }
 
-
         $validator      = Validator::make(Input::all(), $rules, $clsHiyarihatto->Messages());
-
         if ($validator->fails()) {
             return redirect()->route('ortho.hiyarihatto.input')->withErrors($validator)->withInput();
         }
@@ -353,7 +350,7 @@ class HiyarihattoController extends BackendController
         $input['place']                 = Input::get('place');
         $input['sex']                   = Input::get('sex');
         $input['age']                   = Input::get('age');
-        $input['other_input']           = Input::get('other_input');
+        $input['other_input_job']       = Input::get('other_input_job');
         $input['scene']                 = Input::get('scene');
         $input['contents']              = Input::get('contents');
         $input['party']                 = Input::get('party');
@@ -407,18 +404,21 @@ class HiyarihattoController extends BackendController
 
     public function confirmHiyar()
     {
+        if(!Session::has('hiyarihatto')) return redirect()->route('ortho.hiyarihatto.input');
         $data['hiyar'] = Session::get('hiyarihatto');
         return view('backend.ortho.hiyarihatto.confirm', $data);
     }
 
     public function sent()
     {
+        if(!Session::has('hiyarihatto')) return redirect()->route('ortho.hiyarihatto.input');
         $data['hiyar'] = Session::get('hiyarihatto');
         return view('backend.ortho.hiyarihatto.sent', $data);
     }
 
     public function sendEmail()
     {
+        if(!Session::has('hiyarihatto')) return redirect()->route('ortho.hiyarihatto.input');
         $hiyar = (array) Session::get('hiyarihatto');
         Mail::send(['html'=>'backend.ortho.hiyarihatto.email'], ['hiyar'=>$hiyar], function($message) use ($hiyar) {
         $email_to   = env('BACKEND_EMAIL_TO', null);
@@ -434,6 +434,7 @@ class HiyarihattoController extends BackendController
 
     public function complete()
     {
+        if(!Session::has('hiyarihatto')) return redirect()->route('ortho.hiyarihatto.input');
         return view('backend.ortho.hiyarihatto.complete');
     }
 

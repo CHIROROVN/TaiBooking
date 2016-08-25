@@ -50,6 +50,7 @@
             <p>{{$hiyar->nurse}}</p>
             <p>{{$hiyar->secretary}}</p>
             <p>{{$hiyar->dentist}}</p>
+            <p>{{$hiyar->other_input_job}}</p>
           </li>
           <li>
             <h4>5. ヒヤリハットが発生した場面（必須）</h4>

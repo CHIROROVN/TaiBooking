@@ -18,8 +18,8 @@ class HiyarihattoModel
                     'technician'                => 'required',
                     'nurse'                     => 'required',
                     'secretary'                 => 'required',
-                    'other_chk'                 => 'required',
-                    'other_input'               => 'required',
+                    'other_cb'                  => 'required',
+                    'other_input_job'           => 'required',
                     //5
                     'scene'                     => 'required',
                     //6
@@ -84,8 +84,8 @@ class HiyarihattoModel
                 'technician.required'           => trans('validation.error_technician_required'),
                 'nurse.required'                => trans('validation.error_nurse_required'),
                 'secretary.required'            => trans('validation.error_secretary_required'),
-                'other_chk.required'            => trans('validation.error_other_chk_required'),
-                'other_input.required'          => trans('validation.error_other_input_required'),
+                'other_cb.required'             => trans('validation.error_other_cb_required'),
+                'other_input_job.required'      => trans('validation.error_other_input_job_required'),
                 //5
                 'scene.required'                => trans('validation.error_scene_required'),
                 //6

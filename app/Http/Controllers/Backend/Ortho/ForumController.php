@@ -21,7 +21,7 @@ class ForumController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth', ['except' => ['index', 'getAddComment', 'postAddComment', 'detail','countReply','deleteCnf', 'delete','getEditComment','getReplyComment','postReplyComment','postEditComment','getSearch','postSearch','detail2']]);
+        $this->middleware('auth');
     }
 
     /**

@@ -285,7 +285,7 @@ return [
     'error_technician_required'                         => 'Please enter technician.',
     'error_nurse_required'                              => 'Please enter nurse.',
     'error_secretary_required'                          => 'Please enter secretary.',
-    'error_other_input_required'                        => 'Please enter その他.',
+    'error_other_input_job_required'                    => 'Please enter その他.',
 
     'error_scene_required'                              => 'Please enter scene.',
     'error_contents_required'                           => 'Please enter content.',
@@ -315,7 +315,7 @@ return [
     'error_quantity_required'                           => 'Please enter 数量不足.',
     'error_inappropriate_required'                      => 'Please enter 管理不適切 .',
     'error_malfunction_required'                        => 'Please enter 機器誤作動 .',
-    'error_medical_error_required'                      => 'Please enter medical .',
+    'error_medical_error_required'                      => 'Please enter 処方投薬ミス .',
     'error_medical_text_required'                       => 'Please enter medical other.',
     
     'error_education_required'                          => 'Please enter 教育・訓練や説明・対応.',

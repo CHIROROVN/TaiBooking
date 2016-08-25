@@ -144,8 +144,8 @@
               </div>
               <div class="col-md-2">
                 <div class="checkbox">
-                    <label><input name="other_chk" value="その他" type="checkbox" @if(old('other_chk') == 'その他') checked="" @endif >  その他</label>
-                    <input name="other_input" value="{{old('other_input')}}" class="form-control form-control--xs" type="text">
+                    <label><input name="other_cb" value="その他" type="checkbox" @if(old('other_cb') == 'その他') checked="" @endif >  その他</label>
+                    <input name="other_input_job" value="{{old('other_input_job')}}" class="form-control form-control--xs" type="text">
                 </div>
               </div>
               @if ($errors->first('dentist'))
@@ -163,11 +163,11 @@
               @if ($errors->first('secretary'))
                     <span class="error-input">※ {!! $errors->first('secretary') !!}</span>
               @endif
-              @if ($errors->first('other_chk'))
-                    <span class="error-input">※ {!! $errors->first('other_chk') !!}</span>
+              @if ($errors->first('other_cb'))
+                    <span class="error-input">※ {!! $errors->first('other_cb') !!}</span>
               @endif
-               @if ($errors->first('other_input'))
-                    <span class="error-input">※ {!! $errors->first('other_input') !!}</span>
+               @if ($errors->first('other_input_job'))
+                    <span class="error-input">※ {!! $errors->first('other_input_job') !!}</span>
               @endif
             </div>
           </li>

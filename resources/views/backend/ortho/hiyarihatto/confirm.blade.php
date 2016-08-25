@@ -85,7 +85,7 @@
             <p><strong>{{$hiyar->medical_device}}</strong></p>
             <div class="space-line">
               {{$hiyar->defect}}
-              @if($hiyar->malfunction){{', '.$hiyar->malfunction}}@endif
+              @if($hiyar->fault){{', '.$hiyar->fault}}@endif
               @if($hiyar->handle){{', '.$hiyar->handle}}@endif
               @if($hiyar->placement){{', '.$hiyar->placement}}@endif
               @if($hiyar->quantity){{', '.$hiyar->quantity}}@endif

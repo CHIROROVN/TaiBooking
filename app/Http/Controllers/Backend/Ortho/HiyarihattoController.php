@@ -36,7 +36,310 @@ class HiyarihattoController extends BackendController
     {
         if(Session::has('hiyarihatto')) Session::forget('hiyarihatto');
         $clsHiyarihatto = new HiyarihattoModel();
-        $validator      = Validator::make(Input::all(), $clsHiyarihatto->Rules(), $clsHiyarihatto->Messages());
+        $rules          = $clsHiyarihatto->Rules();
+        //4.
+        if( !empty(Input::get('dentist')) || 
+            !empty(Input::get('hygienist')) || 
+            !empty(Input::get('technician')) || 
+            !empty(Input::get('nurse')) || 
+            !empty(Input::get('secretary')) || 
+            !empty(Input::get('other_chk')) )
+        {
+            unset($rules['dentist']);
+            unset($rules['hygienist']);
+            unset($rules['technician']);
+            unset($rules['nurse']);
+            unset($rules['secretary']);
+            unset($rules['other_chk']);
+            unset($rules['other_input']);
+        }else if( !empty(Input::get('other_chk')) )
+        {
+            unset($rules['dentist']);
+            unset($rules['hygienist']);
+            unset($rules['technician']);
+            unset($rules['nurse']);
+            unset($rules['secretary']);
+            unset($rules['other_chk']);
+        }
+//7.
+        if( !empty(Input::get('party')) )
+        {
+            if( !empty(Input::get('confirm')) || 
+                !empty(Input::get('observation')) || 
+                !empty(Input::get('judgment')) || 
+                !empty(Input::get('knowledge')) ||
+                !empty(Input::get('technology')) || 
+                !empty(Input::get('corners')) )
+            {
+                unset($rules['party']);
+                unset($rules['confirm']);
+                unset($rules['observation']);
+                unset($rules['judgment']);
+                unset($rules['knowledge']);
+                unset($rules['technology']);
+                unset($rules['corners']);
+                unset($rules['occurrence']);
+            }
+            //
+                unset($rules['affect_env']);
+                unset($rules['contact']);
+                unset($rules['transmission']);
+                unset($rules['manual']);
+                unset($rules['cooperation']);
+                unset($rules['mistake']);
+                unset($rules['misreading']);
+                unset($rules['affect_text']);
+            //
+                unset($rules['medical_device']);
+                unset($rules['defect']);
+                unset($rules['fault']);
+                unset($rules['handle']);
+                unset($rules['placement']);
+                unset($rules['quantity']);
+                unset($rules['inappropriate']);
+                unset($rules['malfunction']);
+                unset($rules['medical_error']);
+                unset($rules['medical_text']);
+            //
+                unset($rules['education']);
+                unset($rules['edu_training']);
+                unset($rules['explan_patient']);
+                unset($rules['understand_patient']);
+                unset($rules['edu_text']);
+            //
+                unset($rules['other_chk']);
+                unset($rules['other']);
+
+        }else{
+            unset($rules['confirm']);
+            unset($rules['observation']);
+            unset($rules['judgment']);
+            unset($rules['knowledge']);
+            unset($rules['technology']);
+            unset($rules['corners']);
+            unset($rules['occurrence']);
+        }
+
+        if(!empty(Input::get('affect_env')))
+        {
+            if( !empty(Input::get('contact')) || 
+                !empty(Input::get('transmission')) || 
+                !empty(Input::get('manual')) || 
+                !empty(Input::get('cooperation')) || 
+                !empty(Input::get('mistake')) || 
+                !empty(Input::get('misreading')) )
+            {
+                unset($rules['affect_env']);
+                unset($rules['contact']);
+                unset($rules['transmission']);
+                unset($rules['manual']);
+                unset($rules['cooperation']);
+                unset($rules['mistake']);
+                unset($rules['misreading']);
+                unset($rules['affect_text']);
+            }
+            //
+                unset($rules['party']);
+                unset($rules['confirm']);
+                unset($rules['observation']);
+                unset($rules['judgment']);
+                unset($rules['knowledge']);
+                unset($rules['technology']);
+                unset($rules['corners']);
+                unset($rules['occurrence']);
+            //
+                unset($rules['medical_device']);
+                unset($rules['defect']);
+                unset($rules['fault']);
+                unset($rules['handle']);
+                unset($rules['placement']);
+                unset($rules['quantity']);
+                unset($rules['inappropriate']);
+                unset($rules['malfunction']);
+                unset($rules['medical_error']);
+                unset($rules['medical_text']);
+            //
+                unset($rules['education']);
+                unset($rules['edu_training']);
+                unset($rules['explan_patient']);
+                unset($rules['understand_patient']);
+                unset($rules['edu_text']);
+            //
+                unset($rules['other_chk']);
+                unset($rules['other']);
+
+        }else{
+            unset($rules['contact']);
+            unset($rules['transmission']);
+            unset($rules['manual']);
+            unset($rules['cooperation']);
+            unset($rules['mistake']);
+            unset($rules['misreading']);
+            unset($rules['affect_text']);
+        }
+
+        if(!empty(Input::get('medical_device')))
+        {
+            if( !empty(Input::get('defect')) || 
+                !empty(Input::get('fault')) || 
+                !empty(Input::get('handle')) || 
+                !empty(Input::get('placement')) || 
+                !empty(Input::get('quantity')) || 
+                !empty(Input::get('inappropriate')) || 
+                !empty(Input::get('malfunction')) || 
+                !empty(Input::get('medical_error')) )
+            {
+                unset($rules['medical_device']);
+                unset($rules['defect']);
+                unset($rules['fault']);
+                unset($rules['handle']);
+                unset($rules['placement']);
+                unset($rules['quantity']);
+                unset($rules['inappropriate']);
+                unset($rules['malfunction']);
+                unset($rules['medical_error']);
+                unset($rules['medical_text']);
+            }
+            //
+                unset($rules['party']);
+                unset($rules['confirm']);
+                unset($rules['observation']);
+                unset($rules['judgment']);
+                unset($rules['knowledge']);
+                unset($rules['technology']);
+                unset($rules['corners']);
+                unset($rules['occurrence']);
+            //
+                unset($rules['affect_env']);
+                unset($rules['contact']);
+                unset($rules['transmission']);
+                unset($rules['manual']);
+                unset($rules['cooperation']);
+                unset($rules['mistake']);
+                unset($rules['misreading']);
+                unset($rules['affect_text']);
+            //
+                unset($rules['education']);
+                unset($rules['edu_training']);
+                unset($rules['explan_patient']);
+                unset($rules['understand_patient']);
+                unset($rules['edu_text']);
+            //
+                unset($rules['other_chk']);
+                unset($rules['other']);
+        }else{
+            unset($rules['defect']);
+            unset($rules['malfunction']);
+            unset($rules['handle']);
+            unset($rules['placement']);
+            unset($rules['quantity']);
+            unset($rules['inappropriate']);
+            unset($rules['malfunction']);
+            unset($rules['medical_error']);
+            unset($rules['medical_text']);
+        }
+
+        if(!empty(Input::get('education')))
+        {
+            if( !empty(Input::get('edu_training')) || 
+                !empty(Input::get('explan_patient')) || 
+                !empty(Input::get('understand_patient')) )
+            {
+                unset($rules['education']);
+                unset($rules['edu_training']);
+                unset($rules['explan_patient']);
+                unset($rules['understand_patient']);
+                unset($rules['edu_text']);
+            }
+            //
+                unset($rules['party']);
+                unset($rules['confirm']);
+                unset($rules['observation']);
+                unset($rules['judgment']);
+                unset($rules['knowledge']);
+                unset($rules['technology']);
+                unset($rules['corners']);
+                unset($rules['occurrence']);
+            //
+                unset($rules['affect_env']);
+                unset($rules['contact']);
+                unset($rules['transmission']);
+                unset($rules['manual']);
+                unset($rules['cooperation']);
+                unset($rules['mistake']);
+                unset($rules['misreading']);
+                unset($rules['affect_text']);
+            //
+                unset($rules['medical_device']);
+                unset($rules['defect']);
+                unset($rules['fault']);
+                unset($rules['handle']);
+                unset($rules['placement']);
+                unset($rules['quantity']);
+                unset($rules['inappropriate']);
+                unset($rules['malfunction']);
+                unset($rules['medical_error']);
+                unset($rules['medical_text']);
+            //
+                unset($rules['other_chk']);
+                unset($rules['other']);
+        }else{
+            unset($rules['edu_training']);
+            unset($rules['explan_patient']);
+            unset($rules['understand_patient']);
+            unset($rules['edu_text']);
+        }
+
+        if( !empty(Input::get('other_chk')) )
+        {
+            if( !empty(Input::get('other')) ){
+                unset($rules['other_chk']);
+                unset($rules['other']);
+            }else{
+                unset($rules['other_chk']);
+            }
+
+            //
+                unset($rules['party']);
+                unset($rules['confirm']);
+                unset($rules['observation']);
+                unset($rules['judgment']);
+                unset($rules['knowledge']);
+                unset($rules['technology']);
+                unset($rules['corners']);
+                unset($rules['occurrence']);
+            //
+                unset($rules['affect_env']);
+                unset($rules['contact']);
+                unset($rules['transmission']);
+                unset($rules['manual']);
+                unset($rules['cooperation']);
+                unset($rules['mistake']);
+                unset($rules['misreading']);
+                unset($rules['affect_text']);
+            //
+                unset($rules['medical_device']);
+                unset($rules['defect']);
+                unset($rules['fault']);
+                unset($rules['handle']);
+                unset($rules['placement']);
+                unset($rules['quantity']);
+                unset($rules['inappropriate']);
+                unset($rules['malfunction']);
+                unset($rules['medical_error']);
+                unset($rules['medical_text']);
+            //
+                unset($rules['education']);
+                unset($rules['edu_training']);
+                unset($rules['explan_patient']);
+                unset($rules['understand_patient']);
+                unset($rules['edu_text']);
+        }else{
+            unset($rules['other']);
+        }
+
+
+        $validator      = Validator::make(Input::all(), $rules, $clsHiyarihatto->Messages());
 
         if ($validator->fails()) {
             return redirect()->route('ortho.hiyarihatto.input')->withErrors($validator)->withInput();
@@ -62,6 +365,7 @@ class HiyarihattoController extends BackendController
         $input['hygienist']             = Input::get('hygienist');
         $input['medical_error']         = Input::get('medical_error');
         $input['malfunction']           = Input::get('malfunction');
+        $input['fault']                 = Input::get('fault');
         $input['discoverer']            = Input::get('discoverer');
         $input['handle']                = Input::get('handle');
         $input['technician']            = Input::get('technician');

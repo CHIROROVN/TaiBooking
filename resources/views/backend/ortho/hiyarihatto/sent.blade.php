@@ -13,7 +13,16 @@
 <![endif]-->
 <link href="{{asset('public')}}/backend/ortho/common/css/import.css" rel="stylesheet">
 </head>
-<body>
+<body class="body-login">
+  <!-- Header -->
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <h1><img src="{{ asset('') }}public/backend/ortho/common/image/logo.png" /></h1>
+        </div>
+      </div>
+    </header>
+  <!-- End Header -->
   <!-- Content equiment list -->
   <section id="page">
     <div class="container">  
@@ -63,7 +72,6 @@
             </div>
             <div class="space-line"><?php echo nl2br($hiyar->occurrence)?></div>
 
-
             <p><trong>{{$hiyar->affect_env}}</trong></p>
             <div class="space-line">
               {{$hiyar->contact}}
@@ -77,7 +85,7 @@
             <p><strong>{{$hiyar->medical_device}}</strong></p>
             <div class="space-line">
               {{$hiyar->defect}}
-              @if($hiyar->malfunction){{', '.$hiyar->malfunction}}@endif
+              @if($hiyar->fault){{', '.$hiyar->fault}}@endif
               @if($hiyar->handle){{', '.$hiyar->handle}}@endif
               @if($hiyar->placement){{', '.$hiyar->placement}}@endif
               @if($hiyar->quantity){{', '.$hiyar->quantity}}@endif

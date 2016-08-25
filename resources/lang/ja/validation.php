@@ -268,4 +268,66 @@ return [
     */
     'error_service_1_required'                               => '業務内容-1を選択してください。',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Model Hiyarihatto
+    |--------------------------------------------------------------------------
+    */
+    'error_year_required'                               => 'Please enter year.',
+    'error_month_required'                              => 'Please enter month.',
+    'error_day_required'                                => 'Please enter day.',
+    'error_hour_required'                               => 'Please choose hour.',
+    'error_place_required'                              => 'Please enter place.',
+    'error_age_required'                                => 'The ege must be numeric type.',
+    'error_discoverer_required'                         => 'Please choose discoverer or party.',
+    'error_dentist_required'                            => 'Please enter dentist.',
+    'error_hygienist_required'                          => 'Please enter hygienist.',
+    'error_technician_required'                         => 'Please enter technician.',
+    'error_nurse_required'                              => 'Please enter nurse.',
+    'error_secretary_required'                          => 'Please enter secretary.',
+    'error_other_input_required'                        => 'Please enter その他.',
+
+    'error_scene_required'                              => 'Please enter scene.',
+    'error_contents_required'                           => 'Please enter content.',
+
+    'error_party_required'                              => 'Please enter 当事者自身.',
+    'error_confirm_required'                            => 'Please enter 確認不足 .',
+    'error_observation_required'                        => 'Please enter 観察不足 .',
+    'error_judgment_required'                           => 'Please enter 判断ミス.',
+    'error_knowledge_required'                          => 'Please enter 知識不足.',
+    'error_technology_required'                         => 'Please enter 技術不足.',
+    'error_corners_required'                            => 'Please enter 手抜き.',
+    'error_occurrence_required'                         => 'Please enter occurrence.',
+    'error_affect_env_required'                         => 'Please enter 当事者に影響を及ぼした環境等.',
+    'error_contact_required'                            => 'Please enter 報告連絡の不備 .',
+    'error_transmission_required'                       => 'Please enter 指示伝達の不備.',
+    'error_manual_required'                             => 'Please enter マニュアルの不備.',
+    'error_cooperation_required'                        => 'Please enter スタッフ間の連携不適切.',
+    'error_mistake_required'                            => 'Please enter 記録ミス.',
+    'error_misreading_required'                         => 'Please enter 読み間違い.',
+    'error_affect_text_required'                        => 'Please enter 記録ミス.',
+
+    'error_medical_device_required'                     => 'Please enter 医療用具・機器・薬剤・設備等.',
+    'error_defect_required'                             => 'Please enter 欠陥不良品',
+    'error_fault_required'                              => 'Please enter 故障 .',
+    'error_handle_required'                             => 'Please enter 扱いが難しい.',
+    'error_placement_required'                          => 'Please enter 配置が悪い.',
+    'error_quantity_required'                           => 'Please enter 数量不足.',
+    'error_inappropriate_required'                      => 'Please enter 管理不適切 .',
+    'error_malfunction_required'                        => 'Please enter 機器誤作動 .',
+    'error_medical_error_required'                      => 'Please enter medical .',
+    'error_medical_text_required'                       => 'Please enter medical other.',
+    
+    'error_education_required'                          => 'Please enter 教育・訓練や説明・対応.',
+    'error_edu_training_required'                       => 'Please enter 教育・練習不足　.',
+    'error_explan_patient_required'                     => 'Please enter 患者様への説明不足 .',
+    'error_understand_patient_required'                 => 'Please enter 患者様の理解不十分.',
+    'error_edu_text_required'                           => 'Please enter education other.',
+
+    'error_other_chk_required'                          => 'Please enter その他.',
+    'error_other_required'                              => 'Please enter other.',
+
+    'error_impact_required'                             => 'Please enter 影響について.',
+    'error_impact_affect_required'                      => 'Please enter 患者様への影響があったかどうか.',
+
 ];

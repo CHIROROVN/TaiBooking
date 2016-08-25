@@ -148,8 +148,26 @@
                     <input name="other_input" value="{{old('other_input')}}" class="form-control form-control--xs" type="text">
                 </div>
               </div>
-              @if ($errors->first('discoverer'))
-                    <span class="error-input">※ {!! $errors->first('discoverer') !!}</span>
+              @if ($errors->first('dentist'))
+                    <span class="error-input">※ {!! $errors->first('dentist') !!}</span>
+              @endif
+              @if ($errors->first('hygienist'))
+                    <span class="error-input">※ {!! $errors->first('hygienist') !!}</span>
+              @endif
+              @if ($errors->first('technician'))
+                    <span class="error-input">※ {!! $errors->first('technician') !!}</span>
+              @endif
+              @if ($errors->first('nurse'))
+                    <span class="error-input">※ {!! $errors->first('nurse') !!}</span>
+              @endif
+              @if ($errors->first('secretary'))
+                    <span class="error-input">※ {!! $errors->first('secretary') !!}</span>
+              @endif
+              @if ($errors->first('other_chk'))
+                    <span class="error-input">※ {!! $errors->first('other_chk') !!}</span>
+              @endif
+               @if ($errors->first('other_input'))
+                    <span class="error-input">※ {!! $errors->first('other_input') !!}</span>
               @endif
             </div>
           </li>
@@ -226,32 +244,53 @@
               @if ($errors->first('party'))
                     <span class="error-input">※ {!! $errors->first('party') !!}</span>
               @endif
+              @if ($errors->first('confirm'))
+                    <span class="error-input">※ {!! $errors->first('confirm') !!}</span>
+              @endif
+              @if ($errors->first('observation'))
+                    <span class="error-input">※ {!! $errors->first('observation') !!}</span>
+              @endif
+              @if ($errors->first('judgment'))
+                    <span class="error-input">※ {!! $errors->first('judgment') !!}</span>
+              @endif
+              @if ($errors->first('knowledge'))
+                    <span class="error-input">※ {!! $errors->first('knowledge') !!}</span>
+              @endif
+              @if ($errors->first('technology'))
+                    <span class="error-input">※ {!! $errors->first('technology') !!}</span>
+              @endif
+              @if ($errors->first('corners'))
+                    <span class="error-input">※ {!! $errors->first('corners') !!}</span>
+              @endif
+              @if ($errors->first('occurrence'))
+                    <span class="error-input">※ {!! $errors->first('occurrence') !!}</span>
+              @endif
               <!-- Line 2 -->
               <li>
                 <div class="row col-md-12">
                   <div class="checkbox">
-                    <label><input name="affect_env" value="当事者に影響を及ぼした環境等" type="checkbox" @if(old('affect_env') == '当事者に影響を及ぼした環境等') @endif > 当事者に影響を及ぼした環境等</label>
+                    <label><input name="affect_env" value="当事者に影響を及ぼした環境等" type="checkbox" @if(old('affect_env') == '当事者に影響を及ぼした環境等') checked="" @endif > 当事者に影響を及ぼした環境等</label>
                   </div>
                 </div>
                 <div class="row margin-left-33">
                   <div class="col-md-2">
                     <div class="checkbox">
-                      <label><input name="contact" value="報告連絡の不備" type="checkbox" @if(old('contact') == '報告連絡の不備') @endif > 報告連絡の不備 </label>
+                      <label><input name="contact" value="報告連絡の不備" type="checkbox" @if(old('contact') == '報告連絡の不備') checked="" @endif > 報告連絡の不備 </label>
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="checkbox">
-                      <label><input name="transmission" value="指示伝達の不備" type="checkbox" @if(old('transmission') == '指示伝達の不備') @endif >  指示伝達の不備　 </label>
+                      <label><input name="transmission" value="指示伝達の不備" type="checkbox" @if(old('transmission') == '指示伝達の不備') checked="" @endif >  指示伝達の不備　 </label>
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="checkbox">
-                      <label><input name="manual" value="マニュアルの不備" type="checkbox" @if(old('manual') == 'マニュアルの不備') @endif > マニュアルの不備</label>
+                      <label><input name="manual" value="マニュアルの不備" type="checkbox" @if(old('manual') == 'マニュアルの不備') checked="" @endif > マニュアルの不備</label>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="checkbox">
-                      <label><input name="cooperation" value="スタッフ間の連携不適切" type="checkbox" @if(old('cooperation') == 'スタッフ間の連携不適切') @endif >  スタッフ間の連携不適切</label>
+                      <label><input name="cooperation" value="スタッフ間の連携不適切" type="checkbox" @if(old('cooperation') == 'スタッフ間の連携不適切') checked="" @endif >  スタッフ間の連携不適切</label>
                     </div>
                   </div>
                 </div>
@@ -259,12 +298,12 @@
                 <div class="row margin-left-33">
                   <div class="col-md-2">
                     <div class="checkbox">
-                      <label><input name="mistake" value="記録ミス" type="checkbox" @if(old('misreading') == '記録ミス') @endif> 記録ミス </label>
+                      <label><input name="mistake" value="記録ミス" type="checkbox" @if(old('misreading') == '記録ミス') checked="" @endif> 記録ミス </label>
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="checkbox">
-                      <label><input name="misreading" value="読み間違い" type="checkbox" @if(old('misreading') == '読み間違い') @endif> 読み間違い</label>
+                      <label><input name="misreading" value="読み間違い" type="checkbox" @if(old('misreading') == '読み間違い') checked="" @endif> 読み間違い</label>
                     </div>
                   </div>
                 </div>
@@ -274,6 +313,31 @@
                     <textarea name="affect_text" cols="80" rows="3" id="affect_text" class="form-control form-control-full">{{old('affect_text')}}</textarea>
                   </div>
                 </div>
+                  @if ($errors->first('affect_env'))
+                      <span class="error-input">※ {!! $errors->first('affect_env') !!}</span>
+                  @endif
+                  @if ($errors->first('contact'))
+                      <span class="error-input">※ {!! $errors->first('contact') !!}</span>
+                  @endif
+                  @if ($errors->first('transmission'))
+                      <span class="error-input">※ {!! $errors->first('transmission') !!}</span>
+                  @endif
+                  @if ($errors->first('manual'))
+                      <span class="error-input">※ {!! $errors->first('manual') !!}</span>
+                  @endif
+                  @if ($errors->first('cooperation'))
+                      <span class="error-input">※ {!! $errors->first('cooperation') !!}</span>
+                  @endif
+                  @if ($errors->first('mistake'))
+                      <span class="error-input">※ {!! $errors->first('mistake') !!}</span>
+                  @endif
+                  @if ($errors->first('misreading'))
+                      <span class="error-input">※ {!! $errors->first('misreading') !!}</span>
+                  @endif
+                  @if ($errors->first('affect_text'))
+                      <span class="error-input">※ {!! $errors->first('affect_text') !!}</span>
+                  @endif
+
               </li>
               <!-- Line 3 -->
               <li>
@@ -290,7 +354,7 @@
                   </div>
                   <div class="col-md-2">
                     <div class="checkbox">
-                      <label><input name="malfunction" value="故障" type="checkbox" @if(old('malfunction') == '故障') checked="" @endif>   故障 </label>
+                      <label><input name="fault" value="故障" type="checkbox" @if(old('fault') == '故障') checked="" @endif>   故障 </label>
                     </div>
                   </div>
                   <div class="col-md-2">
@@ -309,7 +373,6 @@
                     </div>
                   </div>
                 </div>
-                
                 <div class="row margin-left-33">
                   <div class="col-md-2">
                     <div class="checkbox">
@@ -327,12 +390,41 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="row margin-left-33">
                   <div class="col-md-9">
                     <textarea name="medical_text" cols="80" rows="3" id="medical_text" class="form-control form-control-full">{{old('medical_text')}}</textarea>
                   </div>
                 </div>
+                @if ($errors->first('medical_device'))
+                    <span class="error-input">※ {!! $errors->first('medical_device') !!}</span>
+                @endif
+                @if ($errors->first('defect'))
+                    <span class="error-input">※ {!! $errors->first('defect') !!}</span>
+                @endif
+                @if ($errors->first('malfunction'))
+                    <span class="error-input">※ {!! $errors->first('malfunction') !!}</span>
+                @endif
+                @if ($errors->first('handle'))
+                    <span class="error-input">※ {!! $errors->first('handle') !!}</span>
+                @endif
+                @if ($errors->first('placement'))
+                    <span class="error-input">※ {!! $errors->first('placement') !!}</span>
+                @endif
+                @if ($errors->first('quantity'))
+                    <span class="error-input">※ {!! $errors->first('quantity') !!}</span>
+                @endif
+                @if ($errors->first('inappropriate'))
+                    <span class="error-input">※ {!! $errors->first('inappropriate') !!}</span>
+                @endif
+                @if ($errors->first('malfunction'))
+                    <span class="error-input">※ {!! $errors->first('malfunction') !!}</span>
+                @endif
+                @if ($errors->first('medical_error'))
+                    <span class="error-input">※ {!! $errors->first('medical_error') !!}</span>
+                @endif
+                @if ($errors->first('medical_text'))
+                    <span class="error-input">※ {!! $errors->first('medical_text') !!}</span>
+                @endif
               </li>
               <!-- Line 4 -->
               <li>
@@ -363,6 +455,21 @@
                     <textarea name="edu_text" cols="80" rows="3" id="edu_text" class="form-control form-control-full">{{old('edu_text')}}</textarea>
                   </div>
                 </div>
+                  @if ($errors->first('education'))
+                    <span class="error-input">※ {!! $errors->first('education') !!}</span>
+                  @endif
+                  @if ($errors->first('edu_training'))
+                    <span class="error-input">※ {!! $errors->first('edu_training') !!}</span>
+                  @endif
+                  @if ($errors->first('explan_patient'))
+                    <span class="error-input">※ {!! $errors->first('explan_patient') !!}</span>
+                  @endif
+                  @if ($errors->first('understand_patient'))
+                    <span class="error-input">※ {!! $errors->first('understand_patient') !!}</span>
+                  @endif
+                  @if ($errors->first('edu_text'))
+                    <span class="error-input">※ {!! $errors->first('edu_text') !!}</span>
+                  @endif
               </li>
               <!-- Line 5 -->
               <li>
@@ -376,6 +483,12 @@
                     <textarea name="other" cols="80" rows="3" id="other" class="form-control form-control-full">{{old('other')}}</textarea>
                   </div>
                 </div>
+                  @if ($errors->first('other_chk'))
+                    <span class="error-input">※ {!! $errors->first('other_chk') !!}</span>
+                  @endif
+                  @if ($errors->first('other'))
+                    <span class="error-input">※ {!! $errors->first('other') !!}</span>
+                  @endif
               </li>
             </ul>
           </li>
@@ -401,8 +514,11 @@
                 </div>
               </div>
             </div>
-            @if ($errors->first('impact'))
-                    <span class="error-input">※ {!! $errors->first('impact') !!}</span>
+              @if ($errors->first('impact'))
+                      <span class="error-input">※ {!! $errors->first('impact') !!}</span>
+              @endif
+              @if ($errors->first('impact_affect'))
+                      <span class="error-input">※ {!! $errors->first('impact_affect') !!}</span>
               @endif
           </li>
           <li>

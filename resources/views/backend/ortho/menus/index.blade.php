@@ -45,9 +45,9 @@
             </ul>
             @endif
             
-            <h2>フォーラム</h2>
+            <h2>伝言板</h2>
             <ul>
-              <li><a href="{{ route('ortho.forums.forum_list') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Post comments, reply comments</a></li>
+              <li><a href="{{ route('ortho.forums.forum_list') }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>伝言板の新規登録・一覧</a></li>
             </ul>
 
           </div>

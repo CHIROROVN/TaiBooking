@@ -46,6 +46,7 @@
           </div>
         </div>
         
+        <div class="table-responsive">
         <table class="table table-bordered table-striped ">
           <tbody>
             <tr>
@@ -119,6 +120,7 @@
             @endif
           </tbody>
         </table>
+        </div>
         <div class="row margin-bottom" style="display: block; float: right; width: 100%;">
           <div class="col-md-12 text-center" style="width: 100%;">
             {!! $clinics->render(new App\Pagination\SimplePagination($clinics))  !!}
@@ -132,4 +134,6 @@
         $('.tel').mask('000-000-0000');
       });
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="common/js/bootstrap.min.js"></script>
 @endsection

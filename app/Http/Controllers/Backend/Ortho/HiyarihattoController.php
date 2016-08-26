@@ -59,6 +59,9 @@ class HiyarihattoController extends BackendController
             unset($rules['nurse']);
             unset($rules['secretary']);
             unset($rules['other_cb']);
+        }else{
+            unset($rules['other_cb']);
+            //unset($rules['other_input_job']);
         }
 //7.
         if( !empty(Input::get('party')) )

@@ -64,6 +64,7 @@
               </div>
             </div>
 
+            <div class="table-responsive">
             <div id="tableDiv_Arrays" class="tableDiv">
             <table class="table table-bordered FixedTables" id="Open_Text_Arrays">
               <tr class="col-title">
@@ -121,6 +122,7 @@
                 <tr>
                 @endforeach
             </table>
+            </div>
             </div>
 
           </div>

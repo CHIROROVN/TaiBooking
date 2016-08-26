@@ -550,20 +550,45 @@
 <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-1.9.1.min.js"></script>
 <script  type="text/javascript" charset="utf-8" async defer>
   $( document ).ready(function() {
-    $('input#other_input_job').prop('disabled', true);
-    $('#other').prop('disabled', true);
+     if(!$('#other_cb').is(':checked')){
+      $('input#other_input_job').prop('disabled', true);
+    }else{
+      $('input#other_input_job').prop('disabled', false);
+    }
+
+    if(!$('#other_chk').is(':checked')){
+      $('#other').prop('disabled', true);
+    }else{
+      $('#other').prop('disabled', false);
+    }
+
   //7.1
-    $('.ready71').prop('disabled', true);
+    if(!$('#party').is(':checked')){
+      $('.ready71').prop('disabled', true);
+    }else{
+      $('.ready71').prop('disabled', false);
+    }
 
     //7.2
-    $('.ready72').prop('disabled', true);
+    if(!$('#affect_env').is(':checked')){
+      $('.ready72').prop('disabled', true);
+    }else{
+      $('.ready72').prop('disabled', false);
+    }
 
     //7.3
-    $('.ready73').prop('disabled', true);
+    if(!$('#medical_device').is(':checked')){
+      $('.ready73').prop('disabled', true);
+    }else{
+      $('.ready73').prop('disabled', false);
+    }
 
   //7.4
-    $('.ready74').prop('disabled', true);
-
+    if(!$('#education').is(':checked')){
+      $('.ready74').prop('disabled', true);
+    }else{
+      $('.ready74').prop('disabled', false);
+    }
 
   });
 
@@ -615,9 +640,6 @@
     }
   });
 
-
-
-
   $('#dateNow').click(function(event) {
     var dt = new Date();
     var year = dt.getFullYear();
@@ -628,9 +650,7 @@
     $('#year').val(year);
     $('#month').val(month);
     $('#day').val(year);
-
     $('#hour option[value="' + hour + '"]').prop('selected',true);
-
   });
 
   function format2Digit(num)

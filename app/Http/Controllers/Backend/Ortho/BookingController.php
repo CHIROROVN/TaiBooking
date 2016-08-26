@@ -426,18 +426,20 @@ class BookingController extends BackendController
         //     }
         // }
 
-        $rules = array(
-            'service_1' => 'required'
-        );
-        $messages = array(
-            'service_1.required'     => trans('validation.error_service_1_required'),
-        );
-        $val = array(
-            'service_1' => $service_1
-        );
-        $validator      = Validator::make($val, $rules, $messages);
-        if ($validator->fails()) {
-            return redirect()->route('ortho.bookings.booking.edit', $id)->withErrors($validator)->withInput();
+        if ( $booking->service_1_kind == 2 ) {
+            $rules = array(
+                'service_1' => 'required'
+            );
+            $messages = array(
+                'service_1.required'     => trans('validation.error_service_1_required'),
+            );
+            $val = array(
+                'service_1' => $service_1
+            );
+            $validator      = Validator::make($val, $rules, $messages);
+            if ($validator->fails()) {
+                return redirect()->route('ortho.bookings.booking.edit', $id)->withErrors($validator)->withInput();
+            }
         }
 
         $dataInput = array(
@@ -767,18 +769,20 @@ class BookingController extends BackendController
         //     }
         // }
 
-        $rules = array(
-            'service_1' => 'required'
-        );
-        $messages = array(
-            'service_1.required'     => trans('validation.error_service_1_required'),
-        );
-        $val = array(
-            'service_1' => $service_1
-        );
-        $validator      = Validator::make($val, $rules, $messages);
-        if ($validator->fails()) {
-            return redirect()->route('ortho.bookings.booking.regist', $id)->withErrors($validator)->withInput();
+        if ( $booking->service_1_kind == 2 ) {
+            $rules = array(
+                'service_1' => 'required'
+            );
+            $messages = array(
+                'service_1.required'     => trans('validation.error_service_1_required'),
+            );
+            $val = array(
+                'service_1' => $service_1
+            );
+            $validator      = Validator::make($val, $rules, $messages);
+            if ($validator->fails()) {
+                return redirect()->route('ortho.bookings.booking.regist', $id)->withErrors($validator)->withInput();
+            }
         }
 
         $dataInput = array(
@@ -1125,18 +1129,20 @@ class BookingController extends BackendController
             }
         }
 
-        $rules = array(
-            'service_1' => 'required'
-        );
-        $messages = array(
-            'service_1.required'     => trans('validation.error_service_1_required'),
-        );
-        $val = array(
-            'service_1' => $service_1
-        );
-        $validator      = Validator::make($val, $rules, $messages);
-        if ($validator->fails()) {
-            return redirect()->route('ortho.bookings.booking.1st.regist', $id)->withErrors($validator)->withInput();
+        if ( $booking->service_1_kind == 2 ) {
+            $rules = array(
+                'service_1' => 'required'
+            );
+            $messages = array(
+                'service_1.required'     => trans('validation.error_service_1_required'),
+            );
+            $val = array(
+                'service_1' => $service_1
+            );
+            $validator      = Validator::make($val, $rules, $messages);
+            if ($validator->fails()) {
+                return redirect()->route('ortho.bookings.booking.1st.regist', $id)->withErrors($validator)->withInput();
+            }
         }
 
         // insert new patient

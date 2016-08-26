@@ -782,27 +782,38 @@ class BookingController extends BackendController
         }
 
         $dataInput = array(
-                // 'facility_id'               => Input::get('facility_id'),
-                'patient_id'                => Input::get('p_id'),
-                'doctor_id'                 => Input::get('doctor_id'),
-                'hygienist_id'              => Input::get('hygienist_id'),
-                'equipment_id'              => Input::get('equipment_id'),
-                // 'service_1'                 => $service_1,
-                // 'service_1_kind'            => $service_1_kind,
-                // 'service_2'                 => $service_2,
-                // 'service_2_kind'            => $service_2_kind,
-                'inspection_id'             => Input::get('inspection_id'),
-                'insurance_id'              => Input::get('insurance_id'),
-                'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
-                'booking_status'            => Input::get('booking_status'),
-                'booking_recall_ym'         => Input::get('booking_recall_ym'),
-                'booking_memo'              => Input::get('booking_memo'),
-                // 'booking_rev'               => $clsBooking->getLastBookingRev() + 1,
-                'last_date'                 => date('y-m-d H:i:s'),
-                'last_kind'                 => UPDATE,
-                'last_ipadrs'               => CLIENT_IP_ADRS,
-                'last_user'                 => Auth::user()->id
-            );
+            // 'facility_id'               => Input::get('facility_id'),
+            'patient_id'                => Input::get('p_id'),
+            'doctor_id'                 => Input::get('doctor_id'),
+            'hygienist_id'              => Input::get('hygienist_id'),
+            'equipment_id'              => Input::get('equipment_id'),
+            // 'service_1'                 => $service_1,
+            // 'service_1_kind'            => $service_1_kind,
+            // 'service_2'                 => $service_2,
+            // 'service_2_kind'            => $service_2_kind,
+            'inspection_id'             => Input::get('inspection_id'),
+            'insurance_id'              => Input::get('insurance_id'),
+            'emergency_flag'            => (Input::get('emergency_flag') == 'on') ? 1 : NULL,
+            'booking_status'            => Input::get('booking_status'),
+            'booking_recall_ym'         => Input::get('booking_recall_ym'),
+            'booking_memo'              => Input::get('booking_memo'),
+            // 'booking_rev'               => $clsBooking->getLastBookingRev() + 1,
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => UPDATE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id,
+
+            // 'first_user'                => Auth::user()->id,
+            // 'first_date'                => date('y-m-d H:i:s')
+        );
+        // first regist
+        if ( empty($booking->first_user) ) {
+            $dataInput['first_user'] = Auth::user()->id;
+        }
+        if ( empty($booking->first_date) ) {
+            $dataInput['first_date'] = date('y-m-d H:i:s');
+        }
+        // end first regist
         if ( $dataInput['patient_id'] == 0 ) {
             $dataInput['patient_id'] = null;
         }
@@ -1167,6 +1178,14 @@ class BookingController extends BackendController
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_user'                 => Auth::user()->id
         );
+        // first regist
+        if ( empty($booking->first_user) ) {
+            $dataInput['first_user'] = Auth::user()->id;
+        }
+        if ( empty($booking->first_date) ) {
+            $dataInput['first_date'] = date('y-m-d H:i:s');
+        }
+        // end first regist
 
         if ( $dataInput['doctor_id'] == 0 ) {
             $dataInput['doctor_id'] = null;

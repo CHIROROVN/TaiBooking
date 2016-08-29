@@ -150,8 +150,8 @@ $(document).ready(function(){
           var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
         
         calendar.fullCalendar('unselect');
-        // window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start;
-        location.reload();
+        window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start + "&clinic_id={{@$clinic_id}}";
+        // location.reload();
       },
     });
   });

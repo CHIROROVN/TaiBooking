@@ -26,7 +26,7 @@
   <!-- Content equiment list -->
   <section id="page">
     <div class="container">  
-      <div class="content-page">
+      <div class="content-page text-center">
         <h3>Your email has been sent successfully.</h3>
         
         <div class="row mar-top20 margin-bottom">

@@ -17,16 +17,16 @@
           <tr>
             <td class="col-title"><label for="p_name_f">氏名</label></td>
             <td>
-              <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--medium" value="{{ $p_name_f }}">
-              <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--medium" value="{{ $p_name_g }}">
+              <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--sm" value="{{ $p_name_f }}">
+              <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--sm" value="{{ $p_name_g }}">
             </td>
           </tr>
 
           <tr>
             <td class="col-title"><label for="p_name_f_kana">氏名（ひらがな）</label></td>
             <td>
-              <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--medium" value="{{ $p_name_f_kana }}">
-              <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--medium" value="{{ $p_name_g_kana }}">
+              <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--sm" value="{{ $p_name_f_kana }}">
+              <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--sm" value="{{ $p_name_g_kana }}">
             </td>
           </tr>
 

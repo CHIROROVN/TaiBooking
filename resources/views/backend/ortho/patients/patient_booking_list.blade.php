@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                   <td class="col-title">予約日時</td>
-                  <td>{{formatDateJp($bookings[0]->booking_date)}} ({{DayJp($bookings[0]->booking_date)}})　{{splitHourMin($bookings[0]->booking_start_time)}}～{{toTime($bookings[0]->booking_start_time, $bookings[0]->booking_total_time)}}</td>
+                  <td>{{formatDateJp($bookings[0]->booking_date)}} ({{DayJp($bookings[0]->booking_date)}})　{{splitHourMin($bookings[0]->booking_start_time)}}<!-- ～{{toTime($bookings[0]->booking_start_time, $bookings[0]->booking_total_time)}} --></td>
                 </tr>
                 <tr>
                   <td class="col-title">医院</td>
@@ -85,13 +85,29 @@
                   </td>
                 </tr>
                 <tr>
+                  <td class="col-title">登録者</td>
+                  <td>{{ @$doctors[$bookings[0]->first_user] }}</td>
+                </tr>
+                <tr>
+                  <td class="col-title">登録日時</td>
+                  <td>{{ @dateHourMinSecond($bookings[0]->first_date, '/')}}</td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新者</td>
+                  <td>{{ @$doctors[$bookings[0]->last_user] }}</td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新日時</td>
+                  <td>{{ @dateHourMinSecond($bookings[0]->last_date, '/')}}</td>
+                </tr>
+                <tr>
                   <td class="col-title">備考</td>
                   <td>{{$bookings[0]->booking_memo}}</td>
                 </tr>
                 <tr>
                   <td colspan="2" class="text-center">
                     <input onclick="location.href='{{route('ortho.bookings.booking.edit',[$bookings[0]->booking_id])}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href='{{route('ortho.bookings.booking.change')}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking_change_date',$bookings[0]->booking_id)}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
                     <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf',[$bookings[0]->booking_id])}}'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
@@ -151,6 +167,22 @@
                   <td></td>
                 </tr>
                 <tr>
+                  <td class="col-title">登録者</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">登録日時</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新者</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新日時</td>
+                  <td></td>
+                </tr>
+                <tr>
                   <td class="col-title">備考</td>
                   <td></td>
                 </tr>
@@ -176,7 +208,7 @@
                 </tr>
                 <tr>
                   <td class="col-title">予約日時</td>
-                  <td>{{formatDateJp($bookings[1]->booking_date)}} ({{DayJp($bookings[1]->booking_date)}})　{{splitHourMin($bookings[1]->booking_start_time)}}～{{toTime($bookings[1]->booking_start_time, $bookings[1]->booking_total_time)}}</td>
+                  <td>{{formatDateJp($bookings[1]->booking_date)}} ({{DayJp($bookings[1]->booking_date)}})　{{splitHourMin($bookings[1]->booking_start_time)}}<!-- ～{{toTime($bookings[1]->booking_start_time, $bookings[1]->booking_total_time)}} --></td>
                 </tr>
                 <tr>
                   <td class="col-title">医院</td>
@@ -245,13 +277,29 @@
                   </td>
                 </tr>
                 <tr>
+                  <td class="col-title">登録者</td>
+                  <td>{{ @$doctors[$bookings[1]->first_user] }}</td>
+                </tr>
+                <tr>
+                  <td class="col-title">登録日時</td>
+                  <td>{{ @dateHourMinSecond($bookings[1]->first_date, '/')}}</td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新者</td>
+                  <td>{{ @$doctors[$bookings[1]->last_user] }}</td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新日時</td>
+                  <td>{{ @dateHourMinSecond($bookings[1]->last_date, '/')}}</td>
+                </tr>
+                <tr>
                   <td class="col-title">備考</td>
                   <td>{{$bookings[1]->booking_memo}}</td>
                 </tr>
                 <tr>
                   <td colspan="2" class="text-center">
-                    <input onclick="location.href='{{route('ortho.bookings.booking.edit',[$bookings[1]->booking_id])}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href='{{route('ortho.bookings.booking.change')}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking.edit', $bookings[1]->booking_id)}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking_change_date', $bookings[1]->booking_id)}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
                     <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf',[$bookings[1]->booking_id])}}'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
@@ -308,6 +356,22 @@
                 </tr>
                 <tr>
                   <td class="col-title">予約ステータス</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">登録者</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">登録日時</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新者</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="col-title">最終更新日時</td>
                   <td></td>
                 </tr>
                 <tr>

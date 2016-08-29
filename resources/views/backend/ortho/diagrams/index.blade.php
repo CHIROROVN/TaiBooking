@@ -27,7 +27,6 @@
             </table>
             {!! Form::close() !!}
 
-
             <div id='calendar' class="diagram-calendar"></div>
 
         </div>

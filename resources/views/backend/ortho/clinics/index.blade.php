@@ -7,13 +7,13 @@
         <h3>医院情報管理　＞　登録済み医院の一覧</h3>
 
         <div class="row">
-          <div class="col-md-12 table-responsive">
+          <div class="col-md-12">
             <table class="table table-bordered">
               <tr>
                 <td class="col-title"><label for="keyword">絞り込み</label></td>
                 <td>
                   {!! Form::open(array('url' => 'ortho/clinics', 'method' => 'post')) !!}
-                  <input type="text" name="keyword" value="{{ $keyword }}" id="keyword" class="form-control mar-right" style="display:inline"/>
+                  <input type="text" name="keyword" value="{{ $keyword }}" id="keyword" class="form-control form-control--default mar-right" style="display:inline"/>
                   <input type="submit" name="search" value="表示" class="btn btn-sm btn-page">
                   {!! Form::close() !!}
                 </td>
@@ -46,7 +46,7 @@
           </div>
         </div>
         
-        <div class="table-responsive">
+        <div class="table-responsive table-reponsive-clinic">
         <table class="table table-bordered table-striped ">
           <tbody>
             <tr>
@@ -134,6 +134,4 @@
         $('.tel').mask('000-000-0000');
       });
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="common/js/bootstrap.min.js"></script>
 @endsection

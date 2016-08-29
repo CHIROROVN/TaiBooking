@@ -6,27 +6,25 @@
     <div class="container">
       <div class="row content">
         <h1>メモカレンダーの登録</h1>
-          <div class="table-responsive">
-            <table class="table table-bordered">
+          <table class="table table-bordered">
 
-              <!-- memo_date -->
-              <input type="hidden" name="memo_date" value="{{ $memo_date }}">
-              <tr>
-                <td class="col-title" width="15%">日時</td>
-                <td>{{ formatDateJp($memo_date) }}({{ DayJp($memo_date) }})
-                <span class="error-input">@if ($errors->first('memo_date')) {!! $errors->first('memo_date') !!} @endif</span></td>
-              </tr>
+            <!-- memo_date -->
+            <input type="hidden" name="memo_date" value="{{ $memo_date }}">
+            <tr>
+              <td class="col-title" width="15%">日時</td>
+              <td>{{ formatDateJp($memo_date) }}({{ DayJp($memo_date) }})
+              <span class="error-input">@if ($errors->first('memo_date')) {!! $errors->first('memo_date') !!} @endif</span></td>
+            </tr>
 
-              <!-- memo_contents -->
-              <tr>
-                <td class="col-title"><label for="memo_contents">内容 <span class="note_required">※</span></label></td>
-                <td>
-                  <textarea name="memo_contents" rows="5" id="memo_contents" class="form-control">{!! old('memo_contetns') !!}</textarea>
-                  <span class="error-input">@if ($errors->first('memo_contents')) ※{!! $errors->first('memo_contents') !!} @endif</span>
-                </td>
-              </tr>
-            </table>
-          </div>
+            <!-- memo_contents -->
+            <tr>
+              <td class="col-title"><label for="memo_contents">内容 <span class="note_required">※</span></label></td>
+              <td>
+                <textarea name="memo_contents" rows="5" id="memo_contents" class="form-control">{!! old('memo_contetns') !!}</textarea>
+                <span class="error-input">@if ($errors->first('memo_contents')) ※{!! $errors->first('memo_contents') !!} @endif</span>
+              </td>
+            </tr>
+          </table>
       </div>
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">

@@ -537,6 +537,16 @@ function showPatient($p_id=null){
 		}
 	}
 
+	function dateHourMinSecond($datetime, $comma=null)
+	{
+		$dt = date_create($datetime);
+		if(!empty($comma)){
+			return date_format($dt,"Y".$comma."m".$comma."d H:i:s");
+		}else{
+			return date_format($dt,"Y/m/d H:i:s");
+		}
+	}
+
 	function countReply($forum_id){
 		return App\Http\Controllers\Backend\Ortho\ForumController::countReply($forum_id);
 	}

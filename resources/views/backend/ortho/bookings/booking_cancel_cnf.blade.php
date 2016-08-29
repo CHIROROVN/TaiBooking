@@ -96,6 +96,26 @@
 		            @endif
 		          </td>
 		        </tr>
+                <tr>
+		          <td class="col-title">登録者</td>
+		          <td>{{ @$list_doctors[$booking->first_user] }}</td>
+		        </tr>
+		        <tr>
+		          <td class="col-title">登録日時</td>
+		          <td>{{ dateHourMinSecond($booking->first_date, '/')}}</td>
+		        </tr>
+		        <tr>
+		          <td class="col-title">最終更新者</td>
+		          <td>{{ @$list_doctors[$booking->last_user] }}</td>
+		        </tr>
+		        <tr>
+		          <td class="col-title">最終更新日時</td>
+		          <td>{{ dateHourMinSecond($booking->last_date, '/')}}</td>
+		        </tr>
+		        <tr>
+		          <td class="col-title">備考</td>
+		          <td><?php echo @$booking->booking_memo ?></td>
+		        </tr>
 		        <tr>
 		          <td class="col-title">備考</td>
 		          <td>{{ $booking->booking_memo }}</td>

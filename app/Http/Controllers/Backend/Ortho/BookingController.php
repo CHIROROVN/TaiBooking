@@ -246,6 +246,7 @@ class BookingController extends BackendController
         $clsUser                    = new UserModel();
         $clsClinicService           = new ClinicServiceModel();
         $clsTreatment1              = new Treatment1Model();
+        $data['list_doctors']       = $clsUser->get_list_users([1]);
         $data['booking']            = $clsBooking->get_by_id($id);
         if ( !empty($data['booking']) ) {
             $data['doctors']            = $clsUser->get_by_belong([1]);
@@ -271,6 +272,7 @@ class BookingController extends BackendController
         $clsUser                    = new UserModel();
         $clsClinicService           = new ClinicServiceModel();
         $clsTreatment1              = new Treatment1Model();
+        $data['list_doctors']   = $clsUser->get_list_users([1]);
         $data['booking']            = $clsBooking->get_by_id($id);
         $data['doctors']            = $clsUser->get_by_belong([1]);
         $data['hys']                = $clsUser->get_by_belong([2,3]);
@@ -1621,7 +1623,7 @@ class BookingController extends BackendController
             $clsClinicService           = new ClinicServiceModel();
             $clsTreatment1              = new Treatment1Model();
             $data['booking']            = $clsBooking->get_by_id($id);
-
+            $data['list_doctors']       = $clsUser->get_list_users([1]);
             $data['doctors']            = $clsUser->get_by_belong([1]);
             $data['hys']                = $clsUser->get_by_belong([2,3]);
             $data['start_date']         = Input::get('start_date');

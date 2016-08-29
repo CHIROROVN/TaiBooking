@@ -649,7 +649,7 @@
 
     $('#year').val(year);
     $('#month').val(month);
-    $('#day').val(year);
+    $('#day').val(day);
     $('#hour option[value="' + hour + '"]').prop('selected',true);
   });
 

@@ -60,6 +60,22 @@
               <td>{{@$arrStatus[$booking->booking_status]}}</td>
             </tr>
             <tr>
+              <td class="col-title">登録者</td>
+              <td>{{ @$doctors[$booking->first_user] }}</td>
+            </tr>
+            <tr>
+              <td class="col-title">登録日時</td>
+              <td>{{ @dateHourMinSecond($booking->first_date, '/')}}</td>
+            </tr>
+            <tr>
+              <td class="col-title">最終更新者</td>
+              <td>{{ @$doctors[$booking->last_user] }}</td>
+            </tr>
+            <tr>
+              <td class="col-title">最終更新日時</td>
+              <td>{{ @dateHourMinSecond($booking->last_date, '/')}}</td>
+            </tr>
+            <tr>
               <td class="col-title">備考</td>
               <td>{{@$booking->booking_memo}}</td>
             </tr>
@@ -114,7 +130,7 @@
             <tr>
               <td class="col-title">保険診療</td>
               <td>{{$booking->insurance_name}}</td>
-            </tr>
+            </tr>            
             <tr>
               <td class="col-title">救急</td>
               <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
@@ -123,6 +139,22 @@
             <?php $arrStatus = array('1'=>'通常','2'=>'「TEL待ち」です','3'=>'「リコール」です','4'=>'未作成技工物TEL待ち','5'=>'作成済み技工物キャンセル','6'=>'無断キャンセル') ?>
               <td class="col-title">予約ステータス</td>
               <td>{{@$arrStatus[$booking->booking_status]}}</td>
+            </tr>
+            <tr>
+              <td class="col-title">登録者</td>
+              <td>{{ @$doctors[$booking->first_user] }}</td>
+            </tr>
+            <tr>
+              <td class="col-title">登録日時</td>
+              <td>{{ @dateHourMinSecond($booking->first_date, '/')}}</td>
+            </tr>
+            <tr>
+              <td class="col-title">最終更新者</td>
+              <td>{{ @$doctors[$booking_change['last_user']] }}</td>
+            </tr>
+            <tr>
+              <td class="col-title">最終更新日時</td>
+              <td>{{ @dateHourMinSecond($booking_change['last_date'], '/')}}</td>
             </tr>
             <tr>
               <td class="col-title">備考</td>

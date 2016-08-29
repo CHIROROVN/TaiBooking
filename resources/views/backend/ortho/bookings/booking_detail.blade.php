@@ -123,7 +123,7 @@
         </tr>
         <tr>
           <td class="col-title">登録日時</td>
-          <td>{{ dateHourMinSecond($booking->first_date, '/')}}</td>
+          <td>{{ @dateHourMinSecond($booking->first_date, '/')}}</td>
         </tr>
         <tr>
           <td class="col-title">最終更新者</td>
@@ -131,7 +131,7 @@
         </tr>
         <tr>
           <td class="col-title">最終更新日時</td>
-          <td>{{ dateHourMinSecond($booking->last_date, '/')}}</td>
+          <td>{{ @dateHourMinSecond($booking->last_date, '/')}}</td>
         </tr>
         <tr>
           <td class="col-title">備考</td>

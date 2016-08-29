@@ -1481,7 +1481,7 @@ class BookingController extends BackendController
                     'equipment_id'              => null,
                     'hygienist_id'              => null,
 
-                    'last_date'                 => date('y-m-d H:i:s'),
+                    'last_date'                 => date('Y-m-d H:i:s'),
                     'last_kind'                 => UPDATE,
                     'last_ipadrs'               => CLIENT_IP_ADRS,
                     'last_user'                 => Auth::user()->id
@@ -1497,7 +1497,7 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             $dataDeletePatient = array(
-                'last_date'                 => date('y-m-d H:i:s'),
+                'last_date'                 => date('Y-m-d H:i:s'),
                 'last_kind'                 => DELETE,
                 'last_ipadrs'               => CLIENT_IP_ADRS,
                 'last_user'                 => Auth::user()->id
@@ -1651,13 +1651,14 @@ class BookingController extends BackendController
 
             $data['booking_start_time']  = Input::get('hour_start').$mm;
         }
+        $data['last_date']               = date('Y-m-d H:i:s');
+        $data['last_user']               = Auth::user()->id;
         Session::put('booking_change', $data);
         return redirect()->route('ortho.bookings.booking.change.confirm', $id);
     }
 
     public function getConfirm($id)
     {
-
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($id);
         $clsClinic                  = new ClinicModel();

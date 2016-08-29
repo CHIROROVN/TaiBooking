@@ -74,4 +74,9 @@ class InterviewModel
     	$results = DB::table($this->table)->where('first_id', $id)->update($data);
         return $results;
     }
+
+    public function get_list()
+    {
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('first_id', 'asc')->lists('first_id', 'patient_id');
+    }
 }

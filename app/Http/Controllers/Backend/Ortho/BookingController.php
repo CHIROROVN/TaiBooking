@@ -1111,6 +1111,7 @@ class BookingController extends BackendController
         $clsTreatment1              = new Treatment1Model();
         $clsTemplate                = new TemplateModel();
         $clsPatient                 = new PatientModel();
+        $clsInterview               = new InterviewModel();
         $booking                    = $clsBooking->get_by_id($id);
 
         $service_1 = $service_1_kind = null;
@@ -1162,6 +1163,19 @@ class BookingController extends BackendController
             'last_user'                 => Auth::user()->id
         );
         $p_id = $clsPatient->insert_get_id($dataPatient);
+
+        // insert to table "Interview"
+        if ( Input::get('insert_to_tbl_first') == 1 ) {
+            $dataInterview = array(
+                'patient_id'                => $p_id,
+
+                'last_date'                 => date('y-m-d H:i:s'),
+                'last_kind'                 => UPDATE,
+                'last_ipadrs'               => CLIENT_IP_ADRS,
+                'last_user'                 => Auth::user()->id
+            );
+            $clsInterview->insert($dataInterview);
+        }
 
         $dataInput = array(
             // 'facility_id'               => Input::get('facility_id'),

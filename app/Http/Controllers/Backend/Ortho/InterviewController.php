@@ -32,7 +32,9 @@ class InterviewController extends BackendController
     public function index()
     {
         $clsBooking             = new BookingModel();
+        $clsInterview           = new InterviewModel();
         $data['bookings']       = $clsBooking->get_by_today();
+        $data['interviews']     = $clsInterview->get_list();
 
         return view('backend.ortho.interviews.index', $data);
     }

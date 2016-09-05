@@ -116,10 +116,6 @@
 		          <td class="col-title">備考</td>
 		          <td><?php echo @$booking->booking_memo ?></td>
 		        </tr>
-		        <tr>
-		          <td class="col-title">備考</td>
-		          <td>{{ $booking->booking_memo }}</td>
-		        </tr>
           	</table>
           </div>
           <div class="row margin-bottom">

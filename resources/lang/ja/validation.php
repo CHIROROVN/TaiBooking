@@ -25,7 +25,7 @@ return [
     | Model Area
     |--------------------------------------------------------------------------
     */
-    'error_area_name_required'                           => '地域名を入力してください。',
+    'error_area_name_required'                             => '地域名を入力してください。',
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     | Model Inspection
     |--------------------------------------------------------------------------
     */
-    'error_inspection_name_required'                           => '検査名を入力してください。',
+    'error_inspection_name_required'                          => '検査名を入力してください。',
 
     /*
     |--------------------------------------------------------------------------
@@ -278,7 +278,7 @@ return [
     'error_day_required'                                => '日を入力してください。',
     'error_hour_required'                               => '時間を入力してください。',
     'error_place_required'                              => '場所を入力してください。',
-    'error_age_required'                                => 'The ege must be numeric type.',
+    'error_age_required'                                => '数値でなければなりません。',
     'error_discoverer_required'                         => '発見者か当事者か選択してください。',
     'error_dentist_required'                            => '職種を選択してください。',
     'error_hygienist_required'                          => '職種を選択してください。',

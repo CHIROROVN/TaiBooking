@@ -164,10 +164,13 @@
               <td class="col-title">予約ステータス</td>
               <td>
             <div class="radio">
-              <label><input name="booking_status" value="1" type="radio" @if($booking->booking_status == 1) checked @endif>通常</label>
+              <label><input name="booking_status" value="" type="radio" @if(empty($booking->booking_status)) checked @endif>通常</label>
             </div>
             <div class="radio">
-              <label><input name="booking_status" value="2" type="radio" @if($booking->booking_status == 2) checked @endif>「TEL待ち」です</label>
+              <label><input name="booking_status" value="1" type="radio" @if($booking->booking_status == 1) checked @endif>「TEL待ち」です</label>
+            </div>
+            <div class="radio">
+              <label><input name="booking_status" value="2" type="radio" @if($booking->booking_status == 2) checked @endif>無断キャンセル</label>
             </div>
             <div class="radio">
               <label>
@@ -188,9 +191,6 @@
             </div>
             <div class="radio">
               <label><input name="booking_status" value="5" type="radio" @if($booking->booking_status == 5) checked @endif>作成済み技工物キャンセル</label>
-            </div>
-            <div class="radio">
-              <label><input name="booking_status" value="6" type="radio" @if($booking->booking_status == 6) checked @endif>無断キャンセル</label>
             </div>
           </td>
             </tr>

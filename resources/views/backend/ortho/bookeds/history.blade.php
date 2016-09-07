@@ -45,8 +45,6 @@
             @foreach ( $dates as $date )
               @if ( $s_booking_date == $date )
               <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
-              @elseif ( date('Y-m-d') == $date )
-              <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
               @else
               <option value="{{ $date }}">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
               @endif

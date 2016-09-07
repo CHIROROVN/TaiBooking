@@ -24,7 +24,7 @@
               <tr>
                 <td>{{ $list5->clinic_name }}</td>
                 <td>{{ formatDate($list5->result_date, '/') }}</td>
-                <td>{{ formatDate($list5->booking_date, '/') }} {{splitHourMin($list5->booking_start_time)}}～{{toTime($list5->booking_start_time, $list5->booking_total_time)}}</td>
+                <td>{{ formatDate($list5->booking_date, '/') }}</td>
                 <td>{{ $list5->p_no }}</td>
                 <td>{{ $list5->p_name_f }} {{ $list5->p_name_g }}</td>
                 <td>{{ $list5->p_tel }}</td>

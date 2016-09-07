@@ -24,7 +24,11 @@
 	              @foreach($list1 as $l1)
 	              	<tr>
 		                <td>{{$l1->clinic_name}}</td>
-		                <td>{{formatDate($l1->booking_date)}}</td>
+		                <td>
+                      @if ( isset($l1->result_date)) )
+                      {{formatDate($l1->result_date)}}
+                      @endif
+                    </td>
 		                <td>{{$l1->p_no}}</td>
 		                <td>{{$l1->p_name_f}} {{ $l1->p_name_g }}</td>
 		                <td>{{$l1->p_tel}}</td>

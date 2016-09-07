@@ -25,6 +25,7 @@ use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\DdrModel;
 use App\Http\Models\Ortho\MemoModel;
 
+
 use Form;
 use Html;
 use Input;
@@ -464,6 +465,9 @@ class BookingController extends BackendController
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_user'                 => Auth::user()->id
         );
+        if ( empty($dataInput['booking_status']) ) {
+            $dataInput['booking_status'] = null;
+        }
         if ( $dataInput['doctor_id'] == 0 ) {
             $dataInput['doctor_id'] = null;
         }
@@ -829,6 +833,9 @@ class BookingController extends BackendController
         }
         if ( empty($booking->first_date) ) {
             $dataInput['first_date'] = date('y-m-d H:i:s');
+        }
+        if ( empty($dataInput['booking_status']) ) {
+            $dataInput['booking_status'] = null;
         }
         // end first regist
         if ( $dataInput['patient_id'] == 0 ) {
@@ -1204,6 +1211,7 @@ class BookingController extends BackendController
             );
             $clsInterview->insert($dataInterview);
         }
+        
 
         $dataInput = array(
             // 'facility_id'               => Input::get('facility_id'),
@@ -1235,6 +1243,9 @@ class BookingController extends BackendController
         }
         // end first regist
 
+        if ( empty($dataInput['booking_status']) ) {
+            $dataInput['booking_status'] = null;
+        }
         if ( $dataInput['doctor_id'] == 0 ) {
             $dataInput['doctor_id'] = null;
         }

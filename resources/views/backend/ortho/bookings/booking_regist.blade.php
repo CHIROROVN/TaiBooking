@@ -28,9 +28,9 @@
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>
               <td>
-                <?php $pt = showPatient($booking->patient_id);?>
-                <input type="hidden" name="p_id" id="p_id" value="{{@$pt['p_id']}}">
-                <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{@$pt['patient']}}"> &nbsp;
+                <?php //$pt = showPatient($booking->patient_id);?>
+                <input type="hidden" name="p_id" id="p_id" value="{{ old('p_id') }}">
+                <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ old('patient') }}"> &nbsp;
                 <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.1st.regist',$booking->booking_id)}}'">
               </td>
             </tr>
@@ -61,24 +61,38 @@
                 <option value="">▼選択</option>
                 @if(count($doctors) > 0)
                   @foreach($doctors as $doctor)
-                    <option value="{{$doctor->id}}" @if($booking->doctor_id == $doctor->id) selected @endif>{{$doctor->u_name}}</option>
+                    @if ( old('doctor_id') == $doctor->id )
+                    <option value="{{$doctor->id}}" selected >{{$doctor->u_name}}</option>
+                    @elseif ( $booking->doctor_id == $doctor->id )
+                    <option value="{{$doctor->id}}" selected >{{$doctor->u_name}}</option>
+                    @else
+                    <option value="{{$doctor->id}}" >{{$doctor->u_name}}</option>
+                    @endif
                   @endforeach
                 @endif
               </select>
               </td>
             </tr>
+
             <tr>
               <td class="col-title"><label for="hygienist_id">衛生士</label></td>
               <td><select name="hygienist_id" id="hygienist_id" class="form-control">
                 <option value="">▼選択</option>
                 @if(count($hygienists) > 0)
                   @foreach($hygienists as $hygienist)
-                    <option value="{{$hygienist->id}}" @if($booking->hygienist_id == $hygienist->id) selected @endif>{{$hygienist->u_name}}</option>
+                    @if ( old('hygienist_id') == $hygienist->id )
+                    <option value="{{$hygienist->id}}" selected >{{$hygienist->u_name}}</option>
+                    @elseif ( $booking->hygienist_id == $hygienist->id )
+                    <option value="{{$hygienist->id}}" selected >{{$hygienist->u_name}}</option>
+                    @else
+                    <option value="{{$hygienist->id}}" >{{$hygienist->u_name}}</option>
+                    @endif
                   @endforeach
                 @endif
               </select>
               </td>
             </tr>
+
             <tr>
               <td class="col-title"><label for="equipment_id">装置</label></td>
               <td>
@@ -86,12 +100,19 @@
                   <option value="">▼選択</option>
                   @if(count($equipments) > 0)
                     @foreach($equipments as $key => $equipment)
-                      <option value="{{$key}}" @if($booking->equipment_id == $key) selected @endif>{{$equipment}}</option>
+                      @if ( old('equipment_id') == $key )
+                      <option value="{{$key}}" selected >{{$equipment}}</option>
+                      @elseif ( $booking->equipment_id == $key )
+                      <option value="{{$key}}" selected >{{$equipment}}</option>
+                      @else
+                      <option value="{{$key}}" >{{$equipment}}</option>
+                      @endif
                     @endforeach
                   @endif
                 </select>
               </td>
             </tr>
+
             <tr>
               <td class="col-title"><label for="service_1">業務内容-1 <span class="note_required">※</span></label></td>
               <td>
@@ -102,7 +123,7 @@
                   <option value="-1">▼選択</option>
                   @if(count($treatment1s) > 0)
                     @foreach($treatment1s as $treatment12)
-                        <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if(old('service_1') == $treatment12->treatment_id) selected="" @elseif($booking->service_1 == $treatment12->treatment_id) selected="" @endif>{{$treatment12->treatment_name}}</option>
+                    <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if(old('service_1') == $treatment12->treatment_id) selected="" @elseif($booking->service_1 == $treatment12->treatment_id) selected="" @endif>{{$treatment12->treatment_name}}</option>
                     @endforeach
                   @endif
                 </select>
@@ -110,6 +131,7 @@
                 <span class="error-input">@if ($errors->first('service_1')) {!! $errors->first('service_1') !!} @endif</span>
               </td>
             </tr>
+
             <!-- <tr>
               <td class="col-title"><label for="service_2">業務内容-2</label></td>
               <td>
@@ -137,73 +159,181 @@
               <td>
                 <select name="inspection_id" id="inspection_id" class="form-control">
                   <option>▼選択</option>
-                    @if(count($inspections) > 0)
+                  @if(count($inspections) > 0)
                     @foreach($inspections as $key => $inspection)
-                      <option value="{{$key}}" @if($booking->inspection_id == $key) selected @endif>{{$inspection}}</option>
+                      @if ( old('inspection_id') == $key )
+                      <option value="{{$key}}" selected >{{$inspection}}</option>
+                      @elseif ( $booking->inspection_id == $key )
+                      <option value="{{$key}}" selected >{{$inspection}}</option>
+                      @else
+                      <option value="{{$key}}" >{{$inspection}}</option>
+                      @endif
                     @endforeach
                   @endif
                 </select>
               </td>
             </tr>
+
             <tr>
               <td class="col-title"><label for="insurance_id">保険診療</label></td>
               <td>
                 <select name="insurance_id" id="insurance_id" class="form-control">
                   <option value="">▼選択</option>
-                    @if(count($insurances) > 0)
+                  @if(count($insurances) > 0)
                     @foreach($insurances as $key => $insurance)
-                      <option value="{{$key}}" @if($booking->insurance_id == $key) selected @endif>{{$insurance}}</option>
+                      @if ( old('insurance_id') == $key )
+                      <option value="{{$key}}" selected >{{$insurance}}</option>
+                      @elseif($booking->insurance_id == $key)
+                      <option value="{{$key}}" selected >{{$insurance}}</option>
+                      @else
+                      <option value="{{$key}}" >{{$insurance}}</option>
+                      @endif
                     @endforeach
                   @endif
                 </select>
               </td>
             </tr>
+
             <tr>
               <td class="col-title"><label for="ckEmergency">救急</label></td>
               <td>
                 <div class="checkbox">
-                  <label> <input name="emergency_flag" type="checkbox" id="emergency_flag"@if($booking->emergency_flag == 1) checked @endif>救急です</label>
+                  @if( old('emergency_flag') == 1 )
+                  <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" checked >救急です</label>
+                  @elseif ( $booking->emergency_flag == 1 )
+                  <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" checked >救急です</label>
+                  @else
+                  <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" >救急です</label>
+                  @endif
                 </div>
               </td>
             </tr>
+
             <tr>
               <td class="col-title">予約ステータス</td>
               <td>
                 <div class="radio">
-                  <label><input name="booking_status" value="" type="radio" @if(empty($booking->booking_status)) checked @endif>通常</label>
+                  @if ( empty(old('booking_status')) )
+                  <label><input name="booking_status" value="" type="radio" checked >通常</label>
+                  @elseif ( empty($booking->booking_status) )
+                  <label><input name="booking_status" value="" type="radio" checked >通常</label>
+                  @else
+                  <label><input name="booking_status" value="" type="radio" >通常</label>
+                  @endif
                 </div>
                 <div class="radio">
-                  <label><input name="booking_status" value="1" type="radio" @if($booking->booking_status == 1) checked @endif>「TEL待ち」です</label>
+                  @if ( old('booking_status') == 1 )
+                  <label><input name="booking_status" value="1" type="radio" checked >「TEL待ち」です</label>
+                  @elseif ( $booking->booking_status == 1 )
+                  <label><input name="booking_status" value="1" type="radio" checked >「TEL待ち」です</label>
+                  @else
+                  <label><input name="booking_status" value="1" type="radio" >「TEL待ち」です</label>
+                  @endif
                 </div>
                 <div class="radio">
-                  <label><input name="booking_status" value="2" type="radio" @if($booking->booking_status == 2) checked @endif>無断キャンセル</label>
+                  @if ( old('booking_status') == 2 )
+                  <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
+                  @elseif ( $booking->booking_status == 2 )
+                  <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
+                  @else
+                  <label><input name="booking_status" value="2" type="radio" >無断キャンセル</label>
+                  @endif
                 </div>
                 <div class="radio">
                   <label>
-                    <input name="booking_status" id="recalling" value="3" type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
+                    @if ( old('booking_status') == 3)
+                    <input name="booking_status" id="recalling" value="3" type="radio" checked >「リコール」です→
+                    @elseif ( $booking->booking_status == 3 )
+                    <input name="booking_status" id="recalling" value="3" type="radio" checked >「リコール」です→
+                    @else
+                    <input name="booking_status" id="recalling" value="3" type="radio" >「リコール」です→
+                    @endif
+
                     <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
-                    <?php $year =  date('Y', strtotime($booking->booking_date))?>
-                      <option value="" selected>▼選択</option>
-                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" @if($year.'01' == $booking->booking_recall_ym) selected @endif>1ヶ月後</option>
-                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 03, 'Ym') == $booking->booking_recall_ym) selected @endif>2ヶ月後</option>
-                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 03, 'Ym') == $booking->booking_recall_ym) selected @endif>3ヶ月後</option>
-                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 04, 'Ym') == $booking->booking_recall_ym) selected @endif>4ヶ月後</option>
-                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}0" @if(dateAddMonth($booking->booking_date, 05, 'Ym') == $booking->booking_recall_ym) selected @endif>5ヶ月後</option>
-                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 06, 'Ym') == $booking->booking_recall_ym) selected @endif>6ヶ月後</option>
+                      <option value="">▼選択</option>
+
+                      @if ( dateAddMonth($booking->booking_date, 01, 'Ym') == old('booking_recall_ym') )
+                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" selected="" >1ヶ月後</option>
+                      @elseif ( dateAddMonth($booking->booking_date, 01, 'Ym') == $booking->booking_recall_ym )
+                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" selected="" >1ヶ月後</option>
+                      @else
+                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" >1ヶ月後</option>
+                      @endif
+                      
+                      @if ( dateAddMonth($booking->booking_date, 02, 'Ym') == old('booking_recall_ym') )
+                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" selected >2ヶ月後</option>
+                      @elseif ( dateAddMonth($booking->booking_date, 02, 'Ym') == $booking->booking_recall_ym )
+                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" selected >2ヶ月後</option>
+                      @else
+                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" >2ヶ月後</option>
+                      @endif
+                      
+                      @if ( dateAddMonth($booking->booking_date, 03, 'Ym') == old('booking_recall_ym'))
+                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" selected >3ヶ月後</option>
+                      @elseif ( dateAddMonth($booking->booking_date, 03, 'Ym') == $booking->booking_recall_ym )
+                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" selected >3ヶ月後</option>
+                      @else
+                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" >3ヶ月後</option>
+                      @endif
+                      
+                      @if ( dateAddMonth($booking->booking_date, 04, 'Ym') == old('booking_recall_ym') )
+                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" selected >4ヶ月後</option>
+                      @elseif ( dateAddMonth($booking->booking_date, 04, 'Ym') == $booking->booking_recall_ym )
+                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" selected >4ヶ月後</option>
+                      @else
+                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" >4ヶ月後</option>
+                      @endif
+
+                      @if ( dateAddMonth($booking->booking_date, 05, 'Ym') == old('booking_recall_ym') )
+                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}" selected >5ヶ月後</option>
+                      @elseif ( dateAddMonth($booking->booking_date, 05, 'Ym') == $booking->booking_recall_ym )
+                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}" selected >5ヶ月後</option>
+                      @else
+                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}" >5ヶ月後</option>
+                      @endif
+                      
+                      @if ( dateAddMonth($booking->booking_date, 06, 'Ym') == old('booking_recall_ym') )
+                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" selected >6ヶ月後</option>
+                      @elseif ( dateAddMonth($booking->booking_date, 06, 'Ym') == $booking->booking_recall_ym )
+                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" selected >6ヶ月後</option>
+                      @else
+                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" >6ヶ月後</option>
+                      @endif
+                      
                     </select>
                   </label>
                 </div>
                 <div class="radio">
-                  <label><input name="booking_status" value="4" type="radio" @if($booking->booking_status == 4) checked @endif>未作成技工物TEL待ち</label>
+                  @if ( old('booking_status') == 4 )
+                  <label><input name="booking_status" value="4" type="radio" checked >未作成技工物TEL待ち</label>
+                  @elseif ( $booking->booking_status == 4 )
+                  <label><input name="booking_status" value="4" type="radio" checked >未作成技工物TEL待ち</label>
+                  @else
+                  <label><input name="booking_status" value="4" type="radio" >未作成技工物TEL待ち</label>
+                  @endif
                 </div>
                 <div class="radio">
-                  <label><input name="booking_status" value="5" type="radio" @if($booking->booking_status == 5) checked @endif>作成済み技工物キャンセル</label>
+                  @if ( old('booking_status') == 5 )
+                  <label><input name="booking_status" value="5" type="radio" checked >作成済み技工物キャンセル</label>
+                  @elseif ( $booking->booking_status == 5 )
+                  <label><input name="booking_status" value="5" type="radio" checked >作成済み技工物キャンセル</label>
+                  @else
+                  <label><input name="booking_status" value="5" type="radio" >作成済み技工物キャンセル</label>
+                  @endif
                 </div>
               </td>
             </tr>
             <tr>
               <td class="col-title"><label for="booking_memo">備考</label></td>
-              <td><textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{@$booking->booking_memo}}</textarea></td>
+              <td>
+                @if ( old('booking_memo') )
+                <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{ old('booking_memo') }}</textarea>
+                @elseif ( $booking->booking_memo )
+                <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{ @$booking->booking_memo }}</textarea>
+                @else
+                <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area"></textarea>
+                @endif
+              </td>
             </tr>
           </table>
         </div>

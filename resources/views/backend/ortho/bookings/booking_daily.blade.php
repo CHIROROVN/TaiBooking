@@ -229,7 +229,7 @@
             </tr>
 
             <!-- check "brown", "green", "blue" color -->
-            <?php $tmpFlag = array() ?>
+            <?php $tmpFlag = array(); ?>
             @foreach ( $times as $time )
             <?php
               $tmp_arr = explode(':', $time);
@@ -252,13 +252,24 @@
 
                   if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
                     // set flag
-                    if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
-                      $iconFlag = '';
-                    } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
-                      $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
-                      $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                    if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1  ) {
+                      if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                        $iconFlag = '';
+                      } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
+                        $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                        $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                      } else {
+                        $iconFlag = '';
+                      }
                     } else {
-                      $iconFlag = '';
+                      if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                        $iconFlag = '';
+                      } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id . $arr_bookings[$facility_id][$fullTime]->facility_id, $tmpFlag) ) {
+                        $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id . $arr_bookings[$facility_id][$fullTime]->facility_id;
+                        $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                      } else {
+                        $iconFlag = '';
+                      }
                     }
 
                     if ( empty($arr_bookings[$facility_id][$fullTime]->patient_id) ) {
@@ -325,14 +336,18 @@
                           $tTreatment = @$treatment1s[$booking->service_1] . '<br />';
                         }
 
-                      }else{
+                      } else{
                         $tDoctor = '';
                         $tPatient = '';
                         $tTreatment = '';
+                        $text = 'aaaa';
                       }
 
                       $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
                     }
+                    // $text = 'yes';
+                  } else {
+                    // $text = 'no';
                   }
                 ?>
 
@@ -356,6 +371,10 @@
         </div>
       </div>
     </section>
+
+    <?php echo '<pre>';
+    print_r($tmpFlag);
+    echo '</pre>'; ?>
 
 <script>
   $(document).ready(function(){

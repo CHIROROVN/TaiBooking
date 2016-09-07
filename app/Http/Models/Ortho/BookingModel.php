@@ -279,7 +279,7 @@ class BookingModel
                         ->where('booking_date', $booking_date)
                         ->where('clinic_id', $clinic_id)
                         ->where('facility_id', $facility_id)
-                        ->where('service_1', -1)
+                        // ->where('service_1', -1)
                         ->where('service_1_kind', 2)
                         ->where('booking_start_time', '>=', $begingStartTime)
                         ->where('booking_start_time', '<', $bookingEndTime)

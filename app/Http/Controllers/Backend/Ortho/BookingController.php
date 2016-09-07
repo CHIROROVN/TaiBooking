@@ -25,7 +25,6 @@ use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\DdrModel;
 use App\Http\Models\Ortho\MemoModel;
 
-
 use Form;
 use Html;
 use Input;
@@ -33,7 +32,6 @@ use Validator;
 use URL;
 use Session;
 use Config;
-use Carbon;
 use Response;
 
 class BookingController extends BackendController

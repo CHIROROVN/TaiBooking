@@ -34,7 +34,7 @@
               <td class="col-title"><label for="textNameRead">予約日時</label></td>
               <td><?php echo e(formatDateJp($booking->booking_date)); ?> (<?php echo e(DayJp($booking->booking_date)); ?>)　<?php echo e(splitHourMin($booking->booking_start_time)); ?>
 
-              <input type="button" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='<?php echo e(route('ortho.bookings.booking.change')); ?>'"></td>
+              <input type="button" name="button3" id="button" value="予約日時の変更" class="btn btn-sm btn-page" onclick="location.href='<?php echo e(route('ortho.bookings.booking_change_date', $booking->booking_id)); ?>'"></td>
             </tr>
             <tr>
               <td class="col-title">医院</td>
@@ -166,10 +166,13 @@
               <td class="col-title">予約ステータス</td>
               <td>
             <div class="radio">
-              <label><input name="booking_status" value="1" type="radio" <?php if($booking->booking_status == 1): ?> checked <?php endif; ?>>通常</label>
+              <label><input name="booking_status" value="" type="radio" <?php if(empty($booking->booking_status)): ?> checked <?php endif; ?>>通常</label>
             </div>
             <div class="radio">
-              <label><input name="booking_status" value="2" type="radio" <?php if($booking->booking_status == 2): ?> checked <?php endif; ?>>「TEL待ち」です</label>
+              <label><input name="booking_status" value="1" type="radio" <?php if($booking->booking_status == 1): ?> checked <?php endif; ?>>「TEL待ち」です</label>
+            </div>
+            <div class="radio">
+              <label><input name="booking_status" value="2" type="radio" <?php if($booking->booking_status == 2): ?> checked <?php endif; ?>>無断キャンセル</label>
             </div>
             <div class="radio">
               <label>
@@ -190,9 +193,6 @@
             </div>
             <div class="radio">
               <label><input name="booking_status" value="5" type="radio" <?php if($booking->booking_status == 5): ?> checked <?php endif; ?>>作成済み技工物キャンセル</label>
-            </div>
-            <div class="radio">
-              <label><input name="booking_status" value="6" type="radio" <?php if($booking->booking_status == 6): ?> checked <?php endif; ?>>無断キャンセル</label>
             </div>
           </td>
             </tr>

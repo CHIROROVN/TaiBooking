@@ -213,13 +213,24 @@
 
                   if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
                     // set flag
-                    if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
-                      $iconFlag = '';
-                    } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
-                      $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
-                      $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                    if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1  ) {
+                      if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                        $iconFlag = '';
+                      } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
+                        $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                        $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                      } else {
+                        $iconFlag = '';
+                      }
                     } else {
-                      $iconFlag = '';
+                      if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                        $iconFlag = '';
+                      } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id . $arr_bookings[$facility_id][$fullTime]->facility_id, $tmpFlag) ) {
+                        $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id . $arr_bookings[$facility_id][$fullTime]->facility_id;
+                        $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                      } else {
+                        $iconFlag = '';
+                      }
                     }
 
                     if ( empty($arr_bookings[$facility_id][$fullTime]->patient_id) ) {

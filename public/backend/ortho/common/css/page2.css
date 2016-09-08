@@ -539,11 +539,11 @@ h1 {
   vertical-align: top;
 }
 .content-page .table .col-title {
-    background: #88c9c9;
-    color: #257272;
-    font-weight: bold;
-    vertical-align: middle;
-    width: 15%;
+  background: #88c9c9;
+  color: #257272;
+  font-weight: bold;
+  vertical-align: middle;
+  width: 15%;
 }
 .margin-bottom{
   margin-bottom: 40px;
@@ -559,6 +559,8 @@ h1 {
 .content-page .table.user-list .col-title{
   text-align: center;
 }
+
+
 
 
 /*--------------------------*/

@@ -181,14 +181,17 @@
         </div>
 
         <div class="table-responsive">
-          <table class="table table-bordered table-shift-set">
+          <table class="table table-bordered table-shift-set" id="" style="margin-bottom: 0;">
             <tr>
               <td align="center" style="width: 6%;">時間</td>
               @foreach ( $facilitys as $facility )
               <td align="center" style="">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
+        </table>
 
+        <div class="inner_table table-responsive">
+          <table class="table table-bordered table-shift-set tbl-inner">
             <!-- check "brown", "green", "blue" color -->
             <?php $tmpFlag = array() ?>
             @foreach ( $times as $time )
@@ -310,25 +313,26 @@
                   }
                 ?>
 
-                <!-- close -->
-                <td align="center" width="50px" class="col-{{ $color }} {{ $clsBackgroundPatient }}" id="" width="142px">
-                  <div class="td-content">
-                    {!! $iconFlag !!} {!! $text !!}
-                    @if ( $color === 'brown' )
-                    <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
-                    @endif
-                  </div>
-                </td>
-                <!-- end close -->
-              @endforeach
-            </tr>
+              <!-- close -->
+              <td align="center" width="50px" class="col-{{ $color }} {{ $clsBackgroundPatient }}" id="" width="142px">
+                <div class="td-content">
+                  {!! $iconFlag !!} {!! $text !!}
+                  @if ( $color === 'brown' )
+                  <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
+                  @endif
+                </div>
+              </td>
+              <!-- end close -->
             @endforeach
-            
-          </table>
+          </tr>
+          @endforeach
+        </table>
         </div>
+        <!-- end inner_table -->
+      </div>
+      <!-- end table-responsive -->
     </div>
-  </div>
-</section>
+  </section>
 
 <script>
   $(document).ready(function(){

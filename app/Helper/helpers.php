@@ -374,6 +374,7 @@ function showPatient($p_id=null){
 		}
 	}
 
+
 	function getWeek($date, $kind){
 		if($kind == 'w'){
 			return [formatDate($date->subDays(3)->toDateTimeString(),'-'), formatDate($date->addDays(6)->toDateTimeString(), '-')];
@@ -383,6 +384,52 @@ function showPatient($p_id=null){
 			return '';
 		}
 	}
+	
+
+	function cal_change_date($week_later = null){
+		$datenow = Carbon::now();
+		if(!empty($week_later)){
+			switch ($week_later) {
+				case 'one_week':
+					return cal_week($datenow->addWeek(), 'w');
+					break;
+				case 'two_week':
+					return cal_week($datenow->addWeeks(2), 'w');
+					break;
+				case 'three_week':
+					return cal_week($datenow->addWeeks(3), 'w');
+					break;
+				case 'four_week':
+					return cal_week($datenow->addWeeks(4), 'w');
+					break;
+				case 'five_week':
+					return cal_week($datenow->addWeeks(5), 'w');
+					break;
+				case 'one_month':
+					return cal_week($datenow->addMonth(), 'm');
+					break;
+				case 'two_month':
+					return cal_week($datenow->addMonths(2), 'm');
+					break;
+				default:
+					return $week_later;
+					break;
+			}
+		}else{
+			return null;
+		}
+	}
+
+	function cal_week($date, $kind){
+		if($kind == 'w'){
+			return formatDate($date->toDateTimeString(),'-');
+		}else if($kind == 'm'){
+			return formatDate($date->toDateTimeString(),'-');
+		}else{
+			return '';
+		}
+	}
+
 
 	function hourMin2Min($hhmm)
 	{

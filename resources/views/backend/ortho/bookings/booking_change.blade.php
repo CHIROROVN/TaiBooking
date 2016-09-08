@@ -1,7 +1,7 @@
 @extends('backend.ortho.ortho')
 @section('content')
 
-{!! Form::open( ['id' => 'frmBookingChange', 'class' => 'form-horizontal','method' => 'post', 'route' => 'ortho.bookings.booking.change', 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
+{!! Form::open( ['id' => 'frmBookingChange', 'class' => 'form-horizontal','method' => 'post', 'route' => ['ortho.bookings.booking.change',$booking_id], 'enctype'=>'multipart/form-data', 'accept-charset'=>'utf-8']) !!}
    <section id="page">
         <div class="container">
           <div class="row content-page">
@@ -121,9 +121,10 @@
                           週指定</label>
                       
                         <label class="radio-inline"><input type="radio" class="week_later" name="week_later" id="date_picker" value="date_picker">日付指定
-                        <input type="calendar" name="date_picker_option" id="date_picker_option" class="datepicker" style="width: 150px;"></label>
+                        <input type="calendar" name="date_picker_option" id="date_picker_option" class="datepicker" style="width: 150px;"></label>                     
+
                     </td>
-                    </td>
+
                 </tr>
                 <tr>
                   <td class="col-title">業務</td>

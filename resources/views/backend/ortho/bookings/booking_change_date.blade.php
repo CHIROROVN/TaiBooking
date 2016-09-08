@@ -1,7 +1,7 @@
 @extends('backend.ortho.ortho')
 
 @section('content')
-{!! Form::open(array('route' => ['ortho.bookings.booking_change_date', $booking->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+{!! Form::open(array('route' => ['ortho.bookings.booking_change_date', $booking_id, $booking->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
   <div class="container">
     <div class="row content-page">

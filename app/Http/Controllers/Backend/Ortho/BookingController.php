@@ -1309,7 +1309,7 @@ class BookingController extends BackendController
         }
     }
 
-    public function getBookingChange()
+    public function getBookingChange($booking_id)
     {
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_list_clinic();
@@ -1320,10 +1320,13 @@ class BookingController extends BackendController
         $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_treatment_search();
+        $data['booking_id']         = $booking_id;
+        $clsBooking                 = new BookingModel();
+        $data['booking']            = $clsBooking->get_by_id($booking_id);
         return view('backend.ortho.bookings.booking_change', $data);
     }
 
-    public function postBookingChange()
+    public function postBookingChange($booking_id)
     {
         $condition = array();
         if(Input::has('BookingCalendar')){
@@ -1363,15 +1366,17 @@ class BookingController extends BackendController
             }
         }
 
-            if(!empty(Input::get('clinic_service_name')))
-                $condition['clinic_service_name']         = Input::get('clinic_service_name');
+        if(!empty(Input::get('clinic_service_name')))
+            $condition['clinic_service_name']         = Input::get('clinic_service_name');
 
-            return redirect()->route('ortho.bookings.booking_change_list', $condition);
+        $condition['booking_id']                      = $booking_id;
+
+        return redirect()->route('ortho.bookings.booking_change_list', $condition);
         }
 
     }
 
-    public function bookingChangeList()
+    public function bookingChangeList($booking_id)
     {
         $where = array();
         if(Input::get('clinic_id') != null){
@@ -1408,85 +1413,90 @@ class BookingController extends BackendController
         $data['treatment1s']              = $clsTreatment1->get_list_treatment();
         $clsService                       = new ServiceModel();
         $data['services']                 = $clsService->get_list();
+
+        $data['booking_id']               = $booking_id;
+       
+        if(!empty(Input::get('week_later'))){
+            $data['week_later']           =  cal_change_date(Input::get('week_later'));
+        }
+
         return view('backend.ortho.bookings.booking_change_list', $data);
     }
 
-    public function getChangeDate($id)
+    public function getConfirm($booking_id, $id)
     {
-        if (Session::has('booking_change'))
-        Session::forget('booking_change');
-        $clsBooking                 = new BookingModel();
-        if($clsBooking->checkExistID2($id)){
-            $data                       = array();
-            $clsBooking                 = new BookingModel();
-            $clsUser                    = new UserModel();
-            $clsClinicService           = new ClinicServiceModel();
-            $clsTreatment1              = new Treatment1Model();
-            $data['booking']            = $clsBooking->get_by_id($id);
-            $data['list_doctors']       = $clsUser->get_list_users([1]);
-            $data['doctors']            = $clsUser->get_by_belong([1]);
-            $data['hys']                = $clsUser->get_by_belong([2,3]);
-            $data['start_date']         = Input::get('start_date');
-            $clsService                 = new ServiceModel();
-            $data['services']           = $clsService->get_list();
-            $clsTreatment1              = new Treatment1Model();
-            $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-            return view('backend.ortho.bookings.booking_change_date', $data);
+        if (Session::has('booking_change')) Session::forget('booking_change');
+        $clsBooking                     = new BookingModel();
+        if($clsBooking->checkExistID2($booking_id) || $clsBooking->checkExistID2($id)){
+            $curr_booking                   = $clsBooking->get_by_id($booking_id);
+            $data['booking']                = $curr_booking;
+
+            $clsClinic                      = new ClinicModel();
+            $data['clinics']                = $clsClinic->get_list_clinic();
+            $clsUser                        = new UserModel();
+            $data['doctors']                = $clsUser->get_list();
+            $data['hygienists']             = $clsUser->get_list();
+            $clsService                     = new ServiceModel();
+            $data['services']               = $clsService->get_list();
+            $clsTreatment1                  = new Treatment1Model();
+            $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+            $clsEquipment                   = new EquipmentModel();
+            $data['equipments']             = $clsEquipment->get_list();
+            $clsInspection                  = new InspectionModel();
+            $data['inspections']            = $clsInspection->get_list();
+            $clsInsurance                   = new InsuranceModel();
+            $data['insurances']             = $clsInsurance->get_list();
+
+            $data['booking_id']             = $booking_id;
+
+            $data['booking_change']          = $clsBooking->get_by_id($id);
+
+            $data['booking_change']          = (object) array_merge((array) $data['booking_change'], array(
+                                                                        'last_date' => date('Y-m-d H:i:s'),
+                                                                        'last_user' => Auth::user()->id,
+                                                                        'patient_id' => $curr_booking->patient_id,
+                                                                        'p_no' => $curr_booking->p_no,
+                                                                        'p_name_f' => $curr_booking->p_name_f,
+                                                                        'p_name_g' => $curr_booking->p_name_g,
+                                                                        'clinic_name'=> $curr_booking->clinic_name,
+                                                                        'facility_name' => $curr_booking->facility_name,
+                                                                        'equipment_name' => $curr_booking->equipment_name,
+                                                                        'inspection_name' => $curr_booking->inspection_name,
+                                                                        'insurance_name' => $curr_booking->insurance_name
+                                                                        ) );
+            Session::put('booking_change', $data['booking_change']);
+            return view('backend.ortho.bookings.booking_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);
         }
     }
 
-    public function postChangeDate($id)
-    {
-        $data = array();
-        if(!empty(Input::get('booking_date')))
-            $data['booking_date'] = Input::get('booking_date');
-
-        if(!empty(Input::get('hour_start'))){
-            $mm = Input::get('min_start');
-            if($mm == null){
-                $mm = '00';
-            }
-
-            $data['booking_start_time']  = Input::get('hour_start').$mm;
-        }
-        $data['last_date']               = date('Y-m-d H:i:s');
-        $data['last_user']               = Auth::user()->id;
-        Session::put('booking_change', $data);
-        return redirect()->route('ortho.bookings.booking.change.confirm', $id);
-    }
-
-    public function getConfirm($id)
+    public function postConfirm($booking_id, $id)
     {
         $clsBooking                 = new BookingModel();
-        $data['booking']            = $clsBooking->get_by_id($id);
-        $clsClinic                  = new ClinicModel();
-        $data['clinics']            = $clsClinic->get_list_clinic();
-        $clsUser                    = new UserModel();
-        $data['doctors']            = $clsUser->get_list();
-        $data['hygienists']         = $clsUser->get_list();
-        $clsService                 = new ServiceModel();
-        $data['services']           = $clsService->get_list();
-        $clsTreatment1              = new Treatment1Model();
-        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        $clsEquipment               = new EquipmentModel();
-        $data['equipments']         = $clsEquipment->get_list();
-        $clsInspection              = new InspectionModel();
-        $data['inspections']        = $clsInspection->get_list();
-        $clsInsurance               = new InsuranceModel();
-        $data['insurances']         = $clsInsurance->get_list();
-        $data['booking_change']     = Session::get('booking_change');
-        return view('backend.ortho.bookings.booking_change_confirm', $data);
-    }
+        $curr_booking               = $clsBooking->get_by_id($booking_id);
 
-    public function postConfirm($id)
-    {
-        $dataInput                  = Session::get('booking_change');
+        $bookingOld                 = array(
+                                            'patient_id' => '',
+                                            'last_date'  => date('Y-m-d H:i:s'),
+                                            'last_user'  => Auth::user()->id,
+                                            'last_kind'  => UPDATE
+                                            );
+        $clsBooking->update($booking_id, $bookingOld);
+
+        $dataInput                  = (array) Session::get('booking_change');
+            unset($dataInput['booking_id']);
+            unset($dataInput['p_no']);
+            unset($dataInput['p_name_f']);
+            unset($dataInput['p_name_g']);
+            unset($dataInput['clinic_name']);
+            unset($dataInput['facility_name']);
+            unset($dataInput['equipment_name']);
+            unset($dataInput['inspection_name']);
+            unset($dataInput['insurance_name']);
+
         $condition                  = array();
-        $clsBooking                 = new BookingModel();
-        $booking                    = $clsBooking->get_by_id($id);
-        $condition['clinic_id']     = $booking->clinic_id;
+        $condition['clinic_id']     = $dataInput['clinic_id'];
         $condition['next']          = $dataInput['booking_date'];
 
         // $booking_id_arr[]           = $booking->booking_group_id;

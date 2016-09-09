@@ -1469,7 +1469,7 @@ class BookingController extends BackendController
                                                                         'inspection_name' => $curr_booking->inspection_name,
                                                                         'insurance_name' => $curr_booking->insurance_name
                                                                         ) );
-            Session::put('booking_change', $data['booking_change']);
+            // Session::put('booking_change', $data['booking_change']);
             return view('backend.ortho.bookings.booking_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);
@@ -1479,40 +1479,45 @@ class BookingController extends BackendController
     public function postConfirm($booking_id, $id)
     {
         $clsBooking                 = new BookingModel();
+        $new_booking                = $clsBooking->get_by_id($id);
+
+        //update
+
         $curr_booking               = $clsBooking->get_by_id($booking_id);
-
-        $bookingOld                 = array(
-                                            'patient_id' => '',
-                                            'last_date'  => date('Y-m-d H:i:s'),
-                                            'last_user'  => Auth::user()->id,
-                                            'last_kind'  => UPDATE
-                                            );
-        $clsBooking->update($booking_id, $bookingOld);
-
-        $dataInput                  = (array) Session::get('booking_change');
-            unset($dataInput['booking_id']);
-            unset($dataInput['p_no']);
-            unset($dataInput['p_name_f']);
-            unset($dataInput['p_name_g']);
-            unset($dataInput['clinic_name']);
-            unset($dataInput['facility_name']);
-            unset($dataInput['equipment_name']);
-            unset($dataInput['inspection_name']);
-            unset($dataInput['insurance_name']);
+        $child_group_booking        = $curr_booking->booking_childgroup_id;
 
         $condition                  = array();
-        $condition['clinic_id']     = $dataInput['clinic_id'];
-        $condition['next']          = $dataInput['booking_date'];
+        $condition['clinic_id']     = $curr_booking->clinic_id;
+        $condition['next']          = $new_booking->booking_date;
 
-        $booking_id_arr[]           = $dataInput['booking_group_id'];
-        $bookingGroups = $clsBooking->get_by_group($booking_id_arr);
-
+        $bookingGroups              = $clsBooking->get_by_child_group($child_group_booking);
+        $dataInput                  = array(
+                                            'booking_date'  => $new_booking->booking_date,
+                                            'last_date'     => date('Y-m-d H:i:s'),
+                                            'last_user'     => Auth::user()->id,
+                                            'last_kind'     => UPDATE
+                                            );
         $flag = false;
-         foreach ( $bookingGroups as $item ) {
+        foreach ( $bookingGroups as $item ) {
             if ($clsBooking->update($item->booking_id, $dataInput) ) {
                 $flag = true;
             }
         }
+
+        //Delete
+        $booking_id_oldgroup        = $new_booking->booking_childgroup_id;
+        $bookingOldGroups          = $clsBooking->get_by_child_group($booking_id_oldgroup);
+        $bookingOld                 = array(
+                                            'patient_id' => '',
+                                            'last_date'  => date('Y-m-d H:i:s'),
+                                            'last_user'  => Auth::user()->id,
+                                            'last_kind'  => DELETE
+                                            );
+
+        foreach ( $bookingOldGroups as $bog ) {
+            $clsBooking->update($bog->booking_id, $bookingOld);
+        }
+        //End delete
 
         if ($flag == true) {
             Session::flash('success', trans('common.message_edit_success'));

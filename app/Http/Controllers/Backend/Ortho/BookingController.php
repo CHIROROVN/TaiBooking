@@ -1499,32 +1499,32 @@ class BookingController extends BackendController
         $condition['clinic_id']     = $dataInput['clinic_id'];
         $condition['next']          = $dataInput['booking_date'];
 
-        // $booking_id_arr[]           = $booking->booking_group_id;
-        // $bookingGroups = $clsBooking->get_by_group($booking_id_arr);
+        $booking_id_arr[]           = $dataInput['booking_group_id'];
+        $bookingGroups = $clsBooking->get_by_group($booking_id_arr);
 
-        // $flag = false;
-        //  foreach ( $bookingGroups as $item ) {
-        //     if ($clsBooking->update($item->booking_id, $dataInput) ) {
-        //         $flag = true;
-        //     }
-        // }
+        $flag = false;
+         foreach ( $bookingGroups as $item ) {
+            if ($clsBooking->update($item->booking_id, $dataInput) ) {
+                $flag = true;
+            }
+        }
 
-        // if ($flag == true) {
-        //     Session::flash('success', trans('common.message_edit_success'));
-        //     return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
-        // } else {
-        //     Session::flash('danger', trans('common.message_edit_danger'));
-        //     return redirect()->route('ortho.bookings.booking_change_date', [$id]);
-        // }
-
-        if($clsBooking->update($id, $dataInput))
-        {
+        if ($flag == true) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
-        }else{
+        } else {
             Session::flash('danger', trans('common.message_edit_danger'));
             return redirect()->route('ortho.bookings.booking_change_date', [$id]);
         }
+
+        // if($clsBooking->update($id, $dataInput))
+        // {
+        //     Session::flash('success', trans('common.message_edit_success'));
+        //     return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
+        // }else{
+        //     Session::flash('danger', trans('common.message_edit_danger'));
+        //     return redirect()->route('ortho.bookings.booking_change_date', [$id]);
+        // }
 
         if (Session::has('booking_change'))
             Session::forget('booking_change');

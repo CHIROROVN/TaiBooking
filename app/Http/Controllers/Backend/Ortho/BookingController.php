@@ -617,9 +617,14 @@ class BookingController extends BackendController
                 } else {
                     // $status = false;
                     $treatmentOld                   = $clsTreatment1->get_by_id($booking->service_1);
-                    $treatmentOldTotalTime          = $treatmentOld->treatment_time;
+                    if ( !$treatmentOld ) {
+                        $treatmentOldTotalTime          = null;
+                    } else {
+                        $treatmentOldTotalTime          = $treatmentOld->treatment_time;    
+                    }
+                    
                     // $listBookingUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
-                    if ( $treatmentOldTotalTime > $treatment1TotalTime ) {
+                    if ( empty($treatmentOldTotalTime) || $treatmentOldTotalTime > $treatment1TotalTime ) {
                         $dataUpdate = array(
                             'service_1'                 => -1,
                             'service_1_kind'            => 2,

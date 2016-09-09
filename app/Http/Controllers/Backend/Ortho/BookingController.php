@@ -1488,6 +1488,10 @@ class BookingController extends BackendController
         $curr_booking               = $clsBooking->get_by_id($booking_id);
         $child_group_booking        = $curr_booking->booking_childgroup_id;
 
+        $group_booking              = $curr_booking->booking_group_id;
+
+        $temp                       = explode('_', $group_booking);
+
         $condition                  = array();
         $condition['clinic_id']     = $curr_booking->clinic_id;
         $condition['next']          = $new_booking->booking_date;
@@ -1495,6 +1499,7 @@ class BookingController extends BackendController
         $bookingGroups              = $clsBooking->get_by_child_group($child_group_booking);
         $dataInput                  = array(
                                             'booking_date'  => $new_booking->booking_date,
+                                            'booking_group_id' => $temp[0].'_'.$new_booking->booking_date,
                                             'last_date'     => date('Y-m-d H:i:s'),
                                             'last_user'     => Auth::user()->id,
                                             'last_kind'     => UPDATE

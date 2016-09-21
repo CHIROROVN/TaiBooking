@@ -240,6 +240,9 @@
                 $iconFlag = '';
 
                 if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
+                  // set '↓'
+                  $tmpFacilityTimeGroup[] = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . $arr_bookings[$facility_id][$fullTime]->booking_start_time . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+
                   // set flag
                   if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1  ) {
                     if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
@@ -249,6 +252,10 @@
                       $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                     } else {
                       $iconFlag = '';
+                      $str = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . ($arr_bookings[$facility_id][$fullTime]->booking_start_time - 15) . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                        if ( in_array($str, $tmpFacilityTimeGroup) ) {
+                          $iconFlag = '↓';
+                        }
                     }
                   } else {
                     if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
@@ -257,7 +264,7 @@
                       $tmpFlag[] = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id . $arr_bookings[$facility_id][$fullTime]->facility_id;
                       $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                     } else {
-                      $iconFlag = '';
+                      $iconFlag = '↓';
                     }
                   }
 
@@ -291,7 +298,12 @@
                     if(!empty($services[$booking->service_1]))
                       $sService = @$services[$booking->service_1] . '<br />';
 
-                    $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
+                    if ( $iconFlag == '↓' ) {
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . $iconFlag . '</span></a>';
+                      $iconFlag = null;
+                    } else {
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
+                    }
 
                   } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
                     $color = 'blue';
@@ -329,10 +341,14 @@
                       $tDoctor = '';
                       $tPatient = '';
                       $tTreatment = '';
-                      $text = 'aaaa';
                     }
 
-                    $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
+                    if ( $iconFlag == '↓' ) {
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . $iconFlag . '</span>' . '</a>';
+                      $iconFlag = null;
+                    } else {
+                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
+                    }
                   }
                   // $text = 'yes';
                 } else {

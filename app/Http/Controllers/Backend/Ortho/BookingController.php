@@ -1434,6 +1434,7 @@ class BookingController extends BackendController
 
     public function getConfirm($booking_id, $id)
     {
+
         $clsBooking                     = new BookingModel();
         if($clsBooking->checkExistID2($booking_id) || $clsBooking->checkExistID2($id)){
             $curr_booking                   = $clsBooking->get_by_id($booking_id);
@@ -1529,7 +1530,7 @@ class BookingController extends BackendController
                                     )) ) {
                 $flag = true;
             }
-            $start_time += 15;
+            $start_time = convertStartTime($start_time + 15);
         }
 
         if ($flag == true) {

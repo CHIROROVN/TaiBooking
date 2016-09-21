@@ -606,6 +606,20 @@ function showPatient($p_id=null){
 		return App\Http\Controllers\Backend\Ortho\ForumController::checkOwnValid($user_id, $forum_id);
 	}
 
-	function checkStartTime($time){
-			return (int)$time + 15;
+	function convertStartTime($time){
+		if ( strlen($time) <= 3 )
+			$time  = sprintf('%04d', $time);
+			$spl_time = str_split($time, 2);
+
+			$hour = (int)$spl_time[0];
+			$min  = (int)$spl_time[1];
+
+			if($min >= 60){
+				$mt = (int)$min % 60;
+				$ht = (int)floor($min / 60);
+				$h  = $hour + $ht;
+				return (int)(sprintf('%02d',$h).sprintf('%02d',$mt));
+			}else{
+				return (int)(sprintf('%02d',$hour).sprintf('%02d',$min));
+			}
 	}

@@ -101,6 +101,10 @@ class BookingController extends BackendController
         $clinic_id              = Input::get('clinic_id');
         $date_current           = date('Y-m-d');
 
+        if ( empty($data['clinic_id']) ) {
+            return redirect()->route('ortho.bookings.booking.monthly');
+        }
+
         if(Input::get('cur')){
             $date_current  = Input::get('cur');
         }

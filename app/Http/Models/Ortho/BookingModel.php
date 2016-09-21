@@ -92,6 +92,11 @@ class BookingModel
             $db = $db->where('t_booking.clinic_id', $where['s_clinic_id']);
         }
 
+        // where s_p_id
+        if ( isset($where['s_p_id']) && !empty($where['s_p_id']) ) {
+            $db = $db->where('t_booking.patient_id', $where['s_p_id']);
+        }
+
         $results = $db->groupBy('t_booking.booking_group_id')->orderBy('t_booking.booking_date', 'asc')->simplePaginate(PAGINATION);
 
         return $results;

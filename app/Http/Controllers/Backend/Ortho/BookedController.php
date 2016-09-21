@@ -49,6 +49,11 @@ class BookedController extends BackendController
         if ( empty($data['s_booking_date']) ) {
             $data['s_booking_date'] = date('Y-m-d');
         }
+        $data['s_p_name']                       = Input::get('s_p_name');
+        $data['s_p_id']                         = Input::get('s_p_id');
+        if ( empty($data['s_p_name']) ) {
+            $data['s_p_id'] = '';
+        }
 
         $clsBooking                 = new BookingModel();
         $clsService                 = new ServiceModel();

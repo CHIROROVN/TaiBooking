@@ -605,3 +605,7 @@ function showPatient($p_id=null){
 	function checkOwn($user_id, $forum_id){
 		return App\Http\Controllers\Backend\Ortho\ForumController::checkOwnValid($user_id, $forum_id);
 	}
+
+	function checkStartTime($time){
+			return (int)$time + 15;
+	}

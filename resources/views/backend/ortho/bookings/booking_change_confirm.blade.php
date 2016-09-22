@@ -4,7 +4,7 @@
   <div class="container content-page">
     <h3>予約の変更</h3>
     <p>変更してよろしいですか？</p>
-    {!! Form::open(array('route' => ['ortho.bookings.booking.change.confirm', $booking_id, $booking_change->booking_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+    {!! Form::open(array('route' => ['ortho.bookings.booking.change.confirm', $booking_id, $id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
     <div class="row">
       <div class="col-md-6">
         <table class="table table-bordered treatment2-list">

@@ -1434,7 +1434,6 @@ class BookingController extends BackendController
 
     public function getConfirm($booking_id, $id)
     {
-        if (Session::has('booking_change')) Session::forget('booking_change');
         $clsBooking                     = new BookingModel();
         if($clsBooking->checkExistID2($booking_id) || $clsBooking->checkExistID2($id)){
             $curr_booking                   = $clsBooking->get_by_id($booking_id);
@@ -1457,23 +1456,24 @@ class BookingController extends BackendController
             $data['insurances']             = $clsInsurance->get_list();
 
             $data['booking_id']             = $booking_id;
+            $data['id']                     = $id;
 
-            $data['booking_change']          = $clsBooking->get_by_id($id);
+            $new_booking                    = $clsBooking->get_by_id($id);
 
-            $data['booking_change']          = (object) array_merge((array) $data['booking_change'], array(
-                                                                        'last_date' => date('Y-m-d H:i:s'),
-                                                                        'last_user' => Auth::user()->id,
-                                                                        'patient_id' => $curr_booking->patient_id,
-                                                                        'p_no' => $curr_booking->p_no,
-                                                                        'p_name_f' => $curr_booking->p_name_f,
-                                                                        'p_name_g' => $curr_booking->p_name_g,
-                                                                        'clinic_name'=> $curr_booking->clinic_name,
-                                                                        'facility_name' => $curr_booking->facility_name,
-                                                                        'equipment_name' => $curr_booking->equipment_name,
-                                                                        'inspection_name' => $curr_booking->inspection_name,
-                                                                        'insurance_name' => $curr_booking->insurance_name
-                                                                        ) );
-            // Session::put('booking_change', $data['booking_change']);
+            $new_booking_date               = $new_booking->booking_date;
+            $new_facility_id                = $new_booking->facility_id;
+            $new_facility_name              = $new_booking->facility_name;
+            $new_booking_start_time         = $new_booking->booking_start_time;
+
+            $data['booking_change']     = (Object)array_merge((array)$curr_booking, array(
+                                        'booking_date'          => $new_booking_date,
+                                        'booking_start_time'    => $new_booking_start_time,
+                                        'facility_id'           => $new_facility_id,
+                                        'facility_Name'         => $new_facility_name,
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        ));
+
             return view('backend.ortho.bookings.booking_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);
@@ -1482,51 +1482,55 @@ class BookingController extends BackendController
 
     public function postConfirm($booking_id, $id)
     {
-        $clsBooking                 = new BookingModel();
-        $new_booking                = $clsBooking->get_by_id($id);
+        $clsBooking                     = new BookingModel();
+        //Booking New
+        $new_booking                    = $clsBooking->get_by_id($id);
+        $new_booking_date               = $new_booking->booking_date;
+        $new_facility_id                = $new_booking->facility_id;
+        $new_booking_start_time         = $new_booking->booking_start_time;
 
-        //update
+        //Booking Current
+        $curr_booking                   = $clsBooking->get_by_id($booking_id);
+        $child_group_booking            = $curr_booking->booking_childgroup_id;
+        $group_booking                  = $curr_booking->booking_group_id;
 
-        $curr_booking               = $clsBooking->get_by_id($booking_id);
-        $child_group_booking        = $curr_booking->booking_childgroup_id;
+        $tmpGroup                       = explode('_', $group_booking);
 
-        $group_booking              = $curr_booking->booking_group_id;
+        $tmpChildGroup                  = explode('_', $child_group_booking);
 
-        $temp                       = explode('_', $group_booking);
+        $booking_group_id       = '';
+        if(!empty($tmpGroup[0])){
+            $booking_group_id = $tmpGroup[0].'_'.$new_booking_date;
+        }
 
-        $condition                  = array();
-        $condition['clinic_id']     = $curr_booking->clinic_id;
-        $condition['next']          = $new_booking->booking_date;
+        $booking_childgroup_id  = '';
+        if(!empty($tmpChildGroup[1])){
+            $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
+        }
 
-        $bookingGroups              = $clsBooking->get_by_child_group($child_group_booking);
-        $dataInput                  = array(
-                                            'booking_date'  => $new_booking->booking_date,
-                                            'booking_group_id' => $temp[0].'_'.$new_booking->booking_date,
-                                            'last_date'     => date('Y-m-d H:i:s'),
-                                            'last_user'     => Auth::user()->id,
-                                            'last_kind'     => UPDATE
-                                            );
-        $flag = false;
-        foreach ( $bookingGroups as $item ) {
-            if ($clsBooking->update($item->booking_id, $dataInput) ) {
+        $group_booking                  = $clsBooking->get_by_child_group($child_group_booking);
+
+        $condition                      = array();
+        $condition['clinic_id']         = $curr_booking->clinic_id;
+        $condition['next']              = $new_booking_date;
+
+        $start_time = (int)$new_booking_start_time;
+
+        foreach ($group_booking as $gbk) {
+            if ($clsBooking->update($gbk->booking_id, array(
+                                        'booking_date'          => $new_booking_date,
+                                        'booking_start_time'    => $start_time,
+                                        'booking_group_id'      => $booking_group_id,
+                                        'booking_childgroup_id' => $booking_childgroup_id,
+                                        'facility_id'           => $new_facility_id,
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => UPDATE
+                                    )) ) {
                 $flag = true;
             }
+            $start_time += 15;
         }
-
-        //Delete
-        $booking_id_oldgroup        = $new_booking->booking_childgroup_id;
-        $bookingOldGroups          = $clsBooking->get_by_child_group($booking_id_oldgroup);
-        $bookingOld                 = array(
-                                            'patient_id' => '',
-                                            'last_date'  => date('Y-m-d H:i:s'),
-                                            'last_user'  => Auth::user()->id,
-                                            'last_kind'  => DELETE
-                                            );
-
-        foreach ( $bookingOldGroups as $bog ) {
-            $clsBooking->update($bog->booking_id, $bookingOld);
-        }
-        //End delete
 
         if ($flag == true) {
             Session::flash('success', trans('common.message_edit_success'));
@@ -1544,9 +1548,6 @@ class BookingController extends BackendController
         //     Session::flash('danger', trans('common.message_edit_danger'));
         //     return redirect()->route('ortho.bookings.booking_change_date', [$id]);
         // }
-
-        if (Session::has('booking_change'))
-            Session::forget('booking_change');
     }
 
     //Booking Search

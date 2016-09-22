@@ -48,7 +48,7 @@ class ShiftModel
         return $results;
     }
 
-    public function get_by_belong($belong_kind = array(), $date = '')
+    public function get_by_belong($belong_kind = array(), $date = '', $clinic_id = '')
     {
         $db = DB::table($this->table)
                     ->leftJoin('m_users as t2', 't_shift.u_id', '=', 't2.id')
@@ -58,6 +58,9 @@ class ShiftModel
                     ->whereIn('t1.belong_kind', $belong_kind);
         if ( !empty($date) ) {
             $db = $db->where('t_shift.shift_date', $date);
+        }
+        if ( !empty($clinic_id) ) {
+            $db = $db->where('t_shift.clinic_id', $clinic_id);
         }
 
         $results = $db->get();

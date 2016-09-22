@@ -191,12 +191,6 @@ class ShiftController extends BackendController
             'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
             'last_user'             => Auth::user()->id
         );
-        $dataUpdate2 = array(
-            'last_date'             => date('y-m-d H:i:s'),
-            'last_kind'             => INSERT,
-            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
-            'last_user'             => Auth::user()->id
-        );
 
         if ( !empty(Input::get('u_id_old')) ) {
             $where = array(
@@ -215,60 +209,93 @@ class ShiftController extends BackendController
 
         $status = '';
         if ( !empty($shift) ) {
-            // for udpate facility_id
-            if ( empty($shift->shift_free1) ) {
-                $dataUpdate['shift_free1'] = Input::get('facility_id');
-            } else {
-                if ( empty($shift->shift_free2) ) {
-                    $dataUpdate['shift_free2'] = Input::get('facility_id');
+            // add
+            if ( Input::get('u_id') != -1 ) {
+                if ( empty($shift->shift_free1) ) {
+                    $dataUpdate['shift_free1'] = Input::get('facility_id');
                 } else {
-                    if ( empty($shift->shift_free3) ) {
-                        $dataUpdate['shift_free3'] = Input::get('facility_id');
+                    if ( empty($shift->shift_free2) ) {
+                        $dataUpdate['shift_free2'] = Input::get('facility_id');
                     } else {
-                        if ( empty($shift->shift_free4) ) {
-                            $dataUpdate['shift_free4'] = Input::get('facility_id');
+                        if ( empty($shift->shift_free3) ) {
+                            $dataUpdate['shift_free3'] = Input::get('facility_id');
                         } else {
-                            if ( empty($shift->shift_free5) ) {
-                                $dataUpdate['shift_free5'] = Input::get('facility_id');
+                            if ( empty($shift->shift_free4) ) {
+                                $dataUpdate['shift_free4'] = Input::get('facility_id');
+                            } else {
+                                if ( empty($shift->shift_free5) ) {
+                                    $dataUpdate['shift_free5'] = Input::get('facility_id');
+                                }
                             }
+                            
                         }
                         
                     }
                     
                 }
-                
-            }
-
-            // for reset facility_id
-            if ( $shift->shift_free1 == Input::get('facility_id_old') ) {
-                $dataUpdate2['shift_free1'] = null;
-            } else {
-                if ( $shift->shift_free2 == Input::get('facility_id_old') ) {
-                    $dataUpdate2['shift_free2'] = null;
-                } else {
-                    if ( $shift->shift_free3 == Input::get('facility_id_old') ) {
-                        $dataUpdate2['shift_free3'] = null;
+                if ( !empty($shift->shift_free1) && !empty($shift->shift_free2) && !empty($shift->shift_free3) && !empty($shift->shift_free4) && !empty($shift->shift_free5) ) {
+                    if ( $shift->shift_free1 == Input::get('facility_id') ) {
+                        $dataUpdate['shift_free1'] = Input::get('facility_id');
                     } else {
-                        if ( $shift->shift_free4 == Input::get('facility_id_old') ) {
-                            $dataUpdate2['shift_free4'] = null;
+                        if ( $shift->shift_free2 == Input::get('facility_id') ) {
+                            $dataUpdate['shift_free2'] = Input::get('facility_id');
                         } else {
-                            if ( $shift->shift_free5 == Input::get('facility_id_old') ) {
-                                $dataUpdate2['shift_free5'] = null;
+                            if ( $shift->shift_free3 == Input::get('facility_id') ) {
+                                $dataUpdate['shift_free3'] = Input::get('facility_id');
+                            } else {
+                                if ( $shift->shift_free4 == Input::get('facility_id') ) {
+                                    $dataUpdate['shift_free4'] = Input::get('facility_id');
+                                } else {
+                                    if ( $shift->shift_free5 == Input::get('facility_id') ) {
+                                        $dataUpdate['shift_free5'] = Input::get('facility_id');
+                                    }
+                                }
+                                
                             }
+                            
                         }
                         
                     }
-                    
                 }
-                
-            }
-
-            if ( !empty(Input::get('u_id_old')) ) {
-                $status = $clsShift->update($shift->shift_id, $dataUpdate2);
-            } else {
                 $status = $clsShift->update($shift->shift_id, $dataUpdate);
             }
-            // $status = $clsShift->update($shift->shift_id, $dataUpdate);
+
+            // delete
+            if ( Input::get('u_id') == -1 ) {
+                $dataUpdate = array(
+                    'last_date'             => date('y-m-d H:i:s'),
+                    'last_kind'             => UPDATE,
+                    'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+                    'last_user'             => Auth::user()->id
+                );
+
+                if ( !empty($shift) ) {
+                    if ( $shift->shift_free1 == Input::get('facility_id') ) {
+                        $dataUpdate['shift_free1'] = null;
+                    } else {
+                        if ( $shift->shift_free2 == Input::get('facility_id') ) {
+                            $dataUpdate['shift_free2'] = null;
+                        } else {
+                            if ( $shift->shift_free3 == Input::get('facility_id') ) {
+                                $dataUpdate['shift_free3'] = null;
+                            } else {
+                                if ( $shift->shift_free4 == Input::get('facility_id') ) {
+                                    $dataUpdate['shift_free4'] = null;
+                                } else {
+                                    if ( $shift->shift_free5 == Input::get('facility_id') ) {
+                                        $dataUpdate['shift_free5'] = null;
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                }
+
+                $status = $clsShift->update($shift->shift_id, $dataUpdate);
+            }
         }
 
         echo json_encode(array('status', $status));

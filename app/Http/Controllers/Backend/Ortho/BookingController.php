@@ -205,8 +205,8 @@ class BookingController extends BackendController
         $clsTreatment1          = new Treatment1Model();
         $clsUser                = new UserModel();
         $data['list_doctors']   = $clsUser->get_list_users([1]);
-        $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
-        $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
+        $data['doctors']        = $clsShift->get_by_belong([1], $date_current, $clinic_id);
+        $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current, $clinic_id);
         $data['facilitys']      = $clsFacility->getAll($clinic_id);
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);
         $data['services']       = $clsService->get_list();
@@ -1565,6 +1565,8 @@ class BookingController extends BackendController
 
     public function postSearch()
      {
+        $clsTreatment1              = new Treatment1Model();
+
         $condition = array();
         if(Input::has('BookingCalendar')){
             if(!empty(Input::get('clinic_id')))
@@ -1602,8 +1604,9 @@ class BookingController extends BackendController
 
             if(!empty(Input::get('clinic_service_name')))
                 $condition['clinic_service_name']         = Input::get('clinic_service_name');
+
             return redirect()->route('ortho.bookings.booking.result.list', $condition);
-            }
+        }
      }
 
     /**
@@ -1639,13 +1642,53 @@ class BookingController extends BackendController
         Session::put('where_booking', $where);
 
         $clsBooking                       = new BookingModel();
-        $data['bookings']                 = $clsBooking->get_booking_list($where);
+        $data['bookings']                 = $clsBooking->get_booking_list2($where);
         $clsFacility                      = new FacilityModel();
         $data['facilities']               = $clsFacility->list_facility_all();
         $clsTreatment1                    = new Treatment1Model();
         $data['treatment1s']              = $clsTreatment1->get_list_treatment();
         $clsService                       = new ServiceModel();
         $data['services']                 = $clsService->get_list();
+
+        // research booking is ok treatment time : only treatment
+        // get treatment
+        $treatment = null;
+        $timeTreatment = 0;
+        if ( Input::get('clinic_service_name') && !empty(Input::get('clinic_service_name')) ) {
+            $idTreatment = explode('#', Input::get('clinic_service_name'));
+            $idTreatment = $idTreatment[0];
+            $treatment = $clsTreatment1->get_by_id($idTreatment);
+            $timeTreatment = $treatment->treatment_time;
+        }
+        // get booking: ($data['bookings']) andcheck booking
+        $typeFacility = array();
+        foreach ( $data['bookings'] as $item ) {
+            if ( !in_array($item->facility_id, $typeFacility) ) {
+                $typeFacility[] = $item->facility_id;
+            }
+        }
+        $tmpBookings = array();
+        $status = array();
+        foreach ( $typeFacility as $itemTypeFacility ) {
+            $status[$itemTypeFacility] = 1;
+            foreach ( $data['bookings'] as $key => $item ) {
+                if ( $data['bookings'][$key]->facility_id == $itemTypeFacility ) {
+                    if ( $key == 0 ) {
+                        $status[$itemTypeFacility] = $data['bookings'][$key];
+                    }
+                    if ( $key != 0 && $data['bookings'][$key]->booking_start_time-15 != $data['bookings'][$key - 1]->booking_start_time ) {
+                        $status[$itemTypeFacility] = $data['bookings'][$key];
+                    }
+                }
+            }
+        }
+        echo '<pre>';
+        print_r($status);
+        echo '</pre>';
+        die;
+        // return list booking is ok
+        // end research booking is ok treatment time
+
         return view('backend.ortho.bookings.booking_result_list', $data);
     }
 

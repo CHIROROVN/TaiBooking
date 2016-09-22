@@ -60,6 +60,7 @@
 
         <?php
         $text = '末設定';
+        $tmpText = array();
         ?>
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -71,14 +72,38 @@
                 $str = '';
                 foreach ( $doctors as $doctor ) {
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+
+                  // set name doctor
+                  $data_u_id = null;
+                  if ( $doctor->shift_free1 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free2 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free3 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free4 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free5 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } else {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+                  if ( $text != '末設定' ) {
+                    $tmpText[] = $doctor->u_name . '-' . $facility->facility_id;
+                    break;
+                  }
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
 
-                // if ( $doctor->shift_free1 == $facility->facility_id ) {
-                //   $text = $facility->facility_name;die;
-                // }
+                
               ?>
-              <td align="center" width=""><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -91,14 +116,42 @@
                 $str = '';
                 foreach ( $doctors as $doctor ) {
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+
+                  // set name doctor
+                  $data_u_id = null;
+                  if ( $doctor->shift_free1 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free2 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free3 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free4 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free5 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } else {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+
+                  if ( in_array($text . '-' . $facility->facility_id, $tmpText) ) {
+                    $text = '末設定'; 
+                    $data_u_id = null;
+                  }
+
+                  if ( $text != '末設定' ) {
+                    $tmpText[] = $doctor->u_name . '-' . $facility->facility_id;
+                    break;
+                  }
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
-
-                // if ( $doctor->shift_free1 == $facility->facility_id ) {
-                //   $text = $facility->facility_name;die;
-                // }
               ?>
-              <td align="center" width=""><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -111,14 +164,42 @@
                 $str = '';
                 foreach ( $doctors as $doctor ) {
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+
+                  // set name doctor
+                  $data_u_id = null;
+                  if ( $doctor->shift_free1 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free2 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free3 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free4 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } elseif ( $doctor->shift_free5 == $facility->facility_id ) {
+                    $text = $doctor->u_name;
+                    $data_u_id = $doctor->u_id;
+                  } else {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+
+                  if ( in_array($text . '-' . $facility->facility_id, $tmpText) ) {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+
+                  if ( $text != '末設定' ) {
+                    $tmpText[] = $doctor->u_name . '-' . $facility->facility_id;
+                    break;
+                  }
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
-
-                // if ( $doctor->shift_free1 == $facility->facility_id ) {
-                //   $text = $facility->facility_name;die;
-                // }
               ?>
-              <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="142px"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -243,12 +324,14 @@
                       }
                     }
 
+                    // set link
                     if ( empty($arr_bookings[$facility_id][$fullTime]->patient_id) ) {
                       $link = route('ortho.bookings.booking.regist', $arr_bookings[$facility_id][$fullTime]->booking_id);
                     } else {
                       $link = route('ortho.bookings.booking.detail', $arr_bookings[$facility_id][$fullTime]->booking_id);
                     }
 
+                    // set text title
                     if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1 ) {
                       $color = 'green';
                       $booking = @$arr_bookings[$facility_id][$fullTime];
@@ -384,23 +467,15 @@
       });
 
       $('.input-user').click(function(event) {
-        console.log($(this).val());
-        console.log($(this).attr('text'));
         var u_id = $(this).val();
         var u_name = $(this).attr('text');
 
         if ( u_id == '-1' ) {
           objPopup.html('末設定');
           objPopup.attr('data-u-id', null);
-          // $('.facility_id-' + facility_id).each(function(index, el) {
-          //   $('.facility_id-' + facility_id).find('span').html('<br /><span></span>');
-          // });
         } else {
           objPopup.html(u_name);
           objPopup.attr('data-u-id', u_id);
-          // $('.facility_id-' + facility_id).each(function(index, el) {
-          //   $('.facility_id-' + facility_id).find('span').html('<br /><span>' + u_name + '</span>');
-          // });
         }
         objPopup.popover('hide');
 

@@ -254,7 +254,7 @@ class BookingModel
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
                         ->where('t_booking.last_kind', '<>', DELETE)
-                        // ->where('t_booking.booking_rev', $this->getLastBookingRev())                        
+                        // ->where('t_booking.booking_rev', $this->getLastBookingRev())
                         ->where('t_booking.booking_childgroup_id', $booking_childgroup_id)
                         ->orderBy('t_booking.booking_id', 'asc')
                         ->get();
@@ -537,6 +537,10 @@ class BookingModel
         }else{
             $dateNow = formatDate(Carbon::now()->toDateTimeString(), '-');
             $result = $db->whereDate('booking_date', '>=', $dateNow);
+        }
+
+        if(isset($where['booking_start_time'])){
+            $result = $db->where('booking_start_time', '=', $where['booking_start_time']);
         }
 
         if(isset($where['clinic_service_name'])){

@@ -153,6 +153,7 @@
                           時
                           <select name="bk_start_min"  id="bk_start_min" style="width: 50px;" class="bk_datetime_start">
                                   <option value="">--</option>
+                                  <option value="00">00</option>
                                   <option value="15">15</option>
                                   <option value="30">30</option>
                                   <option value="45">45</option>
@@ -271,6 +272,14 @@
     $('.w_later_option').attr('disabled', true);
     $('input.bk_datetime_start').attr('disabled', true);
     $('.bk_datetime_start').attr('disabled', true);
+  });
+
+   $( "#bk_start_hour" ).change(function() {
+    if($(this).val() == ''){
+
+    }else{
+      $('#bk_start_min option[value="00"]').prop('selected',true);
+    }
   });
 
 </script>

@@ -1373,6 +1373,13 @@ class BookingController extends BackendController
             }else{
                 $condition['week_later'] = Input::get('week_later');
             }
+            if(!empty(Input::get('bk_start_hour'))){
+                $bk_start_hour      = Input::get('bk_start_hour');
+            }
+            if(!empty(Input::get('bk_start_min'))){
+                $bk_start_min       = Input::get('bk_start_min');
+            }
+            $condition['booking_start_time']    = (int)($bk_start_hour.$bk_start_min);
         }
 
         if(!empty(Input::get('clinic_service_name')))
@@ -1407,6 +1414,10 @@ class BookingController extends BackendController
         if(Input::get('week_later') != null){
             $where['week_later']          = Input::get('week_later');
             $data['week_later']           = Input::get('week_later');
+        }
+        if(Input::get('booking_start_time') != null){
+            $where['booking_start_time']          = Input::get('booking_start_time');
+            $data['booking_start_time']           = Input::get('booking_start_time');
         }
         if(Input::get('clinic_service_name') != null){
             $where['clinic_service_name'] = Input::get('clinic_service_name');

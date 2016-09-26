@@ -71,14 +71,7 @@
     </table>
       <div class="row margin-bottom">
         <div class="col-md-12 text-center">
-        {!! $bookings->appends(
-        ['clinic_id'=>@$clinic_id,
-        'doctor_id'=>@$doctor_id,
-        'hygienist_id'=>@$hygienist_id,
-        'booking_date'=>@$booking_date,
-        'week_later'=>@$week_later,
-        'clinic_service_name'=>@$clinic_service_name]
-        )->render(new App\Pagination\SimplePagination($bookings)) !!}
+        
         </div>
       </div>
 

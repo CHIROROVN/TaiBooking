@@ -1646,7 +1646,7 @@ class BookingController extends BackendController
         Session::put('where_booking', $where);
 
         $clsBooking                       = new BookingModel();
-        $data['bookings']                 = $clsBooking->get_booking_list2($where);
+        $bookings                         = $clsBooking->get_booking_list2($where);
         $clsFacility                      = new FacilityModel();
         $data['facilities']               = $clsFacility->list_facility_all();
         $clsTreatment1                    = new Treatment1Model();
@@ -1664,9 +1664,10 @@ class BookingController extends BackendController
             $treatment = $clsTreatment1->get_by_id($idTreatment);
             $timeTreatment = $treatment->treatment_time;
         }
-        // get booking: ($data['bookings']) andcheck booking
+        
+        // get booking: ($bookings) andcheck booking
         $typeFacility = array();
-        foreach ( $data['bookings'] as $item ) {
+        foreach ( $bookings as $item ) {
             if ( !in_array($item->facility_id, $typeFacility) ) {
                 $typeFacility[] = $item->facility_id;
             }
@@ -1675,7 +1676,7 @@ class BookingController extends BackendController
 
         foreach ( $typeFacility as $itemFac ) {
             $tmp = array();
-            foreach ( $data['bookings'] as $item ) {
+            foreach ( $bookings as $item ) {
                 if ( $item->facility_id == $itemFac ) {
                     $tmp[] = $item;
                 }
@@ -1683,35 +1684,35 @@ class BookingController extends BackendController
             $tmpBookings[$itemFac] = $tmp;
         }
 
-
-        echo '<pre>';
-        print_r($tmpBookings);
-        echo '</pre>';
-        // die;
         // return list booking is ok
         $tmpBookingTimeOk = array();
+        $timeTreatmentNumber = $timeTreatment / 15;
         foreach ( $tmpBookings as $key => $values ) {
             foreach ( $values as $keyBooking => $itemBooking ) {
-                if ( isset($values[$keyBooking]) && isset($values[$keyBooking + 1]) && isset($values[$keyBooking + 2]) ) {
-                    if ( ($values[$keyBooking]->booking_start_time + 15) == $values[$keyBooking + 1]->booking_start_time
-                        && ($values[$keyBooking + 1]->booking_start_time + 15) == $values[$keyBooking + 2]->booking_start_time ) {
+                $where = true;
+                for ( $i = 0; $i < $timeTreatmentNumber; $i++ ) {
+                    if ( !isset($values[$keyBooking + $i]) ) {
+                        $where = false;
+                        break;
+                    }
+                }
+                
+                if ( $where ) {
+                    $whereTime = true;
+                    for ( $i = 0; $i < $timeTreatmentNumber - 1; $i++ ) {
+                        if ( convertStartTime($values[$keyBooking + $i]->booking_start_time + 15) != convertStartTime($values[$keyBooking + $i + 1]->booking_start_time) ) {
+                            $whereTime = false;
+                        }
+                    }
+                    //(convertStartTime($values[$keyBooking]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 1]->booking_start_time) && (convertStartTime($values[$keyBooking + 1]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 2]->booking_start_time)
+                    if ( $whereTime ) {
                         $tmpBookingTimeOk[] = $values[$keyBooking];
                     }
-                    echo '<pre>';
-                    print_r($values[$keyBooking]->booking_start_time);
-                    echo '<br>';
-                    print_r(convertStartTime($values[$keyBooking + 1]->booking_start_time + 15));
-                    echo '<br>';
-                    print_r($values[$keyBooking + 2]->booking_start_time);
-                    echo '</pre>';
-                    die;
                 }
             }
         }
-        echo '<pre>';
-        print_r($tmpBookingTimeOk);
-        echo '</pre>';
-        die;
+
+        $data['bookings'] = $tmpBookingTimeOk;
         // end research booking is ok treatment time
 
         return view('backend.ortho.bookings.booking_result_list', $data);

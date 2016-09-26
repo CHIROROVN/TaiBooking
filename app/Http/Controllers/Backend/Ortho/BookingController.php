@@ -1557,6 +1557,7 @@ class BookingController extends BackendController
     public function postConfirm($booking_id, $id)
     {
         $clsBooking                     = new BookingModel();
+        $flag = false;
         //Booking New
         $new_booking                    = $clsBooking->get_by_id($id);
         $new_booking_date               = $new_booking->booking_date;
@@ -1566,11 +1567,11 @@ class BookingController extends BackendController
         //Booking Current
         $curr_booking                   = $clsBooking->get_by_id($booking_id);
         $child_group_booking            = $curr_booking->booking_childgroup_id;
-        $group_booking                  = $curr_booking->booking_group_id;
+        $booking_group_id               = $curr_booking->booking_group_id;
         $patient_id                     = $curr_booking->patient_id;
         $facility_id                    = $curr_booking->facility_id;
 
-        $tmpGroup                       = explode('_', $group_booking);
+        $tmpGroup                       = explode('_', $booking_group_id);
 
         $tmpChildGroup                  = explode('_', $child_group_booking);
 
@@ -1584,7 +1585,7 @@ class BookingController extends BackendController
             $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
         }
 
-        $group_booking                  = $clsBooking->get_by_child_group($child_group_booking, $patient_id, $facility_id);
+        $group_booking                  = $clsBooking->get_by_child_group($child_group_booking, $patient_id, $booking_group_id, $facility_id);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;
@@ -1613,7 +1614,7 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.bookings.booking_change_date', [$id]);
+            return redirect()->route('ortho.bookings.booking_change_list', [$id]);
         }
 
         // if($clsBooking->update($id, $dataInput))

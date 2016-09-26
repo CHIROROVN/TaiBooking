@@ -1672,22 +1672,46 @@ class BookingController extends BackendController
             }
         }
         $tmpBookings = array();
-        $status = array();
-        foreach ( $typeFacility as $itemTypeFacility ) {
-            $status[$itemTypeFacility] = 1;
-            foreach ( $data['bookings'] as $key => $item ) {
-                if ( $data['bookings'][$key]->facility_id == $itemTypeFacility ) {
-                    if ( $key == 0 ) {
-                        $status[$itemTypeFacility] = $data['bookings'][$key];
+
+        foreach ( $typeFacility as $itemFac ) {
+            $tmp = array();
+            foreach ( $data['bookings'] as $item ) {
+                if ( $item->facility_id == $itemFac ) {
+                    $tmp[] = $item;
+                }
+            }
+            $tmpBookings[$itemFac] = $tmp;
+        }
+
+
+        echo '<pre>';
+        print_r($tmpBookings);
+        echo '</pre>';
+        // die;
+        // return list booking is ok
+        $tmpBookingTimeOk = array();
+        foreach ( $tmpBookings as $key => $values ) {
+            foreach ( $values as $keyBooking => $itemBooking ) {
+                if ( isset($values[$keyBooking]) && isset($values[$keyBooking + 1]) && isset($values[$keyBooking + 2]) ) {
+                    if ( ($values[$keyBooking]->booking_start_time + 15) == $values[$keyBooking + 1]->booking_start_time
+                        && ($values[$keyBooking + 1]->booking_start_time + 15) == $values[$keyBooking + 2]->booking_start_time ) {
+                        $tmpBookingTimeOk[] = $values[$keyBooking];
                     }
-                    if ( $key != 0 && $data['bookings'][$key]->booking_start_time-15 != $data['bookings'][$key - 1]->booking_start_time ) {
-                        $status[$itemTypeFacility] = $data['bookings'][$key];
-                    }
+                    echo '<pre>';
+                    print_r($values[$keyBooking]->booking_start_time);
+                    echo '<br>';
+                    print_r(convertStartTime($values[$keyBooking + 1]->booking_start_time + 15));
+                    echo '<br>';
+                    print_r($values[$keyBooking + 2]->booking_start_time);
+                    echo '</pre>';
+                    die;
                 }
             }
         }
-
-        // return list booking is ok
+        echo '<pre>';
+        print_r($tmpBookingTimeOk);
+        echo '</pre>';
+        die;
         // end research booking is ok treatment time
 
         return view('backend.ortho.bookings.booking_result_list', $data);

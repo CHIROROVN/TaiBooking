@@ -1494,6 +1494,8 @@ class BookingController extends BackendController
         $curr_booking                   = $clsBooking->get_by_id($booking_id);
         $child_group_booking            = $curr_booking->booking_childgroup_id;
         $group_booking                  = $curr_booking->booking_group_id;
+        $patient_id                     = $curr_booking->patient_id;
+        $facility_id                    = $curr_booking->facility_id;
 
         $tmpGroup                       = explode('_', $group_booking);
 
@@ -1509,7 +1511,7 @@ class BookingController extends BackendController
             $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
         }
 
-        $group_booking                  = $clsBooking->get_by_child_group($child_group_booking);
+        $group_booking                  = $clsBooking->get_by_child_group($child_group_booking, $patient_id, $facility_id);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;
@@ -1684,10 +1686,7 @@ class BookingController extends BackendController
                 }
             }
         }
-        echo '<pre>';
-        print_r($status);
-        echo '</pre>';
-        die;
+
         // return list booking is ok
         // end research booking is ok treatment time
 

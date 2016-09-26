@@ -276,7 +276,7 @@
 
    $( "#bk_start_hour" ).change(function() {
     if($(this).val() == ''){
-
+      $('#bk_start_min option[value=""]').prop('selected',true);
     }else{
       $('#bk_start_min option[value="00"]').prop('selected',true);
     }

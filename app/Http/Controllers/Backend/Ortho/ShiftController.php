@@ -233,6 +233,8 @@ class ShiftController extends BackendController
                     }
                     
                 }
+
+                // update
                 if ( !empty($shift->shift_free1) && !empty($shift->shift_free2) && !empty($shift->shift_free3) && !empty($shift->shift_free4) && !empty($shift->shift_free5) ) {
                     if ( $shift->shift_free1 == Input::get('facility_id') ) {
                         $dataUpdate['shift_free1'] = Input::get('facility_id');

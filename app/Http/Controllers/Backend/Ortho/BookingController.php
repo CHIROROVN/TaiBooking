@@ -1373,13 +1373,14 @@ class BookingController extends BackendController
             }else{
                 $condition['week_later'] = Input::get('week_later');
             }
-            if(!empty(Input::get('bk_start_hour'))){
-                $bk_start_hour      = Input::get('bk_start_hour');
+
+            if(!empty(Input::get('bk_start_hour')) && !empty(Input::get('bk_start_min'))){
+                $condition['booking_start_time']    = (int) Input::get('bk_start_hour').Input::get('bk_start_min');
+            }else if(!empty(Input::get('bk_start_hour')) && empty(Input::get('bk_start_min'))){
+                $condition['booking_start_time']    = (int) Input::get('bk_start_hour').'00';
+            }else if(empty(Input::get('bk_start_hour')) && !empty(Input::get('bk_start_min'))){
+                $condition['booking_start_time']    = (int) '00'.Input::get('bk_start_min');
             }
-            if(!empty(Input::get('bk_start_min'))){
-                $bk_start_min       = Input::get('bk_start_min');
-            }
-            $condition['booking_start_time']    = (int)($bk_start_hour.$bk_start_min);
         }
 
         if(!empty(Input::get('clinic_service_name')))

@@ -1436,7 +1436,7 @@ class BookingController extends BackendController
         $data['services']                 = $clsService->get_list();
 
         $data['booking_id']               = $booking_id;
-       
+
         if(!empty(Input::get('week_later'))){
             $data['week_later']           =  cal_change_date(Input::get('week_later'));
         }

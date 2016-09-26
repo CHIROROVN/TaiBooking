@@ -111,7 +111,7 @@
                       
                       <label class="radio-inline">
                       <input type="radio" class="week_later" value="week_specified" name="week_later" id="week_later">
-                          <select name="week_later_option"  id="week_later_option" style="width: 100px;">
+                          <select name="week_later_option"  id="week_later_option" style="width: 100px;" class="w_later_option">
                                   <option value="one_week">1週間後</option>
                                   <option value="two_week">2週間後</option>
                                   <option value="three_week">3週間後</option>
@@ -121,10 +121,44 @@
                           週指定</label>
                       
                         <label class="radio-inline"><input type="radio" class="week_later" name="week_later" id="date_picker" value="date_picker">日付指定
-                        <input type="calendar" name="date_picker_option" id="date_picker_option" class="datepicker" style="width: 150px;"></label>                     
-
+                        <input type="calendar" name="date_picker_option" id="date_picker_option" class="datepicker bk_datetime_start" style="width: 150px;"></label>
+                        予約開始時間
+                        <select name="bk_start_hour"  id="bk_start_hour" style="width: 50px;" class="bk_datetime_start">
+                                  <option value="">--</option>
+                                  <option value="00">00</option>
+                                  <option value="01">01</option>
+                                  <option value="02">02</option>
+                                  <option value="03">03</option>
+                                  <option value="04">04</option>
+                                  <option value="05">05</option>
+                                  <option value="06">06</option>
+                                  <option value="07">07</option>
+                                  <option value="08">08</option>
+                                  <option value="09">09</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                  <option value="13">13</option>
+                                  <option value="14">14</option>
+                                  <option value="15">15</option>
+                                  <option value="16">16</option>
+                                  <option value="17">17</option>
+                                  <option value="18">18</option>
+                                  <option value="19">19</option>
+                                  <option value="20">20</option>
+                                  <option value="21">21</option>
+                                  <option value="22">22</option>
+                                  <option value="23">23</option>
+                          </select>
+                          時
+                          <select name="bk_start_min"  id="bk_start_min" style="width: 50px;" class="bk_datetime_start">
+                                  <option value="">--</option>
+                                  <option value="15">15</option>
+                                  <option value="30">30</option>
+                                  <option value="45">45</option>
+                          </select>
+                          分
                     </td>
-
                 </tr>
                 <tr>
                   <td class="col-title">業務</td>
@@ -173,6 +207,20 @@
     // }
 
     $(document).ready(function() {
+      if($('#date_picker').is(':checked')){
+        $('input.bk_datetime_start').attr('disabled', false);
+        $('.bk_datetime_start').attr('disabled', false);
+      }else{
+        $('input.bk_datetime_start').attr('disabled', true);
+        $('.bk_datetime_start').attr('disabled', true);
+      }
+
+      if($('#week_later').is(':checked')){
+        $('.w_later_option').attr('disabled', false);
+      }else{
+        $('.w_later_option').attr('disabled', true);
+      }
+
       $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
       $(".datepicker").datepicker({
           showOn: 'both',
@@ -194,6 +242,37 @@
         $('#date_picker').attr("checked", "checked");
       });
   });
+
+  $('#date_picker').click(function(event) {
+    $('input.bk_datetime_start').attr('disabled', false);
+    $('.bk_datetime_start').attr('disabled', false);
+    $('.week_later_option').attr('disabled', true);
+  });
+
+   $('#week_later').click(function(event) {
+    $('.w_later_option').attr('disabled', false);
+    $('input.bk_datetime_start').attr('disabled', true);
+    $('.bk_datetime_start').attr('disabled', true);
+  });
+
+   $('#two_month').click(function(event) {
+    $('.w_later_option').attr('disabled', true);
+    $('input.bk_datetime_start').attr('disabled', true);
+    $('.bk_datetime_start').attr('disabled', true);
+  });
+
+   $('#one_month').click(function(event) {
+    $('.w_later_option').attr('disabled', true);
+    $('input.bk_datetime_start').attr('disabled', true);
+    $('.bk_datetime_start').attr('disabled', true);
+  });
+
+   $('#none_week').click(function(event) {
+    $('.w_later_option').attr('disabled', true);
+    $('input.bk_datetime_start').attr('disabled', true);
+    $('.bk_datetime_start').attr('disabled', true);
+  });
+
 </script>
 
 <script type="text/javascript">

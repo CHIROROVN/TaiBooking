@@ -230,9 +230,9 @@ class ShiftController extends BackendController
                             
                         }
                         
-                    }
-                    
+                    }   
                 }
+                $status = $clsShift->update($shift->shift_id, $dataUpdate);
 
                 // update
                 // if ( !empty($shift->shift_free1) && !empty($shift->shift_free2) && !empty($shift->shift_free3) && !empty($shift->shift_free4) && !empty($shift->shift_free5) ) {
@@ -259,7 +259,7 @@ class ShiftController extends BackendController
                         
                 //     }
                 // }
-                $status = $clsShift->update($shift->shift_id, $dataUpdate);
+                // $status = $clsShift->update($shift->shift_id, $dataUpdate);
             }
 
             // delete

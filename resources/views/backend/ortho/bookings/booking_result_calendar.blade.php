@@ -2,29 +2,6 @@
 
 @section('content')
 
-<?php
-  // doctor
-  // $totalRecordDoctor    = 45; //count($doctors);
-  // $numberRowDoctor      = ceil($totalRecordDoctor / 15);
-  // $rowspanDoctor        = $numberRowDoctor;
-  // if ( $numberRowDoctor == 0 ) {
-  //   $rowspanDoctor = 1;
-  // }
-
-  // // hygienists
-  // $totalRecordHygienists  = 45; //count($hygienists);
-  // $numberRowHygienists    = ceil($totalRecordHygienists / 15);
-  // $rowspanHygienists      = $numberRowHygienists;
-  // if ( $rowspanHygienists == 0 ) {
-  //   $rowspanHygienists = 1;
-  // }
-
-  // echo $totalRecordDoctor.'-dfw3erf-'.$numberRowDoctor;
-
-  // $totalRecord = count($doctors);
-  // echo $totalRecord;
-?>
-
 <section id="page">
   <div class="container">
     <div class="row content-page">
@@ -61,6 +38,7 @@
         <?php
         $text = '末設定';
         $tmpText = array();
+        $str = '';
         ?>
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -69,10 +47,14 @@
               <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
+                // set list doctor
                 $str = '';
                 foreach ( $doctors as $doctor ) {
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
-
+                }
+                
+                // set default doctor
+                foreach ( $doctors as $doctor ) {
                   // set name doctor
                   $data_u_id = null;
                   if ( $doctor->shift_free1 == $facility->facility_id ) {
@@ -100,8 +82,7 @@
                   }
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
-
-                
+ 
               ?>
               <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
@@ -113,10 +94,14 @@
             <tr>
               @foreach ( $facilitys as $facility )
               <?php
+                // set list doctor
                 $str = '';
                 foreach ( $doctors as $doctor ) {
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+                }
 
+                // set default doctor
+                foreach ( $doctors as $doctor ) {
                   // set name doctor
                   $data_u_id = null;
                   if ( $doctor->shift_free1 == $facility->facility_id ) {
@@ -161,10 +146,14 @@
             <tr>
               @foreach ( $facilitys as $facility )
               <?php
+                // set list doctor
                 $str = '';
                 foreach ( $doctors as $doctor ) {
                   $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $doctor->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $doctor->u_id . '" >' . $doctor->u_name . '</label></li>';
+                }
 
+                // set default doctor
+                foreach ( $doctors as $doctor ) {
                   // set name doctor
                   $data_u_id = null;
                   if ( $doctor->shift_free1 == $facility->facility_id ) {
@@ -450,13 +439,6 @@
       var objPopup = $(this);
       var facility_id = $(this).attr('data-facility-id');
       var u_id_old = $(this).attr('data-u-id');
-      var facility_id_old = $(this).attr('data-facility-id');
-      if ( u_id_old == undefined ) {
-        u_id_old = null;
-      }
-      if ( facility_id_old == undefined ) {
-        facility_id_old = null;
-      }
 
       // auto select value old
       $('.input-user').each(function(index, el) {
@@ -482,7 +464,7 @@
         // update to table "t_shift"
         $.ajax({
            url: "{{ route('ortho.shifts.update.free.ajax') }}",
-           data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old, facility_id_old: facility_id_old } ,
+           data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old } ,
            dataType: 'json',
            type: "get",
            success: function(result) {

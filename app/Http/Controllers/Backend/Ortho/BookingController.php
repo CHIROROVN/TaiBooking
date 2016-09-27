@@ -1557,7 +1557,7 @@ class BookingController extends BackendController
     public function postConfirm($booking_id, $id)
     {
         $clsBooking                     = new BookingModel();
-        $flag = false;
+
         //Booking New
         $new_booking                    = $clsBooking->get_by_id($id);
         $new_booking_date               = $new_booking->booking_date;
@@ -1566,14 +1566,14 @@ class BookingController extends BackendController
 
         //Booking Current
         $curr_booking                   = $clsBooking->get_by_id($booking_id);
-        $child_group_booking            = $curr_booking->booking_childgroup_id;
-        $booking_group_id               = $curr_booking->booking_group_id;
+        $bk_child_group                 = $curr_booking->booking_childgroup_id;
+        $bk_group_id                    = $curr_booking->booking_group_id;
         $patient_id                     = $curr_booking->patient_id;
         $facility_id                    = $curr_booking->facility_id;
 
-        $tmpGroup                       = explode('_', $booking_group_id);
+        $tmpGroup                       = explode('_', $bk_group_id);
 
-        $tmpChildGroup                  = explode('_', $child_group_booking);
+        $tmpChildGroup                  = explode('_', $bk_child_group);
 
         $booking_group_id       = '';
         if(!empty($tmpGroup[0])){
@@ -1585,13 +1585,14 @@ class BookingController extends BackendController
             $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
         }
 
-        $group_booking                  = $clsBooking->get_by_child_group($child_group_booking, $patient_id, $booking_group_id, $facility_id);
+        $group_booking                  = $clsBooking->get_by_child_group($bk_child_group, $patient_id, $facility_id, $bk_group_id);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;
         $condition['next']              = $new_booking_date;
 
         $start_time = (int)$new_booking_start_time;
+        $flag = false;
 
         foreach ($group_booking as $gbk) {
             if ($clsBooking->update($gbk->booking_id, array(

@@ -100,7 +100,7 @@
             </tr>
             <tr>
               <td class="col-title">チェアー</td>
-              <td>{{$booking_change->facility_name}}</td>
+              <td>{{@$facilities[$booking_change->facility_id]}}</td>
             </tr>
             <tr>
               <td class="col-title">ドクター</td>

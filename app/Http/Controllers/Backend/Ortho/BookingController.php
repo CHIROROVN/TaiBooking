@@ -33,6 +33,7 @@ use URL;
 use Session;
 use Config;
 use Response;
+use Redirect;
 
 class BookingController extends BackendController
 {
@@ -1528,6 +1529,8 @@ class BookingController extends BackendController
             $data['inspections']            = $clsInspection->get_list();
             $clsInsurance                   = new InsuranceModel();
             $data['insurances']             = $clsInsurance->get_list();
+            $clsFacility                      = new FacilityModel();
+            $data['facilities']               = $clsFacility->list_facility_all();
 
             $data['booking_id']             = $booking_id;
             $data['id']                     = $id;
@@ -1547,7 +1550,6 @@ class BookingController extends BackendController
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         ));
-
             return view('backend.ortho.bookings.booking_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);
@@ -1606,7 +1608,10 @@ class BookingController extends BackendController
                                         'last_kind'             => UPDATE
                                     )) ) {
                 $flag = true;
+            }else{
+                $flag = false;
             }
+
             $start_time = convertStartTime($start_time + 15);
         }
 
@@ -1614,8 +1619,11 @@ class BookingController extends BackendController
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
         } else {
+            $where              = array();
+
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.bookings.booking_change_list', [$id]);
+           // return redirect()->route('ortho.bookings.booking_change_list', [$id]);
+            return Redirect::to();
         }
 
         // if($clsBooking->update($id, $dataInput))

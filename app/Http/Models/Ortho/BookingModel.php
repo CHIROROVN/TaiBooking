@@ -569,14 +569,13 @@ class BookingModel
             }
         }
 
-        return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
+    return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
                         ->orderBy('t_booking.booking_date', 'asc')
                         ->orderBy('t_booking.booking_start_time', 'asc')
                         ->orderBy('tf1.facility_name', 'asc')
                         ->simplePaginate(PAGINATION);
         
     }
-	
 
     public function get_booking_list2($where = null){
         $db =  DB::table($this->table)

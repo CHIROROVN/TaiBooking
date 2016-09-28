@@ -241,6 +241,7 @@
 
       $('.ui-datepicker-trigger').click(function(event) {
         $('#date_picker').attr("checked", "checked");
+        $('.bk_datetime_start').attr('disabled', false);
       });
   });
 

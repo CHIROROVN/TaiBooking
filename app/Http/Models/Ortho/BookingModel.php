@@ -276,7 +276,6 @@ class BookingModel
 
     public function get_new_booking_child_group($booking_group_id=null, $start_time=null, $facility_id=null, $new_booking_group=null, $limit=null)
     {
-
             $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
@@ -673,8 +672,8 @@ class BookingModel
 
         return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
                         ->orderBy('t_booking.booking_date', 'asc')
-                        ->orderBy('tf1.facility_id', 'asc')
                         ->orderBy('t_booking.booking_start_time', 'asc')
+                        ->orderBy('tf1.facility_id', 'asc')
                         ->get();
 
         // if(isset($where['clinic_service_name']) && $service_kind == 2){

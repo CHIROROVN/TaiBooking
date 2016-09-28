@@ -92,6 +92,7 @@
               <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
+                $tmpText = array();
                 // set list doctor
                 $str = '';
                 foreach ( $doctors as $doctor ) {
@@ -316,6 +317,7 @@
             $hour = $tmp_arr[0];
             $minute = $tmp_arr[1];
             $fullTime = $hour . $minute;
+            $tmpText = array();
           ?>
           <tr>
             <td align="center" style="">{{ $time }}～</td>

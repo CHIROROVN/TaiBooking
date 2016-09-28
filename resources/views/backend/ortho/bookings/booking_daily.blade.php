@@ -1,6 +1,6 @@
 @extends('backend.ortho.ortho')
 @section('content')
-
+<?php $tmpText = array(); ?>
   <section id="page">
     <div class="container">
       <div class="row content-page">

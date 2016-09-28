@@ -274,6 +274,23 @@ class BookingModel
         return $results;
     }
 
+    public function get_new_booking_child_group($booking_group_id=null, $start_time=null, $facility_id=null, $new_booking_group=null, $limit=null)
+    {
+
+            $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.booking_group_id','=' , $new_booking_group)
+                        ->where('t_booking.booking_start_time', '>=', $start_time)
+                        ->where('t_booking.facility_id', $facility_id)
+                        ->orderBy('t_booking.booking_date', 'asc')
+                        ->orderBy('t_booking.booking_start_time', 'asc')
+                        ->limit($limit)
+                        ->get();
+        return $results;
+    }
+
     public function get_by_childGroup($booking_group_id = array())
     {
         $results = DB::table($this->table)
@@ -583,7 +600,6 @@ class BookingModel
                         ->select('t_booking.booking_id', 't_booking.patient_id', 't_booking.booking_date', 't_booking.booking_start_time', 't_booking.booking_total_time', 't_booking.facility_id', 't_booking.facility_id', 't_booking.service_1', 't_booking.service_1_kind', 't_booking.service_2', 't_booking.service_2_kind','t_booking.doctor_id','t_booking.hygienist_id', 'tf1.facility_id', 'tf1.facility_name', 't_booking.clinic_id', 't_booking.booking_group_id')
                         ->whereNull('t_booking.patient_id')
                         ->where('t_booking.last_kind', '<>', DELETE);
-                        // ->where('t_booking.booking_rev', $this->getLastBookingRev());
 
         if(isset($where['clinic_id'])){
             $result = $db->where('t_booking.clinic_id', '=', $where['clinic_id']);
@@ -639,8 +655,8 @@ class BookingModel
             if($service_kind == 1){
                 $result = $db->where('t_booking.service_1', '=', $service)
                 ->where('t_booking.service_1_kind', '=', $service_kind);
-                $result = $db->orWhere('t_booking.service_2', '=', $service)
-                ->where('t_booking.service_2_kind', '=', $service_kind);
+                // $result = $db->orWhere('t_booking.service_2', '=', $service)
+                // ->where('t_booking.service_2_kind', '=', $service_kind);
             }
 
             if($service_kind == 2){
@@ -650,21 +666,30 @@ class BookingModel
 
                 $result = $db->where('t_booking.service_1', '=', '-1')
                 ->where('t_booking.service_1_kind', '=', $service_kind);
-                $result = $db->orWhere('t_booking.service_2', '=', '-1')
-                ->where('t_booking.service_2_kind', '=', $service_kind);
+                // $result = $db->orWhere('t_booking.service_2', '=', '-1')
+                // ->where('t_booking.service_2_kind', '=', $service_kind);
             }
         }
 
-        if(isset($where['clinic_service_name']) && $service_kind == 2){
-            return $db->orderBy('t_booking.booking_date', 'asc')
+        return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
+                        ->orderBy('t_booking.booking_date', 'asc')
                         ->orderBy('tf1.facility_id', 'asc')
-                        ->orderBy('t_booking.booking_start_time', 'asc')->get();
-        }else{
-            return $db->groupBy('t_booking.booking_start_time','t_booking.facility_id')->orderBy('t_booking.booking_date', 'asc')
                         ->orderBy('t_booking.booking_start_time', 'asc')
-                        ->orderBy('tf1.facility_name', 'asc')
                         ->get();
-        }
+
+        // if(isset($where['clinic_service_name']) && $service_kind == 2){
+        //     return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
+        //                 ->orderBy('t_booking.booking_date', 'asc')
+        //                 ->orderBy('tf1.facility_id', 'asc')
+        //                 ->orderBy('t_booking.booking_start_time', 'asc')
+        //                 ->get();
+        // }else{
+        //     return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
+        //                 ->orderBy('t_booking.booking_date', 'asc')
+        //                 ->orderBy('t_booking.booking_start_time', 'asc')
+        //                 ->orderBy('tf1.facility_name', 'asc')
+        //                 ->get();
+        // }
     }
 
     /**

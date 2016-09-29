@@ -1487,7 +1487,6 @@ class BookingController extends BackendController
                         break;
                     }
                 }
-                
                 if ( $where ) {
                     $whereTime = true;
                     for ( $i = 0; $i < $timeTreatmentNumber - 1; $i++ ) {

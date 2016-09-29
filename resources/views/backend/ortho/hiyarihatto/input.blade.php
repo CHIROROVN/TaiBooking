@@ -36,9 +36,9 @@
             <h4>1. 発生した時間と場所（必須）</h4>
             <div class="row margin-left-33">
               <div class="col-md-12">
-                <input name="year" id="year" value="{{old('year')}}" class="form-control form-control--xs text" type="text" style="text-align: center;"> 年
-                <input name="month" id="month" value="{{old('year')}}" class="form-control form-control--xs" style="text-align: center;" type="text"> 月
-                <input name="day" id="day" value="{{old('day')}}" class="form-control form-control--xs" type="text" style="text-align: center;"> 日
+                <input name="year" id="year" value="{{old('year')}}" class="form-control form-control--xs text" type="text" style="text-align: center;" placeholder="----"> 年
+                <input name="month" id="month" value="{{old('month')}}" class="form-control form-control--xs" style="text-align: center;" type="text" placeholder="--"> 月
+                <input name="day" id="day" value="{{old('day')}}" class="form-control form-control--xs" type="text" style="text-align: center;" placeholder="--"> 日
                 <select name="hour" id="hour" class="form-control form-control--xs" style="text-align: center;">
                   <option value="" style="text-align: center;">--</option>
                   @for($i=0; $i<=23; $i++)
@@ -237,7 +237,7 @@
                 </div>
                 <div class="row margin-left-33">
                   <div class="col-md-9">
-                    <textarea name="occurrence" class="ready71" cols="80" rows="3" id="occurrence" class="form-control form-control-full">{{old('occurrence')}}</textarea>
+                    <textarea name="occurrence" cols="80" rows="3" id="occurrence" class="form-control form-control-full ready71">{{old('occurrence')}}</textarea>
                   </div>
                 </div>
               </li>
@@ -307,7 +307,7 @@
 
                 <div class="row margin-left-33">
                   <div class="col-md-9">
-                    <textarea name="affect_text" class="ready72" cols="80" rows="3" id="affect_text" class="form-control form-control-full">{{old('affect_text')}}</textarea>
+                    <textarea name="affect_text" cols="80" rows="3" id="affect_text" class="form-control form-control-full ready72">{{old('affect_text')}}</textarea>
                   </div>
                 </div>
                   @if ($errors->first('affect_env'))
@@ -387,7 +387,7 @@
                 </div>
                 <div class="row margin-left-33">
                   <div class="col-md-9">
-                    <textarea name="medical_text" class="ready73" cols="80" rows="3" id="medical_text" class="form-control form-control-full">{{old('medical_text')}}</textarea>
+                    <textarea name="medical_text" cols="80" rows="3" id="medical_text" class="form-control form-control-full ready73">{{old('medical_text')}}</textarea>
                   </div>
                 </div>
                 @if ($errors->first('medical_device'))
@@ -447,7 +447,7 @@
                 </div>
                 <div class="row margin-left-33">
                   <div class="col-md-9">
-                    <textarea name="edu_text" class="ready74" cols="80" rows="3" id="edu_text" class="form-control form-control-full">{{old('edu_text')}}</textarea>
+                    <textarea name="edu_text" cols="80" rows="3" id="edu_text" class="form-control form-control-full ready74">{{old('edu_text')}}</textarea>
                   </div>
                 </div>
                   @if ($errors->first('education'))
@@ -547,7 +547,7 @@
       </div>
     </div>
   </section>
-<script src="{{ asset('') }}public/backend/ortho/common/js/jquery-1.9.1.min.js"></script>
+<script src="{{ asset('') }}public/backend/ortho/common/js/jquery.min.js"></script>
 <script  type="text/javascript" charset="utf-8" async defer>
   $( document ).ready(function() {
      if(!$('#other_cb').is(':checked')){

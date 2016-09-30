@@ -35,7 +35,7 @@
                         @foreach($doctors as $doctor)
                           <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="checkbox">
-                              <label><input name="doctor_id[]" value="{{$doctor->id}}" type="checkbox"> {{$doctor->u_name}}</label>
+                              <label><input name="doctor_id" value="{{$doctor->id}}" type="radio"> {{$doctor->u_name}}</label>
                             </div>
                           </div>
                         @endforeach
@@ -51,7 +51,7 @@
                         @foreach($hygienists as $hygienist)
                           <div class="col-xs-4 col-sm-4 col-md-4">
                             <div class="checkbox">
-                              <label><input name="hygienist_id[]" value="{{$hygienist->id}}" type="checkbox"> {{$hygienist->u_name}}</label>
+                              <label><input name="hygienist_id" value="{{$hygienist->id}}" type="radio"> {{$hygienist->u_name}}</label>
                             </div>
                           </div>
                         @endforeach

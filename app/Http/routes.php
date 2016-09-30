@@ -298,11 +298,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	
 	Route::post('bookings/booking-change/confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@postConfirm']);
 
-
-
 	Route::get('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@getSearch']);
 
-	Route::post('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@postSearch']);	
+	Route::post('bookings/booking-search', ['as' => 'ortho.bookings.booking_search', 'uses' => 'BookingController@postSearch']);
 	
 	Route::get('bookings/booking-result-list', ['as' => 'ortho.bookings.booking.result.list', 'uses' => 'BookingController@bookingResultList']);
 
@@ -368,6 +366,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@getEdit']);
 	Route::post('ddrs/edit/{id}', ['as' => 'ortho.ddrs.edit', 'uses' => 'DdrController@postEdit']);
 	Route::get('ddrs/delete/{id}', ['as' => 'ortho.ddrs.delete', 'uses' => 'DdrController@getDelete']);
+	
 //Hiyarihatto
 	Route::get('hiyarihatto/input', ['as' => 'ortho.hiyarihatto.input', 'uses' => 'HiyarihattoController@getInput']);
 	Route::post('hiyarihatto/input', ['as' => 'ortho.hiyarihatto.input', 'uses' => 'HiyarihattoController@postInput']);
@@ -376,9 +375,6 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('hiyarihatto/sent', ['as' => 'ortho.hiyarihatto.sent', 'uses' => 'HiyarihattoController@sent']);
 	Route::get('hiyarihatto/sent-email', ['as' => 'ortho.hiyarihatto.sent_email', 'uses' => 'HiyarihattoController@sendEmail']);
 	Route::get('hiyarihatto/complete', ['as' => 'ortho.hiyarihatto.complete', 'uses' => 'HiyarihattoController@complete']);
-
-
-
 
 
 	// auth

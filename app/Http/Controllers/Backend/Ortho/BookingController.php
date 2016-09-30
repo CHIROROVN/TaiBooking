@@ -1502,7 +1502,9 @@ class BookingController extends BackendController
             }
         }
 
-        $data['bookings'] = $tmpBookingTimeOk;
+         $data['bookings'] = $tmpBookingTimeOk;
+
+        //$data['bookings'] = $bookings;
         // end research booking is ok treatment time
 
         return view('backend.ortho.bookings.booking_change_list', $data);
@@ -1623,8 +1625,26 @@ class BookingController extends BackendController
             $bk_start_time = convertStartTime($bk_start_time + 15);
         }
 
+        $data_bk_change = array();
+        $where              = Session::get('where_booking_change');
+
+        if(!empty($where['clinic_id'])) $data_bk_change['clinic_id'] = $where['clinic_id'];
+        if(!empty($where['doctor_id'])) $data_bk_change['doctor_id'] = $where['doctor_id'];
+        if(!empty($where['hygienist_id'])) $data_bk_change['hygienist_id'] = $where['hygienist_id'];
+
+        if(!empty($where['clinic_service_name'])){
+            $tmp_service = explode('_', $where['clinic_service_name']);
+            $service           = $tmp_service[0];
+            $s_kind            = str_split($tmp_service[1], 2);
+            $service_kind      = $s_kind[1];
+
+            $data_bk_change['service_1']        = $service;
+            $data_bk_change['service_1_kind']   = $service_kind;
+        }
+
+
         foreach ($group_booking as $gbk) {
-            if ($clsBooking->update($gbk->booking_id, array(
+            if ($clsBooking->update($gbk->booking_id, array_merge($data_bk_change, array(
                                         'booking_date'          => $new_booking_date,
                                         'booking_start_time'    => $start_time,
                                         'booking_group_id'      => $booking_group_id,
@@ -1633,7 +1653,7 @@ class BookingController extends BackendController
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE
-                                    )) ) {
+                                    ))) ) {
                 $flag = true;
             }else{
                 $flag = false;
@@ -1646,10 +1666,9 @@ class BookingController extends BackendController
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
         } else {
-            $where              = Session::get('where_booking_change');
-
+            // $where              = Session::get('where_booking_change');
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.bookings.booking_change_list', $where);
+            return redirect()->route('ortho.bookings.booking_change_list', array_merge(array('booking_id'=>$booking_id),$where));
             if(Session::has('where_booking_change')) Session::forget('where_booking_change');
         }
         if(Session::has('where_booking_change')) Session::forget('where_booking_change');

@@ -244,54 +244,158 @@
 
           <!-- list hygienists -->
           <tr>
-            <td align="center" rowspan="3" class="col-title" style="width: 6%">衛生士</td>
-            @foreach ( $facilitys as $facility )
-            <?php
-              $str = '';
-              foreach ( $hygienists as $hygienist ) {
-                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
-              }
-              $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
-            ?>
-            <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
-              <ul>
-                {{ $str }}
-              </ul>
-            '>{{ $text }}</span></td>
-            @endforeach
-          </tr>
-          <tr>
-            @foreach ( $facilitys as $facility )
-            <?php
-              $str = '';
-              foreach ( $hygienists as $hygienist ) {
-                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
-              }
-              $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
-            ?>
-            <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
-              <ul>
-                {{ $str }}
-              </ul>
-            '>{{ $text }}</span></td>
-            @endforeach
-          </tr>
-          <tr>
-            @foreach ( $facilitys as $facility )
-            <?php
-              $str = '';
-              foreach ( $hygienists as $hygienist ) {
-                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="hygienist-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
-              }
-              $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
-            ?>
-            <td align="center" width="142px"><span data-u-id="" data-facility-id="{{ $facility->facility_id }}" class="popup popup-hygienist" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
-              <ul>
-                {{ $str }}
-              </ul>
-            '>{{ $text }}</span></td>
-            @endforeach
-          </tr>
+              <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
+              @foreach ( $facilitys as $facility )
+              <?php
+                // set list hygienist
+                $str = '';
+                foreach ( $hygienists as $hygienist ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
+                }
+                
+                // set default hygienist
+                foreach ( $hygienists as $hygienist ) {
+                  // set name hygienist
+                  $data_u_id = null;
+                  if ( $hygienist->shift_free1 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free2 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free3 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free4 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free5 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } else {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+                  if ( $text != '末設定' ) {
+                    $tmpText[] = $hygienist->u_name . '-' . $facility->facility_id;
+                    break;
+                  }
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+ 
+              ?>
+              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <!-- ggggggggggggggggggggggggggggggggggggggggggggggggggggggg -->
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+                // set list hygienist
+                $str = '';
+                foreach ( $hygienists as $hygienist ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
+                }
+
+                // set default hygienist
+                foreach ( $hygienists as $hygienist ) {
+                  // set name hygienist
+                  $data_u_id = null;
+                  if ( $hygienist->shift_free1 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free2 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free3 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free4 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free5 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } else {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+
+                  if ( in_array($text . '-' . $facility->facility_id, $tmpText) ) {
+                    $text = '末設定'; 
+                    $data_u_id = null;
+                  }
+
+                  if ( $text != '末設定' ) {
+                    $tmpText[] = $hygienist->u_name . '-' . $facility->facility_id;
+                    break;
+                  }
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+              ?>
+              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
+            <tr>
+              @foreach ( $facilitys as $facility )
+              <?php
+                // set list hygienist
+                $str = '';
+                foreach ( $hygienists as $hygienist ) {
+                  $str .= '<li><label class="radio"><input type="radio" class="input-user" text="' . $hygienist->u_name . '" name="doctor-facility-' . $facility->facility_id . '" value="' . $hygienist->u_id . '" >' . $hygienist->u_name . '</label></li>';
+                }
+
+                // set default hygienist
+                foreach ( $hygienists as $hygienist ) {
+                  // set name hygienist
+                  $data_u_id = null;
+                  if ( $hygienist->shift_free1 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free2 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free3 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free4 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } elseif ( $hygienist->shift_free5 == $facility->facility_id ) {
+                    $text = $hygienist->u_name;
+                    $data_u_id = $hygienist->u_id;
+                  } else {
+                    $text = '末設定';
+                    $data_u_id = null;
+                  }
+
+                  if ( in_array($text . '-' . $facility->facility_id, $tmpText) ) {
+                    $text = '末設定'; 
+                    $data_u_id = null;
+                  }
+
+                  if ( $text != '末設定' ) {
+                    $tmpText[] = $hygienist->u_name . '-' . $facility->facility_id;
+                    break;
+                  }
+                }
+                $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
+              ?>
+              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+                <ul>
+                  {{ $str }}
+                </ul>
+              '>{{ $text }}</span></td>
+              @endforeach
+            </tr>
           <!-- 3 -->
         </table>
       </div>

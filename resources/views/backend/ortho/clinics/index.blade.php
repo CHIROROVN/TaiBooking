@@ -128,10 +128,13 @@
         </div>
     </div>    
     </section>
+@stop
 
-    <script>
-      $(document).ready(function($){
-        $('.tel').mask('000-000-0000');
-      });
-    </script>
-@endsection
+
+@section('script')
+  <script>
+    $(document).ready(function($){
+      $('.tel').mask('000-000-0000');
+    });
+  </script>
+@stop

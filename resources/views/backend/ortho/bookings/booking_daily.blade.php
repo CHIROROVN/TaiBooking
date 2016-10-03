@@ -579,77 +579,76 @@
     </div>
   </section>
 
-<script>
-  $(document).ready(function(){
-    $('.popup').popover({
-      html: true
-    });
-    
-    // set value from popup
-    $('.popup').click(function(event) {
-      // reset
-      $('.popover').hide();
-      $(this).parent().find('.popover').show();
+@stop
 
-      var objPopup = $(this);
-      var facility_id = $(this).attr('data-facility-id');
-      var u_id_old = $(this).attr('data-u-id');
-      var facility_id_old = $(this).attr('data-facility-id');
-      if ( u_id_old == undefined ) {
-        u_id_old = null;
-      }
-      if ( facility_id_old == undefined ) {
-        facility_id_old = null;
-      }
 
-      // auto select value old
-      $('.input-user').each(function(index, el) {
-        if ( $(this).val() == objPopup.attr('data-u-id') ) {
-          $(this).attr("checked",true);
-          $(this).attr('disabled', 'disabled');
-        }
+@section('script')
+  <script>
+    $(document).ready(function(){
+      $('.popup').popover({
+        html: true
       });
+      
+      // set value from popup
+      $('.popup').click(function(event) {
+        // reset
+        $('.popover').hide();
+        $(this).parent().find('.popover').show();
 
-      $('.input-user').click(function(event) {
-        console.log($(this).val());
-        console.log($(this).attr('text'));
-        var u_id = $(this).val();
-        var u_name = $(this).attr('text');
-
-        if ( u_id == '-1' ) {
-          objPopup.html('末設定');
-          objPopup.attr('data-u-id', null);
-          // $('.facility_id-' + facility_id).each(function(index, el) {
-          //   $('.facility_id-' + facility_id).find('span').html('<br /><span></span>');
-          // });
-        } else {
-          objPopup.html(u_name);
-          objPopup.attr('data-u-id', u_id);
-          // $('.facility_id-' + facility_id).each(function(index, el) {
-          //   $('.facility_id-' + facility_id).find('span').html('<br /><span>' + u_name + '</span>');
-          // });
+        var objPopup = $(this);
+        var facility_id = $(this).attr('data-facility-id');
+        var u_id_old = $(this).attr('data-u-id');
+        var facility_id_old = $(this).attr('data-facility-id');
+        if ( u_id_old == undefined ) {
+          u_id_old = null;
         }
-        objPopup.popover('hide');
+        if ( facility_id_old == undefined ) {
+          facility_id_old = null;
+        }
 
-        // update to table "t_shift"
-        $.ajax({
-           url: "{{ route('ortho.shifts.update.free.ajax') }}",
-           data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old, facility_id_old: facility_id_old } ,
-           dataType: 'json',
-           type: "get",
-           success: function(result) {
-             console.log(result);
-           }
+        // auto select value old
+        $('.input-user').each(function(index, el) {
+          if ( $(this).val() == objPopup.attr('data-u-id') ) {
+            $(this).attr("checked",true);
+            $(this).attr('disabled', 'disabled');
+          }
         });
-        // end update to table "t_shift"
+
+        $('.input-user').click(function(event) {
+          console.log($(this).val());
+          console.log($(this).attr('text'));
+          var u_id = $(this).val();
+          var u_name = $(this).attr('text');
+
+          if ( u_id == '-1' ) {
+            objPopup.html('末設定');
+            objPopup.attr('data-u-id', null);
+            // $('.facility_id-' + facility_id).each(function(index, el) {
+            //   $('.facility_id-' + facility_id).find('span').html('<br /><span></span>');
+            // });
+          } else {
+            objPopup.html(u_name);
+            objPopup.attr('data-u-id', u_id);
+            // $('.facility_id-' + facility_id).each(function(index, el) {
+            //   $('.facility_id-' + facility_id).find('span').html('<br /><span>' + u_name + '</span>');
+            // });
+          }
+          objPopup.popover('hide');
+
+          // update to table "t_shift"
+          $.ajax({
+             url: "{{ route('ortho.shifts.update.free.ajax') }}",
+             data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old, facility_id_old: facility_id_old } ,
+             dataType: 'json',
+             type: "get",
+             success: function(result) {
+               // console.log(result);
+             }
+          });
+          // end update to table "t_shift"
+        });
       });
+      // end set value from popup
     });
-    // end set value from popup
-
-    // set fix table
-    
-    // end set fix table
-  });
-</script>
-
-@endsection
+  </script>
+@stop

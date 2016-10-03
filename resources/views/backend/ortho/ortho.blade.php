@@ -17,20 +17,6 @@
 <link href="{{ asset('') }}public/backend/ortho/common/css/fullcalendar.print.css" rel="stylesheet" media='print'>
 <link href="{{ asset('') }}public/backend/ortho/common/css/import.css" rel="stylesheet">
 
-<script src="{{ asset('') }}public/backend/ortho/common/js/jquery.min.js"></script>
-<!-- <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-1.9.1.min.js"></script> -->
-<!-- <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-migrate-1.2.0.min.js"></script> -->
-<script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap.min.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/jquery-ui.1.11.4.min.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/moment.min.js"></script>
-
-<script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-datetimepicker.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/fullcalendar.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-button-to-input-file.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/ckeditor/ckeditor.js"></script>
-<script src="{{ asset('') }}public/backend/ortho/common/js/jquery.fixedtable.js"></script>
 </head>
 <body>
   <!-- Header -->
@@ -56,5 +42,22 @@
   <!-- Content belong regist -->
     @yield('content')
   <!-- End content belong regist -->
+
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.min.js"></script>
+  <!-- <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-1.9.1.min.js"></script> -->
+  <!-- <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-migrate-1.2.0.min.js"></script> -->
+  <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap.min.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-ui.1.11.4.min.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/moment.min.js"></script>
+
+  <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-datetimepicker.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/fullcalendar.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-button-to-input-file.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/ckeditor/ckeditor.js"></script>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.fixedtable.js"></script>
+
+  @yield('script')
 </body>
 </html>

@@ -163,73 +163,75 @@
       </section>
 {!! Form::close() !!}
 
-<script type="text/javascript">
-    // function goBookingSearch() {
-    //   var clinic_id = $("#clinic_id option:selected").val();
-    //   var link = "{{route('ortho.bookings.booking.result.calendar')}}?clinic_id=" + clinic_id;
-    //   window.location.href = link;
-    // }
+@stop
 
-    $(document).ready(function() {
-      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-      $(".datepicker").datepicker({
-          showOn: 'both',
-          buttonText: 'カレンダー',
-          buttonImageOnly: true,
-          buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
-          dateFormat: 'yy-mm-dd',
-          constrainInput: true,
-          inline: true,
-          lang: 'ja'
-      });
+@section('script')
+  <script type="text/javascript">
+      // function goBookingSearch() {
+      //   var clinic_id = $("#clinic_id option:selected").val();
+      //   var link = "{{route('ortho.bookings.booking.result.calendar')}}?clinic_id=" + clinic_id;
+      //   window.location.href = link;
+      // }
 
-      $('.ui-datepicker-trigger').css('margin-top','1px');
-      $(".ui-datepicker-trigger").mouseover(function() {
-          $(this).css('cursor', 'pointer');
-      });
+      $(document).ready(function() {
+        $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+        $(".datepicker").datepicker({
+            showOn: 'both',
+            buttonText: 'カレンダー',
+            buttonImageOnly: true,
+            buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
+            dateFormat: 'yy-mm-dd',
+            constrainInput: true,
+            inline: true,
+            lang: 'ja'
+        });
 
-      $('.ui-datepicker-trigger').click(function(event) {
-        $('#date_picker').attr("checked", "checked");
-      });
-  });
-</script>
+        $('.ui-datepicker-trigger').css('margin-top','1px');
+        $(".ui-datepicker-trigger").mouseover(function() {
+            $(this).css('cursor', 'pointer');
+        });
 
-<script type="text/javascript">
-  $('#date_picker_option').click(function() {
-    $('#date_picker').attr("checked", "checked");
-  });
-
-  $('#none_week').click(function(event) {
-    $('#none_week').attr("checked", "checked");
-  });
-  $('#one_week').click(function(event) {
-    $('#one_week').attr("checked", "checked");
-  });
-  $('#one_month').click(function(event) {
-    $('#one_month').attr("checked", "checked");
-  });
-  $('#two_month').click(function(event) {
-    $('#two_month').attr("checked", "checked");
-  });
-
-  $('#week_later_option').click(function(event) {
-    $('#week_later').attr("checked", "checked");
-  });
-
-  $('#date_picker').click(function(event) {
-    $('#date_picker').attr("checked", "checked");
-  });
-  $('#week_later').click(function(event) {
-    $('#week_later').attr("checked", "checked");
-  });
-
-  $("#btnReset").click(function(event) {
-    $(".week_later").each(function( i, opt ) {
-     $('.week_later').attr('checked', false);
+        $('.ui-datepicker-trigger').click(function(event) {
+          $('#date_picker').attr("checked", "checked");
+        });
     });
-    $('#none_week').attr("checked", "checked");
-  });
+  </script>
 
-</script>
+  <script type="text/javascript">
+    $('#date_picker_option').click(function() {
+      $('#date_picker').attr("checked", "checked");
+    });
 
-@endsection
+    $('#none_week').click(function(event) {
+      $('#none_week').attr("checked", "checked");
+    });
+    $('#one_week').click(function(event) {
+      $('#one_week').attr("checked", "checked");
+    });
+    $('#one_month').click(function(event) {
+      $('#one_month').attr("checked", "checked");
+    });
+    $('#two_month').click(function(event) {
+      $('#two_month').attr("checked", "checked");
+    });
+
+    $('#week_later_option').click(function(event) {
+      $('#week_later').attr("checked", "checked");
+    });
+
+    $('#date_picker').click(function(event) {
+      $('#date_picker').attr("checked", "checked");
+    });
+    $('#week_later').click(function(event) {
+      $('#week_later').attr("checked", "checked");
+    });
+
+    $("#btnReset").click(function(event) {
+      $(".week_later").each(function( i, opt ) {
+       $('.week_later').attr('checked', false);
+      });
+      $('#none_week').attr("checked", "checked");
+    });
+
+  </script>
+@stop

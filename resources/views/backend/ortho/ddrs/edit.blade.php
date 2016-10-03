@@ -1,86 +1,87 @@
 @extends('backend.ortho.ortho')
 
-<script>
-  // get days in month year => return number
-  var curYearStar = '';
-  var curMonthStar = '';
-  var curYearEnd = '';
-  var curMonthEnd = '';
 
-  function getDayName(yearMonthDay) {
-    var d = new Date(yearMonthDay);
-    var weekday = new Array(7);
-    weekday[0]=  "日";
-    weekday[1] = "月";
-    weekday[2] = "火";
-    weekday[3] = "水";
-    weekday[4] = "木";
-    weekday[5] = "金";
-    weekday[6] = "土";
-    return weekday[d.getDay()];
-  }
-  function daysInMonth(year, month, editDay) {
-    var str = '<option value="">---日</option>';
-    if ( year.length && month.length ) {
-      var numbers = new Date(year, month, 0).getDate();
-      console.log(year);
-      console.log(month);
-      console.log(numbers);
-      var selected = '';
-      for (var i = 1; i <= numbers; i++) {
-        if ( editDay == i ) {
-          selected = 'selected';
-        } else {
-          selected = '';
-        }
-        var dayName = getDayName(year + '-' + month + '-' + i);
-        if ( i < 10 ) {
-          i = '0' + i;
-        }
-        str = str + '<option value="' + i + '" ' + selected + '>' + i + '日(' + dayName + ')</option>';
-      }
-    }
-    return str;
-  }
-  function monthsInYear(year, editMonth) {
-    var str = '<option value="">---月</option>';
-    if ( year.length ) {
-      var selected = '';
-      for (var i = 1; i <= 12; i++) {
-        if ( editMonth == i ) {
-          selected = 'selected';
-        } else {
-          selected = '';
-        }
-        if ( i < 10 ) {
-          i = '0' + i;
-        }
-        str = str + '<option value="' + i + '" ' + selected + '>' + i + '月</option>';
-      }
-    }
-    return str;
-  }
+@section('script')
+  <script>
+    // get days in month year => return number
+    var curYearStar = '';
+    var curMonthStar = '';
+    var curYearEnd = '';
+    var curMonthEnd = '';
 
-  function getMonths(object, year, editMonth) {
-    if ( object == 'ddr_start_month' ) {
-      curYearStar = year;
-    } else {
-      curYearEnd = year;
+    function getDayName(yearMonthDay) {
+      var d = new Date(yearMonthDay);
+      var weekday = new Array(7);
+      weekday[0]=  "日";
+      weekday[1] = "月";
+      weekday[2] = "火";
+      weekday[3] = "水";
+      weekday[4] = "木";
+      weekday[5] = "金";
+      weekday[6] = "土";
+      return weekday[d.getDay()];
     }
-    $('#' + object).html(monthsInYear(year, editMonth));
-    // $('#ddr_start_month').html(monthsInYear(year, editMonth));
-  }
-  function getDays(object, month, editDay) {
-    if ( object == 'ddr_start_day' ) {
-      curMonthStar = month;
-      $('#' + object).html(daysInMonth(curYearStar, curMonthStar, editDay));
-    } else {
-      curMonthEnd = month;
-      $('#' + object).html(daysInMonth(curYearEnd, curMonthEnd, editDay));
+    function daysInMonth(year, month, editDay) {
+      var str = '<option value="">---日</option>';
+      if ( year.length && month.length ) {
+        var numbers = new Date(year, month, 0).getDate();
+        var selected = '';
+        for (var i = 1; i <= numbers; i++) {
+          if ( editDay == i ) {
+            selected = 'selected';
+          } else {
+            selected = '';
+          }
+          var dayName = getDayName(year + '-' + month + '-' + i);
+          if ( i < 10 ) {
+            i = '0' + i;
+          }
+          str = str + '<option value="' + i + '" ' + selected + '>' + i + '日(' + dayName + ')</option>';
+        }
+      }
+      return str;
     }
-    // $('#ddr_start_day').html(daysInMonth(curYearStar, curMonthStar, editDay));
-  }
-</script>
+    function monthsInYear(year, editMonth) {
+      var str = '<option value="">---月</option>';
+      if ( year.length ) {
+        var selected = '';
+        for (var i = 1; i <= 12; i++) {
+          if ( editMonth == i ) {
+            selected = 'selected';
+          } else {
+            selected = '';
+          }
+          if ( i < 10 ) {
+            i = '0' + i;
+          }
+          str = str + '<option value="' + i + '" ' + selected + '>' + i + '月</option>';
+        }
+      }
+      return str;
+    }
+
+    function getMonths(object, year, editMonth) {
+      if ( object == 'ddr_start_month' ) {
+        curYearStar = year;
+      } else {
+        curYearEnd = year;
+      }
+      $('#' + object).html(monthsInYear(year, editMonth));
+      // $('#ddr_start_month').html(monthsInYear(year, editMonth));
+    }
+    function getDays(object, month, editDay) {
+      if ( object == 'ddr_start_day' ) {
+        curMonthStar = month;
+        $('#' + object).html(daysInMonth(curYearStar, curMonthStar, editDay));
+      } else {
+        curMonthEnd = month;
+        $('#' + object).html(daysInMonth(curYearEnd, curMonthEnd, editDay));
+      }
+      // $('#ddr_start_day').html(daysInMonth(curYearStar, curMonthStar, editDay));
+    }
+  </script>
+@stop
+
 
 @section('content')
 {!! Form::open(array('route' => ['ortho.ddrs.edit', $ddr->ddr_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
@@ -251,109 +252,107 @@
   </section>
 {!! Form::close() !!}
 
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    var editYearStar = "{{ $ddr_start_date_y }}";
-    var editMonthStar = "{{ $ddr_start_date_m }}";
-    var editDayStar = "{{ $ddr_start_date_d }}";
-    var editYearEnd = "{{ $ddr_end_date_y }}";
-    var editMonthEnd = "{{ $ddr_end_date_m }}";
-    var editDayEnd = "{{ $ddr_end_date_d }}";
-
-    getMonths('ddr_start_month', editYearStar, editMonthStar);
-    getDays('ddr_start_day', editMonthStar, editDayStar);
-
-    getMonths('ddr_end_month', editYearEnd, editMonthEnd);
-    getDays('ddr_end_day', editMonthEnd, editDayEnd);
-
-    // start date
-    $('#ddr_start_year').change(function() {
-      if ( !$(this).val().length ) {
-        $('#ddr_start_month').html('<option value="">---月</option>');
-        $('#ddr_start_day').html('<option value="">---日</option>');
-      }
-    });
-    $('#ddr_start_month').change(function() {
-      if ( !$(this).val().length ) {
-        $('#ddr_start_day').html('<option value="">---日</option>');
-      }
-    });
-    // end date
-    $('#ddr_end_year').change(function() {
-      if ( !$(this).val().length ) {
-        $('#ddr_end_month').html('<option value="">---月</option>');
-        $('#ddr_end_day').html('<option value="">---日</option>');
-      }
-    });
-    $('#ddr_end_month').change(function() {
-      if ( !$(this).val().length ) {
-        $('#ddr_end_day').html('<option value="">---日</option>');
-      }
-    });
+@stop
 
 
-    // datepicker
-    $(function() {
-      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-      $( "#datepicker" ).datepicker({
-        showOn: "button",
-        buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
-        buttonImageOnly: true,
-        buttonText: "Select date",
-        dateFormat: 'yyyy-mm-dd',
-        inline: true,
-        onSelect: function(dateText, inst) { 
-          var date = $(this).datepicker('getDate'),
-          day  = date.getDate(),
-          month = date.getMonth() + 1,
-          year =  date.getFullYear();
-          console.log(year);
-          console.log(month);
-          console.log(day);
+@section('script')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var editYearStar = "{{ $ddr_start_date_y }}";
+      var editMonthStar = "{{ $ddr_start_date_m }}";
+      var editDayStar = "{{ $ddr_start_date_d }}";
+      var editYearEnd = "{{ $ddr_end_date_y }}";
+      var editMonthEnd = "{{ $ddr_end_date_m }}";
+      var editDayEnd = "{{ $ddr_end_date_d }}";
 
-          $( "#ddr_start_year option" ).each(function( index ) {
-            if($(this).val() == year) {
-                $(this).prop("selected", true);
-            }
-          });
+      getMonths('ddr_start_month', editYearStar, editMonthStar);
+      getDays('ddr_start_day', editMonthStar, editDayStar);
 
-          getMonths('ddr_start_month', year.toString(), month.toString());
-          getDays('ddr_start_day', month.toString(), day.toString());
+      getMonths('ddr_end_month', editYearEnd, editMonthEnd);
+      getDays('ddr_end_day', editMonthEnd, editDayEnd);
+
+      // start date
+      $('#ddr_start_year').change(function() {
+        if ( !$(this).val().length ) {
+          $('#ddr_start_month').html('<option value="">---月</option>');
+          $('#ddr_start_day').html('<option value="">---日</option>');
         }
       });
-    });
-
-    // datepicker 1
-    $(function() {
-      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-      $( "#datepicker1" ).datepicker({
-        showOn: "button",
-        buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
-        buttonImageOnly: true,
-        buttonText: "Select date",
-        dateFormat: 'yyyy-mm-dd',
-        inline: true,
-        onSelect: function(dateText, inst) { 
-          var date = $(this).datepicker('getDate'),
-          day  = date.getDate(),
-          month = date.getMonth() + 1,
-          year =  date.getFullYear();
-
-          $( "#ddr_end_year option" ).each(function( index ) {
-            if($(this).val() == year) {
-                $(this).prop("selected", true);
-            }
-          });
-
-          getMonths('ddr_end_month', year.toString(), month.toString());
-          getDays('ddr_end_day', month.toString(), day.toString());
+      $('#ddr_start_month').change(function() {
+        if ( !$(this).val().length ) {
+          $('#ddr_start_day').html('<option value="">---日</option>');
         }
       });
+      // end date
+      $('#ddr_end_year').change(function() {
+        if ( !$(this).val().length ) {
+          $('#ddr_end_month').html('<option value="">---月</option>');
+          $('#ddr_end_day').html('<option value="">---日</option>');
+        }
+      });
+      $('#ddr_end_month').change(function() {
+        if ( !$(this).val().length ) {
+          $('#ddr_end_day').html('<option value="">---日</option>');
+        }
+      });
+
+
+      // datepicker
+      $(function() {
+        $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+        $( "#datepicker" ).datepicker({
+          showOn: "button",
+          buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
+          buttonImageOnly: true,
+          buttonText: "Select date",
+          dateFormat: 'yyyy-mm-dd',
+          inline: true,
+          onSelect: function(dateText, inst) { 
+            var date = $(this).datepicker('getDate'),
+            day  = date.getDate(),
+            month = date.getMonth() + 1,
+            year =  date.getFullYear();
+
+            $( "#ddr_start_year option" ).each(function( index ) {
+              if($(this).val() == year) {
+                  $(this).prop("selected", true);
+              }
+            });
+
+            getMonths('ddr_start_month', year.toString(), month.toString());
+            getDays('ddr_start_day', month.toString(), day.toString());
+          }
+        });
+      });
+
+      // datepicker 1
+      $(function() {
+        $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+        $( "#datepicker1" ).datepicker({
+          showOn: "button",
+          buttonImage: "{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png",
+          buttonImageOnly: true,
+          buttonText: "Select date",
+          dateFormat: 'yyyy-mm-dd',
+          inline: true,
+          onSelect: function(dateText, inst) { 
+            var date = $(this).datepicker('getDate'),
+            day  = date.getDate(),
+            month = date.getMonth() + 1,
+            year =  date.getFullYear();
+
+            $( "#ddr_end_year option" ).each(function( index ) {
+              if($(this).val() == year) {
+                  $(this).prop("selected", true);
+              }
+            });
+
+            getMonths('ddr_end_month', year.toString(), month.toString());
+            getDays('ddr_end_day', month.toString(), day.toString());
+          }
+        });
+      });
+
     });
-
-  });
-</script>
-
-
-@endsection
+  </script>
+@stop

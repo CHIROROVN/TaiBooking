@@ -532,59 +532,60 @@
       <!-- end table-responsive -->
     </div>
   </section>
+@stop
 
-<script>
-  $(document).ready(function(){
-    $('.popup').popover({
-      html: true
-    });
-    
-    // set value from popup
-    $('.popup').click(function(event) {
-      // reset
-      $('.popover').hide();
-      $(this).parent().find('.popover').show();
+@section('script')
+  <script>
+    $(document).ready(function(){
+      $('.popup').popover({
+        html: true
+      });
       
-      var objPopup = $(this);
-      var facility_id = $(this).attr('data-facility-id');
-      var u_id_old = $(this).attr('data-u-id');
+      // set value from popup
+      $('.popup').click(function(event) {
+        // reset
+        $('.popover').hide();
+        $(this).parent().find('.popover').show();
+        
+        var objPopup = $(this);
+        var facility_id = $(this).attr('data-facility-id');
+        var u_id_old = $(this).attr('data-u-id');
 
-      // auto select value old
-      $('.input-user').each(function(index, el) {
-        if ( $(this).val() == objPopup.attr('data-u-id') ) {
-          $(this).attr("checked",true);
-          $(this).attr('disabled', 'disabled');
-        }
-      });
-
-      $('.input-user').click(function(event) {
-        var u_id = $(this).val();
-        var u_name = $(this).attr('text');
-
-        if ( u_id == '-1' ) {
-          objPopup.html('末設定');
-          objPopup.attr('data-u-id', null);
-        } else {
-          objPopup.html(u_name);
-          objPopup.attr('data-u-id', u_id);
-        }
-        objPopup.popover('hide');
-
-        // update to table "t_shift"
-        $.ajax({
-           url: "{{ route('ortho.shifts.update.free.ajax') }}",
-           data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old } ,
-           dataType: 'json',
-           type: "get",
-           success: function(result) {
-             console.log(result);
-           }
+        // auto select value old
+        $('.input-user').each(function(index, el) {
+          if ( $(this).val() == objPopup.attr('data-u-id') ) {
+            $(this).attr("checked",true);
+            $(this).attr('disabled', 'disabled');
+          }
         });
-        // end update to table "t_shift"
-      });
-    });
-    // end set value from popup
-  });
-</script>
 
-@endsection
+        $('.input-user').click(function(event) {
+          var u_id = $(this).val();
+          var u_name = $(this).attr('text');
+
+          if ( u_id == '-1' ) {
+            objPopup.html('末設定');
+            objPopup.attr('data-u-id', null);
+          } else {
+            objPopup.html(u_name);
+            objPopup.attr('data-u-id', u_id);
+          }
+          objPopup.popover('hide');
+
+          // update to table "t_shift"
+          $.ajax({
+             url: "{{ route('ortho.shifts.update.free.ajax') }}",
+             data: { u_id: u_id, shift_date: '{{ $date_current }}', clinic_id: '{{ $clinic->clinic_id }}', facility_id: facility_id, u_id_old: u_id_old } ,
+             dataType: 'json',
+             type: "get",
+             success: function(result) {
+               console.log(result);
+             }
+          });
+          // end update to table "t_shift"
+        });
+      });
+      // end set value from popup
+    });
+  </script>
+@stop

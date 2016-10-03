@@ -200,125 +200,123 @@
       </section>
 {!! Form::close() !!}
 
-<script type="text/javascript">
-    // function goBookingSearch() {
-    //   var clinic_id = $("#clinic_id option:selected").val();
-    //   var link = "{{route('ortho.bookings.booking.result.calendar')}}?clinic_id=" + clinic_id;
-    //   window.location.href = link;
-    // }
+@stop
 
-    $(document).ready(function() {
-      if($('#date_picker').is(':checked')){
-        $('input.bk_datetime_start').attr('disabled', false);
-        $('.bk_datetime_start').attr('disabled', false);
-      }else{
-        $('input.bk_datetime_start').attr('disabled', true);
-        $('.bk_datetime_start').attr('disabled', true);
-      }
 
-      if($('#week_later').is(':checked')){
-        $('.w_later_option').attr('disabled', false);
-      }else{
-        $('.w_later_option').attr('disabled', true);
-      }
+@section('script')
+  <script type="text/javascript">
+      $(document).ready(function() {
+        if($('#date_picker').is(':checked')){
+          $('input.bk_datetime_start').attr('disabled', false);
+          $('.bk_datetime_start').attr('disabled', false);
+        }else{
+          $('input.bk_datetime_start').attr('disabled', true);
+          $('.bk_datetime_start').attr('disabled', true);
+        }
 
-      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-      $(".datepicker").datepicker({
-          showOn: 'both',
-          buttonText: 'カレンダー',
-          buttonImageOnly: true,
-          buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
-          dateFormat: 'yy-mm-dd',
-          constrainInput: true,
-          inline: true,
-          lang: 'ja'
-      });
+        if($('#week_later').is(':checked')){
+          $('.w_later_option').attr('disabled', false);
+        }else{
+          $('.w_later_option').attr('disabled', true);
+        }
 
-      $('.ui-datepicker-trigger').css('margin-top','1px');
-      $(".ui-datepicker-trigger").mouseover(function() {
-          $(this).css('cursor', 'pointer');
-      });
+        $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+        $(".datepicker").datepicker({
+            showOn: 'both',
+            buttonText: 'カレンダー',
+            buttonImageOnly: true,
+            buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
+            dateFormat: 'yy-mm-dd',
+            constrainInput: true,
+            inline: true,
+            lang: 'ja'
+        });
 
-      $('.ui-datepicker-trigger').click(function(event) {
-        $('#date_picker').attr("checked", "checked");
-        $('.bk_datetime_start').attr('disabled', false);
-      });
-  });
+        $('.ui-datepicker-trigger').css('margin-top','1px');
+        $(".ui-datepicker-trigger").mouseover(function() {
+            $(this).css('cursor', 'pointer');
+        });
 
-  $('#date_picker').click(function(event) {
-    $('input.bk_datetime_start').attr('disabled', false);
-    $('.bk_datetime_start').attr('disabled', false);
-    $('.week_later_option').attr('disabled', true);
-  });
-
-   $('#week_later').click(function(event) {
-    $('.w_later_option').attr('disabled', false);
-    $('input.bk_datetime_start').attr('disabled', true);
-    $('.bk_datetime_start').attr('disabled', true);
-  });
-
-   $('#two_month').click(function(event) {
-    $('.w_later_option').attr('disabled', true);
-    $('input.bk_datetime_start').attr('disabled', true);
-    $('.bk_datetime_start').attr('disabled', true);
-  });
-
-   $('#one_month').click(function(event) {
-    $('.w_later_option').attr('disabled', true);
-    $('input.bk_datetime_start').attr('disabled', true);
-    $('.bk_datetime_start').attr('disabled', true);
-  });
-
-   $('#none_week').click(function(event) {
-    $('.w_later_option').attr('disabled', true);
-    $('input.bk_datetime_start').attr('disabled', true);
-    $('.bk_datetime_start').attr('disabled', true);
-  });
-
-   $( "#bk_start_hour" ).change(function() {
-    if($(this).val() == ''){
-      $('#bk_start_min option[value=""]').prop('selected',true);
-    }else{
-      $('#bk_start_min option[value="00"]').prop('selected',true);
-    }
-  });
-
-</script>
-
-<script type="text/javascript">
-  $('#date_picker_option').click(function() {
-    $('#date_picker').attr("checked", "checked");
-  });
-
-  $('#none_week').click(function(event) {
-    $('#none_week').attr("checked", "checked");
-  });
-  $('#one_week').click(function(event) {
-    $('#one_week').attr("checked", "checked");
-  });
-  $('#one_month').click(function(event) {
-    $('#one_month').attr("checked", "checked");
-  });
-  $('#two_month').click(function(event) {
-    $('#two_month').attr("checked", "checked");
-  });
-
-  $('#week_later_option').click(function(event) {
-    $('#week_later').attr("checked", "checked");
-  });
-
-  $('#date_picker').click(function(event) {
-    $('#date_picker').attr("checked", "checked");
-  });
-  $('#week_later').click(function(event) {
-    $('#week_later').attr("checked", "checked");
-  });
-
-  $("#btnReset").click(function(event) {
-    $(".week_later").each(function( i, opt ) {
-     $('.week_later').attr('checked', false);
+        $('.ui-datepicker-trigger').click(function(event) {
+          $('#date_picker').attr("checked", "checked");
+          $('.bk_datetime_start').attr('disabled', false);
+        });
     });
-    $('#none_week').attr("checked", "checked");
-  });
-</script>
-@endsection
+
+    $('#date_picker').click(function(event) {
+      $('input.bk_datetime_start').attr('disabled', false);
+      $('.bk_datetime_start').attr('disabled', false);
+      $('.week_later_option').attr('disabled', true);
+    });
+
+     $('#week_later').click(function(event) {
+      $('.w_later_option').attr('disabled', false);
+      $('input.bk_datetime_start').attr('disabled', true);
+      $('.bk_datetime_start').attr('disabled', true);
+    });
+
+     $('#two_month').click(function(event) {
+      $('.w_later_option').attr('disabled', true);
+      $('input.bk_datetime_start').attr('disabled', true);
+      $('.bk_datetime_start').attr('disabled', true);
+    });
+
+     $('#one_month').click(function(event) {
+      $('.w_later_option').attr('disabled', true);
+      $('input.bk_datetime_start').attr('disabled', true);
+      $('.bk_datetime_start').attr('disabled', true);
+    });
+
+     $('#none_week').click(function(event) {
+      $('.w_later_option').attr('disabled', true);
+      $('input.bk_datetime_start').attr('disabled', true);
+      $('.bk_datetime_start').attr('disabled', true);
+    });
+
+     $( "#bk_start_hour" ).change(function() {
+      if($(this).val() == ''){
+        $('#bk_start_min option[value=""]').prop('selected',true);
+      }else{
+        $('#bk_start_min option[value="00"]').prop('selected',true);
+      }
+    });
+
+  </script>
+
+  <script type="text/javascript">
+    $('#date_picker_option').click(function() {
+      $('#date_picker').attr("checked", "checked");
+    });
+
+    $('#none_week').click(function(event) {
+      $('#none_week').attr("checked", "checked");
+    });
+    $('#one_week').click(function(event) {
+      $('#one_week').attr("checked", "checked");
+    });
+    $('#one_month').click(function(event) {
+      $('#one_month').attr("checked", "checked");
+    });
+    $('#two_month').click(function(event) {
+      $('#two_month').attr("checked", "checked");
+    });
+
+    $('#week_later_option').click(function(event) {
+      $('#week_later').attr("checked", "checked");
+    });
+
+    $('#date_picker').click(function(event) {
+      $('#date_picker').attr("checked", "checked");
+    });
+    $('#week_later').click(function(event) {
+      $('#week_later').attr("checked", "checked");
+    });
+
+    $("#btnReset").click(function(event) {
+      $(".week_later").each(function( i, opt ) {
+       $('.week_later').attr('checked', false);
+      });
+      $('#none_week').attr("checked", "checked");
+    });
+  </script>
+@stop

@@ -33,6 +33,10 @@
   <!-- End content list1 list -->
 
   <?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
+
+@stop
+
+@section('script')
   <script>
   $(document).ready(function() {
     var date = new Date();
@@ -158,5 +162,4 @@
 
   });
   </script>
-
-@endsection
+@stop

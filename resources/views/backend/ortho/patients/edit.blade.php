@@ -515,10 +515,13 @@
 </section>
 {!! Form::close() !!}
 
-<script>
-  $(document).ready(function(){
-    $('#p_birthday').mask('0000/00/00');
-  });
-</script>
+@stop
 
-@endsection
+
+@section('script')
+  <script>
+    $(document).ready(function(){
+      $('#p_birthday').mask('0000/00/00');
+    });
+  </script>
+@stop

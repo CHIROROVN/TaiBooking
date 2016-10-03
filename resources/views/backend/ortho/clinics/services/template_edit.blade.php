@@ -342,6 +342,11 @@
 </div>
 </section>
 <!-- End content clinic service template edit -->
+  
+@stop
+
+
+@section('script')
   <script type="text/javascript">
     $('.sf1').click(function(event) {
       $("#service_facility_1_other").prop("checked", true); 
@@ -381,4 +386,4 @@
     });
 
   </script>
-@endsection
+@stop

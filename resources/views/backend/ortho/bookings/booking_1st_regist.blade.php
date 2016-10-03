@@ -400,9 +400,14 @@
   </div>
 </section>
 </form>
+
+@stop
+
+
+@section('script')
 <script type="text/javascript">
   $('#booking_recall_ym').click(function() {
     $('#recalling').attr("checked", "checked");
   });
 </script>
-@endsection
+@stop

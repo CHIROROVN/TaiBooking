@@ -290,6 +290,10 @@
   </form>
   <!-- End content clinic booking template edit -->
 
+@stop
+
+
+@section('script')
   <script>
     $(document).ready(function(){
       var facilityIdOld = 0;
@@ -492,5 +496,4 @@
       }
     });
   </script>
-
-@endsection
+@stop

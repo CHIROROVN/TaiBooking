@@ -63,69 +63,83 @@
                 <input value="元に戻す" type="reset" name="back_save" class="btn btn-sm btn-page back-save">
               </div>
             </div>
+            <!-- end row -->
 
-            <div class="table-responsive table-reponsive-shift">
-            <div id="tableDiv_Arrays" class="tableDiv">
-            <table class="table table-bordered FixedTables" id="Open_Text_Arrays">
-              <tr class="col-title">
-                <td>&nbsp;</td>
-                @foreach ( $belongUsers as $belongUser )
-                  @if ( isset($belongUser->belong_users) )
-                  <?php $colspan = (isset($belongUser->belong_users)) ? count($belongUser->belong_users) : 1; ?>
-                  <td colspan="{{ $colspan }}">{{ $belongUser->belong_name }}</td>
-                  @endif
-                @endforeach
-              </tr>
-
-              <tr class="col-title">
-                <td>&nbsp;</td>
-                @foreach ( $belongUsers as $belongUser )
-                  @if ( isset($belongUser->belong_users) )
-                    @foreach( $belongUser->belong_users as $u )
-                    <td>{{ $u->u_name }}</td>
-                    @endforeach
-                  @endif
-                @endforeach
-              </tr>
-
-              <!-- format value ==> -->
-              <!-- ==> u_id|shift_date|linic_id -->
-                <?php $selected = ''; ?>
-                @foreach ( $days as $dayKey => $dayValue )
-                <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
-                <tr>
-                  <td>{{ $dayValue }}</td>
-                  @foreach ( $users as $user )
-                  <td style="">
-                    <select name="select[]" class="form-control form-control--small">
-                    <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
-                    <?php
-                    if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {
-                      $selected = 'selected';
-                    } 
-                    ?>
-                    <option value="{{ $user->id }}|{{ $fullDate }}|-1" {{ $selected }}>休み</option>
-                    @foreach ( $clinics as $clinic )
-                    <?php
-                    if ( isset($shifts[$user->id . '|' . $fullDate . '|' . $clinic->clinic_id]) ) {
-                      $selected = 'selected';
-                    } else {
-                      $selected = '';
-                    }
-                    ?>
-                    <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
-                    @endforeach
-                    
-                    </select>
-                  </td>
+            <div class="table-date">
+              <div style="margin: 0 auto; width: 1100px;">
+                <!-- date -->
+                <table class="table table-bordered " id="" style="float: left; width: 100px;">
+                  <tr class="col-title"><td>&nbsp;</td></tr>
+                  <tr class="col-title"><td>&nbsp;</td></tr>
+                  <?php $selected = ''; ?>
+                  @foreach ( $days as $dayKey => $dayValue )
+                  <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
+                  <tr>
+                    <td style="padding: 11px;">{{ $dayValue }}</td>
+                  <tr>
                   @endforeach
-                <tr>
-                @endforeach
-            </table>
+                </table>
+
+                <!-- data -->
+                <div style="float: left; width: 1000px; overflow-x: auto;">
+                  <table class="table table-bordered " id="" style="">
+                    <tr class="col-title">
+                      @foreach ( $belongUsers as $belongUser )
+                        @if ( isset($belongUser->belong_users) )
+                        <?php $colspan = (isset($belongUser->belong_users)) ? count($belongUser->belong_users) : 1; ?>
+                        <td colspan="{{ $colspan }}">{{ $belongUser->belong_name }}</td>
+                        @endif
+                      @endforeach
+                    </tr>
+
+                    <tr class="col-title">
+                      @foreach ( $belongUsers as $belongUser )
+                        @if ( isset($belongUser->belong_users) )
+                          @foreach( $belongUser->belong_users as $u )
+                          <td>{{ $u->u_name }}</td>
+                          @endforeach
+                        @endif
+                      @endforeach
+                    </tr>
+
+                    <!-- format value ==> -->
+                    <!-- ==> u_id|shift_date|linic_id -->
+                    @foreach ( $days as $dayKey => $dayValue )
+                    <tr>
+                      @foreach ( $users as $user )
+                      <td style="">
+                        <select name="select[]" class="form-control form-control--small">
+                        <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
+                        <?php
+                        if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {
+                          $selected = 'selected';
+                        } 
+                        ?>
+                        <option value="{{ $user->id }}|{{ $fullDate }}|-1" {{ $selected }}>休み</option>
+                        @foreach ( $clinics as $clinic )
+                        <?php
+                        if ( isset($shifts[$user->id . '|' . $fullDate . '|' . $clinic->clinic_id]) ) {
+                          $selected = 'selected';
+                        } else {
+                          $selected = '';
+                        }
+                        ?>
+                        <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
+                        @endforeach
+                        </select>
+                      </td>
+                      @endforeach
+                    <tr>
+                    @endforeach
+                  </table>
+                </div>
+                <!-- end data -->
+              </div>
             </div>
-            </div>
+            <!-- end table-date -->
 
           </div>
+          <!-- end row content-page -->
           
           <div class="row content-page">
             <div class="row">
@@ -142,6 +156,10 @@
       <!-- end container -->
     </section>
 
+@stop
+
+
+@section('script')
   <script>
     $(document).ready(function(){
       var yearNow = parseInt('{{ $yearNow }}');
@@ -208,46 +226,4 @@
     })();
   </script>
 
-  <script type="text/javascript">
-    // this "tableDiv" must be the table's class
-    $(".tableDiv").each(function() {      
-        var Id = $(this).get(0).id;
-        var maintbheight = 500;
-        var maintbwidth = 1200;
-
-        $("#" + Id + " .FixedTables").fixedTable({
-            width: maintbwidth,
-            height: maintbheight,
-            fixedColumns: 1,
-            // header style
-            classHeader: "fixedHead col-title",
-            // footer style        
-            classFooter: "fixedFoot",
-            // fixed column on the left        
-            classColumn: "fixedColumn",
-            // the width of fixed column on the left      
-            fixedColumnWidth: 100,
-            // table's parent div's id           
-            outerId: Id,
-            // tds' in content area default background color                     
-            Contentbackcolor: "transparent",
-            // tds' in content area background color while hover.     
-            Contenthovercolor: "transparent", 
-            // tds' in fixed column default background color   
-            fixedColumnbackcolor:"transparent", 
-            // tds' in fixed column background color while hover. 
-            fixedColumnhovercolor:"transparent"  
-        });        
-    });
-    $('.fixedTable > table').addClass('table table-bordered');
-    $('.fixedTable > table tr td').each(function(index, el) {
-      if ( $(this).html() === '&nbsp;' ) {
-        $(this).parent().addClass('col-title');
-      }
-
-      
-    });
-  </script>
-  <!-- End content shift search -->
-
-@endsection
+@stop

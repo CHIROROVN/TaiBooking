@@ -62,71 +62,74 @@
 </section>
 {!! Form::close() !!}
 
-<script>
-  $(document).ready(function(){
-    // p_relation_id
-    $( "#p_relation_id" ).autocomplete({
-      minLength: 0,
-      // source: pamphlets,
-      source: function(request, response){
-          var key = $('#p_relation_id').val();
-          var id_not_me = '{{ $patient_id }}';
-          $.ajax({
-              url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
-              beforeSend: function(){
-                  // alert("beforeSend");
-              },
-              async:    true,
-              data: { key: key, id_not_me: id_not_me },
-              dataType: "json",
-              method: "get",
-              success: response
-          });
-      },
-      focus: function( event, ui ) {
-        $( "#p_relation_id" ).val( ui.item.label );
-        return false;
-      },
-      select: function( event, ui ) {
-        $( "#p_relation_id" ).val( ui.item.label );
-        $( "#p_relation_id-id" ).val( ui.item.value );
-        var patient_id = ui.item.value;
-        if(patient_id != null){
-          var url_psex = "{{route('ortho.patients.ajax.psex_ajax')}}" + "?p_id=" + patient_id;
-          $.get(url_psex, function(data){
-            var p_sex = "{{$p_sex}}";
-            relationShip(p_sex, data.p_sex);
-          });
-        }
+@stop
 
-        // $( "#p_relation_id-description" ).html( ui.item.desc );
-        return false;
-      }
-    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-          .append( "<a>" + item.desc + "</a>" )
-          .appendTo( ul );
-    };
-    $('#p_relation_id').keyup(function() {
-      if($(this).val() == ''){
+
+@section('script')
+  <script>
+    $(document).ready(function(){
+      // p_relation_id
+      $( "#p_relation_id" ).autocomplete({
+        minLength: 0,
+        // source: pamphlets,
+        source: function(request, response){
+            var key = $('#p_relation_id').val();
+            var id_not_me = '{{ $patient_id }}';
+            $.ajax({
+                url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
+                beforeSend: function(){
+                    // alert("beforeSend");
+                },
+                async:    true,
+                data: { key: key, id_not_me: id_not_me },
+                dataType: "json",
+                method: "get",
+                success: response
+            });
+        },
+        focus: function( event, ui ) {
+          $( "#p_relation_id" ).val( ui.item.label );
+          return false;
+        },
+        select: function( event, ui ) {
+          $( "#p_relation_id" ).val( ui.item.label );
+          $( "#p_relation_id-id" ).val( ui.item.value );
+          var patient_id = ui.item.value;
+          if(patient_id != null){
+            var url_psex = "{{route('ortho.patients.ajax.psex_ajax')}}" + "?p_id=" + patient_id;
+            $.get(url_psex, function(data){
+              var p_sex = "{{$p_sex}}";
+              relationShip(p_sex, data.p_sex);
+            });
+          }
+
+          // $( "#p_relation_id-description" ).html( ui.item.desc );
+          return false;
+        }
+      }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+            .append( "<a>" + item.desc + "</a>" )
+            .appendTo( ul );
+      };
+      $('#p_relation_id').keyup(function() {
+        if($(this).val() == ''){
+          $('input[class=female]').attr("disabled",false);
+          $('input[class=male]').attr("disabled",false);
+        }
+      });
+    });
+
+    function relationShip($primary_sex, $second_sex){
+      if($primary_sex == 1 && $second_sex == 1){
+        $('input[class=female]').attr("disabled",true);
+      }else if($primary_sex == 2 && $second_sex == 2){
+        $('input[class=male]').attr("disabled",true);
+      }else{
         $('input[class=female]').attr("disabled",false);
         $('input[class=male]').attr("disabled",false);
       }
-    });
-  });
-
-  function relationShip($primary_sex, $second_sex){
-    if($primary_sex == 1 && $second_sex == 1){
-      $('input[class=female]').attr("disabled",true);
-    }else if($primary_sex == 2 && $second_sex == 2){
-      $('input[class=male]').attr("disabled",true);
-    }else{
-      $('input[class=female]').attr("disabled",false);
-      $('input[class=male]').attr("disabled",false);
     }
-  }
 
-</script>
-
-@endsection
+  </script>
+@stop

@@ -1599,44 +1599,47 @@
 </div>
 {!! Form::close() !!}
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    // 1
-    $(function () {
-      $('#txt1').datetimepicker();
-    });
-    // 2
-    $(function () {
-      $('#txt2').datetimepicker();
-    });
-    // 3
-    $(function () {
-      $('#txt3').datetimepicker();
-    });
+@stop
 
-    // year
-    $(function () {
-      $('#q1_10_year').datetimepicker({
-        viewMode: 'years',
-        format: 'YYYY'
-      });
-    });
-    // month
-    $(function () {
-      $('#q1_10_month').datetimepicker({
-        viewMode: 'months',
-        format: 'MM'
-      });
-    });
-    // day
-    $(function () {
-      $('#q1_10_day').datetimepicker({
-        viewMode: 'days',
-        format: 'DD'
-      });
-    });
-  });
-  
-</script>
 
-@endsection
+@section('script')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // 1
+      $(function () {
+        $('#txt1').datetimepicker();
+      });
+      // 2
+      $(function () {
+        $('#txt2').datetimepicker();
+      });
+      // 3
+      $(function () {
+        $('#txt3').datetimepicker();
+      });
+
+      // year
+      $(function () {
+        $('#q1_10_year').datetimepicker({
+          viewMode: 'years',
+          format: 'YYYY'
+        });
+      });
+      // month
+      $(function () {
+        $('#q1_10_month').datetimepicker({
+          viewMode: 'months',
+          format: 'MM'
+        });
+      });
+      // day
+      $(function () {
+        $('#q1_10_day').datetimepicker({
+          viewMode: 'days',
+          format: 'DD'
+        });
+      });
+    });
+    
+  </script>
+@stop

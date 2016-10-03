@@ -31,9 +31,14 @@
       {!! Form::close() !!}
     </section>
   <!-- End content forum detail -->
+  
+@stop
+
+
+@section('script')
   <script>
     function goBack() {
         window.history.go(-1);
     }
   </script>
-@endsection
+@stop

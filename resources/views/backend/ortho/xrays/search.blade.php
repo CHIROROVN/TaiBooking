@@ -1,37 +1,41 @@
 @extends('backend.ortho.ortho')
 
-@section('content')
 
-<script>
-  function getVal(val, select_day, old_day_value) {
-    var month = '';
-    var old_day = old_day_value;
-    $('#' + select_day).find('option').remove();
+@section('script')
+  <script>
+    function getVal(val, select_day, old_day_value) {
+      var month = '';
+      var old_day = old_day_value;
+      $('#' + select_day).find('option').remove();
 
-    if ( $.isNumeric( val ) ) {
-      month = val;
-    } else {
-      month = val.value;
-    }
+      if ( $.isNumeric( val ) ) {
+        month = val;
+      } else {
+        month = val.value;
+      }
 
-    $.ajax({
-      method: "GET",
-      url: "{{ route('ortho.xrays.get.day') }}",
-      dataType: "json",
-      data: { month: month }
-    }).done(function( msg ) {
-      // set value for select option month
-      $('#' + select_day).append('<option value="0">--日</option>');
-      $.each( msg, function( key, value ) {
-        if ( old_day == value ) {
-          $('#' + select_day).append('<option value="' + value + '" selected>' + value + '</option>');
-        } else {
-          $('#' + select_day).append('<option value="' + value + '">' + value + '</option>');
-        }
+      $.ajax({
+        method: "GET",
+        url: "{{ route('ortho.xrays.get.day') }}",
+        dataType: "json",
+        data: { month: month }
+      }).done(function( msg ) {
+        // set value for select option month
+        $('#' + select_day).append('<option value="0">--日</option>');
+        $.each( msg, function( key, value ) {
+          if ( old_day == value ) {
+            $('#' + select_day).append('<option value="' + value + '" selected>' + value + '</option>');
+          } else {
+            $('#' + select_day).append('<option value="' + value + '">' + value + '</option>');
+          }
+        });
       });
-    });
-  }
-</script>
+    }
+  </script>
+@stop
+
+
+@section('content')
 
 {!! Form::open(array('route' => 'ortho.xrays.index', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
@@ -183,66 +187,69 @@
 </section>
 </form>
 
-<script>
-  $(document).ready(function(){
-      var val = $('#s_p_birthday_month_from').find("option:selected").val();
-      var val1 = $('#s_p_birthday_month_to').find("option:selected").val();
-      var val2 = $('#s_xray_date_month_from').find("option:selected").val();
-      var val3 = $('#s_xray_date_month_to').find("option:selected").val();
-
-      if ( val != 0) {
-        getVal(val, 's_p_birthday_day_from', '{{ $s_p_birthday_day_from }}');
-      }
-      if ( val1 != 0) {
-        getVal(val1, 's_p_birthday_day_to', '{{ $s_p_birthday_day_to }}');
-      }
-      if ( val2 != 0) {
-        getVal(val2, 's_xray_date_day_from', '{{ $s_xray_date_day_from }}');
-      }
-      if ( val3 != 0) {
-        getVal(val3, 's_xray_date_day_to', '{{ $s_xray_date_day_to }}');
-      }
+@stop
 
 
-      // s_p_id
-      $( "#s_p_id" ).autocomplete({
-        minLength: 0,
-        // source: pamphlets,
-        source: function(request, response){
-            var key = $('#s_p_id').val();
-            $.ajax({
-                url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
-                beforeSend: function(){
-                    // console.log(response);
-                },
-                async:    true,
-                data: { key: key },
-                dataType: "json",
-                method: "get",
-                // success: response
-                success: function(data) {
-                  // console.log(data);
-                  response(data);
-                },
-            });
-        },
-        focus: function( event, ui ) {
-          $( "#s_p_id" ).val( ui.item.label );
-          return false;
-        },
-        select: function( event, ui ) {
-          $( "#s_p_id" ).val( ui.item.label );
-          $( "#s_p_id-id" ).val( ui.item.value );
-          // $( "#p_relation_id-description" ).html( ui.item.desc );
-          return false;
+@section('script')
+  <script>
+    $(document).ready(function(){
+        var val = $('#s_p_birthday_month_from').find("option:selected").val();
+        var val1 = $('#s_p_birthday_month_to').find("option:selected").val();
+        var val2 = $('#s_xray_date_month_from').find("option:selected").val();
+        var val3 = $('#s_xray_date_month_to').find("option:selected").val();
+
+        if ( val != 0) {
+          getVal(val, 's_p_birthday_day_from', '{{ $s_p_birthday_day_from }}');
         }
-      }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-          return $( "<li>" )
-            //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-            .append( "<a>" + item.desc + "</a>" )
-            .appendTo( ul );
-      };
-  });
-</script>
+        if ( val1 != 0) {
+          getVal(val1, 's_p_birthday_day_to', '{{ $s_p_birthday_day_to }}');
+        }
+        if ( val2 != 0) {
+          getVal(val2, 's_xray_date_day_from', '{{ $s_xray_date_day_from }}');
+        }
+        if ( val3 != 0) {
+          getVal(val3, 's_xray_date_day_to', '{{ $s_xray_date_day_to }}');
+        }
 
-@endsection
+
+        // s_p_id
+        $( "#s_p_id" ).autocomplete({
+          minLength: 0,
+          // source: pamphlets,
+          source: function(request, response){
+              var key = $('#s_p_id').val();
+              $.ajax({
+                  url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
+                  beforeSend: function(){
+                      // console.log(response);
+                  },
+                  async:    true,
+                  data: { key: key },
+                  dataType: "json",
+                  method: "get",
+                  // success: response
+                  success: function(data) {
+                    // console.log(data);
+                    response(data);
+                  },
+              });
+          },
+          focus: function( event, ui ) {
+            $( "#s_p_id" ).val( ui.item.label );
+            return false;
+          },
+          select: function( event, ui ) {
+            $( "#s_p_id" ).val( ui.item.label );
+            $( "#s_p_id-id" ).val( ui.item.value );
+            // $( "#p_relation_id-description" ).html( ui.item.desc );
+            return false;
+          }
+        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+              //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+              .append( "<a>" + item.desc + "</a>" )
+              .appendTo( ul );
+        };
+    });
+  </script>
+@stop

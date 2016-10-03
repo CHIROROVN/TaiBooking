@@ -64,22 +64,6 @@
                 </tr>
               @endforeach
             @endif
-            <!-- <tr>
-              <td>青江水曜日</td>
-              <td align="center"><a href="clinic_booking-template_edit.html" class="btn btn-sm btn-edit">編集</a></td>
-              <td align="center"></td>
-              <td align="center" class=""></td>
-              <td align="center"><button>↓</button></td>
-              <td align="center" class=""><button>LAST</button></td>
-            </tr>
-            <tr>
-              <td>青江土曜日</td>
-              <td align="center"><a href="clinic_booking-template_edit.html" class="btn btn-sm btn-edit">編集</a></td>
-              <td align="center"><button>TOP</button></td>
-              <td align="center" class=""><button>↑</button></td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr> -->
           </tbody>
         </table>
 

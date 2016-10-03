@@ -350,45 +350,49 @@
       </div>
     </section>
 {!! Form::close() !!}
-<script type="text/javascript">
-  $('#booking_recall_ym').click(function() {
-    $('#recalling').attr("checked", "checked");
-  });
-</script>
 
-<script>
-  $(document).ready(function(){
-    $( "#patient" ).autocomplete({
-      minLength: 0,
-      // source: pamphlets,
-      source: function(request, response){
-          var key = $('#patient').val();
-          $.ajax({
-              url: "{{ route('ortho.patients.autocomplete.patient') }}",
-              beforeSend: function(){
-              },
-              method: "GET",
-              data: { key: key },
-              dataType: "json",
-              success: function(data) {
-                response(data);
-              },
-          });
-      },
-      focus: function( event, ui ) {
-        $( "#patient" ).val( ui.item.label );
-        return true;
-      },
-      select: function( event, ui ) {
-        $( "#patient" ).val( ui.item.label );
-        $( "#p_id" ).val( ui.item.value );
-        return false;
-      }
-    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-        return $( "<li>" )
-          .append( "<a>" + item.desc + "</a>" )
-          .appendTo( ul );
-    };
-  });
-</script>
-@endsection
+@stop
+
+@section('script')
+  <script type="text/javascript">
+    $('#booking_recall_ym').click(function() {
+      $('#recalling').attr("checked", "checked");
+    });
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      $( "#patient" ).autocomplete({
+        minLength: 0,
+        // source: pamphlets,
+        source: function(request, response){
+            var key = $('#patient').val();
+            $.ajax({
+                url: "{{ route('ortho.patients.autocomplete.patient') }}",
+                beforeSend: function(){
+                },
+                method: "GET",
+                data: { key: key },
+                dataType: "json",
+                success: function(data) {
+                  response(data);
+                },
+            });
+        },
+        focus: function( event, ui ) {
+          $( "#patient" ).val( ui.item.label );
+          return true;
+        },
+        select: function( event, ui ) {
+          $( "#patient" ).val( ui.item.label );
+          $( "#p_id" ).val( ui.item.value );
+          return false;
+        }
+      }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( "<a>" + item.desc + "</a>" )
+            .appendTo( ul );
+      };
+    });
+  </script>
+@stop

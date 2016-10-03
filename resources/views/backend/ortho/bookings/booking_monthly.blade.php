@@ -37,7 +37,13 @@
 </section>
 
 <?php echo '<script>var clinic_id = ' . $clinic_id . '</script>'; ?>
-<script>
+<?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
+
+@stop
+
+
+@section('script')
+  <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
@@ -106,8 +112,7 @@ $(document).ready(function(){
 
 </script>
 
-<?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
-<script>
+  <script>
   $(document).ready(function() {
     var date = new Date();
     var d = date.getDate();
@@ -156,4 +161,4 @@ $(document).ready(function(){
     });
   });
   </script>
-@endsection
+@stop

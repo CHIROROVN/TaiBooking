@@ -38,20 +38,23 @@
   </section>
 {!! Form::close() !!}
 
-<script>
-  $(document).ready(function(){
-    CKEDITOR.replace( 'memo_contents', {
-      language: 'ja',
-      enterMode: Number(2),
-      toolbar: [
-        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-        { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-        '/',
-        { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
-        { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-      ],
-    });
-  });
-</script>
+@stop
 
-@endsection
+
+@section('script')
+  <script>
+    $(document).ready(function(){
+      CKEDITOR.replace( 'memo_contents', {
+        language: 'ja',
+        enterMode: Number(2),
+        toolbar: [
+          { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+          { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+          '/',
+          { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
+          { name: 'colors',      items : [ 'TextColor','BGColor' ] },
+        ],
+      });
+    });
+  </script>
+@stop

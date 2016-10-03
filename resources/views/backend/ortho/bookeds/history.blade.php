@@ -133,45 +133,48 @@
   </div>    
 </section>
 
-<script>
-  // s_p_id
-  $( "#s_p_id" ).autocomplete({
-    minLength: 0,
-    // source: pamphlets,
-    source: function(request, response){
-        var key = $('#s_p_id').val();
-        $.ajax({
-            url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
-            beforeSend: function(){
-                // console.log(response);
-            },
-            async:    true,
-            data: { key: key },
-            dataType: "json",
-            method: "get",
-            // success: response
-            success: function(data) {
-              // console.log(data);
-              response(data);
-            },
-        });
-    },
-    focus: function( event, ui ) {
-      $( "#s_p_id" ).val( ui.item.label );
-      return false;
-    },
-    select: function( event, ui ) {
-      $( "#s_p_id" ).val( ui.item.label );
-      $( "#s_p_id-id" ).val( ui.item.value );
-      // $( "#p_relation_id-description" ).html( ui.item.desc );
-      return false;
-    }
-  }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-      return $( "<li>" )
-        //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-        .append( "<a>" + item.desc + "</a>" )
-        .appendTo( ul );
-  };
-</script>
+@stop
 
-@endsection
+
+@section('script')
+  <script>
+    // s_p_id
+    $( "#s_p_id" ).autocomplete({
+      minLength: 0,
+      // source: pamphlets,
+      source: function(request, response){
+          var key = $('#s_p_id').val();
+          $.ajax({
+              url: "{{ route('ortho.patients.brothers.autocomplete.patient') }}",
+              beforeSend: function(){
+                  // console.log(response);
+              },
+              async:    true,
+              data: { key: key },
+              dataType: "json",
+              method: "get",
+              // success: response
+              success: function(data) {
+                // console.log(data);
+                response(data);
+              },
+          });
+      },
+      focus: function( event, ui ) {
+        $( "#s_p_id" ).val( ui.item.label );
+        return false;
+      },
+      select: function( event, ui ) {
+        $( "#s_p_id" ).val( ui.item.label );
+        $( "#s_p_id-id" ).val( ui.item.value );
+        // $( "#p_relation_id-description" ).html( ui.item.desc );
+        return false;
+      }
+    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+          //.append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+          .append( "<a>" + item.desc + "</a>" )
+          .appendTo( ul );
+    };
+  </script>
+@stop

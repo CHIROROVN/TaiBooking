@@ -2792,51 +2792,53 @@
 </div>
 {!! Form::close() !!}
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    // 1
-    $(function () {
-      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-      $('#q0_1_date').datepicker({
-        // viewMode: 'years',
-        dateFormat: 'yy/mm/dd'
-      });
-    });
-    // 2
-    $(function () {
-      $('#q0_2_date').datepicker({
-        // viewMode: 'years',
-        dateFormat: 'yy/mm/dd'
-      });
-    });
-    // 3
-    $(function () {
-      $('#q0_4_date').datepicker({
-        // viewMode: 'years',
-        dateFormat: 'yy/mm/dd'
-      });
-    });
+@stop
 
-    // year
-    $(function () {
-      $('#q1_10_year').datepicker({
-        dateFormat: 'yy'
-      });
-    });
-    // month
-    $(function () {
-      $('#q1_10_month').datepicker({
-        dateFormat: 'mm'
-      });
-    });
-    // day
-    $(function () {
-      $('#q1_10_day').datepicker({
-        dateFormat: 'dd'
-      });
-    });
-  });
-  
-</script>
 
-@endsection
+@section('script')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // 1
+      $(function () {
+        $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+        $('#q0_1_date').datepicker({
+          // viewMode: 'years',
+          dateFormat: 'yy/mm/dd'
+        });
+      });
+      // 2
+      $(function () {
+        $('#q0_2_date').datepicker({
+          // viewMode: 'years',
+          dateFormat: 'yy/mm/dd'
+        });
+      });
+      // 3
+      $(function () {
+        $('#q0_4_date').datepicker({
+          // viewMode: 'years',
+          dateFormat: 'yy/mm/dd'
+        });
+      });
+
+      // year
+      $(function () {
+        $('#q1_10_year').datepicker({
+          dateFormat: 'yy'
+        });
+      });
+      // month
+      $(function () {
+        $('#q1_10_month').datepicker({
+          dateFormat: 'mm'
+        });
+      });
+      // day
+      $(function () {
+        $('#q1_10_day').datepicker({
+          dateFormat: 'dd'
+        });
+      });
+    });
+  </script>
+@stop

@@ -1,37 +1,41 @@
 @extends('backend.ortho.ortho')
 
-@section('content')
 
-<script>
-  function getVal(val) {
-    var month = '';
-    var old_day = "{{ old('xray_date_day') }}";
-    $('#day').find('option').remove();
+@section('script')
+  <script>
+    function getVal(val) {
+      var month = '';
+      var old_day = "{{ old('xray_date_day') }}";
+      $('#day').find('option').remove();
 
-    if ( $.isNumeric( val ) ) {
-      month = val;
-    } else {
-      month = val.value;
-    }
+      if ( $.isNumeric( val ) ) {
+        month = val;
+      } else {
+        month = val.value;
+      }
 
-    $.ajax({
-      method: "GET",
-      url: "{{ route('ortho.xrays.get.day') }}",
-      dataType: "json",
-      data: { month: month }
-    }).done(function( msg ) {
-      // set value for select option month
-      $('#day').append('<option value="0">--日</option>');
-      $.each( msg, function( key, value ) {
-        if ( old_day == value ) {
-          $('#day').append('<option value="' + value + '" selected>' + value + '日</option>');
-        } else {
-          $('#day').append('<option value="' + value + '">' + value + '日</option>');
-        }
+      $.ajax({
+        method: "GET",
+        url: "{{ route('ortho.xrays.get.day') }}",
+        dataType: "json",
+        data: { month: month }
+      }).done(function( msg ) {
+        // set value for select option month
+        $('#day').append('<option value="0">--日</option>');
+        $.each( msg, function( key, value ) {
+          if ( old_day == value ) {
+            $('#day').append('<option value="' + value + '" selected>' + value + '日</option>');
+          } else {
+            $('#day').append('<option value="' + value + '">' + value + '日</option>');
+          }
+        });
       });
-    });
-  }
-</script>
+    }
+  </script>
+@stop
+
+
+@section('content')
 
 {!! Form::open(array('route' => ['ortho.xrays.regist', $patient->p_id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">
@@ -290,13 +294,16 @@
 </section>
 {!! Form::close() !!}
 
-<script>
-  $(document).ready(function(){
-      var val = $('#month').find("option:selected").val();
-      if ( val != 0) {
-        getVal(val);
-      }
-  });
-</script>
+@stop
 
-@endsection
+
+@section('script')
+  <script>
+    $(document).ready(function(){
+        var val = $('#month').find("option:selected").val();
+        if ( val != 0) {
+          getVal(val);
+        }
+    });
+  </script>
+@stop

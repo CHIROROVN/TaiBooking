@@ -213,10 +213,14 @@
       </div>
     </section>
 {!! Form::close() !!}
-<script type="text/javascript">
-  $('#booking_recall_ym').click(function(event) {
-    $('#recalling').attr("checked", "checked");
-  });
-</script>
 
-@endsection
+@stop
+
+
+@section('script')
+  <script type="text/javascript">
+    $('#booking_recall_ym').click(function(event) {
+      $('#recalling').attr("checked", "checked");
+    });
+  </script>
+@stop

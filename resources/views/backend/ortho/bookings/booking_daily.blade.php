@@ -243,6 +243,11 @@
             </tr>
 
           <!-- list hygienists -->
+          <?php
+            $text = '末設定';
+            $tmpText = array();
+            $str = '';
+          ?>
           <tr>
               <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
               @foreach ( $facilitys as $facility )

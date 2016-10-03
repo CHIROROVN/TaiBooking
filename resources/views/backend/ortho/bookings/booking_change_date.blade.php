@@ -260,27 +260,27 @@
 
 @section('script')
   <script type="text/javascript">
-      $(document).ready(function() {
-        $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-        $(".datepicker").datepicker({
-            showOn: 'both',
-            buttonText: 'カレンダー',
-            buttonImageOnly: true,
-            buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
-            dateFormat: 'yy-mm-dd',
-            constrainInput: true,
-            inline: true,
-            lang: 'ja'
-        });
+    $(document).ready(function() {
+      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+      $(".datepicker").datepicker({
+          showOn: 'both',
+          buttonText: 'カレンダー',
+          buttonImageOnly: true,
+          buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
+          dateFormat: 'yy-mm-dd',
+          constrainInput: true,
+          inline: true,
+          lang: 'ja'
+      });
 
-        $('.ui-datepicker-trigger').css('margin-top','1px');
-        $(".ui-datepicker-trigger").mouseover(function() {
-            $(this).css('cursor', 'pointer');
-        });
+      $('.ui-datepicker-trigger').css('margin-top','1px');
+      $(".ui-datepicker-trigger").mouseover(function() {
+          $(this).css('cursor', 'pointer');
+      });
 
-        $('.ui-datepicker-trigger').click(function(event) {
-          $('#date_picker').attr("checked", "checked");
-        });
+      $('.ui-datepicker-trigger').click(function(event) {
+        $('#date_picker').attr("checked", "checked");
+      });
     });
   </script>
 @stop

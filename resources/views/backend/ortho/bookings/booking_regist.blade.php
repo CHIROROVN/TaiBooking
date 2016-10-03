@@ -354,13 +354,12 @@
 @stop
 
 @section('script')
-  <script type="text/javascript">
+  <script>
     $('#booking_recall_ym').click(function() {
       $('#recalling').attr("checked", "checked");
     });
-  </script>
 
-  <script>
+
     $(document).ready(function(){
       $( "#patient" ).autocomplete({
         minLength: 0,

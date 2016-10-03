@@ -43,12 +43,7 @@
 
 
 @section('script')
-  <script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
-</script>
-<script>  
+  <script>  
     $('#area_id').click(function(event) {
       var area_id = $('#area_id').val();
       var url = "{{route('ortho.bookings.monthly.clinics')}}";
@@ -71,94 +66,95 @@ $(document).ready(function(){
               console.log('Error:', data);
           }
       });
-
     });
 
-  $(document).ready(function() {
-     var area_id = $.urlParam('area_id');
-     var clinic_id = $.urlParam('clinic_id');
-       var url = "{{route('ortho.bookings.monthly.clinics')}}";
-        var htmlOptions = "<option value="+">▼医院名</option>";
-        $.ajax({
-            type:"GET",
-            url:url,
-            data:{area_id:area_id},
-            success: function(results){
-              $.each(results, function(k, val){
-              htmlOptions += "<option value="+val.clinic_id+">" + val.clinic_name + "</option>";
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+
+
+      // order
+      var area_id = $.urlParam('area_id');
+      var clinic_id = $.urlParam('clinic_id');
+      var url = "{{route('ortho.bookings.monthly.clinics')}}";
+      var htmlOptions = "<option value="+">▼医院名</option>";
+      $.ajax({
+          type:"GET",
+          url:url,
+          data:{area_id:area_id},
+          success: function(results){
+            $.each(results, function(k, val){
+            htmlOptions += "<option value="+val.clinic_id+">" + val.clinic_name + "</option>";
+          });
+          $('#clinic_id').html(htmlOptions);
+          $("#clinic_id").find('option').each(function( i, opt ) {
+                if( opt.value == clinic_id ){
+                    $(opt).attr('selected', 'selected');
+                }
             });
-            $('#clinic_id').html(htmlOptions);
-            $("#clinic_id").find('option').each(function( i, opt ) {
-                  if( opt.value == clinic_id ){
-                      $(opt).attr('selected', 'selected');
-                  }
-              });
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
-  });
+          },
+          error: function (data) {
+              console.log('Error:', data);
+          }
+      });
 
-  $.urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-       return null;
-    }
-    else{
-       return results[1] || 0;
-    }
-  }
 
-</script>
-
-  <script>
-  $(document).ready(function() {
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
-    
-    var calendar = $('#calendar').fullCalendar({
-      lang: 'ja',
-      eventLimit: false,
-      editable: false,
-      timezone: 'Asia/Tokyo',
-      buttonText: {
-          prev: '<< 前月',
-          next: '翌月 >>',
-          today: '今月'
-      },
-      header: {
-        left: 'prev today next',
-        center: 'title',
-        //right: 'month,agendaWeek,agendaDay'
-        right: ''
-      },
-       displayEventTime: false,
-       
-      //load all event from DB
-      events: bookings,
+      // order
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
       
-      // Convert the allDay from string to boolean
-      eventRender: function(event, element, view) {
-        if (event.allDay === 'true') {
-          event.allDay = true;
-        } else {
-          event.allDay = false;
-        }
-      },
-      selectable: true,
-      selectHelper: true,
-      select: function(start, end, allDay) {
-          var start = moment(start).format('YYYY-MM-DD');
-          var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
+      var calendar = $('#calendar').fullCalendar({
+        lang: 'ja',
+        eventLimit: false,
+        editable: false,
+        timezone: 'Asia/Tokyo',
+        buttonText: {
+            prev: '<< 前月',
+            next: '翌月 >>',
+            today: '今月'
+        },
+        header: {
+          left: 'prev today next',
+          center: 'title',
+          //right: 'month,agendaWeek,agendaDay'
+          right: ''
+        },
+         displayEventTime: false,
+         
+        //load all event from DB
+        events: bookings,
         
-        calendar.fullCalendar('unselect');
-        window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start + "&clinic_id={{@$clinic_id}}";
-        // location.reload();
-      },
+        // Convert the allDay from string to boolean
+        eventRender: function(event, element, view) {
+          if (event.allDay === 'true') {
+            event.allDay = true;
+          } else {
+            event.allDay = false;
+          }
+        },
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end, allDay) {
+            var start = moment(start).format('YYYY-MM-DD');
+            var end = moment(end).format('YYYY-MM-DD HH:mm:ss');
+          
+          calendar.fullCalendar('unselect');
+          window.location.href = "{{ route('ortho.bookings.booking.daily') }}?start_date=" + start + "&clinic_id={{@$clinic_id}}";
+          // location.reload();
+        },
+      });
     });
-  });
+
+    $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null){
+         return null;
+      }
+      else{
+         return results[1] || 0;
+      }
+    }
+
   </script>
 @stop

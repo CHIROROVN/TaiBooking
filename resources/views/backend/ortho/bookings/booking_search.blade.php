@@ -172,6 +172,41 @@
       //   var link = "{{route('ortho.bookings.booking.result.calendar')}}?clinic_id=" + clinic_id;
       //   window.location.href = link;
       // }
+      $('#date_picker_option').click(function() {
+        $('#date_picker').attr("checked", "checked");
+      });
+
+      $('#none_week').click(function(event) {
+        $('#none_week').attr("checked", "checked");
+      });
+      $('#one_week').click(function(event) {
+        $('#one_week').attr("checked", "checked");
+      });
+      $('#one_month').click(function(event) {
+        $('#one_month').attr("checked", "checked");
+      });
+      $('#two_month').click(function(event) {
+        $('#two_month').attr("checked", "checked");
+      });
+
+      $('#week_later_option').click(function(event) {
+        $('#week_later').attr("checked", "checked");
+      });
+
+      $('#date_picker').click(function(event) {
+        $('#date_picker').attr("checked", "checked");
+      });
+      $('#week_later').click(function(event) {
+        $('#week_later').attr("checked", "checked");
+      });
+
+      $("#btnReset").click(function(event) {
+        $(".week_later").each(function( i, opt ) {
+         $('.week_later').attr('checked', false);
+        });
+        $('#none_week').attr("checked", "checked");
+      });
+
 
       $(document).ready(function() {
         $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
@@ -195,43 +230,5 @@
           $('#date_picker').attr("checked", "checked");
         });
     });
-  </script>
-
-  <script type="text/javascript">
-    $('#date_picker_option').click(function() {
-      $('#date_picker').attr("checked", "checked");
-    });
-
-    $('#none_week').click(function(event) {
-      $('#none_week').attr("checked", "checked");
-    });
-    $('#one_week').click(function(event) {
-      $('#one_week').attr("checked", "checked");
-    });
-    $('#one_month').click(function(event) {
-      $('#one_month').attr("checked", "checked");
-    });
-    $('#two_month').click(function(event) {
-      $('#two_month').attr("checked", "checked");
-    });
-
-    $('#week_later_option').click(function(event) {
-      $('#week_later').attr("checked", "checked");
-    });
-
-    $('#date_picker').click(function(event) {
-      $('#date_picker').attr("checked", "checked");
-    });
-    $('#week_later').click(function(event) {
-      $('#week_later').attr("checked", "checked");
-    });
-
-    $("#btnReset").click(function(event) {
-      $(".week_later").each(function( i, opt ) {
-       $('.week_later').attr('checked', false);
-      });
-      $('#none_week').attr("checked", "checked");
-    });
-
   </script>
 @stop

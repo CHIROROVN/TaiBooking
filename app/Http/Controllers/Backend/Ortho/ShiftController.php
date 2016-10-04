@@ -81,6 +81,17 @@ class ShiftController extends BackendController
             $tmpShift[$shift->u_id . '|' . $shift->shift_date . '|' . $shift->clinic_id] = $shift;
         }
         $data['shifts'] = $tmpShift;
+
+        // Optimal show list user
+        $strUser = '';
+        foreach ( $data['belongUsers'] as $belongUser ) {
+            if ( isset($belongUser->belong_users) ) {
+                foreach( $belongUser->belong_users as $u ) {
+                    $strUser .= '<td>' . $u->u_name . '</td>';
+                }
+            }
+        }
+        $data['strUser'] = $strUser;
         
         return view('backend.ortho.shifts.list_edit', $data);
     }

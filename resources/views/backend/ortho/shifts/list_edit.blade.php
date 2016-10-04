@@ -65,13 +65,13 @@
             </div>
             <!-- end row -->
 
+            <?php $selected = ''; ?>
             <div class="table-date">
               <div style="margin: 0 auto; width: 1100px;">
                 <!-- date -->
                 <table class="table table-bordered " id="" style="float: left; width: 100px;">
                   <tr class="col-title"><td>&nbsp;</td></tr>
                   <tr class="col-title"><td>&nbsp;</td></tr>
-                  <?php $selected = ''; ?>
                   @foreach ( $days as $dayKey => $dayValue )
                   <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
                   <tr>
@@ -92,14 +92,9 @@
                       @endforeach
                     </tr>
 
+                    <!-- list user -->
                     <tr class="col-title">
-                      @foreach ( $belongUsers as $belongUser )
-                        @if ( isset($belongUser->belong_users) )
-                          @foreach( $belongUser->belong_users as $u )
-                          <td>{{ $u->u_name }}</td>
-                          @endforeach
-                        @endif
-                      @endforeach
+                      {!! $strUser !!}
                     </tr>
 
                     <!-- format value ==> -->
@@ -108,7 +103,7 @@
                     <tr>
                       @foreach ( $users as $user )
                       <td style="">
-                        <select name="select[]" class="form-control form-control--small">
+                        <select name="select[]" class="form-control form-control--small data-user" user-id="{{ $user->id }}" full-date="{{ $fullDate }}">
                         <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
                         <?php
                         if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {
@@ -116,16 +111,18 @@
                         } 
                         ?>
                         <option value="{{ $user->id }}|{{ $fullDate }}|-1" {{ $selected }}>休み</option>
+                        <!-- here -->
                         @foreach ( $clinics as $clinic )
                         <?php
                         if ( isset($shifts[$user->id . '|' . $fullDate . '|' . $clinic->clinic_id]) ) {
-                          $selected = 'selected';
+                        $selected = 'selected';
                         } else {
-                          $selected = '';
+                        $selected = '';
                         }
                         ?>
                         <option value="{{ $user->id }}|{{ $fullDate }}|{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
                         @endforeach
+                        <!-- end here -->
                         </select>
                       </td>
                       @endforeach
@@ -201,29 +198,7 @@
         // $('#input-month').val(monthNowShow);
         obj.val(yearNow + '-' + monthNowShow);
       }
-
-      // change belong kind
-      $( "#s_belong_kind" ).change(function() {
-        $( "#frm-shift-edit" ).submit();
-      });
     });
-  </script>
-
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script>
-    var filestyler = new buttontoinputFile();
-  </script>
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-36251023-1']);
-    _gaq.push(['_setDomainName', 'jqueryscript.net']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
   </script>
 
 @stop

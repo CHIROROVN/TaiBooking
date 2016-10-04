@@ -47,7 +47,6 @@
   <!-- <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-1.9.1.min.js"></script> -->
   <!-- <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-migrate-1.2.0.min.js"></script> -->
   <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap.min.js"></script>
-  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
   <script src="{{ asset('') }}public/backend/ortho/common/js/jquery-ui.1.11.4.min.js"></script>
   <script src="{{ asset('') }}public/backend/ortho/common/js/moment.min.js"></script>
 
@@ -55,8 +54,6 @@
   <script src="{{ asset('') }}public/backend/ortho/common/js/fullcalendar.js"></script>
   <script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>
   <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-button-to-input-file.js"></script>
-  <script src="{{ asset('') }}public/backend/ortho/common/js/ckeditor/ckeditor.js"></script>
-  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.fixedtable.js"></script>
 
   @yield('script')
 </body>

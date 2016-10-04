@@ -519,6 +519,7 @@
 
 
 @section('script')
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
   <script>
     $(document).ready(function(){
       $('#p_birthday').mask('0000/00/00');

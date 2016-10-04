@@ -39,6 +39,7 @@
 
 
 @section('script')
+  <script src="{{ asset('') }}public/backend/ortho/common/js/ckeditor/ckeditor.js"></script>
   <script>
     $(document).ready(function(){
       CKEDITOR.replace( 'memo_contents', {

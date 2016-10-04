@@ -132,6 +132,7 @@
 
 
 @section('script')
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.mask.min.js"></script>
   <script>
     $(document).ready(function($){
       $('.tel').mask('000-000-0000');

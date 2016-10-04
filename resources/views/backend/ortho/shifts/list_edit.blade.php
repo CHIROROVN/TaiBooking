@@ -103,7 +103,7 @@
                     <tr>
                       @foreach ( $users as $user )
                       <td style="">
-                        <select name="select[]" class="form-control form-control--small data-user" user-id="{{ $user->id }}" full-date="{{ $fullDate }}">
+                        <select name="select[]" class="form-control form-control--small data-user">
                         <option value="{{ $user->id }}|{{ $fullDate }}|0">▼選択</option>
                         <?php
                         if ( isset($shifts[$user->id . '|' . $fullDate . '|' . '-1']) ) {

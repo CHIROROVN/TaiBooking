@@ -1657,7 +1657,6 @@ class BookingController extends BackendController
             $data_bk_change['service_1_kind']   = $service_kind;
         }
 
-
         foreach ($group_booking as $gbk) {
             if ($clsBooking->update($gbk->booking_id, array_merge($data_bk_change, array(
                                         'booking_date'          => $new_booking_date,

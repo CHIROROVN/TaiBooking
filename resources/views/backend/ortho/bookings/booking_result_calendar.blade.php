@@ -595,7 +595,7 @@ $countFacility = count($facilitys);
       var widthSimple = $('.td-simple').width();
       $('.td-title').width(100);
       $('.td-will').width(widthSimple);
-      // $('.td-will-box').width($('.td-will').width());
+      $('.td-will-box').width($('.td-will').width() - 3);
     });
   </script>
 @stop

@@ -655,7 +655,7 @@
       $('.td-title').width(100);
       $('.td-title-daily').width(123);
       $('.td-will').width(widthSimple);
-      // $('.td-will-box').width($('.td-will').width());
+      $('.td-will-box').width($('.td-will').width() - 3);
     });
   </script>
 @stop

@@ -1334,6 +1334,7 @@ class BookingController extends BackendController
         $data['booking_id']         = $booking_id;
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($booking_id);
+
         return view('backend.ortho.bookings.booking_change', $data);
     }
 
@@ -1430,6 +1431,10 @@ class BookingController extends BackendController
         Session::put('where_booking_change', $where);
 
         $clsBooking                       = new BookingModel();
+        $booking                          = $clsBooking->get_by_id($booking_id);
+        $where['service_1']               = $booking->service_1;
+        $where['service_1_kind']          = $booking->service_1_kind;
+
         $bookings                         = $clsBooking->get_booking_list2($where);
         $clsFacility                      = new FacilityModel();
         $data['facilities']               = $clsFacility->list_facility_all();
@@ -1444,13 +1449,14 @@ class BookingController extends BackendController
             $data['week_later']           =  cal_change_date(Input::get('week_later'));
         }
 
+
         if(!empty(Input::get('clinic_service_name'))){
             $sk = explode('_', Input::get('clinic_service_name'));
             $service           = $sk[0];
             $s_kind            = str_split($sk[1], 2);
             $service_kind      = $s_kind[1];
             
-            if($service_kind == 2){
+            if($service_kind == 2){ 
                 // get treatment
                 $treatment = null;
                 $timeTreatment = 0;
@@ -1509,15 +1515,15 @@ class BookingController extends BackendController
                 }
 
                  $data['bookings'] = $tmpBookingTimeOk;
+            }else if($service_kind == 1){
+                //Service
+                $data['bookings'] = $bookings;
             }
 
-            // if($service_kind == 1){
-
-            // }
-
+        }else{
+            $data['bookings'] = $bookings;
         }
 
-        $data['bookings'] = $bookings;
         return view('backend.ortho.bookings.booking_change_list', $data);
     }
 
@@ -1572,7 +1578,6 @@ class BookingController extends BackendController
 
     public function postConfirm($booking_id, $id)
     {
-
         $clsBooking                     = new BookingModel();
 
         //Booking New
@@ -1581,7 +1586,6 @@ class BookingController extends BackendController
         $new_facility_id                = $new_booking->facility_id;
         $new_booking_start_time         = $new_booking->booking_start_time;
         $new_booking_group              = $new_booking->booking_group_id;
-
 
         //Booking Current
         $curr_booking                   = $clsBooking->get_by_id($booking_id);

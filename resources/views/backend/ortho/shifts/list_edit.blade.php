@@ -199,6 +199,11 @@
         // $('#input-month').val(monthNowShow);
         obj.val(yearNow + '-' + monthNowShow);
       }
+
+      // form frm-shift-edit submit
+      $( "#s_belong_kind" ).change(function() {
+        $("#frm-shift-edit").submit()
+      });
     });
   </script>
 

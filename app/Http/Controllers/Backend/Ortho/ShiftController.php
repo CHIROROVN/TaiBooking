@@ -126,7 +126,7 @@ class ShiftController extends BackendController
                     $dataInput['last_kind'] = DELETE;
                     $clsShift->update_by_uid_shiftdate($dataInput['u_id'], $dataInput['shift_date'], $dataInput);
                     // unset($dataInput['clinic_id']);
-                } elseif ( $dataInput['clinic_id'] != '0' ) {
+                } elseif ( $dataInput['clinic_id'] != 0 ) {
                     // (1) udpate
                     // (2) if not already is insert
                     $status = $clsShift->check_exist_by_uid_shiftdate($dataInput['u_id'], $dataInput['shift_date']);
@@ -142,15 +142,6 @@ class ShiftController extends BackendController
                 }
             }
         }
-        // if ( $update ) {
-        //     echo '000000';
-        // }
-        // if ( $update1 ) {
-        //     echo 1;
-        // }
-        // if ( $update2 ) {
-        //     echo 2;
-        // }die;
 
         if ( $update ) {
             Session::flash('success', trans('common.message_edit_success'));

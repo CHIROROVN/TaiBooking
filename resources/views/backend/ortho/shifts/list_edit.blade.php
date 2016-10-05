@@ -100,6 +100,7 @@
                     <!-- format value ==> -->
                     <!-- ==> u_id|shift_date|linic_id -->
                     @foreach ( $days as $dayKey => $dayValue )
+                    <?php $fullDate = $yearNow . '-' . $monthNow . '-' . $dayKey; ?>
                     <tr>
                       @foreach ( $users as $user )
                       <td style="">

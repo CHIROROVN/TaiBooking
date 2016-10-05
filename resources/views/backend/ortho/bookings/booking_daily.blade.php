@@ -89,7 +89,7 @@
         <table class="table table-bordered">
           <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
+              <td align="center" rowspan="3" class="col-title td-title td-title-daily" style="width: 130px">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 $tmpText = array();
@@ -130,7 +130,7 @@
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" class="td-simple"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -249,7 +249,7 @@
             $str = '';
           ?>
           <tr>
-              <td align="center" rowspan="3" class="col-title" style="width: 6%">ドクター</td>
+              <td align="center" rowspan="3" class="col-title td-title td-title-daily" style="width: 130px">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list hygienist
@@ -409,9 +409,9 @@
       <div class="table-responsive">
         <table class="table table-bordered table-shift-set " id="" style="margin-bottom: 0;">
           <tr>
-            <td align="center" width="6%">時間</td>
+            <td align="center" width="" style="width: 110px;" class="td-title">時間</td>
             @foreach ( $facilitys as $facility )
-            <td align="center" >{{ $facility->facility_name }}</td>
+            <td align="center" style="" class="td-will" >{{ $facility->facility_name }}</td>
             @endforeach
           </tr>
         </table>
@@ -429,7 +429,7 @@
             $tmpText = array();
           ?>
           <tr>
-            <td align="center" style="">{{ $time }}～</td>
+            <td align="center" style="width: 110px;" class="td-title">{{ $time }}～</td>
             @foreach ( $facilitys as $facility )
               <?php
                 // $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -559,7 +559,7 @@
               ?>
 
               <!-- close -->
-              <td align="center" width="50px" class="col-{{ $color }} {{ $clsBackgroundPatient }}" id="" width="142px">
+              <td align="center" width="" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="" width="142px">
                 <div class="td-content">
                   {!! $iconFlag !!} {!! $text !!}
                   @if ( $color === 'brown' )
@@ -649,6 +649,13 @@
         });
       });
       // end set value from popup
+
+      // set width td
+      var widthSimple = $('.td-simple').width();
+      $('.td-title').width(100);
+      $('.td-title-daily').width(123);
+      $('.td-will').width(widthSimple);
+      // $('.td-will-box').width($('.td-will').width());
     });
   </script>
 @stop

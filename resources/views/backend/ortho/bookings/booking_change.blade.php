@@ -170,7 +170,7 @@
                       <optgroup label="業務名">
                         @if(count($services) > 0)
                           @foreach($services as $service)
-                          <option value="{{$service->service_id}}_sk1" @if($service->service_id == $booking->service_1) selected="" @endif >{{$service->service_name}}</option>
+                          <option value="{{$service->service_id}}_sk1" >{{$service->service_name}}</option>
                         @endforeach
                         @endif
                       </optgroup>

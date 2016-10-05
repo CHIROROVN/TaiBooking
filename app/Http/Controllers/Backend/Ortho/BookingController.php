@@ -1619,11 +1619,11 @@ class BookingController extends BackendController
         $condition['next']              = $new_booking_date;
 
         $start_time = (int)$new_booking_start_time;
-        $flag = false;
+        $flag  = false;
 
         $limit = count($group_booking);
 
-        $newGroupBooking               = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
 
         $bk_start_time  = (int)$bk_booking_start_time;
 
@@ -1648,10 +1648,10 @@ class BookingController extends BackendController
         if(!empty($where['hygienist_id'])) $data_bk_change['hygienist_id'] = $where['hygienist_id'];
 
         if(!empty($where['clinic_service_name'])){
-            $tmp_service = explode('_', $where['clinic_service_name']);
-            $service           = $tmp_service[0];
-            $s_kind            = str_split($tmp_service[1], 2);
-            $service_kind      = $s_kind[1];
+            $tmp_service        = explode('_', $where['clinic_service_name']);
+            $service            = $tmp_service[0];
+            $s_kind             = str_split($tmp_service[1], 2);
+            $service_kind       = $s_kind[1];
 
             $data_bk_change['service_1']        = $service;
             $data_bk_change['service_1_kind']   = $service_kind;
@@ -1663,7 +1663,7 @@ class BookingController extends BackendController
                                         'booking_start_time'    => $start_time,
                                         'booking_group_id'      => $booking_group_id,
                                         'booking_childgroup_id' => $booking_childgroup_id,
-                                        'facility_id'           => $new_facility_id,
+                                        //'facility_id'           => $new_facility_id,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE

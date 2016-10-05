@@ -166,20 +166,24 @@
                   <td>
                     <select name="clinic_service_name" id="clinic_service_name" class="form-control">
                       <option value="" selected="selected">指定なし</option>
+                      @if($booking->service_1_kind  == 1)
                       <optgroup label="業務名">
                         @if(count($services) > 0)
                           @foreach($services as $service)
-                          <option value="{{$service->service_id}}_sk1" >{{$service->service_name}}</option>
+                          <option value="{{$service->service_id}}_sk1" @if($service->service_id == $booking->service_1) selected="" @endif >{{$service->service_name}}</option>
                         @endforeach
                         @endif
-                    </optgroup>
-                    <optgroup label="治療内容">
-                          @if(count($treatment1s) > 0)
-                            @foreach($treatment1s as $treatment12)
-                              <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk2" >{{$treatment12->treatment_name}}</option>
-                            @endforeach
-                          @endif
-                    </optgroup>
+                      </optgroup>
+                      @endif
+                      @if($booking->service_1_kind  == 2)
+                      <optgroup label="治療内容">
+                            @if(count($treatment1s) > 0)
+                              @foreach($treatment1s as $treatment12)
+                                <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk2" @if($booking->service_1 == $treatment12->treatment_id) selected="" @endif>{{$treatment12->treatment_name}}</option>
+                              @endforeach
+                            @endif
+                      </optgroup>
+                      @endif
                     </select>
                   </td>
                 </tr>
@@ -290,15 +294,19 @@
 
     $('#none_week').click(function(event) {
       $('#none_week').attr("checked", "checked");
+      $('#date_picker_option').val('');
     });
     $('#one_week').click(function(event) {
       $('#one_week').attr("checked", "checked");
+      $('#date_picker_option').val('');
     });
     $('#one_month').click(function(event) {
       $('#one_month').attr("checked", "checked");
+      $('#date_picker_option').val('');
     });
     $('#two_month').click(function(event) {
       $('#two_month').attr("checked", "checked");
+      $('#date_picker_option').val('');
     });
 
     $('#week_later_option').click(function(event) {
@@ -307,9 +315,20 @@
 
     $('#date_picker').click(function(event) {
       $('#date_picker').attr("checked", "checked");
+
+      Date.prototype.yyyymmdd = function() {
+        var yyyy = this.getFullYear().toString();
+        var mm = (this.getMonth()+1).toString();
+        var dd  = this.getDate().toString();
+        return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
+      };
+      var date = new Date();
+      $('#date_picker_option').val(date.yyyymmdd());
     });
+
     $('#week_later').click(function(event) {
       $('#week_later').attr("checked", "checked");
+      $('#date_picker_option').val('');
     });
 
     $("#btnReset").click(function(event) {

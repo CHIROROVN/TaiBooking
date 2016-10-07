@@ -1637,7 +1637,7 @@ class BookingController extends BackendController
                                         'booking_date'          => $bk_booking_date,
                                         'booking_start_time'    => $bk_start_time,
                                         'booking_group_id'      => $bk_group_id,
-                                        'facility_id'           => !empty($oldFacility[$key]) ? $oldFacility[$key] : $facility_id,
+                                        'facility_id'           => !empty(@$oldFacility[$key]) ? @$oldFacility[$key] : $facility_id,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE
@@ -1673,7 +1673,7 @@ class BookingController extends BackendController
                                         'booking_start_time'    => $start_time,
                                         'booking_group_id'      => $booking_group_id,
                                         'booking_childgroup_id' => $booking_childgroup_id,
-                                        'facility_id'           => !empty($newFacility[$key]) ? $newFacility[$key] : $facility_id,
+                                        'facility_id'           => !empty(@$newFacility[$key]) ? @$newFacility[$key] : $facility_id,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE

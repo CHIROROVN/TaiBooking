@@ -1623,24 +1623,29 @@ class BookingController extends BackendController
 
         $limit = count($group_booking);
 
+        $oldFacility = array();
+        foreach ($group_booking as $key=>$bk) {
+         $oldFacility[$key] = $bk->facility_id;
+        }
+
         $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
 
         $bk_start_time  = (int)$bk_booking_start_time;
 
-        foreach ($newGroupBooking as $newbk) {
+        foreach ($newGroupBooking as $key=>$newbk) {
             $clsBooking->update($newbk->booking_id, array(
                                         'booking_date'          => $bk_booking_date,
                                         'booking_start_time'    => $bk_start_time,
                                         'booking_group_id'      => $bk_group_id,
-                                        'facility_id'           => $facility_id,
+                                        'facility_id'           => !empty($oldFacility[$key]) ? $oldFacility[$key] : $facility_id,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE
                                     ));
-            $bk_start_time = convertStartTime($bk_start_time + 15);
+            $bk_start_time                  = convertStartTime($bk_start_time + 15);
         }
 
-        $data_bk_change = array();
+        $data_bk_change     = array();
         $where              = Session::get('where_booking_change');
 
         if(!empty($where['clinic_id'])) $data_bk_change['clinic_id'] = $where['clinic_id'];
@@ -1657,13 +1662,18 @@ class BookingController extends BackendController
             $data_bk_change['service_1_kind']   = $service_kind;
         }
 
+        $newFacility = array();
+        foreach ($newGroupBooking as $key=>$new_bk) {
+         $newFacility[$key] = $new_bk->facility_id;
+        }
+
         foreach ($group_booking as $gbk) {
             if ($clsBooking->update($gbk->booking_id, array_merge($data_bk_change, array(
                                         'booking_date'          => $new_booking_date,
                                         'booking_start_time'    => $start_time,
                                         'booking_group_id'      => $booking_group_id,
                                         'booking_childgroup_id' => $booking_childgroup_id,
-                                        //'facility_id'           => $new_facility_id,
+                                        'facility_id'           => !empty($newFacility[$key]) ? $newFacility[$key] : $facility_id,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE
@@ -1672,7 +1682,6 @@ class BookingController extends BackendController
             }else{
                 $flag = false;
             }
-
             $start_time = convertStartTime($start_time + 15);
         }
 

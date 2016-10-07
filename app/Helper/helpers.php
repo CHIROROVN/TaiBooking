@@ -623,3 +623,13 @@ function showPatient($p_id=null){
 				return (int)(sprintf('%02d',$hour).sprintf('%02d',$min));
 			}
 	}
+
+function delete_row(&$array, $offset) {
+    return array_splice($array, $offset, 1);
+}
+
+function delete_col(&$array, $offset) {
+    return array_walk($array, function (&$v) use ($offset) {
+        array_splice($v, $offset, 1);
+    });
+}

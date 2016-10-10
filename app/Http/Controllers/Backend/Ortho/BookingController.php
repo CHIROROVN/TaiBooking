@@ -24,6 +24,7 @@ use App\Http\Models\Ortho\ClinicAreaModel;
 use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\DdrModel;
 use App\Http\Models\Ortho\MemoModel;
+use App\Http\Models\Ortho\BookingTelWaitingModel;
 
 use Form;
 use Html;
@@ -293,6 +294,7 @@ class BookingController extends BackendController
 
     public function bookingCancel($id){
         $clsBooking                         = new BookingModel();
+        $clsBookingTelWaiting               = new BookingTelWaitingModel();
         $booking                            = $clsBooking->get_by_id($id);
         $dataUpdate = array(
             'service_1'                 => -1,
@@ -333,13 +335,20 @@ class BookingController extends BackendController
             foreach ( $listBookingGroup as $item ) {
                 if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
                     $status = false;
+                } else {
+                    // and insert to table "t_booking_tell_waiting"
+                    $bookingTelWaiting = (array)$item;
+                    $clsBookingTelWaiting->insert($bookingTelWaiting);
                 }
             }
         }
 
         if ( $status ) {
             Session::flash('success', trans('common.message_delete_success'));
-            return redirect()->route('ortho.bookings.booking.daily', [ 'clinic_id' => $booking->clinic_id ]);
+            $where                          = array();
+            $where['clinic_id']             = $booking->clinic_id;
+            $where['cur']                   = $booking->booking_date;
+            return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             Session::flash('danger', trans('common.message_delete_danger'));
             return redirect()->route('ortho.ortho.bookings.booking_cancel_cnf', $id);
@@ -382,6 +391,7 @@ class BookingController extends BackendController
     {
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
+        $clsBookingTelWaiting       = new BookingTelWaitingModel();
         $booking                    = $clsBooking->get_by_id($id);
         // $arr_gid                    = array();
         // $arr_gid[]                  = $booking->booking_group_id;
@@ -1486,7 +1496,7 @@ class BookingController extends BackendController
                     }
                     $tmpBookings[$itemFac] = $tmp;
                 }
-                
+
                 // return list booking is ok
                 $tmpBookingTimeOk = array();
                 $timeTreatmentNumber = $timeTreatment / 15;
@@ -1870,15 +1880,15 @@ class BookingController extends BackendController
     /**
      * List1 list
      */
-    public function list1_list(){
-        $clsBooking             = new BookingModel();
-        $data['list1']          = $clsBooking->get_list1_list();
-        $clsService             = new ServiceModel();
-        $data['services']       = $clsService->get_list();
-        $clsTreatment1          = new Treatment1Model();
-        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
-        return view('backend.ortho.bookings.list1_list', $data);
-    }
+    // public function list1_list(){
+    //     $clsBooking             = new BookingModel();
+    //     $data['list1']          = $clsBooking->get_list1_list();
+    //     $clsService             = new ServiceModel();
+    //     $data['services']       = $clsService->get_list();
+    //     $clsTreatment1          = new Treatment1Model();
+    //     $data['treatment1s']    = $clsTreatment1->get_list_treatment();
+    //     return view('backend.ortho.bookings.list1_list', $data);
+    // }
 
     /**
      * List2 list

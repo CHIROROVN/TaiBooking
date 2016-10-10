@@ -376,6 +376,14 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('hiyarihatto/sent-email', ['as' => 'ortho.hiyarihatto.sent_email', 'uses' => 'HiyarihattoController@sendEmail']);
 	Route::get('hiyarihatto/complete', ['as' => 'ortho.hiyarihatto.complete', 'uses' => 'HiyarihattoController@complete']);
 
+	// bookingTellWaiting
+	Route::get('list1-list', ['as' => 'ortho.list1_list.index', 'uses' => 'BookingTelWaitingController@index']);
+	Route::get('list1-list/regist', ['as' => 'ortho.list1_list.regist', 'uses' => 'BookingTelWaitingController@getRegist']);
+	Route::post('list1-list/regist', ['as' => 'ortho.list1_list.regist', 'uses' => 'BookingTelWaitingController@postRegist']);
+	Route::get('list1-list/edit/{id}', ['as' => 'ortho.list1_list.edit', 'uses' => 'BookingTelWaitingController@getEdit']);
+	Route::post('list1-list/edit/{id}', ['as' => 'ortho.list1_list.edit', 'uses' => 'BookingTelWaitingController@postEdit']);
+	Route::get('list1-list/delete/{id}', ['as' => 'ortho.list1_list.delete', 'uses' => 'BookingTelWaitingController@getDelete']);
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

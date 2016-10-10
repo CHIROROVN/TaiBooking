@@ -22,7 +22,7 @@
               <li><a href="{{ route('ortho.bookings.booking_search') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>新患の予約を取る</a></li>
               <li><a href="{{ route('ortho.bookeds.history') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>来院履歴登録～次回の予約を取る</a></li>
               <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
-              <li><a href="{{route('ortho.bookings.list1_list')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>TEL待ちリストから予約を取る</a></li>
+              <li><a href="{{route('ortho.list1_list.index')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>TEL待ちリストから予約を取る</a></li>
               <li><a href="{{route('ortho.bookings.booking_search')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>急患の予約を取る</a></li>
               <li><a href="{{ route('ortho.bookings.booking.monthly', ['area_id'=> @$area_id, 'clinic_id'=>@$clinic_id]) }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
               <li><a href="{{route('ortho.diagrams.index')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約状況の模式図</a></li>
@@ -74,7 +74,7 @@
             @if(!empty(Auth::user()->u_power7))
             <h2>各種リスト表示</h2>
             <ul>
-              <li><a href="{{route('ortho.bookings.list1_list')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「TEL待ち」リストの表示</a></li>
+              <li><a href="{{route('ortho.list1_list.index')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「TEL待ち」リストの表示</a></li>
               <li><a href="{{ route('ortho.bookings.list2_list',['booking_date_year'=>date('Y'), 
               'booking_date_month'=>date('m')]) }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>「無断キャンセル」リストの表示</a></li>
               <li><a href="{{ route('ortho.bookings.list3_list',['booking_recall_yy'=>date('Y'), 

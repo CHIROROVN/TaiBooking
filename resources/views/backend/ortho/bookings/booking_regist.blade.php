@@ -221,7 +221,7 @@
                   <label><input name="booking_status" value="" type="radio" >通常</label>
                   @endif
                 </div>
-                <div class="radio">
+                <?php /*<div class="radio">
                   @if ( old('booking_status') == 1 )
                   <label><input name="booking_status" value="1" type="radio" checked >「TEL待ち」です</label>
                   @elseif ( $booking->booking_status == 1 )
@@ -229,7 +229,7 @@
                   @else
                   <label><input name="booking_status" value="1" type="radio" >「TEL待ち」です</label>
                   @endif
-                </div>
+                </div>*/ ?>
                 <div class="radio">
                   @if ( old('booking_status') == 2 )
                   <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
@@ -239,7 +239,7 @@
                   <label><input name="booking_status" value="2" type="radio" >無断キャンセル</label>
                   @endif
                 </div>
-                <div class="radio">
+                <?php /*<div class="radio">
                   <label>
                     @if ( old('booking_status') == 3)
                     <input name="booking_status" id="recalling" value="3" type="radio" checked >「リコール」です→
@@ -301,7 +301,7 @@
                       @endif
                       
                     </select>
-                  </label>
+                  </label>*/ ?>
                 </div>
                 <div class="radio">
                   @if ( old('booking_status') == 4 )

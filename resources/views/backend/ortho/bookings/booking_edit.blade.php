@@ -166,13 +166,13 @@
             <div class="radio">
               <label><input name="booking_status" value="" type="radio" @if(empty($booking->booking_status)) checked @endif>通常</label>
             </div>
-            <div class="radio">
+            <!-- <div class="radio">
               <label><input name="booking_status" value="1" type="radio" @if($booking->booking_status == 1) checked @endif>「TEL待ち」です</label>
-            </div>
+            </div> -->
             <div class="radio">
               <label><input name="booking_status" value="2" type="radio" @if($booking->booking_status == 2) checked @endif>無断キャンセル</label>
             </div>
-            <div class="radio">
+            <!-- <div class="radio">
               <label>
                 <input name="booking_status" id="recalling" value="3"  type="radio" @if($booking->booking_status == 3) checked @endif>「リコール」です→
                 <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
@@ -185,7 +185,7 @@
                   <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" @if(dateAddMonth($booking->booking_date, 06, 'Ym') == $booking->booking_recall_ym) selected @endif>6ヶ月後</option>
                 </select>
               </label>
-            </div>
+            </div> -->
             <div class="radio">
               <label><input name="booking_status" value="4" type="radio" @if($booking->booking_status == 4) checked @endif>未作成技工物TEL待ち</label>
             </div>

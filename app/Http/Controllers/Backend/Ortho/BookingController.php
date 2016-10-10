@@ -1436,6 +1436,7 @@ class BookingController extends BackendController
         $where['service_1_kind']          = $booking->service_1_kind;
 
         $bookings                         = $clsBooking->get_booking_list2($where);
+
         $clsFacility                      = new FacilityModel();
         $data['facilities']               = $clsFacility->list_facility_all();
         $clsTreatment1                    = new Treatment1Model();
@@ -1476,7 +1477,6 @@ class BookingController extends BackendController
                 }
 
                 $tmpBookings = array();
-
                 foreach ( $typeFacility as $itemFac ) {
                     $tmp = array();
                     foreach ( $bookings as $item ) {
@@ -1486,7 +1486,7 @@ class BookingController extends BackendController
                     }
                     $tmpBookings[$itemFac] = $tmp;
                 }
-
+                
                 // return list booking is ok
                 $tmpBookingTimeOk = array();
                 $timeTreatmentNumber = $timeTreatment / 15;
@@ -1523,6 +1523,11 @@ class BookingController extends BackendController
         }else{
             $data['bookings'] = $bookings;
         }
+
+        // echo '<pre>';
+        // print_r($tmpBookingTimeOk);
+        // echo '</pre>';
+        // die;
 
         return view('backend.ortho.bookings.booking_change_list', $data);
     }

@@ -628,7 +628,9 @@ class BookingModel
 				// ->where('t_booking.service_2_kind', '=', $service_kind);
 			}
 		}else{
-			$result = $db->where('t_booking.service_1_kind', $where['service_1_kind']);
+			if ( isset($where['service_1_kind']) ) {
+				$result = $db->where('t_booking.service_1_kind', $where['service_1_kind']);
+			}
 		}
 
 		// if(isset($where['doctor_id'])){

@@ -141,6 +141,7 @@
             </tr>
 
             <!-- check "brown", "green", "blue" color -->
+            <?php $tmpFlag = array(); ?>
             @foreach ( $times as $time )
             <?php
               $tmp_arr = explode(':', $time);
@@ -157,17 +158,66 @@
                   $service_id = 0;
                   $fullValue = null;
                   $text = '';
+                  $iconFlag = '';
 
                   if ( isset($arr_templates[$facility_id][$time]) ) {
                     $hour_template = substr($arr_templates[$facility->facility_id][$time]->booking_start_time , 0, 2);
                     $minute_template = substr($arr_templates[$facility->facility_id][$time]->booking_start_time , 2, 2);
 
+                    // set '↓'
+                    $tmpFacilityTimeGroup[] = $arr_templates[$facility_id][$time]->facility_id . '-' . (int)$arr_templates[$facility_id][$time]->booking_start_time . '-' . $arr_templates[$facility_id][$time]->booking_childgroup_id;
+
+                    // set flag
+                    if ( $arr_templates[$facility_id][$time]->service_1_kind == 1  ) {
+                      if ( empty($arr_templates[$facility_id][$time]->booking_childgroup_id) ) {
+                        $iconFlag = '';
+                      } elseif ( !in_array($arr_templates[$facility_id][$time]->booking_childgroup_id, $tmpFlag) ) {
+                        $tmpFlag[] = $arr_templates[$facility_id][$time]->booking_childgroup_id;
+                        $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                      } else {
+                        $iconFlag = '';
+                        $str = $arr_templates[$facility_id][$time]->facility_id . '-' . ($arr_templates[$facility_id][$time]->booking_start_time - 15) . '-' . $arr_templates[$facility_id][$time]->booking_childgroup_id;
+                        if ( in_array($str, $tmpFacilityTimeGroup) ) {
+                          $iconFlag = '↓';
+                        }
+                      }
+                    } else {
+                      if ( empty($arr_templates[$facility_id][$time]->booking_childgroup_id) ) {
+                        $iconFlag = '';
+                      } elseif ( !in_array($arr_templates[$facility_id][$time]->booking_childgroup_id . $arr_templates[$facility_id][$time]->facility_id, $tmpFlag) ) {
+                        $tmpFlag[] = $arr_templates[$facility_id][$time]->booking_childgroup_id . $arr_templates[$facility_id][$time]->facility_id;
+                        $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
+                      } else {
+                        $iconFlag = '↓';
+                      }
+                    }
+
                     if ( $arr_templates[$facility_id][$time]->clinic_service_id > 0
                           && $hour_template == $hour
                           && $minute_template == $minute ) {
-                      $color = 'green';
-                      if ( isset($services[$arr_templates[$facility_id][$time]->clinic_service_id]) ) {
-                        $text = $services[$arr_templates[$facility_id][$time]->clinic_service_id]->service_name;
+                      // service
+                      if ( $arr_templates[$facility_id][$time]->service_1_kind == 1  ) {
+                        $color = 'green';
+                        if ( isset($services[$arr_templates[$facility_id][$time]->clinic_service_id]) ) {
+                          $text = $services[$arr_templates[$facility_id][$time]->clinic_service_id]->service_name;
+                        }
+                        if ( $iconFlag == '↓' ) {
+                          $text = $iconFlag;
+                          $iconFlag = null;
+                        } else {
+                          $text = $text;
+                        }
+                      } elseif ( $arr_templates[$facility_id][$time]->service_1_kind == 2  ) {
+                        $color = 'blue';
+                        if ( isset($treatment1s[$arr_templates[$facility_id][$time]->clinic_service_id]) ) {
+                          $text = $treatment1s[$arr_templates[$facility_id][$time]->clinic_service_id];
+                        }
+                        if ( $iconFlag == '↓' ) {
+                          $text = $iconFlag;
+                          $iconFlag = null;
+                        } else {
+                          $text = $text;
+                        }
                       }
                     } elseif ( $arr_templates[$facility_id][$time]->clinic_service_id == -1
                                 && $hour_template == $hour
@@ -192,7 +242,6 @@
                     if ( empty($clsNameGroup) ) {
                       $clsNameGroup = $idBooking;
                     }
-                    
                   }
                 ?>
 
@@ -210,7 +259,7 @@
                     @endif
 
                     <!-- input -->
-                    <span>{{ $text }}</span>
+                    <span>{!! $iconFlag !!} {{ $text }}</span>
                     @if ( $color === 'brown' )
                     <input type="hidden" class="input" name="" value="{{ $fullValue }}">
                     @else
@@ -267,7 +316,7 @@
               @endforeach
             </tr>
             @endforeach
-            
+            <?php  ?>
           </table>
         </div>
       </div>

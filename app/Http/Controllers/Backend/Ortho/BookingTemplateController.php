@@ -8,6 +8,7 @@ use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
+use App\Http\Models\Ortho\Treatment1Model;
 
 use Request;
 use Auth;
@@ -335,12 +336,14 @@ class BookingTemplateController extends BackendController
         $clsBookingTemplate         = new BookingTemplateModel();
         $clsClinic                  = new ClinicModel();
         $clsBooking                 = new BookingModel();
+        $clsTreatment1              = new Treatment1Model();
 
         $service_available          = $clsService->service_available();
         $data['clinic']             = $clsClinic->get_by_id(Input::get('clinic_id'));
         $data['facilitys']          = $clsFacility->getAll(@$data['clinic']->clinic_id);
         $data['facilitys_popup']    = $clsFacility->getAll(@$data['clinic']->clinic_id, 1);
         $services                   = $clsClinicService->getAll(@$data['clinic']->clinic_id, $service_available);
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['times']              = Config::get('constants.TIME');
         $where = array(
             'clinic_id' => Input::get('clinic_id')
@@ -391,6 +394,11 @@ class BookingTemplateController extends BackendController
             }
         }
         $data['arr_templates']       = $arr_templates;
+        // echo '<pre>';
+        // print_r($data['arr_templates']);
+        // // print_r($data['services']);
+        // echo '</pre>';
+        // die;
 
         return view('backend.ortho.bookings.booking_template_daily', $data);
     }

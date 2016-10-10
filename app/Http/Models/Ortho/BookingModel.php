@@ -243,7 +243,7 @@ class BookingModel
 						->where('t_booking.last_kind', '<>', DELETE)
 						// ->where('t_booking.booking_rev', $this->getLastBookingRev())
 						->whereIn('t_booking.booking_group_id', $booking_group_id)
-						->orderBy('t_booking.booking_id', 'asc')
+						->orderBy('t_booking.booking_start_time', 'asc')
 						->get();
 		return $results;
 	}

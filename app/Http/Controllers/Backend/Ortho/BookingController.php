@@ -191,6 +191,10 @@ class BookingController extends BackendController
         if ( !empty(Input::get('next')) ) {
             $date_current = Input::get('next');
         }
+        $data['date'] = date('Y-m-d');
+        if ( Input::get('date') ) {
+            $data['date'] = Input::get('date');
+        }
         $data['date_current']   = $date_current;
 
         $clinic_id = Input::get('clinic_id');
@@ -199,20 +203,22 @@ class BookingController extends BackendController
             return redirect()->route('ortho.bookings.booking_search');
         }
 
-        $clsShift               = new ShiftModel();
-        $clsBooking             = new BookingModel();
-        $clsFacility            = new FacilityModel();
-        $clsClinic              = new ClinicModel();
-        $clsService             = new ServiceModel();
-        $clsTreatment1          = new Treatment1Model();
-        $clsUser                = new UserModel();
-        $data['list_doctors']   = $clsUser->get_list_users([1]);
-        $data['doctors']        = $clsShift->get_by_belong([1], $date_current, $clinic_id);
-        $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current, $clinic_id);
-        $data['facilitys']      = $clsFacility->getAll($clinic_id);
-        $data['clinic']         = $clsClinic->get_by_id($clinic_id);
-        $data['services']       = $clsService->get_list();
-        $data['treatment1s']    = $clsTreatment1->get_list_treatment();
+        $clsShift                   = new ShiftModel();
+        $clsBooking                 = new BookingModel();
+        $clsFacility                = new FacilityModel();
+        $clsClinic                  = new ClinicModel();
+        $clsService                 = new ServiceModel();
+        $clsTreatment1              = new Treatment1Model();
+        $clsUser                    = new UserModel();
+        $clsFacility                = new FacilityModel();
+        $data['list_doctors']       = $clsUser->get_list_users([1]);
+        $data['doctors']            = $clsShift->get_by_belong([1], $date_current, $clinic_id);
+        $data['hygienists']         = $clsShift->get_by_belong([2,3], $date_current, $clinic_id);
+        $data['facilitys']          = $clsFacility->getAll($clinic_id);
+        $data['clinic']             = $clsClinic->get_by_id($clinic_id);
+        $data['services']           = $clsService->get_list();
+        $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id, 1);
 
         $data['times']          = Config::get('constants.TIME');
 

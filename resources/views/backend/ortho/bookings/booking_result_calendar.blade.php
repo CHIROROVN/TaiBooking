@@ -388,7 +388,7 @@ $countFacility = count($facilitys);
               <td align="center" style="width: 110px;" class="td-title">{{ $time }}～</td>
               @foreach ( $facilitys as $key => $facility )
                 <?php
-                  // $common_id = $facility->facility_id . '-' . $hour.$minute;
+                  $common_id = $facility->facility_id . '-' . $hour.$minute;
                   $facility_id = $facility->facility_id;
                   $color = 'brown';
                   // $service_id = 0;
@@ -516,13 +516,55 @@ $countFacility = count($facilitys);
                 ?>
 
               <!-- close -->
-              <td align="center" width="" style="" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="">
-                <div class="td-content">
+              <td align="center" width="" style="" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
+                <div class="td-content" data-toggle="modal" data-target="#myModal-{{ $common_id }}">
                   {!! $iconFlag !!} {!! $text !!}
                   @if ( $color === 'brown' )
                   <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                   @endif
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal-{{ $common_id }}" role="dialog">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{trans('common.modal_header_popup_edit_clinic_booking_template')}}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <!-- child table -->
+                        <table class="table table-bordered" style="margin-top: 20px; float: none;">
+                          <tr style="font-weight: normal; border-bottom: 1px solid grey;">
+                            <td align="left" style="width: 26%;">業務の選択</td>
+                            <td align="left">
+                              <select name="" id="clinic_service_id-{{ $common_id }}">
+                                <option value="0">閉じる</option>
+                                <option value="-1">治療</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="left">チェアの選択</td>
+                            <td align="left">
+                              <select name="" id="facility_id-{{ $common_id }}">
+                                @foreach ( $facilitys_popup as $item )
+                                <option value="{{ $item->facility_id }}" @if ( $facility->facility_id == $item->facility_id ) selected @endif>{{ $item->facility_name }}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                              <button type="" class="btn btn-sm btn-page btn-save" data-id="{{ $common_id }}" data-full-time="{{ $hour.$minute }}" id="btn-save-{{ $common_id }}">{{ trans('common.modal_btn_ok') }}</button>
+                            </td>
+                          </tr>
+                        </table>
+                        <!-- end child table -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Modal -->
               </td>
               <!-- end close -->
             @endforeach
@@ -596,6 +638,171 @@ $countFacility = count($facilitys);
       $('.td-title').width(100);
       $('.td-will').width(widthSimple);
       $('.td-will-box').width($('.td-will').width() - 3);
+
+
+      // set popup treatment
+      var facilityIdOld = 0;
+      var serviceIdOld = 0;
+      var tdObjOld = '';
+
+
+      $('.td-content').click(function(event) {
+        facilityIdOld = $(this).attr('data-facility-id');
+        serviceIdOld = $(this).attr('data-service-id');
+
+        var dataId = $(this).attr('data-id');
+        tdObjOld = $('#td-' + dataId);
+
+        // ser selected for select option
+        $('#clinic_service_id-' + dataId + ' option').each(function() {
+          if ( $(this).val() == serviceIdOld ) {
+            $(this).prop("selected", true);
+          }
+        });
+      });
+
+      // button save
+      $(".btn-save").click(function(event){
+        event.preventDefault();
+
+        var data_id = $(this).attr('data-id');
+        var dataFullTime = $(this).attr('data-full-time');
+
+        // new value
+        var serviceIdNew = $('#clinic_service_id-' + data_id).val();
+        var serviceTextNew = $('#clinic_service_id-' + data_id).find('option:selected').text();
+        var facilityIdNew = $('#facility_id-' + data_id).val();
+        var fullValue = facilityIdNew + '|' + serviceIdNew + '|' + dataFullTime;
+
+        // set color td
+        var tdObjNew = $('#td-' + facilityIdNew + '-' + dataFullTime);
+        console.log(tdObjNew.attr('class'));
+
+        // green
+        if ( serviceIdNew < 0 ) {
+          // blue
+          setClear(tdObjOld, 0);
+          setBlue(tdObjNew, serviceIdNew, fullValue, serviceTextNew);
+
+          // insert to table "t_booking"
+          $.ajax({
+            url: "{{ route('ortho.bookings.template.daily.insert.ajax') }}",
+            type: 'get',
+            dataType: 'json',
+            data: { 
+              facility_id: facilityIdNew,
+              time: dataFullTime,
+              booking_date: '{{ $date }}',
+              clinic_id: '{{ @$clinic->clinic_id }}' 
+            },
+            success: function(result){
+              tdObjNew.children().attr('data-booking-id', result[1].booking_id);
+            }
+          });
+        } else if ( serviceIdNew == 0 ) {
+          // brown
+          // update to database table "t_booking"
+          // $.ajax({
+          //   url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
+          //   type: 'get',
+          //   dataType: 'json',
+          //   data: {
+          //     booking_group_id: tdObjOld.find('.td-content').attr('data-dad-group'),
+          //     booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
+          //     clinic_id: '{{ @$clinic->clinic_id }}',
+          //     booking_id: tdObjOld.find('.td-content').attr('data-booking-id')
+          //   },
+          //   success: function(result){
+          //     console.log(result);
+          //   }
+          // });
+          // reset html
+          // var groupDelete = tdObjOld.find('.td-content').attr('data-group');
+          // if ( groupDelete.length ) {
+          //   $('.td-content').each(function(index, el) {
+          //     if ( $(this).attr('data-group') == groupDelete ) {
+          //       setClear($(this).parent(), 0);
+          //       setBrow($(this).parent(), 0, '');
+          //     }
+          //   });
+          // } else {
+          //   setClear(tdObjOld, 0);
+          //   setBrow(tdObjOld, 0, '');
+          // }
+        } else {
+          // green
+        }
+
+        $('#myModal-' + data_id).modal('hide');
+      });
+
+      function setGreen(objNew, serviceIdNew, value, text, group) {
+        tdNewCls = objNew.attr('class');
+        objNew.removeClass(tdNewCls);
+        objNew.addClass('col-green');
+        // objNew.children().attr('class', 'td-content');
+        objNew.find('.td-content').html(' ');
+        objNew.find('.td-content').append('');
+        // set service id
+        objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').addClass(group);
+        objNew.find('.td-content').attr('data-group', group);
+        // set value for hidden iput
+        objNew.find('.td-content').html(text);
+        objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
+      }
+
+      function setBlue(objNew, serviceIdNew, value, text, group) {
+        tdNewCls = objNew.attr('class');
+        objNew.removeClass(tdNewCls);
+        objNew.addClass('col-blue');
+        // objNew.children().attr('class', 'td-content');
+        objNew.find('.td-content').html('');
+        objNew.find('.td-content').append('');
+        // set service id
+        objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // get group
+        objNew.find('.td-content').addClass(group);
+        objNew.find('.td-content').attr('data-group', group);
+        // set value for hidden iput
+        objNew.find('.td-content').html(text);
+        objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
+      }
+
+      function setBrow(objNew, serviceIdNew, value, group) {
+        tdNewCls = objNew.attr('class');
+        if ( tdNewCls != 'col-brown' ) {
+          objNew.removeClass(tdNewCls);
+          objNew.addClass('col-brown');
+          objNew.find('.td-content').html('');
+          objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
+        // set service id
+        objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+        // set group
+        objNew.find('.td-content').attr('data-group', group);
+        // set value for hidden iput
+        objNew.find('.td-content').append('<input type="hidden" class="input" name="facility_service_time[]" value="' + value + '">');
+        }
+      }
+
+      function setClear(objNew, serviceIdNew) {
+        tdNewCls = objNew.attr('class');
+        if ( tdNewCls != 'col-brown' ) {
+          objNew.removeClass(tdNewCls);
+          objNew.addClass('col-brown');
+          objNew.find('.td-content').html('');
+          objNew.find('.td-content').append('<img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />');
+          // set service id
+          objNew.find('.td-content').attr('data-service-id', serviceIdNew);
+          // set group
+          objNew.find('.td-content').attr('data-group', '');
+          objNew.find('.td-content').attr('data-booking-id', '');
+          objNew.find('.td-content > .input').val('');
+          objNew.find('.td-content > .input').attr('name', '');
+        }
+      }
+
     });
   </script>
 @stop

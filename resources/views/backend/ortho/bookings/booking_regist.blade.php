@@ -359,7 +359,6 @@
       $('#recalling').attr("checked", "checked");
     });
 
-
     $(document).ready(function(){
       $( "#patient" ).autocomplete({
         minLength: 0,

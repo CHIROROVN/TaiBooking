@@ -384,6 +384,13 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('list1-list/edit/{id}', ['as' => 'ortho.list1_list.edit', 'uses' => 'BookingTelWaitingController@postEdit']);
 	Route::get('list1-list/delete/{id}', ['as' => 'ortho.list1_list.delete', 'uses' => 'BookingTelWaitingController@getDelete']);
 
+	//Booking recall
+	Route::get('bookings/booking-recall', ['as' => 'ortho.bookings.booking_recall', 'uses' => 'RecallController@index']);
+	Route::get('bookings/booking-recall/regist', ['as' => 'ortho.bookings.booking_recall_regist', 'uses' => 'RecallController@getRegist']);
+	Route::post('bookings/booking-recall/regist', ['as' => 'ortho.bookings.booking_recall_regist', 'uses' => 'RecallController@postRegist']);
+	Route::get('bookings/booking-recall/edit/{id}', ['as' => 'ortho.bookings.booking_recall_edit', 'uses' => 'RecallController@getEdit']);
+	Route::post('bookings/booking-recall/edit/{id}', ['as' => 'ortho.bookings.booking_recall_edit', 'uses' => 'RecallController@postEdit']);
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

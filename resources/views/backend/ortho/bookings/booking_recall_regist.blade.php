@@ -17,7 +17,7 @@
                         <?php $listClinic = $clinics; ?>
                         @foreach($listClinic as $clinic_id => $clinic)
                           @if ( $clinic == 'たい矯正歯科' )
-                          <option value="{{$clinic_id}}" @if(empty(old('clinic_id'))) selected="" @endif>{{$clinic}}</option>
+                          <option value="{{$clinic_id}}" @if(empty(old('clinic_id'))) selected="" @elseif(old('clinic_id') == $clinic_id) selected="" @endif>{{$clinic}}</option>
                           <?php unset($listClinic[$clinic_id]) ?>
                           @endif
                         @endforeach

@@ -29,13 +29,22 @@ class BookingTelWaitingController extends BackendController
      */
     public function index()
     {
+        // search
+        $data                           = array();
+        $data['p_id']                   = Input::get('p_id');
+        $data['patient']                = Input::get('patient');
+        $data['insert_date']            = Input::get('insert_date');
+        if ( empty($data['patient']) ) {
+            $data['p_id'] = null;
+        }
+
         $clsBookingTelWaiting           = new BookingTelWaitingModel();
         $clsClinic                      = new ClinicModel();
         $clsPatient                     = new PatientModel();
 
         $data['clinics']                = $clsClinic->get_for_select_only_user();
         $data['patients']               = $clsPatient->get_for_select();
-        $tmpList1_list                  = $clsBookingTelWaiting->get_all();
+        $tmpList1_list                  = $clsBookingTelWaiting->get_all($data);
         $tmp = array();
         $tmpGroup = array();
         foreach ( $tmpList1_list as $item ) {

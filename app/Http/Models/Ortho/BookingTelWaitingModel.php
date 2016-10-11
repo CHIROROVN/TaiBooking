@@ -21,10 +21,24 @@ class BookingTelWaitingModel
 		);
     }
 
-    public function get_all()
+    public function get_all($where = array())
     {
-        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('last_date', 'asc')->get();
-        return $results;
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        // p_id
+        if ( !empty($where['p_id']) ) {
+            $results = $results->where('patient_id', $where['p_id']);
+        }
+
+        // insert_date
+        if ( !empty($where['insert_date']) ) {
+            $results = $results->where('insert_date', $where['insert_date']);
+        }
+
+        $results = $results->orderBy('insert_date', 'asc');
+
+        $db = $results->get();
+        return $db;
     }
 
     public function insert($data)

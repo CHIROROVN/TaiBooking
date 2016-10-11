@@ -337,6 +337,7 @@ class BookingController extends BackendController
                     $status = false;
                 } else {
                     // and insert to table "t_booking_tell_waiting"
+                    $item->insert_date = date('Y-m-d');
                     $bookingTelWaiting = (array)$item;
                     $clsBookingTelWaiting->insert($bookingTelWaiting);
                 }

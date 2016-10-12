@@ -48,7 +48,7 @@ $countFacility = count($facilitys);
           <table class="table table-bordered">
             <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="col-title td-title" style="width: 110px">ドクター</td>
+              <td align="center" rowspan="3" class="td-col-header td-width-title">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list doctor
@@ -88,7 +88,7 @@ $countFacility = count($facilitys);
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td class="td-simple" align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td class="td-simple td-width-box" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -207,7 +207,7 @@ $countFacility = count($facilitys);
               $str = '';
             ?>
             <tr>
-              <td align="center" rowspan="3" class="col-title td-title" style="width: 110px">ドクター</td>
+              <td align="center" rowspan="3" class="td-col-header td-width-title">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list hygienist
@@ -366,14 +366,14 @@ $countFacility = count($facilitys);
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set" id="" style="margin-bottom: 0;">
             <tr>
-              <td align="center" style="width: 110px;" class="td-title">時間</td>
+              <td align="center" class="td-title td-width-title">時間</td>
               @foreach ( $facilitys as $facility )
-              <td align="center" style="" class="td-will">{{ $facility->facility_name }}</td>
+              <td align="center" class="td-width-box">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
         </table>
 
-        <div class="inner_table table-responsive">
+        <div class="inner_table table-responsive" id="scrollbox3">
           <table class="table table-bordered table-shift-set tbl-inner">
             <!-- check "brown", "green", "blue" color -->
             <?php $tmpFlag = array(); ?>
@@ -385,7 +385,7 @@ $countFacility = count($facilitys);
               $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" style="width: 110px;" class="td-title">{{ $time }}～</td>
+              <td align="center" class="td-title td-width-title">{{ $time }}～</td>
               @foreach ( $facilitys as $key => $facility )
                 <?php
                   $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -581,6 +581,16 @@ $countFacility = count($facilitys);
 @stop
 
 @section('script')
+<script src="{{ asset('') }}public/backend/ortho/common/js/enscroll-0.6.2.min.js"></script>
+
+  <script>
+    $('#scrollbox3').enscroll({
+      showOnHover: true,
+      verticalTrackClass: 'track3',
+      verticalHandleClass: 'handle3'
+    });
+  </script>
+
   <script>
     $(document).ready(function(){
       $('.popup').popover({

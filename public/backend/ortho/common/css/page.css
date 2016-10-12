@@ -795,7 +795,7 @@ tr td.td-width-box-child:last-child {
   max-width: 76px !important;
 }
 
-#scrollbox3 {
+.scrollbox3 {
     overflow: auto;
     width: 100%!important;
   //  height: auto;

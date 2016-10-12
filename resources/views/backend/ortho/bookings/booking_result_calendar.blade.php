@@ -4,6 +4,7 @@
 <?php
 // count facility
 $countFacility = count($facilitys);
+$widthPercent = 88 / ($countFacility);
 ?>
 
 <section id="page">
@@ -48,7 +49,7 @@ $countFacility = count($facilitys);
           <table class="table table-bordered">
             <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="td-col-header td-width-title">ドクター</td>
+              <td align="center" rowspan="3" class="td-col-header td-width-title" style="width: 7%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list doctor
@@ -88,7 +89,7 @@ $countFacility = count($facilitys);
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td class="td-simple td-width-box" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td style="width: {{$widthPercent}}%" class="td-simple td-width-box" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -140,7 +141,7 @@ $countFacility = count($facilitys);
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -192,7 +193,7 @@ $countFacility = count($facilitys);
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -207,7 +208,7 @@ $countFacility = count($facilitys);
               $str = '';
             ?>
             <tr>
-              <td align="center" rowspan="3" class="td-col-header td-width-title">ドクター</td>
+              <td align="center" rowspan="3" class="td-col-header" style="width: 7%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list hygienist
@@ -247,7 +248,7 @@ $countFacility = count($facilitys);
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -300,7 +301,7 @@ $countFacility = count($facilitys);
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -352,7 +353,7 @@ $countFacility = count($facilitys);
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -366,9 +367,9 @@ $countFacility = count($facilitys);
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set" id="" style="margin-bottom: 0;">
             <tr>
-              <td align="center" class="td-title td-width-title">時間</td>
+              <td align="center" class="td-title td-width-title" style="width: 7%">時間</td>
               @foreach ( $facilitys as $facility )
-              <td align="center" class="td-width-box">{{ $facility->facility_name }}</td>
+              <td align="center" class="td-width-box" style="width: {{$widthPercent}}%">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
         </table>
@@ -385,7 +386,7 @@ $countFacility = count($facilitys);
               $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" class="td-title td-width-title">{{ $time }}～</td>
+              <td align="center" class="td-title td-width-title" style="width: 7%">{{ $time }} ～</td>
               @foreach ( $facilitys as $key => $facility )
                 <?php
                   $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -516,7 +517,7 @@ $countFacility = count($facilitys);
                 ?>
 
               <!-- close -->
-              <td align="center" width="" style="" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
+              <td align="center" width="" style="width: {{$widthPercent}}%;" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
                 <div class="td-content" @if ( $color === 'brown' ) data-toggle="modal" data-target="#myModal-{{ $common_id }}" @endif>
                   {!! $iconFlag !!} {!! $text !!}
                   @if ( $color === 'brown' )
@@ -642,12 +643,6 @@ $countFacility = count($facilitys);
         });
       });
       // end set value from popup
-
-      // set width td
-      // var widthSimple = $('.td-simple').width();
-      // $('.td-title').width(100);
-      // $('.td-will').width(widthSimple);
-      // $('.td-will-box').width($('.td-will').width() - 3);
 
 
       // set popup treatment

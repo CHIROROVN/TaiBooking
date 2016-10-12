@@ -1,6 +1,13 @@
 @extends('backend.ortho.ortho')
 @section('content')
 <?php $tmpText = array(); ?>
+
+<?php
+// count facility
+$countFacility = count($facilitys);
+$widthPercent = 88 / ($countFacility);
+?>
+
   <section id="page">
     <div class="container">
       <div class="row content-page">
@@ -87,11 +94,11 @@
       $str = '';
       ?>
       
-      <div class="table-responsive">
+      <div class="table-responsive" >
         <table class="table table-bordered">
           <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="td-col-header td-width-title">ドクター</td>
+              <td align="center" rowspan="3"  class="td-col-header" style="width: 7%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list doctor
@@ -131,7 +138,7 @@
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td class="td-simple td-width-box" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td class="" align="center" style="width: {{$widthPercent}}%" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -183,7 +190,7 @@
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -235,7 +242,7 @@
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -250,7 +257,7 @@
             $str = '';
           ?>
           <tr>
-              <td align="center" rowspan="3" class="col-title td-title td-title-daily" style="width: 130px">ドクター</td>
+              <td align="center" rowspan="3" class=" td-col-header" style="width: 7%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list hygienist
@@ -290,7 +297,7 @@
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -343,7 +350,7 @@
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -395,7 +402,7 @@
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style="width: {{$widthPercent}}%"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -410,14 +417,14 @@
       <div class="table-responsive">
         <table class="table table-bordered table-shift-set " id="" style="margin-bottom: 0;">
           <tr>
-            <td align="center" width="" style="width: 110px;" class="td-title">時間</td>
+            <td align="center" width="" style="width: 7%" class="td-title">時間</td>
             @foreach ( $facilitys as $facility )
-            <td align="center" style="" class="td-will" >{{ $facility->facility_name }}</td>
+            <td align="center" style="width: {{$widthPercent}}%" class="td-will" >{{ $facility->facility_name }}</td>
             @endforeach
           </tr>
         </table>
 
-        <div class="inner_table table-responsive" id="scrollbox3">
+        <div class="inner_table table-responsive scrollbox3">
           <table class="table table-bordered table-shift-set tbl-inner">
             <!-- check "brown", "green", "blue" color -->
           <?php $tmpFlag = array(); ?>
@@ -430,7 +437,7 @@
             $tmpText = array();
           ?>
           <tr>
-            <td align="center" style="width: 110px;" class="td-title">{{ $time }}～</td>
+            <td align="center" style="width: 7%;" class="td-title">{{ $time }} ～</td>
             @foreach ( $facilitys as $facility )
               <?php
                 $common_id = $facility->facility_id . '-' . $hour.$minute;
@@ -560,7 +567,7 @@
               ?>
 
               <!-- close -->
-              <td align="center" width="" style="" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
+              <td align="center" width="" style="width: {{$widthPercent}}%" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
                 <div class="td-content" @if ( $color === 'brown' ) data-toggle="modal" data-target="#myModal-{{ $common_id }}" @endif>
                   {!! $iconFlag !!} {!! $text !!}
                   @if ( $color === 'brown' )
@@ -628,7 +635,7 @@
 @section('script')
 <script src="{{ asset('') }}public/backend/ortho/common/js/enscroll-0.6.2.min.js"></script>
   <script>
-    $('#scrollbox3').enscroll({
+    $('.scrollbox3').enscroll({
       showOnHover: true,
       verticalTrackClass: 'track3',
       verticalHandleClass: 'handle3'
@@ -700,13 +707,6 @@
         });
       });
       // end set value from popup
-
-      // set width td
-      // var widthSimple = $('.td-simple').width();
-      // $('.td-title').width(100);
-      // $('.td-title-daily').width(123);
-      // $('.td-will').width(widthSimple);
-      // $('.td-will-box').width($('.td-will').width() - 3);
 
 
       // set popup treatment

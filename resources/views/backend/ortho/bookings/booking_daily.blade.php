@@ -417,7 +417,7 @@
           </tr>
         </table>
 
-        <div class="inner_table table-responsive">
+        <div class="inner_table table-responsive" id="scrollbox3">
           <table class="table table-bordered table-shift-set tbl-inner">
             <!-- check "brown", "green", "blue" color -->
           <?php $tmpFlag = array(); ?>
@@ -626,6 +626,14 @@
 
 
 @section('script')
+<script src="{{ asset('') }}public/backend/ortho/common/js/enscroll-0.6.2.min.js"></script>
+  <script>
+    $('#scrollbox3').enscroll({
+      showOnHover: true,
+      verticalTrackClass: 'track3',
+      verticalHandleClass: 'handle3'
+    });
+  </script>
   <script>
     $(document).ready(function(){
       $('.popup').popover({

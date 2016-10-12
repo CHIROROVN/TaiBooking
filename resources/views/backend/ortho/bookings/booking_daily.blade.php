@@ -81,18 +81,19 @@
             <p>{{ @$clinic->clinic_name }}</p>
       </div>
 
-        <?php
+      <?php
       $text = '末設定';
+      $tmpText = array();
+      $str = '';
       ?>
       
       <div class="table-responsive">
         <table class="table table-bordered">
           <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="col-title td-title td-title-daily" style="width: 130px">ドクター</td>
+              <td align="center" rowspan="3" class="td-col-header td-width-title">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
-                $tmpText = array();
                 // set list doctor
                 $str = '';
                 foreach ( $doctors as $doctor ) {
@@ -130,7 +131,7 @@
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td align="center" width="" class="td-simple"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td class="td-simple td-width-box" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -182,7 +183,7 @@
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -234,7 +235,7 @@
                 }
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
               ?>
-              <td align="center" width="142px"><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td align="center" width="" style=""><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -746,22 +747,23 @@
 
           // insert to table "t_booking"
           $.ajax({
-            url: "{{ route('ortho.bookings.template.daily.insert.ajax') }}",
+            url: "{{ route('ortho.bookings.insert.insert') }}",
             type: 'get',
             dataType: 'json',
             data: { 
               facility_id: facilityIdNew,
               time: dataFullTime,
-              booking_date: '{{ $date }}',
+              booking_date: '{{ $date_current }}',
               clinic_id: '{{ @$clinic->clinic_id }}' 
             },
             success: function(result){
-              tdObjNew.children().attr('data-booking-id', result[1].booking_id);
-              tdObjNew.children().attr('data-toggle', null);
-              tdObjNew.children().attr('data-target', null);
-              var bookingID = result[1].booking_id;
-              var link = "{{ asset('') }}ortho/bookings/booking-regist/" + bookingID;
-              tdObjNew.children().html('<a href="' + link + '" class="facility_id-10"><span>治療</span></a>')
+              // tdObjNew.children().attr('data-booking-id', result[1].booking_id);
+              // tdObjNew.children().attr('data-toggle', null);
+              // tdObjNew.children().attr('data-target', null);
+              // var bookingID = result[1].booking_id;
+              // var link = "{{ asset('') }}ortho/bookings/booking-regist/" + bookingID;
+              // tdObjNew.children().html('<a href="' + link + '" class="facility_id-10"><span>治療</span></a>')
+              location.reload();
             }
           });
         } else if ( serviceIdNew == 0 ) {

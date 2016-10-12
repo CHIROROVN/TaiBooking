@@ -898,4 +898,28 @@ class BookingTemplateController extends BackendController
 
         echo json_encode(array('status', $status));
     }
+
+    public function insertBookingAjax()
+    {
+        $clsBooking = new BookingModel();
+        $dataInsert = array(
+            'booking_date'          => Input::get('booking_date'),
+            'booking_start_time'    => Input::get('time'),
+            'clinic_id'             => Input::get('clinic_id'),
+            'facility_id'           => Input::get('facility_id'),
+            'service_1'             => -1,
+            'service_1_kind'        => 2,
+            // 'booking_rev'           => $clsBooking->getLastBookingRev() + 1,
+
+            'last_date'             => date('y-m-d H:i:s'),
+            'last_kind'             => INSERT,
+            'last_ipadrs'           => $_SERVER['REMOTE_ADDR'],
+            'last_user'             => Auth::user()->id
+        );
+
+        $id = $clsBooking->insert_get_id($dataInsert);
+        $status = $clsBooking->get_by_id($id);
+        
+        echo json_encode(array('status', $status));
+    }
 }

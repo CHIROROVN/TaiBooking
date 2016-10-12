@@ -696,22 +696,24 @@ $countFacility = count($facilitys);
 
           // insert to table "t_booking"
           $.ajax({
-            url: "{{ route('ortho.bookings.template.daily.insert.ajax') }}",
+            url: "{{ route('ortho.bookings.insert.insert') }}",
             type: 'get',
             dataType: 'json',
             data: { 
               facility_id: facilityIdNew,
               time: dataFullTime,
-              booking_date: '{{ $date }}',
+              booking_date: '{{ $date_current }}',
               clinic_id: '{{ @$clinic->clinic_id }}' 
             },
             success: function(result){
-              tdObjNew.children().attr('data-booking-id', result[1].booking_id);
-              tdObjNew.children().attr('data-toggle', null);
-              tdObjNew.children().attr('data-target', null);
-              var bookingID = result[1].booking_id;
-              var link = "{{ asset('') }}ortho/bookings/booking-regist/" + bookingID;
-              tdObjNew.children().html('<a href="' + link + '" class="facility_id-10"><span>治療</span></a>')
+              // console.log(result);
+              // tdObjNew.children().attr('data-booking-id', result[1].booking_id);
+              // tdObjNew.children().attr('data-toggle', null);
+              // tdObjNew.children().attr('data-target', null);
+              // var bookingID = result[1].booking_id;
+              // var link = "{{ asset('') }}ortho/bookings/booking-regist/" + bookingID;
+              // tdObjNew.children().html('<a href="' + link + '" class="facility_id-10"><span>治療</span></a>')
+              location.reload();
             }
           });
         } else if ( serviceIdNew == 0 ) {

@@ -315,6 +315,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-template-daily/edit/ajax', ['as' => 'ortho.bookings.template.daily.edit.ajax', 'uses' => 'BookingTemplateController@editBookingTemplateDailyAjax']);
 	Route::get('bookings/booking-template-daily/insert/ajax', ['as' => 'ortho.bookings.template.daily.insert.ajax', 'uses' => 'BookingTemplateController@insertBookingTemplateDailyAjax']);
 	Route::get('bookings/booking-template-daily/insert/ajax/big', ['as' => 'ortho.bookings.template.daily.insert.ajax.big', 'uses' => 'BookingTemplateController@insertBookingTemplateDailyAjaxBig']);
+	Route::get('bookings/booking-insert/insert/ajax', ['as' => 'ortho.bookings.insert.insert', 'uses' => 'BookingTemplateController@insertBookingAjax']);
 
 	// booked history
 	Route::any('bookeds/history', ['as' => 'ortho.bookeds.history', 'uses' => 'BookedController@getHistory']);

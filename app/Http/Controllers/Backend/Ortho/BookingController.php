@@ -121,10 +121,6 @@ class BookingController extends BackendController
         if ( !empty(Input::get('next')) ) {
             $date_current = Input::get('next');
         }
-        $data['date'] = date('Y-m-d');
-        if ( Input::get('date') ) {
-            $data['date'] = Input::get('date');
-        }
         $data['date_current']   = $date_current;
         $data['times']          = Config::get('constants.TIME');
 
@@ -195,10 +191,6 @@ class BookingController extends BackendController
         }
         if ( !empty(Input::get('next')) ) {
             $date_current = Input::get('next');
-        }
-        $data['date'] = date('Y-m-d');
-        if ( Input::get('date') ) {
-            $data['date'] = Input::get('date');
         }
         $data['date_current']   = $date_current;
 

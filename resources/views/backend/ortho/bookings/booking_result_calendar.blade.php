@@ -517,7 +517,7 @@ $countFacility = count($facilitys);
 
               <!-- close -->
               <td align="center" width="" style="" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
-                <div class="td-content" data-toggle="modal" data-target="#myModal-{{ $common_id }}">
+                <div class="td-content" @if ( $color === 'brown' ) data-toggle="modal" data-target="#myModal-{{ $common_id }}" @endif>
                   {!! $iconFlag !!} {!! $text !!}
                   @if ( $color === 'brown' )
                   <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
@@ -634,10 +634,10 @@ $countFacility = count($facilitys);
       // end set value from popup
 
       // set width td
-      var widthSimple = $('.td-simple').width();
-      $('.td-title').width(100);
-      $('.td-will').width(widthSimple);
-      $('.td-will-box').width($('.td-will').width() - 3);
+      // var widthSimple = $('.td-simple').width();
+      // $('.td-title').width(100);
+      // $('.td-will').width(widthSimple);
+      // $('.td-will-box').width($('.td-will').width() - 3);
 
 
       // set popup treatment
@@ -676,7 +676,7 @@ $countFacility = count($facilitys);
 
         // set color td
         var tdObjNew = $('#td-' + facilityIdNew + '-' + dataFullTime);
-        console.log(tdObjNew.attr('class'));
+        // console.log(tdObjNew.attr('class'));
 
         // green
         if ( serviceIdNew < 0 ) {
@@ -697,38 +697,15 @@ $countFacility = count($facilitys);
             },
             success: function(result){
               tdObjNew.children().attr('data-booking-id', result[1].booking_id);
+              tdObjNew.children().attr('data-toggle', null);
+              tdObjNew.children().attr('data-target', null);
+              var bookingID = result[1].booking_id;
+              var link = "{{ asset('') }}ortho/bookings/booking-regist/" + bookingID;
+              tdObjNew.children().html('<a href="' + link + '" class="facility_id-10"><span>治療</span></a>')
             }
           });
         } else if ( serviceIdNew == 0 ) {
           // brown
-          // update to database table "t_booking"
-          // $.ajax({
-          //   url: "{{ route('ortho.bookings.template.daily.edit.ajax') }}",
-          //   type: 'get',
-          //   dataType: 'json',
-          //   data: {
-          //     booking_group_id: tdObjOld.find('.td-content').attr('data-dad-group'),
-          //     booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
-          //     clinic_id: '{{ @$clinic->clinic_id }}',
-          //     booking_id: tdObjOld.find('.td-content').attr('data-booking-id')
-          //   },
-          //   success: function(result){
-          //     console.log(result);
-          //   }
-          // });
-          // reset html
-          // var groupDelete = tdObjOld.find('.td-content').attr('data-group');
-          // if ( groupDelete.length ) {
-          //   $('.td-content').each(function(index, el) {
-          //     if ( $(this).attr('data-group') == groupDelete ) {
-          //       setClear($(this).parent(), 0);
-          //       setBrow($(this).parent(), 0, '');
-          //     }
-          //   });
-          // } else {
-          //   setClear(tdObjOld, 0);
-          //   setBrow(tdObjOld, 0, '');
-          // }
         } else {
           // green
         }

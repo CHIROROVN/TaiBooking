@@ -23,6 +23,7 @@
                           @endif
                         @endforeach
                       </select>
+                      <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
                     </td>
                   </tr>
 
@@ -36,6 +37,7 @@
                         <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ $patient->p_no }} {{ $patient->p_name_f }} {{ $patient->p_name_g }} ({{ $patient->p_name_f_kana }} {{ $patient->p_name_g_kana }})">
                         @endif
                       @endforeach
+                      <span class="error-input">@if ($errors->first('p_id')) ※{!! $errors->first('p_id') !!} @endif</span>
                     </td>
                   </tr>
 

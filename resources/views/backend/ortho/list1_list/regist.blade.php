@@ -23,6 +23,7 @@
                           @endif
                         @endforeach
                       </select>
+                      <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
                     </td>
                   </tr>
 
@@ -32,6 +33,7 @@
                     <td>
                       <input type="hidden" name="p_id" id="p_id" value="{{ old('p_id') }}">
                       <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ old('patient') }}">
+                      <span class="error-input">@if ($errors->first('p_id')) ※{!! $errors->first('p_id') !!} @endif</span>
                     </td>
                   </tr>
 
@@ -49,7 +51,6 @@
                     <td class="col-title"><label for="free_text">備考</label></td>
                     <td>
                       <input type="text" name="free_text" id="free_text" class="form-control" value="{{ old('free_text') }}" />
-                      <span class="error-input">@if ($errors->first('free_text')) ※{!! $errors->first('free_text') !!} @endif</span>
                     </td>
                   </tr>
                 </table>

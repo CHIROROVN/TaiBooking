@@ -10,14 +10,18 @@ class BookingTelWaitingModel
     public function Rules()
     {
     	return array(
-    		
+    		'clinic_id'         => 'required',
+            'p_id'              => 'required',
+            'telephone'         => 'required',
 		);
     }
 
     public function Messages()
     {
     	return array(
-            
+            'clinic_id.required'        => trans('validation.error_clinic_id_required'),
+            'p_id.required'             => trans('validation.error_p_id_required'),
+            'telephone.required'        => trans('validation.error_telephone_required'),
 		);
     }
 

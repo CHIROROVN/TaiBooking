@@ -342,4 +342,13 @@ return [
     'error_impact_required'                             => '影響を入力してください。',
     'error_impact_affect_required'                      => '影響のあり、なしを選択してください。',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Booking tel waiting Forum
+    |--------------------------------------------------------------------------
+    */
+    'error_clinic_id_required'                                  => '医院名を入力してください。',
+    'error_p_id_required'                                       => '患者名を入力してください。',
+    'error_telephone_required'                                  => '電話番号を入力してください。',
+
 ];

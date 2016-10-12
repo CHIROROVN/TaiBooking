@@ -49,7 +49,7 @@ $widthPercent = 88 / ($countFacility);
           <table class="table table-bordered">
             <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="td-col-header td-width-title" style="width: 7%">ドクター</td>
+              <td align="center" rowspan="3" class="td-col-header" style="width: 7%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list doctor
@@ -89,7 +89,7 @@ $widthPercent = 88 / ($countFacility);
                 $str .= '<li><label class="radio"><input type="radio" class="input-user" text="" name="doctor-facility-' . $facility->facility_id . '" value="-1" >' . trans('common.select_reset') . '</label></li>';
  
               ?>
-              <td style="width: {{$widthPercent}}%" class="td-simple td-width-box" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
+              <td style="width: {{$widthPercent}}%" class="" align="center" ><span data-u-id="{{ @$data_u_id }}" data-facility-id="{{ $facility->facility_id }}" class="popup popup-dotor" data-toggle="popover" title="{{ trans('common.popup_header') }}" data-content='
                 <ul>
                   {{ $str }}
                 </ul>
@@ -367,9 +367,9 @@ $widthPercent = 88 / ($countFacility);
         <div class="table-responsive">
           <table class="table table-bordered table-shift-set" id="" style="margin-bottom: 0;">
             <tr>
-              <td align="center" class="td-title td-width-title" style="width: 7%">時間</td>
+              <td align="center" class="td-title" style="width: 7%">時間</td>
               @foreach ( $facilitys as $facility )
-              <td align="center" class="td-width-box" style="width: {{$widthPercent}}%">{{ $facility->facility_name }}</td>
+              <td align="center" class="td-will" style="width: {{$widthPercent}}%">{{ $facility->facility_name }}</td>
               @endforeach
             </tr>
         </table>
@@ -386,7 +386,7 @@ $widthPercent = 88 / ($countFacility);
               $fullTime = $hour . $minute;
             ?>
             <tr>
-              <td align="center" class="td-title td-width-title" style="width: 7%">{{ $time }} ～</td>
+              <td align="center" class="td-title" style="width: 7%">{{ $time }} ～</td>
               @foreach ( $facilitys as $key => $facility )
                 <?php
                   $common_id = $facility->facility_id . '-' . $hour.$minute;

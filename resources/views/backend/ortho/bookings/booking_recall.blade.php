@@ -54,7 +54,7 @@
               <td>{{formatYm($recall->booking_recall_ym, '/')}}</td>
               <td>{{$recall->booking_memo}}</td>
               <td align="center">
-                <input class="btn btn-xs btn-page" onclick="location.href='{{route('ortho.bookings.booking.regist', $recall->booking_id)}}'" value="予約の登録" type="button">
+                <input class="btn btn-xs btn-page" onclick="location.href='{{route('ortho.bookings.booking_search')}}'" value="予約の登録" type="button">
               </td>
               <td align="center">
                 <input class="btn btn-xs btn-page" onclick="location.href='{{route('ortho.bookings.booking_recall_edit',$recall->id)}}'" value="リコール情報の編集" type="button">

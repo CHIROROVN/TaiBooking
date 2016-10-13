@@ -743,6 +743,7 @@ span.note_required{
 .ddr-infomation {
   margin-top: 15px;
 }
+
 .ddr-infomation .ddr-infomation-child {
   display: inline-block;
   margin-right: 15px;
@@ -781,20 +782,6 @@ span.note_required{
   width: 80px;
 }
 
-.td-width-title {
-  min-width: 80px !important;
-}
-
-.td-width-box {
-  min-width: 80px !important;
-  max-width: 80px !important;
-}
-
-tr td.td-width-box-child:last-child {
-  min-width: 76px !important;
-  max-width: 76px !important;
-}
-
 .scrollbox3 {
     overflow: auto;
     width: 100%!important;
@@ -807,7 +794,7 @@ tr td.td-width-box-child:last-child {
     width: 2px;
     background: rgba(0, 0, 0, 0);
     margin-right: 2px;
-    border-radius: 10px;
+    border-radius: 5px;
     -webkit-transition: background 250ms linear;
     transition: background 250ms linear;
 }
@@ -819,18 +806,16 @@ tr td.td-width-box-child:last-child {
 }
 
 .handle3 {
-    width: 7px;
+    width: 8px;
     right: 0;
     background: #999;
     background: rgba(0, 0, 0, 0.4);
-    border-radius: 7px;
+    border-radius: 5px;
     -webkit-transition: width 250ms;
     transition: width 250ms;
 }
 
 .track3:hover .handle3,
 .track3.dragging .handle3 {
-    width: 8px;
+    width: 12px;
 }
-
-

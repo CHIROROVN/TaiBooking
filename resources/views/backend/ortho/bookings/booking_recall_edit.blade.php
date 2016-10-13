@@ -71,7 +71,7 @@
             <tr>
               <td class="col-title"><label for="booking_memo">備考</label></td>
               <td>
-               <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">@if(!empty(old('booking_memo')))<?php echo nl2br(old('booking_memo'))?>@else<?php echo nl2br($recall->booking_memo)?>@endif</textarea>
+               <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">@if(!empty(old('booking_memo'))){{old('booking_memo')}}@else{{$recall->booking_memo}}@endif</textarea>
                <span class="error-input">@if ($errors->first('booking_memo')) ※{!! $errors->first('booking_memo') !!} @endif</span>
               </td>
             </tr>

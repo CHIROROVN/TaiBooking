@@ -104,10 +104,6 @@
           <td>
             @if ( $booking->booking_status == 1 )
             通常
-            @elseif ( $booking->booking_status == 2 )
-            「TEL待ち」です
-            @elseif ( $booking->booking_status == 3 )
-            「リコール」です→ <?php echo (empty($booking->booking_recall_ym)) ? '' : date('Y-m', strtotime($booking->booking_recall_ym)); ?>
             @elseif ( $booking->booking_status == 4 )
             未作成技工物TEL待ち
             @elseif ( $booking->booking_status == 5 )

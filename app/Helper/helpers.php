@@ -27,11 +27,13 @@ function showPatient($p_id=null){
     }
 
     function formatYm($date = null, $comma = null){
-        $dates = date_create($date);
+        $ym     = str_split($date, 4);
+        $y = $ym[0];
+        $m = $ym[1];
         if($comma == null){
-            return date_format($dates,"Y/m");
+            return $y."/".$m;
         }else{
-            return date_format($dates,"Y".$comma."m");
+            return $y.$comma.$m;
         }
     }
 

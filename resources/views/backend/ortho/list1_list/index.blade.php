@@ -28,9 +28,9 @@
         {!! Form::open(array('route' => 'ortho.list1_list.index', 'method' => 'get')) !!}
         <!-- p_id -->
         <input type="hidden" name="p_id" id="p_id" value="{{ $p_id }}">
-        <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline; float: left;" value="{{ $patient }}">
+        <input type="text" name="patient" id="patient" class=" form-control" style="width: 150px; display: inline; float: left;" value="{{ $patient }}">
         <!-- date -->
-        <input type="calendar" name="insert_date" id="insert_date" class="input-text-mid form-control datepicker" style="float: left; margin-left: 10px;" value="{{ $insert_date }}">
+        <input type="calendar" name="insert_date" id="insert_date" class=" form-control datepicker" style="width: 150px; float: left; margin-left: 10px;" value="{{ $insert_date }}">
         <!-- submit -->
         <input type="submit" class="btn btn-sm btn-page" value="サーチ">
         </form>
@@ -50,13 +50,13 @@
           <td align="center" class="col-title">患者名</td>
           <td align="center" class="col-title">電話番号</td>
           <td align="center" class="col-title">備考</td>
-          <td align="center" class="col-title col-edit">予約の登録</td>
-          <td align="center" class="col-title col-action">TEL待ち情報の編集</td>
+          <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-edit">予約の登録</td>
+          <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-action">TEL待ち情報の編集</td>
         </tr>
 
         @if(empty($list1_list) || count($list1_list) < 1)
           <tr>
-            <td colspan="8">
+            <td colspan="9">
               <h3 align="center">該当するデータがありません。</h3>
             </td>
           </tr>
@@ -73,18 +73,14 @@
             <td>{{ $item->insert_date }}</td>
             <td>{{ $item->booking_date }}</td>
             <td>
-              @foreach ( $patients as $patient )
-                @if ( $patient->p_id == $item->patient_id )
-                  {{ $patient->p_no }}
-                @endif
-              @endforeach
+              @if ( isset($patients[$item->patient_id]) )
+                {{ $patients[$item->patient_id]->p_no }}
+              @endif
             </td>
             <td>
-              @foreach ( $patients as $patient )
-                @if ( $patient->p_id == $item->patient_id )
-                  {{ $patient->p_name_f }} {{ $patient->p_name_g }} ({{ $patient->p_name_f_kana }} {{ $patient->p_name_g_kana }})
-                @endif
-              @endforeach
+              @if ( isset($patients[$item->patient_id]) )
+                {{ $patients[$item->patient_id]->p_name_f }} {{ $patients[$item->patient_id]->p_name_g }} ({{ $patients[$item->patient_id]->p_name_f_kana }} {{ $patients[$item->patient_id]->p_name_g_kana }})
+              @endif
             </td>
             <td>
               {{ @$item->telephone }}
@@ -92,8 +88,8 @@
             <td>
               {{ @$item->free_text }}
             </td>
-            <td><a href="{{ route('ortho.bookings.booking_search') }}" class="btn btn-sm btn-page">予約の登録</a></td>
-            <td><a href="{{ route('ortho.list1_list.edit', [ $item->id ]) }}" class="btn btn-sm btn-page">TEL待ち情報の編集</a></td>
+            <td align="center"><a href="{{ route('ortho.bookings.booking_search') }}" class="btn btn-sm btn-page">予約の登録</a></td>
+            <td align="center"><a href="{{ route('ortho.list1_list.edit', [ $item->id ]) }}" class="btn btn-sm btn-page">TEL待ち情報の編集</a></td>
           </tr>
           @endforeach
         @endif

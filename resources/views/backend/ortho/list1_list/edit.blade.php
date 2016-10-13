@@ -31,12 +31,14 @@
                   <tr>
                     <td class="col-title"><label for="telephone">患者名 <span class="note_required">※</span></label></td>
                     <td>
-                      <input type="hidden" name="p_id" id="p_id" value="{{ $list1->patient_id }}">
-                      @foreach ( $patients as $patient )
-                        @if ( $patient->p_id == $list1->patient_id )
-                        <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ $patient->p_no }} {{ $patient->p_name_f }} {{ $patient->p_name_g }} ({{ $patient->p_name_f_kana }} {{ $patient->p_name_g_kana }})">
-                        @endif
-                      @endforeach
+                      <?php 
+                      $p = null;
+                      if ( isset($patients[$list1->patient_id]) ) {
+                        $p = $patients[$list1->patient_id];
+                      }
+                      ?>
+                      <input type="hidden" name="p_id" id="p_id" value="{{ $list1->patient_id }}" />
+                      <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ $p }}" />
                       <span class="error-input">@if ($errors->first('p_id')) ※{!! $errors->first('p_id') !!} @endif</span>
                     </td>
                   </tr>

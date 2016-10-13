@@ -102,14 +102,14 @@
         <tr>
           <td class="col-title">予約ステータス</td>
           <td>
-            @if ( $booking->booking_status == 1 )
+            @if ( empty($booking->booking_status) )
             通常
+            @elseif ( $booking->booking_status == 2 )
+            無断キャンセル
             @elseif ( $booking->booking_status == 4 )
             未作成技工物TEL待ち
             @elseif ( $booking->booking_status == 5 )
             作成済み技工物キャンセル
-            @elseif ( $booking->booking_status == 6 )
-            無断キャンセル
             @endif
           </td>
         </tr>

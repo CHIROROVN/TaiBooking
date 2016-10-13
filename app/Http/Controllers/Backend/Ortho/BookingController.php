@@ -25,6 +25,7 @@ use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\DdrModel;
 use App\Http\Models\Ortho\MemoModel;
 use App\Http\Models\Ortho\BookingTelWaitingModel;
+use App\Http\Models\Ortho\BelongModel;
 
 use Form;
 use Html;
@@ -56,22 +57,30 @@ class BookingController extends BackendController
         $clsShift               = new ShiftModel();
         $clsAreaModel           = new AreaModel();
         $clsUser                = new UserModel();
-         $tmp_arr                = array();
+        $clsBelong              = new BelongModel();
+        $tmp_arr                = array();
         // $bookings               = $clsBooking->get_all($data);
         $data['areas']          = $clsAreaModel->get_list();
-        $data['doctors']          = $clsUser->get_by_belong([1]);
-
+        $data['doctors']        = $clsUser->get_by_belong([1]);
+        $belongDoctor           = $clsBelong->get_for_select(['s_belong_kind' => 1]);
+        $tmpBelongDoctor        = array();
+        foreach ( $belongDoctor as $item ) {
+            $tmpBelongDoctor[$item->belong_id] = $item;
+        }
         $shifts                 = $clsShift->get_all($data);
+
         foreach ( $shifts as $shift ) {
-            // $booking_id     = $shift->booking_id;
-            $clinic_id              = $shift->clinic_id;
-            $clinic_display_name    = $shift->clinic_display_name;
-            $tmp_arr[] = array(
-                'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_display_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $shift->u_name_display,
-                'start' => $shift->shift_date,
-                'end' => $shift->shift_date + 1,
-                'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $shift->shift_date ]),
-            );
+            if ( isset($tmpBelongDoctor[$shift->u_belong]) ) {
+                // $booking_id     = $shift->booking_id;
+                $clinic_id              = $shift->clinic_id;
+                $clinic_display_name    = $shift->clinic_display_name;
+                $tmp_arr[] = array(
+                    'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_display_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $shift->u_name_display,
+                    'start' => $shift->shift_date,
+                    'end' => $shift->shift_date + 1,
+                    'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $shift->shift_date ]),
+                ); 
+            }
         }
         if ( empty($data['clinic_id']) ) {
             $tmp_arr = array();

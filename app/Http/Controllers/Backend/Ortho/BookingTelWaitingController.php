@@ -43,8 +43,15 @@ class BookingTelWaitingController extends BackendController
         $clsPatient                     = new PatientModel();
 
         $data['clinics']                = $clsClinic->get_for_select_only_user();
-        $data['patients']               = $clsPatient->get_for_select();
+        $patients                       = $clsPatient->get_for_select();
         $tmpList1_list                  = $clsBookingTelWaiting->get_all($data);
+
+        $tmp = array();
+        foreach ( $patients as $item ) {
+            $tmp[$item->p_id] = $item;
+        }
+        $data['patients'] = $tmp;
+
         $tmp = array();
         $tmpGroup = array();
         foreach ( $tmpList1_list as $item ) {
@@ -98,7 +105,9 @@ class BookingTelWaitingController extends BackendController
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-            'last_user'         => Auth::user()->id
+            'last_user'         => Auth::user()->id,
+
+            'insert_date'      => date('y-m-d H:i:s'),
         );
 
         $status_insert = $clsBookingTelWaiting->insert($dataInsert);
@@ -123,7 +132,13 @@ class BookingTelWaitingController extends BackendController
 
         $data['list1']                  = $clsBookingTelWaiting->get_by_id($id);
         $data['clinics']                = $clsClinic->get_for_select_only_user();
-        $data['patients']               = $clsPatient->get_for_select();
+        $patients                       = $clsPatient->get_for_select();
+
+        $tmp = array();
+        foreach ( $patients as $item ) {
+            $tmp[$item->p_id] = $item->p_no . ' ' . $item->p_name_f . ' ' . $item->p_name_g . ' (' . $item->p_name_f_kana . ' ' . $item->p_name_g_kana . ')';
+        }
+        $data['patients'] = $tmp;
 
         return view('backend.ortho.list1_list.edit', $data);
     }
@@ -151,7 +166,9 @@ class BookingTelWaitingController extends BackendController
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
-            'last_user'         => Auth::user()->id
+            'last_user'         => Auth::user()->id,
+
+            'insert_date'      => date('y-m-d H:i:s'),
         );
 
         $status_insert = $clsBookingTelWaiting->update($id, $dataInsert);

@@ -34,7 +34,7 @@
               <td class="col-title"><label>患者名 <span class="note_required">※</span></label></td>
               <td>
                 <input id="p_id" name="p_id" value="{{$recall->patient_id}}" type="hidden">
-                <input id="patient" class="input-text-mid form-control ui-autocomplete-input" name="patient" style="width: 250px; display: inline;" value="{{$recall->p_no}}{{$recall->p_name_f}}{{$recall->p_name_g}}@if(!empty($recall->p_name_f_kana) && !empty($recall->p_name_g_kana))(@endif{{ $recall->p_name_f_kana}}{{ $recall->p_name_g_kana}}@if(!empty($recall->p_name_f_kana) && !empty($recall->p_name_g_kana)))@endif" autocomplete="off" type="text">
+                <input id="patient" class="input-text-mid form-control ui-autocomplete-input" name="patient" style="width: 250px; display: inline;" value="{{$recall->p_no}} {{$recall->p_name_f}} {{$recall->p_name_g}}@if(!empty($recall->p_name_f_kana) && !empty($recall->p_name_g_kana)) (@endif{{ $recall->p_name_f_kana}}{{ $recall->p_name_g_kana}}@if(!empty($recall->p_name_f_kana) && !empty($recall->p_name_g_kana)))@endif" autocomplete="off" type="text">
                 <span class="error-input">@if ($errors->first('patient')) ※{!! $errors->first('patient') !!} @endif</span>
               </td>
             </tr>
@@ -94,8 +94,8 @@
 @section('script')
 <script>
     function resetForm() {
-    document.getElementById("frmBookingRecall").reset();
-}
+      document.getElementById("frmBookingRecallEdit").reset();
+    }
 </script>
 <script type="text/javascript">
     $(document).ready(function(){

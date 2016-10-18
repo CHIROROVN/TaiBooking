@@ -112,9 +112,6 @@ class ForumController extends BackendController
         $fread['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
         $fread['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
 
-
-
-
         if ( $clsForum->insert($dataInput) ) {
             //insert to t_forum_read
             $clsForumRead                = new ForumReadModel();

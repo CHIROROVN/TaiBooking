@@ -42,18 +42,20 @@
             @foreach($commentrs as $cr)
             <table class="table table-bordered treatment2-list">
               <tr>
-                <td class="col-title"  rowspan="3">
+                <td class="col-title" rowspan="3">
                   @if(empty($cr->forum_user_id))不明 @else {{$cr->u_name_display}} @endif<br />
                   {{formatDateTime($cr->forum_read_time, '/')}}<br />
+
                   @if(!empty(Auth::user()->u_power12))
-                  @if(Auth::user()->u_power12 == 2)
+                  @if(Auth::user()->u_power12 == 2 && Auth::user()->id == $cr->forum_user_id)
                   <a class="text-orange" href="{{route('ortho.forums.forum_edit',$cr->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$cr->forum_id)}}">削除</a>
-                  @elseif(Auth::user()->u_power12 == 1)
+                  @elseif(Auth::user()->u_power12 == 1 && Auth::user()->id == $cr->forum_user_id)
                     @if(checkOwn(Auth::user()->id, $cr->forum_id))
                     <a class="text-orange" href="{{route('ortho.forums.forum_edit',$cr->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$cr->forum_id)}}">削除</a>
                     @endif
                   @endif
                 @endif
+
                 </td>
                 <td>{{$cr->forum_title}}</td>
               </tr>

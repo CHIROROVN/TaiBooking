@@ -344,7 +344,18 @@ class BookingController extends BackendController
             }
         } else {
             foreach ( $listBookingGroup as $item ) {
-                if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
+                $statusUpdate = null;
+                if ( $item->service_1_kind == 1 ) {
+                    // service
+                    $dataUpdateService = array(
+                        'patient_id' => null
+                    );
+                    $statusUpdate = $clsBooking->update($item->booking_id, $dataUpdateService);
+                } else {
+                    // treatment
+                    $statusUpdate = $clsBooking->update($item->booking_id, $dataUpdate);
+                }
+                if ( $statusUpdate == null || !$statusUpdate ) {
                     $status = false;
                 } else {
                     // and insert to table "t_booking_tell_waiting"

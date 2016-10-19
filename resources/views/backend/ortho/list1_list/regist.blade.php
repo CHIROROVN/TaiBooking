@@ -39,7 +39,7 @@
 
                   <!-- telephone -->
                   <tr>
-                    <td class="col-title"><label for="telephone">電話番号 <span class="note_required">※</span></label></td>
+                    <td class="col-title"><label for="telephone">電話番号</td>
                     <td>
                       <input type="text" name="telephone" id="telephone " class="form-control" value="{{ old('telephone') }}" />
                       <span class="error-input">@if ($errors->first('telephone')) ※{!! $errors->first('telephone') !!} @endif</span>

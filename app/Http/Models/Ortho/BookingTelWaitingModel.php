@@ -12,7 +12,7 @@ class BookingTelWaitingModel
     	return array(
     		'clinic_id'         => 'required',
             'p_id'              => 'required',
-            'telephone'         => 'required',
+            'telephone'         => 'numeric',
 		);
     }
 
@@ -21,7 +21,7 @@ class BookingTelWaitingModel
     	return array(
             'clinic_id.required'        => trans('validation.error_clinic_id_required'),
             'p_id.required'             => trans('validation.error_p_id_required'),
-            'telephone.required'        => trans('validation.error_telephone_required'),
+            'telephone.numeric'         => trans('validation.error_telephone_numeric'),
 		);
     }
 

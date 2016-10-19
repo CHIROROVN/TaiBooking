@@ -699,6 +699,7 @@ class BookingModel
 	 * get booking by patient id
 	*/
 	public function getBookByPatientID($p_id=null){
+		$dateNow = formatDate(Carbon::now()->toDateTimeString(), '-');
 		return DB::table($this->table)
 							->leftJoin('m_clinic as cl', 't_booking.clinic_id', '=', 'cl.clinic_id')
 							->leftJoin('t_patient as pt', 't_booking.patient_id', '=', 'pt.p_id')
@@ -710,7 +711,7 @@ class BookingModel
 							->where('t_booking.last_kind', '<>', DELETE)
 							// ->where('t_booking.booking_rev', $this->getLastBookingRev())
 							->where('t_booking.patient_id', '=', $p_id)
-							->where('t_booking.booking_date', '>=', 'NOW()')
+							->where('t_booking.booking_date', '>=', $dateNow)
 							->orderBy('t_booking.booking_date', 'asc')
 							->limit(2)
 							->get();

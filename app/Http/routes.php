@@ -222,6 +222,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	//Clinic Service Template
 	Route::get('clinics/{clinic_id}/services/{service_id}/templates', ['as' => 'ortho.clinics.services.template_list', 'uses' => 'ServiceTemplateController@index']);
+	
+	// Route::get('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.template_regist', 'uses' => 'ServiceTemplateController@getRegist']);
+	// Route::post('clinics/{clinic_id}/services/{service_id}/regist', ['as' => 'ortho.clinics.services.template_regist', 'uses' => 'ServiceTemplateController@postRegist']);
 
 	Route::get('clinics/{clinic_id}/services/{service_id}/update/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@getEdit']);
 	Route::post('clinics/{clinic_id}/services/{service_id}/update/{id}', ['as' => 'ortho.clinics.services.template_edit', 'uses' => 'ServiceTemplateController@postEdit']);
@@ -287,9 +290,6 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-change/{booking_id}', ['as' => 'ortho.bookings.booking.change', 'uses' => 'BookingController@getBookingChange']);
 	Route::post('bookings/booking-change/{booking_id}', ['as' => 'ortho.bookings.booking.change', 'uses' => 'BookingController@postBookingChange']);
 	Route::get('bookings/change-list/{booking_id}', ['as' => 'ortho.bookings.booking_change_list', 'uses' => 'BookingController@bookingChangeList']);
-	
-	// Route::get('bookings/change-date/{booking_id}/{id}', ['as' => 'ortho.bookings.booking_change_date', 'uses' => 'BookingController@getChangeDate']);
-	// Route::post('bookings/change-date/{booking_id}/{id}', ['as' => 'ortho.bookings.booking_change_date', 'uses' => 'BookingController@postChangeDate']);
 
 	Route::get('bookings/booking-change/confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.booking.change.confirm', 'uses' => 'BookingController@getConfirm']);
 	

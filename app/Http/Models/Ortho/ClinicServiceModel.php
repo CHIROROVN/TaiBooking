@@ -96,6 +96,17 @@ class ClinicServiceModel
                     ->get();
     }
 
+    public function get_list_service()
+    {
+        return DB::table($this->table)
+                    ->leftJoin('m_service as t1', 't_clinic_service.service_id', '=', 't1.service_id')
+                    //->select('t_clinic_service.service_id', 't1.service_name')
+                    ->where('t1.last_kind', '<>', DELETE)
+                    ->where('t_clinic_service.last_kind', '<>', DELETE)
+                    ->groupBy('t_clinic_service.service_id')
+                    ->lists('t1.service_name');
+    }
+
     public function service_using(){
         return DB::table($this->table)
                                     ->where('last_kind', '<>', DELETE)

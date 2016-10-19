@@ -330,7 +330,7 @@ class PatientController extends BackendController
         $data['doctors']            = $clsUser->get_list_users([1]);
         $data['hygienists']         = $clsUser->get_list_users([2,3]);
         $clsClinicService           = new ClinicServiceModel();
-        $data['services']           = $clsClinicService->get_service();
+        $data['services']           = $clsClinicService->get_list_service();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
 

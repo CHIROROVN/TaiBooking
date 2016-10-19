@@ -31,8 +31,21 @@ class RecallController extends BackendController
      */
     public function index()
     {
-        $clsRecall  = new RecallModel();
-        $data['recalls']  = $clsRecall->get_recall_list();
+        $where              = array();
+        $clsRecall          = new RecallModel();
+
+         if(!empty(Input::get('p_id'))){
+            $data['p_id']           = Input::get('p_id');
+            $data['patient']        = Input::get('patient');
+            $where['patient_id']    = Input::get('p_id');
+         }
+
+        if(!empty(Input::get('insert_date'))){
+            $data['insert_date']    = Input::get('insert_date');
+            $where['last_date']     = Input::get('insert_date');
+        }
+
+        $data['recalls']    = $clsRecall->get_recall_list($where);
         return view('backend.ortho.bookings.booking_recall', $data);
     }
 
@@ -52,7 +65,7 @@ class RecallController extends BackendController
      */
     public function postRegist()
     {
-        $clsRecall = new RecallModel();
+        $clsRecall      = new RecallModel();
         $inputs         = Input::all();
         $validator      = Validator::make($inputs, $clsRecall->Rules(), $clsRecall->Messages());
 

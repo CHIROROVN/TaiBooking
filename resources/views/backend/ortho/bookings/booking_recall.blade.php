@@ -22,11 +22,24 @@
             </div>
           @endif
         </div>
-      <div class="row">
-          <div class="col-md-12 text-right">
-            <input name="button" value="リコールリストの新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking_recall_regist')}}'" type="button">
+        <div class="row" style="float: left;">
+          <div class="col-md-12">
+            {!! Form::open(array('route' => 'ortho.bookings.booking_recall', 'method' => 'get', 'class'=>'form-inline')) !!}
+            <!-- p_id -->
+            <input type="hidden" name="p_id" id="p_id" value="{{ @$p_id }}">
+            <input type="text" name="patient" id="patient" class=" form-control input-text-mid" value="{{ @$patient }}">
+            <!-- date -->
+            <input type="calendar" name="insert_date" id="insert_date" class=" form-control input-text-mid datepicker" value="{{ @$insert_date }}">
+            <!-- submit -->
+            <input type="submit" class="btn btn-sm btn-page" value="検索">
+            </form>
           </div>
-      </div>
+        </div>
+        <div class="row" style="float: right;">
+         <div class="col-md-12 text-right" style="float: right;">
+                <input name="button" value="リコールリストの新規登録" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking_recall_regist')}}'" type="button">
+          </div>
+        </div>
 
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -70,4 +83,55 @@
     </div>    
   </section>
   <!-- End content list1 list -->
+  @section('script')
+  <script>
+    $(document).ready(function(){
+      $( "#patient" ).autocomplete({
+        minLength: 0,
+        // source: pamphlets,
+        source: function(request, response){
+            var key = $('#patient').val();
+            $.ajax({
+                url: "{{ route('ortho.patients.autocomplete.patient') }}",
+                beforeSend: function(){
+                },
+                method: "GET",
+                data: { key: key },
+                dataType: "json",
+                success: function(data) {
+                  response(data);
+                },
+            });
+        },
+        focus: function( event, ui ) {
+          $( "#patient" ).val( ui.item.label );
+          return true;
+        },
+        select: function( event, ui ) {
+          $( "#patient" ).val( ui.item.label );
+          $( "#p_id" ).val( ui.item.value );
+          return false;
+        }
+      }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( "<a>" + item.desc + "</a>" )
+            .appendTo( ul );
+      };
+
+
+      // datepicker
+      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
+      $(".datepicker").datepicker({
+          showOn: 'both',
+          buttonText: 'カレンダー',
+          buttonImageOnly: true,
+          buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
+          dateFormat: 'yy-mm-dd',
+          constrainInput: true,
+          inline: true,
+          lang: 'ja'
+      });
+    });
+  </script>
+@stop
 @endsection

@@ -86,7 +86,12 @@ class PatientModel
 
         // p_tel
         if ( !empty($where['p_tel']) ) {
-            $results = $results->where('p_tel', 'like', '%' . $where['p_tel'] . '%');
+            $results = $results->where('p_tel',  'like', '%' . $where['p_tel'] . '%');
+        }
+
+        // p_mobile
+        if ( !empty($where['p_mobile']) ) {
+            $results = $results->where('p_mobile', 'like', '%' . $where['p_mobile'] . '%');
         }
 
         // p_hos

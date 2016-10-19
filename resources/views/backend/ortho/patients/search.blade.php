@@ -10,30 +10,37 @@
           <tr>
             <td class="col-title"><label for="p_no">カルテNo</label></td>
             <td>
-              <input type="text" name="p_no" id="p_no" maxlength="8" class="form-control" value="{{ $p_no }}">
+              <input type="text" name="p_no" id="p_no" maxlength="8" class="form-control" value="{{ $p_no }}" placeholder="カルテNo">
             </td>
           </tr>
 
           <tr>
             <td class="col-title"><label for="p_name_f">氏名</label></td>
             <td>
-              <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--sm" value="{{ $p_name_f }}">
-              <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--sm" value="{{ $p_name_g }}">
+              <input type="text" name="p_name_f" id="p_name_f" class="form-control form-control--sm" value="{{ $p_name_f }}" placeholder="患者の氏名">
+              <input type="text" name="p_name_g" id="p_name_g" class="form-control form-control--sm" value="{{ $p_name_g }}" placeholder="患者の苗字">
             </td>
           </tr>
 
           <tr>
             <td class="col-title"><label for="p_name_f_kana">氏名（ひらがな）</label></td>
             <td>
-              <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--sm" value="{{ $p_name_f_kana }}">
-              <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--sm" value="{{ $p_name_g_kana }}">
+              <input type="text" name="p_name_f_kana" id="p_name_f_kana" class="form-control form-control--sm" value="{{ $p_name_f_kana }}" placeholder="患者の氏名（ひらがな）">
+              <input type="text" name="p_name_g_kana" id="p_name_g_kana" class="form-control form-control--sm" value="{{ $p_name_g_kana }}" placeholder="患者の苗字（ひらがな）">
             </td>
           </tr>
 
           <tr>
             <td class="col-title">TEL</td>
             <td>
-              <input type="text" name="p_tel" id="p_tel" maxlength="12" class="form-control" value="{{ @$p_tel }}">
+              <input type="text" name="p_tel" id="p_tel" maxlength="12" class="form-control" value="{{ @$p_tel }}" placeholder="電話番号">
+            </td>
+          </tr>
+
+          <tr>
+            <td class="col-title">携帯電話</td>
+            <td>
+              <input type="text" name="p_mobile" id="p_mobile" maxlength="12" class="form-control" value="{{ @$p_mobile }}" placeholder="携帯電話">
             </td>
           </tr>
 

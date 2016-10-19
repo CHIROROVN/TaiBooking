@@ -48,15 +48,6 @@
                 ?></td>
                 </tr>
                 <tr>
-                  <td class="col-title">業務内容-2</td>
-                  <td><?php if(isset($bookings[1]->service_2_kind) && $bookings[1]->service_2_kind == 1){
-                      echo @$services[$bookings[1]->service_2];
-                    }elseif(isset($bookings[1]->service_2_kind) && $bookings[1]->service_2_kind == 2){
-                      echo @$treatment1s[$bookings[1]->service_2];
-                    }
-                ?></td>
-                </tr>
-                <tr>
                   <td class="col-title">検査</td>
                   <td>{{$bookings[0]->inspection_name}}</td>
                 </tr>
@@ -107,7 +98,7 @@
                 <tr>
                   <td colspan="2" class="text-center">
                     <input onclick="location.href='{{route('ortho.bookings.booking.edit',[$bookings[0]->booking_id])}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href='{{route('ortho.bookings.booking_change_date',$bookings[0]->booking_id)}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking.change',$bookings[0]->booking_id)}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
                     <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf',[$bookings[0]->booking_id])}}'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
@@ -144,10 +135,6 @@
                 </tr>
                 <tr>
                   <td class="col-title">業務内容-1</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="col-title">業務内容-2</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -188,9 +175,9 @@
                 </tr>
                 <tr>
                   <td colspan="2" class="text-center">
-                    <input onclick="location.href=''" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href=''" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href=''" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='javascript:void(0);'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='javascript:void(0);'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='javascript:void(0);'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
               </tbody>
@@ -239,15 +226,7 @@
                     }
                 ?></td>
                 </tr>
-                <tr>
-                  <td class="col-title">業務内容-2</td>
-                  <td><?php if(isset($bookings[1]->service_2_kind) && $bookings[1]->service_2_kind == 1){
-                      echo @$services[$bookings[1]->service_2];
-                    }elseif(isset($bookings[1]->service_2_kind) && $bookings[1]->service_2_kind == 2){
-                      echo @$treatment1s[$bookings[1]->service_2];
-                    }
-                ?></td>
-                </tr>
+
                 <tr>
                   <td class="col-title">検査</td>
                   <td>{{$bookings[1]->inspection_name}}</td>
@@ -299,7 +278,7 @@
                 <tr>
                   <td colspan="2" class="text-center">
                     <input onclick="location.href='{{route('ortho.bookings.booking.edit', $bookings[1]->booking_id)}}'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href='{{route('ortho.bookings.booking_change_date', $bookings[1]->booking_id)}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='{{route('ortho.bookings.booking.change', $bookings[1]->booking_id)}}'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
                     <input onclick="location.href='{{route('ortho.bookings.booking.cancel_cnf',[$bookings[1]->booking_id])}}'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
@@ -336,10 +315,6 @@
                 </tr>
                 <tr>
                   <td class="col-title">業務内容-1</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="col-title">業務内容-2</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -380,9 +355,9 @@
                 </tr>
                 <tr>
                   <td colspan="2" class="text-center">
-                    <input onclick="location.href=''" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href=''" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
-                    <input onclick="location.href=''" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='javascript:void(0);'" value="予約内容を修正する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='javascript:void(0);'" value="予約日時を変更する" type="button" class="btn btn-xs btn-page mar-right">
+                    <input onclick="location.href='javascript:void(0);'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
               </tbody>
@@ -392,7 +367,7 @@
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
-            <input onclick="history.back()" value="前の画面に戻る" type="button" class="btn btn-sm btn-page">
+            <input onclick="location.href='{{route('ortho.patients.index')}}'" value="前の画面に戻る" type="button" class="btn btn-sm btn-page">
           </div>
         </div>
       </div>    

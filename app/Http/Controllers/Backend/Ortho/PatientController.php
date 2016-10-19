@@ -50,6 +50,7 @@ class PatientController extends BackendController
         $where['p_name_f_kana'] = Input::get('p_name_f_kana');
         $where['p_name_g_kana'] = Input::get('p_name_g_kana');
         $where['p_tel']         = Input::get('p_tel');
+        $where['p_mobile']      = Input::get('p_mobile');
         $where['p_hos']         = Input::get('p_hos');
         $where['p_hos_memo']    = Input::get('p_hos_memo');
         // set where
@@ -66,6 +67,7 @@ class PatientController extends BackendController
         $data['p_name_f_kana']  = Input::get('p_name_f_kana');
         $data['p_name_g_kana']  = Input::get('p_name_g_kana');
         $data['p_tel']          = Input::get('p_tel');
+        $data['p_mobile']       = Input::get('p_mobile');
         $data['p_hos']          = Input::get('p_hos');
         $data['p_hos_memo']     = Input::get('p_hos_memo');
 
@@ -75,7 +77,6 @@ class PatientController extends BackendController
             $tmpInterviews[$interview->patient_id] = $interview;
         }
         $data['interviews'] = $tmpInterviews;
-
         return view('backend.ortho.patients.index', $data);
     }
 
@@ -309,6 +310,7 @@ class PatientController extends BackendController
         $data['p_name_f_kana']      = Input::get('p_name_f_kana');
         $data['p_name_g_kana']      = Input::get('p_name_g_kana');
         $data['p_tel']              = Input::get('p_tel');
+        $data['p_mobile']           = Input::get('p_mobile');
         $data['p_hos']              = Input::get('p_hos');
         $data['p_hos_memo']         = Input::get('p_hos_memo');
 
@@ -331,6 +333,7 @@ class PatientController extends BackendController
         $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
+
         return view('backend.ortho.patients.patient_booking_list', $data);
     }
 

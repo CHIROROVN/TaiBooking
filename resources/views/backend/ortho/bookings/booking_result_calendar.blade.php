@@ -395,7 +395,9 @@ $widthPercent = 88 / ($countFacility);
                   // $service_id = 0;
                   // $fullValue = null;
                   $text = '';
-                  $clsBackgroundPatient = ''; //backgroup-while
+                  $clsBackgroundPatient = ''; //backgroup-while != null
+                  $clsBackgroundEmergencyFlag = ''; //backgroup-red == 1
+                  $clsBackgroundBookingStatus = ''; //backgroup-yellow == 2
                   $iconFlag = '';
 
                   if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
@@ -455,6 +457,14 @@ $widthPercent = 88 / ($countFacility);
                         $clsBackgroundPatient = 'backgroup-while';
                       }
 
+                      if ( !empty($booking->emergency_flag) ) {
+                        $clsBackgroundPatient = 'backgroup-red';
+                      }
+
+                      if ( !empty($booking->booking_status) ) {
+                        $clsBackgroundPatient = 'backgroup-yellow';
+                      }
+
                       $sService = '';
                       if(!empty($services[$booking->service_1]))
                         $sService = @$services[$booking->service_1] . '<br />';
@@ -492,6 +502,14 @@ $widthPercent = 88 / ($countFacility);
 
                         if ( !empty($tPatient) ) {
                           $clsBackgroundPatient = 'backgroup-while';
+                        }
+
+                        if ( !empty($booking->emergency_flag) ) {
+                          $clsBackgroundPatient = 'backgroup-red';
+                        }
+
+                        if ( !empty($booking->booking_status) ) {
+                          $clsBackgroundPatient = 'backgroup-yellow';
                         }
 
                         $tTreatment = '';

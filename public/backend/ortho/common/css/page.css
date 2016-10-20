@@ -712,6 +712,18 @@ span.note_required{
   background-color: white !important;
 }
 
+.backgroup-red {
+  background-color: red !important;
+}
+
+.backgroup-red a {
+  color: black !important;
+}
+
+.backgroup-yellow {
+  background-color: yellow !important;
+}
+
 .popover {
   width: 500px;
 }

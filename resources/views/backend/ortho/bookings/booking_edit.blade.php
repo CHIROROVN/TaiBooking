@@ -156,7 +156,7 @@
               <td class="col-title"><label for="ckEmergency">救急</label></td>
               <td>
                 <div class="checkbox">
-                  <label> <input name="emergency_flag" type="checkbox" id="emergency_flag"@if($booking->emergency_flag == 1) checked @endif>救急です</label>
+                  <label> <input name="emergency_flag" type="checkbox" id="emergency_flag" value="1" @if($booking->emergency_flag == 1) checked @endif>救急です</label>
                 </div>
               </td>
             </tr>

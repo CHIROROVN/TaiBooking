@@ -81,7 +81,7 @@
             <tr>
               <td>{{$recall->clinic_name}}</td>
               <td>{{formatDate($recall->last_date)}}</td>
-              <td>{{$recall->patient_id}}</td>
+              <td>{{$recall->p_no}}</td>
               <td>{{$recall->p_name_f}}{{$recall->p_name_g}}</td>
               <td>{{$recall->p_tel}}</td>
               <td>{{formatYm($recall->booking_recall_ym, '/')}}</td>

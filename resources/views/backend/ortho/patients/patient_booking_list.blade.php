@@ -104,7 +104,7 @@
                 </tr>
               </tbody>
               @else
-              <tbody>
+<!--               <tbody>
                 <tr>
                   <td class="col-title" style="width:30%">患者名</td>
                   <td></td>
@@ -180,7 +180,7 @@
                     <input onclick="location.href='javascript:void(0);'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
-              </tbody>
+              </tbody> -->
               @endif
             </table>
           </div>
@@ -284,7 +284,7 @@
                 </tr>
               </tbody>
               @else
-              <tbody>
+<!--               <tbody>
                 <tr>
                   <td class="col-title" style="width:30%">患者名</td>
                   <td></td>
@@ -360,7 +360,7 @@
                     <input onclick="location.href='javascript:void(0);'" value="予約をキャンセルする" type="button" class="btn btn-xs btn-page mar-right">
                   </td>
                 </tr>
-              </tbody>
+              </tbody> -->
               @endif
             </table>
           </div>

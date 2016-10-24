@@ -71,7 +71,9 @@ class RecallModel
         if ( isset($where['booking_recall_ym']) && !empty($where['booking_recall_ym']) ) {
             $db = $db->where('t_booking_recall.booking_recall_ym', $where['booking_recall_ym']);
         }
-        $db = $db->orderBy('booking_recall_ym', 'desc')->get();
+        $db = $db->orderBy('booking_recall_ym', 'asc')
+        ->orderBy('last_date', 'asc')
+        ->get();
         return $db;
     }
 

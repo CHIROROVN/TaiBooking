@@ -64,6 +64,7 @@
             <td class="col-title" align="center">詳細</td>
             <td class="col-title" align="center">問診票の参照</td>
             <td class="col-title" align="center" style="min-width: 71px;">予約表示</td>
+            <td class="col-title" align="center" style="min-width: 70px;">リスト</td>
             <td class="col-title" align="center" style="min-width: 95px;">来院履歴</td>
             <td class="col-title" align="center" style="min-width: 95px;">コミュノート</td>
           </tr>
@@ -89,6 +90,19 @@
                 @endif
               </td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.patient_booking_list', [ $patient->p_id ]) }}'" value="予約表示" type="button" class="btn btn-xs btn-page"/></td>
+              <td align="center"><input onclick="location.href='{{ route('ortho.patients.registered_list', [ $patient->p_id, 
+                'keyword'       => $keyword,
+                'keyword_id'    => $keyword_id,
+                'p_no'          => $p_no,
+                'p_name_f'      => $p_name_f,
+                'p_name_g'      => $p_name_g,
+                'p_name_f_kana' => $p_name_f_kana,
+                'p_name_g_kana' => $p_name_g_kana,
+                'p_tel'         => $p_tel,
+                'p_hos'         => $p_hos,
+                'p_hos_memo'    => $p_hos_memo,
+                'page'          => $page ]) }}'" 
+                value="リスト" type="button" class="btn btn-xs btn-page"/></td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.visit.list', [ $patient->p_id ]) }}'" value="来院履歴" type="button" class="btn btn-xs btn-page"/></td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.communications.index', [ $patient->p_id ]) }}'" value="コミュノート" type="button" class="btn btn-xs btn-page"/></td>
             </tr>

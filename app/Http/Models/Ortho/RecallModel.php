@@ -44,7 +44,15 @@ class RecallModel
         return DB::table($this->table)
             ->leftJoin('t_patient as t1', 't_booking_recall.patient_id', '=', 't1.p_id')
             ->select('t_booking_recall.*', 't1.p_no', 't1.p_name_f','t1.p_name_g','t1.p_name_f_kana','t1.p_name_g_kana')
+            ->where('t_booking_recall.last_kind', '<>', DELETE)
             ->where('id', $id)->first();
+    }
+
+    public function get_by_patient_id($patient_id)
+    {
+        return DB::table($this->table)
+            ->where('last_kind', '<>', DELETE)
+            ->where('patient_id', $patient_id)->first();
     }
 
     public function get_recall_list($where=array()){

@@ -13,6 +13,8 @@ use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
 use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
+use App\Http\Models\Ortho\BookingTelWaitingModel;
+use App\Http\Models\Ortho\RecallModel;
 use Form;
 use Html;
 use Input;
@@ -70,6 +72,7 @@ class PatientController extends BackendController
         $data['p_mobile']       = Input::get('p_mobile');
         $data['p_hos']          = Input::get('p_hos');
         $data['p_hos_memo']     = Input::get('p_hos_memo');
+        $data['page']           = Input::get('page');
 
         $interviews = $clsInterview->get_all();
         $tmpInterviews = array();
@@ -366,6 +369,44 @@ class PatientController extends BackendController
         }
         $data['hygienists'] = $tmpHygienists;
         return view('backend.ortho.patients.visit_list', $data);
+    }
+
+    public function getRegisteredList($id)
+    {
+        // where
+        $data                       = array();
+
+        $keyword                    = Input::get('keyword', null);
+        $keyword_id                 = Input::get('keyword_id', null);
+        if ( empty($keyword) ) {
+            $keyword_id = null;
+        }
+        $data['keyword']           = $keyword;
+        $data['keyword_id']        = $keyword_id;
+
+        $data['p_no']              = Input::get('p_no');
+        $data['p_name_f']          = Input::get('p_name_f');
+        $data['p_name_g']          = Input::get('p_name_g');
+        $data['p_name_f_kana']     = Input::get('p_name_f_kana');
+        $data['p_name_g_kana']     = Input::get('p_name_g_kana');
+        $data['p_tel']             = Input::get('p_tel');
+        $data['p_mobile']          = Input::get('p_mobile');
+        $data['p_hos']             = Input::get('p_hos');
+        $data['p_hos_memo']        = Input::get('p_hos_memo');
+        $data['page']              = Input::get('page');
+
+        $clsPatient                = new PatientModel();
+        $clsBookingTelWaiting      = new BookingTelWaitingModel();
+        $clsRecall                 = new RecallModel();
+        $clsBooking                = new BookingModel();
+        $data['patient']           = $clsPatient->get_by_id($id);
+        $data['bookingTelWaiting'] = $clsBookingTelWaiting->get_by_patient_id($id);
+        $data['recall']            = $clsRecall->get_by_patient_id($id);
+        $data['list2list']         = $clsBooking->get_list2_list_by_patient_id($id);
+        $data['list4list']         = $clsBooking->get_list4_list_by_patient_id($id);
+        $data['list5list']         = $clsBooking->get_list5_list_by_patient_id($id);
+
+        return view('backend.ortho.patients.registered_list', $data);
     }
 
     // autocomplete patient

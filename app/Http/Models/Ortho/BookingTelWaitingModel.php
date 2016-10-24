@@ -59,7 +59,13 @@ class BookingTelWaitingModel
 
     public function get_by_id($id)
     {
-        $results = DB::table($this->table)->where('id', $id)->first();
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->where('id', $id)->first();
+        return $results;
+    }
+
+    public function get_by_patient_id($patient_id)
+    {
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->where('patient_id', $patient_id)->first();
         return $results;
     }
 

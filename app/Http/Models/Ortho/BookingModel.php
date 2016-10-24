@@ -423,21 +423,21 @@ class BookingModel
 										->update($data);
 	}
 
-	public function get_list1_list(){
-		return DB::table($this->table)
-						->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-						->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
-						->leftJoin('t_result as t2', 't_booking.patient_id', '=', 't2.patient_id')
-						// ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
-						// ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-						->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
-						->where('t_booking.last_kind', '<>', DELETE)
-						// ->where('t_booking.booking_rev', $this->getLastBookingRev())
-						->where('t_booking.booking_status', '=', 1)
-						->orderBy('t_booking.booking_date', 'desc')
-						->groupBy('t_booking.booking_childgroup_id')
-						->get();
-	}
+	// public function get_list1_list(){
+	// 	return DB::table($this->table)
+	// 					->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+	// 					->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
+	// 					->leftJoin('t_result as t2', 't_booking.patient_id', '=', 't2.patient_id')
+	// 					// ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
+	// 					// ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
+	// 					->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+	// 					->where('t_booking.last_kind', '<>', DELETE)
+	// 					// ->where('t_booking.booking_rev', $this->getLastBookingRev())
+	// 					->where('t_booking.booking_status', '=', 1)
+	// 					->orderBy('t_booking.booking_date', 'desc')
+	// 					->groupBy('t_booking.booking_childgroup_id')
+	// 					->get();
+	// }
 
 	public function get_list2_list($where = array()){
 		$db = DB::table($this->table)
@@ -464,31 +464,39 @@ class BookingModel
 		return $db;
 	}
 
-	public function get_list3_list($where = array()){
-		$db = DB::table($this->table)
-						->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
-						->leftJoin('t_result as t2', 't_booking.patient_id', '=', 't2.patient_id')
-						->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
-						// ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
-						// ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
-						->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+	public function get_list2_list_by_patient_id($patient_id){
+		return DB::table($this->table)
 						->where('t_booking.last_kind', '<>', DELETE)
-						// ->where('t_booking.booking_rev', $this->getLastBookingRev());
-						->where('t_booking.booking_status', 3);
-
-
-		if ( !empty($where['booking_recall_yy']) && !empty($where['booking_recall_mm']) ) {
-			$db = $db->where('t_booking.booking_recall_ym', 'like', $where['booking_recall_yy'] . '%')
-					->where('t_booking.booking_recall_ym', 'like', '%' . $where['booking_recall_mm']);
-		} elseif ( !empty($where['booking_recall_yy']) && empty($where['booking_recall_mm']) ) {
-			$db = $db->where('t_booking.booking_recall_ym', 'like', $where['booking_recall_yy'] . '%');
-		} elseif ( empty($where['booking_recall_yy']) && !empty($where['booking_recall_mm']) ) {
-			$db = $db->where('t_booking.booking_recall_ym', 'like', '%' . $where['booking_recall_mm']);
-		}
-
-		$db = $db->groupBy('t_booking.booking_childgroup_id')->orderBy('t2.result_date', 'desc')->get();
-		return $db;
+						->where('t_booking.patient_id', $patient_id)
+						->where('t_booking.booking_status', '=', 2)
+						->first();
 	}
+
+	// public function get_list3_list($where = array()){
+	// 	$db = DB::table($this->table)
+	// 					->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+	// 					->leftJoin('t_result as t2', 't_booking.patient_id', '=', 't2.patient_id')
+	// 					->leftJoin('m_clinic as m1', 't_booking.clinic_id', '=', 'm1.clinic_id')
+	// 					// ->leftJoin('m_service as ms1', 't_booking.service_1', '=', 'ms1.service_id')
+	// 					// ->leftJoin('m_service as ms2', 't_booking.service_2', '=', 'ms2.service_id')
+	// 					->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_tel', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+	// 					->where('t_booking.last_kind', '<>', DELETE)
+	// 					// ->where('t_booking.booking_rev', $this->getLastBookingRev());
+	// 					->where('t_booking.booking_status', 3);
+
+
+	// 	if ( !empty($where['booking_recall_yy']) && !empty($where['booking_recall_mm']) ) {
+	// 		$db = $db->where('t_booking.booking_recall_ym', 'like', $where['booking_recall_yy'] . '%')
+	// 				->where('t_booking.booking_recall_ym', 'like', '%' . $where['booking_recall_mm']);
+	// 	} elseif ( !empty($where['booking_recall_yy']) && empty($where['booking_recall_mm']) ) {
+	// 		$db = $db->where('t_booking.booking_recall_ym', 'like', $where['booking_recall_yy'] . '%');
+	// 	} elseif ( empty($where['booking_recall_yy']) && !empty($where['booking_recall_mm']) ) {
+	// 		$db = $db->where('t_booking.booking_recall_ym', 'like', '%' . $where['booking_recall_mm']);
+	// 	}
+
+	// 	$db = $db->groupBy('t_booking.booking_childgroup_id')->orderBy('t2.result_date', 'desc')->get();
+	// 	return $db;
+	// }
 
 	public function get_list4_list($booking_status = 4){
 		$db = DB::table($this->table)
@@ -504,6 +512,22 @@ class BookingModel
 		
 		$db = $db->groupBy('t_booking.booking_childgroup_id')->orderBy('t2.result_date', 'desc')->get();
 		return $db;
+	}
+
+	public function get_list4_list_by_patient_id($patient_id){
+		return DB::table($this->table)
+						->where('t_booking.last_kind', '<>', DELETE)
+						->where('t_booking.patient_id', $patient_id)
+						->where('t_booking.booking_status', '=', 4)
+						->first();
+	}
+
+	public function get_list5_list_by_patient_id($patient_id){
+		return DB::table($this->table)
+						->where('t_booking.last_kind', '<>', DELETE)
+						->where('t_booking.patient_id', $patient_id)
+						->where('t_booking.booking_status', '=', 5)
+						->first();
 	}
 
 	//search booking list

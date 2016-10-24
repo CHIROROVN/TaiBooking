@@ -68,8 +68,8 @@ class RecallModel
             $db = $db->where('t_booking_recall.patient_id', $where['patient_id']);
         }
         // where last_date
-        if ( isset($where['last_date']) && !empty($where['last_date']) ) {
-            $db = $db->where('t_booking_recall.last_date', formatYm($where['last_date'],null));
+        if ( isset($where['booking_recall_ym']) && !empty($where['booking_recall_ym']) ) {
+            $db = $db->where('t_booking_recall.booking_recall_ym', $where['booking_recall_ym']);
         }
         $db = $db->orderBy('booking_recall_ym', 'desc')->get();
         return $db;

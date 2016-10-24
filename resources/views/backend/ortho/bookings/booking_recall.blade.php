@@ -29,7 +29,27 @@
             <input type="hidden" name="p_id" id="p_id" value="{{ @$p_id }}">
             <input type="text" name="patient" id="patient" class=" form-control input-text-mid" value="{{ @$patient }}">
             <!-- date -->
-            <input type="calendar" name="insert_date" id="insert_date" class=" form-control input-text-mid datepicker" value="{{ @$insert_date }}">
+            <select name="year" id="year" class="form-control form-control" style="text-align: center;">
+                <option value='' >----</option>
+                <?php echo $yoption;?>;
+            </select>&nbsp;年
+
+              <select name="month" id="month" class="form-control" style="text-align: center;">
+                  <option value="" @if($oldmonth == '') selected="" @endif>--</option>
+                  <option value="00" @if($oldmonth == '00') selected="" @endif>00</option>
+                  <option value="01" @if($oldmonth == '01') selected="" @endif>01</option>
+                  <option value="02" @if($oldmonth == '02') selected="" @endif>02</option>
+                  <option value="03" @if($oldmonth == '03') selected="" @endif>03</option>
+                  <option value="04" @if($oldmonth == '04') selected="" @endif>04</option>
+                  <option value="05" @if($oldmonth == '05') selected="" @endif>05</option>
+                  <option value="06" @if($oldmonth == '06') selected="" @endif>06</option>
+                  <option value="07" @if($oldmonth == '07') selected="" @endif>07</option>
+                  <option value="08" @if($oldmonth == '08') selected="" @endif>08</option>
+                  <option value="09" @if($oldmonth == '09') selected="" @endif>09</option>
+                  <option value="10" @if($oldmonth == '10') selected="" @endif>10</option>
+                  <option value="11" @if($oldmonth == '11') selected="" @endif>11</option>
+                  <option value="12" @if($oldmonth == '12') selected="" @endif>12</option>
+              </select>&nbsp;月
             <!-- submit -->
             <input type="submit" class="btn btn-sm btn-page" value="検索">
             </form>
@@ -117,20 +137,18 @@
             .append( "<a>" + item.desc + "</a>" )
             .appendTo( ul );
       };
+    });
 
-
-      // datepicker
-      $.datepicker.setDefaults( $.datepicker.regional[ "ja" ] );
-      $(".datepicker").datepicker({
-          showOn: 'both',
-          buttonText: 'カレンダー',
-          buttonImageOnly: true,
-          buttonImage: "{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}",
-          dateFormat: 'yy-mm-dd',
-          constrainInput: true,
-          inline: true,
-          lang: 'ja'
-      });
+  </script>
+  <script type="text/javascript">
+    var date = new Date();
+    var m    = date.getMonth()+1;
+    $("#year").change(function() {
+      if($(this).val() == ''){
+        $('#month option[value=""]').prop('selected',true);
+      }else{
+        $('#month option[value="'+m+'"]').prop('selected',true);
+      }
     });
   </script>
 @stop

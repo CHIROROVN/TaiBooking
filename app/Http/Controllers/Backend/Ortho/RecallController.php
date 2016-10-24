@@ -33,16 +33,34 @@ class RecallController extends BackendController
     {
         $where              = array();
         $clsRecall          = new RecallModel();
+        $ynow = date('Y');
+        $ynext      = $ynow + 3;
+        $yoption    = '';
+        $data['oldmonth']           = Input::get('month');
+        for($i=$ynow; $i<=$ynext; $i++){
+            if(Input::get('year') == $i){
+                $select = 'selected=""';
+            }else{
+                $select = '';
+            }
+            $yoption .= "<option value='".$i."' ".$select." >".$i."</option>";
+        }
 
-         if(!empty(Input::get('p_id'))){
+        $data['yoption']            = $yoption;
+
+        if(!empty(Input::get('p_id'))){
             $data['p_id']           = Input::get('p_id');
             $data['patient']        = Input::get('patient');
             $where['patient_id']    = Input::get('p_id');
          }
 
-        if(!empty(Input::get('insert_date'))){
-            $data['insert_date']    = Input::get('insert_date');
-            $where['last_date']     = Input::get('insert_date');
+        if(!empty(Input::get('year'))){
+            if(!empty(Input::get('month')))
+                $smonth = Input::get('month');
+            else
+                $smonth = '00';
+            
+            $where['booking_recall_ym']     = Input::get('year').$smonth;
         }
 
         $data['recalls']    = $clsRecall->get_recall_list($where);

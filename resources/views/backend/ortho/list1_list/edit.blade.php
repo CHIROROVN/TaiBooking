@@ -55,7 +55,7 @@
                           @else
                           <option value="{{$doctor->id}}" >{{$doctor->u_name}}</option>
                           @endif
-                          
+
                         @endforeach
                       </select>
                       <span class="error-input">@if ($errors->first('doctor_id')) ※{!! $errors->first('doctor_id') !!} @endif</span>
@@ -78,7 +78,7 @@
                         <optgroup label="治療内容">
                           @if(count($treatment1s) > 0)
                             @foreach($treatment1s as $treatment12)
-                              <option value="{{$treatment12->treatment_id}}_{{$treatment12->treatment_time}}_treatment" @if($list1->service_1 == $treatment12->treatment_id.'_'.$treatment12->treatment_time.'_treatment') selected="" @endif >{{$treatment12->treatment_name}}</option>
+                              <option value="{{$treatment12->treatment_id}}_{{$treatment12->treatment_time}}_treatment" @if($list1->service_1.'_'.$treatment12->treatment_time.'_treatment' == $treatment12->treatment_id.'_'.$treatment12->treatment_time.'_treatment') selected="" @endif >{{$treatment12->treatment_name}}</option>
                             @endforeach
                           @endif
                         </optgroup>

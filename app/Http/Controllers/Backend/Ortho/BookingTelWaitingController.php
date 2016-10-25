@@ -188,7 +188,7 @@ class BookingTelWaitingController extends BackendController
         $dataInsert = array(
             'clinic_id'         => Input::get('clinic_id'),
             'patient_id'        => Input::get('p_id'),
-            'telephone'         => Input::get('telephone'),
+            'doctor_id'         => Input::get('doctor_id'),
             'free_text'         => Input::get('free_text'),
 
             'last_date'         => date('y-m-d H:i:s'),
@@ -198,6 +198,19 @@ class BookingTelWaitingController extends BackendController
 
             'insert_date'      => date('y-m-d H:i:s'),
         );
+        $service_1 = Input::get('service_1');
+        if ( !empty($service_1) ) {
+            $tmp = explode('_', $service_1);
+            if ( $tmp[1] == 'service' ) {
+                // service
+                $dataInsert['service_1'] = $tmp[0];
+                $dataInsert['service_1_kind'] = 1;
+            } else {
+                // treatment
+                $dataInsert['service_1'] = $tmp[0];
+                $dataInsert['service_1_kind'] = 2;
+            }
+        }
 
         $status_insert = $clsBookingTelWaiting->update($id, $dataInsert);
 
@@ -218,19 +231,8 @@ class BookingTelWaitingController extends BackendController
         $clsBookingTelWaiting   = new BookingTelWaitingModel();
         $booking                = $clsBookingTelWaiting->get_by_id($id);
 
-        $where = array(
-            'clinic_id'                 => $booking->clinic_id,
-            'booking_group_id'          => $booking->booking_group_id,
-            'booking_childgroup_id'     => $booking->booking_childgroup_id
-        );
-        if ( $booking->service_1_kind == 2 ) {
-            $where['facility_id']       = $booking->facility_id;
-        }
-        $listBookingGroup = $clsBookingTelWaiting->get_where($where);
-
-        $status = true;
-        foreach ( $listBookingGroup as $item ) {
-            // update table area
+        if ( empty($booking->booking_group_id) && empty($booking->booking_childgroup_id) ) {
+            $status = true;
             $dataUpdate = array(
                 'last_date'         => date('y-m-d H:i:s'),
                 'last_kind'         => DELETE,
@@ -238,11 +240,35 @@ class BookingTelWaitingController extends BackendController
                 'last_user'         => Auth::user()->id
             );
 
-            if ( !$clsBookingTelWaiting->update($item->id, $dataUpdate) ) {
+            if ( !$clsBookingTelWaiting->update($booking->id, $dataUpdate) ) {
                 $status = false;
             }
+        } else {
+            $where = array(
+                'clinic_id'                 => $booking->clinic_id,
+                'booking_group_id'          => $booking->booking_group_id,
+                'booking_childgroup_id'     => $booking->booking_childgroup_id
+            );
+            if ( $booking->service_1_kind == 2 ) {
+                $where['facility_id']       = $booking->facility_id;
+            }
+            $listBookingGroup = $clsBookingTelWaiting->get_where($where);
+
+            $status = true;
+            foreach ( $listBookingGroup as $item ) {
+                // update table area
+                $dataUpdate = array(
+                    'last_date'         => date('y-m-d H:i:s'),
+                    'last_kind'         => DELETE,
+                    'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+                    'last_user'         => Auth::user()->id
+                );
+
+                if ( !$clsBookingTelWaiting->update($item->id, $dataUpdate) ) {
+                    $status = false;
+                }
+            }
         }
-        
         
         if ( $status ) {
             Session::flash('success', trans('common.message_delete_success'));

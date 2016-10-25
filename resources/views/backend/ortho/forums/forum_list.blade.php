@@ -49,7 +49,7 @@
                 <img src="{{asset('public/backend/ortho')}}/common/image/mail_open.gif" height="14" width="13">
                 @endif
               </td>
-              <td><a href="{{route('ortho.forums.forum_detail', $forum->forum_id)}}">{{$forum->forum_title}}</a></td>
+              <td><a href="{{route('ortho.forums.forum_detail2', $forum->forum_id)}}">{{$forum->forum_title}}</a></td>
               <td align="center">{{countReply($forum->forum_id)}}</td>
               <td align="center">@if(!empty($forum->forum_view)){{$forum->forum_view}}@else 0 @endif</td>
               <td align="center">@if(empty($forum->forum_user_id))不明 @else {{$forum->u_name_display}} @endif</td>

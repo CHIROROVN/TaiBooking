@@ -55,6 +55,7 @@
                           @else
                           <option value="{{$doctor->id}}" >{{$doctor->u_name}}</option>
                           @endif
+                          
                         @endforeach
                       </select>
                       <span class="error-input">@if ($errors->first('doctor_id')) ※{!! $errors->first('doctor_id') !!} @endif</span>

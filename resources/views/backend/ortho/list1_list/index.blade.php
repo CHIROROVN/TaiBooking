@@ -83,7 +83,9 @@
               @endif
             </td>
             <td>
-              {{ @$item->telephone }}
+              @if ( isset($patients[$item->patient_id]) )
+                {{ $patients[$item->patient_id]->p_tel }}
+              @endif
             </td>
             <td>
               {{ @$item->free_text }}

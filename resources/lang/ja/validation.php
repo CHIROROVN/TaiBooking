@@ -349,6 +349,8 @@ return [
     */
     'error_clinic_id_required'                                  => '医院名を入力してください。',
     'error_p_id_required'                                       => '患者名を入力してください。',
+    'error_doctor_id_required'                                  => '担当ドクターを入力してください。',
+    'error_service_1_required'                                  => '業務内容-1を入力してください。',
     'error_telephone_numeric'                                   => '電話番号は数字でなければなりません。',
 
 ];

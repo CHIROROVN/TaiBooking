@@ -138,7 +138,7 @@ class PatientModel
 
     public function get_for_select()
     {
-        return DB::table($this->table)->select('p_id', 'p_no', 'p_name_f', 'p_name_g', 'p_name_f_kana', 'p_name_g_kana')->where('last_kind', '<>', DELETE)->get();
+        return DB::table($this->table)->select('p_id', 'p_no', 'p_name_f', 'p_name_g', 'p_name_f_kana', 'p_name_g_kana', 'p_tel')->where('last_kind', '<>', DELETE)->get();
     }
 
     public function insert($data)

@@ -43,12 +43,46 @@
                     </td>
                   </tr>
 
-                  <!-- telephone -->
+                  <!-- doctor_id -->
                   <tr>
-                    <td class="col-title"><label for="telephone">電話番号</label></td>
+                    <td class="col-title"><label for="doctor_id">担当ドクター <span class="note_required">※</span></label></td>
                     <td>
-                      <input type="text" name="telephone" id="telephone " class="form-control" value="{{ $list1->telephone }}" />
-                      <span class="error-input">@if ($errors->first('telephone')) ※{!! $errors->first('telephone') !!} @endif</span>
+                      <select name="doctor_id" id="doctor_id" class="form-control form-control--medium">
+                        <option value="">▼選択</option>
+                        @foreach($doctors as $doctor)
+                          @if ( $list1->doctor_id == $doctor->id )
+                          <option value="{{$doctor->id}}" selected >{{$doctor->u_name}}</option>
+                          @else
+                          <option value="{{$doctor->id}}" >{{$doctor->u_name}}</option>
+                          @endif
+                        @endforeach
+                      </select>
+                      <span class="error-input">@if ($errors->first('doctor_id')) ※{!! $errors->first('doctor_id') !!} @endif</span>
+                    </td>
+                  </tr>
+
+                  <!-- service_1 -->
+                  <tr>
+                    <td class="col-title"><label for="service_1">業務内容-1 <span class="note_required">※</span></label></td>
+                    <td>
+                      <select name="service_1" id="service_1" class="form-control form-control--medium">
+                        <option value="">▼選択</option>
+                        <optgroup label="業務名">
+                          @if(count($services) > 0)
+                            @foreach($services as $key21 => $service21)
+                              <option value="{{$key21}}_service" @if($list1->service_1 == $key21.'_service') selected="" @endif>{{$service21}}</option>
+                            @endforeach
+                          @endif
+                        </optgroup>
+                        <optgroup label="治療内容">
+                          @if(count($treatment1s) > 0)
+                            @foreach($treatment1s as $treatment12)
+                              <option value="{{$treatment12->treatment_id}}_{{$treatment12->treatment_time}}_treatment" @if($list1->service_1 == $treatment12->treatment_id.'_'.$treatment12->treatment_time.'_treatment') selected="" @endif >{{$treatment12->treatment_name}}</option>
+                            @endforeach
+                          @endif
+                        </optgroup>
+                      </select>
+                      <span class="error-input">@if ($errors->first('service_1')) ※{!! $errors->first('service_1') !!} @endif</span>
                     </td>
                   </tr>
 

@@ -9,6 +9,9 @@ use App\Http\Models\Ortho\BookingTelWaitingModel;
 use App\Http\Models\Ortho\ClinicModel;
 use App\Http\Models\Ortho\PatientModel;
 use App\Http\Models\Ortho\BookingModel;
+use App\Http\Models\Ortho\UserModel;
+use App\Http\Models\Ortho\ServiceModel;
+use App\Http\Models\Ortho\Treatment1Model;
 
 use Form;
 use Html;
@@ -76,9 +79,15 @@ class BookingTelWaitingController extends BackendController
     {
         $clsClinic                      = new ClinicModel();
         $clsPatient                     = new PatientModel();
+        $clsUser                        = new UserModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
 
         $data['clinics']                = $clsClinic->get_for_select_only_user();
         $data['patients']               = $clsPatient->get_for_select();
+        $data['doctors']                = $clsUser->get_by_belong([1]);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_treatment_search();
 
         return view('backend.ortho.list1_list.regist', $data);
     }
@@ -99,7 +108,7 @@ class BookingTelWaitingController extends BackendController
         $dataInsert = array(
             'clinic_id'         => Input::get('clinic_id'),
             'patient_id'        => Input::get('p_id'),
-            'telephone'         => Input::get('telephone'),
+            'doctor_id'         => Input::get('doctor_id'),
             'free_text'         => Input::get('free_text'),
 
             'last_date'         => date('y-m-d H:i:s'),
@@ -109,6 +118,19 @@ class BookingTelWaitingController extends BackendController
 
             'insert_date'      => date('y-m-d H:i:s'),
         );
+        $service_1 = Input::get('service_1');
+        if ( !empty($service_1) ) {
+            $tmp = explode('_', $service_1);
+            if ( $tmp[1] == 'service' ) {
+                // service
+                $dataInsert['service_1'] = $tmp[0];
+                $dataInsert['service_1_kind'] = 1;
+            } else {
+                // treatment
+                $dataInsert['service_1'] = $tmp[0];
+                $dataInsert['service_1_kind'] = 2;
+            }
+        }
 
         $status_insert = $clsBookingTelWaiting->insert($dataInsert);
 
@@ -129,9 +151,15 @@ class BookingTelWaitingController extends BackendController
         $clsBookingTelWaiting           = new BookingTelWaitingModel();
         $clsClinic                      = new ClinicModel();
         $clsPatient                     = new PatientModel();
+        $clsUser                        = new UserModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
 
         $data['list1']                  = $clsBookingTelWaiting->get_by_id($id);
         $data['clinics']                = $clsClinic->get_for_select_only_user();
+        $data['doctors']                = $clsUser->get_by_belong([1]);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_treatment_search();
         $patients                       = $clsPatient->get_for_select();
 
         $tmp = array();

@@ -1,41 +1,37 @@
 @extends('backend.ortho.ortho')
 
-
-@section('script')
-  <script>
-    function getVal(val, select_day, old_day_value) {
-      var month = '';
-      var old_day = old_day_value;
-      $('#' + select_day).find('option').remove();
-
-      if ( $.isNumeric( val ) ) {
-        month = val;
-      } else {
-        month = val.value;
-      }
-
-      $.ajax({
-        method: "GET",
-        url: "{{ route('ortho.xrays.get.day') }}",
-        dataType: "json",
-        data: { month: month }
-      }).done(function( msg ) {
-        // set value for select option month
-        $('#' + select_day).append('<option value="0">--日</option>');
-        $.each( msg, function( key, value ) {
-          if ( old_day == value ) {
-            $('#' + select_day).append('<option value="' + value + '" selected>' + value + '</option>');
-          } else {
-            $('#' + select_day).append('<option value="' + value + '">' + value + '</option>');
-          }
-        });
-      });
-    }
-  </script>
-@stop
-
-
 @section('content')
+
+<script>
+  function getVal(val, select_day, old_day_value) {
+    var month = '';
+    var old_day = old_day_value;
+    $('#' + select_day).find('option').remove();
+
+    if ( $.isNumeric( val ) ) {
+      month = val;
+    } else {
+      month = val.value;
+    }
+
+    $.ajax({
+      method: "GET",
+      url: "{{ route('ortho.xrays.get.day') }}",
+      dataType: "json",
+      data: { month: month }
+    }).done(function( msg ) {
+      // set value for select option month
+      $('#' + select_day).append('<option value="0">--日</option>');
+      $.each( msg, function( key, value ) {
+        if ( old_day == value ) {
+          $('#' + select_day).append('<option value="' + value + '" selected>' + value + '</option>');
+        } else {
+          $('#' + select_day).append('<option value="' + value + '">' + value + '</option>');
+        }
+      });
+    });
+  }
+</script>
 
 {!! Form::open(array('route' => 'ortho.xrays.index', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
 <section id="page">

@@ -42,7 +42,7 @@
               <td class="col-title" align="center">電話番号</td>
               <td class="col-title" align="center" style="min-width:135px;">最終処置内容-1-2</td>
               <td class="col-title" align="center" style="min-width:50px;">備考</td>
-              <td class="col-title" align="center" style="min-width:120px;">予約情報の編集</td>
+              <td class="col-title" align="center" style="min-width:120px;">予約の登録</td>
             </tr>
             @if ( !empty($list2s) && count($list2s) > 0 )
             @foreach ( $list2s as $list2 )
@@ -69,7 +69,7 @@
                 @endif
               </td>
               <td>{{ $list2->result_memo }}</td>
-              <td align="center"><input onclick="location.href='{{ route('ortho.bookings.booking.edit', [ $list2->booking_id ]) }}'" value="予約情報の編集" type="button" class="btn btn-xs btn-page"/></td>
+              <td align="center"><input onclick="location.href='{{ route('ortho.bookings.booking.edit', [ $list2->booking_id ]) }}'" value="予約の登録" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
             @endforeach
             @else

@@ -50,7 +50,7 @@
           <td align="center" class="col-title">患者名</td>
           <td align="center" class="col-title">xxxx担当ドクター</td>
           <td align="center" class="col-title">xxxx業務内容-1</td>
-          <td align="center" class="col-title">電話番号</td>
+          <td align="center" class="col-title" style="min-width: 120px">電話番号</td>
           <td align="center" class="col-title">備考</td>
           <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-edit">予約の登録</td>
           <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-action">TEL待ち情報の編集</td>

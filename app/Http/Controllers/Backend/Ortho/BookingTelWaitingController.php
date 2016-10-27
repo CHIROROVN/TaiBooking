@@ -44,10 +44,16 @@ class BookingTelWaitingController extends BackendController
         $clsBookingTelWaiting           = new BookingTelWaitingModel();
         $clsClinic                      = new ClinicModel();
         $clsPatient                     = new PatientModel();
+        $clsService                     = new ServiceModel();
+        $clsTreatment1                  = new Treatment1Model();
+        $clsUser                        = new UserModel();
 
         $data['clinics']                = $clsClinic->get_for_select_only_user();
         $patients                       = $clsPatient->get_for_select();
         $tmpList1_list                  = $clsBookingTelWaiting->get_all($data);
+        $data['list_doctors']           = $clsUser->get_list_users([1]);
+        $data['services']               = $clsService->get_list();
+        $data['treatment1s']            = $clsTreatment1->get_list_treatment();
 
         $tmp = array();
         foreach ( $patients as $item ) {

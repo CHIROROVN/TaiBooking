@@ -48,6 +48,8 @@
           <td align="center" class="col-title">当初予約日時</td>
           <td align="center" class="col-title">カルテNo</td>
           <td align="center" class="col-title">患者名</td>
+          <td align="center" class="col-title">xxxx担当ドクター</td>
+          <td align="center" class="col-title">xxxx業務内容-1</td>
           <td align="center" class="col-title">電話番号</td>
           <td align="center" class="col-title">備考</td>
           <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-edit">予約の登録</td>
@@ -80,6 +82,22 @@
             <td>
               @if ( isset($patients[$item->patient_id]) )
                 {{ $patients[$item->patient_id]->p_name_f }} {{ $patients[$item->patient_id]->p_name_g }} ({{ $patients[$item->patient_id]->p_name_f_kana }} {{ $patients[$item->patient_id]->p_name_g_kana }})
+              @endif
+            </td>
+            <td>
+              @if ( isset($list_doctors[$item->doctor_id]) )
+                {{ $list_doctors[$item->doctor_id] }}
+              @endif
+            </td>
+            <td>
+              @if ( $item->service_1_kind == 1 )
+                @if ( isset($services[$item->service_1]) )
+                  {{ $services[$item->service_1] }}
+                @endif
+              @else
+                @if ( isset($treatment1s[$item->service_1]) )
+                  {{ $treatment1s[$item->service_1] }}
+                @endif
               @endif
             </td>
             <td>

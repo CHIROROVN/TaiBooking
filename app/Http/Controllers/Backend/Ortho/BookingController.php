@@ -1944,6 +1944,24 @@ class BookingController extends BackendController
     }
 
     public function postList2Search($booking_id){
+        if(Input::has('BookingCalendar')){
+            $clsBooking                  = new BookingModel();
+            $booking                     = $clsBooking->get_by_id($booking_id);
+            $condition['clinic_id'] = $booking->clinic_id;
+            
+            if(!empty(Input::get('week_later'))){
+                if(Input::get('week_later') == 'week_specified'){
+                    $condition['next'] = cal_date(Input::get('week_later_option'));
+                }elseif (Input::get('week_later') == 'date_picker') {
+                    $condition['next'] = formatDate(Input::get('date_picker_option'), '-');
+                }else{
+                    $condition['next'] = cal_date(Input::get('week_later'));
+                }
+            }
+
+            return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
+
+        }else if(Input::has('BookingList')){
 
         $condition['booking_id'] = $booking_id;
 
@@ -1960,7 +1978,8 @@ class BookingController extends BackendController
             }
         }
 
-        return redirect()->route('ortho.bookings.list2_change', $condition);
+            return redirect()->route('ortho.bookings.list2_change', $condition);
+        }
     }
 
     public function getList2Change($booking_id){

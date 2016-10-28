@@ -2067,7 +2067,9 @@ class BookingController extends BackendController
             $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
         }
 
-        $group_booking                  = $clsBooking->get_by_child_group($bk_child_group, $patient_id, $facility_id, $bk_group_id);
+        $booking_status                 = 2;
+
+        $group_booking                  = $clsBooking->get_by_child_group_list2($bk_child_group, $patient_id, $facility_id, $bk_group_id, $booking_status);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;

@@ -269,13 +269,9 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	Route::get('list2-change/{booking_id}', ['as' => 'ortho.bookings.list2_change', 'uses' => 'BookingController@getList2Change']);
 
-	// Route::get('list2-change-list', ['as' => 'ortho.bookings.list2_change_list', 'uses' => 'BookingController@list2ChangeList']);
-
 	Route::get('list2-change-confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.list2_change_confirm', 'uses' => 'BookingController@list2ChangeConfirm']);
 
 	Route::post('list2-change-confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.list2_change_confirm', 'uses' => 'BookingController@postList2Cnf']);
-
-
 
 	Route::get('list3-list', ['as' => 'ortho.bookings.list3_list', 'uses' => 'BookingController@list3_list']);
 	Route::get('list4-list', ['as' => 'ortho.bookings.list4_list', 'uses' => 'BookingController@list4_list']);

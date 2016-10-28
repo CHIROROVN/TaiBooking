@@ -1557,11 +1557,6 @@ class BookingController extends BackendController
             $data['bookings'] = $bookings;
         }
 
-        // echo '<pre>';
-        // print_r($tmpBookingTimeOk);
-        // echo '</pre>';
-        // die;
-
         return view('backend.ortho.bookings.booking_change_list', $data);
     }
 
@@ -1938,6 +1933,222 @@ class BookingController extends BackendController
         }
         $data['years'] = $tmpYears;
         return view('backend.ortho.bookings.list2_list', $data);
+    }
+
+    public function getList2Search($booking_id){
+        $data = array();
+        $data['booking_id'] = $booking_id;
+        $clsBooking                 = new BookingModel();
+        $data['booking']            = $clsBooking->get_by_id($booking_id);
+        return view('backend.ortho.bookings.list2_search', $data);
+    }
+
+    public function postList2Search($booking_id){
+
+        $condition['booking_id'] = $booking_id;
+
+        if(!empty(Input::get('booking_date')))
+            $condition['booking_date'] = Input::get('booking_date');
+
+        if(!empty(Input::get('week_later'))){
+            if(Input::get('week_later') == 'week_specified'){
+            $condition['week_later'] = Input::get('week_later_option');
+            }elseif (Input::get('week_later') == 'date_picker') {
+                $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
+            }else{
+                $condition['week_later'] = Input::get('week_later');
+            }
+        }
+
+        return redirect()->route('ortho.bookings.list2_change', $condition);
+    }
+
+    public function getList2Change($booking_id){
+        $clsBooking                       = new BookingModel();
+        $clsFacility                      = new FacilityModel();
+        $data['facilities']               = $clsFacility->list_facility_all();
+        $data['booking_id']               = $booking_id;
+        $where                            = array();
+        $old_booking                      = $clsBooking->get_by_id($booking_id);
+        $service_1_kind                   = $old_booking->service_1_kind;
+
+        if(!empty($service_1_kind))
+            $where['service_1_kind']      = $service_1_kind;
+        if(!empty(Input::get('booking_date')))
+            $where['booking_date']        = Input::get('booking_date');
+        if(!empty(Input::get('week_later')))
+            $where['week_later']          = Input::get('week_later');
+
+        $data['bookings']                 = $clsBooking->get_booking_list2($where);
+
+        return view('backend.ortho.bookings.list2_change_list', $data);
+    }
+
+    public function list2ChangeConfirm($booking_id, $id){
+        $clsBooking                         = new BookingModel();
+        if($clsBooking->checkExistID2($booking_id) || $clsBooking->checkExistID2($id)){
+            $curr_booking                   = $clsBooking->get_by_id($booking_id);
+            $data['booking']                = $curr_booking;
+
+            $clsClinic                      = new ClinicModel();
+            $data['clinics']                = $clsClinic->get_list_clinic();
+            $clsUser                        = new UserModel();
+            $data['doctors']                = $clsUser->get_list();
+            $data['hygienists']             = $clsUser->get_list();
+            $clsService                     = new ServiceModel();
+            $data['services']               = $clsService->get_list();
+            $clsTreatment1                  = new Treatment1Model();
+            $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+            $clsEquipment                   = new EquipmentModel();
+            $data['equipments']             = $clsEquipment->get_list();
+            $clsInspection                  = new InspectionModel();
+            $data['inspections']            = $clsInspection->get_list();
+            $clsInsurance                   = new InsuranceModel();
+            $data['insurances']             = $clsInsurance->get_list();
+            $clsFacility                    = new FacilityModel();
+            $data['facilities']             = $clsFacility->list_facility_all();
+
+            $data['booking_id']             = $booking_id;
+            $data['id']                     = $id;
+
+            $new_booking                    = $clsBooking->get_by_id($id);
+
+            $new_booking_date               = $new_booking->booking_date;
+            $new_facility_id                = $new_booking->facility_id;
+            $new_facility_name              = $new_booking->facility_name;
+            $new_booking_start_time         = $new_booking->booking_start_time;
+
+            $data['booking_change']         = (Object)array_merge((array)$curr_booking, array(
+                                            'booking_date'          => $new_booking_date,
+                                            'booking_start_time'    => $new_booking_start_time,
+                                            'facility_id'           => $new_facility_id,
+                                            'facility_Name'         => $new_facility_name,
+                                            'last_date'             => date('Y-m-d H:i:s'),
+                                            'last_user'             => Auth::user()->id,
+                                            ));
+            return view('backend.ortho.bookings.list2_change_confirm', $data);
+        }else{
+            return response()->view('errors.404', [], 404);
+        }
+    }
+
+    public function postList2Cnf($booking_id, $id){
+        $clsBooking                     = new BookingModel();
+
+        //Booking New
+        $new_booking                    = $clsBooking->get_by_id($id);
+        $new_booking_date               = $new_booking->booking_date;
+        $new_facility_id                = $new_booking->facility_id;
+        $new_booking_start_time         = $new_booking->booking_start_time;
+        $new_booking_group              = $new_booking->booking_group_id;
+
+        //Booking Current
+        $curr_booking                   = $clsBooking->get_by_id($booking_id);
+        $bk_child_group                 = $curr_booking->booking_childgroup_id;
+        $bk_group_id                    = $curr_booking->booking_group_id;
+        $patient_id                     = $curr_booking->patient_id;
+        $facility_id                    = $curr_booking->facility_id;
+        $bk_service                     = $curr_booking->service_1;
+        $bk_service_kind                = $curr_booking->service_1_kind;
+        $bk_booking_date                = $curr_booking->booking_date;
+        $bk_booking_start_time          = $curr_booking->booking_start_time;
+
+        $tmpGroup                       = explode('_', $bk_group_id);
+
+        $tmpChildGroup                  = explode('_', $bk_child_group);
+
+        $booking_group_id               = '';
+        if(!empty($tmpGroup[0])){
+            $booking_group_id = $tmpGroup[0].'_'.$new_booking_date;
+        }
+
+        $booking_childgroup_id  = '';
+        if(!empty($tmpChildGroup[1])){
+            $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
+        }
+
+        $group_booking                  = $clsBooking->get_by_child_group($bk_child_group, $patient_id, $facility_id, $bk_group_id);
+
+        $condition                      = array();
+        $condition['clinic_id']         = $curr_booking->clinic_id;
+        $condition['next']              = $new_booking_date;
+
+        $start_time = (int)$new_booking_start_time;
+        $flag  = false;
+
+        $limit = count($group_booking);
+
+        $oldFacility = array();
+        foreach ($group_booking as $key=>$bk) {
+         $oldFacility[$key] = $bk->facility_id;
+        }
+
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+
+        $bk_start_time  = (int)$bk_booking_start_time;
+
+        foreach ($newGroupBooking as $key=>$newbk) {
+            $clsBooking->update($newbk->booking_id, array(
+                                        'booking_date'          => $bk_booking_date,
+                                        'booking_start_time'    => $bk_start_time,
+                                        'booking_group_id'      => $bk_group_id,
+                                        'facility_id'           => !empty(@$oldFacility[$key]) ? @$oldFacility[$key] : $facility_id,
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => UPDATE
+                                    ));
+            $bk_start_time                  = convertStartTime($bk_start_time + 15);
+        }
+
+        $data_bk_change     = array();
+        $where              = Session::get('where_booking_change');
+
+        if(!empty($where['clinic_id'])) $data_bk_change['clinic_id'] = $where['clinic_id'];
+        if(!empty($where['doctor_id'])) $data_bk_change['doctor_id'] = $where['doctor_id'];
+        if(!empty($where['hygienist_id'])) $data_bk_change['hygienist_id'] = $where['hygienist_id'];
+
+        if(!empty($where['clinic_service_name'])){
+            $tmp_service        = explode('_', $where['clinic_service_name']);
+            $service            = $tmp_service[0];
+            $s_kind             = str_split($tmp_service[1], 2);
+            $service_kind       = $s_kind[1];
+
+            $data_bk_change['service_1']        = $service;
+            $data_bk_change['service_1_kind']   = $service_kind;
+        }
+
+        $newFacility = array();
+        foreach ($newGroupBooking as $key=>$new_bk) {
+         $newFacility[$key] = $new_bk->facility_id;
+        }
+
+        foreach ($group_booking as $gbk) {
+            if ($clsBooking->update($gbk->booking_id, array_merge($data_bk_change, array(
+                                        'booking_date'          => $new_booking_date,
+                                        'booking_start_time'    => $start_time,
+                                        'booking_group_id'      => $booking_group_id,
+                                        'booking_childgroup_id' => $booking_childgroup_id,
+                                        'facility_id'           => !empty(@$newFacility[$key]) ? @$newFacility[$key] : $facility_id,
+                                        'booking_status'        => NULL,
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => UPDATE
+                                    ))) ) {
+                $flag = true;
+            }else{
+                $flag = false;
+            }
+            $start_time = convertStartTime($start_time + 15);
+        }
+
+        if ($flag == true) {
+            Session::flash('success', trans('common.message_edit_success'));
+            return redirect()->route('ortho.bookings.list2_list');
+        } else {
+            Session::flash('danger', trans('common.message_edit_danger'));
+            return redirect()->route('ortho.bookings.list2_change', array('booking_id'=>$booking_id));
+            if(Session::has('where_booking_change')) Session::forget('where_booking_change');
+        }
     }
 
     /**

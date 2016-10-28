@@ -55,7 +55,7 @@
               <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>
-              <?php $arrStatus = array('1'=>'通常','2'=>'「TEL待ち」です','3'=>'「リコール」です','4'=>'未作成技工物TEL待ち','5'=>'作成済み技工物キャンセル','6'=>'無断キャンセル') ?>
+              <?php $arrStatus = array(''=>'通常','1'=>'「TEL待ち」です','2'=>'無断キャンセル','3'=>'「リコール」です','4'=>'未作成技工物TEL待ち','5'=>'作成済み技工物キャンセル') ?>
               <td class="col-title">予約ステータス</td>
               <td>{{@$arrStatus[$booking->booking_status]}}</td>
             </tr>

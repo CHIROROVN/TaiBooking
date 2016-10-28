@@ -6,6 +6,23 @@
   <section id="page">
     <div class="container content-page">
       <h3>各種リスト表示　＞　「無断キャンセル」リストの表示</h3>
+          <div class="msg-alert-action margin-top-15">
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success  alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+        </div>
+      @elseif($message = Session::get('danger'))
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <ul class="no-margin-bottom"><strong><li> {{ $message }}</li></strong></ul>
+        </div>
+      @endif
+    </div>
       <table class="table table-bordered">
         <tr>
           <td class="col-title"><label for="textName">当初予約日</label></td>
@@ -40,7 +57,7 @@
               <td class="col-title" align="center">カルテNo</td>
               <td class="col-title" align="center">患者名</td>
               <td class="col-title" align="center">電話番号</td>
-              <td class="col-title" align="center" style="min-width:135px;">最終処置内容-1-2</td>
+              <td class="col-title" align="center" style="min-width:135px;">最終処置内容-1</td>
               <td class="col-title" align="center" style="min-width:50px;">備考</td>
               <td class="col-title" align="center" style="min-width:120px;">予約の登録</td>
             </tr>
@@ -69,7 +86,7 @@
                 @endif
               </td>
               <td>{{ $list2->result_memo }}</td>
-              <td align="center"><input onclick="location.href='{{ route('ortho.bookings.booking.edit', [ $list2->booking_id ]) }}'" value="予約の登録" type="button" class="btn btn-xs btn-page"/></td>
+              <td align="center"><input onclick="location.href='{{ route('ortho.bookings.list2_search',$list2->booking_id) }}'" value="無断キャンセルリスト" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
             @endforeach
             @else

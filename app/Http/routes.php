@@ -260,6 +260,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	//List1
 	Route::get('list1-list', ['as' => 'ortho.bookings.list1_list', 'uses' => 'BookingController@list1_list']);
+	Route::get('list1-search/{booking_id}', ['as' => 'ortho.bookings.list1_search', 'uses' => 'BookingController@getList1Search']);
+	Route::post('list1-search/{booking_id}', ['as' => 'ortho.bookings.list1_search', 'uses' => 'BookingController@postList1Search']);
 	//List2
 	Route::get('list2-list', ['as' => 'ortho.bookings.list2_list', 'uses' => 'BookingController@list2_list']);
 

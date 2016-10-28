@@ -2225,4 +2225,34 @@ class BookingController extends BackendController
         $data['years'] = $tmpYears;
         return view('backend.ortho.bookings.list5_list', $data);
     }
+
+
+
+    public function getList1Search($booking_id){
+        $data = array();
+        $data['booking_id'] = $booking_id;
+        $clsBooking                 = new BookingModel();
+        $data['booking']            = $clsBooking->get_by_id($booking_id);
+        return view('backend.ortho.bookings.list2_search', $data);
+    }
+
+    public function postList1Search($booking_id){
+
+        $condition['booking_id'] = $booking_id;
+
+        if(!empty(Input::get('booking_date')))
+            $condition['booking_date'] = Input::get('booking_date');
+
+        if(!empty(Input::get('week_later'))){
+            if(Input::get('week_later') == 'week_specified'){
+            $condition['week_later'] = Input::get('week_later_option');
+            }elseif (Input::get('week_later') == 'date_picker') {
+                $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
+            }else{
+                $condition['week_later'] = Input::get('week_later');
+            }
+        }
+
+        return redirect()->route('ortho.bookings.list2_change', $condition);
+    }
 }

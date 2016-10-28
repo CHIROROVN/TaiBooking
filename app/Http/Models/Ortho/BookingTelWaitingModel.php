@@ -1,6 +1,7 @@
 <?php namespace App\Http\Models\Ortho;
 
 use DB;
+use Carbon;
 
 class BookingTelWaitingModel
 {
@@ -111,5 +112,151 @@ class BookingTelWaitingModel
         $db = $db->orderBy($orderBy, 'asc')->get();
 
         return $db;
+    }
+
+    public function get_booking_list1($where = null){
+
+        $db =  DB::table($this->table)
+                        ->leftJoin('t_facility as tf1', 't_booking_tel_waiting.facility_id', '=', 'tf1.facility_id')
+                        ->select('t_booking_tel_waiting.booking_id', 't_booking_tel_waiting.patient_id', 't_booking_tel_waiting.booking_date', 't_booking_tel_waiting.booking_start_time', 't_booking_tel_waiting.booking_total_time', 't_booking_tel_waiting.facility_id', 't_booking_tel_waiting.facility_id', 't_booking_tel_waiting.service_1', 't_booking_tel_waiting.service_1_kind', 't_booking_tel_waiting.service_2', 't_booking_tel_waiting.service_2_kind','t_booking_tel_waiting.doctor_id','t_booking_tel_waiting.hygienist_id', 'tf1.facility_name', 't_booking_tel_waiting.clinic_id', 't_booking_tel_waiting.booking_group_id')
+                        ->whereNull('t_booking_tel_waiting.patient_id')
+                        ->where('t_booking_tel_waiting.last_kind', '<>', DELETE);
+
+        if(isset($where['clinic_id'])){
+            $result = $db->where('t_booking_tel_waiting.clinic_id', '=', $where['clinic_id']);
+        }
+
+        if(isset($where['clinic_service_name'])){
+            $sk = explode('_', $where['clinic_service_name']);
+            $service           = $sk[0];
+            $s_kind            = str_split($sk[1], 2);
+            $service_kind      = $s_kind[1];
+
+            if($service_kind == 1){
+                $result = $db->where('t_booking_tel_waiting.service_1', $service);
+                $result = $db->where('t_booking_tel_waiting.service_1_kind', $service_kind);
+                // $result = $db->orWhere('t_booking_tel_waiting.service_2', '=', $service)
+                // ->where('t_booking_tel_waiting.service_2_kind', '=', $service_kind);
+            }
+
+            if($service_kind == 2){
+                $split = explode('#', $service);
+                $treatment_id   = $split[0];
+                $treatment_time = $split[1];
+
+                $result = $db->where('t_booking_tel_waiting.service_1', '=', $treatment_id);
+                $result = $db->orWhere('t_booking_tel_waiting.service_1', '=', '-1');
+                $result = $db->where('t_booking_tel_waiting.service_1_kind', '=', $service_kind);
+                // $result = $db->orWhere('t_booking_tel_waiting.service_2', '=', '-1')
+                // ->where('t_booking_tel_waiting.service_2_kind', '=', $service_kind);
+            }
+        }else{
+            if ( isset($where['service_1_kind']) ) {
+                $result = $db->where('t_booking_tel_waiting.service_1_kind', $where['service_1_kind']);
+            }
+        }
+
+        if(isset($where['service_1_kind']))
+            $result = $db->where('t_booking_tel_waiting.service_1_kind', $where['service_1_kind']);
+
+        // if(isset($where['doctor_id'])){
+        //     $doctor_id = $where['doctor_id'];
+        //     $result = $db->whereIn('t_booking_tel_waiting.doctor_id', $doctor_id);
+        // }
+
+        // if(isset($where['hygienist_id'])){
+        //     $hygienist_id = $where['hygienist_id'];
+        //     $result = $db->whereIn('t_booking_tel_waiting.hygienist_id', $hygienist_id);
+        // }
+
+        if(isset($where['booking_date'])){
+            $result = $db->whereIn(DB::raw("DAYOFWEEK(booking_date)"), $where['booking_date']);
+        }
+
+        if(isset($where['week_later'])){
+            if($where['week_later'] == 'one_week'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }elseif($where['week_later'] == 'two_week'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }elseif($where['week_later'] == 'three_week'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }elseif($where['week_later'] == 'four_week'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }elseif($where['week_later'] == 'five_week'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }elseif($where['week_later'] == 'one_month'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }elseif($where['week_later'] == 'two_month'){
+                $result = $db->whereBetween('t_booking_tel_waiting.booking_date', weeklater($where['week_later']));
+            }else{
+                $result = $db->whereDate('t_booking_tel_waiting.booking_date', '=', $where['week_later']);
+            }
+        }else{
+            $dateNow = formatDate(Carbon::now()->toDateTimeString(), '-');
+            $result = $db->whereDate('booking_date', '>=', $dateNow);
+        }
+
+        if(isset($where['booking_start_time'])){
+            $result = $db->where('booking_start_time', '=', $where['booking_start_time']);
+        }
+
+        return $db->groupBy('t_booking_tel_waiting.booking_date','t_booking_tel_waiting.booking_start_time','t_booking_tel_waiting.facility_id')
+                        ->orderBy('t_booking_tel_waiting.booking_date', 'asc')
+                        ->orderBy('t_booking_tel_waiting.booking_start_time', 'asc')
+                        ->orderBy('tf1.facility_id', 'asc')
+                        ->get();
+
+        // if(isset($where['clinic_service_name']) && $service_kind == 2){
+        //     return $db->groupBy('t_booking_tel_waiting.booking_date','t_booking_tel_waiting.booking_start_time','t_booking_tel_waiting.facility_id')
+        //                 ->orderBy('t_booking_tel_waiting.booking_date', 'asc')
+        //                 ->orderBy('tf1.facility_id', 'asc')
+        //                 ->orderBy('t_booking_tel_waiting.booking_start_time', 'asc')
+        //                 ->get();
+        // }else{
+        //     return $db->groupBy('t_booking_tel_waiting.booking_date','t_booking_tel_waiting.booking_start_time','t_booking_tel_waiting.facility_id')
+        //                 ->orderBy('t_booking_tel_waiting.booking_date', 'asc')
+        //                 ->orderBy('t_booking_tel_waiting.booking_start_time', 'asc')
+        //                 ->orderBy('tf1.facility_name', 'asc')
+        //                 ->get();
+        // }
+    }
+
+    public function checkExistID2($id){
+        if (DB::table('t_booking_tel_waiting')
+                    ->where('last_kind', '<>', DELETE)
+                    // ->where('t_booking_tel_waiting.booking_rev', $this->getLastBookingRev())
+                    ->where('booking_id', '=', $id)
+                    ->exists()) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function get_by_child_group_list1($booking_childgroup_id=null, $patient_id=null, $facility_id=null, $booking_group_id=null, $booking_status=null)
+    {
+        $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking_tel_waiting.patient_id', '=', 't1.p_id')
+                        ->select('t_booking_tel_waiting.*', 't1.p_name_f', 't1.p_name_g')
+                        ->where('t_booking_tel_waiting.last_kind', '<>', DELETE)
+                        ->where('t_booking_tel_waiting.booking_childgroup_id', $booking_childgroup_id)
+                        ->where('t_booking_tel_waiting.booking_status', $booking_status)
+                        ->orderBy('t_booking_tel_waiting.booking_id', 'asc')
+                        ->get();
+        if(!empty($patient_id)){
+            $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking_tel_waiting.patient_id', '=', 't1.p_id')
+                        ->select('t_booking_tel_waiting.*', 't1.p_name_f', 't1.p_name_g')
+                        ->where('t_booking_tel_waiting.last_kind', '<>', DELETE)
+                        ->where('t_booking_tel_waiting.patient_id', $patient_id)
+                        ->where('t_booking_tel_waiting.booking_group_id', $booking_group_id)
+                        ->where('t_booking_tel_waiting.facility_id', $facility_id)
+                        ->where('t_booking_tel_waiting.booking_childgroup_id', $booking_childgroup_id)
+                        ->where('t_booking_tel_waiting.booking_status', $booking_status)
+                        ->orderBy('t_booking_tel_waiting.booking_id', 'asc')
+                        ->get();
+        }
+
+        return $results;
     }
 }

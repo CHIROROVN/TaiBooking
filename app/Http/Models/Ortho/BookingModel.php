@@ -767,8 +767,9 @@ class BookingModel
                             // ->where('t_booking.booking_rev', $this->getLastBookingRev())
                             ->where('t_booking.patient_id', '=', $p_id)
                             ->where('t_booking.booking_date', '>=', $dateNow)
+                            ->groupBy('t_booking.booking_childgroup_id')
                             ->orderBy('t_booking.booking_date', 'asc')
-                            ->limit(2)
+                            //->limit(2)
                             ->get();
     }
 

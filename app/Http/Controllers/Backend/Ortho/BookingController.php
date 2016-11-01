@@ -1161,6 +1161,7 @@ class BookingController extends BackendController
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_user'                 => Auth::user()->id
         );
+        
         // first regist
         if ( empty($booking->first_user) ) {
             $dataInput['first_user'] = Auth::user()->id;

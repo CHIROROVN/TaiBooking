@@ -2246,8 +2246,6 @@ class BookingController extends BackendController
         return view('backend.ortho.bookings.list5_list', $data);
     }
 
-
-
     public function getList1Search($booking_id){
         $data = array();
         $data['booking_id'] = $booking_id;

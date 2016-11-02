@@ -119,7 +119,7 @@ class PatientModel
     public function get_for_autocomplate($key = '', $id_not_me = 0)
     {
         $results = DB::table($this->table)
-                        ->select('p_id', 'p_no', 'p_name_f', 'p_name_g', 'p_name_f_kana', 'p_name_g_kana')
+                        ->select('p_id', 'p_no', 'p_name_f', 'p_name_g', 'p_name_f_kana', 'p_name_g_kana', 'p_tel')
                         ->where('last_kind', '<>', DELETE)
                         ->where('p_id', '<>', $id_not_me);
 

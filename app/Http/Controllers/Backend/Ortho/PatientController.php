@@ -422,6 +422,7 @@ class PatientController extends BackendController
                 'value'     => $patient->p_id,
                 'label'     => $patient->p_no . ' ' . $patient->p_name_f . ' ' . $patient->p_name_g . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')',
                 'desc'      => $patient->p_no . ' ' . $patient->p_name_f . ' ' . $patient->p_name_g . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')',
+                'tel'       => $patient->p_tel,
             );
         }
         echo json_encode($tmp);

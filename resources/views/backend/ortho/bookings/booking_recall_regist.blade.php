@@ -124,6 +124,7 @@
         select: function( event, ui ) {
           $( "#patient" ).val( ui.item.label );
           $( "#p_id" ).val( ui.item.value );
+          $( "#p_tel" ).val( ui.item.tel );
           return false;
         }
       }).autocomplete( "instance" )._renderItem = function( ul, item ) {

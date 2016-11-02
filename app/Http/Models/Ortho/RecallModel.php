@@ -13,7 +13,7 @@ class RecallModel
     {
         return array(
             'patient'           => 'required',
-            'p_tel'             => 'numeric',
+            //'p_tel'             => 'numeric',
             'booking_recall_ym' => 'required'
         );
     }

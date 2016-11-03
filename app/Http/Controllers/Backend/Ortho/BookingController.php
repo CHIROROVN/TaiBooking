@@ -2247,10 +2247,11 @@ class BookingController extends BackendController
     }
 
     public function getList1Search($booking_id){
-        $data = array();
-        $data['booking_id'] = $booking_id;
+        $data                       = array();
+        $data['booking_id']         = $booking_id;
         $clsBooking                 = new BookingModel();
         $data['booking']            = $clsBooking->get_by_id($booking_id);
+
         return view('backend.ortho.bookings.list1_search', $data);
     }
 
@@ -2275,12 +2276,12 @@ class BookingController extends BackendController
     }
 
     public function getList1Change($booking_id){
-        $clsBookingTelWaiting             = new BookingTelWaitingModel();
+        $clsBooking                       = new BookingModel();
         $clsFacility                      = new FacilityModel();
         $data['facilities']               = $clsFacility->list_facility_all();
         $data['booking_id']               = $booking_id;
         $where                            = array();
-        $old_booking                      = $clsBookingTelWaiting->get_by_id($booking_id);
+        $old_booking                      = $clsBooking->get_by_id($booking_id);
         $service_1_kind                   = $old_booking->service_1_kind;
 
         if(!empty($service_1_kind))
@@ -2290,7 +2291,7 @@ class BookingController extends BackendController
         if(!empty(Input::get('week_later')))
             $where['week_later']          = Input::get('week_later');
 
-        $data['bookings']                 = $clsBookingTelWaiting->get_booking_list1($where);
+        $data['bookings']                 = $clsBooking->get_booking_list2($where);
 
         return view('backend.ortho.bookings.list1_change_list', $data);
     }

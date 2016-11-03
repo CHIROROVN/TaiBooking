@@ -73,7 +73,7 @@ class BookingTelWaitingController extends BackendController
                 $tmp[] = (object)$item;
             }
         }
-        $data['list1_list']             = $tmp;
+        $data['list1_list'] = $tmp;
 
         return view('backend.ortho.list1_list.index', $data);
     }

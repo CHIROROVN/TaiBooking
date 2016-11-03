@@ -58,7 +58,7 @@
 
         @if(empty($list1_list) || count($list1_list) < 1)
           <tr>
-            <td colspan="9">
+            <td colspan="11">
               <h3 align="center">該当するデータがありません。</h3>
             </td>
           </tr>
@@ -108,7 +108,7 @@
             <td>
               {{ @$item->free_text }}
             </td>
-            <td align="center"><a href="{{ route('ortho.bookings.list1_search', [ $item->id ]) }}" class="btn btn-sm btn-page">予約の登録</a></td>
+            <td align="center"><a href="{{ route('ortho.bookings.list1_search', [ $item->booking_id ]) }}" class="btn btn-sm btn-page">予約の登録</a></td>
             <td align="center"><a href="{{ route('ortho.list1_list.edit', [ $item->id ]) }}" class="btn btn-sm btn-page">TEL待ち情報の編集</a></td>
           </tr>
           @endforeach

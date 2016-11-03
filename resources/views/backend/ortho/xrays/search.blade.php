@@ -44,7 +44,7 @@
         <tr>
           <td class="col-title"><label for="s_p_name">患者名</label></td>
           <td>
-            <input name="s_p_name" id="s_p_id" type="text"  class="form-control form-control--small" value="{{ $s_p_name }}">
+            <input name="s_p_name" id="s_p_id" type="text"  class="form-control form-control--medium" value="{{ $s_p_name }}">
             <input name="s_p_id" type="hidden" id="s_p_id-id" value="{{ $s_p_id }}">
           </td>
         </tr>

@@ -55,7 +55,11 @@
             <td>{{ $xray->p_name_f }} {{ $xray->p_name_g }}</td>
             <td>{{ $xray->p_name_f_kana }} {{ $xray->p_name_g_kana }}</td>
             <td><?php echo ($xray->p_sex == 1) ? '男' : '女'; ?></td>
-            <td>{{ date('Y/m/d', strtotime($xray->p_birthday)) }}</td>
+            <td>
+              @if ( !empty($xray->p_birthday) && $xray->p_birthday != '0000-00-00' )
+              {{ date('Y/m/d', strtotime($xray->p_birthday)) }}
+              @endif
+            </td>
             <td align="center">
               <input onclick="location.href='{{ route('ortho.xrays.detail', [$xray->p_patient_id]) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
             </td>

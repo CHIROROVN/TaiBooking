@@ -36,10 +36,10 @@ class XrayModel
                     ->where('t_xray.last_kind', '<>', DELETE);
 
         // s_p_id
-        if( !empty($where['s_p_id']) )
-        {
+        // if( !empty($where['s_p_id']) )
+        // {
             $db = $db->where('t1.p_id', $where['s_p_id']);
-        }
+        // }
 
         // s_p_name
         if( !empty($where['s_p_name']) && empty($where['s_p_id']) )

@@ -49,7 +49,7 @@ $widthPercent = 88 / ($countFacility);
           <table class="table table-bordered">
             <!-- list doctor -->
             <tr>
-              <td align="center" rowspan="3" class="td-col-header" style="width: 7%">衛生士</td>
+              <td align="center" rowspan="3" class="td-col-header" style="width: 7%">ドクター</td>
               @foreach ( $facilitys as $facility )
               <?php
                 // set list doctor

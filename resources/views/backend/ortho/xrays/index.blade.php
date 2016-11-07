@@ -61,13 +61,36 @@
               @endif
             </td>
             <td align="center">
-              <input onclick="location.href='{{ route('ortho.xrays.detail', [$xray->p_patient_id]) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
+              <input onclick="location.href='{{ route('ortho.xrays.detail', [$xray->p_id]) }}'" value="放射線照射録の表示" type="button" class="btn btn-xs btn-page"/>
             </td>
           </tr>
           @endforeach
         @endif
       </tbody>
     </table>
+
+    <div class="row margin-bottom">
+      <div class="col-md-12 text-center">
+        {!! $xrays->appends([
+          's_p_name'                => $s_p_name,
+          's_p_id'                  => $s_p_id,
+          's_p_birthday_year_from'  => $s_p_birthday_year_from,
+          's_p_birthday_month_from' => $s_p_birthday_month_from,
+          's_p_birthday_day_from'   => $s_p_birthday_day_from,
+          's_p_birthday_year_to'    => $s_p_birthday_year_to,
+          's_p_birthday_month_to'   => $s_p_birthday_month_to,
+          's_p_birthday_day_to'     => $s_p_birthday_day_to,
+          's_p_sex_men'             => $s_p_sex_men,
+          's_p_sex_women'           => $s_p_sex_women,
+          's_xray_date_year_from'   => $s_xray_date_year_from,
+          's_xray_date_month_from'  => $s_xray_date_month_from,
+          's_xray_date_day_from'    => $s_xray_date_day_from,
+          's_xray_date_year_to'     => $s_xray_date_year_to,
+          's_xray_date_month_to'    => $s_xray_date_month_to,
+          's_xray_date_day_to'      => $s_xray_date_day_to,
+        ])->render(new App\Pagination\SimplePagination($xrays)) !!}
+      </div>
+    </div>
 
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">

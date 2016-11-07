@@ -58,17 +58,17 @@ class XrayController extends BackendController
 
         $clsXray            = new XrayModel();
         $clsPatient         = new PatientModel();
-        $xrays              = $clsXray->get_all(false, $data);
+        $xrays              = $clsXray->get_all(true, $data);
 
-        $tmp = array();
-        $tmpGroup = array();
-        foreach ( $xrays as $item ) {
-                if ( !in_array($item->p_id . '|' . $item->xray_date, $tmpGroup) ) {
-                    $tmpGroup[] = $item->p_id . '|' . $item->xray_date;
-                    $tmp[] = (object)$item;
-                }
-        }
-        $data['xrays'] = $tmp;
+        // $tmp = array();
+        // $tmpGroup = array();
+        // foreach ( $xrays as $item ) {
+        //         if ( !in_array($item->p_id . '|' . $item->xray_date, $tmpGroup) ) {
+        //             $tmpGroup[] = $item->p_id . '|' . $item->xray_date;
+        //             $tmp[] = (object)$item;
+        //         }
+        // }
+        $data['xrays'] = $xrays;
 
         return view('backend.ortho.xrays.index', $data);
     }

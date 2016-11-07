@@ -317,6 +317,20 @@ class BookingModel
         return $results;
     }
 
+    public function get_recall_booking_child_group($new_booking_group_id=null, $new_booking_childgroup_id=null)
+    {
+            $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.booking_group_id','=' , $new_booking_group_id)
+                        ->where('t_booking.booking_childgroup_id','=' , $new_booking_childgroup_id)
+                        ->orderBy('t_booking.booking_date', 'asc')
+                        ->orderBy('t_booking.booking_start_time', 'asc')
+                        ->get();
+        return $results;
+    }
+
     public function get_by_childGroup($booking_group_id = array())
     {
         $results = DB::table($this->table)

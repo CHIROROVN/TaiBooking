@@ -24,7 +24,7 @@
         </div>
         <div class="row" style="float: left;">
           <div class="col-md-12">
-            {!! Form::open(array('route' => 'ortho.bookings.booking_recall', 'method' => 'get', 'class'=>'form-inline')) !!}
+            {!! Form::open(array('route' => 'ortho.bookings.booking_recall', 'method' => 'get', 'class'=>'form-inline', 'id'=>'frmSearch')) !!}
             <!-- p_id -->
             <input type="hidden" name="p_id" id="p_id" value="{{ @$p_id }}">
             <input type="text" name="patient" id="patient" class=" form-control input-text-mid" value="{{ @$patient }}">
@@ -51,7 +51,7 @@
                   <option value="12" @if($oldmonth == '12') selected="" @endif>12</option>
               </select>&nbsp;月
             <!-- submit -->
-            <input type="submit" class="btn btn-sm btn-page" value="検索">
+            <input id="btnsearch" type="submit" class="btn btn-sm btn-page" value="検索">
             </form>
           </div>
         </div>
@@ -87,7 +87,7 @@
               <td>{{formatYm($recall->booking_recall_ym, '/')}}</td>
               <td>{{$recall->booking_memo}}</td>
               <td align="center">
-                <input class="btn btn-xs btn-page" onclick="location.href='{{route('ortho.bookings.booking_search')}}'" value="予約の登録" type="button">
+                <input class="btn btn-xs btn-page" onclick="location.href='{{route('ortho.bookings.booking_recall_serach', $recall->id)}}'" value="予約の登録" type="button">
               </td>
               <td align="center">
                 <input class="btn btn-xs btn-page" onclick="location.href='{{route('ortho.bookings.booking_recall_edit',$recall->id)}}'" value="リコール情報の編集" type="button">
@@ -150,6 +150,7 @@
         $('#month option[value="'+m+'"]').prop('selected',true);
       }
     });
+
   </script>
 @stop
 @endsection

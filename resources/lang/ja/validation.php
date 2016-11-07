@@ -157,6 +157,7 @@ return [
     'error_p_parent_company_required'                       => '保護者勤務先を入力してください。',
     'error_p_parent_tel_required'                           => '保護者連絡先を入力してください。',
     'error_p_parent_kind_required'                          => '保護者連絡先種別を選択してください。',
+    'error_p_tel_numeric'                                   => 'TELは数値でなければなりません。',
 
     /*
     |--------------------------------------------------------------------------

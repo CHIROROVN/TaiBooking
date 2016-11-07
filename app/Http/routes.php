@@ -407,6 +407,14 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-recall/edit/{id}', ['as' => 'ortho.bookings.booking_recall_edit', 'uses' => 'RecallController@getEdit']);
 	Route::post('bookings/booking-recall/edit/{id}', ['as' => 'ortho.bookings.booking_recall_edit', 'uses' => 'RecallController@postEdit']);
 
+	Route::get('bookings/booking-recall/search/{id}', ['as' => 'ortho.bookings.booking_recall_search', 'uses' => 'RecallController@getSearch']);
+	Route::post('bookings/booking-recall/search/{id}', ['as' => 'ortho.bookings.booking_recall_serach', 'uses' => 'RecallController@postSearch']);
+
+	Route::get('bookings/booking-recall/list-change/{id}', ['as' => 'ortho.bookings.booking_recall_change', 'uses' => 'RecallController@recallListChange']);
+
+	Route::get('bookings/booking-recall/change-confirm/{id}', ['as' => 'ortho.bookings.booking_recall_change_cnf', 'uses' => 'RecallController@getRecallChangeCnf']);
+	Route::post('bookings/booking-recall/change-confirm/{id}', ['as' => 'ortho.bookings.booking_recall_change_cnf', 'uses' => 'RecallController@postRecallChangeCnf']);
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

@@ -38,13 +38,6 @@
                 <span class="error-input">@if ($errors->first('patient')) ※{!! $errors->first('patient') !!} @endif</span>
               </td>
             </tr>
-            <tr>
-              <td class="col-title"><label for="inspection_id">電話番号</label></td>
-              <td>
-              <input name="p_tel" id="p_tel" class="input-text-mid form-control" value="{{old('p_tel')}}" type="text">
-              <span class="error-input">@if ($errors->first('p_tel')) ※{!! $errors->first('p_tel') !!} @endif</span>
-              </td>
-            </tr>
 
             <tr>
               <td class="col-title"><label for="insurance_id">リコール月 <span class="note_required">※</span></label></td>
@@ -80,7 +73,7 @@
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
             <input name="btnSubmit" id="btnSubmit" value="登録する" type="submit" class="btn btn-sm btn-page">
-            <input value="リセット" onclick="resetForm()" type="button" class="btn btn-sm btn-page">
+            <input value="削除する" onclick="resetForm()" type="button" class="btn btn-sm btn-page">
         </div>
         </div>
         <div class="row margin-bottom">
@@ -124,7 +117,7 @@
         select: function( event, ui ) {
           $( "#patient" ).val( ui.item.label );
           $( "#p_id" ).val( ui.item.value );
-          $( "#p_tel" ).val( ui.item.tel );
+
           return false;
         }
       }).autocomplete( "instance" )._renderItem = function( ul, item ) {

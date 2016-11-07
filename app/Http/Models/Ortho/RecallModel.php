@@ -61,7 +61,7 @@ class RecallModel
                         ->leftJoin('t_patient as t1', 't_booking_recall.patient_id', '=', 't1.p_id')
                         ->leftJoin('t_result as t2', 't_booking_recall.patient_id', '=', 't2.patient_id')
                         ->leftJoin('m_clinic as m1', 't_booking_recall.clinic_id', '=', 'm1.clinic_id')
-                        ->select('t_booking_recall.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
+                        ->select('t_booking_recall.*', 't1.p_name_f', 't1.p_name_g', 't1.p_tel', 't1.p_no', 'm1.clinic_name', 't2.result_date', 't2.result_memo')
                         ->where('t_booking_recall.last_kind', '<>', DELETE);
         // where patient_id
         if ( isset($where['patient_id']) && !empty($where['patient_id']) ) {

@@ -17,11 +17,10 @@ class PatientModel
             'p_name_f_kana'         => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'p_name_g_kana'         => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'p_sex'                 => 'required',
-            'p_tel'                 => 'required',
+            'p_tel'                 => 'required|regex:/^\+?[^a-zA-Z]{5,}$/',
             'p_email'               => 'email',
 		);
     }
-
 
     public function Messages()
     {
@@ -35,10 +34,10 @@ class PatientModel
             'p_name_g_kana.regex'               => trans('validation.error_p_name_g_kana_regex'),
             'p_sex.required'                    => trans('validation.error_p_sex_required'),
             'p_tel.required'                    => trans('validation.error_p_tel_required'),
+            'p_tel.regex'                       => trans('validation.error_p_tel_numeric'),
             'p_email.email'                     => trans('validation.error_p_email_email'),
 		);
     }
-
 
     public function get_all($where = array(), $paging = true)
     {
@@ -115,7 +114,6 @@ class PatientModel
         return $db;
     }
 
-
     public function get_for_autocomplate($key = '', $id_not_me = 0)
     {
         $results = DB::table($this->table)
@@ -146,12 +144,10 @@ class PatientModel
         return DB::table($this->table)->insert($data);
     }
 
-
     public function insert_get_id($data)
     {
         return DB::table($this->table)->insertGetId($data);
     }
-
 
     public function get_by_id($id)
     {

@@ -1454,8 +1454,8 @@ class BookingController extends BackendController
             $data['week_later']           = Input::get('week_later');
         }
         if(Input::get('booking_start_time') != null){
-            $where['booking_start_time']          = Input::get('booking_start_time');
-            $data['booking_start_time']           = Input::get('booking_start_time');
+            $where['booking_start_time']          = (int)Input::get('booking_start_time');
+            $data['booking_start_time']           = (int)Input::get('booking_start_time');
         }
         if(Input::get('clinic_service_name') != null){
             $where['clinic_service_name'] = Input::get('clinic_service_name');

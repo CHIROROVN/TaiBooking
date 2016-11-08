@@ -667,50 +667,17 @@ class BookingModel
 
         if(isset($where['clinic_id'])){
             $result = $db->where('t_booking.clinic_id', '=', $where['clinic_id']);
+        }     
+
+        if(isset($where['doctor_id'])){
+            $doctor_id = $where['doctor_id'];
+            $result = $db->where('t_booking.doctor_id', $doctor_id);
         }
 
-        if(isset($where['clinic_service_name'])){
-            $sk = explode('_', $where['clinic_service_name']);
-            $service           = $sk[0];
-            $s_kind            = str_split($sk[1], 2);
-            $service_kind      = $s_kind[1];
-
-            if($service_kind == 1){
-                $result = $db->where('t_booking.service_1', $service);
-                $result = $db->where('t_booking.service_1_kind', $service_kind);
-                // $result = $db->orWhere('t_booking.service_2', '=', $service)
-                // ->where('t_booking.service_2_kind', '=', $service_kind);
-            }
-
-            if($service_kind == 2){
-                $split = explode('#', $service);
-                $treatment_id   = $split[0];
-                $treatment_time = $split[1];
-
-                $result = $db->where('t_booking.service_1', '=', $treatment_id);
-                $result = $db->orWhere('t_booking.service_1', '=', '-1');
-                $result = $db->where('t_booking.service_1_kind', '=', $service_kind);
-                // $result = $db->orWhere('t_booking.service_2', '=', '-1')
-                // ->where('t_booking.service_2_kind', '=', $service_kind);
-            }
-        }else{
-            if ( isset($where['service_1_kind']) ) {
-                $result = $db->where('t_booking.service_1_kind', $where['service_1_kind']);
-            }
+        if(isset($where['hygienist_id'])){
+            $hygienist_id = $where['hygienist_id'];
+            $result = $db->where('t_booking.hygienist_id', $hygienist_id);
         }
-
-        if(isset($where['service_1_kind']))
-            $result = $db->where('t_booking.service_1_kind', $where['service_1_kind']);
-
-        // if(isset($where['doctor_id'])){
-        //     $doctor_id = $where['doctor_id'];
-        //     $result = $db->whereIn('t_booking.doctor_id', $doctor_id);
-        // }
-
-        // if(isset($where['hygienist_id'])){
-        //     $hygienist_id = $where['hygienist_id'];
-        //     $result = $db->whereIn('t_booking.hygienist_id', $hygienist_id);
-        // }
 
         if(isset($where['booking_date'])){
             $result = $db->whereIn(DB::raw("DAYOFWEEK(booking_date)"), $where['booking_date']);
@@ -736,7 +703,32 @@ class BookingModel
             }
         }else{
             $dateNow = formatDate(Carbon::now()->toDateTimeString(), '-');
-            $result = $db->whereDate('booking_date', '>=', $dateNow);
+            $result = $db->whereDate('t_booking.booking_date', '>=', $dateNow);
+        }
+
+        if(isset($where['clinic_service_name']) && !empty($where['clinic_service_name'])){
+            $sk = explode('_', $where['clinic_service_name']);
+            $service           = $sk[0];
+            $s_kind            = str_split($sk[1], 2);
+            $service_kind      = $s_kind[1];
+
+            if($service_kind == 1){
+                $result = $db->where('t_booking.service_1', '=', $service);
+                $result = $db->where('t_booking.service_1_kind', '=', $service_kind);
+            }
+
+            if($service_kind == 2){
+                $split = explode('#', $service);
+                $treatment_id   = $split[0];
+               // $treatment_time = $split[1];
+
+                $result = $db->where('t_booking.service_1_kind', '=', $service_kind);
+                $result = $db->whereIn('t_booking.service_1', [$treatment_id, '-1']);
+            }
+        }else{
+            if ( isset($where['service_1_kind']) ) {
+                $result = $db->where('t_booking.service_1_kind', $where['service_1_kind']);
+            }
         }
 
         if(isset($where['booking_start_time'])){
@@ -748,20 +740,6 @@ class BookingModel
                         ->orderBy('t_booking.booking_start_time', 'asc')
                         ->orderBy('tf1.facility_id', 'asc')
                         ->get();
-
-        // if(isset($where['clinic_service_name']) && $service_kind == 2){
-        //     return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
-        //                 ->orderBy('t_booking.booking_date', 'asc')
-        //                 ->orderBy('tf1.facility_id', 'asc')
-        //                 ->orderBy('t_booking.booking_start_time', 'asc')
-        //                 ->get();
-        // }else{
-        //     return $db->groupBy('t_booking.booking_date','t_booking.booking_start_time','t_booking.facility_id')
-        //                 ->orderBy('t_booking.booking_date', 'asc')
-        //                 ->orderBy('t_booking.booking_start_time', 'asc')
-        //                 ->orderBy('tf1.facility_name', 'asc')
-        //                 ->get();
-        // }
     }
 
     /**

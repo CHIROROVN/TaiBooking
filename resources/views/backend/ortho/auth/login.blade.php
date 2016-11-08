@@ -50,7 +50,7 @@
               <div class="row">
                 <div class="col-xs-12 col-md-4"></div>
                 <div class="col-xs-12 col-md-6">
-                  <button type="submit" class="btn btn-login" name="login" value="login">ログイン</button>
+                  <button type="submit" autofocus class="btn btn-login" name="login" value="login">ログイン</button> 
                 </div>
               </div>
               <div class="row" style="margin-top: 30px;">

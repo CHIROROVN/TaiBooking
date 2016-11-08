@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td>{{@$recall->booking_memo}}</td>
+              <td><?php echo nl2br(@$recall->booking_memo); ?></td>
             </tr>
           </tbody>
         </table>

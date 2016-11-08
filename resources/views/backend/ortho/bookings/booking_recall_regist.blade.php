@@ -72,7 +72,7 @@
         </div>
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
-            <input name="btnSubmit" id="btnSubmit" value="登録する" type="submit" class="btn btn-sm btn-page">
+            <input name="btnSubmit" id="btnSubmit" autofocus value="登録する" type="submit" class="btn btn-sm btn-page">
             <input value="削除する" onclick="resetForm()" type="button" class="btn btn-sm btn-page">
         </div>
         </div>

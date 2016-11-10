@@ -285,4 +285,24 @@ class RecallController extends BackendController
         }
 
     }
+
+    public function recalDelete($id)
+    {
+        $clsRecall                      = new RecallModel();
+        $dataDelete = array(
+            'last_kind'             => DELETE,
+            'last_ipadrs'           => CLIENT_IP_ADRS,
+            'last_user'             => Auth::user()->id,
+            'last_date'             => date('y-m-d H:i:s'),
+        );
+
+        if ( $clsRecall->update($id, $dataDelete) ) {
+            Session::flash('success', trans('common.message_delete_success'));
+            return redirect()->route('ortho.bookings.booking_recall');
+        } else {
+            Session::flash('danger', trans('common.message_delete_danger'));
+            return redirect()->route('ortho.bookings.booking_recall_edit',$id);
+        }
+    }
+
 }

@@ -415,6 +415,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-recall/change-confirm/{id}', ['as' => 'ortho.bookings.booking_recall_change_cnf', 'uses' => 'RecallController@getRecallChangeCnf']);
 	Route::post('bookings/booking-recall/change-confirm/{id}', ['as' => 'ortho.bookings.booking_recall_change_cnf', 'uses' => 'RecallController@postRecallChangeCnf']);
 
+	Route::get('bookings/booking-recall/delete/{id}', ['as' => 'ortho.bookings.booking_recall_delete', 'uses' => 'RecallController@recalDelete']);
+
 
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);

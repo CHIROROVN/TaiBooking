@@ -2298,9 +2298,9 @@ class BookingController extends BackendController
     }
 
     public function list1ChangeConfirm($booking_id, $id){
-        $clsBookingTelWaiting               = new BookingTelWaitingModel();
-        if($clsBookingTelWaiting->checkExistID2($booking_id) || $clsBookingTelWaiting->checkExistID2($id)){
-            $curr_booking                   = $clsBookingTelWaiting->get_by_id($booking_id);
+        $clsBooking                         = new BookingModel();
+        if($clsBooking->checkExistID2($booking_id) || $clsBooking->checkExistID2($id)){
+            $curr_booking                   = $clsBooking->get_by_id($booking_id);
             $data['booking']                = $curr_booking;
 
             $clsClinic                      = new ClinicModel();
@@ -2324,7 +2324,7 @@ class BookingController extends BackendController
             $data['booking_id']             = $booking_id;
             $data['id']                     = $id;
 
-            $new_booking                    = $clsBookingTelWaiting->get_by_id($id);
+            $new_booking                    = $clsBooking->get_by_id($id);
 
             $new_booking_date               = $new_booking->booking_date;
             $new_facility_id                = $new_booking->facility_id;
@@ -2339,6 +2339,10 @@ class BookingController extends BackendController
                                             'last_date'             => date('Y-m-d H:i:s'),
                                             'last_user'             => Auth::user()->id,
                                             ));
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+            die;
             return view('backend.ortho.bookings.list1_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);

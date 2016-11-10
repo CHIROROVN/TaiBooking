@@ -73,7 +73,27 @@
         <div class="row margin-bottom">
           <div class="col-md-12 text-center">
             <input name="btnSubmit" id="btnSubmit" autofocus value="更新する" type="submit" class="btn btn-sm btn-page">
-            <input value="削除する" onclick="resetForm()" type="button" class="btn btn-sm btn-page">
+            <input value="削除する" type="button" class="btn btn-sm btn-page" data-toggle="modal" data-target="#myModal">
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">{{trans('common.modal_header_delete')}}</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>{{trans('common.modal_content_delete')}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="{{ route('ortho.bookings.booking_recall_delete', $recall->id) }}" class="btn btn-sm btn-page">{{trans('common.modal_btn_delete')}}</a>
+                      <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{trans('common.modal_btn_cancel')}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /Modal -->
+
         </div>
         </div>
         <div class="row margin-bottom">

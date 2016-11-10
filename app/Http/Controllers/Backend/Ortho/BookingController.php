@@ -1817,6 +1817,7 @@ class BookingController extends BackendController
             $where['week_later']          = Input::get('week_later');
             $data['week_later']           = Input::get('week_later');
         }
+
         if(Input::get('clinic_service_name') != null){
             $where['clinic_service_name'] = Input::get('clinic_service_name');
             $data['clinic_service_name']  = Input::get('clinic_service_name');

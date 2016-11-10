@@ -28,14 +28,14 @@
           <td class="col-title"><label for="textName">当初予約日</label></td>
           <td>
             {!! Form::open(array('route' => 'ortho.bookings.list2_list', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
-            <select name="booking_date_year" id="booking_date_year" class="form-control form-control--small mar-right">
+            <select name="booking_date_year" id="booking_date_year" class="form-control form-control--small mar-right" style="text-align: center;">
               <option value="">----年</option>
               @foreach ( $years as $year )
               <option value="{{ $year }}" @if($booking_date_year == $year) selected="" @endif>{{ $year }}年</option>
               @endforeach
             </select>
          
-            <select name="booking_date_month" id="booking_date_month" class="form-control form-control--small mar-right">
+            <select name="booking_date_month" id="booking_date_month" class="form-control form-control--small mar-right" style="text-align: center;">
               <option value="">--月</option>
               @for ( $i = 1; $i <= 12; $i++ )
               <?php $i = ($i < 10) ? ('0' . $i) : $i; ?>
@@ -86,7 +86,7 @@
                 @endif
               </td>
               <td>{{ $list2->result_memo }}</td>
-              <td align="center"><input onclick="location.href='{{ route('ortho.bookings.list2_search',$list2->booking_id) }}'" value="無断キャンセルリスト" type="button" class="btn btn-xs btn-page"/></td>
+              <td align="center"><input onclick="location.href='{{ route('ortho.bookings.list2_search',$list2->booking_id) }}'" value="予約の登録" type="button" class="btn btn-xs btn-page"/></td>
             </tr>
             @endforeach
             @else
@@ -97,5 +97,18 @@
       </div>
     </div>    
   </section>
+  <script src="{{ asset('') }}public/backend/ortho/common/js/jquery.min.js"></script>
+  <script type="text/javascript">
+    var date = new Date();
+    var m    = date.getMonth()+1;
+    $("#booking_date_year").change(function() {
+      if($(this).val() == ''){
+        $('#booking_date_month option[value=""]').prop('selected',true);
+      }else{
+        $('#booking_date_month option[value="'+m+'"]').prop('selected',true);
+      }
+    });
+
+  </script>
   <!-- End content list1 list -->
 @endsection

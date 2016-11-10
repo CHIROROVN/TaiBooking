@@ -68,6 +68,22 @@ class BookingTelWaitingModel
         return $results;
     }
 
+    public function get_by_booking_id($booking_id)
+    {
+        $results = DB::table($this->table)
+                            ->leftJoin('t_patient as t1', 't_booking_tel_waiting.patient_id', '=', 't1.p_id')
+                            ->leftJoin('m_clinic as t2', 't_booking_tel_waiting.clinic_id', '=', 't2.clinic_id')
+                            ->leftJoin('t_facility as t3', 't_booking_tel_waiting.facility_id', '=', 't3.facility_id')
+                            ->leftJoin('m_equipment as t4', 't_booking_tel_waiting.equipment_id', '=', 't4.equipment_id')
+                            ->leftJoin('m_inspection as t5', 't_booking_tel_waiting.inspection_id', '=', 't5.inspection_id')
+                            ->leftJoin('m_insurance as t6', 't_booking_tel_waiting.insurance_id', '=', 't6.insurance_id')
+                            ->select('t_booking_tel_waiting.*', 't1.p_no', 't1.p_name_f', 't1.p_name_g', 't2.clinic_name', 't3.facility_name', 't4.equipment_name', 't5.inspection_name', 't6.insurance_name')
+                            ->where('t_booking_tel_waiting.last_kind', '<>', DELETE)
+                            ->where('t_booking_tel_waiting.booking_id', $booking_id)
+                            ->first();
+        return $results;
+    }
+
     public function get_by_patient_id($patient_id)
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE)->where('patient_id', $patient_id)->first();

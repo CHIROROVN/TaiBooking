@@ -2299,8 +2299,9 @@ class BookingController extends BackendController
 
     public function list1ChangeConfirm($booking_id, $id){
         $clsBooking                         = new BookingModel();
+        $clsBookingTelWaiting               = new BookingTelWaitingModel();
         if($clsBooking->checkExistID2($booking_id) || $clsBooking->checkExistID2($id)){
-            $curr_booking                   = $clsBooking->get_by_id($booking_id);
+            $curr_booking                   = $clsBookingTelWaiting->get_by_booking_id($booking_id);
             $data['booking']                = $curr_booking;
 
             $clsClinic                      = new ClinicModel();
@@ -2339,7 +2340,6 @@ class BookingController extends BackendController
                                             'last_date'             => date('Y-m-d H:i:s'),
                                             'last_user'             => Auth::user()->id,
                                             ));
-
             return view('backend.ortho.bookings.list1_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);
@@ -2347,17 +2347,17 @@ class BookingController extends BackendController
     }
 
     public function postList1Cnf($booking_id, $id){
-        $clsBookingTelWaiting           = new BookingTelWaitingModel();
+        $clsBooking                     = new BookingModel();
 
         //Booking New
-        $new_booking                    = $clsBookingTelWaiting->get_by_id($id);
+        $new_booking                    = $clsBooking->get_by_id($id);
         $new_booking_date               = $new_booking->booking_date;
         $new_facility_id                = $new_booking->facility_id;
         $new_booking_start_time         = $new_booking->booking_start_time;
         $new_booking_group              = $new_booking->booking_group_id;
 
         //Booking Current
-        $curr_booking                   = $clsBookingTelWaiting->get_by_id($booking_id);
+        $curr_booking                   = $clsBooking->get_by_id($booking_id);
         $bk_child_group                 = $curr_booking->booking_childgroup_id;
         $bk_group_id                    = $curr_booking->booking_group_id;
         $patient_id                     = $curr_booking->patient_id;
@@ -2383,7 +2383,7 @@ class BookingController extends BackendController
 
         $booking_status                 = 2;
 
-        $group_booking                  = $clsBookingTelWaiting->get_by_child_group_list2($bk_child_group, $patient_id, $facility_id, $bk_group_id, $booking_status);
+        $group_booking                  = $clsBooking->get_by_child_group_list2($bk_child_group, $patient_id, $facility_id, $bk_group_id, $booking_status);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;
@@ -2399,12 +2399,12 @@ class BookingController extends BackendController
          $oldFacility[$key] = $bk->facility_id;
         }
 
-        $newGroupBooking                = $clsBookingTelWaiting->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
 
         $bk_start_time  = (int)$bk_booking_start_time;
 
         foreach ($newGroupBooking as $key=>$newbk) {
-            $clsBookingTelWaiting->update($newbk->booking_id, array(
+            $clsBooking->update($newbk->booking_id, array(
                                         'booking_date'          => $bk_booking_date,
                                         'booking_start_time'    => $bk_start_time,
                                         'booking_group_id'      => $bk_group_id,

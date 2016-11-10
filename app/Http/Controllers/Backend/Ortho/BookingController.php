@@ -2339,10 +2339,7 @@ class BookingController extends BackendController
                                             'last_date'             => date('Y-m-d H:i:s'),
                                             'last_user'             => Auth::user()->id,
                                             ));
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
-            die;
+
             return view('backend.ortho.bookings.list1_change_confirm', $data);
         }else{
             return response()->view('errors.404', [], 404);

@@ -709,4 +709,26 @@ class InterviewController extends BackendController
         }
         return redirect()->route('ortho.patients.index');
     }
+
+
+    public function getUpdateBooking($booking_id) {
+        $clsBooking             = new BookingModel();
+
+        // update
+        $dataUpdate = array(
+            'flag_interview'    => 1,
+
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => DELETE,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => Auth::user()->id
+        );
+
+        if ( $clsBooking->update($booking_id, $dataUpdate) ) {
+            Session::flash('success', trans('common.message_delete_success'));
+        } else {
+            Session::flash('danger', trans('common.message_delete_danger'));
+        }
+        return redirect()->route('ortho.interviews.index');
+    }
 }

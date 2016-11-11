@@ -257,6 +257,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::post('interviews/edit/{id}', ['as' => 'ortho.interviews.edit', 'uses' => 'InterviewController@postEdit']);
 	Route::get('interviews/delete/{id}', ['as' => 'ortho.interviews.delete', 'uses' => 'InterviewController@getDelete']);
 	Route::get('interviews/detail/{patient_id}', ['as' => 'ortho.interviews.detail', 'uses' => 'InterviewController@getDetail']);
+	Route::get('interviews/update-booking/{booking_id}', ['as' => 'ortho.interviews.update.booking', 'uses' => 'InterviewController@getUpdateBooking']);
 
 	//List1
 	// Route::get('list1-list', ['as' => 'ortho.bookings.list1_list', 'uses' => 'BookingController@list1_list']);

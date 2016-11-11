@@ -44,7 +44,7 @@
         </tr>
         @else
           @foreach ( $bookings as $booking )
-            @if ( !isset($interviews[$booking->patient_id]) )
+            @if ( !isset($interviews[$booking->patient_id]) && empty($booking->flag_interview) )
             <tr>
               <td>{{ $booking->p_name_f }} {{ $booking->p_name_g }}</td>
               <td align="center"><a href="{{ route('ortho.interviews.regist', [ 'patient_id' => $booking->patient_id, 'booking_id' => $booking->booking_id, 'clinic_id' => $booking->clinic_id ]) }}" class="btn btn-xs btn-page" target="_blank">問診票の入力</a></td>
@@ -64,7 +64,7 @@
                           <p>{{ trans('common.modal_content_delete') }}</p>
                         </div>
                         <div class="modal-footer">
-                          <a href="{{ route('ortho.interviews.delete', [ $booking->booking_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
+                          <a href="{{ route('ortho.interviews.update.booking', [ $booking->booking_id ]) }}" class="btn btn-sm btn-page">{{ trans('common.modal_btn_delete') }}</a>
                           <button type="button" class="btn btn-sm btn-page" data-dismiss="modal">{{ trans('common.modal_btn_cancel') }}</button>
                         </div>
                       </div>

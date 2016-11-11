@@ -4,7 +4,9 @@
 	 <section id="page">
       <div class="container content-page">
         <h3>患者管理　＞　予約の表示</h3>
-        <p>予約は2件あります。</p>
+        @if(count($bookings) > 0)
+        <p>予約は{{count($bookings)}}件あります。</p>
+        @endif
         <div class="row">
           <div class="col-md-6">
             <table class="table table-bordered treatment2-list">

@@ -79,7 +79,12 @@ class InterviewController extends BackendController
         $patient_id = $clsPatient->insert_get_id($dataInsert);
         // insert to table "interview"
         $dataInsert = array(
-            'patient_id' => $patient_id
+            'patient_id' => $patient_id,
+
+            'last_date'         => date('y-m-d H:i:s'),
+            'last_kind'         => INSERT,
+            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_user'         => Auth::user()->id
         );
         $insert_interview = $clsInterview->insert($dataInsert);
         if ( $patient_id && $insert_interview ) {

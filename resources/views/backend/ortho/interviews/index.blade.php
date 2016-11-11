@@ -44,7 +44,7 @@
         </tr>
         @else
           @foreach ( $bookings as $booking )
-            @if ( !isset($interviews[$booking->patient_id]) && empty($booking->flag_interview) )
+            @if ( isset($interviews[$booking->patient_id]) && empty($booking->flag_interview) && empty($interviews[$booking->patient_id]->q1_1_sei) )
             <tr>
               <td>{{ $booking->p_name_f }} {{ $booking->p_name_g }}</td>
               <td align="center"><a href="{{ route('ortho.interviews.regist', [ 'patient_id' => $booking->patient_id, 'booking_id' => $booking->booking_id, 'clinic_id' => $booking->clinic_id ]) }}" class="btn btn-xs btn-page" target="_blank">問診票の入力</a></td>

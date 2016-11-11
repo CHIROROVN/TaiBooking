@@ -77,6 +77,13 @@ class InterviewModel
 
     public function get_list()
     {
-        return DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('first_id', 'asc')->lists('first_id', 'patient_id');
+        $db = DB::table($this->table)->where('last_kind', '<>', DELETE)->orderBy('first_id', 'asc')->get();
+
+        $tmp = array();
+        foreach ( $db as $item ) {
+            $tmp[$item->patient_id] = $item;
+        }
+
+        return $tmp;
     }
 }

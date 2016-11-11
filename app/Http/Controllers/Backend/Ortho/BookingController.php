@@ -1130,6 +1130,7 @@ class BookingController extends BackendController
         if ( Input::get('insert_to_tbl_first') == 1 ) {
             $dataInterview = array(
                 'patient_id'                => $p_id,
+                'booking_id'                => $booking->booking_id,
 
                 'last_date'                 => date('y-m-d H:i:s'),
                 'last_kind'                 => UPDATE,

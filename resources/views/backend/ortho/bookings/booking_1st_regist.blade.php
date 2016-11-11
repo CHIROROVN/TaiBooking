@@ -269,15 +269,6 @@
                   @endif
                 </div>
                 <div class="radio">
-                  @if ( old('booking_status') == 1 )
-                  <label><input name="booking_status" value="1" type="radio" checked >「TEL待ち」です</label>
-                  @elseif ( $booking->booking_status == 1 )
-                  <label><input name="booking_status" value="1" type="radio" checked >「TEL待ち」です</label>
-                  @else
-                  <label><input name="booking_status" value="1" type="radio" >「TEL待ち」です</label>
-                  @endif
-                </div>
-                <div class="radio">
                   @if ( old('booking_status') == 2 )
                   <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
                   @elseif ( $booking->booking_status == 2 )
@@ -285,70 +276,6 @@
                   @else
                   <label><input name="booking_status" value="2" type="radio" >無断キャンセル</label>
                   @endif
-                </div>
-                <div class="radio">
-                  <label>
-                    @if ( old('booking_status') == 3)
-                    <input name="booking_status" id="recalling" value="3" type="radio" checked >「リコール」です→
-                    @elseif ( $booking->booking_status == 3 )
-                    <input name="booking_status" id="recalling" value="3" type="radio" checked >「リコール」です→
-                    @else
-                    <input name="booking_status" id="recalling" value="3" type="radio" >「リコール」です→
-                    @endif
-
-                    <select name="booking_recall_ym" id="booking_recall_ym" class="form-control form-control--xs" style="width: 90px !important;">
-                      <option value="">▼選択</option>
-
-                      @if ( dateAddMonth($booking->booking_date, 01, 'Ym') == old('booking_recall_ym') )
-                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" selected="" >1ヶ月後</option>
-                      @elseif ( dateAddMonth($booking->booking_date, 01, 'Ym') == $booking->booking_recall_ym )
-                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" selected="" >1ヶ月後</option>
-                      @else
-                      <option value="{{dateAddMonth($booking->booking_date, 01, 'Ym')}}" >1ヶ月後</option>
-                      @endif
-                      
-                      @if ( dateAddMonth($booking->booking_date, 02, 'Ym') == old('booking_recall_ym') )
-                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" selected >2ヶ月後</option>
-                      @elseif ( dateAddMonth($booking->booking_date, 02, 'Ym') == $booking->booking_recall_ym )
-                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" selected >2ヶ月後</option>
-                      @else
-                      <option value="{{dateAddMonth($booking->booking_date, 02, 'Ym')}}" >2ヶ月後</option>
-                      @endif
-                      
-                      @if ( dateAddMonth($booking->booking_date, 03, 'Ym') == old('booking_recall_ym'))
-                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" selected >3ヶ月後</option>
-                      @elseif ( dateAddMonth($booking->booking_date, 03, 'Ym') == $booking->booking_recall_ym )
-                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" selected >3ヶ月後</option>
-                      @else
-                      <option value="{{dateAddMonth($booking->booking_date, 03, 'Ym')}}" >3ヶ月後</option>
-                      @endif
-                      
-                      @if ( dateAddMonth($booking->booking_date, 04, 'Ym') == old('booking_recall_ym') )
-                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" selected >4ヶ月後</option>
-                      @elseif ( dateAddMonth($booking->booking_date, 04, 'Ym') == $booking->booking_recall_ym )
-                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" selected >4ヶ月後</option>
-                      @else
-                      <option value="{{dateAddMonth($booking->booking_date, 04, 'Ym')}}" >4ヶ月後</option>
-                      @endif
-
-                      @if ( dateAddMonth($booking->booking_date, 05, 'Ym') == old('booking_recall_ym') )
-                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}" selected >5ヶ月後</option>
-                      @elseif ( dateAddMonth($booking->booking_date, 05, 'Ym') == $booking->booking_recall_ym )
-                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}" selected >5ヶ月後</option>
-                      @else
-                      <option value="{{dateAddMonth($booking->booking_date, 05, 'Ym')}}" >5ヶ月後</option>
-                      @endif
-                      
-                      @if ( dateAddMonth($booking->booking_date, 06, 'Ym') == old('booking_recall_ym') )
-                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" selected >6ヶ月後</option>
-                      @elseif ( dateAddMonth($booking->booking_date, 06, 'Ym') == $booking->booking_recall_ym )
-                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" selected >6ヶ月後</option>
-                      @else
-                      <option value="{{dateAddMonth($booking->booking_date, 06, 'Ym')}}" >6ヶ月後</option>
-                      @endif
-                      
-                    </select>
-                  </label>
                 </div>
                 <div class="radio">
                   @if ( old('booking_status') == 4 )

@@ -873,7 +873,7 @@
         <td colspan="2" class="col-title"><span class="span-q">Q22</span>　今、歯並び以外で気にされていることはありますか？（例：親知らずが痛い、詰め物が取れているなど）</td>
       </tr>
       <tr>
-        <td colspan="2">テスト- {{ @$interview->q22 }}</td>
+        <td colspan="2">{{ @$interview->q22 }}</td>
       </tr>
 
       <!-- Q23 -->
@@ -933,7 +933,26 @@
         <td colspan="2" class="col-title"><span class="span-q">Q27</span>　以下の項目のうち、気になるものを選択してください</td>
       </tr>
       <tr>
-        <td colspan="2">矯正装置が入っている期間、保定装置の期間など治療期間について気になる</td>
+        <td colspan="2">
+          @if ( !empty($interview->q27_1) )
+          矯正装置が入っている期間、保定装置の期間など治療期間について気になる<br />
+          @endif
+          @if ( !empty($interview->q27_2) )
+          治療費がどのくらいになるか気になる<br />
+          @endif
+          @if ( !empty($interview->q27_3) )
+          仕事上、接客の機会が多いので、支障が無いか、気になる<br />
+          @endif
+          @if ( !empty($interview->q27_4) )
+          スポーツをしている\<br />
+          @endif
+          @if ( !empty($interview->q27_5) )
+          管楽器の演奏をすることがある<br />
+          @endif
+          @if ( !empty($interview->q27_6) )
+          普段の生活で、(受験・仕事など)ストレスがかかることがある<br />
+          @endif
+        </td>
       </tr>
 
       <!-- Q28 -->
@@ -941,7 +960,7 @@
         <td colspan="2" class="col-title"><span class="span-q">Q28</span>　その他、矯正治療を進めていく上で、ご不安・ご希望の点があればお書きください</td>
       </tr>
       <tr>
-        <td colspan="2">テスト-{{ @$interview->q28 }}</td>
+        <td colspan="2">{!! nl2br(@$interview->q28) !!}</td>
       </tr>
     </tbody>
   </table>

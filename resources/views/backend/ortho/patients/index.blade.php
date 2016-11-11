@@ -80,7 +80,11 @@
               <td>{{ $patient->p_name_f }} {{ $patient->p_name_g }}</td>
               <td>{{ $patient->p_name_f_kana }} {{ $patient->p_name_g_kana }}</td>
               <td><?php echo ($patient->p_sex == 1) ? '男' : '女'; ?></td>
-              <td>{{ date('Y/m/d', strtotime($patient->p_birthday)) }}</td>
+              <td>
+                @if ( !empty($patient->p_birthday) && $patient->p_birthday != '0000-00-00' && $patient->p_birthday != '1970-01-01' )
+                {{ date('Y/m/d', strtotime($patient->p_birthday)) }}
+                @endif
+              </td>
               <td align="center"><input onclick="location.href='{{ route('ortho.patients.detail', [$patient->p_id]) }}'" value="詳細" type="button" class="btn btn-xs btn-page"></td>
               <td align="center">
                 @if ( isset($interviews[$patient->p_id]) )

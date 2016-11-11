@@ -110,6 +110,7 @@ class InterviewController extends BackendController
     public function postRegist()
     {
         $clsInterview           = new InterviewModel();
+        $interview              = $clsInterview->get_by_patient_id(Input::get('patient_id'));
         $dataInsert = array(
             'patient_id'        => Input::get('patient_id'),
             'first_date'        => '',
@@ -241,7 +242,7 @@ class InterviewController extends BackendController
             'q28'               => Input::get('q28'),
 
             'last_date'         => date('y-m-d H:i:s'),
-            'last_kind'         => INSERT,
+            'last_kind'         => UPDATE,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
             'last_user'         => Auth::user()->id
         );
@@ -349,7 +350,13 @@ class InterviewController extends BackendController
         }
         unset($dataInsert['q8_kind_1_1']);
 
-        if ( $clsInterview->insert($dataInsert) ) {
+        if ( $interview ) {
+            $status = $clsInterview->update($interview->first_id, $dataInsert);
+        } else {
+            $status = $clsInterview->insert($dataInsert);
+        }
+
+        if ( $status ) {
             Session::flash('success', trans('common.message_regist_success'));
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));

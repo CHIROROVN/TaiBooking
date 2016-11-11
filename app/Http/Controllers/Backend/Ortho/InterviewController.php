@@ -731,25 +731,25 @@ class InterviewController extends BackendController
         );
 
         $status = true;
-        // if ( empty($booking->booking_group_id) ) {
+        if ( empty($booking->booking_group_id) && empty($booking->booking_childgroup_id) ) {
             $status = $clsBooking->update($booking_id, $dataUpdate);
-        // } else {
-        //     $where = array(
-        //         'clinic_id'                 => $booking->clinic_id,
-        //         'booking_group_id'          => $booking->booking_group_id,
-        //         'booking_childgroup_id'     => $booking->booking_childgroup_id
-        //     );
-        //     if ( $booking->service_1_kind == 2 ) {
-        //         $where['facility_id']       = $booking->facility_id;
-        //     }
-        //     $listBookingGroup = $clsBooking->get_where($where);
-        //     foreach ( $listBookingGroup as $item ) {
-        //         if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
-        //             $status = false;
-        //             break;
-        //         }
-        //     }
-        // }
+        } else {
+            $where = array(
+                'clinic_id'                 => $booking->clinic_id,
+                'booking_group_id'          => $booking->booking_group_id,
+                'booking_childgroup_id'     => $booking->booking_childgroup_id
+            );
+            if ( $booking->service_1_kind == 2 ) {
+                $where['facility_id']       = $booking->facility_id;
+            }
+            $listBookingGroup = $clsBooking->get_where($where);
+            foreach ( $listBookingGroup as $item ) {
+                if ( !$clsBooking->update($item->booking_id, $dataUpdate) ) {
+                    $status = false;
+                    break;
+                }
+            }
+        }
 
         if ( $status ) {
             Session::flash('success', trans('common.message_delete_success'));

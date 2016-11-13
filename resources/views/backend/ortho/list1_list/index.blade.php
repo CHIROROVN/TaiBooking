@@ -113,7 +113,7 @@
               @if ( empty($item->booking_id) )
               <?php $str = 'disabled' ?>
               @endif
-              <a href="{{ route('ortho.bookings.list1_search', [ $item->booking_id ]) }}" class="btn btn-sm btn-page" {{ $str }}>予約の登録</a>
+              <a href="{{ route('ortho.list1_list.search', [ $item->id ]) }}" class="btn btn-sm btn-page" {{ $str }}>予約の登録</a>
             </td>
             <td align="center"><a href="{{ route('ortho.list1_list.edit', [ $item->id ]) }}" class="btn btn-sm btn-page">TEL待ち情報の編集</a></td>
           </tr>

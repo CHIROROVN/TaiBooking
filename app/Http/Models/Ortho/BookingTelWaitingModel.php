@@ -275,4 +275,29 @@ class BookingTelWaitingModel
 
         return $results;
     }
+
+    public function getTelChildGroup($patient_id=null, $booking_childgroup_id=null, $facility_id=null)
+    {
+        $results = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        // patient_id
+        if ( !empty($patient_id) ) {
+            $results = $results->where('patient_id', $patient_id);
+        }
+
+        // booking_childgroup_id
+        if ( !empty($booking_childgroup_id) ) {
+            $results = $results->where('booking_childgroup_id', $booking_childgroup_id);
+        }
+
+        // facility_id
+        if ( !empty($facility_id) ) {
+            $results = $results->where('facility_id', $facility_id);
+        }
+
+        $results = $results->orderBy('booking_date', 'asc')->orderBy('booking_start_time', 'asc')->orderBy('id', 'asc');
+
+        $db = $results->get();
+        return $db;
+    }
 }

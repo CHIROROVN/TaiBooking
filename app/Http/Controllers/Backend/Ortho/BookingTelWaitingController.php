@@ -12,6 +12,10 @@ use App\Http\Models\Ortho\BookingModel;
 use App\Http\Models\Ortho\UserModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
+use App\Http\Models\Ortho\FacilityModel;
+use App\Http\Models\Ortho\EquipmentModel;
+use App\Http\Models\Ortho\InspectionModel;
+use App\Http\Models\Ortho\InsuranceModel;
 
 use Form;
 use Html;
@@ -282,5 +286,219 @@ class BookingTelWaitingController extends BackendController
             Session::flash('danger', trans('common.message_delete_danger'));
         }
         return redirect()->route('ortho.list1_list.index');
+    }
+
+    public function getList1Search($id)
+    {
+        $data['id']         = $id;
+        return view('backend.ortho.list1_list.search', $data);
+    }
+
+    public function postList1Search($id)
+    {
+        $clsBookingTel                  = new BookingTelWaitingModel();
+        $bookingTel                     = $clsBookingTel->get_by_id($id);
+
+
+        $condition['id']                = $id;
+        $condition['clinic_id']         = $bookingTel->clinic_id;
+
+        if(Input::has('BookingCalendar')){
+
+            if(!empty(Input::get('week_later'))){
+                if(Input::get('week_later') == 'week_specified'){
+                    $condition['next'] = cal_date(Input::get('week_later_option'));
+                }elseif (Input::get('week_later') == 'date_picker') {
+                    $condition['next'] = formatDate(Input::get('date_picker_option'), '-');
+                }else{
+                    $condition['next'] = cal_date(Input::get('week_later'));
+                }
+            }
+
+            return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
+        }else{
+            
+            if(!empty(Input::get('booking_date')))
+                $condition['booking_date'] = Input::get('booking_date');
+
+            if(!empty(Input::get('week_later'))){
+                if(Input::get('week_later') == 'week_specified'){
+                $condition['week_later'] = Input::get('week_later_option');
+                }elseif (Input::get('week_later') == 'date_picker') {
+                    $condition['week_later'] = formatDate(Input::get('date_picker_option'), '-');
+                }else{
+                    $condition['week_later'] = Input::get('week_later');
+                }
+            }
+            return redirect()->route('ortho.list1_list.change', $condition);
+        }
+    }
+
+    public function telList1Change($id)
+    {
+        $clsBooking                       = new BookingModel();
+        $clsFacility                      = new FacilityModel();
+        $data['facilities']               = $clsFacility->list_facility_all();
+        $data['id']                       = $id;
+        $where                            = array();
+
+        //Treatment
+        $where['service_1_kind']          = 2;
+        
+        if(!empty(Input::get('booking_date')))
+            $where['booking_date']        = Input::get('booking_date');
+        if(!empty(Input::get('week_later')))
+            $where['week_later']          = Input::get('week_later');
+
+        $data['bookings']                 = $clsBooking->get_booking_list2($where);
+
+        return view('backend.ortho.list1_list.change', $data);
+    }
+
+    public function list1ChangeConfirm($id)
+    {
+        $clsUser                        = new UserModel();
+        $clsEquipment                   = new EquipmentModel();
+        $data['equipments']             = $clsEquipment->get_list();
+        $clsInspection                  = new InspectionModel();
+        $data['inspections']            = $clsInspection->get_list();
+        $clsInsurance                   = new InsuranceModel();
+        $data['insurances']             = $clsInsurance->get_list();
+        $clsFacility                    = new FacilityModel();
+        $data['facilities']             = $clsFacility->list_facility_all();
+        $data['doctors']                = $clsUser->get_list();
+        $data['hygienists']             = $clsUser->get_list();
+        $clsService                     = new ServiceModel();
+        $data['services']               = $clsService->get_list();
+        $clsTreatment1                  = new Treatment1Model();
+        $data['treatment1s']            = $clsTreatment1->get_list_treatment();
+
+        $data['id']                     = $id;
+        $data['booking_id']             = Input::get('booking_id');
+        $clsBookingTel                  = new BookingTelWaitingModel();
+        $bookingtel                     = $clsBookingTel->get_by_id($id);
+
+        $p_id                           = $bookingtel->patient_id;
+
+        $clsPatient                     = new PatientModel();
+        $data['patient']                = $clsPatient->get_by_id($p_id);
+
+        $data['bookingtel']             = $bookingtel;
+
+        $clsClinic                      = new ClinicModel();
+        $data['clinics']                = $clsClinic->get_list_clinic();
+
+        $clsBooking                     = new BookingModel();
+        $new_booking                    = $clsBooking->get_by_id(Input::get('booking_id'));
+        $booking_tel_memo               = $bookingtel->booking_memo;
+
+        $data['bookingtel_change']             = (Object)array_merge((array)$new_booking, array(
+                                            'booking_memo'          => $booking_tel_memo,
+                                            'patient_id'            => $p_id,
+                                            'last_date'             => date('Y-m-d H:i:s'),
+                                            'last_user'             => Auth::user()->id,
+                                            ));
+
+        return view('backend.ortho.list1_list.change_confirm', $data);  
+    }
+
+    public function postList1Cnf($id)
+    {
+        $clsBooking                     = new BookingModel();
+
+        $clsBookingTel                  = new BookingTelWaitingModel();
+
+        $bookingtel                     = $clsBookingTel->get_by_id($id);
+
+        $booking_id                     = Input::get('booking_id');
+
+        $facility_id                    = $bookingtel->facility_id;
+
+
+        $new_booking                    = $clsBooking->get_by_id($booking_id);
+        $new_booking_start_time         = $new_booking->booking_start_time;
+        $new_booking_group              = $new_booking->booking_group_id;
+        $new_booking_date               = $new_booking->booking_date;
+        $new_facility_id                = $new_booking->facility_id;
+
+        $start_time = (int)$new_booking_start_time;
+
+        $booking_childgroup_id          = $bookingtel->booking_childgroup_id;
+
+        if(!empty($booking_childgroup_id)){
+            //tel child group
+            $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $booking_childgroup_id, $facility_id);
+            
+            $limit = count($tel_child_groups);
+
+            $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+
+            $flag = false;
+
+            //delete booking tel
+            foreach ($tel_child_groups as $telgroup) {
+                $clsBookingTel->update($telgroup->id, array(
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => DELETE)); 
+            }
+            if(!empty($newGroupBooking))
+            {
+                $dataUpdate                     =  array(
+                                                'booking_memo'          => $bookingtel->free_text,
+                                                'patient_id'            => $bookingtel->patient_id,
+                                                'booking_status'        => NULL,
+                                                'service_1'             => $bookingtel->service_1,
+                                                'service_1_kind'        => $bookingtel->service_1_kind,
+                                                'last_date'             => date('Y-m-d H:i:s'),
+                                                'last_user'             => Auth::user()->id,
+                                                'last_kind'             => UPDATE
+                                                );
+
+                foreach ($newGroupBooking as $booking_group) {
+                    if($clsBooking->update($booking_group->booking_id, $dataUpdate))
+                        $flag = true;
+                    else
+                        $flag = false;
+
+
+                    if($flag){
+                        Session::flash('success', trans('common.message_edit_success'));
+                        return redirect()->route('ortho.list1_list.index');
+                    }else{
+                        Session::flash('danger', trans('common.message_edit_danger'));
+                        return redirect()->route('ortho.list1_list.change', array('id'=>$id));
+                    }
+                }
+            }
+            
+
+        }else{
+            $dataUpdate                     =  array(
+                                                'booking_memo'          => $bookingtel->free_text,
+                                                'patient_id'            => $bookingtel->patient_id,
+                                                'booking_status'        => NULL,
+                                                'service_1'             => $bookingtel->service_1,
+                                                'service_1_kind'        => $bookingtel->service_1_kind,
+                                                'last_date'             => date('Y-m-d H:i:s'),
+                                                'last_user'             => Auth::user()->id,
+                                                'last_kind'             => UPDATE
+                                                );
+            
+            //delete booking tel
+            $clsBookingTel->update($id, array(
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => DELETE));
+            //update booking
+            if ($clsBooking->update($booking_id, $dataUpdate)) {
+                Session::flash('success', trans('common.message_edit_success'));
+                return redirect()->route('ortho.list1_list.index');
+            } else {
+                Session::flash('danger', trans('common.message_edit_danger'));
+                return redirect()->route('ortho.list1_list.change', array('id'=>$id));
+            }
+        }
+
     }
 }

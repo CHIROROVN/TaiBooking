@@ -259,13 +259,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('interviews/detail/{patient_id}', ['as' => 'ortho.interviews.detail', 'uses' => 'InterviewController@getDetail']);
 	Route::get('interviews/update-booking/{booking_id}', ['as' => 'ortho.interviews.update.booking', 'uses' => 'InterviewController@getUpdateBooking']);
 
-	//List1
-	// Route::get('list1-list', ['as' => 'ortho.bookings.list1_list', 'uses' => 'BookingController@list1_list']);
-	Route::get('list1-search/{booking_id}', ['as' => 'ortho.bookings.list1_search', 'uses' => 'BookingController@getList1Search']);
-	Route::post('list1-search/{booking_id}', ['as' => 'ortho.bookings.list1_search', 'uses' => 'BookingController@postList1Search']);
-	Route::get('list1-change/{booking_id}', ['as' => 'ortho.bookings.list1_change', 'uses' => 'BookingController@getList1Change']);
-	Route::get('list1-change-confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.list1_change_confirm', 'uses' => 'BookingController@list1ChangeConfirm']);
-	Route::post('list1-change-confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.list1_change_confirm', 'uses' => 'BookingController@postList1Cnf']);
+
+
 	//List2
 	Route::get('list2-list', ['as' => 'ortho.bookings.list2_list', 'uses' => 'BookingController@list2_list']);
 
@@ -400,6 +395,19 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('list1-list/edit/{id}', ['as' => 'ortho.list1_list.edit', 'uses' => 'BookingTelWaitingController@getEdit']);
 	Route::post('list1-list/edit/{id}', ['as' => 'ortho.list1_list.edit', 'uses' => 'BookingTelWaitingController@postEdit']);
 	Route::get('list1-list/delete/{id}', ['as' => 'ortho.list1_list.delete', 'uses' => 'BookingTelWaitingController@getDelete']);
+
+
+	Route::get('list1-search/{id}', ['as' => 'ortho.list1_list.search', 'uses' => 'BookingTelWaitingController@getList1Search']);
+	
+	Route::post('list1-search/{id}', ['as' => 'ortho.list1_list.search', 'uses' => 'BookingTelWaitingController@postList1Search']);
+	
+	Route::get('list1-change/{id}', ['as' => 'ortho.list1_list.change', 'uses' => 'BookingTelWaitingController@telList1Change']);
+	
+	Route::get('list1-change-confirm/{id}', ['as' => 'ortho.list1_list.change_confirm', 'uses' => 'BookingTelWaitingController@list1ChangeConfirm']);
+
+	Route::post('list1-change-confirm/{id}', ['as' => 'ortho.list1_list.change_confirm', 'uses' => 'BookingTelWaitingController@postList1Cnf']);
+
+
 
 	//Booking recall
 	Route::get('bookings/booking-recall', ['as' => 'ortho.bookings.booking_recall', 'uses' => 'RecallController@index']);

@@ -91,8 +91,7 @@
                   <tr>
                     <td class="col-title"><label for="free_text">備考</label></td>
                     <td>
-                      <input type="text" name="free_text" id="free_text" class="form-control" value="{{ $list1->free_text }}" />
-                      <span class="error-input">@if ($errors->first('free_text')) ※{!! $errors->first('free_text') !!} @endif</span>
+                      <textarea name="booking_memo" id="booking_memo" cols="30" rows="10" class="form-control form-control-full">{{ $list1->booking_memo }}</textarea>
                     </td>
                   </tr>
                 </table>

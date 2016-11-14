@@ -415,7 +415,7 @@ class BookingTelWaitingController extends BackendController
         $facility_id                    = $bookingtel->facility_id;
         $service_1_kind                 = $bookingtel->service_1_kind;
 
-        $booking_childgroup_id          = $bookingtel->booking_childgroup_id;
+        $new_booking_childgroup_id      = $bookingtel->booking_childgroup_id;
 
         $new_booking                    = $clsBooking->get_by_id($booking_id); 
 
@@ -469,8 +469,8 @@ class BookingTelWaitingController extends BackendController
                 $dataUpdate = array(
                                             'booking_date'          => $new_booking_date,
                                             'booking_start_time'    => $bk_start_time,
-                                            'booking_childgroup_id' => $booking_group_id,
-                                            'booking_group_id'      => $booking_childgroup_id,
+                                            'booking_childgroup_id' => $booking_childgroup_id,
+                                            'booking_group_id'      => $booking_group_id,
                                             'patient_id'            => $bookingtel->patient_id,
                                             'doctor_id'             => $bookingtel->doctor_id,
                                             'facility_id'           => $new_facility_id,
@@ -483,9 +483,9 @@ class BookingTelWaitingController extends BackendController
                                             'last_kind'             => UPDATE
                                             );
 
-                if(!empty($booking_childgroup_id)){
-                    array_merge($dataUpdate, array('booking_childgroup_id'=>$booking_childgroup_id));
-                }
+                // if(!empty($new_booking_childgroup_id)){
+                //     array_merge($dataUpdate, array('booking_childgroup_id'=>$new_booking_childgroup_id));
+                // }
 
                 if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
                 $flag = true;                   

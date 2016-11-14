@@ -276,7 +276,7 @@ class BookingTelWaitingModel
         return $results;
     }
 
-    public function getTelChildGroup($patient_id=null, $booking_childgroup_id=null, $facility_id=null)
+    public function getTelChildGroup($patient_id=null, $booking_childgroup_id=null, $booking_group_id=null, $facility_id=null)
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE);
 

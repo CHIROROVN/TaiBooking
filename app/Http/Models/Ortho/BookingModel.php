@@ -318,6 +318,24 @@ class BookingModel
         return $results;
     }
 
+    public function get_new_booking_child_group2($new_booking_date=null, $start_time=null, $service_1_kind=null, $new_facility_id=null, $bk_group_id=null, $limit=null)
+    {
+            $results = DB::table($this->table)                        
+                        ->select('t_booking.*')
+                        ->where('t_booking.last_kind', '<>', DELETE)
+                        ->where('t_booking.booking_start_time', '>=', $start_time)
+                        ->where('t_booking.service_1', '=', -1)
+                        ->where('t_booking.service_1_kind', '=', $service_1_kind)
+                        ->where('t_booking.facility_id', '=', $new_facility_id)
+                        ->where('t_booking.booking_group_id', '=', $bk_group_id)
+                        ->where('t_booking.booking_date', '=', $new_booking_date)                    
+                        ->orderBy('t_booking.booking_date', 'asc')
+                        ->orderBy('t_booking.booking_start_time', 'asc')
+                        ->limit($limit)
+                        ->get();
+        return $results;
+    }
+
     public function get_recall_booking_child_group($new_booking_group_id=null, $new_booking_childgroup_id=null)
     {
             $results = DB::table($this->table)

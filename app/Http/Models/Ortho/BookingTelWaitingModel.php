@@ -290,6 +290,11 @@ class BookingTelWaitingModel
             $results = $results->where('booking_childgroup_id', $booking_childgroup_id);
         }
 
+        // booking_group_id
+        if ( !empty($booking_group_id) ) {
+            $results = $results->where('booking_group_id', $booking_group_id);
+        }
+
         // facility_id
         if ( !empty($facility_id) ) {
             $results = $results->where('facility_id', $facility_id);

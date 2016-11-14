@@ -420,18 +420,32 @@ class BookingTelWaitingController extends BackendController
         $new_booking_group              = $new_booking->booking_group_id;
         $new_booking_date               = $new_booking->booking_date;
         $new_facility_id                = $new_booking->facility_id;
+        $new_booking_childgroup_id      = $new_booking->booking_childgroup_id;
 
         $start_time = (int)$new_booking_start_time;
 
         $booking_childgroup_id          = $bookingtel->booking_childgroup_id;
+        $booking_group_id               = $bookingtel->booking_group_id;
 
         if(!empty($booking_childgroup_id)){
             //tel child group
-            $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $booking_childgroup_id, $facility_id);
+            $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $booking_childgroup_id, $booking_group_id, $facility_id);
             
             $limit = count($tel_child_groups);
 
-            $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+            // $where = array(
+            //     'clinic_id'                 => $booking->clinic_id,
+            //     'booking_group_id'          => $booking->booking_group_id,
+            //     'booking_childgroup_id'     => $booking->booking_childgroup_id
+            // );
+
+            // if ( $booking->service_1_kind == 2 ) {
+            //     $where['facility_id']       = $booking->facility_id;
+            // }
+            // $listBookingGroup = $clsBooking->get_where($where);
+
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $limit);
+
 
             $flag = false;
 

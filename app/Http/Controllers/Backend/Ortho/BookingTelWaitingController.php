@@ -471,6 +471,7 @@ class BookingTelWaitingController extends BackendController
                                                 'booking_childgroup_id' => $booking_group_id,
                                                 'booking_group_id'      => $booking_childgroup_id,
                                                 'patient_id'            => $bookingtel->patient_id,
+                                                'doctor_id'             => $bookingtel->doctor_id,
                                                 'facility_id'           => $new_facility_id,
                                                 'booking_status'        => NULL,
                                                 'booking_memo'          => $bookingtel->free_text,

@@ -119,7 +119,7 @@ class BookingTelWaitingController extends BackendController
             'clinic_id'         => Input::get('clinic_id'),
             'patient_id'        => Input::get('p_id'),
             'doctor_id'         => Input::get('doctor_id'),
-            'free_text'         => Input::get('free_text'),
+            'booking_memo'      => Input::get('booking_memo'),
 
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
@@ -199,7 +199,7 @@ class BookingTelWaitingController extends BackendController
             'clinic_id'         => Input::get('clinic_id'),
             'patient_id'        => Input::get('p_id'),
             'doctor_id'         => Input::get('doctor_id'),
-            'free_text'         => Input::get('free_text'),
+            'booking_memo'      => Input::get('booking_memo'),
 
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => UPDATE,

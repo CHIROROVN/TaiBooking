@@ -427,25 +427,14 @@ class BookingTelWaitingController extends BackendController
         $booking_childgroup_id          = $bookingtel->booking_childgroup_id;
         $booking_group_id               = $bookingtel->booking_group_id;
 
+
         if(!empty($booking_childgroup_id)){
             //tel child group
             $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $booking_childgroup_id, $booking_group_id, $facility_id);
             
             $limit = count($tel_child_groups);
 
-            // $where = array(
-            //     'clinic_id'                 => $booking->clinic_id,
-            //     'booking_group_id'          => $booking->booking_group_id,
-            //     'booking_childgroup_id'     => $booking->booking_childgroup_id
-            // );
-
-            // if ( $booking->service_1_kind == 2 ) {
-            //     $where['facility_id']       = $booking->facility_id;
-            // }
-            // $listBookingGroup = $clsBooking->get_where($where);
-
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $limit);
-
+            $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $limit);
 
             $flag = false;
 
@@ -456,6 +445,7 @@ class BookingTelWaitingController extends BackendController
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => DELETE)); 
             }
+
             if(!empty($newGroupBooking))
             {
                 $dataUpdate                     =  array(
@@ -471,21 +461,17 @@ class BookingTelWaitingController extends BackendController
 
                 foreach ($newGroupBooking as $booking_group) {
                     if($clsBooking->update($booking_group->booking_id, $dataUpdate))
-                        $flag = true;
-                    else
-                        $flag = false;
+                        $flag = true;                                      
+                }
 
-
-                    if($flag){
+                if($flag){
                         Session::flash('success', trans('common.message_edit_success'));
                         return redirect()->route('ortho.list1_list.index');
-                    }else{
-                        Session::flash('danger', trans('common.message_edit_danger'));
-                        return redirect()->route('ortho.list1_list.change', array('id'=>$id));
-                    }
-                }
-            }
-            
+                }else{
+                    Session::flash('danger', trans('common.message_edit_danger'));
+                    return redirect()->route('ortho.list1_list.change', array('id'=>$id));
+                } 
+            }                       
 
         }else{
             $dataUpdate                     =  array(

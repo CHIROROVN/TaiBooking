@@ -1621,6 +1621,7 @@ class BookingController extends BackendController
         $new_facility_id                = $new_booking->facility_id;
         $new_booking_start_time         = $new_booking->booking_start_time;
         $new_booking_group              = $new_booking->booking_group_id;
+        $new_booking_childgroup_id      = $new_booking->booking_childgroup_id;
 
         //Booking Current
         $curr_booking                   = $clsBooking->get_by_id($booking_id);
@@ -1663,7 +1664,7 @@ class BookingController extends BackendController
          $oldFacility[$key] = $bk->facility_id;
         }
 
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $limit);
 
         $bk_start_time  = (int)$bk_booking_start_time;
 
@@ -2063,6 +2064,7 @@ class BookingController extends BackendController
         $new_facility_id                = $new_booking->facility_id;
         $new_booking_start_time         = $new_booking->booking_start_time;
         $new_booking_group              = $new_booking->booking_group_id;
+        $new_booking_childgroup_id      = $new_booking->booking_childgroup_id;
 
         //Booking Current
         $curr_booking                   = $clsBooking->get_by_id($booking_id);
@@ -2107,7 +2109,7 @@ class BookingController extends BackendController
          $oldFacility[$key] = $bk->facility_id;
         }
 
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $limit);
 
         $bk_start_time  = (int)$bk_booking_start_time;
 

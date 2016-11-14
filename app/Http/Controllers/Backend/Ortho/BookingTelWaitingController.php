@@ -415,6 +415,8 @@ class BookingTelWaitingController extends BackendController
         $facility_id                    = $bookingtel->facility_id;
         $service_1_kind                 = $bookingtel->service_1_kind;
 
+        $booking_childgroup_id          = $bookingtel->booking_childgroup_id;
+
         $new_booking                    = $clsBooking->get_by_id($booking_id); 
 
         $new_booking_start_time         = $new_booking->booking_start_time;
@@ -465,7 +467,7 @@ class BookingTelWaitingController extends BackendController
             if(!empty($newGroupBooking))
             {
                 foreach ($newGroupBooking as $booking_group) {
-                    if( $clsBooking->update($booking_group->booking_id, array(
+                    $dataUpdate = array(
                                                 'booking_date'          => $new_booking_date,
                                                 'booking_start_time'    => $bk_start_time,
                                                 'booking_childgroup_id' => $booking_group_id,
@@ -480,11 +482,16 @@ class BookingTelWaitingController extends BackendController
                                                 'last_date'             => date('Y-m-d H:i:s'),
                                                 'last_user'             => Auth::user()->id,
                                                 'last_kind'             => UPDATE
-                                                )) )
-                    $flag = true;
-                   
+                                                );
 
-                    $bk_start_time                  = convertStartTime($bk_start_time + 15);                                    
+                    if(!empty($booking_childgroup_id)){
+                        array_merge($dataUpdate, array('booking_childgroup_id'=>$booking_childgroup_id));
+                    }
+
+                    if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
+                    $flag = true;                   
+
+                    $bk_start_time                  = convertStartTime($bk_start_time + 15);
                 }
 
                 if($flag){

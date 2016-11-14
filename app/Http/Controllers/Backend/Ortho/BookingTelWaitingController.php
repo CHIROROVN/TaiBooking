@@ -444,91 +444,63 @@ class BookingTelWaitingController extends BackendController
         $tel_booking_group_id               = $bookingtel->booking_group_id;
 
 
-        // if(!empty($booking_childgroup_id)){
-            //tel child group
-            $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_childgroup_id, $tel_booking_group_id, $facility_id);
-            
-            $limit = count($tel_child_groups);
+        //tel child group
+        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_childgroup_id, $tel_booking_group_id, $facility_id);
+        
+        $limit = count($tel_child_groups);
 
-            $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $start_time, $service_1_kind, $new_facility_id , $bk_group_id, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $start_time, $service_1_kind, $new_facility_id , $bk_group_id, $limit);
 
-            $flag = false;
+        $flag = false;
 
-            //delete booking tel
-            foreach ($tel_child_groups as $telgroup) {
-                $clsBookingTel->update($telgroup->id, array(
-                                        'last_date'             => date('Y-m-d H:i:s'),
-                                        'last_user'             => Auth::user()->id,
-                                        'last_kind'             => DELETE)); 
-            }
+        //delete booking tel
+        foreach ($tel_child_groups as $telgroup) {
+            $clsBookingTel->update($telgroup->id, array(
+                                    'last_date'             => date('Y-m-d H:i:s'),
+                                    'last_user'             => Auth::user()->id,
+                                    'last_kind'             => DELETE)); 
+        }
 
-            $bk_start_time = (int)$new_booking_start_time;
+        $bk_start_time = (int)$new_booking_start_time;
 
-            if(!empty($newGroupBooking))
-            {
-                foreach ($newGroupBooking as $booking_group) {
-                    $dataUpdate = array(
-                                                'booking_date'          => $new_booking_date,
-                                                'booking_start_time'    => $bk_start_time,
-                                                'booking_childgroup_id' => $booking_group_id,
-                                                'booking_group_id'      => $booking_childgroup_id,
-                                                'patient_id'            => $bookingtel->patient_id,
-                                                'doctor_id'             => $bookingtel->doctor_id,
-                                                'facility_id'           => $new_facility_id,
-                                                'booking_status'        => NULL,
-                                                'booking_memo'          => $bookingtel->free_text,
-                                                'service_1'             => $bookingtel->service_1,
-                                                'service_1_kind'        => $bookingtel->service_1_kind,
-                                                'last_date'             => date('Y-m-d H:i:s'),
-                                                'last_user'             => Auth::user()->id,
-                                                'last_kind'             => UPDATE
-                                                );
+        if(!empty($newGroupBooking))
+        {
+            foreach ($newGroupBooking as $booking_group) {
+                $dataUpdate = array(
+                                            'booking_date'          => $new_booking_date,
+                                            'booking_start_time'    => $bk_start_time,
+                                            'booking_childgroup_id' => $booking_group_id,
+                                            'booking_group_id'      => $booking_childgroup_id,
+                                            'patient_id'            => $bookingtel->patient_id,
+                                            'doctor_id'             => $bookingtel->doctor_id,
+                                            'facility_id'           => $new_facility_id,
+                                            'booking_status'        => NULL,
+                                            'booking_memo'          => $bookingtel->booking_memo,
+                                            'service_1'             => $bookingtel->service_1,
+                                            'service_1_kind'        => $bookingtel->service_1_kind,
+                                            'last_date'             => date('Y-m-d H:i:s'),
+                                            'last_user'             => Auth::user()->id,
+                                            'last_kind'             => UPDATE
+                                            );
 
-                    if(!empty($booking_childgroup_id)){
-                        array_merge($dataUpdate, array('booking_childgroup_id'=>$booking_childgroup_id));
-                    }
-
-                    if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
-                    $flag = true;                   
-
-                    $bk_start_time                  = convertStartTime($bk_start_time + 15);
+                if(!empty($booking_childgroup_id)){
+                    array_merge($dataUpdate, array('booking_childgroup_id'=>$booking_childgroup_id));
                 }
 
-                if($flag){
-                        Session::flash('success', trans('common.message_edit_success'));
-                        return redirect()->route('ortho.list1_list.index');
-                }else{
-                    Session::flash('danger', trans('common.message_edit_danger'));
-                    return redirect()->route('ortho.list1_list.change', array('id'=>$id));
-                } 
-            }                       
+                if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
+                $flag = true;                   
 
-        // }else{
-        //     $dataUpdate                     =  array(
-        //                                         'booking_memo'          => $bookingtel->free_text,
-        //                                         'patient_id'            => $bookingtel->patient_id,
-        //                                         'booking_status'        => NULL,
-        //                                         'service_1'             => $bookingtel->service_1,
-        //                                         'service_1_kind'        => $bookingtel->service_1_kind,
-        //                                         'last_date'             => date('Y-m-d H:i:s'),
-        //                                         'last_user'             => Auth::user()->id,
-        //                                         'last_kind'             => UPDATE
-        //                                         );
-            
-        //     //delete booking tel
-        //     $clsBookingTel->update($id, array(
-        //                                 'last_date'             => date('Y-m-d H:i:s'),
-        //                                 'last_user'             => Auth::user()->id,
-        //                                 'last_kind'             => DELETE));
-        //     //update booking
-        //     if ($clsBooking->update($booking_id, $dataUpdate)) {
-        //         Session::flash('success', trans('common.message_edit_success'));
-        //         return redirect()->route('ortho.list1_list.index');
-        //     } else {
-        //         Session::flash('danger', trans('common.message_edit_danger'));
-        //         return redirect()->route('ortho.list1_list.change', array('id'=>$id));
-        //     }
-        // }
+                $bk_start_time                  = convertStartTime($bk_start_time + 15);
+            }
+
+            if($flag){
+                    Session::flash('success', trans('common.message_edit_success'));
+                    return redirect()->route('ortho.list1_list.index');
+            }else{
+                Session::flash('danger', trans('common.message_edit_danger'));
+                return redirect()->route('ortho.list1_list.change', array('id'=>$id));
+            } 
+        }
 
     }
 }

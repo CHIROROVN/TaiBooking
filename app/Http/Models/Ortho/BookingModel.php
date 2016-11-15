@@ -306,12 +306,25 @@ class BookingModel
             $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
-                        ->where('t_booking.last_kind', '<>', DELETE)
-                        ->where('t_booking.booking_group_id','=' , $new_booking_group)
-                        ->where('t_booking.booking_childgroup_id','=' , $new_booking_childgroup_id)
-                        ->where('t_booking.booking_start_time', '>=', $start_time)
-                        ->where('t_booking.facility_id', $new_facility_id)
-                        ->orderBy('t_booking.booking_date', 'asc')
+                        ->where('t_booking.last_kind', '<>', DELETE);
+           
+            if(!empty($new_booking_group)){
+                $results = $results->where('t_booking.booking_group_id','=' , $new_booking_group);
+            }
+
+            if(!empty($new_booking_childgroup_id)){
+                $results = $results->where('t_booking.booking_childgroup_id','=' , $new_booking_childgroup_id);
+            }
+
+            if(!empty($start_time)){
+                $results = $results->where('t_booking.booking_start_time', '>=', $start_time);
+            }
+
+            if(!empty($new_facility_id)){
+                $results = $results->where('t_booking.facility_id', $new_facility_id);
+            }
+
+            $results = $results->orderBy('t_booking.booking_date', 'asc')
                         ->orderBy('t_booking.booking_start_time', 'asc')
                         ->limit($limit)
                         ->get();
@@ -324,7 +337,7 @@ class BookingModel
                         ->select('t_booking.*')
                         ->where('t_booking.last_kind', '<>', DELETE)
                         ->where('t_booking.service_1', '=', -1);
-                        
+
         if(!empty($service_1_kind)){
            $results = $results->where('t_booking.service_1_kind', '=', $service_1_kind); 
         }

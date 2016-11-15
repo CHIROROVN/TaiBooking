@@ -455,14 +455,6 @@ class BookingTelWaitingController extends BackendController
 
         $flag = false;
 
-        // //delete booking tel
-        // foreach ($tel_child_groups as $telgroup) {
-        //     $clsBookingTel->update($telgroup->id, array(
-        //                             'last_date'             => date('Y-m-d H:i:s'),
-        //                             'last_user'             => Auth::user()->id,
-        //                             'last_kind'             => DELETE)); 
-        // }
-
         $bk_start_time = (int)$new_booking_start_time;
 
         if(!empty($newGroupBooking))

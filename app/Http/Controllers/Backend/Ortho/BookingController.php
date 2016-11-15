@@ -1493,6 +1493,7 @@ class BookingController extends BackendController
             $service_kind      = $s_kind[1];
             
             if($service_kind == 2){ 
+                //refine booking----------------------------------------
                 // get treatment
                 $treatment = null;
                 $timeTreatment = 0;
@@ -1549,7 +1550,8 @@ class BookingController extends BackendController
                     }
                 }
 
-                 $data['bookings'] = $tmpBookingTimeOk;
+                $data['bookings'] = $tmpBookingTimeOk;
+                //refine booking----------------------------------------
             }else if($service_kind == 1){
                 //Service
                 $data['bookings'] = $bookings;

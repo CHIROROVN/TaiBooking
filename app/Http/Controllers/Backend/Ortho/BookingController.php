@@ -1624,64 +1624,50 @@ class BookingController extends BackendController
         $new_booking_start_time         = $new_booking->booking_start_time;
         $new_booking_group              = $new_booking->booking_group_id;
         $new_booking_childgroup_id      = $new_booking->booking_childgroup_id;
+        $new_service_1_kind             = $new_booking->service_1_kind;
 
-        //Booking Current
-        $curr_booking                   = $clsBooking->get_by_id($booking_id);
-        $bk_child_group                 = $curr_booking->booking_childgroup_id;
-        $bk_group_id                    = $curr_booking->booking_group_id;
-        $patient_id                     = $curr_booking->patient_id;
-        $facility_id                    = $curr_booking->facility_id;
-        $bk_service                     = $curr_booking->service_1;
-        $bk_service_kind                = $curr_booking->service_1_kind;
-        $bk_booking_date                = $curr_booking->booking_date;
-        $bk_booking_start_time          = $curr_booking->booking_start_time;
+        //Booking Old
+        $old_booking                    = $clsBooking->get_by_id($booking_id);
+        $old_booking_childgroup_id      = $old_booking->booking_childgroup_id;
+        $old_booking_group_id           = $old_booking->booking_group_id;
+        $old_patient_id                 = $old_booking->patient_id;
+        $old_facility_id                = $old_booking->facility_id;
+        $old_service_1                  = $old_booking->service_1;
+        $old_service_kind               = $old_booking->service_1_kind;
+        $old_booking_date               = $old_booking->booking_date;
+        $old_booking_start_time         = $old_booking->booking_start_time;
 
-        $tmpGroup                       = explode('_', $bk_group_id);
-
-        $tmpChildGroup                  = explode('_', $bk_child_group);
-
-        $booking_group_id       = '';
-        if(!empty($tmpGroup[0])){
-            $booking_group_id = $tmpGroup[0].'_'.$new_booking_date;
-        }
-
-        $booking_childgroup_id  = '';
-        if(!empty($tmpChildGroup[1])){
-            $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
-        }
-
-        $group_booking                  = $clsBooking->get_by_child_group($bk_child_group, $patient_id, $facility_id, $bk_group_id);
-
+        //Condition
         $condition                      = array();
-        $condition['clinic_id']         = $curr_booking->clinic_id;
+        $condition['clinic_id']         = $old_booking->clinic_id;
         $condition['next']              = $new_booking_date;
 
-        $start_time = (int)$new_booking_start_time;
-        $flag  = false;
-
-        $limit = count($group_booking);
-
-        $oldFacility = array();
-        foreach ($group_booking as $key=>$bk) {
-         $oldFacility[$key] = $bk->facility_id;
+        //new booking_group_id
+        if(!empty($new_booking_group)){
+            $tmpGroup                       = explode('_', $new_booking_group);
+            $booking_group_id = $tmpGroup[0].'_'.$new_booking_date;
+        }else{
+            $booking_group_id = $old_booking_group_id;
         }
 
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $limit);
-
-        $bk_start_time  = (int)$bk_booking_start_time;
-
-        foreach ($newGroupBooking as $key=>$newbk) {
-            $clsBooking->update($newbk->booking_id, array(
-                                        'booking_date'          => $bk_booking_date,
-                                        'booking_start_time'    => $bk_start_time,
-                                        'booking_group_id'      => $bk_group_id,
-                                        'facility_id'           => !empty(@$oldFacility[$key]) ? @$oldFacility[$key] : $facility_id,
-                                        'last_date'             => date('Y-m-d H:i:s'),
-                                        'last_user'             => Auth::user()->id,
-                                        'last_kind'             => UPDATE
-                                    ));
-            $bk_start_time                  = convertStartTime($bk_start_time + 15);
+        //new booking_childgroup_id
+        $tmpChildGroup                  = explode('_', $old_booking_childgroup_id);
+        if(!empty($tmpChildGroup[1])){
+            $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
+        }else{
+            $booking_childgroup_id = 'group_'.$new_booking_start_time;
         }
+
+        $old_start_time  = (int)$old_booking_start_time;
+
+        //old booking group
+        $oldGroupBooking                  = $clsBooking->get_by_child_group2($old_patient_id, $old_booking_group_id, $old_booking_childgroup_id, $old_facility_id, $old_start_time);
+        
+        //count old booking
+        $limit = count($oldGroupBooking);
+
+        $new_start_time = (int)$new_booking_start_time;
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group($new_booking_date, $new_start_time, $new_facility_id, $new_booking_group, $new_booking_childgroup_id, $new_service_1=-1, $new_service_1_kind, $limit);
 
         $data_bk_change     = array();
         $where              = Session::get('where_booking_change');
@@ -1700,34 +1686,50 @@ class BookingController extends BackendController
             $data_bk_change['service_1_kind']   = $service_kind;
         }
 
-        $newFacility = array();
-        foreach ($newGroupBooking as $key=>$new_bk) {
-         $newFacility[$key] = $new_bk->facility_id;
-        }
+        $flag = false;
 
-        foreach ($group_booking as $gbk) {
-            if ($clsBooking->update($gbk->booking_id, array_merge($data_bk_change, array(
+        //update new booking
+        foreach ($newGroupBooking as $key=>$newbk) {
+            if( $clsBooking->update($newbk->booking_id, array_merge($data_bk_change ,array(
+                                        'patient_id'            => $old_patient_id,
                                         'booking_date'          => $new_booking_date,
-                                        'booking_start_time'    => $start_time,
+                                        'booking_start_time'    => $new_start_time,
                                         'booking_group_id'      => $booking_group_id,
                                         'booking_childgroup_id' => $booking_childgroup_id,
-                                        'facility_id'           => !empty(@$newFacility[$key]) ? @$newFacility[$key] : $facility_id,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE
-                                    ))) ) {
+                                    ))) ){
                 $flag = true;
-            }else{
-                $flag = false;
             }
-            $start_time = convertStartTime($start_time + 15);
+
+            $new_start_time                  = convertStartTime($new_start_time + 15);
+        }
+
+        // delete old booking
+        foreach ($oldGroupBooking as $gbk) {
+            if ($clsBooking->update($gbk->booking_id, array(
+                                        'patient_id'            => NULL,
+                                        'booking_date'          => $old_booking_date,
+                                        'booking_start_time'    => $old_start_time,
+                                        'booking_group_id'      => $old_booking_group_id,
+                                        'booking_childgroup_id' => NULL,
+                                        // 'facility_id'           => !empty(@$newFacility[$key]) ? @$newFacility[$key] : $old_facility_id,
+                                        'service_1'             => -1,
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => UPDATE
+                                    )) ) {
+                
+            }
+
+            $old_start_time = convertStartTime($old_start_time + 15);
         }
 
         if ($flag == true) {
             Session::flash('success', trans('common.message_edit_success'));
             return redirect()->route('ortho.bookings.booking.result.calendar', $condition);
         } else {
-            // $where              = Session::get('where_booking_change');
             Session::flash('danger', trans('common.message_edit_danger'));
             return redirect()->route('ortho.bookings.booking_change_list', array_merge(array('booking_id'=>$booking_id),$where));
             if(Session::has('where_booking_change')) Session::forget('where_booking_change');

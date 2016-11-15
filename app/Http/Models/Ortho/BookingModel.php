@@ -274,6 +274,37 @@ class BookingModel
         return $results;
     }
 
+    public function get_by_child_group2($old_patient_id=null, $old_booking_group_id=null, $old_booking_childgroup_id=null, $old_facility_id=null, $old_start_time)
+    {
+        $results = DB::table($this->table)
+                        ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
+                        ->where('t_booking.last_kind', '<>', DELETE);
+
+        if(!empty($old_booking_group_id)){
+            $results = $results->where('t_booking.booking_group_id', $old_booking_group_id);
+        }
+
+        if(!empty($old_booking_childgroup_id)){
+            $results = $results->where('t_booking.booking_childgroup_id', $old_booking_childgroup_id);
+        }
+
+        if(!empty($old_facility_id)){
+            $results = $results->where('t_booking.facility_id', $old_facility_id);
+        }
+
+        if(!empty($old_patient_id)){
+            $results = $results->where('t_booking.patient_id', $old_patient_id);
+        }
+
+        if(!empty($old_start_time)){
+            $results = $results->where('t_booking.booking_start_time', '>=' , $old_start_time);
+        }
+                        
+        return $results->orderBy('t_booking.booking_id', 'asc')->get();
+    }
+
+
     public function get_by_child_group_list2($booking_childgroup_id=null, $patient_id=null, $facility_id=null, $booking_group_id=null, $booking_status=null)
     {
         $results = DB::table($this->table)
@@ -300,13 +331,17 @@ class BookingModel
 
         return $results;
     }
-
-    public function get_new_booking_child_group($new_booking_date=null, $start_time=null, $new_facility_id=null, $new_booking_group=null, $new_booking_childgroup_id=null, $limit=null)
+ 
+    public function get_new_booking_child_group($new_booking_date=null, $new_start_time=null, $new_facility_id=null, $new_booking_group=null, $new_booking_childgroup_id=null, $new_service_1=null, $new_service_1_kind=null, $limit=null)
     {
             $results = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g')
                         ->where('t_booking.last_kind', '<>', DELETE);
+
+            if(!empty($new_booking_date)){
+                $results = $results->where('t_booking.booking_date','=' , $new_booking_date);
+            }
            
             if(!empty($new_booking_group)){
                 $results = $results->where('t_booking.booking_group_id','=' , $new_booking_group);
@@ -316,12 +351,20 @@ class BookingModel
                 $results = $results->where('t_booking.booking_childgroup_id','=' , $new_booking_childgroup_id);
             }
 
-            if(!empty($start_time)){
-                $results = $results->where('t_booking.booking_start_time', '>=', $start_time);
+            if(!empty($new_start_time)){
+                $results = $results->where('t_booking.booking_start_time', '>=', $new_start_time);
             }
 
             if(!empty($new_facility_id)){
                 $results = $results->where('t_booking.facility_id', $new_facility_id);
+            }
+
+            if(!empty($new_service_1)){
+                $results = $results->where('t_booking.service_1', $new_service_1);
+            }
+
+            if(!empty($new_service_1_kind)){
+                $results = $results->where('t_booking.service_1_kind', $new_service_1_kind);
             }
 
             $results = $results->orderBy('t_booking.booking_date', 'asc')

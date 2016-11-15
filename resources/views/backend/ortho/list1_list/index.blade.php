@@ -106,7 +106,7 @@
               @endif
             </td>
             <td>
-              {{ @$item->free_text }}
+              {{ $item->booking_memo }}
             </td>
             <td align="center">
               <a href="{{ route('ortho.list1_list.search', [ $item->id ]) }}" class="btn btn-sm btn-page">予約の登録</a>

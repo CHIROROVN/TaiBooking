@@ -410,6 +410,9 @@ class BookingTelWaitingController extends BackendController
 
         $bookingtel                     = $clsBookingTel->get_by_id($id);
 
+        $tel_booking_childgroup_id      = $bookingtel->booking_childgroup_id;
+        $tel_booking_group_id           = $bookingtel->booking_group_id;
+
         $booking_id                     = Input::get('booking_id');
 
         $facility_id                    = $bookingtel->facility_id;
@@ -417,49 +420,48 @@ class BookingTelWaitingController extends BackendController
 
         $new_booking_childgroup_id      = $bookingtel->booking_childgroup_id;
 
+        //new booking
         $new_booking                    = $clsBooking->get_by_id($booking_id); 
 
         $new_booking_start_time         = $new_booking->booking_start_time;
         $new_booking_date               = $new_booking->booking_date;
-        $new_facility_id                = $new_booking->facility_id;    
+        $new_facility_id                = $new_booking->facility_id;
+        $new_booking_group_id           = $new_booking->booking_group_id;
+        $new_booking_childgroup_id      = $new_booking->booking_childgroup_id;
 
-        $bk_group_id                    = $new_booking->booking_group_id;
-
-        $tmpGroup                       = explode('_', $bk_group_id);
-
-        $booking_group_id       = '';
-        if(!empty($tmpGroup[0])){
-            $booking_group_id = $tmpGroup[0].'_'.$new_booking_date;
+        //new booking_group_id
+        if(!empty($new_booking_group_id)){
+            $tmpGroup                       = explode('_', $new_booking_group_id);
+            $booking_group_id       = '';
+            if(!empty($tmpGroup[0])){
+                $booking_group_id = $tmpGroup[0].'_'.$new_booking_date;
+            }
+        }else{
+            $booking_group_id = $tel_booking_group_id;
         }
 
-        $bk_child_group                 = $new_booking->booking_childgroup_id;
-        $booking_childgroup_id  = '';
-        if(!empty($tmpGroup[1])){
-            $booking_childgroup_id = 'group_'.$new_booking_start_time;
-        }
+        //new booking_childgroup_id
+        $booking_childgroup_id = 'group_'.$new_booking_start_time;
 
-        $start_time = (int)$new_booking_start_time;
-
-        $tel_booking_childgroup_id          = $bookingtel->booking_childgroup_id;
-        $tel_booking_group_id               = $bookingtel->booking_group_id;
-
+        //new booking_start_time
+        $booking_start_time = (int)$new_booking_start_time;
 
         //tel child group
-        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_childgroup_id, $tel_booking_group_id, $facility_id);
+        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $new_booking_childgroup_id, $tel_booking_group_id, $facility_id);        
         
         $limit = count($tel_child_groups);
 
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $start_time, $service_1_kind, $new_facility_id , $bk_group_id, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $booking_start_time, $service_1_kind, $new_facility_id , $new_booking_group_id, $new_booking_childgroup_id, $limit);
 
         $flag = false;
 
-        //delete booking tel
-        foreach ($tel_child_groups as $telgroup) {
-            $clsBookingTel->update($telgroup->id, array(
-                                    'last_date'             => date('Y-m-d H:i:s'),
-                                    'last_user'             => Auth::user()->id,
-                                    'last_kind'             => DELETE)); 
-        }
+        // //delete booking tel
+        // foreach ($tel_child_groups as $telgroup) {
+        //     $clsBookingTel->update($telgroup->id, array(
+        //                             'last_date'             => date('Y-m-d H:i:s'),
+        //                             'last_user'             => Auth::user()->id,
+        //                             'last_kind'             => DELETE)); 
+        // }
 
         $bk_start_time = (int)$new_booking_start_time;
 
@@ -483,14 +485,19 @@ class BookingTelWaitingController extends BackendController
                                             'last_kind'             => UPDATE
                                             );
 
-                // if(!empty($new_booking_childgroup_id)){
-                //     array_merge($dataUpdate, array('booking_childgroup_id'=>$new_booking_childgroup_id));
-                // }
 
-                if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
+            if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
                 $flag = true;                   
 
                 $bk_start_time                  = convertStartTime($bk_start_time + 15);
+            }
+
+            //delete booking tel
+            foreach ($tel_child_groups as $telgroup) {
+                $clsBookingTel->update($telgroup->id, array(
+                                        'last_date'             => date('Y-m-d H:i:s'),
+                                        'last_user'             => Auth::user()->id,
+                                        'last_kind'             => DELETE)); 
             }
 
             if($flag){

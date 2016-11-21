@@ -97,7 +97,7 @@ class BookingModel
             $db = $db->where('t_booking.patient_id', $where['s_p_id']);
         }
 
-        $results = $db->groupBy('t_booking.patient_id')->orderBy('t_booking.booking_date', 'asc')->simplePaginate(PAGINATION);
+        $results = $db->groupBy('t_booking.booking_childgroup_id')->orderBy('t_booking.booking_date', 'asc')->simplePaginate(PAGINATION);
 
         return $results;
     }

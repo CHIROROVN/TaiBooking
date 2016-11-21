@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td><?php echo nl2br(@$bookingtel->free_text); ?></td>
+              <td><?php echo nl2br(@$bookingtel->booking_memo); ?></td>
             </tr>
           </tbody>
         </table>
@@ -160,7 +160,7 @@
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td><?php echo nl2br(@$bookingtel->free_text); ?></td>
+              <td><?php echo nl2br(@$bookingtel->booking_memo); ?></td>
             </tr>
           </tbody>
         </table>

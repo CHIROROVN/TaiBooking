@@ -276,7 +276,7 @@ class BookingTelWaitingModel
         return $results;
     }
 
-    public function getTelChildGroup($patient_id=null, $booking_childgroup_id=null, $booking_group_id=null, $facility_id=null)
+    public function getTelChildGroup($patient_id=null, $tel_booking_group_id=null, $tel_booking_childgroup_id=null, $facility_id=null, $service_1_kind=null)
     {
         $results = DB::table($this->table)->where('last_kind', '<>', DELETE);
 
@@ -286,18 +286,23 @@ class BookingTelWaitingModel
         }
 
         // booking_childgroup_id
-        if ( !empty($booking_childgroup_id) ) {
-            $results = $results->where('booking_childgroup_id', $booking_childgroup_id);
+        if ( !empty($tel_booking_childgroup_id) ) {
+            $results = $results->where('booking_childgroup_id', $tel_booking_childgroup_id);
         }
 
         // booking_group_id
-        if ( !empty($booking_group_id) ) {
-            $results = $results->where('booking_group_id', $booking_group_id);
+        if ( !empty($tel_booking_group_id) ) {
+            $results = $results->where('booking_group_id', $tel_booking_group_id);
         }
 
         // facility_id
         if ( !empty($facility_id) ) {
             $results = $results->where('facility_id', $facility_id);
+        }
+
+        // service_1_kind
+        if ( !empty($service_1_kind) ) {
+            $results = $results->where('service_1_kind', $service_1_kind);
         }
 
         $results = $results->orderBy('booking_date', 'asc')->orderBy('booking_start_time', 'asc')->orderBy('id', 'asc');

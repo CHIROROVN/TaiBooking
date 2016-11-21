@@ -164,9 +164,9 @@ class BookingModel
     {
         $db = DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE);
 
-        if ( $lastBookingVer ) {
+        //if ( $lastBookingVer ) {
             // $db = $db->where('t_booking.booking_rev', $this->getLastBookingRev());
-        }
+       // }
 
         // where booking_group_id
         if ( isset($where['booking_group_id']) && !empty($where['booking_group_id']) ) {
@@ -378,11 +378,16 @@ class BookingModel
     {
         $results = DB::table($this->table)                        
                         ->select('t_booking.*')
-                        ->where('t_booking.last_kind', '<>', DELETE)
-                        ->where('t_booking.service_1', '=', -1);
+                        ->where('t_booking.last_kind', '<>', DELETE);
+
 
         if(!empty($service_1_kind)){
-           $results = $results->where('t_booking.service_1_kind', '=', $service_1_kind); 
+            if($service_1_kind == 1){
+                $results = $results->where('t_booking.service_1_kind', '=', $service_1_kind);
+            }else{
+                $results = $results->where('t_booking.service_1', '=', -1);
+                $results = $results->where('t_booking.service_1_kind', '=', $service_1_kind);
+            }          
         }
 
         if(!empty($new_booking_group_id)){

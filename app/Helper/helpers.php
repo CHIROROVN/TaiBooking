@@ -665,3 +665,11 @@ function showPatient($p_id=null){
             array_splice($v, $offset, 1);
         });
     }
+
+    function count_treatment($time=null){
+        if(!empty($time)){
+            return $time / 15;
+        }else{
+            return 0;
+        }
+    }

@@ -345,8 +345,11 @@ class BookingTelWaitingController extends BackendController
         $where                            = array();
         $booking_old                      = $clsBookingTelWaiting->get_by_id($id);
 
-        //Treatment
-        $where['service_1_kind']          = 2;
+        $old_service_1_kind               = $booking_old->service_1_kind;
+
+        $old_service_1                    = $booking_old->service_1;
+
+        $where['service_1_kind']          = $old_service_1_kind;
         
         if(!empty(Input::get('booking_date')))
             $where['booking_date']        = Input::get('booking_date');
@@ -355,58 +358,64 @@ class BookingTelWaitingController extends BackendController
 
         $bookingsNewList                  = $clsBooking->get_booking_list2($where);
 
-        //refine booking-------------------------------
-        $timeTreatment = 0;
-        $treatment = $clsTreatment1->get_by_id($booking_old->service_1);
-        $timeTreatment = $treatment->treatment_time;
+        if($old_service_1_kind == 2)
+        {
+            //refine booking-------------------------------
+            $timeTreatment = 0;
+            $treatment = $clsTreatment1->get_by_id($booking_old->service_1);
+            $timeTreatment = $treatment->treatment_time;
 
-        // get booking: ($bookingsNewList) andcheck booking
-        $typeFacility = array();
-        foreach ( $bookingsNewList as $item ) {
-            if ( !in_array($item->facility_id, $typeFacility) ) {
-                $typeFacility[] = $item->facility_id;
-            }
-        }
 
-        $tmpBookings = array();
-        foreach ( $typeFacility as $itemFac ) {
-            $tmp = array();
+            // get booking: ($bookingsNewList) andcheck booking
+            $typeFacility = array();
             foreach ( $bookingsNewList as $item ) {
-                if ( $item->facility_id == $itemFac ) {
-                    $tmp[] = $item;
+                if ( !in_array($item->facility_id, $typeFacility) ) {
+                    $typeFacility[] = $item->facility_id;
                 }
             }
-            $tmpBookings[$itemFac] = $tmp;
-        }
 
-        // return list booking is ok
-        $tmpBookingTimeOk = array();
-        $timeTreatmentNumber = $timeTreatment / 15;
-        foreach ( $tmpBookings as $key => $values ) {
-            foreach ( $values as $keyBooking => $itemBooking ) {
-                $where = true;
-                for ( $i = 0; $i < $timeTreatmentNumber; $i++ ) {
-                    if ( !isset($values[$keyBooking + $i]) ) {
-                        $where = false;
-                        break;
+            $tmpBookings = array();
+            foreach ( $typeFacility as $itemFac ) {
+                $tmp = array();
+                foreach ( $bookingsNewList as $item ) {
+                    if ( $item->facility_id == $itemFac ) {
+                        $tmp[] = $item;
                     }
                 }
-                if ( $where ) {
-                    $whereTime = true;
-                    for ( $i = 0; $i < $timeTreatmentNumber - 1; $i++ ) {
-                        if ( convertStartTime($values[$keyBooking + $i]->booking_start_time + 15) != convertStartTime($values[$keyBooking + $i + 1]->booking_start_time) ) {
-                            $whereTime = false;
+                $tmpBookings[$itemFac] = $tmp;
+            }
+
+            // return list booking is ok
+            $tmpBookingTimeOk = array();
+            $timeTreatmentNumber = $timeTreatment / 15;
+            foreach ( $tmpBookings as $key => $values ) {
+                foreach ( $values as $keyBooking => $itemBooking ) {
+                    $where = true;
+                    for ( $i = 0; $i < $timeTreatmentNumber; $i++ ) {
+                        if ( !isset($values[$keyBooking + $i]) ) {
+                            $where = false;
+                            break;
                         }
                     }
-                    //(convertStartTime($values[$keyBooking]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 1]->booking_start_time) && (convertStartTime($values[$keyBooking + 1]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 2]->booking_start_time)
-                    if ( $whereTime ) {
-                        $tmpBookingTimeOk[] = $values[$keyBooking];
+                    if ( $where ) {
+                        $whereTime = true;
+                        for ( $i = 0; $i < $timeTreatmentNumber - 1; $i++ ) {
+                            if ( convertStartTime($values[$keyBooking + $i]->booking_start_time + 15) != convertStartTime($values[$keyBooking + $i + 1]->booking_start_time) ) {
+                                $whereTime = false;
+                            }
+                        }
+                        //(convertStartTime($values[$keyBooking]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 1]->booking_start_time) && (convertStartTime($values[$keyBooking + 1]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 2]->booking_start_time)
+                        if ( $whereTime ) {
+                            $tmpBookingTimeOk[] = $values[$keyBooking];
+                        }
                     }
                 }
             }
+            $data['bookings'] = $tmpBookingTimeOk;
+        }else{
+            $data['bookings'] = $bookingsNewList;
         }
-
-        $data['bookings'] = $tmpBookingTimeOk;
+        
         //refine booking----------------------------------------
 
         return view('backend.ortho.list1_list.change', $data);
@@ -477,9 +486,8 @@ class BookingTelWaitingController extends BackendController
         $booking_id                     = Input::get('booking_id');
 
         $facility_id                    = $bookingtel->facility_id;
+        $service_1                      = $bookingtel->service_1;
         $service_1_kind                 = $bookingtel->service_1_kind;
-
-        $new_booking_childgroup_id      = $bookingtel->booking_childgroup_id;
 
         //new booking
         $new_booking                    = $clsBooking->get_by_id($booking_id); 
@@ -508,9 +516,16 @@ class BookingTelWaitingController extends BackendController
         $booking_start_time = (int)$new_booking_start_time;
 
         //tel child group
-        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $new_booking_childgroup_id, $tel_booking_group_id, $facility_id);        
-        
+        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_group_id , $tel_booking_childgroup_id, $facility_id, $service_1_kind);
         $limit = count($tel_child_groups);
+
+        $clsTreatment1                  = new Treatment1Model();
+
+        if($service_1_kind == 2){
+            $treatment                  = $clsTreatment1->get_by_id($service_1);
+            $time                       = $treatment->treatment_time;
+            $limit = count_treatment($time);
+        }
 
         $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $booking_start_time, $service_1_kind, $new_facility_id , $new_booking_group_id, $new_booking_childgroup_id, $limit);
 

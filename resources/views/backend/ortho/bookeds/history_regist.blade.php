@@ -33,14 +33,45 @@
               <select name="result_start_time_hh" id="result_start_time_hh" class="form-control form-control--small">
                 @for ( $i = 6; $i <= 23; $i++ )
                 <?php $i = ($i < 10) ? '0' . $i : $i; ?>
+                  @if ( $booking_start_time_hhmm['hh'] == $i )
+                  <option value="{{ $i }}" selected="">{{ $i }}時</option>
+                  @else
                   <option value="{{ $i }}" @if(old('result_start_time_hh') == $i) selected="" @endif>{{ $i }}時</option>
+                  @endif
                 @endfor
               </select>
                 <select name="result_start_time_mm" id="result_start_time_mm" class="form-control form-control--small">
-                  <option value="00" @if(old('result_start_time_mm') == '00') selected="" @endif>00分</option>
-                  <option value="15" @if(old('result_start_time_mm') == '15') selected="" @endif>15分</option>
-                  <option value="30" @if(old('result_start_time_mm') == '30') selected="" @endif>30分</option>
-                  <option value="45" @if(old('result_start_time_mm') == '45') selected="" @endif>45分</option>
+                  @if ( $booking_start_time_hhmm['mm'] == '00')
+                  <option value="00" selected="">00分</option>
+                  @elseif ( old('result_start_time_mm') == '00' )
+                  <option value="00" selected="">00分</option>
+                  @else
+                  <option value="00" >00分</option>
+                  @endif
+
+                  @if ( $booking_start_time_hhmm['mm'] == '15')
+                  <option value="15" selected="">15分</option>
+                  @elseif ( old('result_start_time_mm') == '15' )
+                  <option value="15" selected="">15分</option>
+                  @else
+                  <option value="15" >15分</option>
+                  @endif
+
+                  @if ( $booking_start_time_hhmm['mm'] == '30')
+                  <option value="30" selected="">30分</option>
+                  @elseif ( old('result_start_time_mm') == '30' )
+                  <option value="30" selected="">30分</option>
+                  @else
+                  <option value="30" >30分</option>
+                  @endif
+
+                  @if ( $booking_start_time_hhmm['mm'] == '45')
+                  <option value="45" selected="">45分</option>
+                  @elseif ( old('result_start_time_mm') == '45' )
+                  <option value="45" selected="">45分</option>
+                  @else
+                  <option value="45" >45分</option>
+                  @endif
               </select>
               ～
               <!-- result_total_time -->
@@ -67,14 +98,14 @@
               <select name="clinic_id" id="clinic_id" class="form-control">
                 <option value="">▼選択</option>
                 <?php $listClinic = $clinics; ?>
-                @foreach ( $listClinic as $key => $clinic )
-                  @if ( $clinic->clinic_name == 'たい矯正歯科' )
-                  <option value="{{ $clinic->clinic_id }}" @if(old('clinic_id') == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
-                  <?php unset($listClinic[$key]) ?>
-                  @endif
-                @endforeach
                 @foreach ( $listClinic as $clinic )
-                  <option value="{{ $clinic->clinic_id }}" @if(old('clinic_id') == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
+                  @if ( $booking->clinic_id == $clinic->clinic_id )
+                  <option value="{{ $clinic->clinic_id }}"selected="" >{{ $clinic->clinic_name }}</option>
+                  @elseif ( old('clinic_id') == $clinic->clinic_id )
+                  <option value="{{ $clinic->clinic_id }}" selected="" >{{ $clinic->clinic_name }}</option>
+                  @else
+                  <option value="{{ $clinic->clinic_id }}">{{ $clinic->clinic_name }}</option>
+                  @endif
                 @endforeach
               </select>
               <span class="error-input">@if ($errors->first('clinic_id')) ※{!! $errors->first('clinic_id') !!} @endif</span>
@@ -88,7 +119,13 @@
               <select name="doctor_id" id="doctor_id" class="form-control">
                 <option value="">▼選択</option>
                 @foreach ( $doctors as $doctor )
-                  <option value="{{ $doctor->id }}" @if(old('doctor_id') == $doctor->id) selected="" @endif>{{ $doctor->u_name }}</option>
+                  @if ( $booking->doctor_id == $doctor->id )
+                  <option value="{{ $doctor->id }}"selected="">{{ $doctor->u_name }}</option>
+                  @elseif ( old('doctor_id') == $doctor->id )
+                  <option value="{{ $doctor->id }}"selected="">{{ $doctor->u_name }}</option>
+                  @else
+                  <option value="{{ $doctor->id }}">{{ $doctor->u_name }}</option>
+                  @endif
                 @endforeach
               </select>
               <span class="error-input">@if ($errors->first('doctor_id')) ※{!! $errors->first('doctor_id') !!} @endif</span>
@@ -102,7 +139,13 @@
               <select name="hygienist_id" id="hygienist_id" class="form-control">
                 <option value="">▼選択</option>
                 @foreach ( $hygienists as $hygienist )
-                  <option value="{{ $hygienist->id }}" @if(old('hygienist_id') == $hygienist->id) selected="" @endif>{{ $hygienist->u_name }}</option>
+                  @if ( $booking->hygienist_id == $hygienist->id )
+                  <option value="{{ $hygienist->id }}" selected="">{{ $hygienist->u_name }}</option>
+                  @elseif ( old('hygienist_id') == $hygienist->id )
+                  <option value="{{ $hygienist->id }}" selected="">{{ $hygienist->u_name }}</option>
+                  @else
+                  <option value="{{ $hygienist->id }}">{{ $hygienist->u_name }}</option>
+                  @endif
                 @endforeach
               </select>
             </td>
@@ -117,7 +160,9 @@
                 <optgroup label="業務名">
                 @if(count($services) > 0)
                   @foreach($services as $service)
-                    @if ( old('service_1') )
+                    @if ( $booking->service_1_kind == 1 && $booking->service_1 == $service->service_id )
+                    <option value="1|{{ $service->service_id }}" selected="">{{ $service->service_name }}</option>
+                    @elseif ( old('service_1') )
                     <option value="1|{{ $service->service_id }}" @if(old('service_1') == $service->service_id) selected="" @endif>{{ $service->service_name }}</option>
                     @else
                     <option value="1|{{ $service->service_id }}">{{ $service->service_name }}</option>
@@ -128,7 +173,9 @@
                 <optgroup label="治療内容">
                 @if(count($treatment1s) > 0)
                   @foreach($treatment1s as $key => $treatment1)
-                    @if ( old('service_1') )
+                    @if ( $booking->service_1_kind == 2 && $booking->service_1 == $key )
+                    <option value="2|{{ $key }}" selected="">{{ $treatment1 }}</option>
+                    @elseif ( old('service_1') )
                     <option value="2|{{ $key }}" @if(old('service_1') == $key) selected="" @endif>{{ $treatment1 }}</option>
                     @else
                     <option value="2|{{ $key }}">{{ $treatment1 }}</option>

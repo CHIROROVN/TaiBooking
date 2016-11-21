@@ -86,6 +86,14 @@ class BookedController extends BackendController
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
         $data['booking']            = $clsBooking->get_by_id($booking_id);
+
+        // booking info
+        $data['booking_start_time_hhmm'] = time2D4($data['booking']->booking_start_time);
+        
+        // echo '<pre>';
+        // print_r($data['booking_start_time_hhmm']);
+        // echo '</pre>';
+        // die;
         return view('backend.ortho.bookeds.history_regist', $data);
     }
 

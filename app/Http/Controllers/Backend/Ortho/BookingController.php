@@ -1807,14 +1807,14 @@ class BookingController extends BackendController
             $where['clinic_id']           = Input::get('clinic_id');
             $data['clinic_id']            = Input::get('clinic_id');
         }
-        if(Input::get('doctor_id') != null){
-            $where['doctor_id']           = Input::get('doctor_id');
-            $data['doctor_id']            = Input::get('doctor_id');
-        }
-        if(Input::get('hygienist_id') != null){
-            $where['hygienist_id']        = Input::get('hygienist_id');
-            $data['hygienist_id']         = Input::get('hygienist_id');
-        }
+        // if(Input::get('doctor_id') != null){
+        //     $where['doctor_id']           = Input::get('doctor_id');
+        //     $data['doctor_id']            = Input::get('doctor_id');
+        // }
+        // if(Input::get('hygienist_id') != null){
+        //     $where['hygienist_id']        = Input::get('hygienist_id');
+        //     $data['hygienist_id']         = Input::get('hygienist_id');
+        // }
         if(Input::get('booking_date') != null){
             $where['booking_date']        = Input::get('booking_date');
             $data['booking_date']         = Input::get('booking_date');

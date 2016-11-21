@@ -436,6 +436,8 @@ class BookingTelWaitingController extends BackendController
         $bookingtel                     = $clsBookingTel->get_by_id($id);
 
         $p_id                           = $bookingtel->patient_id;
+        $service_1                      = $bookingtel->service_1;
+        $service_1_kind                 = $bookingtel->service_1_kind;
 
         $clsPatient                     = new PatientModel();
         $data['patient']                = $clsPatient->get_by_id($p_id);
@@ -452,6 +454,8 @@ class BookingTelWaitingController extends BackendController
         $data['bookingtel_change']             = (Object)array_merge((array)$new_booking, array(
                                             'booking_memo'          => $booking_tel_memo,
                                             'patient_id'            => $p_id,
+                                            'service_1'             => $service_1,
+                                            'service_1_kind'        => $service_1_kind,
                                             'last_date'             => date('Y-m-d H:i:s'),
                                             'last_user'             => Auth::user()->id,
                                             ));

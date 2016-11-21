@@ -38,20 +38,38 @@ function showPatient($p_id=null){
     }
 
     function formatDateJp($date=null){
-        $year = date('Y', strtotime($date));
-        $month = date('m', strtotime($date));
-        $day = date('d', strtotime($date));
-        return $year.'年'.$month.'月'.$day.'日';
+        if(!empty($date)){
+            $year = date('Y', strtotime($date));
+            $month = date('m', strtotime($date));
+            $day = date('d', strtotime($date));
+            return $year.'年'.$month.'月'.$day.'日';
+        }else{
+            return null;
+        }
     }
 
     function convert2Digit($num){
         return sprintf("%02d", $num);
     }
 
-    function DayJp($date){
-        $convertEn2Jp = array('Sun'=>'日', 'Mon'=>'月', 'Tue'=>'火', 'Wed'=>'水', 'Thu'=>'木', 'Fri'=>'金', 'Sat'=>'土');
-        $dayEn = strtotime($date);
-        return $convertEn2Jp[date("D", $dayEn)];
+    function DayJp($date=null, $comm=null){
+        if(empty($comm)){
+            if(!empty($date)){
+                $convertEn2Jp = array('Sun'=>'日', 'Mon'=>'月', 'Tue'=>'火', 'Wed'=>'水', 'Thu'=>'木', 'Fri'=>'金', 'Sat'=>'土');
+                $dayEn = strtotime($date);
+                return $convertEn2Jp[date("D", $dayEn)];
+            }else{
+                return null;
+            }
+        }else{
+            if(!empty($date)){
+                $convertEn2Jp = array('Sun'=>'日', 'Mon'=>'月', 'Tue'=>'火', 'Wed'=>'水', 'Thu'=>'木', 'Fri'=>'金', 'Sat'=>'土');
+                $dayEn = strtotime($date);
+                return '('.$convertEn2Jp[date("D", $dayEn)].')';
+            }else{
+                return null;
+            }
+        }
     }
 
     function DayEn($date){
@@ -60,15 +78,15 @@ function showPatient($p_id=null){
     }
 
     function splitHourMin($str_time, $char = ':'){
-        // if(strlen($str_time) != 4){
-        //  return '00:00';
-        // }else{
+        if(!empty($str_time)){
             $tmpStr = sprintf("%04d",$str_time);
             $date = str_split($tmpStr, 2);
             $hour = $date[0];
             $min = $date[1];
             return $hour. $char .$min;
-        // }
+        }else{
+            return null;
+        }
     }
 
     /**

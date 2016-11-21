@@ -26,38 +26,7 @@
                     </select>
                   </td>
                 </tr>
-                <tr>
-                  <td class="col-title">担当ドクター</td>
-                  <td>
-                    <div class="row">
-                      @if(count($doctors) > 0)
-                        @foreach($doctors as $doctor)
-                          <div class="col-xs-4 col-sm-4 col-md-4">
-                            <div class="checkbox">
-                              <label><input name="doctor_id[]" value="{{$doctor->id}}" type="checkbox"> {{$doctor->u_name}}</label>
-                            </div>
-                          </div>
-                        @endforeach
-                      @endif
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="col-title">衛生士</td>
-                  <td>
-                    <div class="row">
-                       @if(count($hygienists) > 0)
-                        @foreach($hygienists as $hygienist)
-                          <div class="col-xs-4 col-sm-4 col-md-4">
-                            <div class="checkbox">
-                              <label><input name="hygienist_id[]" value="{{$hygienist->id}}" type="checkbox"> {{$hygienist->u_name}}</label>
-                            </div>
-                          </div>
-                        @endforeach
-                      @endif
-                    </div>
-                  </td>
-                </tr>
+               
                 <tr>
                   <td class="col-title">曜日</td>
                   <td>
@@ -191,11 +160,21 @@
 
       $('#week_later_option').click(function(event) {
         $('#week_later').attr("checked", "checked");
-      });
+      });     
 
       $('#date_picker').click(function(event) {
-        $('#date_picker').attr("checked", "checked");
+      $('#date_picker').attr("checked", "checked");
+
+        Date.prototype.yyyymmdd = function() {
+          var yyyy = this.getFullYear().toString();
+          var mm = (this.getMonth()+1).toString();
+          var dd  = this.getDate().toString();
+          return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
+        };
+        var date = new Date();
+        $('#date_picker_option').val(date.yyyymmdd());
       });
+
       $('#week_later').click(function(event) {
         $('#week_later').attr("checked", "checked");
       });

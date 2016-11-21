@@ -9,14 +9,14 @@
       <div class="col-md-6">
         <table class="table table-bordered treatment2-list">
           <tbody>
-          <tr><td colspan="2">無断キャンセル前予約</td></tr>
+          <tr><td colspan="2">TEL待ち患者情報</td></tr>
             <tr>
               <td class="col-title" style="width:30%">患者名</td>
               <td>{{@$patient->p_no}} {{ @$patient->p_name_f }} {{ @$patient->p_name_g }}</td>
             </tr>
             <tr>
               <td class="col-title">予約日時</td>
-              <td>{{formatDateJp($bookingtel->booking_date)}} ({{DayJp($bookingtel->booking_date)}})　{{splitHourMin($bookingtel->booking_start_time)}}</td>
+              <td>{{formatDateJp($bookingtel->booking_date)}} {{DayJp($bookingtel->booking_date, $comm='()')}}　{{splitHourMin($bookingtel->booking_start_time)}}</td>
             </tr>
             <tr>
               <td class="col-title">医院</td>
@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td><?php echo nl2br(@$bookingtel->free_text); ?></td>
+              <td><?php echo nl2br(@$bookingtel->booking_memo); ?></td>
             </tr>
           </tbody>
         </table>
@@ -160,7 +160,7 @@
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td><?php echo nl2br(@$bookingtel->free_text); ?></td>
+              <td><?php echo nl2br(@$bookingtel->booking_memo); ?></td>
             </tr>
           </tbody>
         </table>

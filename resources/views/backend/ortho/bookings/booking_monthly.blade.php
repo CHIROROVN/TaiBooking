@@ -17,7 +17,7 @@
                 @endforeach
               @endif
             </select>
-            <select name="clinic_id" id="clinic_id" class="form-control form-control--small">
+            <select name="clinic_id" id="clinic_id" class="form-control form-control--medium">
               <option value="">▼医院名</option>
             </select>
             <select name="u_id" id="u_id" class="form-control form-control--small">

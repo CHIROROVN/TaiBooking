@@ -76,16 +76,51 @@
               ～
               <!-- result_total_time -->
               <select name="result_total_time_hh" id="result_total_time_hh" class="form-control form-control--small">
+                <option value="">---</option>
                 @for ( $i = 6; $i <= 23; $i++ )
                 <?php $i = ($i < 10) ? '0' . $i : $i; ?>
-                  <option value="{{ $i }}" @if(old('result_total_time_hh') == $i) selected="" @endif>{{ $i }}時</option>
+                  @if ( !empty($booking_end_time_hhmm) && $booking_end_time_hhmm['hh'] == $i )
+                  <option value="{{ $i }}" selected="">{{ $i }}時</option>
+                  @elseif ( old('result_total_time_hh') == $i )
+                  <option value="{{ $i }}" selected="">{{ $i }}時</option>
+                  @else
+                  <option value="{{ $i }}">{{ $i }}時</option>
+                  @endif
                 @endfor
               </select>
               <select name="result_total_time_mm" id="result_total_time_mm" class="form-control form-control--small">
-                <option value="00" @if(old('result_total_time_mm') == '00') selected="" @endif>00分</option>
-                <option value="15" @if(old('result_total_time_mm') == '15') selected="" @endif>15分</option>
-                <option value="30" @if(old('result_total_time_mm') == '30') selected="" @endif>30分</option>
-                <option value="45" @if(old('result_total_time_mm') == '45') selected="" @endif>45分</option>
+                <option value="">---</option>
+                @if (  !empty($booking_end_time_hhmm) && $booking_end_time_hhmm['mm'] == '00' )
+                <option value="00" selected="">00分</option>
+                @elseif ( old('result_total_time_mm') == '00' )
+                <option value="00" selected="" >00分</option>
+                @else
+                <option value="00" >00分</option>
+                @endif
+
+                @if (  !empty($booking_end_time_hhmm) && $booking_end_time_hhmm['mm'] == '15' )
+                <option value="15" selected="">15分</option>
+                @elseif ( old('result_total_time_mm') == '15' )
+                <option value="15" selected="" >15分</option>
+                @else
+                <option value="15" >15分</option>
+                @endif
+
+                @if ( !empty($booking_end_time_hhmm) && $booking_end_time_hhmm['mm'] == '30' )
+                <option value="30" selected="">30分</option>
+                @elseif ( old('result_total_time_mm') == '30' )
+                <option value="30" selected="" >30分</option>
+                @else
+                <option value="30" >30分</option>
+                @endif
+
+                @if ( !empty($booking_end_time_hhmm) && $booking_end_time_hhmm['mm'] == '45' )
+                <option value="45" selected="">45分</option>
+                @elseif ( old('result_total_time_mm') == '45' )
+                <option value="45" selected="" >45分</option>
+                @else
+                <option value="45">45分</option>
+                @endif
               </select>
               <span class="error-input">@if ($errors->first('result_start_time')) ※{!! $errors->first('result_start_time') !!} @endif</span>
             </td>

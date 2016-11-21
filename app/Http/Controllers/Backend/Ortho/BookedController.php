@@ -61,7 +61,7 @@ class BookedController extends BackendController
         $clsResult                  = new ResultModel();
         $data['bookeds']            = $clsBooking->getBookedHistory($data);
         $data['services']           = $clsService->get_list();
-        $data['results']            = $clsResult->get_list();
+        $data['results']            = $clsResult->get_all();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
@@ -89,11 +89,28 @@ class BookedController extends BackendController
 
         // booking info
         $data['booking_start_time_hhmm'] = time2D4($data['booking']->booking_start_time);
-        
-        // echo '<pre>';
-        // print_r($data['booking_start_time_hhmm']);
-        // echo '</pre>';
-        // die;
+
+        $where = array(
+            'clinic_id'                 => $data['booking']->clinic_id,
+            'booking_group_id'          => $data['booking']->booking_group_id,
+            'booking_childgroup_id'     => $data['booking']->booking_childgroup_id,
+            'booking_date'              => $data['booking']->booking_date,
+        );
+        if ( $data['booking']->service_1_kind == 2 ) {
+            $where['facility_id']       = $data['booking']->facility_id;
+        }
+        $listBookingGroup = $clsBooking->get_where($where);
+        $booking_end_time = null;
+        $data['booking_end_time_hhmm'] = null;
+        if ( count($listBookingGroup) > 1 ) {
+            $booking_end_time = toTime($data['booking']->booking_start_time, (count($listBookingGroup) * 15 ));
+            $tmp = explode(':', $booking_end_time);
+            $data['booking_end_time_hhmm'] = array(
+                'hh' => $tmp[0],
+                'mm' => $tmp[1]
+            );
+        }
+
         return view('backend.ortho.bookeds.history_regist', $data);
     }
 

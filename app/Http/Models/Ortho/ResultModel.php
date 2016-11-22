@@ -92,6 +92,11 @@ class ResultModel
     {
         $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
 
+        // where result_date
+        if ( isset($where['result_date']) && !empty($where['result_date']) ) {
+            $db = $db->where('result_date', $where['result_date']);
+        }
+
         // where patient_id
         if ( isset($where['patient_id']) && !empty($where['patient_id']) ) {
             $db = $db->where('patient_id', $where['patient_id']);
@@ -115,6 +120,11 @@ class ResultModel
     public function get_by_where($where = array())
     {
         $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        // where result_date
+        if ( isset($where['result_date']) && !empty($where['result_date']) ) {
+            $db = $db->where('result_date', $where['result_date']);
+        }
 
         // where patient_id
         if ( isset($where['patient_id']) && !empty($where['patient_id']) ) {

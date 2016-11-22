@@ -257,9 +257,10 @@ class BookedController extends BackendController
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['services']           = $clsClinicService->get_service();
         $where = array(
-            'patient_id'    => $data['booked']->patient_id,
-            'clinic_id'     => $data['booked']->clinic_id,
-            'facility_id'   => $data['booked']->facility_id,
+            'result_date'    => $data['booked']->booking_date,
+            'patient_id'     => $data['booked']->patient_id,
+            'clinic_id'      => $data['booked']->clinic_id,
+            'facility_id'    => $data['booked']->facility_id,
         );
         $data['result']             = $clsResult->get_by_where($where);
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
@@ -375,6 +376,7 @@ class BookedController extends BackendController
         }
 
         $where = array(
+            'result_date'   => $booking->booking_date,
             'patient_id'    => $booking->patient_id,
             'clinic_id'     => $booking->clinic_id,
             'facility_id'   => $booking->facility_id,

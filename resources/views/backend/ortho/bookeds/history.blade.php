@@ -99,13 +99,13 @@
               </td>
               <td align="center">
                 <!-- regist -->
-                @if ( isset($results[$booked->patient_id]) )
+                @if ( isset($results[$booked->patient_id . '|' . $booked->clinic_id . '|' . $booked->facility_id]) )
                 <input onclick="location.href='{{ route('ortho.bookeds.history.regist', [$booked->booking_id]) }}'" value="登録" type="button" class="btn btn-xs btn-page" disabled="">
                 @else
                 <input onclick="location.href='{{ route('ortho.bookeds.history.regist', [$booked->booking_id]) }}'" value="登録" type="button" class="btn btn-xs btn-page">
                 @endif
                 <!-- edit -->
-                @if ( isset($results[$booked->patient_id]) )
+                @if ( isset($results[$booked->patient_id . '|' . $booked->clinic_id . '|' . $booked->facility_id]) )
                 <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page">
                 @else
                 <input onclick="location.href='{{ route('ortho.bookeds.history.edit', [ $booked->booking_id ]) }}'" value="編集" type="button" class="btn btn-xs btn-page" disabled="">
@@ -127,7 +127,7 @@
 
     <div class="row margin-bottom">
       <div class="col-md-12 text-center">
-        {!! $bookeds->appends(['s_clinic_id' => $s_clinic_id, 's_booking_date' => $s_booking_date, ])->render(new App\Pagination\SimplePagination($bookeds)) !!}
+        
       </div>
     </div>
   </div>    

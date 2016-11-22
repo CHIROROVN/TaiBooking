@@ -59,12 +59,33 @@ class BookedController extends BackendController
         $clsService                 = new ServiceModel();
         $clsTreatment1              = new Treatment1Model();
         $clsResult                  = new ResultModel();
-        $data['bookeds']            = $clsBooking->getBookedHistory($data);
+        $bookeds                    = $clsBooking->getBookedHistory($data);
         $data['services']           = $clsService->get_list();
-        $data['results']            = $clsResult->get_all();
+        $results                    = $clsResult->get_all();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
+
+        // set bookeds
+        $tmp = array();
+        $tmpGroup = array();
+        foreach ( $bookeds as $item ) {
+            $val = $item->booking_childgroup_id . '|' . $item->booking_group_id . '|' . $item->clinic_id . '|' . $item->facility_id;
+            if ( !in_array($val, $tmpGroup) ) {
+                $tmpGroup[] = $val;
+                $tmp[] = $item;
+            }
+        }
+        $data['bookeds'] = $tmp;
+
+        // set results
+        $tmpResults = array();
+        foreach ( $results as $item ) {
+            $val = $item->patient_id . '|' . $item->clinic_id . '|' . $item->facility_id;
+            $tmpResults[$val] = $item;
+        }
+        $data['results'] = $tmpResults;
+
         return view('backend.ortho.bookeds.history', $data);
     }
 
@@ -102,7 +123,7 @@ class BookedController extends BackendController
         $listBookingGroup = $clsBooking->get_where($where);
         $booking_end_time = null;
         $data['booking_end_time_hhmm'] = null;
-        if ( count($listBookingGroup) > 1 ) {
+        if ( count($listBookingGroup) > 0 ) {
             $booking_end_time = toTime($data['booking']->booking_start_time, (count($listBookingGroup) * 15 ));
             $tmp = explode(':', $booking_end_time);
             $data['booking_end_time_hhmm'] = array(
@@ -172,8 +193,13 @@ class BookedController extends BackendController
         }
         
         // set result_total_time
-        $totalSecond = totalSecond(Input::get('result_total_time_hh'), Input::get('result_total_time_mm'), '0', Input::get('result_start_time_hh'), Input::get('result_start_time_mm'), '0');
-        $totalTime = $totalSecond / 60;
+        if ( !empty(Input::get('result_total_time_hh')) && !empty(Input::get('result_total_time_mm')) ) {
+            $totalSecond = totalSecond(Input::get('result_total_time_hh'), Input::get('result_total_time_mm'), '0', Input::get('result_start_time_hh'), Input::get('result_start_time_mm'), '0');
+            $totalTime = $totalSecond / 60;
+        } else {
+            $totalTime = 15;
+        }
+        
         $dataUpdate['result_total_time'] = $totalTime;
         // set service 1
         $service_1                          = Input::get('service_1');
@@ -230,13 +256,28 @@ class BookedController extends BackendController
         $data['hygienists']         = $clsUser->get_by_belong([2,3]);
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['services']           = $clsClinicService->get_service();
-        $data['result']             = $clsResult->get_by_patient_id($data['booked']->patient_id);
+        $where = array(
+            'patient_id'    => $data['booked']->patient_id,
+            'clinic_id'     => $data['booked']->clinic_id,
+            'facility_id'   => $data['booked']->facility_id,
+        );
+        $data['result']             = $clsResult->get_by_where($where);
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
 
-        // echo '<pre>';
-        // print_r($data['booked']);
-        // echo '</pre>';die;
+        // booking info
+        $resultTime = $data['result']->result_start_time;
+        $data['booking_start_time_hhmm'] = array(
+            'hh' => substr($resultTime, 0, 2),
+            'mm' => substr($resultTime, 2, 2),
+        );
+        $booking_end_time = toTime($data['result']->result_start_time, $data['result']->result_total_time);
+        $tmp = explode(':', $booking_end_time);
+        $data['booking_end_time_hhmm'] = array(
+            'hh' => $tmp[0],
+            'mm' => $tmp[1]
+        );
+
         return view('backend.ortho.bookeds.history_edit', $data);
     }
 
@@ -333,7 +374,13 @@ class BookedController extends BackendController
             $dataUpdate['next_service_2']       = $tmpNext2[1];
         }
 
-        if ( $clsResult->update_by_patient_id($booking->patient_id, $dataUpdate) ) {
+        $where = array(
+            'patient_id'    => $booking->patient_id,
+            'clinic_id'     => $booking->clinic_id,
+            'facility_id'   => $booking->facility_id,
+        );
+
+        if ( $clsResult->update_by_where($where, $dataUpdate) ) {
             Session::flash('success', trans('common.message_edit_success'));
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));

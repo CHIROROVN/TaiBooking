@@ -87,4 +87,52 @@ class ResultModel
         $results = DB::table($this->table)->where('patient_id', $patient_id)->update($data);
         return $results;
     }
+
+    public function update_by_where($where = array(), $data)
+    {
+        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        // where patient_id
+        if ( isset($where['patient_id']) && !empty($where['patient_id']) ) {
+            $db = $db->where('patient_id', $where['patient_id']);
+        }
+
+        // where clinic_id
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('clinic_id', $where['clinic_id']);
+        }
+
+        // where facility_id
+        if ( isset($where['facility_id']) && !empty($where['facility_id']) ) {
+            $db = $db->where('facility_id', $where['facility_id']);
+        }
+
+        $results = $db->update($data);
+
+        return $results;
+    }
+
+    public function get_by_where($where = array())
+    {
+        $db = DB::table($this->table)->where('last_kind', '<>', DELETE);
+
+        // where patient_id
+        if ( isset($where['patient_id']) && !empty($where['patient_id']) ) {
+            $db = $db->where('patient_id', $where['patient_id']);
+        }
+
+        // where clinic_id
+        if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
+            $db = $db->where('clinic_id', $where['clinic_id']);
+        }
+
+        // where facility_id
+        if ( isset($where['facility_id']) && !empty($where['facility_id']) ) {
+            $db = $db->where('facility_id', $where['facility_id']);
+        }
+
+        $results = $db->first();
+
+        return $results;
+    }
 }

@@ -752,6 +752,7 @@ class BookingController extends BackendController
             $clsUser                    = new UserModel();
             $clsClinicService           = new ClinicServiceModel();
             $clsTreatment1              = new Treatment1Model();
+            $clsPatient                 = new PatientModel();
             $data['booking']            = $clsBooking->get_by_id($id);
             $data['doctors']            = $clsUser->get_by_belong([1]);
             $data['hygienists']         = $clsUser->get_by_belong([2,3]);
@@ -768,6 +769,13 @@ class BookingController extends BackendController
             $clsInsurance               = new InsuranceModel();
             $data['insurances']         = $clsInsurance->get_list();
             $data['booking_id']         = $id;
+
+            // sent booking from booked
+            if ( Session::has('booking_id') ) {
+                $data['bookingFromBooked'] = $clsBooking->get_by_id(Session::get('booking_id'));
+                $data['patient'] = $clsPatient->get_by_id($data['bookingFromBooked']->patient_id);
+            }
+
             return view('backend.ortho.bookings.booking_regist', $data);
         }else{
             return response()->view('errors.404', [], 404);
@@ -1739,6 +1747,11 @@ class BookingController extends BackendController
 
     //Booking Search
     public function getSearch(){
+        if ( Input::get('booking_id') ) {
+            Session::put('booking_id', Input::get('booking_id'));
+        }
+
+        $clsBooking                 = new BookingModel();
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_list_clinic();
         $clsUser                    = new UserModel();
@@ -1748,6 +1761,11 @@ class BookingController extends BackendController
         $data['services']           = $clsClinicService->get_service();
         $clsTreatment1              = new Treatment1Model();
         $data['treatment1s']        = $clsTreatment1->get_treatment_search();
+
+        if ( Input::get('booking_id') ) {
+            $data['booking']        = $clsBooking->get_by_id(Input::get('booking_id'));
+        }
+
         return view('backend.ortho.bookings.booking_search', $data);
     }
 

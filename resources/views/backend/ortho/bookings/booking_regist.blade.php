@@ -28,10 +28,17 @@
             <tr>
               <td class="col-title"><label for="textName">患者名</label></td>
               <td>
-                <?php //$pt = showPatient($booking->patient_id);?>
+                <?php //$pt = isset($bookingFromBooked) ? showPatient($bookingFromBooked->patient_id) : null;?>
+                @if ( isset($bookingFromBooked) )
+                <?php $patientName = $patient->p_no .' '. $patient->p_name_f . ' ' . $patient->p_name_g . ' ' . '(' . $patient->p_name_f_kana . ' ' . $patient->p_name_g_kana . ')'; ?>
+                <input type="hidden" name="p_id" id="p_id" value="{{ $bookingFromBooked->patient_id }}">
+                <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ $patientName }}"> &nbsp;
+                <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.1st.regist',$booking->booking_id)}}'">
+                @else
                 <input type="hidden" name="p_id" id="p_id" value="{{ old('p_id') }}">
                 <input type="text" name="patient" id="patient" class="input-text-mid form-control" style="width: 250px; display: inline;" value="{{ old('patient') }}"> &nbsp;
                 <input type="button" name="1stBK" id="button" value="新患です" class="btn btn-sm btn-page" onclick="location.href='{{route('ortho.bookings.booking.1st.regist',$booking->booking_id)}}'">
+                @endif
               </td>
             </tr>
             <tr>
@@ -65,6 +72,8 @@
                     <option value="{{$doctor->id}}" selected >{{$doctor->u_name}}</option>
                     @elseif ( $booking->doctor_id == $doctor->id )
                     <option value="{{$doctor->id}}" selected >{{$doctor->u_name}}</option>
+                    @elseif ( isset($bookingFromBooked) && $bookingFromBooked->doctor_id == $doctor->id )
+                    <option value="{{$doctor->id}}" selected >{{$doctor->u_name}}</option>
                     @else
                     <option value="{{$doctor->id}}" >{{$doctor->u_name}}</option>
                     @endif
@@ -83,6 +92,8 @@
                     @if ( old('hygienist_id') == $hygienist->id )
                     <option value="{{$hygienist->id}}" selected >{{$hygienist->u_name}}</option>
                     @elseif ( $booking->hygienist_id == $hygienist->id )
+                    <option value="{{$hygienist->id}}" selected >{{$hygienist->u_name}}</option>
+                    @elseif ( isset($bookingFromBooked) && $bookingFromBooked->hygienist_id == $hygienist->id )
                     <option value="{{$hygienist->id}}" selected >{{$hygienist->u_name}}</option>
                     @else
                     <option value="{{$hygienist->id}}" >{{$hygienist->u_name}}</option>
@@ -104,6 +115,8 @@
                       <option value="{{$key}}" selected >{{$equipment}}</option>
                       @elseif ( $booking->equipment_id == $key )
                       <option value="{{$key}}" selected >{{$equipment}}</option>
+                      @elseif ( isset($bookingFromBooked) && $bookingFromBooked->equipment_id == $key )
+                      <option value="{{$key}}" selected >{{$equipment}}</option>
                       @else
                       <option value="{{$key}}" >{{$equipment}}</option>
                       @endif
@@ -123,7 +136,15 @@
                   <option value="-1">▼選択</option>
                   @if(count($treatment1s) > 0)
                     @foreach($treatment1s as $treatment12)
-                    <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" @if(old('service_1') == $treatment12->treatment_id) selected="" @elseif($booking->service_1 == $treatment12->treatment_id) selected="" @endif>{{$treatment12->treatment_name}}</option>
+                      @if ( old('service_1') == $treatment12->treatment_id )
+                      <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" selected="">{{$treatment12->treatment_name}}</option>
+                      @elseif ( $booking->service_1 == $treatment12->treatment_id )
+                      <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" selected="">{{$treatment12->treatment_name}}</option>
+                      @elseif ( isset($bookingFromBooked) && $bookingFromBooked->service_1 == $treatment12->treatment_id )
+                      <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" selected="">{{$treatment12->treatment_name}}</option>
+                      @else
+                      <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk22" >{{$treatment12->treatment_name}}</option>
+                      @endif
                     @endforeach
                   @endif
                 </select>
@@ -165,6 +186,8 @@
                       <option value="{{$key}}" selected >{{$inspection}}</option>
                       @elseif ( $booking->inspection_id == $key )
                       <option value="{{$key}}" selected >{{$inspection}}</option>
+                      @elseif ( isset($bookingFromBooked) && $bookingFromBooked->inspection_id == $key )
+                      <option value="{{$key}}" selected >{{$inspection}}</option>
                       @else
                       <option value="{{$key}}" >{{$inspection}}</option>
                       @endif
@@ -185,6 +208,8 @@
                       <option value="{{$key}}" selected >{{$insurance}}</option>
                       @elseif($booking->insurance_id == $key)
                       <option value="{{$key}}" selected >{{$insurance}}</option>
+                      @elseif ( isset($bookingFromBooked) && $bookingFromBooked->insurance_id == $key )
+                      <option value="{{$key}}" selected >{{$insurance}}</option>
                       @else
                       <option value="{{$key}}" >{{$insurance}}</option>
                       @endif
@@ -202,6 +227,8 @@
                   <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" checked >救急です</label>
                   @elseif ( $booking->emergency_flag == 1 )
                   <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" checked >救急です</label>
+                  @elseif ( isset($bookingFromBooked) && $bookingFromBooked->emergency_flag == 1 )
+                  <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" checked >救急です</label>
                   @else
                   <label> <input name="emergency_flag" value="1" type="checkbox" id="emergency_flag" >救急です</label>
                   @endif
@@ -216,6 +243,8 @@
                   @if ( empty(old('booking_status')) )
                   <label><input name="booking_status" value="" type="radio" checked >通常</label>
                   @elseif ( empty($booking->booking_status) )
+                  <label><input name="booking_status" value="" type="radio" checked >通常</label>
+                  @elseif ( isset($bookingFromBooked) && empty($bookingFromBooked->booking_status) )
                   <label><input name="booking_status" value="" type="radio" checked >通常</label>
                   @else
                   <label><input name="booking_status" value="" type="radio" >通常</label>
@@ -234,6 +263,8 @@
                   @if ( old('booking_status') == 2 )
                   <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
                   @elseif ( $booking->booking_status == 2 )
+                  <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
+                  @elseif ( isset($bookingFromBooked) && $bookingFromBooked->booking_status == 2 )
                   <label><input name="booking_status" value="2" type="radio" checked >無断キャンセル</label>
                   @else
                   <label><input name="booking_status" value="2" type="radio" >無断キャンセル</label>
@@ -308,6 +339,8 @@
                   <label><input name="booking_status" value="4" type="radio" checked >未作成技工物TEL待ち</label>
                   @elseif ( $booking->booking_status == 4 )
                   <label><input name="booking_status" value="4" type="radio" checked >未作成技工物TEL待ち</label>
+                  @elseif ( isset($bookingFromBooked) && $bookingFromBooked->booking_status == 4 )
+                  <label><input name="booking_status" value="4" type="radio" checked >未作成技工物TEL待ち</label>
                   @else
                   <label><input name="booking_status" value="4" type="radio" >未作成技工物TEL待ち</label>
                   @endif
@@ -316,6 +349,8 @@
                   @if ( old('booking_status') == 5 )
                   <label><input name="booking_status" value="5" type="radio" checked >作成済み技工物キャンセル</label>
                   @elseif ( $booking->booking_status == 5 )
+                  <label><input name="booking_status" value="5" type="radio" checked >作成済み技工物キャンセル</label>
+                  @elseif ( isset($bookingFromBooked) && $bookingFromBooked->booking_status == 5 )
                   <label><input name="booking_status" value="5" type="radio" checked >作成済み技工物キャンセル</label>
                   @else
                   <label><input name="booking_status" value="5" type="radio" >作成済み技工物キャンセル</label>
@@ -329,6 +364,8 @@
                 @if ( old('booking_memo') )
                 <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{ old('booking_memo') }}</textarea>
                 @elseif ( $booking->booking_memo )
+                <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{ @$booking->booking_memo }}</textarea>
+                @elseif ( isset($bookingFromBooked) && $bookingFromBooked->booking_memo )
                 <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area">{{ @$booking->booking_memo }}</textarea>
                 @else
                 <textarea name="booking_memo" cols="60" rows="3" id="booking_memo" class="form-control form-control-area"></textarea>

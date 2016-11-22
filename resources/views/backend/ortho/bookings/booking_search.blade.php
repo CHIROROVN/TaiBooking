@@ -108,7 +108,11 @@
                     <optgroup label="治療内容">
                           @if(count($treatment1s) > 0)
                             @foreach($treatment1s as $treatment12)
+                              @if ( isset($booking) && $booking->service_1_kind == 2 && $booking->service_1 == $treatment12->treatment_id )
+                              <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk2" selected="" >{{$treatment12->treatment_name}}</option>
+                              @else
                               <option value="{{$treatment12->treatment_id}}#{{$treatment12->treatment_time}}_sk2" >{{$treatment12->treatment_name}}</option>
+                              @endif
                             @endforeach
                           @endif
                     </optgroup>

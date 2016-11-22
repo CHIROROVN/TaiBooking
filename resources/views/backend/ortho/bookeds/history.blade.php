@@ -115,7 +115,7 @@
                 @if ( $booked->booking_date > $currentDay )
                 {{ formatDate($booked->booking_date) }} {{ splitHourMin($booked->booking_start_time) }}～{{ toTime($booked->booking_start_time, $booked->booking_total_time) }}
                 @else
-                <input onclick="location.href='{{ route('ortho.bookings.booking_search') }}'" value="次回予約" type="button" class="btn btn-xs btn-page">
+                <input onclick="location.href='{{ route('ortho.bookings.booking_search', ['booking_id' => $booked->booking_id]) }}'" value="次回予約" type="button" class="btn btn-xs btn-page">
                 @endif
               </td>
             </tr>

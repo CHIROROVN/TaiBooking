@@ -70,7 +70,14 @@ class BookedController extends BackendController
         $tmp = array();
         $tmpGroup = array();
         foreach ( $bookeds as $item ) {
-            $val = $item->booking_childgroup_id . '|' . $item->booking_group_id . '|' . $item->clinic_id . '|' . $item->facility_id;
+            // treatment
+            if ( $item->service_1_kind == 2 ) {
+                $val = $item->booking_childgroup_id . '|' . $item->booking_group_id . '|' . $item->clinic_id . '|' . $item->facility_id;
+            // service
+            } else {
+                $val = $item->booking_childgroup_id . '|' . $item->booking_group_id . '|' . $item->clinic_id;
+            }
+            
             if ( !in_array($val, $tmpGroup) ) {
                 $tmpGroup[] = $val;
                 $tmp[] = $item;

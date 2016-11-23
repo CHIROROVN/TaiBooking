@@ -1751,6 +1751,10 @@ class BookingController extends BackendController
             Session::put('booking_id', Input::get('booking_id'));
         }
 
+        if ( Input::get('search') ) {
+            $data['search']         = Input::get('search');
+        }
+
         $clsBooking                 = new BookingModel();
         $clsClinic                  = new ClinicModel();
         $data['clinics']            = $clsClinic->get_list_clinic();

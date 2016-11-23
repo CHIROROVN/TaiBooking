@@ -27,6 +27,7 @@
                   </td>
                 </tr>
 
+                @if(isset($search) && $search == 'advance')
                 <tr>
                    <td class="col-title">担当ドクター</td>
                    <td>
@@ -59,7 +60,7 @@
                      </div>
                    </td>
                  </tr>
-               
+               @endif
                 <tr>
                   <td class="col-title">曜日</td>
                   <td>

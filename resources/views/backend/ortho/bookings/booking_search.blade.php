@@ -26,6 +26,39 @@
                     </select>
                   </td>
                 </tr>
+
+                <tr>
+                   <td class="col-title">担当ドクター</td>
+                   <td>
+                     <div class="row">
+                       @if(count($doctors) > 0)
+                         @foreach($doctors as $doctor)
+                           <div class="col-xs-4 col-sm-4 col-md-4">
+                             <div class="checkbox">
+                               <label><input name="doctor_id[]" value="{{$doctor->id}}" type="checkbox">{{$doctor->u_name}}</label>
+                             </div>
+                           </div>
+                         @endforeach
+                       @endif
+                     </div>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td class="col-title">衛生士</td>
+                   <td>
+                     <div class="row">
+                        @if(count($hygienists) > 0)
+                         @foreach($hygienists as $hygienist)
+                           <div class="col-xs-4 col-sm-4 col-md-4">
+                             <div class="checkbox">
+                               <label><input name="hygienist_id[]" value="{{$hygienist->id}}" type="checkbox"> {{$hygienist->u_name}}</label>
+                             </div>
+                           </div>
+                         @endforeach
+                       @endif
+                     </div>
+                   </td>
+                 </tr>
                
                 <tr>
                   <td class="col-title">曜日</td>

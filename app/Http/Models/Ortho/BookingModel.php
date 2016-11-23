@@ -772,15 +772,15 @@ class BookingModel
             $result = $db->where('t_booking.clinic_id', '=', $where['clinic_id']);
         }     
 
-        // if(isset($where['doctor_id'])){
-        //     $doctor_id = $where['doctor_id'];
-        //     $result = $db->where('t_booking.doctor_id', $doctor_id);
-        // }
+        if(isset($where['doctor_id'])){
+            $doctor_id = $where['doctor_id'];
+            $result = $db->where('t_booking.doctor_id', $doctor_id);
+        }
 
-        // if(isset($where['hygienist_id'])){
-        //     $hygienist_id = $where['hygienist_id'];
-        //     $result = $db->where('t_booking.hygienist_id', $hygienist_id);
-        // }
+        if(isset($where['hygienist_id'])){
+            $hygienist_id = $where['hygienist_id'];
+            $result = $db->where('t_booking.hygienist_id', $hygienist_id);
+        }
 
         if(isset($where['booking_date'])){
             $result = $db->whereIn(DB::raw("DAYOFWEEK(booking_date)"), $where['booking_date']);

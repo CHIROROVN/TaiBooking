@@ -88,7 +88,7 @@
               <div class="checkbox">
                 <label><input type="checkbox" name="u_power10" @if($user->u_power10 == 1) {{'checked'}} @endif value="1">初診業務</label>
               </div>
-              <div class="checkbox">
+              <!-- <div class="checkbox">
                 <label><input type="checkbox" name="u_power11" @if($user->u_power11 == 1) {{'checked'}} @endif value="1">メモ管理/power11</label>
               </div>
               <div class="dropdown">
@@ -97,7 +97,7 @@
                   <option value="1" @if($user->u_power12 == 1) selected="" @endif >伝言板</option>
                   <option value="2" @if($user->u_power12 == 2) selected="" @endif >伝言板</option>
                 </select>  <span class="power">伝言板/power12</span>
-              </div>
+              </div> -->
             </td>
           </tr>
           <tr>

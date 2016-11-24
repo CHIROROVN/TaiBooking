@@ -93,17 +93,17 @@
               <div class="checkbox">
                 <label><input type="checkbox" name="u_power10" @if(old('u_power10') == 1) {{'checked'}} @endif value="1">初診業務</label>
               </div>
-              <div class="checkbox">
+<!--               <div class="checkbox">
                 <label><input type="checkbox" name="u_power11" @if(old('u_power11') == 1) {{'checked'}} @endif value="1">メモ管理/power11</label>
               </div>
               <div class="dropdown">
-                <!-- <label><input type="checkbox" name="u_power12" @if(old('u_power12') == 1) {{'checked'}} @endif value="1">伝言板/power12</label> -->
+                <label><input type="checkbox" name="u_power12" @if(old('u_power12') == 1) {{'checked'}} @endif value="1">伝言板/power12</label>
                 <select name="u_power12" id="u_power12" style="width:80px;">
                   <option value="">正常</option>
                   <option value="1">伝言板</option>
                   <option value="2">伝言板</option>
                 </select>  <span class="power">伝言板/power12</span>
-              </div>
+              </div> -->
             </td>
           </tr>
             <tr>

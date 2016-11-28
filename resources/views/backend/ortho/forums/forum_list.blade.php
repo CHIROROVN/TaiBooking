@@ -30,7 +30,7 @@
         <table class="table table-bordered table-striped treatment2-list">
           <tbody>
                 <tr>
-                  <td class="col-title" align="center" style="width:50px"></td>
+                  <td class="col-title" align="center" style="width:50px">&nbsp;&nbsp;</td>
                   <td class="col-title" align="center" style="width:30%;">話題</td>
                   <td class="col-title" align="center">返答数</td>
                   <td class="col-title" align="center">読数</td>

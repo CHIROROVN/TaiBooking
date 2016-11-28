@@ -12,16 +12,16 @@
             <tr>
               <td class="col-title"  rowspan="3">
                 @if(empty($comment->forum_user_id))不明 @else {{$comment->u_name_display}} @endif<br />
-                {{formatDateTime($comment->forum_time, '/')}}<br />
-                 @if(!empty(Auth::user()->u_power12))
-                  @if(Auth::user()->u_power12 == 2)
-                <a class="text-orange" href="{{route('ortho.forums.forum_edit',$comment->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$comment->forum_id)}}">削除</a>
-                 @elseif(Auth::user()->u_power12 == 1)
-                    @if(checkOwn(Auth::user()->id, $comment->forum_id))
-                    <a class="text-orange" href="{{route('ortho.forums.forum_edit',$comment->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$comment->forum_id)}}">削除</a>
+                  {{formatDateTime($comment->forum_time, '/')}}<br />
+                   @if(!empty(Auth::user()->u_power12))
+                    @if(Auth::user()->u_power12 == 2)
+                  <a class="text-orange" href="{{route('ortho.forums.forum_edit',$comment->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$comment->forum_id)}}">削除</a>
+                   @elseif(Auth::user()->u_power12 == 1)
+                      @if(checkOwn(Auth::user()->id, $comment->forum_id))
+                      <a class="text-orange" href="{{route('ortho.forums.forum_edit',$comment->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$comment->forum_id)}}">削除</a>
+                      @endif
                     @endif
                   @endif
-                @endif
               </td>
               <td>{{$comment->forum_title}}</td>
             </tr>
@@ -46,15 +46,13 @@
                   @if(empty($cr->forum_user_id))不明 @else {{$cr->u_name_display}} @endif<br />
                   {{formatDateTime($cr->forum_read_time, '/')}}<br />
 
-                  @if(!empty(Auth::user()->u_power12))
-                  @if(Auth::user()->u_power12 == 2 && Auth::user()->id == $cr->forum_user_id)
-                  <a class="text-orange" href="{{route('ortho.forums.forum_edit',$cr->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$cr->forum_id)}}">削除</a>
-                  @elseif(Auth::user()->u_power12 == 1 && Auth::user()->id == $cr->forum_user_id)
-                    @if(checkOwn(Auth::user()->id, $cr->forum_id))
-                    <a class="text-orange" href="{{route('ortho.forums.forum_edit',$cr->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$cr->forum_id)}}">削除</a>
+                  @if(!empty(Auth::user()->u_power11))
+                    @if(Auth::user()->u_power11 == 1 && Auth::user()->id == $cr->forum_user_id)
+                      @if(checkOwn(Auth::user()->id, $cr->forum_id))
+                      <a class="text-orange" href="{{route('ortho.forums.forum_edit',$cr->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$cr->forum_id)}}">削除</a>
+                      @endif
                     @endif
                   @endif
-                @endif
 
                 </td>
                 <td>{{$cr->forum_title}}</td>

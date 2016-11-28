@@ -104,13 +104,17 @@ class ForumController extends BackendController
         $dataInput['last_ipadrs']         = $_SERVER['REMOTE_ADDR'];
         $dataInput['last_user']           = !empty(Auth::user()->id) ? Auth::user()->id : '';
 
+        $max_forum_id                = $clsForum->get_max();
+        if(empty( $max_forum_id)) $max_forum_id = 0;
+
         //insert to t_forum_read
         $fread                       = array();
-        $fread['forum_id']           = $clsForum->get_max() + 1;
+        $fread['forum_id']           = $max_forum_id + 1;
         $fread['last_date']          = date('y-m-d H:i:s');
         $fread['last_kind']          = INSERT;
         $fread['last_ipadrs']        = $_SERVER['REMOTE_ADDR'];
         $fread['last_user']          = !empty(Auth::user()->id) ? Auth::user()->id : '';
+
 
         if ( $clsForum->insert($dataInput) ) {
             //insert to t_forum_read
@@ -152,6 +156,19 @@ class ForumController extends BackendController
         $clsForum               = new ForumModel();
         $data['comment']        = $clsForum->get_by_id($id);
         $data['commentrs']      = $clsForum->getAllForum(null, $id);
+
+        $clsForumRead                 = new ForumReadModel();
+        $fread                        = array();
+        $fread['forum_read_user_id']  = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $fread['forum_read_time']     = date('y-m-d H:i:s');
+        $fread['last_date']           = date('y-m-d H:i:s');
+        $fread['last_kind']           = UPDATE;
+        $fread['last_ipadrs']         = $_SERVER['REMOTE_ADDR'];
+        $fread['last_user']           = !empty(Auth::user()->id) ? Auth::user()->id : '';
+        $clsForumRead->read($id, $fread);
+
+        //update count view comment
+        $clsForum->view($id);
         return view('backend.ortho.forums.forum_detail2', $data);
     }
 

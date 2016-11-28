@@ -88,6 +88,16 @@
                 @if(!empty($user->u_power10))
                 ・初診業務<br />
                 @endif
+                @if(!empty($user->u_power11))
+                メモ管理<br />
+                @endif
+                @if(!empty($user->u_power12))
+                  @if($user->u_power12 == 1)
+                  伝言板/私設
+                  @elseif($user->u_power12 == 2)
+                  伝言板/公衆
+                  @endif
+                @endif
               </td>
               <td align="center"><a href="{{ asset('ortho/users/edit/' . $user->id) }}" class="btn btn-sm btn-edit">編集</a></td>
             </tr>

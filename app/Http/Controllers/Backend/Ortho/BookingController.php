@@ -2198,7 +2198,7 @@ class BookingController extends BackendController
                                                 'facility_id'           => $facility_id,
                                                 'booking_status'        => NULL,
                                                 'booking_memo'          => $curr_booking->booking_memo,
-                                                'service_1'             => -1,
+                                                'service_1'             => ($curr_booking->service_1_kind == 2) ? -1 : $curr_booking->service_1,
                                                 'service_1_kind'        => $curr_booking->service_1_kind,
                                                 'last_date'             => date('Y-m-d H:i:s'),
                                                 'last_user'             => Auth::user()->id,

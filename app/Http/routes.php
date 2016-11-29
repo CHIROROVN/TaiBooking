@@ -13,7 +13,6 @@
 
 Route::get('/', function () {
 	return redirect('ortho/menus');
-    // return view('welcome');
 });
 
 Route::auth();
@@ -260,20 +259,20 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('interviews/update-booking/{booking_id}', ['as' => 'ortho.interviews.update.booking', 'uses' => 'InterviewController@getUpdateBooking']);
 
 
-
 	//List2
 	Route::get('list2-list', ['as' => 'ortho.bookings.list2_list', 'uses' => 'BookingController@list2_list']);
 
-	Route::get('list2-search/{booking_id}', ['as' => 'ortho.bookings.list2_search', 'uses' => 'BookingController@getList2Search']);
+	Route::get('list2-search/{id}', ['as' => 'ortho.bookings.list2_search', 'uses' => 'BookingController@getList2Search']);
 
-	Route::post('list2-search/{booking_id}', ['as' => 'ortho.bookings.list2_search', 'uses' => 'BookingController@postList2Search']);
+	Route::post('list2-search/{id}', ['as' => 'ortho.bookings.list2_search', 'uses' => 'BookingController@postList2Search']);
 
-	Route::get('list2-change/{booking_id}', ['as' => 'ortho.bookings.list2_change', 'uses' => 'BookingController@getList2Change']);
+	Route::get('list2-change/{id}', ['as' => 'ortho.bookings.list2_change', 'uses' => 'BookingController@getList2Change']);
 
-	Route::get('list2-change-confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.list2_change_confirm', 'uses' => 'BookingController@list2ChangeConfirm']);
+	Route::get('list2-change-confirm/{id}', ['as' => 'ortho.bookings.list2_change_confirm', 'uses' => 'BookingController@list2ChangeConfirm']);
 
-	Route::post('list2-change-confirm/{booking_id}/{id}', ['as' => 'ortho.bookings.list2_change_confirm', 'uses' => 'BookingController@postList2Cnf']);
+	Route::post('list2-change-confirm/{id}', ['as' => 'ortho.bookings.list2_change_confirm', 'uses' => 'BookingController@postList2Cnf']);
 
+	//List 3
 	Route::get('list3-list', ['as' => 'ortho.bookings.list3_list', 'uses' => 'BookingController@list3_list']);
 	Route::get('list4-list', ['as' => 'ortho.bookings.list4_list', 'uses' => 'BookingController@list4_list']);
 	Route::get('list5-list', ['as' => 'ortho.bookings.list5_list', 'uses' => 'BookingController@list5_list']);

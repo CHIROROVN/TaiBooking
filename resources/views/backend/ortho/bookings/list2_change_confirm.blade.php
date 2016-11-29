@@ -4,7 +4,7 @@
   <div class="container content-page">
     <h3>予約の変更</h3>
     <p>登録してよろしいですか？</p>
-    {!! Form::open(array('route' => ['ortho.bookings.list2_change_confirm', $booking_id, $id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
+    {!! Form::open(array('route' => ['ortho.bookings.list2_change_confirm', $id], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
     <div class="row">
       <div class="col-md-6">
         <table class="table table-bordered treatment2-list">
@@ -12,6 +12,7 @@
           <tr><td colspan="2">無断キャンセル前予約</td></tr>
             <tr>
               <td class="col-title" style="width:30%">患者名</td>
+              <input type="hidden" name="booking_id" value="{{@$booking_id}}">
               <td>{{$booking->p_no}} {{ $booking->p_name_f }} {{ $booking->p_name_g }}</td>
             </tr>
             <tr>
@@ -55,7 +56,7 @@
               <td>@if($booking->emergency_flag == 1) 救急です @else 救急ではない @endif</td>
             </tr>
             <tr>
-              <?php $arrStatus = array('1'=>'通常','2'=>'「TEL待ち」です','3'=>'「リコール」です','4'=>'未作成技工物TEL待ち','5'=>'作成済み技工物キャンセル','6'=>'無断キャンセル') ?>
+              <?php $arrStatus = array(''=>'通常','1'=>'「TEL待ち」です','2'=>'無断キャンセル','3'=>'「リコール」です','4'=>'未作成技工物TEL待ち','5'=>'作成済み技工物キャンセル') ?>
               <td class="col-title">予約ステータス</td>
               <td>{{@$arrStatus[$booking->booking_status]}}</td>
             </tr>
@@ -77,7 +78,7 @@
             </tr>
             <tr>
               <td class="col-title">備考</td>
-              <td>{{@$booking->booking_memo}}</td>
+              <td><?php echo nl2br($booking->booking_memo)?></td>
             </tr>
           </tbody>
         </table>

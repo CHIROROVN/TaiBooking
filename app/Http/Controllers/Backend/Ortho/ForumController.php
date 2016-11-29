@@ -237,9 +237,11 @@ class ForumController extends BackendController
                 }
             }else{
                 $flag  = $clsForum->checkFileValid(trim($forum_file->getClientOriginalName()));
-                if($flag == true)
-                    $fn       = $forum_file->getClientOriginalName().'.'.$extFile;
-                $fn       = $forum_file->getClientOriginalName().'_'.rand(time(),time()).'.'.$extFile;
+
+                if($flag)
+                    $fn       = pathinfo($forum_file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$extFile;
+                else
+                    $fn       = pathinfo($forum_file->getClientOriginalName(), PATHINFO_FILENAME).'_'.rand(time(),time()).'.'.$extFile;
             }
 
             $path = '/backend/ortho/forums/comments/detail/files/';
@@ -304,9 +306,10 @@ class ForumController extends BackendController
                 }
             }else{
                 $flag  = $clsForum->checkFileValid(trim($forum_file->getClientOriginalName()));
-                if($flag == true)
-                    $fn       = $forum_file->getClientOriginalName().'.'.$extFile;
-                $fn       = $forum_file->getClientOriginalName().'_'.rand(time(),time()).'.'.$extFile;
+                if($flag)
+                    $fn       = pathinfo($forum_file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$extFile;
+                else
+                    $fn       = pathinfo($forum_file->getClientOriginalName(), PATHINFO_FILENAME).'_'.rand(time(),time()).'.'.$extFile;
             }
 
             $path = '/backend/ortho/forums/comments/detail/files/';

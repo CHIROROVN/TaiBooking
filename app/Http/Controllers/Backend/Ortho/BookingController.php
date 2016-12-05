@@ -2090,6 +2090,7 @@ class BookingController extends BackendController
 
     public function postList2Cnf($id){
         $clsBooking                     = new BookingModel();
+        $clsTreatment1                  = new Treatment1Model();
         $booking_id                     = Input::get('booking_id');
 
         //Booking New
@@ -2106,6 +2107,7 @@ class BookingController extends BackendController
         $bk_group_id                    = $curr_booking->booking_group_id;
         $patient_id                     = $curr_booking->patient_id;
         $facility_id                    = $curr_booking->facility_id;
+        $clinic_id                      = $curr_booking->clinic_id;
         $service_1                      = $curr_booking->service_1;
         $service_1_kind                 = $curr_booking->service_1_kind;
         $bk_booking_date                = $curr_booking->booking_date;
@@ -2132,25 +2134,37 @@ class BookingController extends BackendController
         //new booking_start_time
         $booking_start_time = (int)$new_booking_start_time;
 
-        //list2 booking child group
-        $list2_child_groups = $clsBooking->get_by_child_group_list2($bk_child_group, $patient_id, $facility_id, $bk_group_id, $booking_status=2);
+        $booking_end_time  = NULL;
+        if($service_1_kind == 2){
+            $treatment                  = $clsTreatment1->get_by_id($service_1);
+            if(!empty($treatment)){
+                $cur_treatment1TotalTime                       = $treatment->treatment_time;
+                $cur_mm = hourMin2Min($bk_booking_start_time);
+                $cur_mm = $cur_mm + $cur_treatment1TotalTime;
+                $booking_end_time = (int)min2HourMin($cur_mm);
+            }
+        }
 
-        $limit = count($list2_child_groups);
+        //list2 booking child group
+        $list2_child_groups = $clsBooking->get_by_child_group_list2($clinic_id, $bk_booking_date, $bk_booking_start_time, null, $patient_id, $facility_id, null, $booking_status=2, $booking_end_time);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;
         $condition['next']              = $new_booking_date;
 
-        $clsTreatment1                  = new Treatment1Model();
-
+        $hhmmBookingEndTime  = NULL;
         if($service_1_kind == 2){
             $treatment                  = $clsTreatment1->get_by_id($service_1);
-            $time                       = $treatment->treatment_time;
-            $limit = count_treatment($time);
+            if(!empty($treatment)){
+                $treatment1TotalTime                       = $treatment->treatment_time;
+                $new_mm = hourMin2Min($new_booking_start_time);
+                $new_mm = $new_mm + $treatment1TotalTime;
+                $hhmmBookingEndTime = (int)min2HourMin($new_mm);
+            }
         }
 
         //New booking group
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $booking_start_time, $service_1_kind, $new_facility_id , $new_booking_group_id, $new_booking_childgroup_id, $limit);
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $booking_start_time, $service_1_kind, $new_facility_id , null, null, $hhmmBookingEndTime);
 
         $flag = false;
 
@@ -2166,6 +2180,10 @@ class BookingController extends BackendController
                                             'booking_group_id'      => $booking_group_id,
                                             'patient_id'            => $curr_booking->patient_id,
                                             'doctor_id'             => $curr_booking->doctor_id,
+                                            'hygienist_id'          => $curr_booking->hygienist_id,
+                                            'equipment_id'          => $curr_booking->equipment_id,
+                                            'inspection_id'         => $curr_booking->inspection_id,
+                                            'insurance_id'          => $curr_booking->insurance_id,
                                             'facility_id'           => $new_facility_id,
                                             'booking_status'        => NULL,
                                             'booking_memo'          => $curr_booking->booking_memo,
@@ -2184,31 +2202,32 @@ class BookingController extends BackendController
             }
         }
 
-            //delete booking list 2
-            $list2_bk_start_time = (int)$bk_booking_start_time;
-            if(!empty($list2_child_groups)){
-                foreach ($list2_child_groups as $booking_group) {
-                    $dataDelete = array(
-                                                'booking_date'          => $new_booking_date,
-                                                'booking_start_time'    => $list2_bk_start_time,
-                                                'booking_childgroup_id' => NULL,
-                                                'booking_group_id'      => $bk_child_group,
-                                                'patient_id'            => NULL,
-                                                'doctor_id'             => NULL,
-                                                'facility_id'           => $facility_id,
-                                                'booking_status'        => NULL,
-                                                'booking_memo'          => $curr_booking->booking_memo,
-                                                'service_1'             => ($curr_booking->service_1_kind == 2) ? -1 : $curr_booking->service_1,
-                                                'service_1_kind'        => $curr_booking->service_1_kind,
-                                                'last_date'             => date('Y-m-d H:i:s'),
-                                                'last_user'             => Auth::user()->id,
-                                                'last_kind'             => UPDATE
-                                                );
+        //delete booking list 2
+        $list2_bk_start_time = (int)$bk_booking_start_time;
 
-                    $clsBooking->update($booking_group->booking_id, $dataDelete);
-                    $list2_bk_start_time                  = convertStartTime($list2_bk_start_time + 15);
-                }
+        if(!empty($list2_child_groups)){
+            foreach ($list2_child_groups as $booking_group) {
+                $dataDelete = array(
+                                            'booking_date'          => $new_booking_date,
+                                            'booking_start_time'    => $list2_bk_start_time,
+                                            'booking_childgroup_id' => NULL,
+                                            'booking_group_id'      => $bk_child_group,
+                                            'patient_id'            => NULL,
+                                            'doctor_id'             => NULL,
+                                            'facility_id'           => $facility_id,
+                                            'booking_status'        => NULL,
+                                            'booking_memo'          => $curr_booking->booking_memo,
+                                            'service_1'             => ($curr_booking->service_1_kind == 2) ? -1 : $curr_booking->service_1,
+                                            'service_1_kind'        => $curr_booking->service_1_kind,
+                                            'last_date'             => date('Y-m-d H:i:s'),
+                                            'last_user'             => Auth::user()->id,
+                                            'last_kind'             => UPDATE
+                                            );
+
+                $clsBooking->update($booking_group->booking_id, $dataDelete);
+                $list2_bk_start_time                  = convertStartTime($list2_bk_start_time + 15);
             }
+        }
 
         if ($flag == true) {
             Session::flash('success', trans('common.message_edit_success'));
@@ -2408,6 +2427,7 @@ class BookingController extends BackendController
         $bk_group_id                    = $curr_booking->booking_group_id;
         $patient_id                     = $curr_booking->patient_id;
         $facility_id                    = $curr_booking->facility_id;
+        $clinic_id                      = $curr_booking->clinic_id;
         $bk_service                     = $curr_booking->service_1;
         $bk_service_kind                = $curr_booking->service_1_kind;
         $bk_booking_date                = $curr_booking->booking_date;
@@ -2427,9 +2447,7 @@ class BookingController extends BackendController
             $booking_childgroup_id = 'group_'.$new_booking_start_time.(!empty($tmpChildGroup[2]) ? '_'.$tmpChildGroup[2] : '').(!empty($tmpChildGroup[3]) ? '_'.$tmpChildGroup[3] : '').(!empty($tmpChildGroup[4]) ? '_'.$tmpChildGroup[4] : '');
         }
 
-        $booking_status                 = 2;
-
-        $group_booking                  = $clsBooking->get_by_child_group_list2($bk_child_group, $patient_id, $facility_id, $bk_group_id, $booking_status);
+        $group_booking                  = $clsBooking->get_by_child_group_list2($clinic_id, $bk_booking_date, $bk_child_group, $patient_id, $facility_id, $bk_group_id, $booking_status=2);
 
         $condition                      = array();
         $condition['clinic_id']         = $curr_booking->clinic_id;

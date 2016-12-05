@@ -474,14 +474,16 @@ class BookingTelWaitingController extends BackendController
 
     public function postList1Cnf($id)
     {
-        $clsBooking                     = new BookingModel();
 
+        $clsBooking                     = new BookingModel();
         $clsBookingTel                  = new BookingTelWaitingModel();
+        $clsTreatment1                  = new Treatment1Model();
 
         $bookingtel                     = $clsBookingTel->get_by_id($id);
 
         $tel_booking_childgroup_id      = $bookingtel->booking_childgroup_id;
         $tel_booking_group_id           = $bookingtel->booking_group_id;
+        $tel_booking_start_time         = $bookingtel->booking_start_time;
 
         $booking_id                     = Input::get('booking_id');
 
@@ -515,19 +517,30 @@ class BookingTelWaitingController extends BackendController
         //new booking_start_time
         $booking_start_time = (int)$new_booking_start_time;
 
-        //tel child group
-        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_group_id , $tel_booking_childgroup_id, $facility_id, $service_1_kind);
-        $limit = count($tel_child_groups);
-
-        $clsTreatment1                  = new Treatment1Model();
-
+        $tel_booking_end_start_time  = NULL;
         if($service_1_kind == 2){
-            $treatment                  = $clsTreatment1->get_by_id($service_1);
-            $time                       = $treatment->treatment_time;
-            $limit = count_treatment($time);
+            $telTreatment               = $clsTreatment1->get_by_id($service_1);
+            $telTreatment1TotalTime     = $telTreatment->treatment_time;
+
+            $tel_mm = hourMin2Min($tel_booking_start_time);
+            $tel_mm = $tel_mm + $telTreatment1TotalTime;
+            $tel_booking_end_start_time = (int)min2HourMin($tel_mm);
         }
 
-        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $booking_start_time, $service_1_kind, $new_facility_id , $new_booking_group_id, $new_booking_childgroup_id, $limit);
+        //tel child group
+        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_group_id , $tel_booking_childgroup_id, $facility_id, $service_1_kind, $tel_booking_end_start_time);
+
+        $bk_booking_end_start_time  = NULL;
+        if($service_1_kind == 2){
+            $bk_treatment               = $clsTreatment1->get_by_id($service_1);
+            $bkTreatment1TotalTime      = $bk_treatment->treatment_time;
+            $bk_mm = hourMin2Min($new_booking_start_time);
+            $bk_mm = $bk_mm + $bkTreatment1TotalTime;
+            $bk_booking_end_start_time = (int)min2HourMin($bk_mm);
+        }
+
+        $newGroupBooking                = $clsBooking->get_new_booking_child_group2($new_booking_date, $booking_start_time, $service_1_kind, $new_facility_id , $new_booking_group_id, $new_booking_childgroup_id, $bk_booking_end_start_time);
+
 
         $flag = false;
 
@@ -543,6 +556,10 @@ class BookingTelWaitingController extends BackendController
                                             'booking_group_id'      => $booking_group_id,
                                             'patient_id'            => $bookingtel->patient_id,
                                             'doctor_id'             => $bookingtel->doctor_id,
+                                            'hygienist_id'          => $bookingtel->hygienist_id,
+                                            'equipment_id'          => $bookingtel->equipment_id,
+                                            'inspection_id'         => $bookingtel->inspection_id,
+                                            'insurance_id'          => $bookingtel->insurance_id,
                                             'facility_id'           => $new_facility_id,
                                             'booking_status'        => NULL,
                                             'booking_memo'          => $bookingtel->booking_memo,
@@ -552,7 +569,6 @@ class BookingTelWaitingController extends BackendController
                                             'last_user'             => Auth::user()->id,
                                             'last_kind'             => UPDATE
                                             );
-
 
             if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
                 $flag = true;                   

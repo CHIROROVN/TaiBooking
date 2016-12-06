@@ -194,8 +194,8 @@ class BookingTelWaitingController extends BackendController
             return redirect()->route('ortho.list1_list.edit', [ $bookingTelWaiting->id ])->withErrors($validator)->withInput();
         }
 
-        // insert
-        $dataInsert = array(
+        // Update
+        $dataUpdate = array(
             'clinic_id'         => Input::get('clinic_id'),
             'patient_id'        => Input::get('p_id'),
             'doctor_id'         => Input::get('doctor_id'),
@@ -213,18 +213,16 @@ class BookingTelWaitingController extends BackendController
             $tmp = explode('_', $service_1);
             if ( $tmp[1] == 'service' ) {
                 // service
-                $dataInsert['service_1'] = $tmp[0];
-                $dataInsert['service_1_kind'] = 1;
+                $dataUpdate['service_1'] = $tmp[0];
+                $dataUpdate['service_1_kind'] = 1;
             } else {
                 // treatment
-                $dataInsert['service_1'] = $tmp[0];
-                $dataInsert['service_1_kind'] = 2;
+                $dataUpdate['service_1'] = $tmp[0];
+                $dataUpdate['service_1_kind'] = 2;
             }
         }
 
-        $status_insert = $clsBookingTelWaiting->update($id, $dataInsert);
-
-        if ( $status_insert ) {
+        if ( $clsBookingTelWaiting->update($id, $dataUpdate )) {
             Session::flash('success', trans('common.message_edit_success'));
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
@@ -474,7 +472,6 @@ class BookingTelWaitingController extends BackendController
 
     public function postList1Cnf($id)
     {
-
         $clsBooking                     = new BookingModel();
         $clsBookingTel                  = new BookingTelWaitingModel();
         $clsTreatment1                  = new Treatment1Model();
@@ -484,6 +481,7 @@ class BookingTelWaitingController extends BackendController
         $tel_booking_childgroup_id      = $bookingtel->booking_childgroup_id;
         $tel_booking_group_id           = $bookingtel->booking_group_id;
         $tel_booking_start_time         = $bookingtel->booking_start_time;
+        $tel_clinic_id                  = $bookingtel->clinic_id;
 
         $booking_id                     = Input::get('booking_id');
 
@@ -521,14 +519,15 @@ class BookingTelWaitingController extends BackendController
         if($service_1_kind == 2){
             $telTreatment               = $clsTreatment1->get_by_id($service_1);
             $telTreatment1TotalTime     = $telTreatment->treatment_time;
-
-            $tel_mm = hourMin2Min($tel_booking_start_time);
-            $tel_mm = $tel_mm + $telTreatment1TotalTime;
-            $tel_booking_end_start_time = (int)min2HourMin($tel_mm);
+            if(!empty($tel_booking_start_time)){
+                $tel_mm = hourMin2Min($tel_booking_start_time);
+                $tel_mm = $tel_mm + $telTreatment1TotalTime;
+                $tel_booking_end_start_time = (int)min2HourMin($tel_mm);
+            }
         }
 
         //tel child group
-        $tel_child_groups = $clsBookingTel->getTelChildGroup($bookingtel->patient_id, $tel_booking_group_id , $tel_booking_childgroup_id, $facility_id, $service_1_kind, $tel_booking_end_start_time);
+        $tel_child_groups = $clsBookingTel->getTelChildGroup($tel_clinic_id, $tel_booking_start_time, $bookingtel->patient_id, $tel_booking_group_id , $tel_booking_childgroup_id, $facility_id, $service_1_kind, $tel_booking_end_start_time);
 
         $bk_booking_end_start_time  = NULL;
         if($service_1_kind == 2){
@@ -569,10 +568,7 @@ class BookingTelWaitingController extends BackendController
                                             'last_user'             => Auth::user()->id,
                                             'last_kind'             => UPDATE
                                             );
-
-            if( $clsBooking->update($booking_group->booking_id, $dataUpdate) )
-                $flag = true;                   
-
+                if($clsBooking->update($booking_group->booking_id, $dataUpdate)) $flag = true;
                 $bk_start_time                  = convertStartTime($bk_start_time + 15);
             }
 

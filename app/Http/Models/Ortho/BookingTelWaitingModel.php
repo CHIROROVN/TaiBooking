@@ -10,24 +10,24 @@ class BookingTelWaitingModel
 
     public function Rules()
     {
-    	return array(
-    		'clinic_id'         => 'required',
+        return array(
+            'clinic_id'         => 'required',
             'p_id'              => 'required',
             'doctor_id'         => 'required',
             'service_1'         => 'required',
             'telephone'         => 'numeric',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'clinic_id.required'        => trans('validation.error_clinic_id_required'),
             'p_id.required'             => trans('validation.error_p_id_required'),
             'doctor_id.required'        => trans('validation.error_doctor_id_required'),
             'service_1.required'        => trans('validation.error_service_1_required'),
             'telephone.numeric'         => trans('validation.error_telephone_numeric'),
-		);
+        );
     }
 
     public function get_all($where = array())
@@ -92,7 +92,7 @@ class BookingTelWaitingModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('id', $id)->update($data);
+        $results = DB::table($this->table)->where('id', $id)->update($data);
         return $results;
     }
 

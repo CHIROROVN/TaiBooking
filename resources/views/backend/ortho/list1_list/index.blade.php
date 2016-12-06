@@ -50,10 +50,10 @@
           <td align="center" class="col-title">患者名</td>
           <td align="center" class="col-title">担当ドクター</td>
           <td align="center" class="col-title">業務内容-1</td>
-          <td align="center" class="col-title" style="min-width: 120px">電話番号</td>
-          <td align="center" class="col-title" style="min-width: 120px">備考</td>
-          <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-edit">予約の登録</td>
-          <td style="width: 200px; min-width: 200px;" align="center" class="col-title col-action">TEL待ち情報の編集</td>
+          <td align="center" class="col-title" style="min-width: 80px">電話番号</td>
+          <td align="center" class="col-title" style="min-width: 70px">備考</td>
+          <td style="width: 200px; min-width: 100px;" align="center" class="col-title col-edit">予約の登録</td>
+          <td style="width: 200px; min-width: 140px;" align="center" class="col-title col-action">TEL待ち情報の編集</td>
         </tr>
 
         @if(empty($list1_list) || count($list1_list) < 1)

@@ -2139,9 +2139,11 @@ class BookingController extends BackendController
             $treatment                  = $clsTreatment1->get_by_id($service_1);
             if(!empty($treatment)){
                 $cur_treatment1TotalTime                       = $treatment->treatment_time;
-                $cur_mm = hourMin2Min($bk_booking_start_time);
-                $cur_mm = $cur_mm + $cur_treatment1TotalTime;
-                $booking_end_time = (int)min2HourMin($cur_mm);
+                if(!empty($bk_booking_start_time)){
+                    $cur_mm = hourMin2Min($bk_booking_start_time);
+                    $cur_mm = $cur_mm + $cur_treatment1TotalTime;
+                    $booking_end_time = (int)min2HourMin($cur_mm);
+                }
             }
         }
 
@@ -2157,9 +2159,11 @@ class BookingController extends BackendController
             $treatment                  = $clsTreatment1->get_by_id($service_1);
             if(!empty($treatment)){
                 $treatment1TotalTime                       = $treatment->treatment_time;
-                $new_mm = hourMin2Min($new_booking_start_time);
-                $new_mm = $new_mm + $treatment1TotalTime;
-                $hhmmBookingEndTime = (int)min2HourMin($new_mm);
+                if(!empty($new_booking_start_time)){
+                    $new_mm = hourMin2Min($new_booking_start_time);
+                    $new_mm = $new_mm + $treatment1TotalTime;
+                    $hhmmBookingEndTime = (int)min2HourMin($new_mm);
+                }
             }
         }
 

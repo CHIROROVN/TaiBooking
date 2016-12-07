@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class ServiceTemplateModel
@@ -32,11 +31,11 @@ class ServiceTemplateModel
             'service_facility_3.required' => trans('validation.error_service_facility_3_required'),
             'service_facility_4.required' => trans('validation.error_service_facility_4_required'),
             'service_facility_5.required' => trans('validation.error_service_facility_5_required'),
-            'service_time_1.required' => trans('validation.error_service_time_1_required'),
-            'service_time_2.required' => trans('validation.error_service_time_2_required'),
-            'service_time_3.required' => trans('validation.error_service_time_3_required'),
-            'service_time_4.required' => trans('validation.error_service_time_4_required'),
-            'service_time_5.required' => trans('validation.error_service_time_5_required'),
+            'service_time_1.required'     => trans('validation.error_service_time_1_required'),
+            'service_time_2.required'     => trans('validation.error_service_time_2_required'),
+            'service_time_3.required'     => trans('validation.error_service_time_3_required'),
+            'service_time_4.required'     => trans('validation.error_service_time_4_required'),
+            'service_time_5.required'     => trans('validation.error_service_time_5_required'),
         );
     }
 

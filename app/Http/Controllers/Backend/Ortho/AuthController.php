@@ -1,5 +1,4 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -28,7 +27,6 @@ class AuthController extends Controller
         }
     }
 
-
     /**
      * 
      */
@@ -36,7 +34,6 @@ class AuthController extends Controller
     {
         return view('backend.ortho.auth.login');
     }
-
 
     /**
      * 

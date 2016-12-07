@@ -1,24 +1,22 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class InspectionModel
 {
-
     protected $table = 'm_inspection';
 
     public function Rules()
     {
-    	return array(
-    		'inspection_name' => 'required',
-		);
+        return array(
+            'inspection_name' => 'required',
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'inspection_name.required' => trans('validation.error_inspection_name_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -47,7 +45,7 @@ class InspectionModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('inspection_id', $id)->update($data);
+        $results = DB::table($this->table)->where('inspection_id', $id)->update($data);
         return $results;
     }
 

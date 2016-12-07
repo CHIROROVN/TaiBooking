@@ -16,16 +16,16 @@ class DiagramsController extends BackendController
         $this->middleware('auth');
     }
 
-  	public function index(){
-  		$data 						        = array();
+    public function index(){
+      $data                     = array();
       $data['doctor_id']        = Input::get('doctor_id');
 
-  		$clsUser                	= new UserModel();
+      $clsUser                  = new UserModel();
       $clsBooking               = new BookingModel();
       $where = array(
         'u_id' => $data['doctor_id']
       );
-      $data['doctors']        	= $clsUser->get_by_belong([1]);
+      $data['doctors']          = $clsUser->get_by_belong([1]);
 
       // for in month
       $date_current             = date('Y-m-d');
@@ -328,8 +328,8 @@ class DiagramsController extends BackendController
       }
 
       $data['date']               = $date_current;
-      $data['bookings'] 			    = json_encode($tempDiagram);
+      $data['bookings']           = json_encode($tempDiagram);
 
-  		return view('backend.ortho.diagrams.index', $data);
-  	}
+      return view('backend.ortho.diagrams.index', $data);
+    }
 }

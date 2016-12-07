@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class UserModel
@@ -9,19 +8,19 @@ class UserModel
 
     public function Rules()
     {
-    	return array(
-    		'u_name'            => 'required',
+        return array(
+            'u_name'            => 'required',
             'u_name_yomi'       => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'u_name_display'    => 'required',
             //'u_login'           => 'required|unique:m_users,u_login,NULL,id,last_kind,<>' . DELETE,
             'u_login'           => 'required|unique:m_users',
             'password'          => 'required',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'u_name.required'           => trans('validation.error_u_name_required'),
             'u_name_yomi.required'      => trans('validation.error_u_name_yomi_required'),
             'u_name_yomi.regex'         => trans('validation.error_u_name_yomi_regex'),
@@ -29,7 +28,7 @@ class UserModel
             'u_login.required'          => trans('validation.error_u_login_required'),
             'u_login.unique'            => trans('validation.error_u_login_unique'),
             'password.required'         => trans('validation.error_password_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -80,7 +79,7 @@ class UserModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('id', $id)->update($data);
+        $results = DB::table($this->table)->where('id', $id)->update($data);
         return $results;
     }
 

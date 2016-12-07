@@ -9,7 +9,6 @@ use App\Http\Models\Ortho\TemplateModel;
 use App\Http\Models\Ortho\ServiceModel;
 use App\Http\Models\Ortho\ClinicServiceModel;
 use App\Http\Models\Ortho\Treatment1Model;
-
 use Request;
 use Auth;
 use Form;
@@ -276,14 +275,13 @@ class BookingTemplateController extends BackendController
     {
         $data                   = array();
         $data['s_clinic_id']    = Input::get('s_clinic_id');
-
         $clsClinic              = new ClinicModel();
         $clsBooking             = new BookingModel();
         $clsTemplate            = new TemplateModel();
         $clsBookingTemplate     = new BookingTemplateModel();
         $data['clinics']        = $clsClinic->get_list_clinic();
-
         $bookings               = $clsBooking->get_all_groupby($data);
+
         if ( empty(Input::get('s_clinic_id')) ) {
             $bookings = array();
         }
@@ -362,17 +360,10 @@ class BookingTemplateController extends BackendController
         $templateBookings           = $clsTemplate->get_by_mbtId($data['s_mbt_id']);
 
         if ( !empty($templateBookings) ) {
-            // $tmpTemplateGroupId = array();
-            // foreach ( $templateBookings as $item ) {
-            //     $tmpTemplateGroupId[] = $item->template_group_id . '_' . $data['date'];
-            // }
             $templates          = $clsBooking->get_by_group(array($data['s_mbt_id'] . '_' . $data['date']));
 
             foreach ( $templates as $key => $template ) {
                 $templates[$key]->clinic_service_id = $template->service_1;
-                // if ( $template->service_1 == -1 && $template->service_1_kind == 2 ) {
-                //     $templates[$key]->clinic_service_id = $template->service_1;
-                // }
                 $templates[$key]->template_group_id = $templateBookings[0]->template_group_id;
                 $templates[$key]->booking_start_time = sprintf("%04d", $template->booking_start_time);
             }
@@ -459,7 +450,6 @@ class BookingTemplateController extends BackendController
                 $clsBooking->insert($data);
             }
         }
-
         return redirect()->route('ortho.bookings.template.daily', [ 'clinic_id' => Input::get('clinic_id'), 'date' => Input::get('date'), 's_mbt_id' => Input::get('mbt_id') ]);
     }
 
@@ -846,8 +836,6 @@ class BookingTemplateController extends BackendController
             $id = $clsBooking->insert_get_id($dataInsert);
             $status = $clsBooking->get_by_id($id);
         }
-        
-
         echo json_encode(array('status', $status));
     }
 

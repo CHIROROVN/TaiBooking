@@ -9,18 +9,18 @@ class BelongModel
 
     public function Rules()
     {
-    	return array(
-    		'belong_name' => 'required',
+        return array(
+            'belong_name' => 'required',
             'belong_kind' => 'required',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
-    		'belong_name.required'  => trans('validation.error_belong_name_required'),
+        return array(
+            'belong_name.required'  => trans('validation.error_belong_name_required'),
             'belong_kind.required'  => trans('validation.error_belong_kind_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -56,7 +56,7 @@ class BelongModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('belong_id', $id)->update($data);
+        $results = DB::table($this->table)->where('belong_id', $id)->update($data);
         return $results;
     }
 

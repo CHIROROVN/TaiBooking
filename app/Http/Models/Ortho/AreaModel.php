@@ -9,16 +9,16 @@ class AreaModel
 
     public function Rules()
     {
-    	return array(
-    		'area_name' => 'required',
-		);
+        return array(
+            'area_name' => 'required',
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'area_name.required' => trans('validation.error_area_name_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -47,7 +47,7 @@ class AreaModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('area_id', $id)->update($data);
+        $results = DB::table($this->table)->where('area_id', $id)->update($data);
         return $results;
     }
 

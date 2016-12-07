@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class EquipmentModel

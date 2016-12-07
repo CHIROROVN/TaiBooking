@@ -6,12 +6,12 @@ class BookingTemplateModel
 {
     protected $table = 'm_booking_template';
     protected $primaryKey = 'mbt_id';
-    public $timestamps  = false;
+    public $timestamps    = false;
 
     public function Rules()
     {
         return array(
-            'mbt_name'        => 'required',
+            'mbt_name'          => 'required',
         );
     }
 

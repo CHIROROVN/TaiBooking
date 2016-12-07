@@ -1,7 +1,5 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
-
 use App\Http\Controllers\BackendController;
-
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
@@ -40,43 +38,8 @@ class BrotherController extends BackendController
         $tmpBrothers    = array();
         foreach ( $brothers1 as $key => $item ) {
             $tmpBrothers[] = $item;
-            // switch ( $item->brother_relation ) {
-            //     case 1:
-            //         if ( $item->p_sex == 1 ) {
-            //             $tmpBrothers[$key]->brother_relation = 2;
-            //         } else {
-            //             $tmpBrothers[$key]->brother_relation = 4;
-            //         }
-            //         break;
-            //     case 2:
-            //         if ( $item->p_sex == 1 ) {
-            //             $tmpBrothers[$key]->brother_relation = 1;
-            //         } else {
-            //             $tmpBrothers[$key]->brother_relation = 3;
-            //         }
-            //         break;
-            //     case 3:
-            //         if ( $item->p_sex == 1 ) {
-            //             $tmpBrothers[$key]->brother_relation = 2;
-            //         } else {
-            //             $tmpBrothers[$key]->brother_relation = 4;
-            //         }
-            //         break;
-            //     case 4:
-            //         if ( $item->p_sex == 1 ) {
-            //             $tmpBrothers[$key]->brother_relation = 1;
-            //         } else {
-            //             $tmpBrothers[$key]->brother_relation = 3;
-            //         }
-            //         break;
-            //     case 5:
-            //         $tmpBrothers[$key]->brother_relation = 5;
-            //         break;
-            //     default:
-            //         # code...
-            //         break;
-            // }
         }
+        
         if ( empty($data['brothers']) || count($data['brothers']) == 0 ) {
             $brothers2      = $clsBrother->get_all_me($patient_id);
             foreach ( $brothers2 as $key => $item ) {

@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class Treatment1Model
@@ -73,7 +72,7 @@ class Treatment1Model
                                     ->orderBy('treatment_sort_no', 'asc')
                                     ->get();
     }
-    
+
     public function get_list_treatment(){
         return DB::table($this->table)
                                     ->where('last_kind', '<>', DELETE)

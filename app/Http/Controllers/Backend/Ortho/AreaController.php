@@ -1,5 +1,4 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
-
 use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -99,7 +98,6 @@ class AreaController extends BackendController
         } else {
             Session::flash('danger', trans('common.message_regist_danger'));
         }
-
         return redirect()->route('ortho.areas.index');
     }
 

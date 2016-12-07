@@ -93,28 +93,24 @@ function showPatient($p_id=null){
      * ex: {{ splitHourMin($booking->booking_start_time) }}～{{ toTime($booking->booking_start_time, $booking->booking_total_time) }}
      */
     function toTime($from_time, $total_min){
-            // if(strlen($from_time) != 4){
-            //  return '00:00';
-            // }else{
-            $tmpStr = sprintf("%04d",$from_time);
-                $datef = str_split($tmpStr, 2);
-                $hf = (int)$datef[0];
-                $mf = (int)$datef[1];
-                $to_time = min2hour($total_min);
-                $ht = $to_time[0];
-                $mt = $to_time[1];
-                $fm = $mf + $mt;
-                $fh = $ht + $hf;
-                if($fm >= 60){
-                    $tmp_time = min2hour($fm);
-                    $tmp_h = $tmp_time[0];
-                    $tmp_m = $tmp_time[1];
-                    $fh = $fh + $tmp_h;
-                    $fm = $tmp_m;
-                }
-                $toTime = sprintf("%02d",$fh).':'.sprintf("%02d",$fm);
-                return $toTime;
-            // }
+        $tmpStr = sprintf("%04d",$from_time);
+            $datef = str_split($tmpStr, 2);
+            $hf = (int)$datef[0];
+            $mf = (int)$datef[1];
+            $to_time = min2hour($total_min);
+            $ht = $to_time[0];
+            $mt = $to_time[1];
+            $fm = $mf + $mt;
+            $fh = $ht + $hf;
+            if($fm >= 60){
+                $tmp_time = min2hour($fm);
+                $tmp_h = $tmp_time[0];
+                $tmp_m = $tmp_time[1];
+                $fh = $fh + $tmp_h;
+                $fm = $tmp_m;
+            }
+            $toTime = sprintf("%02d",$fh).':'.sprintf("%02d",$fm);
+            return $toTime;
     }
 
     function min2hour($min=null){
@@ -238,9 +234,6 @@ function showPatient($p_id=null){
         }
     }
 
-//  $time = strtotime("2016-07-19");
-// $final = date("Y-m-d", strtotime("+2 month", $time));
-
     /**
      * ex: 00,02 -> 00,03 ==> 60s
      */
@@ -321,7 +314,6 @@ function showPatient($p_id=null){
 
         $nextDate            = strtotime ( '+ 1 month' , strtotime ( $currentDay ) ) ;
         $nextDate            = date ( 'Y-m-d' , $nextDate );
-
         return $nextDate;
     }
 
@@ -458,14 +450,11 @@ function showPatient($p_id=null){
         }
     }
 
-
     function hourMin2Min($hhmm)
     {
         $tmpHhmm = sprintf('%04d', $hhmm);
-
         $hh = substr($tmpHhmm, 0, 2);
         $mm = substr($tmpHhmm, 2, 2);
-
         return $hh * 60 + $mm;
     }
 

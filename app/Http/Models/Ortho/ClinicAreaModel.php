@@ -1,24 +1,18 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class ClinicAreaModel
 {
-
     protected $table = 't_clinic_area';
 
     public function Rules()
     {
-    	return array(
-
-		);
+        return array();
     }
 
     public function Messages()
     {
-    	return array(
-
-		);
+        return array();
     }
 
     public function get_all()
@@ -97,7 +91,6 @@ class ClinicAreaModel
         $results = DB::table($this->table)->insert($data);
         return $results;
     }
-
 
     //get list clinic
     public function list_clinic_by_area($area_id = null){

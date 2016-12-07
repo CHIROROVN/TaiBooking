@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class ForumModel
@@ -136,6 +135,5 @@ class ForumModel
         if(!empty($result))
             return true;
         return false;
-
     }
 }

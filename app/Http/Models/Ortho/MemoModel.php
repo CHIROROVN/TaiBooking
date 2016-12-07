@@ -1,24 +1,22 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class MemoModel
 {
-
     protected $table = 't_memo';
 
     public function Rules()
     {
-    	return array(
+        return array(
                 'memo_contents'                 => 'required'
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
                 'memo_contents.required'        => trans('validation.error_memo_date_required')
-		);
+        );
     }
 
     public function get_all()
@@ -59,7 +57,7 @@ class MemoModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('memo_id', $id)->update($data);
+        $results = DB::table($this->table)->where('memo_id', $id)->update($data);
         return $results;
     }
 }

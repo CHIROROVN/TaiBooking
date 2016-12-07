@@ -1,26 +1,24 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class CommunicationModel
 {
-
     protected $table = 't_com';
 
     public function Rules()
     {
-    	return array(
-    		'com_title'                       => 'required',
+        return array(
+            'com_title'                       => 'required',
             'com_contents'                    => 'required'
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'com_title.required'                     => trans('validation.error_com_title_required'),
             'com_contents.required'                  => trans('validation.error_com_contents_required')
-		);
+        );
     }
 
     public function get_all($patient_id)
@@ -30,7 +28,6 @@ class CommunicationModel
                         ->select('t_com.*', 'm_users.u_name')
                         ->where('p_id', $patient_id)
                         ->where('t_com.last_kind', '<>', DELETE);
-
         $db = $results->orderBy('com_title', 'asc')->get();
         
         return $db;
@@ -56,7 +53,7 @@ class CommunicationModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('com_id', $id)->update($data);
+        $results = DB::table($this->table)->where('com_id', $id)->update($data);
         return $results;
     }
 }

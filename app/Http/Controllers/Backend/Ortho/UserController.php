@@ -233,7 +233,6 @@ class UserController extends BackendController
             'u_power9'          => 1,
             'u_power10'         => 1,
             'u_human_flg'       => '',
-
             'last_date'         => date('y-m-d H:i:s'),
             'last_kind'         => INSERT,
             'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],

@@ -1,25 +1,22 @@
 <?php namespace App\Http\Models\Ortho;
-
-
 use DB;
 
 class DdrModel
 {
-
     protected $table = 't_ddr';
 
     public function Rules()
     {
-    	return array(
+        return array(
             'ddr_start_date' => 'required',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'ddr_start_date.required' => trans('validation.error_ddr_start_date_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -60,7 +57,7 @@ class DdrModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('ddr_id', $id)->update($data);
+        $results = DB::table($this->table)->where('ddr_id', $id)->update($data);
         return $results;
     }
 }

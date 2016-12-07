@@ -1,9 +1,13 @@
 <?php namespace App\Http\Controllers\Backend\Ortho;
-
 use App\Http\Controllers\BackendController;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Auth;
+use Form;
+use Html;
+use Input;
+use Validator;
+use Session;
 use App\User;
 use App\Http\Models\Ortho\BookingTelWaitingModel;
 use App\Http\Models\Ortho\ClinicModel;
@@ -16,12 +20,6 @@ use App\Http\Models\Ortho\FacilityModel;
 use App\Http\Models\Ortho\EquipmentModel;
 use App\Http\Models\Ortho\InspectionModel;
 use App\Http\Models\Ortho\InsuranceModel;
-
-use Form;
-use Html;
-use Input;
-use Validator;
-use Session;
 
 class BookingTelWaitingController extends BackendController
 {

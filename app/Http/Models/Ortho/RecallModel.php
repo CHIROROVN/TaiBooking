@@ -1,10 +1,8 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class RecallModel
 {
-
     protected $table = 't_booking_recall';
     protected $primaryKey = 'id';
     public $timestamps  = false;
@@ -76,5 +74,4 @@ class RecallModel
         ->get();
         return $db;
     }
-
 }

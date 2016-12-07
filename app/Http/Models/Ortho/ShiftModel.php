@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class ShiftModel
@@ -24,7 +23,6 @@ class ShiftModel
         );
     }
 
-
     public function get_all($where = array())
     {
         $db = DB::table($this->table)
@@ -32,7 +30,6 @@ class ShiftModel
                     ->leftJoin('m_clinic as t2', 't_shift.clinic_id', '=', 't2.clinic_id')
                     ->select('t_shift.*', 't1.u_name', 't1.u_name_display', 't1.u_belong', 't2.clinic_name', 't2.clinic_display_name')
                     ->where('t_shift.last_kind', '<>', DELETE);
-
         // where
         if ( !empty($where['u_id']) ) {
             $db = $db->where('t_shift.u_id', $where['u_id']);
@@ -69,8 +66,7 @@ class ShiftModel
 
     public function insert($data)
     {
-        $results = DB::table($this->table)->insert($data);
-        return $results;
+        return DB::table($this->table)->insert($data);
     }
 
     public function insert_get_id($data)
@@ -109,7 +105,6 @@ class ShiftModel
             // exist
             return true;
         }
-
         // not exist
         return false;
     }
@@ -117,7 +112,6 @@ class ShiftModel
     public function checkExist($where = array())
     {
         $db = DB::table($this->table);
-
         // u_id
         if ( !empty($where['u_id']) ) {
             $db->where('u_id', $where['u_id']);
@@ -130,7 +124,6 @@ class ShiftModel
         if ( !empty($where['clinic_id']) ) {
             $db->where('clinic_id', $where['clinic_id']);
         }
-
         $db = $db->first();
         return $db;
     }
@@ -146,7 +139,6 @@ class ShiftModel
                     ->whereIn('t1.belong_kind', $belong_kind);
        return $db->get();
     }
-
 
     public function autoInsert($data)
     {

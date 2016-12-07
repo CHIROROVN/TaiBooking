@@ -6,12 +6,12 @@ use Config;
 
 class BackendController extends Controller
 {
-	public function __construct()
-	{
-		parent::__construct();
-		$this->middleware('auth');
+    public function __construct()
+    {
+        parent::__construct();
+        $this->middleware('auth');
         LaravelLocalization::setLocale('ja');
-		$ipaddress = '';
+        $ipaddress = '';
         if (isset($_SERVER['HTTP_CLIENT_IP']))
             $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
         else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
@@ -33,8 +33,7 @@ class BackendController extends Controller
         {
             define($key, $value);
         }
-	}
-
+    }
 
     /**
      * function set page, using in function delete(id)
@@ -54,15 +53,12 @@ class BackendController extends Controller
         if ($tmp_page < $page) {
             $page = $tmp_page;
         }
-
         return $page;
     }
-
 
     protected function top($clsObject, $id, $field_sort)
     {
         $min = $clsObject->get_min();
-
         // update
         $dataUpdate = array(
             $field_sort => $min - 1

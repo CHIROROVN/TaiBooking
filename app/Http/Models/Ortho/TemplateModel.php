@@ -1,5 +1,4 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class TemplateModel
@@ -47,7 +46,7 @@ class TemplateModel
         if ( !empty($template_group_id) ) {
             $db = $db->where('t_template.template_group_id', $template_group_id);
         }
-                                
+        
         $db = $db->first();
         return $db;
     }

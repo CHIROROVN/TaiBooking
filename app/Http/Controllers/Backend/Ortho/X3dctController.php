@@ -193,7 +193,6 @@ class X3dctController extends BackendController
         }
     }
 
-
     public function getDelete($patient_id, $id)
     {
         $clsX3dct                  = new X3dctModel();
@@ -212,7 +211,6 @@ class X3dctController extends BackendController
             return redirect()->route('ortho.xrays.detail', [ $patient_id ]);
         }
     }
-
 
     function cal_days_in_month($calendar, $month, $year) 
     { 

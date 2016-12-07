@@ -1,16 +1,13 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class PatientModel
 {
-
     protected $table = 't_patient';
-
 
     public function Rules()
     {
-    	return array(
+        return array(
             'p_no'                  => 'unique:t_patient',
             'p_name_f'              => 'required',
             'p_name_g'              => 'required',
@@ -19,12 +16,12 @@ class PatientModel
             'p_sex'                 => 'required',
             'p_tel'                 => 'required|regex:/^\+?[^a-zA-Z]{5,}$/',
             'p_email'               => 'email',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'p_no.unique'                       => trans('validation.error_p_no_unique'),
             'p_name_f.required'                 => trans('validation.error_p_name_f_required'),
             'p_name_g.required'                 => trans('validation.error_p_name_g_required'),
@@ -36,7 +33,7 @@ class PatientModel
             'p_tel.required'                    => trans('validation.error_p_tel_required'),
             'p_tel.regex'                       => trans('validation.error_p_tel_numeric'),
             'p_email.email'                     => trans('validation.error_p_email_email'),
-		);
+        );
     }
 
     public function get_all($where = array(), $paging = true)
@@ -110,7 +107,6 @@ class PatientModel
         } else {
             $db = $results->get();
         }
-
         return $db;
     }
 
@@ -130,7 +126,6 @@ class PatientModel
         }
 
         $db = $results->orderBy('p_no', 'asc')->get();
-
         return $db;
     }
 

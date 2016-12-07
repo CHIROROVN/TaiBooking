@@ -1,24 +1,22 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class InsuranceModel
 {
-
     protected $table = 'm_insurance';
 
     public function Rules()
     {
-    	return array(
-    		'insurance_name' => 'required',
-		);
+        return array(
+            'insurance_name' => 'required',
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'insurance_name.required' => trans('validation.error_insurance_name_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -47,7 +45,7 @@ class InsuranceModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('insurance_id', $id)->update($data);
+        $results = DB::table($this->table)->where('insurance_id', $id)->update($data);
         return $results;
     }
 

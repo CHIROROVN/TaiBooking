@@ -1,32 +1,30 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class ResultModel
 {
-
     protected $table = 't_result';
 
     public function Rules()
     {
-    	return array(
-    		'result_date'                   => 'required',
+        return array(
+            'result_date'                   => 'required',
             'result_start_time'             => 'required',
             'clinic_id'                     => 'required',
             'doctor_id'                     => 'required',
             'service_1'                     => 'required',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'result_date.required'          => trans('validation.error_result_result_date_required'),
             'result_start_time.required'    => trans('validation.error_result_result_start_time_required'),
             'clinic_id.required'            => trans('validation.error_result_clinic_id_required'),
             'doctor_id.required'            => trans('validation.error_result_doctor_id_required'),
             'service_1.required'            => trans('validation.error_result_service_1_required'),
-		);
+        );
     }
 
     public function get_all()
@@ -78,7 +76,7 @@ class ResultModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('result_id', $id)->update($data);
+        $results = DB::table($this->table)->where('result_id', $id)->update($data);
         return $results;
     }
 
@@ -140,9 +138,7 @@ class ResultModel
         if ( isset($where['facility_id']) && !empty($where['facility_id']) ) {
             $db = $db->where('facility_id', $where['facility_id']);
         }
-
         $results = $db->first();
-
         return $results;
     }
 }

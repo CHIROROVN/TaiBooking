@@ -1,17 +1,15 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 use Auth;
 
 class ClinicModel
 {
-
     protected $table = 'm_clinic';
 
     public function Rules()
     {
-    	return array(
-    		'clinic_name'               => 'required',
+        return array(
+            'clinic_name'               => 'required',
             'clinic_name_yomi'          => 'required|regex:/^[\x{3041}-\x{3096}]+$/u',
             'clinic_display_name'       => 'required',
             'clinic_zip3'               => 'required',
@@ -20,12 +18,12 @@ class ClinicModel
             'clinic_ownername'          => 'required',
             'clinic_tel'                => 'required|numeric',
             'clinic_email'              => 'required|email',
-		);
+        );
     }
 
     public function Messages()
     {
-    	return array(
+        return array(
             'clinic_name.required'          => trans('validation.error_area_name_required'),
             'clinic_name_yomi.required'     => trans('validation.error_clinic_name_yomi_required'),
             'clinic_name_yomi.regex'        => trans('validation.error_clinic_name_yomi_regex'),
@@ -36,7 +34,7 @@ class ClinicModel
             'clinic_ownername.required'     => trans('validation.error_clinic_ownername_required'),
             'clinic_tel.required'           => trans('validation.error_clinic_tel_required'),
             'clinic_email.required'         => trans('validation.error_clinic_email_required'),
-		);
+        );
     }
 
     public function get_all($pagination = false, $keyword = NULL)
@@ -114,7 +112,7 @@ class ClinicModel
 
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('clinic_id', $id)->update($data);
+        $results = DB::table($this->table)->where('clinic_id', $id)->update($data);
         return $results;
     }
 

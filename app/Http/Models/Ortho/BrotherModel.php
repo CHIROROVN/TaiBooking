@@ -1,29 +1,25 @@
 <?php namespace App\Http\Models\Ortho;
-
 use DB;
 
 class BrotherModel
 {
-
     protected $table = 't_brother';
 
     public function Rules()
     {
-    	return array(
-    		'p_relation_id'                       => 'required',
+        return array(
+            'p_relation_id'                       => 'required',
             'brother_relation'                    => 'required',
-		);
+        );
     }
-
 
     public function Messages()
     {
-    	return array(
+        return array(
             'p_relation_id.required'            => trans('validation.error_p_relation_id_required'),
             'brother_relation.required'         => trans('validation.error_brother_relation_required'),
-		);
+        );
     }
-
 
     public function get_all($patient_id)
     {
@@ -38,7 +34,6 @@ class BrotherModel
         
         return $db;
     }
-
 
     public function get_all_me($patient_id)
     {
@@ -55,20 +50,17 @@ class BrotherModel
         return $db;
     }
 
-
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);
         return $results;
     }
 
-
     public function insert_get_id($data)
     {
         $results = DB::table($this->table)->insertGetId($data);
         return $results;
     }
-
 
     public function get_by_id($id)
     {
@@ -82,10 +74,9 @@ class BrotherModel
         return $results;
     }
 
-
     public function update($id, $data)
     {
-    	$results = DB::table($this->table)->where('brother_id', $id)->update($data);
+        $results = DB::table($this->table)->where('brother_id', $id)->update($data);
         return $results;
     }
 }

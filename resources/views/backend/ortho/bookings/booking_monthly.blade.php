@@ -68,6 +68,26 @@
       });
     });
 
+    $('#clinic_id').click(function(event) {
+      var clinic_id = $('#clinic_id').val();
+      var url = "{{route('ortho.bookings.monthly.users')}}";
+      var htmlOptions = "<option value="+">▼Dr</option>";
+      $.ajax({
+          type:"GET",
+          url:url,
+          data:{clinic_id:clinic_id},
+          success: function(results){
+            $.each(results, function(k, val){
+              htmlOptions += "<option value="+val.id+">" + val.u_name_display + "</option>";
+            });
+            $('#u_id').html(htmlOptions);
+          },
+          error: function (data) {
+              console.log('Error:', data);
+          }
+      });
+    });
+
     $(document).ready(function() {
       $('[data-toggle="tooltip"]').tooltip();
 
@@ -91,6 +111,23 @@
                     $(opt).attr('selected', 'selected');
                 }
             });
+          },
+          error: function (data) {
+              console.log('Error:', data);
+          }
+      });
+
+      var url = "{{route('ortho.bookings.monthly.users')}}";
+      var htmlOptions2 = "<option value="+">▼Dr</option>";
+      $.ajax({
+          type:"GET",
+          url:url,
+          data:{clinic_id:clinic_id},
+          success: function(results){
+            $.each(results, function(k, val){
+            htmlOptions2 += "<option value="+val.id+">" + val.u_name_display + "</option>";
+          });
+          $('#u_id').html(htmlOptions2);
           },
           error: function (data) {
               console.log('Error:', data);

@@ -29,7 +29,7 @@
           </div>
           <div class="col-md-6 page-right mar-top">
             <input type="button" class="btn btn-sm btn-header" name="button2" onclick="location.href='{{ route('ortho.ddrs.my.calendar') }}'" value="院長・自分カレンダー" />
-            <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='{{ route('ortho.bookings.booking.monthly') }}'" value="予約簿" />
+            <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='{{ route('ortho.bookings.booking.monthly', ['area_id'=> @$area_id, 'clinic_id'=>@$clinic_id]) }}'" value="予約簿" />
             <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='carte_patient_search.html'" value="カルテ" />
             <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='{{ route('ortho.menus.index') }}'" value="メニューへ" />
             <input type="button" class="btn btn-sm btn-header" name="button" onclick="location.href='{{ route('ortho.logout') }}'" value="ログアウト" />

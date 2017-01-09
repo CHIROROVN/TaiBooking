@@ -280,6 +280,7 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	// bookings
 	Route::any('bookings/booking-monthly', ['as' => 'ortho.bookings.booking.monthly', 'uses' => 'BookingController@bookingMonthly']);
 	Route::get('bookings/monthly/clinics/', ['as' => 'ortho.bookings.monthly.clinics', 'uses' => 'BookingController@getClinicByAreaID']);
+	Route::get('bookings/monthly/users/', ['as' => 'ortho.bookings.monthly.users', 'uses' => 'BookingController@getUserByClinic']);
 	
 	Route::any('bookings/booking-daily', ['as' => 'ortho.bookings.booking.daily', 'uses' => 'BookingController@bookingDaily']);
 	

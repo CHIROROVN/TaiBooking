@@ -112,4 +112,22 @@ class UserModel
                     ->whereIn('t1.belong_kind', $belong_kind)
                     ->lists('u_name_display', 'id');
     }
+
+    public function list_user_by_clinic($clinic_id = null){
+        if(!empty($clinic_id)){
+            return DB::table($this->table)
+                                ->where('u_power_booking', '=', $clinic_id)
+                                ->where('last_kind', '<>', DELETE)
+                                ->select('id','u_name_display')
+                                ->get();
+        }elseif (empty($clinic_id)){
+            return DB::table($this->table)
+                                ->where('u_power_booking', '=', -1)
+                                ->where('last_kind', '<>', DELETE)
+                                ->select('id','u_name_display')
+                                ->get();
+        } else {
+            return null;
+        }
+    }
 }

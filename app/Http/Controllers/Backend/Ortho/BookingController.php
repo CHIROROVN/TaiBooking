@@ -102,6 +102,16 @@ class BookingController extends BackendController
     }
 
     /**
+    *Ajax
+    **/
+    function getUserByClinic(){
+        $clsUser                = new UserModel();
+        $clinic_id              = Input::get('clinic_id');
+        $users                  = $clsUser->list_user_by_clinic($clinic_id);
+        return response()->json($users);
+    }
+
+    /**
      * get view Dailily
      */
     public function bookingDaily()

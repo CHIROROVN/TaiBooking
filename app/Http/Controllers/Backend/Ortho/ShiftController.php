@@ -26,6 +26,7 @@ class ShiftController extends BackendController
 
     public function getSListEdit()
     {
+        $data                   = array();
         $yearNow                = date('Y');
         $monthNow               = date('m');
         $days                   = getDay($monthNow, $yearNow);
@@ -34,18 +35,19 @@ class ShiftController extends BackendController
             $yearNow                = $input[0];
             $monthNow               = $input[1];
             $days                   = getDay($monthNow, $yearNow);
+            $data['next']           = Input::get('next');
         } elseif ( Input::get('prev') ) {
             $input = explode('-', Input::get('prev'));
             $yearNow                = $input[0];
             $monthNow               = $input[1];
             $days                   = getDay($monthNow, $yearNow);
+            $data['prev']           = Input::get('prev');
         }
 
         $clsClinic              = new ClinicModel();
         $clsBelong              = new BelongModel();
         $clsUser                = new UserModel();
         $clsShift               = new ShiftModel();
-        $data                   = array();
         $data['clinics']        = $clsClinic->get_for_select();
         $data['yearNow']        = $yearNow;
         $data['monthNow']       = convert2Digit($monthNow);
@@ -143,12 +145,18 @@ class ShiftController extends BackendController
             }
         }
 
+        $link                       = array();
+        $link['s_belong_kind']      = Input::get('s_belong_kind');
+        $link['date']               = Input::get('date');
+        $link['next']               = (Input::get('next')) ? Input::get('next') : null;
+        $link['prev']               = (Input::get('prev')) ? Input::get('prev') : null;
+        
         if ( $update ) {
             Session::flash('success', trans('common.message_edit_success'));
-            return redirect()->route('ortho.shifts.list_edit', [ 's_belong_kind' => Input::get('s_belong_kind') ]);
+            return redirect()->route('ortho.shifts.list_edit', $link);
         } else {
             Session::flash('danger', trans('common.message_edit_danger'));
-            return redirect()->route('ortho.shifts.list_edit', [ 's_belong_kind' => Input::get('s_belong_kind') ]);
+            return redirect()->route('ortho.shifts.list_edit', $link);
         }
     }
 

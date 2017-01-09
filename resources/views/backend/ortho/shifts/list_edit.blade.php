@@ -25,8 +25,16 @@
               </div>
             @endif
           </div>
-          
+
           {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'get', 'enctype'=>'multipart/form-data', 'id' => 'frm-shift-edit')) !!}
+          <input type="hidden" name="date" value="{{ $yearNow }}-{{ $monthNow }}">
+          @if ( isset($next) )
+          <input type="hidden" name="next" value="{{ @$next }}">
+          @endif
+          @if ( isset($prev) )
+          <input type="hidden" name="prev" value="{{ @$prev }}">
+          @endif
+
           <div class="fillter">
             <div class="col-md-12" style="text-align:center;">
 
@@ -55,6 +63,12 @@
           {!! Form::open(array('route' => ['ortho.shifts.list_edit'], 'method' => 'post', 'enctype'=>'multipart/form-data')) !!}
           <input type="hidden" name="date" value="{{ $yearNow }}-{{ $monthNow }}">
           <input type="hidden" name="s_belong_kind" value="{{ $s_belong_kind }}">
+          @if ( isset($next) )
+          <input type="hidden" name="next" value="{{ @$next }}">
+          @endif
+          @if ( isset($prev) )
+          <input type="hidden" name="prev" value="{{ @$prev }}">
+          @endif
 
           <div class="row content-page">
             <div class="row">

@@ -37,25 +37,64 @@ class DdrController extends BackendController
             '5' => '#F90',
         );
         $tmpDdrs           = array();
+        $tmpDdrsList       = array();
+
+        //for just custom in view Fullcalendar jquery
         foreach ( $ddrs as $ddr ) {
-            $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
-            $start_time = splitHourMin($ddr->ddr_start_time);
-            $end_time = splitHourMin($ddr->ddr_end_time);
-            if ( $start_time == '00:00' ) {
-                $start_time = null;
+            $yearStart  = date('Y', strtotime($ddr->ddr_start_date));
+            $monthStart = date('m', strtotime($ddr->ddr_start_date));
+            $dayStart   = date('d', strtotime($ddr->ddr_start_date));
+            $dayEnd     = date('d', strtotime($ddr->ddr_end_date));
+            $subDay     = $dayEnd - $dayStart;
+            if ( $subDay > 0 ) {
+                for ( $i = 0; $i < $subDay; $i++ ) {
+                    $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
+                    $start_time = splitHourMin($ddr->ddr_start_time);
+                    $end_time = splitHourMin($ddr->ddr_end_time);
+                    if ( $start_time == '00:00' ) {
+                        $start_time = null;
+                    }
+                    if ( $end_time == '00:00' ) {
+                        $end_time = null;
+                    }
+
+                    //set day start temp
+                    $tmpDayStart = $dayStart + $i;
+                    if ( $tmpDayStart < 10) {
+                        $tmpDayStart = '0' . $tmpDayStart;
+                    }
+                    $tmpDdrs[]      = array(
+                        'title'     => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
+                        'start'     => $yearStart . '-' . $monthStart . '-' . $tmpDayStart,
+                        'end'       => $yearStart . '-' . $monthStart . '-' . $tmpDayStart,
+                        'url'       => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
+                        'color'     => 'transparent',
+                        'border'    => 'none',
+                    );
+                }
             }
-            if ( $end_time == '00:00' ) {
-                $end_time = null;
-            }
-            $tmpDdrs[]      = array(
-                'title'     => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
-                'start'     => $ddr->ddr_start_date,
-                'end'       => $ddr->ddr_start_date + 1,
-                'url'       => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
-                'color'     => 'transparent',
-                'border'    => 'none',
-            );
         }
+
+        //for just default Fullcalendar jquery
+        // foreach ( $ddrs as $ddr ) {
+        //     $kind = '<span style="color: ' . $color[$ddr->ddr_kind] . ';">■</span>';
+        //     $start_time = splitHourMin($ddr->ddr_start_time);
+        //     $end_time = splitHourMin($ddr->ddr_end_time);
+        //     if ( $start_time == '00:00' ) {
+        //         $start_time = null;
+        //     }
+        //     if ( $end_time == '00:00' ) {
+        //         $end_time = null;
+        //     }
+        //     $tmpDdrs[]      = array(
+        //         'title'     => $kind . ' ' . $start_time . '~' . $end_time . ' ' . $ddr->ddr_contents,
+        //         'start'     => $ddr->ddr_start_date,
+        //         'end'       => $ddr->ddr_end_date,
+        //         'url'       => route('ortho.ddrs.edit', [ $ddr->ddr_id ]),
+        //         'color'     => 'transparent',
+        //         //'border'    => 'none',
+        //     );
+        // }
         $data['ddrs']      = json_encode($tmpDdrs);
 
         return view('backend.ortho.ddrs.calendar', $data);

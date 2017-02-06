@@ -163,9 +163,15 @@
                 </select>
                 <select name="ddr_end_month" id="ddr_end_month" class="form-control form-control--small" onchange="getDays('ddr_end_day', $(this).val(), '')">
                   <option value="">---月</option>
+                  @for ( $i = 1; $i <= 12; $i++ )
+                  <option value="{{ convert2Digit($i) }}" @if($ddr_end_date_m == $i) selected="" @endif>{{ convert2Digit($i) }}月</option>
+                  @endfor
                 </select>
                 <select name="ddr_end_day" id="ddr_end_day" class="form-control form-control--small">
                   <option value="">---日</option>
+                  @for ( $i = 1; $i <= 31; $i++ )
+                  <option value="{{ convert2Digit($i) }}" @if($ddr_end_date_d == $i) selected="" @endif>{{ convert2Digit($i) }}日</option>
+                  @endfor
                 </select>
                 <input type="hidden" id="datepicker1">
 

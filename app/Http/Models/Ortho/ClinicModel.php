@@ -17,7 +17,7 @@ class ClinicModel
             'clinic_address1'           => 'required',
             'clinic_ownername'          => 'required',
             'clinic_tel'                => 'required|numeric',
-            'clinic_email'              => 'required|email',
+            'clinic_email'              => 'email',
         );
     }
 
@@ -33,7 +33,7 @@ class ClinicModel
             'clinic_address1.required'      => trans('validation.error_clinic_address1_required'),
             'clinic_ownername.required'     => trans('validation.error_clinic_ownername_required'),
             'clinic_tel.required'           => trans('validation.error_clinic_tel_required'),
-            'clinic_email.required'         => trans('validation.error_clinic_email_required'),
+            'clinic_email.email'            => trans('validation.error_clinic_email_email'),
         );
     }
 

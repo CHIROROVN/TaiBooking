@@ -49,7 +49,7 @@ return [
     'error_clinic_address1_required'                        => '住所を入力してください。',
     'error_clinic_ownername_required'                       => '院長名を入力してください。',
     'error_clinic_tel_required'                             => 'TELを入力してください。',
-    'error_clinic_email_required'                           => 'E-mailを入力してください。',
+    'error_clinic_email_email'                              => 'E-mailは数値でなければなりません。',
 
     /*
     |--------------------------------------------------------------------------

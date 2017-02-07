@@ -134,7 +134,7 @@
                   <td><input type="text" name="clinic_fax" id="clinic_fax" class="form-control form-control--small" value="{{ old('clinic_fax') }}" /></td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="col-title"><label for="clinic_email">E-mail <span class="note_required">※</span></label></td>
+                  <td colspan="2" class="col-title"><label for="clinic_email">E-mail</label></td>
                   <td>
                     <input type="text" name="clinic_email" id="clinic_email" class="form-control form-control--small" value="{{ old('clinic_email') }}" />
                     <span class="error-input">@if ($errors->first('clinic_email')) ※{!! $errors->first('clinic_email') !!} @endif</span>

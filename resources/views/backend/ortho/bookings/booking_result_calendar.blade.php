@@ -623,6 +623,19 @@ $widthPercent = 88 / ($countFacility);
       $('.popup').popover({
         html: true
       });
+
+      // show dialog message
+      $(window).scroll(function(){ 
+        if ($(this).scrollTop() > 100) { 
+          $('#dialog-message').fadeIn(); 
+        } else { 
+          $('#dialog-message').fadeOut(); 
+        } 
+      }); 
+      $('#dialog-message').click(function(){ 
+        $("html, body").animate({ scrollTop: 0 }, 600); 
+        return false;
+      });
       
       // set value from popup
       $('.popup').click(function(event) {

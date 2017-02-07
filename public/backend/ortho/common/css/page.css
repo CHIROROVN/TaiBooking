@@ -831,3 +831,20 @@ span.note_required{
 .track3.dragging .handle3 {
     width: 12px;
 }
+
+.btn-close-nobooking {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0.6;
+  cursor: pointer;
+  display: none;
+}
+
+.td-will-box {
+  position: relative !important;
+}
+
+.td-will-box:hover .btn-close-nobooking {
+  display: block;
+}

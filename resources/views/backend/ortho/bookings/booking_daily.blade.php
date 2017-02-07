@@ -450,6 +450,7 @@ $widthPercent = 88 / ($countFacility);
                 $clsBackgroundEmergencyFlag = ''; //backgroup-red == 1
                 $clsBackgroundBookingStatus = ''; //backgroup-yellow == 2
                 $iconFlag = '';
+                $bookingGroupKind1 = '';
 
                 if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
                   // set '↓'
@@ -469,6 +470,7 @@ $widthPercent = 88 / ($countFacility);
                           $iconFlag = '↓';
                         }
                     }
+                    $bookingGroupKind1 = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
                   } else {
                     if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
                       $iconFlag = '';
@@ -585,11 +587,17 @@ $widthPercent = 88 / ($countFacility);
               ?>
 
               <!-- close -->
-              <td align="center" width="" style="width: {{$widthPercent}}%" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}">
+              <td align="center" width="" style="width: {{$widthPercent}}%" class="col-{{ $color }} {{ $clsBackgroundPatient }} td-will-box" id="td-{{ $common_id }}" booking-group-kind-1="{{ $bookingGroupKind1 }}">
                 <div class="td-content" @if ( $color === 'brown' ) data-toggle="modal" data-target="#myModal-{{ $common_id }}" @endif>
                   {!! $iconFlag !!} {!! $text !!}
                   @if ( $color === 'brown' )
                   <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
+                  @elseif ( ($color === 'blue' && $clsBackgroundPatient == '') || ($color === 'green' && $clsBackgroundPatient == '') )
+                    <?php $deleteType = 'single' ?>
+                    @if ( $color === 'green' )
+                    <?php $deleteType = 'group' ?>
+                    @endif
+                    <span class="glyphicon glyphicon-remove btn-close-nobooking" aria-hidden="true" data-id="td-{{ $common_id }}" booking-id="{{ $booking->booking_id }}" delete-type="{{ $deleteType }}"></span>
                   @endif
                 </div>
                 <!-- Modal -->
@@ -747,6 +755,36 @@ $widthPercent = 88 / ($countFacility);
           }
         });
       });
+
+      // button close from no booking
+      $(".btn-close-nobooking").click(function(event){
+        var dataId = $(this).attr('data-id');
+        tdObjOld = $('#' + dataId);
+        var booking_id = $(this).attr('booking-id');
+        var delete_type = $(this).attr('delete-type');
+        var booking_group_kind_1 = tdObjOld.attr('booking-group-kind-1');
+        setClear(tdObjOld, 0);
+        $.ajax({
+          url: "{{ route('ortho.bookings.delete.single.group') }}",
+          type: 'get',
+          dataType: 'json',
+          data: { 
+            booking_id: booking_id,
+            delete_type: delete_type
+          },
+          success: function(result){
+            //console.log(result);
+            if ( delete_type === 'group' ) {
+              $('.td-will-box').each(function() {
+                if ( $(this).attr('booking-group-kind-1') == booking_group_kind_1 ) {
+                  setClear($(this), 0);
+                }
+              });
+            }
+            location.reload();
+          }
+        }); // end ajax
+      }); // end click
 
       // button save
       $(".btn-save").click(function(event){

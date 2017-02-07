@@ -2544,4 +2544,54 @@ class BookingController extends BackendController
             if(Session::has('where_booking_change')) Session::forget('where_booking_change');
         }
     }
+
+    // delete single or group booking from booking-result-calendar
+    // only no booking (patient_id == null)
+    public function deleteSingleGroup()
+    {
+        $booking_id         = Input::get('booking_id');
+        $delete_type        = Input::get('delete_type');
+        $clsBooking         = new BookingModel();
+        $dataUpdate         = array(
+            'last_date'                 => date('y-m-d H:i:s'),
+            'last_kind'                 => DELETE,
+            'last_ipadrs'               => CLIENT_IP_ADRS,
+            'last_user'                 => Auth::user()->id
+        );
+
+        if ( $booking_id > 0 ) {
+            $booking                    = $clsBooking->get_by_id($booking_id);
+
+            if ( $delete_type === 'single' ) {
+
+                if ( $clsBooking->update($booking_id, $dataUpdate) ) {
+                    return response()->json(['status', '1']);
+                }
+            } elseif ( $delete_type === 'group' ) {
+                $whereChildGroups               = array(
+                    'booking_group_id'          => $booking->booking_group_id,
+                    'booking_childgroup_id'     => $booking->booking_childgroup_id,
+                    'clinic_id'                 => $booking->clinic_id,
+                    // 'facility_id'               => $booking->facility_id,
+                );
+                if ( $booking->service_1_kind == 2 ) {
+                    $whereChildGroups['facility_id'] = $booking->facility_id;
+                }
+                $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+
+                $status = true;
+                foreach ( $bookingChildGroups as $item ) {
+                    $status = $clsBooking->update($item->booking_id, $dataUpdate);
+                    if ( !$status ) {
+                        break;
+                    }
+                }
+                if ( $status ) {
+                    return response()->json(['status', $bookingChildGroups]);
+                }
+            }
+        }
+
+        return response()->json(['status', '0']);
+    }
 }

@@ -315,6 +315,8 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 
 	Route::get('bookings/booking-result-list', ['as' => 'ortho.bookings.booking.result.list', 'uses' => 'BookingController@bookingResultList']);
 
+	Route::get('bookings/booking-delete-single-or-group', ['as' => 'ortho.bookings.delete.single.group', 'uses' => 'BookingController@deleteSingleGroup']);
+
 
 	Route::get('bookings', function(){
 		return redirect()->route('ortho.bookings.booking_search');

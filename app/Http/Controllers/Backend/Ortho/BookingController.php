@@ -167,7 +167,7 @@ class BookingController extends BackendController
         $bookings               = $clsBooking->get_by_clinic($clinic_id, $date_current);
         $data['ddrs']           = $clsDdr->get_by_start_date($date_current);
         $data['memos']          = $clsMemo->get_list_by_memo_date($date_current);
-        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id, 1);
+        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id); //$clsFacility->getAll($clinic_id, 1)
 
         $where['clinic_id']     = $clinic_id;
         $where['booking_date']  = $date_current;
@@ -233,7 +233,7 @@ class BookingController extends BackendController
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
         $data['services']           = $clsService->get_list();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id, 1);
+        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id);
 
         $data['times']          = Config::get('constants.TIME');
 

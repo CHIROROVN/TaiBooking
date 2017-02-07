@@ -44,7 +44,7 @@
         <td>
           <div class="row">
             <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_1_clinic]->clinic_name }}</div>
-            <div class="col-md-6 col-lg-6">日付：テスト-{{ @$interview->q0_1_date }}</div>
+            <div class="col-md-6 col-lg-6">日付：<?php echo (isset($interview->q0_1_date) && $interview->q0_1_date != '0000-00-00') ? formatDate($interview->q0_1_date) : ''; ?></div>
           </div>
         </td>
       </tr>
@@ -53,7 +53,7 @@
         <td>
           <div class="row">
             <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_2_clinic]->clinic_name }}</div>
-            <div class="col-md-6 col-lg-6">日付：テスト-{{ @$interview->q0_2_date }}</div>
+            <div class="col-md-6 col-lg-6">日付：<?php echo (isset($interview->q0_2_date) && $interview->q0_2_date != '0000-00-00') ? formatDate($interview->q0_2_date) : ''; ?></div>
           </div>
         </td>
       </tr>
@@ -66,29 +66,29 @@
         <td>
           <div class="row">
             <div class="col-md-6 col-lg-6">{{ @$clinics[$interview->q0_4_clinic]->clinic_name }}</div>
-            <div class="col-md-6 col-lg-6">日付：テスト-{{ @$interview->q0_4_date }}</div>
+            <div class="col-md-6 col-lg-6">日付：<?php echo (isset($interview->q0_4_date) && $interview->q0_4_date != '0000-00-00') ? formatDate($interview->q0_4_date) : ''; ?></div>
           </div>
         </td>
       </tr>
       <tr>
         <td>主訴</td>
-        <td>テスト-{{ @$interview->q0_5 }}</td>
+        <td>{{ @$interview->q0_5 }}</td>
       </tr>
       <tr>
         <td>所見</td>
-        <td>テスト-{{ @$interview->q0_6 }}</td>
+        <td>{{ @$interview->q0_6 }}</td>
       </tr>
       <tr>
         <td>説明チェック</td>
-        <td>テスト-{{ @$interview->q0_7 }}</td>
+        <td>{{ @$interview->q0_7 }}</td>
       </tr>
       <tr>
         <td>資料チェック</td>
-        <td>テスト-{{ @$interview->q0_8 }}</td>
+        <td>{{ @$interview->q0_8 }}</td>
       </tr>
       <tr>
         <td>メモ</td>
-        <td>テスト-{{ @$interview->q0_9 }}</td>
+        <td>{{ @$interview->q0_9 }}</td>
       </tr>
 
       <!-- Q1 -->
@@ -123,11 +123,11 @@
       </tr>
       <tr>
         <td>結婚</td>
-        <td>テスト-<?php echo (@$interview->q1_3 == 1) ? '結婚' : '未婚'; ?></td>
+        <td><?php echo (@$interview->q1_3 == 1) ? '結婚' : '未婚'; ?></td>
       </tr>
       <tr>
         <td>性別</td>
-        <td>テスト-<?php echo (@$interview->q1_4 == 1) ? '男' : '女'; ?></td>
+        <td><?php echo (@$interview->q1_4 == 1) ? '男' : '女'; ?></td>
       </tr>
       <tr>
         <td>ご住所</td>
@@ -157,19 +157,19 @@
       </tr>
       <tr>
         <td>電話番号</td>
-        <td>テスト-{{ @$interview->q1_6 }}</td>
+        <td>{{ @$interview->q1_6 }}</td>
       </tr>
       <tr>
         <td>FAX</td>
-        <td>テスト-{{ @$interview->q1_7 }}</td>
+        <td>{{ @$interview->q1_7 }}</td>
       </tr>
       <tr>
         <td>携帯電話</td>
-        <td>テスト-{{ @$interview->q1_8 }}</td>
+        <td>{{ @$interview->q1_8 }}</td>
       </tr>
       <tr>
         <td>メールアドレス</td>
-        <td>テスト-{{ @$interview->q1_9 }}</td>
+        <td>{{ @$interview->q1_9 }}</td>
       </tr>
       <tr>
         <td>生年月日</td>
@@ -177,11 +177,11 @@
       </tr>
       <tr>
         <td>学校名またはお勤め先</td>
-        <td>テスト-{{ @$interview->q1_11 }}</td>
+        <td>{{ @$interview->q1_11 }}</td>
       </tr>
       <tr>
         <td>趣味・興味のあること</td>
-        <td>テスト-{{ @$interview->q1_12 }}</td>
+        <td>{{ @$interview->q1_12 }}</td>
       </tr>
       <tr>
         <td>保護者様のお名前</td>

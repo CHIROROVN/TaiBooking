@@ -13,7 +13,8 @@ class InterviewModel
             'q1_2_sei'      => 'required',
             'q1_2_mei'      => 'required',
             'q1_6'          => 'required',
-            'q1_9'          => 'required|email',
+            'q1_9'          => 'email',
+            'q3_kind'       => 'required',
         );
     }
 
@@ -27,8 +28,8 @@ class InterviewModel
             'q1_2_sei.required'     => trans('validation.error_q1_2_sei_required'),
             'q1_2_mei.required'     => trans('validation.error_q1_2_mei_required'),
             'q1_6.required'         => trans('validation.error_q1_6_required'),
-            'q1_9.required'         => trans('validation.error_q1_9_required'),
             'q1_9.email'            => trans('validation.error_q1_9_email'),
+            'q3_kind.required'      => trans('validation.error_q3_kind_required'),
         );
     }
 

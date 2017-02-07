@@ -179,12 +179,7 @@
           <td>
             <div class="row">
             <div class="col-md-12">
-            <input class="form-control date abc" type="text" name="q1_10_year" id="q1_10_year" placeholder="年" value="{{ old('q1_10_year') }}" />
-            <label for="birthday-year">年</label>
-            <input class="form-control date" type="text" name="q1_10_month" id="q1_10_month" placeholder="月" value="{{ old('q1_10_month') }}" />
-            <label for="birthday-month">月</label>
-            <input class="form-control date" type="text" name="q1_10_day" id="q1_10_day" placeholder="日" value="{{ old('q1_10_day') }}" />
-            <label for="birthday-day">日</label>
+            <input class="form-control date abc" type="text" name="q1_10" id="q1_10" placeholder="年" value="{{ old('q1_10') }}" />
             </div>
             </div>
           </td>
@@ -289,6 +284,13 @@
               <label for="q3_kind_4" class="font-weight-nomal">友人・知人の紹介</label>
             </div>
           </div>
+          @if ($errors->first('q3_kind'))
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+              <span class="error-input">※{!! $errors->first('q3_kind') !!}</span>
+            </div>
+          </div>
+          @endif
           </td>
       </tr>
 
@@ -1617,26 +1619,12 @@
       $(function () {
         $('#txt3').datetimepicker();
       });
-
+      
       // year
       $(function () {
-        $('#q1_10_year').datetimepicker({
-          viewMode: 'years',
-          format: 'YYYY'
-        });
-      });
-      // month
-      $(function () {
-        $('#q1_10_month').datetimepicker({
-          viewMode: 'months',
-          format: 'MM'
-        });
-      });
-      // day
-      $(function () {
-        $('#q1_10_day').datetimepicker({
-          viewMode: 'days',
-          format: 'DD'
+        $('#q1_10').datepicker({
+          // viewMode: 'years',
+          dateFormat: 'yy/mm/dd'
         });
       });
     });

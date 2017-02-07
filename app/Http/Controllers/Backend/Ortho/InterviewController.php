@@ -138,7 +138,7 @@ class InterviewController extends BackendController
             'q1_7'              => Input::get('q1_7', ''),
             'q1_8'              => Input::get('q1_8', ''),
             'q1_9'              => Input::get('q1_9', ''),
-            'q1_10'             => '', // after
+            'q1_10'             => Input::get('q1_10', ''),
             'q1_11'             => Input::get('q1_11', ''),
             'q1_12'             => Input::get('q1_12', ''),
             'q1_13'             => Input::get('q1_13', ''),
@@ -255,10 +255,9 @@ class InterviewController extends BackendController
         for ( $i = 1; $i <= 46; $i++ ) {
             $dataInsert['q6_sq_' . $i] = Input::get('q6_sq_' . $i);
         }
-        // get YYYY-mm-dd
-        if ( !empty(Input::get('q1_10_year')) && !empty(Input::get('q1_10_month')) && !empty(Input::get('q1_10_day')) ) {
-            $dataInsert['q1_10'] = Input::get('q1_10_year') . '-' . Input::get('q1_10_month') . '-' . Input::get('q1_10_day');
-        }
+        
+        // get YYYY-mm-dd q1_10
+        $dataInsert['q1_10'] = formatDate($dataInsert['q1_10'], '-');
 
         $validator      = Validator::make($dataInsert, $clsInterview->Rules(), $clsInterview->Messages());
         if ($validator->fails()) {
@@ -423,7 +422,7 @@ class InterviewController extends BackendController
             'q1_7'              => Input::get('q1_7', ''),
             'q1_8'              => Input::get('q1_8', ''),
             'q1_9'              => Input::get('q1_9', ''),
-            'q1_10'             => '', // after
+            'q1_10'             => Input::get('q1_10', ''),
             'q1_11'             => Input::get('q1_11', ''),
             'q1_12'             => Input::get('q1_12', ''),
             'q1_13'             => Input::get('q1_13', ''),
@@ -545,10 +544,8 @@ class InterviewController extends BackendController
         for ( $i = 1; $i <= 46; $i++ ) {
             $dataInsert['q6_sq_' . $i] = Input::get('q6_sq_' . $i);
         }
-        // get YYYY-mm-dd
-        if ( !empty(Input::get('q1_10_year')) && !empty(Input::get('q1_10_month')) && !empty(Input::get('q1_10_day')) ) {
-            $dataInsert['q1_10'] = Input::get('q1_10_year') . '-' . Input::get('q1_10_month') . '-' . Input::get('q1_10_day');
-        }
+        // get YYYY-mm-dd q1_10
+        $dataInsert['q1_10'] = formatDate($dataInsert['q1_10'], '-');
 
         $validator      = Validator::make($dataInsert, $clsInterview->Rules(), $clsInterview->Messages());
         if ($validator->fails()) {

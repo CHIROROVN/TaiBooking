@@ -439,7 +439,7 @@
 
       <!-- q1_9 -->
       <tr>
-          <td>メールアドレス <span class="note_required">※</span></td>
+          <td>メールアドレス</td>
           <td>
             <div class="row"><div class="col-sm-6">
               @if ( old('q1_9') )
@@ -458,24 +458,11 @@
           <td>
             <div class="row">
             <div class="col-md-12">
-            @if ( old('q1_10_year') )
-            <input class="form-control date abc" type="text" name="q1_10_year" id="q1_10_year" placeholder="年" value="{{ old('q1_10_year') }}" />
+            @if ( old('q1_10') )
+            <input class="form-control date abc" type="text" name="q1_10" id="q1_10" placeholder="年" value="{{ old('q1_10') }}" />
             @else
-            <input class="form-control date abc" type="text" name="q1_10_year" id="q1_10_year" placeholder="年" value="{{ @$interview->q1_10_year }}" />
+            <input class="form-control date abc" type="text" name="q1_10" id="q1_10" placeholder="年" value="{{ @formatDate($interview->q1_10) }}" />
             @endif
-            <label for="birthday-year">年</label>
-            @if ( old('q1_10_month') )
-            <input class="form-control date" type="text" name="q1_10_month" id="q1_10_month" placeholder="月" value="{{ old('q1_10_month') }}" />
-            @else
-            <input class="form-control date" type="text" name="q1_10_month" id="q1_10_month" placeholder="月" value="{{ @$interview->q1_10_month }}" />
-            @endif
-            <label for="birthday-month">月</label>
-            @if ( old('q1_10_day') )
-            <input class="form-control date" type="text" name="q1_10_day" id="q1_10_day" placeholder="日" value="{{ old('q1_10_day') }}" />
-            @else
-            <input class="form-control date" type="text" name="q1_10_day" id="q1_10_day" placeholder="日" value="{{ @$interview->q1_10_day }}" />
-            @endif
-            <label for="birthday-day">日</label>
             </div>
             </div>
           </td>
@@ -583,7 +570,7 @@
 
       <!-- Q3 -->
       <tr>
-        <td colspan="2" class="col-title"><span class="span-q">Q3</span>　たい矯正歯科を知ったきっかけは何ですか？（最も影響されたものを１つだけ選んでください）</td>
+        <td colspan="2" class="col-title"><span class="span-q">Q3</span>　たい矯正歯科を知ったきっかけは何ですか？（最も影響されたものを１つだけ選んでください） <span class="note_required">※</span></td>
       </tr>
       <!-- q3_kind -->
       <tr>
@@ -628,6 +615,13 @@
               <label for="q3_kind_4" class="font-weight-nomal">友人・知人の紹介</label>
             </div>
           </div>
+          @if ($errors->first('q3_kind'))
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+              <span class="error-input">※{!! $errors->first('q3_kind') !!}</span>
+            </div>
+          </div>
+          @endif
           </td>
       </tr>
 
@@ -2823,20 +2817,9 @@
 
       // year
       $(function () {
-        $('#q1_10_year').datepicker({
-          dateFormat: 'yy'
-        });
-      });
-      // month
-      $(function () {
-        $('#q1_10_month').datepicker({
-          dateFormat: 'mm'
-        });
-      });
-      // day
-      $(function () {
-        $('#q1_10_day').datepicker({
-          dateFormat: 'dd'
+        $('#q1_10').datepicker({
+          // viewMode: 'years',
+          dateFormat: 'yy/mm/dd'
         });
       });
     });

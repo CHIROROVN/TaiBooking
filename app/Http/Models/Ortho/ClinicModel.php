@@ -51,6 +51,7 @@ class ClinicModel
         }
 
         $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc');
+        $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科（佐藤先生）")') . ' desc');
         $db = $db->orderBy('clinic_name_yomi', 'asc');
 
         if($pagination)
@@ -75,6 +76,7 @@ class ClinicModel
         }
 
         $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                        ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科（佐藤先生）")') . ' desc')
                         ->orderBy('clinic_name_yomi', 'asc')
                         ->get();
         return $db;
@@ -87,6 +89,7 @@ class ClinicModel
                         ->where('last_kind', '<>', DELETE);
 
         $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                        ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科（佐藤先生）")') . ' desc')
                         ->orderBy('clinic_name_yomi', 'asc')
                         ->get();
         return $db;
@@ -125,6 +128,7 @@ class ClinicModel
         }
 
         $db = $db->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科")') . ' desc')
+                                ->orderByRaw(DB::raw('FIELD(clinic_name, "たい矯正歯科（佐藤先生）")') . ' desc')
                                 ->orderBy('clinic_name_yomi', 'asc')
                                 ->lists('clinic_name', 'clinic_id');
         return $db;

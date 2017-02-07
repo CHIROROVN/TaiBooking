@@ -848,3 +848,15 @@ span.note_required{
 .td-will-box:hover .btn-close-nobooking {
   display: block;
 }
+
+#dialog-message{
+    padding: 10px;
+    position: fixed;
+    top: 75px;
+    right: 30px;
+    display: none;
+    z-index: 3;
+    background-color: #88c9c9;
+    box-shadow: 5px 5px 5px #257272;
+    opacity: 0.9;
+}

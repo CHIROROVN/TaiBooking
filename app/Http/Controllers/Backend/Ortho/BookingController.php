@@ -358,7 +358,19 @@ class BookingController extends BackendController
                 if ( $item->service_1_kind == 1 ) {
                     // service
                     $dataUpdateService = array(
-                        'patient_id' => null
+                        'patient_id'                => null,
+                        'doctor_id'                 => null,
+                        'hygienist_id'              => null,
+                        'equipment_id'              => null,
+                        'inspection_id'             => null,
+                        'insurance_id'              => null,
+                        'booking_memo'              => null,
+                        'booking_status'            => null,
+
+                        'last_date'                 => date('y-m-d H:i:s'),
+                        'last_kind'                 => UPDATE,
+                        'last_ipadrs'               => CLIENT_IP_ADRS,
+                        'last_user'                 => Auth::user()->id
                     );
                     $statusUpdate = $clsBooking->update($item->booking_id, $dataUpdateService);
                 } else {

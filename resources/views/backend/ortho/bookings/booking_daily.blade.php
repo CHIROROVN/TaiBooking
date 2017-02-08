@@ -84,7 +84,7 @@ $widthPercent = 88 / ($countFacility);
           </div>
         </div>
 
-        @if ( $text != '' && $text2 != '' )
+        @if ( !empty($text) || !empty($text2) )
         <div id="dialog-message" class="ddr-infomation">
           <div class="ddr-infomation-child ddr-infomation-child-dialog">
             {!! $text !!}

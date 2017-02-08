@@ -859,4 +859,10 @@ span.note_required{
     background-color: #88c9c9;
     box-shadow: 5px 5px 5px #257272;
     opacity: 0.9;
+    color: black;
+}
+#dialog-message .title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 18px;
 }

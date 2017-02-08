@@ -86,6 +86,9 @@ $widthPercent = 88 / ($countFacility);
 
         @if ( !empty($text) || !empty($text2) )
         <div id="dialog-message" class="ddr-infomation">
+          <div class="title">
+            {{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）
+          </div>
           <div class="ddr-infomation-child ddr-infomation-child-dialog">
             {!! $text !!}
           </div>

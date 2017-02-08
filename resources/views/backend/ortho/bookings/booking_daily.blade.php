@@ -84,14 +84,16 @@ $widthPercent = 88 / ($countFacility);
           </div>
         </div>
 
+        @if ( $text != '' && $text2 != '' )
         <div id="dialog-message" class="ddr-infomation">
-          <div class="ddr-infomation-child">
+          <div class="ddr-infomation-child ddr-infomation-child-dialog">
             {!! $text !!}
           </div>
-          <div class="ddr-infomation-child">
+          <div class="ddr-infomation-child ddr-infomation-child-dialog">
             {!! $text2 !!}
           </div>
         </div>
+        @endif
 
         <h3 class="text-center mar-top20">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
             <p>{{ @$clinic->clinic_name }}</p>
@@ -681,15 +683,11 @@ $widthPercent = 88 / ($countFacility);
 
       // show dialog message
       $(window).scroll(function(){ 
-        if ($(this).scrollTop() > 100) { 
-          $('#dialog-message').fadeIn(); 
-        } else { 
-          $('#dialog-message').fadeOut(); 
-        } 
-      }); 
-      $('#dialog-message').click(function(){ 
-        $("html, body").animate({ scrollTop: 0 }, 600); 
-        return false;
+          if ($(this).scrollTop() > 100) { 
+            $('#dialog-message').fadeIn(); 
+          } else { 
+            $('#dialog-message').fadeOut(); 
+          } 
       });
 
 

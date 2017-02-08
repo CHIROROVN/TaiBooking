@@ -1882,6 +1882,7 @@ class BookingController extends BackendController
 
         $clsBooking                       = new BookingModel();
         $bookings                         = $clsBooking->get_booking_list2($where);
+
         $clsFacility                      = new FacilityModel();
         $data['facilities']               = $clsFacility->list_facility_all();
         $clsTreatment1                    = new Treatment1Model();
@@ -1900,15 +1901,16 @@ class BookingController extends BackendController
             $timeTreatment = $treatment->treatment_time;
         }
         
-        // get booking: ($bookings) andcheck booking
+        // get booking: ($bookings) and check booking
+        //get facility_id in list bookings
         $typeFacility = array();
         foreach ( $bookings as $item ) {
             if ( !in_array($item->facility_id, $typeFacility) ) {
                 $typeFacility[] = $item->facility_id;
             }
         }
-        $tmpBookings = array();
 
+        $tmpBookings = array();
         foreach ( $typeFacility as $itemFac ) {
             $tmp = array();
             foreach ( $bookings as $item ) {
@@ -1918,6 +1920,7 @@ class BookingController extends BackendController
             }
             $tmpBookings[$itemFac] = $tmp;
         }
+
 
         // return list booking is ok
         $tmpBookingTimeOk = array();
@@ -1947,7 +1950,83 @@ class BookingController extends BackendController
             }
         }
 
-        $data['bookings'] = $tmpBookingTimeOk;
+        // order by by hand make --------------------------------------------------------
+        // step 1: arrangement by date from list bookings
+        // step 1.1: get array date
+        $tmpDate = array();
+        foreach ( $tmpBookingTimeOk as $item ) {
+            if ( !in_array($item->booking_date, $tmpDate) ) {
+                $tmpDate[] =  $item->booking_date;
+            }
+        }
+        for ( $i = 0; $i < count($tmpDate) - 1; $i++ ) {
+            for ( $j = $i + 1; $j < count($tmpDate); $j++ ) {
+                if ( strtotime($tmpDate[$j]) < strtotime($tmpDate[$i]) ) {
+                    $temp = $tmpDate[$j];
+                    $tmpDate[$j] = $tmpDate[$i];
+                    $tmpDate[$i] = $temp;
+                }
+            }
+        }
+        // step 1.2: arrangement date
+        $tmpBookingTimeOkArrangement = array();
+        foreach ( $tmpDate as $date ) {
+            foreach ( $tmpBookingTimeOk as $booking ) {
+                if ( $booking->booking_date == $date ) {
+                    $tmpBookingTimeOkArrangement[] = $booking;
+                }
+            }
+        }
+        // end step 1
+        // step 2: arrangement by time
+        // step 2.1: group by date by list booking arrangement date
+        // $tmp1 = array();
+        // foreach ( $tmpDate as $date ) {
+        //     foreach ( $tmpBookingTimeOkArrangement as $booking ) {
+        //         if ( $booking->booking_date == $date ) {
+        //             $tmp1[$date][] = $booking;
+        //         }
+        //     }
+        // }
+        // $tmp11 = array();
+        // foreach ( $tmp1 as $key1 => $value1 ) {
+        //     foreach ( $value1 as $key2 => $value2 ) {
+        //         for ( $i = 0; $i < count($value1) - 1; $i++ ) {
+        //             for ( $j = $i + 1; $j < count($value1); $j++ ) {
+        //                 if ( $value1[$j]->booking_start_time < $value1[$i]->booking_start_time ) {
+        //                     $temp = $value1[$j];
+        //                     $value1[$j] = $value1[$i];
+        //                     $value1[$i] = $temp;
+        //                     echo $value1[$j]->booking_start_time .'---'.$value1[$i]->booking_start_time;die;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // echo '<pre>';
+        // print_r($tmp1);
+        // echo '</pre>';
+        // die;
+        // die;
+        
+
+                    
+        $result = $tmpBookingTimeOkArrangement;
+
+
+        // echo '<pre>';
+        // print_r($tmpBookingTimeOkArrangement);
+        // echo '</pre>';
+        // end order by by hand make --------------------------------------------------------
+        // echo count($bookings);
+        // echo '----';
+        // echo count($tmpBookingTimeOk);
+        // echo '----';
+        // echo count($tmpBookingTimeOkArrangement);
+        //die;
+
+
+        $data['bookings'] = $result;
         // end research booking is ok treatment time
 
         return view('backend.ortho.bookings.booking_result_list', $data);

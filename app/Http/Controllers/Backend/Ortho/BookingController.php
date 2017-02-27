@@ -169,7 +169,7 @@ class BookingController extends BackendController
         $data['ddrs']           = $clsDdr->get_by_start_date($date_current);
         $data['memos']          = $clsMemo->get_list_by_memo_date($date_current);
         $data['facilitys_popup']    = $clsFacility->getAll($clinic_id); //$clsFacility->getAll($clinic_id, 1)
-        $shift_user             = $clsShift->get_user_shift2();
+        $shift_user             = $clsShift->get_user_shift2($clinic_id);
         $belongs                = $clsBelong->get_all();
 
         $where['clinic_id']     = $clinic_id;

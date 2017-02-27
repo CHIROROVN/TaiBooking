@@ -144,7 +144,7 @@ class ShiftModel
     {
         $db = DB::table($this->table)
                     ->leftJoin('m_users', 't_shift.u_id', '=', 'm_users.id')
-                    ->select('shift_id', 'u_id', 'u_name', 'u_belong')
+                    ->select('shift_id', 'u_id', 'u_name', 'u_belong', 'u_name_display')
                     ->where('t_shift.clinic_id', $clinic_id)
                     ->where('t_shift.last_kind', '<>', DELETE)
                     ->groupBy('u_id');

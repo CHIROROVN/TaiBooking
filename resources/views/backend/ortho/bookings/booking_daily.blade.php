@@ -89,9 +89,9 @@ $widthPercent = 88 / ($countFacility);
               {{ $key }}:
               @for ( $i = 0; $i < count($value); $i++ )
                 @if ( $i < count($value) - 1 )
-                  {{ $value[$i]->u_name . ', ' }}
+                  {{ $value[$i]->u_name_display . ', ' }}
                 @else
-                  {{ $value[$i]->u_name . '.' }}
+                  {{ $value[$i]->u_name_display . '.' }}
                 @endif
               @endfor
               <br>

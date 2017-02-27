@@ -407,6 +407,7 @@ $widthPercent = 88 / ($countFacility);
 
                     // set flag
                     if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1  ) {
+                      // service
                       if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
                         $iconFlag = '';
                       } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
@@ -414,12 +415,19 @@ $widthPercent = 88 / ($countFacility);
                         $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                       } else {
                         $iconFlag = '';
-                        $str = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . ($arr_bookings[$facility_id][$fullTime]->booking_start_time - 15) . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                        // set time, ex: 1600 - 15 = 1545
+                        $subTime = $arr_bookings[$facility_id][$fullTime]->booking_start_time - 15;
+                        if ( substr($subTime, 2, 1) == '8' ) {
+                          $subTime = substr($subTime, 0, 2) . '4' . substr($subTime, 3, 1);
+                        }
+                        // end set time
+                        $str = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . $subTime . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
                         if ( in_array($str, $tmpFacilityTimeGroup) ) {
                           $iconFlag = '↓';
                         }
                       }
                       $bookingGroupKind1 = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                      // treatment1s
                     } else {
                       if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
                         $iconFlag = '';

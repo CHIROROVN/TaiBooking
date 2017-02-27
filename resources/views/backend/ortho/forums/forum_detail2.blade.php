@@ -12,7 +12,7 @@
             <tr>
               <td class="col-title"  rowspan="3">
                 @if(empty($comment->forum_user_id))不明 @else {{$comment->u_name_display}} @endif<br />
-                  {{formatDateTime($comment->forum_time, '/')}}<br />
+                  {{formatDateTime($comment->last_date, '/')}}<br />
                    @if(!empty(Auth::user()->u_power12))
                     @if(Auth::user()->u_power12 == 2)
                   <a class="text-orange" href="{{route('ortho.forums.forum_edit',$comment->forum_id)}}">編集</a> / <a class="text-orange" href="{{route('ortho.forums.forum_delete_cnf',$comment->forum_id)}}">削除</a>
@@ -38,13 +38,13 @@
               </td>
             </tr>
           </table>
-          @if(count($commentrs))
-            @foreach($commentrs as $cr)
+          @if(count($comments))
+            @foreach($comments as $cr)
             <table class="table table-bordered treatment2-list">
               <tr>
                 <td class="col-title" rowspan="3">
                   @if(empty($cr->forum_user_id))不明 @else {{$cr->u_name_display}} @endif<br />
-                  {{formatDateTime($cr->forum_read_time, '/')}}<br />
+                  {{formatDateTime($cr->last_date, '/')}}<br />
 
                   @if(!empty(Auth::user()->u_power11))
                     @if(Auth::user()->u_power11 == 1 && Auth::user()->id == $cr->forum_user_id)

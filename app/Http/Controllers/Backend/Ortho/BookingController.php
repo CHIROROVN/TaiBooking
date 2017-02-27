@@ -155,6 +155,7 @@ class BookingController extends BackendController
         $clsDdr                 = new DdrModel();
         $clsMemo                = new MemoModel();
         $clsBelong              = new BelongModel();
+        
 
         $data['list_doctors']   = $clsUser->get_list_users([1]);
         $data['doctors']        = $clsShift->get_by_belong([1], $date_current);

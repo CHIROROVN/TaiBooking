@@ -36,7 +36,7 @@ class ForumModel
                                             ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
                                             ->where('t_forum.last_kind', '<>', DELETE)
                                             ->where('t_forum.forum_parent_id', '=', $forum_parent_id);
-            return $query->orderBy('forum_time', 'asc')->get();
+            return $query->orderBy('last_date', 'asc')->get();
         }else if(!empty($keyword)){
             $countSpace = substr_count($keyword, ' ');
             if($countSpace >= 1){
@@ -66,14 +66,14 @@ class ForumModel
                                             });
             }
 
-            return $query->orderBy('forum_time', 'asc')->simplePaginate(PAGINATION);
+            return $query->orderBy('last_date', 'asc')->simplePaginate(PAGINATION);
         }else{
             $query = DB::table($this->table)->leftJoin('t_forum_read as fr', 't_forum.forum_id', '=', 'fr.forum_id')
                                             ->leftJoin('m_users as us', 't_forum.forum_user_id', '=', 'us.id')
                                             ->select('t_forum.*', 'fr.forum_read_id', 'fr.forum_read_user_id', 'fr.forum_read_time', 'fr.last_user', 'us.u_name_display')
                                             ->where('t_forum.last_kind', '<>', DELETE)
                                             ->whereNull('t_forum.forum_parent_id');
-            return $query->orderBy('forum_time', 'asc')->simplePaginate(PAGINATION);
+            return $query->orderBy('forum_time', 'desc')->simplePaginate(PAGINATION);
         }
     }
 

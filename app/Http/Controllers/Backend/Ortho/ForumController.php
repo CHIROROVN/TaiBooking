@@ -155,7 +155,7 @@ class ForumController extends BackendController
         $data                   = array();
         $clsForum               = new ForumModel();
         $data['comment']        = $clsForum->get_by_id($id);
-        $data['commentrs']      = $clsForum->getAllForum(null, $id);
+        $data['comments']      = $clsForum->getAllForum(null, $id);
 
         $clsForumRead                 = new ForumReadModel();
         $fread                        = array();

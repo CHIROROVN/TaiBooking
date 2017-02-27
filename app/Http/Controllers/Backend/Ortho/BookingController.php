@@ -154,6 +154,7 @@ class BookingController extends BackendController
         $clsUser                = new UserModel();
         $clsDdr                 = new DdrModel();
         $clsMemo                = new MemoModel();
+        $clsBelong              = new BelongModel();
 
         $data['list_doctors']   = $clsUser->get_list_users([1]);
         $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
@@ -168,6 +169,8 @@ class BookingController extends BackendController
         $data['ddrs']           = $clsDdr->get_by_start_date($date_current);
         $data['memos']          = $clsMemo->get_list_by_memo_date($date_current);
         $data['facilitys_popup']    = $clsFacility->getAll($clinic_id); //$clsFacility->getAll($clinic_id, 1)
+        $shift_user             = $clsShift->get_user_shift2();
+        $belongs                = $clsBelong->get_all();
 
         $where['clinic_id']     = $clinic_id;
         $where['booking_date']  = $date_current;
@@ -191,6 +194,17 @@ class BookingController extends BackendController
             }
         }
         $data['arr_bookings']       = $arr_bookings;
+
+        // shift_user, belongs
+        $dataShiftUser = array();
+        foreach ( $belongs as $belong ) {
+            foreach ( $shift_user as $item ) {
+                if ( $item->u_belong == $belong->belong_id ) {
+                    $dataShiftUser[$belong->belong_name][] = $item;
+                }
+            }
+        }
+        $data['dataShiftUser'] = $dataShiftUser;
 
         return view('backend.ortho.bookings.booking_daily', $data);
     }

@@ -75,12 +75,27 @@ $widthPercent = 88 / ($countFacility);
             }
           }
         ?>
-        <div class="ddr-infomation">
-          <div class="ddr-infomation-child">
-            {!! $text !!}
+        <div style="position: relative;">
+          <div class="ddr-infomation" style="width: 400px; position: absolute; left: 0; top: 0;">
+            <div class="ddr-infomation-child">
+              {!! $text !!}
+            </div>
+            <div class="ddr-infomation-child">
+              {!! $text2 !!}
+            </div>
           </div>
-          <div class="ddr-infomation-child">
-            {!! $text2 !!}
+          <div class="tbl-user-shift">
+            @foreach ( $dataShiftUser as $key => $value )
+              {{ $key }}:
+              @for ( $i = 0; $i < count($value); $i++ )
+                @if ( $i < count($value) - 1 )
+                  {{ $value[$i]->u_name . ', ' }}
+                @else
+                  {{ $value[$i]->u_name . '.' }}
+                @endif
+              @endfor
+              <br>
+            @endforeach
           </div>
         </div>
 
@@ -98,7 +113,7 @@ $widthPercent = 88 / ($countFacility);
         </div>
         @endif
 
-        <h3 class="text-center mar-top20">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
+        <h3 class="text-center mar-top20" style="margin-top: 100px;">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
             <p>{{ @$clinic->clinic_name }}</p>
       </div>
 
@@ -472,6 +487,7 @@ $widthPercent = 88 / ($countFacility);
 
                   // set flag
                   if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1  ) {
+                    // service
                     if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
                       $iconFlag = '';
                     } elseif ( !in_array($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id, $tmpFlag) ) {
@@ -479,12 +495,19 @@ $widthPercent = 88 / ($countFacility);
                       $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                     } else {
                       $iconFlag = '';
-                      $str = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . ($arr_bookings[$facility_id][$fullTime]->booking_start_time - 15) . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
-                        if ( in_array($str, $tmpFacilityTimeGroup) ) {
-                          $iconFlag = '↓';
-                        }
+                      // set time, ex: 1600 - 15 = 1545
+                      $subTime = $arr_bookings[$facility_id][$fullTime]->booking_start_time - 15;
+                      if ( substr($subTime, 2, 1) == '8' ) {
+                        $subTime = substr($subTime, 0, 2) . '4' . substr($subTime, 3, 1);
+                      }
+                      // end set time
+                      $str = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . $subTime . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                      if ( in_array($str, $tmpFacilityTimeGroup) ) {
+                        $iconFlag = '↓';
+                      }
                     }
                     $bookingGroupKind1 = $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+                    // treatment1s
                   } else {
                     if ( empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
                       $iconFlag = '';
@@ -536,7 +559,7 @@ $widthPercent = 88 / ($countFacility);
 
                     if ( $iconFlag == '↓' ) {
                       $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . $iconFlag . '</span></a>';
-                      $iconFlag = null;
+                      $iconFlag = '';
                     } else {
                       $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
                     }

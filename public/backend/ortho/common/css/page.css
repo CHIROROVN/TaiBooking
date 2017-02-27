@@ -866,3 +866,9 @@ span.note_required{
   margin-bottom: 10px;
   font-size: 18px;
 }
+
+.tbl-user-shift {
+  margin: 0 auto;
+  text-align: left;
+  width: 600px;
+}

@@ -113,7 +113,7 @@ $widthPercent = 88 / ($countFacility);
         </div>
         @endif
 
-        <h3 class="text-center mar-top20" style="margin-top: 100px;">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
+        <h3 class="text-center mar-top20" style="margin-top: 85px;">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
             <p>{{ @$clinic->clinic_name }}</p>
       </div>
 

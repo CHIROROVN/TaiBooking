@@ -77,7 +77,7 @@ $widthPercent = 88 / ($countFacility);
         ?>
         <div style="position: relative;">
           <div class="ddr-infomation" style="width: 400px; position: absolute; left: 0; top: 0;">
-            <div class="ddr-infomation-child">
+            <div class="ddr-infomation-child ddr-infomation-child-first">
               {!! $text !!}
             </div>
             <div class="ddr-infomation-child">
@@ -104,12 +104,34 @@ $widthPercent = 88 / ($countFacility);
           <div class="title">
             {{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）
           </div>
-          <div class="ddr-infomation-child ddr-infomation-child-dialog">
-            {!! $text !!}
+          <div class="dialog-content">
+            <div class="content-left">
+              <div class="ddr-infomation-child ddr-infomation-child-dialog">
+                {!! $text !!}
+              </div>
+              <div class="ddr-infomation-child ddr-infomation-child-dialog memo-infomation-child-dialog">
+                {!! $text2 !!}
+              </div>
+            </div>
+            <!-- end content-left -->
+            <div class="content-right">
+              <div class="ddr-infomation-child shift-user-child-dialog">
+                @foreach ( $dataShiftUser as $key => $value )
+                  {{ $key }}:
+                  @for ( $i = 0; $i < count($value); $i++ )
+                    @if ( $i < count($value) - 1 )
+                      {{ $value[$i]->u_name_display . ', ' }}
+                    @else
+                      {{ $value[$i]->u_name_display . '.' }}
+                    @endif
+                  @endfor
+                  <br>
+                @endforeach
+              </div>
+            </div>
+            <!-- end content-right -->
           </div>
-          <div class="ddr-infomation-child ddr-infomation-child-dialog">
-            {!! $text2 !!}
-          </div>
+          <!-- end dialog-content -->
         </div>
         @endif
 

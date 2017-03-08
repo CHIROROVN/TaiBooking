@@ -1918,80 +1918,84 @@ class BookingController extends BackendController
         
         // get booking: ($bookings) and check booking
         //get facility_id in list bookings
-        $typeFacility = array();
-        foreach ( $bookings as $item ) {
-            if ( !in_array($item->facility_id, $typeFacility) ) {
-                $typeFacility[] = $item->facility_id;
-            }
-        }
+        // echo '<pre>';
+        // print_r($bookings);
+        // echo '</pre>';
+        // die;
+        // $typeFacility = array();
+        // foreach ( $bookings as $item ) {
+        //     if ( !in_array($item->facility_id, $typeFacility) ) {
+        //         $typeFacility[] = $item->facility_id;
+        //     }
+        // }
 
-        $tmpBookings = array();
-        foreach ( $typeFacility as $itemFac ) {
-            $tmp = array();
-            foreach ( $bookings as $item ) {
-                if ( $item->facility_id == $itemFac ) {
-                    $tmp[] = $item;
-                }
-            }
-            $tmpBookings[$itemFac] = $tmp;
-        }
+        // $tmpBookings = array();
+        // foreach ( $typeFacility as $itemFac ) {
+        //     $tmp = array();
+        //     foreach ( $bookings as $item ) {
+        //         if ( $item->facility_id == $itemFac ) {
+        //             $tmp[] = $item;
+        //         }
+        //     }
+        //     $tmpBookings[$itemFac] = $tmp;
+        // }
 
 
-        // return list booking is ok
-        $tmpBookingTimeOk = array();
-        $timeTreatmentNumber = $timeTreatment / 15;
-        foreach ( $tmpBookings as $key => $values ) {
-            foreach ( $values as $keyBooking => $itemBooking ) {
-                $where = true;
-                for ( $i = 0; $i < $timeTreatmentNumber; $i++ ) {
-                    if ( !isset($values[$keyBooking + $i]) ) {
-                        $where = false;
-                        break;
-                    }
-                }
+        // // return list booking is ok
+        // $tmpBookingTimeOk = array();
+        // $timeTreatmentNumber = $timeTreatment / 15;
+        // foreach ( $tmpBookings as $key => $values ) {
+        //     foreach ( $values as $keyBooking => $itemBooking ) {
+        //         $where = true;
+        //         for ( $i = 0; $i < $timeTreatmentNumber; $i++ ) {
+        //             if ( !isset($values[$keyBooking + $i]) ) {
+        //                 $where = false;
+        //                 break;
+        //             }
+        //         }
                 
-                if ( $where ) {
-                    $whereTime = true;
-                    for ( $i = 0; $i < $timeTreatmentNumber - 1; $i++ ) {
-                        if ( convertStartTime($values[$keyBooking + $i]->booking_start_time + 15) != convertStartTime($values[$keyBooking + $i + 1]->booking_start_time) ) {
-                            $whereTime = false;
-                        }
-                    }
-                    //(convertStartTime($values[$keyBooking]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 1]->booking_start_time) && (convertStartTime($values[$keyBooking + 1]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 2]->booking_start_time)
-                    if ( $whereTime ) {
-                        $tmpBookingTimeOk[] = $values[$keyBooking];
-                    }
-                }
-            }
-        }
+        //         if ( $where ) {
+        //             $whereTime = true;
+        //             for ( $i = 0; $i < $timeTreatmentNumber - 1; $i++ ) {
+        //                 if ( convertStartTime($values[$keyBooking + $i]->booking_start_time + 15) != convertStartTime($values[$keyBooking + $i + 1]->booking_start_time) ) {
+        //                     $whereTime = false;
+        //                 }
+        //             }
+        //             //(convertStartTime($values[$keyBooking]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 1]->booking_start_time) && (convertStartTime($values[$keyBooking + 1]->booking_start_time + 15)) == convertStartTime($values[$keyBooking + 2]->booking_start_time)
+        //             if ( $whereTime ) {
+        //                 $tmpBookingTimeOk[] = $values[$keyBooking];
+        //             }
+        //         }
+        //     }
+        // }
 
         // order by by hand make --------------------------------------------------------
         // step 1: arrangement by date from list bookings
         // step 1.1: get array date
-        $tmpDate = array();
-        foreach ( $tmpBookingTimeOk as $item ) {
-            if ( !in_array($item->booking_date, $tmpDate) ) {
-                $tmpDate[] =  $item->booking_date;
-            }
-        }
-        for ( $i = 0; $i < count($tmpDate) - 1; $i++ ) {
-            for ( $j = $i + 1; $j < count($tmpDate); $j++ ) {
-                if ( strtotime($tmpDate[$j]) < strtotime($tmpDate[$i]) ) {
-                    $temp = $tmpDate[$j];
-                    $tmpDate[$j] = $tmpDate[$i];
-                    $tmpDate[$i] = $temp;
-                }
-            }
-        }
-        // step 1.2: arrangement date
-        $tmpBookingTimeOkArrangement = array();
-        foreach ( $tmpDate as $date ) {
-            foreach ( $tmpBookingTimeOk as $booking ) {
-                if ( $booking->booking_date == $date ) {
-                    $tmpBookingTimeOkArrangement[] = $booking;
-                }
-            }
-        }
+        // $tmpDate = array();
+        // foreach ( $tmpBookingTimeOk as $item ) {
+        //     if ( !in_array($item->booking_date, $tmpDate) ) {
+        //         $tmpDate[] =  $item->booking_date;
+        //     }
+        // }
+        // for ( $i = 0; $i < count($tmpDate) - 1; $i++ ) {
+        //     for ( $j = $i + 1; $j < count($tmpDate); $j++ ) {
+        //         if ( strtotime($tmpDate[$j]) < strtotime($tmpDate[$i]) ) {
+        //             $temp = $tmpDate[$j];
+        //             $tmpDate[$j] = $tmpDate[$i];
+        //             $tmpDate[$i] = $temp;
+        //         }
+        //     }
+        // }
+        // // step 1.2: arrangement date
+        // $tmpBookingTimeOkArrangement = array();
+        // foreach ( $tmpDate as $date ) {
+        //     foreach ( $tmpBookingTimeOk as $booking ) {
+        //         if ( $booking->booking_date == $date ) {
+        //             $tmpBookingTimeOkArrangement[] = $booking;
+        //         }
+        //     }
+        // }
         // end step 1
         // step 2: arrangement by time
         // step 2.1: group by date by list booking arrangement date
@@ -2026,7 +2030,7 @@ class BookingController extends BackendController
         
 
                     
-        $result = $tmpBookingTimeOkArrangement;
+        $result = $bookings;
 
 
         // echo '<pre>';

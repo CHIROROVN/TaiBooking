@@ -176,7 +176,13 @@
                         $iconFlag = '<img src="' . asset('') . 'public/backend/ortho/common/image/icon-shift-set2.png" />';
                       } else {
                         $iconFlag = '';
-                        $str = $arr_templates[$facility_id][$time]->facility_id . '-' . ($arr_templates[$facility_id][$time]->booking_start_time - 15) . '-' . $arr_templates[$facility_id][$time]->booking_childgroup_id;
+                        // set time, ex: 1600 - 15 = 1545
+                        $subTime = $arr_templates[$facility_id][$time]->booking_start_time - 15;
+                        if ( substr($subTime, 2, 1) == '8' ) {
+                          $subTime = substr($subTime, 0, 2) . '4' . substr($subTime, 3, 1);
+                        }
+                        // end set time
+                        $str = $arr_templates[$facility_id][$time]->facility_id . '-' . $subTime . '-' . $arr_templates[$facility_id][$time]->booking_childgroup_id;
                         if ( in_array($str, $tmpFacilityTimeGroup) ) {
                           $iconFlag = '↓';
                         }

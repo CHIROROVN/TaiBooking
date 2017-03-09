@@ -775,7 +775,7 @@ class BookingController extends BackendController
             $where['cur']                   = $booking->booking_date;
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
-            Session::flash('danger', trans('common.message_edit_danger'));
+            Session::flash('danger', trans('common.message_time_danger'));
             return redirect()->route('ortho.bookings.booking.edit', $id);
         }
     }
@@ -1080,7 +1080,7 @@ class BookingController extends BackendController
             $where['cur']                   = $booking->booking_date;
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
-            Session::flash('danger', trans('common.message_edit_danger'));
+            Session::flash('danger', trans('common.message_time_danger'));
             return redirect()->route('ortho.bookings.booking.regist', $id);
         }
     }
@@ -1394,7 +1394,7 @@ class BookingController extends BackendController
             );
             $clsPatient->update($p_id, $dataDeletePatient);
 
-            Session::flash('danger', trans('common.message_edit_danger'));
+            Session::flash('danger', trans('common.message_time_danger'));
             return redirect()->route('ortho.bookings.booking.1st.regist', $id);
         }
     }

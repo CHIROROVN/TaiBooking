@@ -25,6 +25,8 @@ return [
     'message_delete_success'                => '削除しました。',
     'message_delete_danger'                 => '削除できませんでした。',
 
+    'message_time_danger'                   => '予約可能な予約枠より長い予約時間の予約のため登録できませんでした。',
+
     /*
     |--------------------------------------------------------------------------
     | Permission: access to function, controller

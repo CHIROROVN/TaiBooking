@@ -99,7 +99,6 @@ $widthPercent = 88 / ($countFacility);
           </div>
         </div>
 
-        @if ( !empty($text) || !empty($text2) )
         <div id="dialog-message" class="ddr-infomation">
           <div class="title">
             {{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）
@@ -133,7 +132,6 @@ $widthPercent = 88 / ($countFacility);
           </div>
           <!-- end dialog-content -->
         </div>
-        @endif
 
         <h3 class="text-center mar-top20" style="margin-top: 85px;">{{ formatDateJp($date_current) }}（{{ DayJp($date_current) }}）</h3>
             <p>{{ @$clinic->clinic_name }}</p>

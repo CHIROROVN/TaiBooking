@@ -10,3 +10,5 @@ Homestead.json
 /public/tai-booking-document
 /bootstrap
 /storage/logs/laravel.log
+/.phpintel
+/.idea

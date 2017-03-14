@@ -255,9 +255,13 @@ class InterviewController extends BackendController
         for ( $i = 1; $i <= 46; $i++ ) {
             $dataInsert['q6_sq_' . $i] = Input::get('q6_sq_' . $i);
         }
-        
         // get YYYY-mm-dd q1_10
-        $dataInsert['q1_10'] = formatDate($dataInsert['q1_10'], '-');
+        $dataInsert['q1_10'] = date('Y-m-d', strtotime($dataInsert['q1_10']));
+
+        $rules = $clsInterview->Rules();
+        if ( $dataInsert['q3_kind'] != 1 ) {
+            unset($rules['q3_sq']);
+        }
 
         $validator      = Validator::make($dataInsert, $clsInterview->Rules(), $clsInterview->Messages());
         if ($validator->fails()) {
@@ -545,9 +549,14 @@ class InterviewController extends BackendController
             $dataInsert['q6_sq_' . $i] = Input::get('q6_sq_' . $i);
         }
         // get YYYY-mm-dd q1_10
-        $dataInsert['q1_10'] = formatDate($dataInsert['q1_10'], '-');
+        $dataInsert['q1_10'] = date('Y-m-d', strtotime($dataInsert['q1_10']));
 
-        $validator      = Validator::make($dataInsert, $clsInterview->Rules(), $clsInterview->Messages());
+        $rules = $clsInterview->Rules();
+        if ( $dataInsert['q3_kind'] != 1 ) {
+            unset($rules['q3_sq']);
+        }
+
+        $validator      = Validator::make($dataInsert, $rules, $clsInterview->Messages());
         if ($validator->fails()) {
             return redirect()->route('ortho.interviews.edit', [ $id ])->withErrors($validator)->withInput();
         }
@@ -715,7 +724,7 @@ class InterviewController extends BackendController
 
     public function getUpdateBooking($booking_id) {
         $clsBooking             = new BookingModel();
-        // $booking                = $clsBooking->get_by_id($booking_id);
+         $booking                = $clsBooking->get_by_id($booking_id);
 
         // update
         $dataUpdate = array(

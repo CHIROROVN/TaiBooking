@@ -142,11 +142,11 @@
             </tr>
             <tr>
               <td class="col-title">登録者</td>
-              <td>{{ @$doctors[$booking_change->first_user] }}</td>
+              <td>{{ @$doctors[$booking->first_user] }}</td>
             </tr>
             <tr>
               <td class="col-title">登録日時</td>
-              <td>{{ @dateHourMinSecond($booking_change->first_date, '/')}}</td>
+              <td>{{ @dateHourMinSecond($booking->first_date, '/')}}</td>
             </tr>
             <tr>
               <td class="col-title">最終更新者</td>

@@ -632,6 +632,22 @@ class BookingController extends BackendController
             //     }
             // }
 
+            //check is booking no booking?
+            //ex: booking_1: 10h->11h.
+            //ex: booking_2: regist new from 9h: 10h30 ==> can not regist
+            $checkNoBooking = true;
+            if ( count($listBookingUpdate) ) {
+                foreach ( $listBookingUpdate as $item ) {
+                    if ( !empty($item->booking_childgroup_id) ) {
+                        $checkNoBooking = false;
+                        break;
+                    }
+                }
+            }
+            if  ( !$checkNoBooking ) {
+                $listBookingUpdate = array();
+            }
+
             // update treatment1
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                 // ok update
@@ -980,6 +996,22 @@ class BookingController extends BackendController
             //     }
             // }
 
+            //check is booking no booking?
+            //ex: booking_1: 10h->11h.
+            //ex: booking_2: regist new from 9h: 10h30 ==> can not regist
+            $checkNoBooking = true;
+            if ( count($listBookingUpdate) ) {
+                foreach ( $listBookingUpdate as $item ) {
+                    if ( !empty($item->booking_childgroup_id) ) {
+                        $checkNoBooking = false;
+                        break;
+                    }
+                }
+            }
+            if  ( !$checkNoBooking ) {
+                $listBookingUpdate = array();
+            }
+
             // update treatment1
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {
                 // ok update
@@ -1073,6 +1105,9 @@ class BookingController extends BackendController
         } elseif ( empty($service_1) ) {
             $status = true;
         }
+
+        //Above = true --> continute regist check
+        //check: exp: booking 10h->11h, booking 2 regist 9h->10h. can not regist
 
         if ( $status ) {
             $where                          = array();
@@ -1285,6 +1320,22 @@ class BookingController extends BackendController
             //         unset($listBookingUpdate[$key]);
             //     }
             // }
+
+            //check is booking no booking?
+            //ex: booking_1: 10h->11h.
+            //ex: booking_2: regist new from 9h: 10h30 ==> can not regist
+            $checkNoBooking = true;
+            if ( count($listBookingUpdate) ) {
+                foreach ( $listBookingUpdate as $item ) {
+                    if ( !empty($item->booking_childgroup_id) ) {
+                        $checkNoBooking = false;
+                        break;
+                    }
+                }
+            }
+            if  ( !$checkNoBooking ) {
+                $listBookingUpdate = array();
+            }
 
             // update treatment1
             if ( count($listBookingUpdate) && (count($listBookingUpdate) >= $treatment1TotalTime/15) ) {

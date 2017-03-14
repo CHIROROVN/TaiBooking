@@ -60,7 +60,7 @@
         </tr>
         <tr>
           <td class="col-title">生年月日</td>
-          <td>{{ date('Y/m/d', strtotime($patient->p_birthday)) }}</td>
+          <td>{{ empty($patient->p_birthday) ? '' : date('Y/m/d', strtotime($patient->p_birthday)) }}</td>
         </tr>
         <tr>
           <td class="col-title">かかりつけ</td>

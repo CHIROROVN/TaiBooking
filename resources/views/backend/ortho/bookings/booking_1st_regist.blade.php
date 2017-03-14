@@ -83,7 +83,7 @@
               <td class="col-title"><label for="insert_to_tbl_first">問診票の入力</label></td>
               <td>
                 <div class="checkbox">
-                  <label><input type="checkbox" name="insert_to_tbl_first" id="insert_to_tbl_first" value="1" @if(old('insert_to_tbl_first') == 1) checked="" @endif />初診者一覧にも自動登録（＝問診票の新規登録）</label>
+                  <label><input checked type="checkbox" name="insert_to_tbl_first" id="insert_to_tbl_first" value="1" @if(old('insert_to_tbl_first') == 1) checked="" @endif />初診者一覧にも自動登録（＝問診票の新規登録）</label>
                 </div>
               </td>
             </tr>

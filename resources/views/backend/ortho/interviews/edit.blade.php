@@ -461,7 +461,7 @@
             @if ( old('q1_10') )
             <input class="form-control date abc" type="text" name="q1_10" id="q1_10" placeholder="年" value="{{ old('q1_10') }}" />
             @else
-            <input class="form-control date abc" type="text" name="q1_10" id="q1_10" placeholder="年" value="{{ @formatDate($interview->q1_10) }}" />
+            <input class="form-control date abc" type="text" name="q1_10" id="q1_10" placeholder="年" value="{{ empty($interview->q1_10) ? '' : @formatDate($interview->q1_10) }}" />
             @endif
             </div>
             </div>
@@ -621,6 +621,13 @@
               <span class="error-input">※{!! $errors->first('q3_kind') !!}</span>
             </div>
           </div>
+          @endif
+          @if ($errors->first('q3_sq'))
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                <span class="error-input">※{!! $errors->first('q3_sq') !!}</span>
+              </div>
+            </div>
           @endif
           </td>
       </tr>
@@ -2810,14 +2817,6 @@
       // 3
       $(function () {
         $('#q0_4_date').datepicker({
-          // viewMode: 'years',
-          dateFormat: 'yy/mm/dd'
-        });
-      });
-
-      // year
-      $(function () {
-        $('#q1_10').datepicker({
           // viewMode: 'years',
           dateFormat: 'yy/mm/dd'
         });

@@ -473,7 +473,7 @@ $widthPercent = 88 / ($countFacility);
           </tr>
         </table>
 
-        <div class="inner_table table-responsive scrollbox3">
+        <div class="inner_table table-responsive scrollbox3" id="scrollbox3">
           <table class="table table-bordered table-shift-set tbl-inner">
             <!-- check "brown", "green", "blue" color -->
           <?php $tmpFlag = array(); ?>
@@ -553,6 +553,7 @@ $widthPercent = 88 / ($countFacility);
                     if(!empty($list_doctors[$booking->doctor_id]))
                       $sDoctor = @$list_doctors[$booking->doctor_id];
 
+
                     $sPatient = '';
                     if( !empty($booking->p_no) ) {
                       $sPatient .= $booking->p_no . '<br />';
@@ -578,10 +579,10 @@ $widthPercent = 88 / ($countFacility);
                       $sService = @$services[$booking->service_1] . '<br />';
 
                     if ( $iconFlag == '↓' ) {
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . $iconFlag . '</span></a>';
+                      $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . $iconFlag . '</span></a>';
                       $iconFlag = '';
                     } else {
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
+                      $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
                     }
 
                   } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
@@ -597,6 +598,7 @@ $widthPercent = 88 / ($countFacility);
                         $initTreatment = '';
                         $tDoctor = @$list_doctors[$booking->doctor_id];
                       }
+
 
                       $tPatient = '';
                       if( !empty($booking->p_no) ) {
@@ -631,10 +633,10 @@ $widthPercent = 88 / ($countFacility);
                     }
 
                     if ( $iconFlag == '↓' ) {
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . $iconFlag . '</span>' . '</a>';
+                      $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . $iconFlag . '</span>' . '</a>';
                       $iconFlag = null;
                     } else {
-                      $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
+                      $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
                     }
                   }
                   // $text = 'yes';
@@ -725,7 +727,46 @@ $widthPercent = 88 / ($countFacility);
     });
   </script>
   <script>
+
     $(document).ready(function(){
+      // when finish regist booking
+      // go to position offset top
+      var top = $("html").offset();
+      var topTable = $("#scrollbox3").offset().top;
+      $(window).scroll(function(){
+          top = $(this).scrollTop();
+      });
+      $('#scrollbox3').scroll(function(){
+          topTable = $(this).scrollTop();
+      });
+      $('.get-position-top').click(function (e) {
+          var link = $(this).attr('href');
+          e.preventDefault();
+          //send position to php
+          $.ajax({
+              url: "{{ route('ortho.bookings.set.position.top.ajax') }}",
+              data: { top: top, topTable: topTable } ,
+              dataType: 'json',
+              type: "get",
+              success: function(result) {
+                  window.location.href = link;
+              }
+          });
+      });
+      //run
+      var topResult = getUrlParameter('top');
+      var topTableResult = getUrlParameter('topTable');
+      if ( topResult > 0 && topTableResult > 0 ) {
+          $("html, body").animate({ scrollTop: topResult }, 600);
+          $("#scrollbox3").animate({ scrollTop: topTableResult }, 600);
+          return false;
+      }false
+      // end----
+
+
+      $('.popup').popover({
+          html: true
+      });
 
       // show dialog message
       $(window).scroll(function(){ 
@@ -734,11 +775,6 @@ $widthPercent = 88 / ($countFacility);
           } else { 
             $('#dialog-message').fadeOut(); 
           } 
-      });
-
-
-      $('.popup').popover({
-        html: true
       });
       
       // set value from popup
@@ -973,6 +1009,21 @@ $widthPercent = 88 / ($countFacility);
           objNew.find('.td-content > .input').attr('name', '');
         }
       }
+
+      function getUrlParameter(sParam) {
+          var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+              sURLVariables = sPageURL.split('&'),
+              sParameterName,
+              i;
+
+          for (i = 0; i < sURLVariables.length; i++) {
+              sParameterName = sURLVariables[i].split('=');
+
+              if (sParameterName[0] === sParam) {
+                  return sParameterName[1] === undefined ? true : sParameterName[1];
+              }
+          }
+      };
     });
   </script>
 @stop

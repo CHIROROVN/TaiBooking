@@ -59,12 +59,15 @@ class BookedController extends BackendController
         $clsService                 = new ServiceModel();
         $clsTreatment1              = new Treatment1Model();
         $clsResult                  = new ResultModel();
+        $clsUser                    = new UserModel();
         $bookeds                    = $clsBooking->getBookedHistory($data);
         $data['services']           = $clsService->get_list();
         $results                    = $clsResult->get_all();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
         $data['dates']              = getSomeDayFromDay(date('Y-m-d'), 10);
         $data['currentDay']         = date('Y-m-d');
+        $data['doctors']            = $clsUser->get_by_belong([1]);
+        $data['hys']                = $clsUser->get_by_belong([2,3]);
 
         // set bookeds
         $tmp = array();

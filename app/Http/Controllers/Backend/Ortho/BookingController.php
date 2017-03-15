@@ -789,6 +789,8 @@ class BookingController extends BackendController
             $where                          = array();
             $where['clinic_id']             = $booking->clinic_id;
             $where['cur']                   = $booking->booking_date;
+            $where['top']                   = Session::get('top');
+            $where['topTable']              = Session::get('topTable');
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             Session::flash('danger', trans('common.message_time_danger'));
@@ -1113,6 +1115,8 @@ class BookingController extends BackendController
             $where                          = array();
             $where['clinic_id']             = $booking->clinic_id;
             $where['cur']                   = $booking->booking_date;
+            $where['top']                   = Session::get('top');
+            $where['topTable']              = Session::get('topTable');
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             Session::flash('danger', trans('common.message_time_danger'));
@@ -1435,6 +1439,8 @@ class BookingController extends BackendController
             $where                          = array();
             $where['clinic_id']             = $booking->clinic_id;
             $where['cur']                   = $booking->booking_date;
+            $where['top']                   = Session::get('top');
+            $where['topTable']              = Session::get('topTable');
             return redirect()->route('ortho.bookings.booking.daily', $where);
         } else {
             $dataDeletePatient = array(
@@ -2754,5 +2760,16 @@ class BookingController extends BackendController
         }
 
         return response()->json(['status', '0']);
+    }
+
+    //set position top for page: regist, edit, delete booking
+    //jquery for page: regist, edit, delete booking
+    public function setPositionTop()
+    {
+        $top                        = Input::get('top');
+        $topTable                   = Input::get('topTable');
+        Session::put('top', $top);
+        Session::put('topTable', $topTable);
+        echo json_encode(['top' => $top, 'topTable' => $topTable]);
     }
 }

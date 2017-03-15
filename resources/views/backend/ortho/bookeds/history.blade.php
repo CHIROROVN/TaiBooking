@@ -65,9 +65,16 @@
       <tbody>
         <tr>
           <td  class="col-title" align="center">時間帯</td>
+            <td  class="col-title" align="center">時間</td>
           <td  class="col-title"align="center">患者名</td>
-          <td class="col-title" align="center">本日の内容</td>
-          <td class="col-title" align="center">編集</td>
+            <td  class="col-title"align="center">ドクター</td>
+            <td  class="col-title"align="center">衛生士</td>
+            <td  class="col-title"align="center">装置</td>
+            <td  class="col-title"align="center">処置内容-1</td>
+            <td  class="col-title"align="center" style="min-width: 100px;">検査</td>
+            <td  class="col-title"align="center" style="min-width: 100px;">保険診療</td>
+            <td  class="col-title"align="center" style="min-width: 100px;">救急</td>
+          <td class="col-title" align="center" style="min-width: 100px;">編集</td>
           <td class="col-title" align="center">次回予約</td>
         </tr>
         @if ( !count($bookeds) )
@@ -77,7 +84,23 @@
             @if ( !empty($booked->patient_id) )
             <tr>
               <td>{{ $booked->booking_date }}</td>
-              <td>{{ $booked->p_no }}　{{ $booked->p_name_f . ' ' . $booked->p_name_g }}@if(!empty($booked->p_name_f_kana))（{{ $booked->p_name_f_kana . ' ' . $booked->p_name_g_kana }}）@endif</td>
+                <td>{{ splitHourMin($booked->booking_start_time) }}</td>
+              <td>{{ $booked->p_no }}　{{ $booked->p_name_f . ' ' . $booked->p_name_g }}</td>
+                <td>
+                    @foreach ( $doctors as $doctor )
+                        @if ( $doctor->id == $booked->doctor_id )
+                            {{ $doctor->u_name }}
+                        @endif
+                    @endforeach
+                </td>
+                <td>
+                    @foreach ( $hys as $hy )
+                        @if ( $hy->id == $booked->hygienist_id )
+                            {{ $hy->u_name }}
+                        @endif
+                    @endforeach
+                </td>
+                <td>{{ $booked->equipment_name }}</td>
               <td>
                 @if ( $booked->service_1_kind == 1 )
                 {{ @$services[$booked->service_1] }}
@@ -97,6 +120,9 @@
                   @endif
                 @endif
               </td>
+                <td>{{ $booked->inspection_name }}</td>
+                <td>{{ $booked->insurance_name }}</td>
+                <td><?php echo ($booked->emergency_flag == 1) ? '救急です' : 'ノーマル'; ?></td>
               <td align="center">
                 <!-- regist -->
                 @if ( isset($results[$booked->patient_id . '|' . $booked->clinic_id . '|' . $booked->facility_id]) )

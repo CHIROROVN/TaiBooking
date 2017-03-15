@@ -73,7 +73,10 @@ class BookingModel
         $db = DB::table($this->table)
                         ->leftJoin('t_patient as t1', 't_booking.patient_id', '=', 't1.p_id')
                         ->leftJoin('m_clinic', 't_booking.clinic_id', '=', 'm_clinic.clinic_id')
-                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_name_f_kana', 't1.p_name_g_kana', 'm_clinic.clinic_name')
+                        ->leftJoin('m_equipment as t4', 't_booking.equipment_id', '=', 't4.equipment_id')
+                        ->leftJoin('m_inspection as t5', 't_booking.inspection_id', '=', 't5.inspection_id')
+                        ->leftJoin('m_insurance as t6', 't_booking.insurance_id', '=', 't6.insurance_id')
+                        ->select('t_booking.*', 't1.p_name_f', 't1.p_name_g', 't1.p_no', 't1.p_name_f_kana', 't1.p_name_g_kana', 'm_clinic.clinic_name', 't4.equipment_name', 't5.inspection_name', 't6.insurance_name')
                         ->whereNotNull('t_booking.patient_id')
                         ->where('t_booking.last_kind', '<>', DELETE);
                         // ->where('t_booking.booking_rev', $this->getLastBookingRev());

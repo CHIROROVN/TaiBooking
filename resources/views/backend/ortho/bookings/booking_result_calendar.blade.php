@@ -480,10 +480,10 @@ $widthPercent = 88 / ($countFacility);
                         $sService = @$services[$booking->service_1] . '<br />';
 
                       if ( $iconFlag == '↓' ) {
-                        $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . $iconFlag . '</span></a>';
+                        $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . $iconFlag . '</span></a>';
                         $iconFlag = null;
                       } else {
-                        $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
+                        $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' . '<span>' . @$sPatient . @$sService . @$sDoctor . '</span></a>';
                       }
 
                     } elseif ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 2 ) {
@@ -535,10 +535,10 @@ $widthPercent = 88 / ($countFacility);
                       }
 
                       if ( $iconFlag == '↓' ) {
-                        $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . $iconFlag . '</span>' . '</a>';
+                        $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . $iconFlag . '</span>' . '</a>';
                         $iconFlag = null;
                       } else {
-                        $text = '<a href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
+                        $text = '<a class="get-position-top" href="' . $link . '" class="facility_id-' . $facility_id . '">' .  '<span>' . @$initTreatment . @$tPatient  . @$tTreatment . @$tDoctor . '</span>' . '</a>';
                       }
                     }
                   }
@@ -628,17 +628,51 @@ $widthPercent = 88 / ($countFacility);
 
   <script>
     $(document).ready(function(){
+      // when finish regist booking
+      // go to position offset top
+      var top = $("html").offset();
+      var topTable = $("#scrollbox3").offset().top;
+      $(window).scroll(function(){
+          top = $(this).scrollTop();
+      });
+      $('#scrollbox3').scroll(function(){
+          topTable = $(this).scrollTop();
+      });
+      $('.get-position-top').click(function (e) {
+          var link = $(this).attr('href');
+          e.preventDefault();
+          //send position to php
+          $.ajax({
+              url: "{{ route('ortho.bookings.set.position.top.ajax') }}",
+              data: { top: top, topTable: topTable } ,
+              dataType: 'json',
+              type: "get",
+              success: function(result) {
+                  window.location.href = link;
+              }
+          });
+      });
+      //run
+      var topResult = getUrlParameter('top');
+      var topTableResult = getUrlParameter('topTable');
+      if ( topResult > 0 && topTableResult > 0 ) {
+          $("html, body").animate({ scrollTop: topResult }, 600);
+          $("#scrollbox3").animate({ scrollTop: topTableResult }, 600);
+          return false;
+      }false
+      // end----
+
       $('.popup').popover({
         html: true
       });
 
       // show dialog message
-      $(window).scroll(function(){ 
+      $(window).scroll(function(){
         if ($(this).scrollTop() > 100) { 
           $('#dialog-message').fadeIn(); 
         } else { 
           $('#dialog-message').fadeOut(); 
-        } 
+        }
       }); 
       $('#dialog-message').click(function(){ 
         $("html, body").animate({ scrollTop: 0 }, 600); 

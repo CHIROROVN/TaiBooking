@@ -429,6 +429,10 @@ Route::group(['prefix' => 'ortho', 'namespace' => 'Backend\Ortho'], function ()
 	Route::get('bookings/booking-recall/delete/{id}', ['as' => 'ortho.bookings.booking_recall_delete', 'uses' => 'RecallController@recalDelete']);
 
 
+	//set position top for page: regist, edit, delete booking
+    Route::get('bookings/set-position-top-ajax', ['as' => 'ortho.bookings.set.position.top.ajax', 'uses' => 'BookingController@setPositionTop']);
+
+
 	// auth
 	Route::get('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@getLogin']);
 	Route::post('/login', ['as' => 'ortho.login', 'uses' => 'AuthController@postLogin']);

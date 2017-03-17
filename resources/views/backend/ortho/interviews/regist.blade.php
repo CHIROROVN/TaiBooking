@@ -164,7 +164,7 @@
 
       <!-- q1_9 -->
       <tr>
-          <td>メールアドレス <span class="note_required">※</span></td>
+          <td>メールアドレス </td>
           <td>
             <div class="row"><div class="col-sm-6">
               <input class="form-control" type="text" name="q1_9" id="q1_9" placeholder="例）example@domain.co.jp" value="{{ old('q1_9') }}" />
@@ -290,6 +290,13 @@
               <span class="error-input">※{!! $errors->first('q3_kind') !!}</span>
             </div>
           </div>
+          @endif
+          @if ($errors->first('q3_sq'))
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                <span class="error-input">※{!! $errors->first('q3_sq') !!}</span>
+              </div>
+            </div>
           @endif
           </td>
       </tr>
@@ -1618,14 +1625,6 @@
       // 3
       $(function () {
         $('#txt3').datetimepicker();
-      });
-      
-      // year
-      $(function () {
-        $('#q1_10').datepicker({
-          // viewMode: 'years',
-          dateFormat: 'yy/mm/dd'
-        });
       });
     });
     

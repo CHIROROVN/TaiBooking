@@ -1798,6 +1798,7 @@ class BookingController extends BackendController
                                         'booking_start_time'    => $new_start_time,
                                         'booking_group_id'      => $booking_group_id,
                                         'booking_childgroup_id' => $booking_childgroup_id,
+                                        'first_date'            => $old_booking->first_date,
                                         'last_date'             => date('Y-m-d H:i:s'),
                                         'last_user'             => Auth::user()->id,
                                         'last_kind'             => UPDATE

@@ -407,7 +407,7 @@ class BookingTemplateController extends BackendController
         if ( count($templates) ) {
             // delete old data
             $dataDelete['last_kind']              = DELETE;
-            $clsBooking->update_by_bookingDate(Input::get('date'), $dataDelete);
+            $clsBooking->update_by_bookingDate(Input::get('date'), Input::get('clinic_id'), $dataDelete);
 
             // insert new data
             foreach ( $templates as $template ) {

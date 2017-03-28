@@ -760,7 +760,7 @@ $widthPercent = 88 / ($countFacility);
           $("html, body").animate({ scrollTop: topResult }, 600);
           $("#scrollbox3").animate({ scrollTop: topTableResult }, 600);
           return false;
-      }false
+      }
       // end----
 
 

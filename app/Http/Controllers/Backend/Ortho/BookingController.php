@@ -77,7 +77,7 @@ class BookingController extends BackendController
                 $tmp_arr[] = array(
                     'title' => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png">'.@$clinic_display_name.'<img src="' . asset('') . 'public/backend/ortho/common/image/docter.png">' . $shift->u_name_display,
                     'start' => $shift->shift_date,
-                    'end' => $shift->shift_date + 1,
+                    'end' => (int)$shift->shift_date + 1,
                     'url' => route('ortho.bookings.booking.daily', [ 'clinic_id'=>$clinic_id,'start_date' => $shift->shift_date ]),
                 ); 
             }

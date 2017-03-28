@@ -149,7 +149,7 @@ class DdrController extends BackendController
             $tmpDdrs[]      = array(
                 'title'     => '<img src="' . asset('') . 'public/backend/ortho/common/image/hospital.png" width="13" height="11">' . $textClinic,
                 'start'     => $shift->shift_date,
-                'end'       => $shift->shift_date + 1,
+                'end'       => (int)$shift->shift_date + 1,
                 'url'       => '',
                 'color'     => $colorClinic,
             );

@@ -38,6 +38,7 @@
 
 <?php echo '<script>var clinic_id = ' . $clinic_id . '</script>'; ?>
 <?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
+<?php echo '<script>var u_id = ' . $u_id . '</script>'; ?>
 
 @stop
 
@@ -78,7 +79,12 @@
           data:{clinic_id:clinic_id},
           success: function(results){
             $.each(results, function(k, val){
-              htmlOptions += "<option value="+val.id+">" + val.u_name_display + "</option>";
+                if ( val.id == u_id ) {
+                    htmlOptions += "<option value="+val.id+" selected>" + val.u_name_display + "</option>";
+                } else {
+                    htmlOptions += "<option value="+val.id+">" + val.u_name_display + "</option>";
+                }
+
             });
             $('#u_id').html(htmlOptions);
           },
@@ -125,7 +131,12 @@
           data:{clinic_id:clinic_id},
           success: function(results){
             $.each(results, function(k, val){
-            htmlOptions2 += "<option value="+val.id+">" + val.u_name_display + "</option>";
+
+                if ( val.id == u_id ) {
+                    htmlOptions2 += "<option value="+val.id+" selected>" + val.u_name_display + "</option>";
+                } else {
+                    htmlOptions2 += "<option value="+val.id+">" + val.u_name_display + "</option>";
+                }
           });
           $('#u_id').html(htmlOptions2);
           },

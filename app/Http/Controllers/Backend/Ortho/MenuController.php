@@ -27,10 +27,10 @@ class MenuController extends BackendController
     public function index()
     {
         $clsClinic     = new ClinicModel();
-        $clinic        = $clsClinic->get_id_by_name('たい矯正歯科');
+        $clinic_id     = Auth::user()->u_power_booking;
         $clsClinicArea = new ClinicAreaModel();
         $data          = array();
-        $area_clinic   = $clsClinicArea->get_clinic_area($clinic->clinic_id);
+        $area_clinic   = $clsClinicArea->get_clinic_area($clinic_id);
         if(!empty($area_clinic)){
             $data['area_id']    = $area_clinic->area_id;
             $data['clinic_id']  = $area_clinic->clinic_id;

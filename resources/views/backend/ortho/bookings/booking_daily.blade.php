@@ -484,6 +484,7 @@ $widthPercent = 88 / ($countFacility);
             $minute = $tmp_arr[1];
             $fullTime = $hour . $minute;
             $tmpText = array();
+            $deleteType = 'single';
           ?>
           <tr>
             <td align="center" style="width: 7%;" class="td-title">{{ $time }} ～</td>
@@ -504,6 +505,11 @@ $widthPercent = 88 / ($countFacility);
                 if ( isset($arr_bookings[$facility_id][$fullTime]) ) {
                   // set '↓'
                   $tmpFacilityTimeGroup[] = $arr_bookings[$facility_id][$fullTime]->facility_id . '-' . $arr_bookings[$facility_id][$fullTime]->booking_start_time . '-' . $arr_bookings[$facility_id][$fullTime]->booking_childgroup_id;
+
+                  //set deleteType
+                  if ( !empty($arr_bookings[$facility_id][$fullTime]->booking_childgroup_id) ) {
+                    $deleteType = 'group';
+                  }
 
                   // set flag
                   if ( $arr_bookings[$facility_id][$fullTime]->service_1_kind == 1  ) {
@@ -652,11 +658,7 @@ $widthPercent = 88 / ($countFacility);
                   @if ( $color === 'brown' )
                   <img src="{{ asset('') }}public/backend/ortho/common/image/img-col-shift-set.png" />
                   @elseif ( ($color === 'blue' && $clsBackgroundPatient == '') || ($color === 'green' && $clsBackgroundPatient == '') )
-                    <?php $deleteType = 'single' ?>
-                    @if ( $color === 'green' )
-                    <?php $deleteType = 'group' ?>
-                    @endif
-                    <span class="glyphicon glyphicon-remove btn-close-nobooking" aria-hidden="true" data-id="td-{{ $common_id }}" booking-id="{{ $booking->booking_id }}" delete-type="{{ $deleteType }}"></span>
+                    <span class="glyphicon glyphicon-remove btn-close-nobooking" aria-hidden="true" data-id="td-{{ $common_id }}" booking-id="{{ $booking->booking_id }}" delete-type="{{ $deleteType  }}"></span>
                   @endif
                 </div>
                 <!-- Modal -->
@@ -759,7 +761,6 @@ $widthPercent = 88 / ($countFacility);
       if ( topResult > 0 && topTableResult > 0 ) {
           $("html, body").animate({ scrollTop: topResult }, 600);
           $("#scrollbox3").animate({ scrollTop: topTableResult }, 600);
-          return false;
       }
       // end----
 
@@ -769,14 +770,14 @@ $widthPercent = 88 / ($countFacility);
       });
 
       // show dialog message
-      $(window).scroll(function(){ 
-          if ($(this).scrollTop() > 100) { 
-            $('#dialog-message').fadeIn(); 
-          } else { 
-            $('#dialog-message').fadeOut(); 
-          } 
+      $(window).scroll(function(){
+          if ($(this).scrollTop() > 100) {
+            $('#dialog-message').fadeIn();
+          } else {
+            $('#dialog-message').fadeOut();
+          }
       });
-      
+
       // set value from popup
       $('.popup').click(function(event) {
         // reset
@@ -867,24 +868,24 @@ $widthPercent = 88 / ($countFacility);
         var booking_id = $(this).attr('booking-id');
         var delete_type = $(this).attr('delete-type');
         var booking_group_kind_1 = tdObjOld.attr('booking-group-kind-1');
-        setClear(tdObjOld, 0);
+        //setClear(tdObjOld, 0);
         $.ajax({
           url: "{{ route('ortho.bookings.delete.single.group') }}",
           type: 'get',
           dataType: 'json',
-          data: { 
+          data: {
             booking_id: booking_id,
             delete_type: delete_type
           },
           success: function(result){
             //console.log(result);
-            if ( delete_type === 'group' ) {
+            /*if ( delete_type === 'group' ) {
               $('.td-will-box').each(function() {
                 if ( $(this).attr('booking-group-kind-1') == booking_group_kind_1 ) {
                   setClear($(this), 0);
                 }
               });
-            }
+            }*/
             location.reload();
           }
         }); // end ajax
@@ -918,11 +919,11 @@ $widthPercent = 88 / ($countFacility);
             url: "{{ route('ortho.bookings.insert.insert') }}",
             type: 'get',
             dataType: 'json',
-            data: { 
+            data: {
               facility_id: facilityIdNew,
               time: dataFullTime,
               booking_date: '{{ $date_current }}',
-              clinic_id: '{{ @$clinic->clinic_id }}' 
+              clinic_id: '{{ @$clinic->clinic_id }}'
             },
             success: function(result){
               // tdObjNew.children().attr('data-booking-id', result[1].booking_id);

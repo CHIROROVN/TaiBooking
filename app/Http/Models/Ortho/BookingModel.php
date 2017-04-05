@@ -577,11 +577,6 @@ class BookingModel
         return DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE)->where('booking_id', $id)->update($data);
     }
 
-    public function delete($id)
-    {
-        return DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE)->where('booking_id', $id)->delete();
-    }
-
     public function update_by_bookingDate($booking_date, $linic_id, $data)
     {
         return DB::table($this->table)->where('booking_date', $booking_date)->where('clinic_id', $linic_id)->where('t_booking.last_kind', '<>', DELETE)

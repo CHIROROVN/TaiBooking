@@ -306,7 +306,7 @@ class BookingTemplateController extends BackendController
                 $tmpBookings[]      = array(
                     'title'         => $groupNameFinish,
                     'start'         => $booking->booking_date,
-                    'end'           => $booking->booking_date + 1,
+                    'end'           => (int)$booking->booking_date + 1,
                     'url'           => route('ortho.bookings.template.daily', [ 'date' => $booking->booking_date, 'clinic_id' => $booking->clinic_id, 's_mbt_id' => $s_mbt_id ]),
                     'className'     => 'booking-template-set',
                 );
@@ -323,6 +323,10 @@ class BookingTemplateController extends BackendController
         $data['date'] = date('Y-m-d');
         if ( Input::get('date') ) {
             $data['date'] = Input::get('date');
+        }
+
+        if ( empty(Input::get('clinic_id')) || Input::get('clinic_id') == '' ) {
+            return redirect()->route('ortho.bookings.template.set');
         }
 
         $data['s_mbt_id']           = Input::get('s_mbt_id');
@@ -391,6 +395,10 @@ class BookingTemplateController extends BackendController
 
     public function postBookingTemplateDaily()
     {
+        if ( empty(Input::get('clinic_id')) || Input::get('clinic_id') == '' ) {
+            return redirect()->route('ortho.bookings.template.set');
+        }
+
         $clsTemplate                = new TemplateModel();
         $clsFacility                = new FacilityModel();
         $clsBooking                 = new BookingModel();

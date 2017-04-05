@@ -22,12 +22,12 @@ class AreaController extends BackendController
     }
 
     /**
-     * 
+     * @return [type]
      */
     public function index()
     {
-        $clsArea = new AreaModel();
-        $data['areas'] = $clsArea->get_all();
+            $clsArea = new AreaModel();
+            $data['areas'] = $clsArea->get_all();
 
         return view('backend.ortho.areas.index', $data);
     }

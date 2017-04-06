@@ -688,9 +688,10 @@ class BookingTemplateController extends BackendController
             $dataUpdate['booking_childgroup_id']    = 'group_' . $startTime . '_' . $clinicService->clinic_service_id . '_' . $clinicService->clinic_id . '_' . $clinicService->service_id;
         }
         $where = array(
-            'booking_group_id'      => Input::get('booking_group_id'),
+            //'booking_group_id'      => Input::get('booking_group_id'),
             'booking_childgroup_id' => Input::get('booking_childgroup_id'),
             'clinic_id'             => Input::get('clinic_id'),
+            'booking_date'          => Input::get('booking_date'),
         );
         //single
         $status = '';
@@ -776,9 +777,10 @@ class BookingTemplateController extends BackendController
             'last_user'             => Auth::user()->id
         );
         $where = array(
-            'booking_group_id'      => Input::get('booking_group_id'),
+            //'booking_group_id'      => Input::get('booking_group_id'),
             'booking_childgroup_id' => Input::get('booking_childgroup_id'),
             'clinic_id'             => Input::get('clinic_id'),
+            'booking_date'          => Input::get('booking_date'),
         );
 
         //single

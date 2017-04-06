@@ -168,18 +168,16 @@ class BookingModel
     {
         $db = DB::table($this->table)->where('t_booking.last_kind', '<>', DELETE);
 
-        //if ( $lastBookingVer ) {
-            // $db = $db->where('t_booking.booking_rev', $this->getLastBookingRev());
-       // }
-
         // where booking_group_id
-        if ( isset($where['booking_group_id']) && !empty($where['booking_group_id']) ) {
-            $db = $db->where('t_booking.booking_group_id', $where['booking_group_id']);
+        if ( isset($where['booking_group_id']) ) {
+        $db = $db->where('t_booking.booking_group_id', $where['booking_group_id']);
         }
+        
         // where booking_childgroup_id
-        if ( isset($where['booking_childgroup_id']) && !empty($where['booking_childgroup_id']) ) {
+        if ( isset($where['booking_childgroup_id']) ) {
             $db = $db->where('t_booking.booking_childgroup_id', $where['booking_childgroup_id']);
         }
+        
         // where clinic_id
         if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
             $db = $db->where('t_booking.clinic_id', $where['clinic_id']);

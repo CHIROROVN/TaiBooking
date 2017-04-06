@@ -742,8 +742,9 @@ class InterviewController extends BackendController
         } else {
             $where = array(
                 'clinic_id'                 => $booking->clinic_id,
-                'booking_group_id'          => $booking->booking_group_id,
-                'booking_childgroup_id'     => $booking->booking_childgroup_id
+                //'booking_group_id'          => $booking->booking_group_id,
+                'booking_childgroup_id'     => $booking->booking_childgroup_id,
+                'booking_date'              => $booking->booking_date,
             );
             if ( $booking->service_1_kind == 2 ) {
                 $where['facility_id']       = $booking->facility_id;

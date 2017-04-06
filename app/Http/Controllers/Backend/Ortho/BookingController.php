@@ -355,8 +355,9 @@ class BookingController extends BackendController
 
         $where = array(
             'clinic_id'                 => $booking->clinic_id,
-            'booking_group_id'          => $booking->booking_group_id,
-            'booking_childgroup_id'     => $booking->booking_childgroup_id
+            //'booking_group_id'          => $booking->booking_group_id,
+            'booking_childgroup_id'     => $booking->booking_childgroup_id,
+            'booking_date'              => $booking->booking_date,
         );
         if ( $booking->service_1_kind == 2 ) {
             $where['facility_id']       = $booking->facility_id;
@@ -452,6 +453,7 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
         $booking                    = $clsBooking->get_by_id($id);
+        $bookingDeleteForUpdate     = array();
 
         $service_1 = $service_1_kind = null;
 
@@ -516,9 +518,10 @@ class BookingController extends BackendController
         if ( $booking->service_1_kind == 1 ) {
             //service
             $whereChildGroups               = array(
-                'booking_group_id'          => $booking->booking_group_id,
+                //'booking_group_id'          => $booking->booking_group_id,
                 'booking_childgroup_id'     => $booking->booking_childgroup_id,
                 'clinic_id'                 => $booking->clinic_id,
+                'booking_date'              => $booking->booking_date,
             );
             $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
             $status = true;
@@ -567,34 +570,68 @@ class BookingController extends BackendController
             $listBookingWillUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
             $status = true;
+            //case: 1
             //check allow update
-            //check treatment time
-            if ( $treatment_time_1 > $timeOldTreatment1 ) {
-                foreach ( $listBookingWillUpdate as $item ) {
-                    //check empty booking (booking_childgroup_id)
-                    //booking_id = booking_id is ok
-                    //empty patient_id is ok
-                    if ( !empty($item->booking_childgroup_id) && $item->booking_id != $id && !empty($item->patient_id) ) {
-                        $status = false;
+            $tmpBookingWillDelete = array();
+            foreach ( $listBookingWillUpdate as $item ) {
+                //check empty booking (booking_childgroup_id)
+                //booking_id = booking_id is ok
+                //empty patient_id is ok
+                if ( !empty($item->booking_childgroup_id) && $item->booking_id != $id && !empty($item->patient_id) ) {
+                    $status = false;
+
+                    //only in edit
+                    if ( $item->booking_childgroup_id == $booking->booking_childgroup_id ) {
+                        $status = true;
+                    }
+                    //end only in edit
+
+                    if ( !$status ) {
+                        break;
                     }
                 }
-            } elseif ( $treatment_time_1 < $timeOldTreatment1 ) {
-                $whereChildGroups               = array(
-                    'booking_group_id'          => $booking->booking_group_id,
-                    'booking_childgroup_id'     => $booking->booking_childgroup_id,
-                    'clinic_id'                 => $booking->clinic_id,
-                    'facility_id'               => $booking->facility_id,
-                );
-                $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
-                //delete old booking in group treatment
-                foreach ( $bookingChildGroups as $item ) {
-                    $clsBooking->update($item->booking_id, $dataDelete);
+
+                //case specil: IF no patient_id but already in the child group -> need delete group
+                if ( empty($item->patient_id) && !empty($item->booking_childgroup_id) ) {
+                    $tmpBookingWillDelete[] = $item;
                 }
+
+                //only edit
+                if ( $item->booking_childgroup_id == $booking->booking_childgroup_id ) {
+                    $tmpBookingWillDelete[] = $item;
+                }
+                //end only edit
             }
+            
+            //case: 2
             //check how many box booking for treatment, 1 box = 15 min
             if ( ($treatment_time_1 / 15) > count($listBookingWillUpdate) ) {
                 $status = false;
             }
+
+            //delete old booking in group treatment IF booking_childgroup_id NOT NULL
+            if ( $status ) {
+                //exp:
+                //group 1: 10:30 -> 10:45. Group regist: 10:15 -> 10:30
+                //need delete group 1 and regist group regist
+                //$tmopBookingWillDelete = group 1
+                foreach ( $tmpBookingWillDelete as $item ) {
+                    $whereChildGroups               = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->clinic_id,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date, //20170406
+                    );
+                    $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+                    foreach ( $bookingChildGroups as $key => $value ) {
+                        $bookingDeleteForUpdate[] = $value;
+                        $clsBooking->update($value->booking_id, $dataDelete);
+                        
+                    }    
+                }
+            }
+            //Session::put('bookingDeleteForUpdate', $bookingDeleteForUpdate);
             //end step 1
 
             //step 2: regist
@@ -663,6 +700,7 @@ class BookingController extends BackendController
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
         $booking                    = $clsBooking->get_by_id($id);
+        $bookingDeleteForUpdate     = array();
 
         $service_1 = $service_1_kind = null;
 
@@ -727,9 +765,10 @@ class BookingController extends BackendController
         if ( $booking->service_1_kind == 1 ) {
             //service
             $whereChildGroups               = array(
-                'booking_group_id'          => $booking->booking_group_id,
+                //'booking_group_id'          => $booking->booking_group_id,
                 'booking_childgroup_id'     => $booking->booking_childgroup_id,
                 'clinic_id'                 => $booking->clinic_id,
+                'booking_date'              => $booking->booking_date,
             );
             $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
             $status = true;
@@ -778,34 +817,53 @@ class BookingController extends BackendController
             $listBookingWillUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
             $status = true;
+            //case: 1
             //check allow update
-            //check treatment time
-            if ( $treatment_time_1 > $timeOldTreatment1 ) {
-                foreach ( $listBookingWillUpdate as $item ) {
-                    //check empty booking (booking_childgroup_id)
-                    //booking_id = booking_id is ok
-                    //empty patient_id is ok
-                    if ( !empty($item->booking_childgroup_id) && $item->booking_id != $id && !empty($item->patient_id) ) {
-                        $status = false;
-                    }
+            $tmpBookingWillDelete = array();
+            foreach ( $listBookingWillUpdate as $item ) {
+                //check empty booking (booking_childgroup_id)
+                //booking_id = booking_id is ok
+                //empty patient_id is ok
+                if ( !empty($item->booking_childgroup_id) && $item->booking_id != $id && !empty($item->patient_id) ) {
+                    $status = false;
+                    break;
                 }
-            } elseif ( $treatment_time_1 < $timeOldTreatment1 ) {
-                $whereChildGroups               = array(
-                    'booking_group_id'          => $booking->booking_group_id,
-                    'booking_childgroup_id'     => $booking->booking_childgroup_id,
-                    'clinic_id'                 => $booking->clinic_id,
-                    'facility_id'               => $booking->facility_id,
-                );
-                $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
-                //delete old booking in group treatment
-                foreach ( $bookingChildGroups as $item ) {
-                    $clsBooking->update($item->booking_id, $dataDelete);
+
+                //case specil: IF no patient_id but already in the child group -> need delete group
+                if ( empty($item->patient_id) && !empty($item->booking_childgroup_id) ) {
+                    $tmpBookingWillDelete[] = $item;
                 }
             }
+            
+            //case: 2
             //check how many box booking for treatment, 1 box = 15 min
             if ( ($treatment_time_1 / 15) > count($listBookingWillUpdate) ) {
                 $status = false;
             }
+
+            //delete old booking in group treatment IF booking_childgroup_id NOT NULL
+            if ( $status ) {
+                //exp:
+                //group 1: 10:30 -> 10:45. Group regist: 10:15 -> 10:30
+                //need delete group 1 and regist group regist
+                //$tmopBookingWillDelete = group 1
+                foreach ( $tmpBookingWillDelete as $item ) {
+                    $whereChildGroups               = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->clinic_id,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date, //this is resolve
+                    );
+                    $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+                    foreach ( $bookingChildGroups as $key => $value ) {
+                        $bookingDeleteForUpdate[] = $value;
+                        $clsBooking->update($value->booking_id, $dataDelete);
+                        
+                    }    
+                }
+            }
+            //Session::put('bookingDeleteForUpdate', $bookingDeleteForUpdate);
             //end step 1
 
             //step 2: regist
@@ -864,6 +922,7 @@ class BookingController extends BackendController
         $clsPatient                 = new PatientModel();
         $clsInterview               = new InterviewModel();
         $booking                    = $clsBooking->get_by_id($id);
+        $bookingDeleteForUpdate     = array();
 
         // insert new patient
         $dataPatient = array(
@@ -960,9 +1019,10 @@ class BookingController extends BackendController
         if ( $booking->service_1_kind == 1 ) {
             //service
             $whereChildGroups               = array(
-                'booking_group_id'          => $booking->booking_group_id,
+                //'booking_group_id'          => $booking->booking_group_id,
                 'booking_childgroup_id'     => $booking->booking_childgroup_id,
                 'clinic_id'                 => $booking->clinic_id,
+                'booking_date'              => $booking->booking_date,
             );
             $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
             $status = true;
@@ -1011,34 +1071,53 @@ class BookingController extends BackendController
             $listBookingWillUpdate = $clsBooking->get_for_update_treatment1($booking->booking_date, $booking->clinic_id, $booking->facility_id, $bookingStartTime, $hhmmBookingEndTime);
 
             $status = true;
+            //case: 1
             //check allow update
-            //check treatment time
-            if ( $treatment_time_1 > $timeOldTreatment1 ) {
-                foreach ( $listBookingWillUpdate as $item ) {
-                    //check empty booking (booking_childgroup_id)
-                    //booking_id = booking_id is ok
-                    //empty patient_id is ok
-                    if ( !empty($item->booking_childgroup_id) && $item->booking_id != $id && !empty($item->patient_id) ) {
-                        $status = false;
-                    }
+            $tmpBookingWillDelete = array();
+            foreach ( $listBookingWillUpdate as $item ) {
+                //check empty booking (booking_childgroup_id)
+                //booking_id = booking_id is ok
+                //empty patient_id is ok
+                if ( !empty($item->booking_childgroup_id) && $item->booking_id != $id && !empty($item->patient_id) ) {
+                    $status = false;
+                    break;
                 }
-            } elseif ( $treatment_time_1 < $timeOldTreatment1 ) {
-                $whereChildGroups               = array(
-                    'booking_group_id'          => $booking->booking_group_id,
-                    'booking_childgroup_id'     => $booking->booking_childgroup_id,
-                    'clinic_id'                 => $booking->clinic_id,
-                    'facility_id'               => $booking->facility_id,
-                );
-                $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
-                //delete old booking in group treatment
-                foreach ( $bookingChildGroups as $item ) {
-                    $clsBooking->update($item->booking_id, $dataDelete);
+
+                //case specil: IF no patient_id but already in the child group -> need delete group
+                if ( empty($item->patient_id) && !empty($item->booking_childgroup_id) ) {
+                    $tmpBookingWillDelete[] = $item;
                 }
             }
+            
+            //case: 2
             //check how many box booking for treatment, 1 box = 15 min
             if ( ($treatment_time_1 / 15) > count($listBookingWillUpdate) ) {
                 $status = false;
             }
+
+            //delete old booking in group treatment IF booking_childgroup_id NOT NULL
+            if ( $status ) {
+                //exp:
+                //group 1: 10:30 -> 10:45. Group regist: 10:15 -> 10:30
+                //need delete group 1 and regist group regist
+                //$tmopBookingWillDelete = group 1
+                foreach ( $tmpBookingWillDelete as $item ) {
+                    $whereChildGroups               = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->clinic_id,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date, //this is resolve
+                    );
+                    $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
+                    foreach ( $bookingChildGroups as $key => $value ) {
+                        $bookingDeleteForUpdate[] = $value;
+                        $clsBooking->update($value->booking_id, $dataDelete);
+                        
+                    }    
+                }
+            }
+            //Session::put('bookingDeleteForUpdate', $bookingDeleteForUpdate);
             //end step 1
 
             //step 2: regist
@@ -2344,9 +2423,10 @@ class BookingController extends BackendController
                 }
             } else {
                 $whereChildGroups               = array(
-                    'booking_group_id'          => $booking->booking_group_id,
+                    //'booking_group_id'          => $booking->booking_group_id,
                     'booking_childgroup_id'     => $booking->booking_childgroup_id,
                     'clinic_id'                 => $booking->clinic_id,
+                    'booking_date'              => $booking->booking_date,
                     // 'facility_id'               => $booking->facility_id,
                 );
                 if ( $booking->service_1_kind == 2 ) {

@@ -470,7 +470,8 @@
               booking_group_id: tdObjOld.find('.td-content').attr('data-dad-group'),
               booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
               clinic_id: '{{ @$clinic->clinic_id }}',
-              booking_id: tdObjOld.find('.td-content').attr('data-booking-id')
+              booking_id: tdObjOld.find('.td-content').attr('data-booking-id'),
+              booking_date: '{{ $date }}',
             },
             success: function(result){
               console.log(result);
@@ -503,7 +504,8 @@
               booking_childgroup_id: tdObjOld.find('.td-content').attr('data-group'),
               facility_id: facilityIdNew,
               clinic_id: '{{ @$clinic->clinic_id }}',
-              booking_template_daily: 1
+              booking_template_daily: 1,
+              booking_date: '{{ $date }}',
             },
             success: function(result){
               console.log(result);

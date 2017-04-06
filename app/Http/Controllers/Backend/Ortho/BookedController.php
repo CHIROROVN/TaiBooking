@@ -123,7 +123,7 @@ class BookedController extends BackendController
 
         $where = array(
             'clinic_id'                 => $data['booking']->clinic_id,
-            'booking_group_id'          => $data['booking']->booking_group_id,
+            //'booking_group_id'          => $data['booking']->booking_group_id,
             'booking_childgroup_id'     => $data['booking']->booking_childgroup_id,
             'booking_date'              => $data['booking']->booking_date,
         );

@@ -160,7 +160,7 @@ class BookingController extends BackendController
         $data['list_doctors']   = $clsUser->get_list_users([1]);
         $data['doctors']        = $clsShift->get_by_belong([1], $date_current);
         $data['hygienists']     = $clsShift->get_by_belong([2,3], $date_current);
-        $data['facilitys']      = $clsFacility->getAll($clinic_id);
+        $facilitys              = $clsFacility->getAll($clinic_id);
         $data['clinic']         = $clsClinic->get_by_id($clinic_id);
         $data['times']          = Config::get('constants.TIME');
         $data['treatment1s']    = $clsTreatment1->get_list_treatment();
@@ -169,13 +169,27 @@ class BookingController extends BackendController
         $bookings               = $clsBooking->get_by_clinic($clinic_id, $date_current);
         $data['ddrs']           = $clsDdr->get_by_start_date($date_current);
         $data['memos']          = $clsMemo->get_list_by_memo_date($date_current);
-        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id); //$clsFacility->getAll($clinic_id, 1)
+        //$data['facilitys_popup']    = $clsFacility->getAll($clinic_id); //$clsFacility->getAll($clinic_id, 1)
         $shift_user             = $clsShift->get_user_shift2($clinic_id, $date_current);
         $belongs                = $clsBelong->get_all();
 
         $where['clinic_id']     = $clinic_id;
         $where['booking_date']  = $date_current;
         $bookings               = $clsBooking->get_all($where);
+
+        // set facility specal
+        $facilitysSpecal            = $clsFacility->get_specal_for_clinic($clinic_id);
+        $tmpFacilitys               = array();
+        foreach ( $facilitys as $item ) {
+            $tmpFacilitys[] = $item;
+        }
+        if ( count($facilitysSpecal) > 0 ) {
+            foreach ( $facilitysSpecal as $item ) {
+                $tmpFacilitys[] = $item;
+            }
+        }
+        $data['facilitys']          = $tmpFacilitys;
+        $data['facilitys_popup']    = $tmpFacilitys;
 
         // $data['bookings']       = $bookings;
         $arr_bookings           = array();
@@ -244,17 +258,33 @@ class BookingController extends BackendController
         $data['list_doctors']       = $clsUser->get_list_users([1]);
         $data['doctors']            = $clsShift->get_by_belong([1], $date_current, $clinic_id);
         $data['hygienists']         = $clsShift->get_by_belong([2,3], $date_current, $clinic_id);
-        $data['facilitys']          = $clsFacility->getAll($clinic_id);
+        $facilitys                  = $clsFacility->getAll($clinic_id);
         $data['clinic']             = $clsClinic->get_by_id($clinic_id);
         $data['services']           = $clsService->get_list();
         $data['treatment1s']        = $clsTreatment1->get_list_treatment();
-        $data['facilitys_popup']    = $clsFacility->getAll($clinic_id);
+        //$data['facilitys_popup']    = $clsFacility->getAll($clinic_id);
 
-        $data['times']          = Config::get('constants.TIME');
+        $data['times']              = Config::get('constants.TIME');
 
-        $where['clinic_id']     = $clinic_id;
-        $where['booking_date']  = $date_current;
-        $bookings               = $clsBooking->get_all($where);
+        $where['clinic_id']         = $clinic_id;
+        $where['booking_date']      = $date_current;
+        $bookings                   = $clsBooking->get_all($where);
+
+
+        // set facility specal
+        $facilitysSpecal            = $clsFacility->get_specal_for_clinic($clinic_id);
+        $tmpFacilitys               = array();
+        foreach ( $facilitys as $item ) {
+            $tmpFacilitys[] = $item;
+        }
+        if ( count($facilitysSpecal) > 0 ) {
+            foreach ( $facilitysSpecal as $item ) {
+                $tmpFacilitys[] = $item;
+            }
+        }
+        $data['facilitys']          = $tmpFacilitys;
+        $data['facilitys_popup']    = $tmpFacilitys;
+
         // $data['bookings']       = $bookings;
         $arr_bookings           = array();
         foreach ( $data['times'] as $time ) {

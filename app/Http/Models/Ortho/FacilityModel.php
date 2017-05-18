@@ -44,6 +44,11 @@ class FacilityModel
         return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('clinic_id', '=', $clinic_id)->orderBy('facility_sort_no', 'asc')->get();
     }
 
+    public function get_specal_for_clinic($clinic_id)
+    {
+        return DB::table($this->table)->where('last_kind', '<>', DELETE)->where('facility_free1', '=', $clinic_id)->orderBy('facility_sort_no', 'asc')->get();
+    }
+
     public function insert($data)
     {
         $results = DB::table($this->table)->insert($data);

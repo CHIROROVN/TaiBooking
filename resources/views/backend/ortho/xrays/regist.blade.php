@@ -82,18 +82,24 @@
           <td>
             <select name="xray_date_year" class="form-control form-control--small">
               <option value="0">----年</option>
-              <option value="{{ $year_prev }}" @if(old('xray_date_year') == $year_prev) selected="" @endif>{{ $year_prev }}年</option>
-              <option value="{{ $year_now }}" @if(old('xray_date_year') == $year_now) selected="" @endif>{{ $year_now }}年</option>
-              <option value="{{ $year_next }}" @if(old('xray_date_year') == $year_next) selected="" @endif>{{ $year_next }}年</option>
+              <?php $selectOption = '' ?>
+              @if ( old('xray_date_year') == $year_prev )
+              @endif
+              <option value="{{ $year_prev }}" @if(date('Y') == $year_prev || old('xray_date_year') == $year_prev) selected="" @endif>{{ $year_prev }}年</option>
+              <option value="{{ $year_now }}" @if(date('Y') == $year_now || old('xray_date_year') == $year_now) selected="" @endif>{{ $year_now }}年</option>
+              <option value="{{ $year_next }}" @if(date('Y') == $year_next || old('xray_date_year') == $year_next) selected="" @endif>{{ $year_next }}年</option>
             </select>
             <select name="xray_date_month" class="form-control form-control--small" id="month" onchange="getVal(this);">
               <option value="0">--月</option>
               @for ( $i = 1; $i <= 12; $i++ )
-              <option value="{{ $i }}" @if(old('xray_date_month') == $i) selected="" @endif>{{ $i }}月</option>
+              <option value="{{ $i }}" @if(date('m') == $i || old('xray_date_month') == $i) selected="" @endif>{{ $i }}月</option>
               @endfor
             </select>
             <select name="xray_date_day" class="form-control form-control--small" id="day">
               <option value="0">--日</option>
+              @for ( $i = 1; $i <= 31; $i++ )
+              <option value="{{ $i }}" @if(date('d') == $i || old('xray_date_month') == $i) selected="" @endif>{{ $i }}日</option>
+              @endfor
             </select>
             <img src="{{ asset('') }}public/backend/ortho/common/image/dummy-calendar.png" height="23" width="27">
             <span class="error-input">@if ($errors->first('xray_date')) ※{!! $errors->first('xray_date') !!} @endif</span>
@@ -279,7 +285,7 @@
         <tr>
           <td class="col-title">備考2</td>
           <td>
-            <textarea name="xray_memo" id="xray_memo" cols="60" rows="3" class="form-control">{{ old('xray_memo') }}</textarea>
+            <textarea name="xray_memo" id="xray_memo" cols="60" rows="3" class="form-control" style="height: 70px !important">{{ old('xray_memo') }}</textarea>
           </td>
         </tr>
       </table>

@@ -38,15 +38,21 @@
             <td>
               <select style="text-align: center;" name="year" id="year" class="form-control form-control--small">
                 <option value="">----年</option>
-                <option value="{{$prevYear}}">{{$prevYear}}年</option>
-                <option value="{{$currYear}}">{{$currYear}}年</option>
-                <option value="{{$nextYear}}">{{$nextYear}}年</option>
+                <option value="{{$prevYear}}" @if(date('Y') == $prevYear || old('year') == $prevYear) selected="" @endif>{{$prevYear}}年</option>
+                <option value="{{$currYear}}" @if(date('Y') == $currYear || old('year') == $currYear) selected="" @endif>{{$currYear}}年</option>
+                <option value="{{$nextYear}}" @if(date('Y') == $nextYear || old('year') == $nextYear) selected="" @endif>{{$nextYear}}年</option>
               </select>
               <select style="text-align: center;" name="month" id="month" class="form-control form-control--small">
                 <option value="">--月</option>
+                @for ( $i = 1; $i <= 12; $i++ )
+                <option value="{{ $i }}" @if(date('m') == $i || old('month') == $i) selected="" @endif>{{ $i }}月</option>
+                @endfor
               </select>
               <select style="text-align: center;" name="day" id="day" class="form-control form-control--small">
-                <option value="">--日</option>               
+                <option value="">--日</option>
+                @for ( $i = 1; $i <= 31; $i++ )
+                <option value="{{ $i }}" @if(date('d') == $i || old('day') == $i) selected="" @endif>{{ $i }}月</option>
+                @endfor          
               </select>
               <img src="{{asset('public/backend/ortho/common/image/dummy-calendar.png')}}" height="23" width="27">
               <span class="error-input">@if ($errors->first('ct_date')) ※{!! $errors->first('ct_date') !!} @endif</span>

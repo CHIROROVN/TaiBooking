@@ -11,10 +11,8 @@
                 <table class="table table-bordered">
                   <tr>
                     <td class="col-title"><label for="facility_name">設備名 <span class="note_required">※</span></label></td>
-                    <td><input type="text" name="facility_name" id="facility_name" class="form-control"/>
-                    	@if ($errors->first('facility_name'))
-		                    <span class="error-input">※ {!! $errors->first('facility_name') !!}</span>
-		            	@endif
+                    <td><input type="text" name="facility_name" id="facility_name" class="form-control" value="{{ old('facility_name') }}"/>
+                    	@if ($errors->first('facility_name'))<span class="error-input">※ {!! $errors->first('facility_name') !!}</span>@endif
                     </td>
                   </tr>
                   <tr>
@@ -26,9 +24,18 @@
                       <div class="radio">
                         <label><input type="radio" name="facility_kind" id="out_treatment" value="2" @if(old('facility_kind') == '2') checked="checked" @endif />治療以外</label>
                       </div>
-                    	@if ($errors->first('facility_kind'))
-		                    <span class="error-input">※ {!! $errors->first('facility_kind') !!}</span>
-		            	@endif
+                    	@if ($errors->first('facility_kind'))<span class="error-input">※ {!! $errors->first('facility_kind') !!}</span>@endif
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-title"><label for="facility_name">And order facility</label></td>
+                    <td>
+                      <select class="form-control" name="clinic_id_specal">
+                        <option value="">---</option>
+                        @foreach ( $clinicList as $item )
+                        <option value="{{ $item->clinic_id }}">{{ $item->clinic_name }}</option>
+                        @endforeach
+                      </select>
                     </td>
                   </tr>
                 </table>

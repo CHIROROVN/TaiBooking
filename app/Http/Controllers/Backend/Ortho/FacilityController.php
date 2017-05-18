@@ -40,6 +40,7 @@ class FacilityController extends BackendController
         $clsClinic          = new ClinicModel();
         $data               = array();
         $data['clinic']     = $clsClinic->get_by_id($clinic_id);
+        $data['clinicList'] = $clsClinic->get_for_select_only_user();
         return view('backend.ortho.facilities.regist', $data);
     }
 
@@ -58,10 +59,12 @@ class FacilityController extends BackendController
 
         $max = $clsFacility->get_max();
         $dataInsert = array(
-            'facility_name'            => Input::get('facility_name'),
-            'facility_kind'            => Input::get('facility_kind'),
+            'facility_name'             => Input::get('facility_name'),
+            'facility_kind'             => Input::get('facility_kind'),
+            'facility_free1'            => (empty(Input::get('clinic_id_specal'))) ? null : Input::get('clinic_id_specal'),
             'clinic_id'                 => $clinic_id,
-            'facility_sort_no'         => $max + 1,
+            'facility_sort_no'          => $max + 1,
+
             'last_kind'                 => INSERT,
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_date'                 => date('y-m-d H:i:s'),
@@ -88,6 +91,7 @@ class FacilityController extends BackendController
         $data['facility']   = $clsFacility->get_by_id($id);
         $data['clinic_id']  = $clinic_id;
         $data['clinic']     = $clsClinic->get_by_id($clinic_id);
+        $data['clinicList'] = $clsClinic->get_for_select_only_user();
         return view('backend.ortho.facilities.edit', $data);
     }
 
@@ -106,6 +110,8 @@ class FacilityController extends BackendController
             'facility_name'             => Input::get('facility_name'),
             'facility_kind'             => Input::get('facility_kind'),
             'clinic_id'                 => $clinic_id,
+            'facility_free1'            => (empty(Input::get('clinic_id_specal'))) ? null : Input::get('clinic_id_specal'),
+
             'last_kind'                 => UPDATE,
             'last_ipadrs'               => CLIENT_IP_ADRS,
             'last_date'                 => date('y-m-d H:i:s'),

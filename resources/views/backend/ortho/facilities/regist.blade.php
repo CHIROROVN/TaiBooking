@@ -33,7 +33,11 @@
                       <select class="form-control" name="clinic_id_specal">
                         <option value="">---</option>
                         @foreach ( $clinicList as $item )
+                        @if ( $item->clinic_id != $clinic_id )
                         <option value="{{ $item->clinic_id }}">{{ $item->clinic_name }}</option>
+                        @else
+                        <option value="{{ $item->clinic_id }}" disabled>{{ $item->clinic_name }}</option>
+                        @endif
                         @endforeach
                       </select>
                     </td>

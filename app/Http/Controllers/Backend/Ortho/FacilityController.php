@@ -40,6 +40,7 @@ class FacilityController extends BackendController
         $clsClinic          = new ClinicModel();
         $data               = array();
         $data['clinic']     = $clsClinic->get_by_id($clinic_id);
+        $data['clinic_id']  = $clinic_id;
         $data['clinicList'] = $clsClinic->get_for_select_only_user();
         return view('backend.ortho.facilities.regist', $data);
     }

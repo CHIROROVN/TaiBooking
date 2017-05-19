@@ -56,8 +56,6 @@
   <script src="{{ asset('') }}public/backend/ortho/common/js/lang-all.js"></script>
   <script src="{{ asset('') }}public/backend/ortho/common/js/bootstrap-button-to-input-file.js"></script>
 
-  <script src="{{ asset('') }}public/backend/ortho/common/js/main.js"></script>
-
   @yield('script')
 </body>
 </html>

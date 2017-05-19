@@ -28,20 +28,18 @@
           {!! Form::open(array('route' => 'ortho.bookeds.history', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
           <select title="医院" name="s_clinic_id" class="form-control">
             <option value="">医院</option>
-            <?php $listClinic = $clinics; ?>
-            @foreach($listClinic as $clinic_id => $clinic)
-              @if ( $clinic->clinic_name == 'たい矯正歯科' )
-              <option value="{{$clinic->clinic_id}}" selected="">{{ $clinic->clinic_name }}</option>
-              <?php unset($listClinic[$clinic_id]) ?>
-              @endif
+            
+            <?php $selected = '' ?>
+            @foreach ( $clinics as $clinic)
+            <?php $selected = ($clinic->clinic_id == $s_clinic_id || $clinic->clinic_id == Auth::user()->u_power_booking) ? 'selected' : '' ?>
+            <option value="{{ $clinic->clinic_id }}" {{ $selected }}>{{ $clinic->clinic_name }}</option>
             @endforeach
-            @foreach ( $listClinic as $clinic)
-            <option value="{{ $clinic->clinic_id }}" @if($s_clinic_id == $clinic->clinic_id) selected="" @endif>{{ $clinic->clinic_name }}</option>
-            @endforeach
+
           </select>
           　
           <select name="s_booking_date" id="s_booking_date" class="form-control" style="margin-left: -19px;">
             <option value="">----</option>
+            
             @foreach ( $dates as $date )
               @if ( $s_booking_date == $date )
               <option value="{{ $date }}" selected="">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
@@ -49,6 +47,7 @@
               <option value="{{ $date }}">{{ formatDate($date, '/') }}({{ DayJp($date) }})</option>
               @endif
             @endforeach
+
           </select>
 
           <div style="display: inline;">

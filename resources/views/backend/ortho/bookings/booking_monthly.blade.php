@@ -8,26 +8,32 @@
         <div class="fillter">
           <div class="col-md-12 page-left">
           
-          {!! Form::open(array('route' => 'ortho.bookings.booking.monthly', 'id'=>'bookingMonthly', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
+            {!! Form::open(array('route' => 'ortho.bookings.booking.monthly', 'id'=>'bookingMonthly', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
             <select name="area_id" id="area_id" class="form-control form-control--small">
               <option value="">▼地域</option>
+              
               @if(!empty($areas))
                 @foreach($areas as $a_id => $area_name)
                   <option value="{{$a_id}}" @if($a_id == $area_id) selected="" @endif>{{$area_name}}</option>
                 @endforeach
               @endif
+
             </select>
             <select name="clinic_id" id="clinic_id" class="form-control form-control--medium">
               <option value="">▼医院名</option>
             </select>
             <select name="u_id" id="u_id" class="form-control form-control--small">
               <option value="">▼Dr</option>
+              
+              <?php $selected = '' ?>
               @foreach ( $doctors as $doctor )
-              <option value="{{ $doctor->id }}" @if($u_id == $doctor->id) selected="" @endif>{{ $doctor->u_name }}</option>
+              <?php $selected = (Auth::user()->id == $doctor->id || $u_id == $doctor->id) ? 'selected' : ''; ?>
+              <option value="{{ $doctor->id }}" {{ $selected }}>{{ $doctor->u_name }}</option>
               @endforeach
+
             </select>
             <input type="submit" class="btn btn-sm btn-page no-border" name="" value="絞込表示">
-          </form>
+            </form>
 
           </div>
         </div>
@@ -39,6 +45,7 @@
 <?php echo '<script>var clinic_id = ' . $clinic_id . '</script>'; ?>
 <?php echo '<script>var bookings = ' . $bookings . '</script>'; ?>
 <?php echo '<script>var u_id = ' . $u_id . '</script>'; ?>
+<?php echo '<script>var u_login_id = ' . Auth::user()->id . '</script>'; ?>
 
 @stop
 
@@ -79,7 +86,7 @@
           data:{clinic_id:clinic_id},
           success: function(results){
             $.each(results, function(k, val){
-                if ( val.id == u_id ) {
+                if ( val.id == u_id || val.id == u_login_id ) {
                     htmlOptions += "<option value="+val.id+" selected>" + val.u_name_display + "</option>";
                 } else {
                     htmlOptions += "<option value="+val.id+">" + val.u_name_display + "</option>";
@@ -99,8 +106,8 @@
 
 
       // order
-      var area_id = $.urlParam('area_id');
-      var clinic_id = $.urlParam('clinic_id');
+      var area_id = getUrlParameter('area_id');
+      var clinic_id = getUrlParameter('clinic_id');
       var url = "{{route('ortho.bookings.monthly.clinics')}}";
       var htmlOptions = "<option value="+">▼医院名</option>";
       $.ajax({
@@ -132,7 +139,7 @@
           success: function(results){
             $.each(results, function(k, val){
 
-                if ( val.id == u_id ) {
+                if ( val.id == u_id || val.id == u_login_id ) {
                     htmlOptions2 += "<option value="+val.id+" selected>" + val.u_name_display + "</option>";
                 } else {
                     htmlOptions2 += "<option value="+val.id+">" + val.u_name_display + "</option>";
@@ -193,16 +200,6 @@
         },
       });
     });
-
-    $.urlParam = function(name){
-      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-      if (results==null){
-         return null;
-      }
-      else{
-         return results[1] || 0;
-      }
-    }
 
   </script>
 @stop

@@ -8,22 +8,25 @@
       <h3>予約雛形の適用と個別開閉</h3>
           <div class="fillter">
             <div class="col-md-12 page-left">
+
               {!! Form::open(array('route' => 'ortho.bookings.template.set', 'method' => 'get', 'enctype'=>'multipart/form-data')) !!}
               <select name="s_clinic_id" id="s_clinic_id" class="form-control form-control--small">
                 <option value="">▼医院名</option>
-                <?php $listClinic = $clinics; ?>
-                @foreach($listClinic as $clinic_id => $clinic)
-                  @if ( $clinic == 'たい矯正歯科' )
-                  <option value="{{$clinic_id}}" selected="">{{$clinic}}</option>
-                  <?php unset($listClinic[$clinic_id]) ?>
-                  @endif
+
+                <?php $selected = '' ?>
+                @foreach ( $clinics as $key => $clinic )
+                  <?php
+                  if ( $key == Auth::user()->u_power_booking || $key == $s_clinic_id ) {
+                    $selected = 'selected';
+                  }
+                  ?>
+                <option value="{{ $key }}" {{ $selected }}>{{ $clinic }}</option>
                 @endforeach
-                @foreach ( $listClinic as $key => $clinic )
-                <option value="{{ $key }}" @if($s_clinic_id == $key) selected="" @endif>{{ $clinic }}</option>
-                @endforeach
+
               </select>
               <input type="submit" class="btn btn-sm btn-page no-border" name="" value="表示">
               </form>
+
             </div>
           </div>
           <div id='calendar'></div>

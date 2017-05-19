@@ -56,9 +56,13 @@
             <td>
               <select  name="p_hos" class="form-control" title="▼選択">
                 <option data-hidden="true"></option>
+
+                <?php $selected = '' ?>
                 @foreach ( $clinics as $clinic )
-                <option value="{{ $clinic->clinic_id }}" @if(@$p_hos == $clinic->clinic_id) selected="" @endif >{{ $clinic->clinic_name }}</option>
+                <?php $selected = ($clinic->clinic_id == $p_hos || $clinic->clinic_id == Auth::user()->u_power_booking) ? 'selected' : '' ?>
+                <option value="{{ $clinic->clinic_id }}" {{ $selected }} >{{ $clinic->clinic_name }}</option>
                 @endforeach
+
               </select>
             </div>
             </td>

@@ -448,7 +448,7 @@ class BookingTemplateController extends BackendController
                     $data['booking_childgroup_id']  = $template->template_group_id;
                 }
 
-                $data['booking_rev']            = $clsBooking->getLastBookingRev();
+                //$data['booking_rev']            = $clsBooking->getLastBookingRev();
 
                 $data['last_date']              = date('y-m-d H:i:s');
                 $data['last_kind']              = INSERT;
@@ -822,11 +822,11 @@ class BookingTemplateController extends BackendController
         $bookingBlue = $clsBooking->get_by_clinic($dataInsert['clinic_id'], $dataInsert['booking_date']);
         if ( !empty($bookingBlue) ) {
             $dataInsert['booking_group_id'] = $bookingBlue[0]->booking_group_id;
-            $dataInsert['booking_rev']      = $bookingBlue[0]->booking_rev;
+            //$dataInsert['booking_rev']      = $bookingBlue[0]->booking_rev;
         } else {
             $bookingBlue = $clsBooking->get_blue();
             $dataInsert['booking_group_id'] = (isset($bookingBlue->booking_group_id)) ? $bookingBlue->booking_group_id : null;
-            $dataInsert['booking_rev']      = (isset($bookingBlue->booking_rev)) ? $bookingBlue->booking_rev : null;
+            //$dataInsert['booking_rev']      = (isset($bookingBlue->booking_rev)) ? $bookingBlue->booking_rev : null;
         }
 
         $where = array(
@@ -839,7 +839,7 @@ class BookingTemplateController extends BackendController
         $status = '';
         if ( !empty($booking) ) {
             $dataInsert['last_kind'] = UPDATE;
-            $dataInsert['booking_rev'] = $booking->booking_rev + 1;
+            //$dataInsert['booking_rev'] = $booking->booking_rev + 1;
             $clsBooking->update($booking->booking_id, $dataInsert);
             $status = $booking;
         } else {
@@ -871,11 +871,11 @@ class BookingTemplateController extends BackendController
             $bookingBlue = $clsBooking->get_by_clinic($dataInsert['clinic_id'], $dataInsert['booking_date']);
             if ( !empty($bookingBlue) ) {
                 $dataInsert['booking_group_id'] = $bookingBlue[0]->booking_group_id;
-                $dataInsert['booking_rev']      = $bookingBlue[0]->booking_rev;
+                //$dataInsert['booking_rev']      = $bookingBlue[0]->booking_rev;
             } else {
                 $bookingBlue = $clsBooking->get_blue();
                 $dataInsert['booking_group_id'] = (isset($bookingBlue->booking_group_id)) ? $bookingBlue->booking_group_id : null;
-                $dataInsert['booking_rev']      = (isset($bookingBlue->booking_rev)) ? $bookingBlue->booking_rev : null;
+                //$dataInsert['booking_rev']      = (isset($bookingBlue->booking_rev)) ? $bookingBlue->booking_rev : null;
             }
 
             $where = array(

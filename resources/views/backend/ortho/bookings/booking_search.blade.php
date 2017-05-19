@@ -11,18 +11,15 @@
                   <td>
                     <select name="clinic_id" id="clinic_id" class="form-control">
                       <option value="">▼選択</option>
+                      
                       @if(count($clinics) > 0)
-                        <?php $listClinic = $clinics; ?>
-                        @foreach($listClinic as $clinic_id => $clinic)
-                          @if ( $clinic == 'たい矯正歯科' )
-                          <option value="{{$clinic_id}}" selected="">{{$clinic}}</option>
-                          <?php unset($listClinic[$clinic_id]) ?>
-                          @endif
-                        @endforeach
-                        @foreach($listClinic as $clinic_id => $clinic)
-                        <option value="{{$clinic_id}}">{{$clinic}}</option>
+                        <?php $selected = '' ?>
+                        @foreach($clinics as $clinic_id => $clinic)
+                        <?php $selected = ($clinic_id == $clinic_id || $clinic_id == Auth::user()->u_power_booking) ? 'selected' : '' ?>
+                        <option value="{{$clinic_id}}" {{ $selected }}>{{$clinic}}</option>
                         @endforeach
                       @endif
+
                     </select>
                   </td>
                 </tr>

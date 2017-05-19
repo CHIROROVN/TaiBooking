@@ -208,7 +208,7 @@ class UserController extends BackendController
     /**
      * when foget accout login to admin
      * let's run this function
-     * user: chiroro
+     * user: phu
      * pass: 123456
      */
     public function create_default_accout()
@@ -216,10 +216,10 @@ class UserController extends BackendController
         $clsUser            = new UserModel();
 
         $dataInsert = array(
-            'u_name'            => 'Chiroro Net Viet',
+            'u_name'            => 'Default account name',
             'u_name_yomi'       => 'ぁあぃい',
-            'u_name_display'    => 'Chiroro Admin',
-            'u_login'           => 'chiroro',
+            'u_name_display'    => 'Default account name display',
+            'u_login'           => 'phu',
             'password'          => Hash::make('123456'),
             'u_belong'          => 1,
             'u_power1'          => 1,
@@ -234,11 +234,16 @@ class UserController extends BackendController
             'u_power10'         => 1,
             'u_human_flg'       => '',
             'last_date'         => date('y-m-d H:i:s'),
-            'last_kind'         => INSERT,
-            'last_ipadrs'       => $_SERVER['REMOTE_ADDR'],
+            'last_kind'         => 0,
+            'last_ipadrs'       => null,
             'last_user'         => 1,
         );
 
-        $clsUser->insert($dataInsert);
+        if ( $clsUser->insert($dataInsert) ) {
+            echo 'Success!';
+        } else {
+            echo 'Failed!';
+        }
+
     }
 }

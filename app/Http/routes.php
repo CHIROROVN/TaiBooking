@@ -15,6 +15,9 @@ Route::get('/', function () {
 	return redirect('ortho/menus');
 });
 
+//create default account
+//Route::get('/create-default-account', 'Backend\Ortho\UserController@create_default_accout');
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');

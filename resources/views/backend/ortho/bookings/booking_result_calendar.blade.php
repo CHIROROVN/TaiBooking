@@ -814,7 +814,7 @@ $widthPercent = 88 / ($countFacility);
               clinic_id: '{{ @$clinic->clinic_id }}' 
             },
             success: function(result){
-              // console.log(result);
+              //console.log(result);
               // tdObjNew.children().attr('data-booking-id', result[1].booking_id);
               // tdObjNew.children().attr('data-toggle', null);
               // tdObjNew.children().attr('data-target', null);

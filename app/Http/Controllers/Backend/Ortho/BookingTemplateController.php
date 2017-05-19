@@ -900,6 +900,8 @@ class BookingTemplateController extends BackendController
     public function insertBookingAjax()
     {
         $clsBooking = new BookingModel();
+        $clsFacility = new FacilityModel();
+
         $dataInsert = array(
             'booking_date'          => Input::get('booking_date'),
             'booking_start_time'    => Input::get('time'),
@@ -916,8 +918,25 @@ class BookingTemplateController extends BackendController
         );
 
         $id = $clsBooking->insert_get_id($dataInsert);
-        $status = $clsBooking->get_by_id($id);
+        $booking = $clsBooking->get_by_id($id);
+
+        $facilityIdSpecal = $clsFacility->get_by_id(Input::get('facility_id'));
+        if ( !empty($facilityIdSpecal->facility_free1) ) {
+            if ( $facilityIdSpecal->facility_free1 == Input::get('clinic_id') ) {
+                $dataInsert['clinic_id'] = $facilityIdSpecal->clinic_id;
+            } else {
+                $dataInsert['clinic_id'] = $facilityIdSpecal->facility_free1;
+            }
+            
+            $id2 = $clsBooking->insert_get_id($dataInsert);
+            $booking2 = $clsBooking->get_by_id($id2);
+        }
+
+        //update booking_free1 = facility specal = clinic_id
+        $clsBooking->update($id, array('booking_free1' => $booking2->clinic_id));
+        $clsBooking->update($id2, array('booking_free1' => $booking->clinic_id));
+
         
-        echo json_encode(array('status', $status));
+        echo json_encode(array($booking, $booking2));
     }
 }

@@ -56,7 +56,7 @@ class BookingModel
         if ( isset($where['clinic_id']) && !empty($where['clinic_id']) ) {
             $db = $db->where('t_booking.clinic_id', $where['clinic_id']);
         }
-
+        
         $db = $db->orderBy('t_booking.booking_date', 'asc');
 
         if ( $paging ) {
@@ -189,6 +189,16 @@ class BookingModel
         // where facility_id
         if ( isset($where['facility_id']) && !empty($where['facility_id']) ) {
             $db = $db->where('t_booking.facility_id', $where['facility_id']);
+        }
+
+        // where booking_free1
+        if ( isset($where['booking_free1']) && !empty($where['booking_free1']) ) {
+            $db = $db->where('t_booking.booking_free1', $where['booking_free1']);
+        }
+
+        // where booking_start_time
+        if ( isset($where['booking_start_time']) && !empty($where['booking_start_time']) ) {
+            $db = $db->where('t_booking.booking_start_time', $where['booking_start_time']);
         }
 
         $db = $db->orderBy($orderBy, 'asc')->get();

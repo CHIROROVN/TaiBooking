@@ -268,6 +268,7 @@ class BookingController extends BackendController
 
         $where['clinic_id']         = $clinic_id;
         $where['booking_date']      = $date_current;
+        $where['booking_free1']     = $date_current;
         $bookings                   = $clsBooking->get_all($where);
 
 
@@ -418,9 +419,43 @@ class BookingController extends BackendController
                         'last_ipadrs'               => CLIENT_IP_ADRS,
                         'last_user'                 => Auth::user()->id
                     );
+
+                    //update specal
+                    $whereChildGroupsSpecal         = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        //'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->booking_free1,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date,
+                        'booking_free1'             => $item->clinic_id,
+                        'booking_start_time'        => $item->booking_start_time,
+                    );
+                    $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                    foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                        $clsBooking->update($itemSpecal->booking_id, $dataUpdate);
+                    }
+                    //end update specal
+
                     $statusUpdate = $clsBooking->update($item->booking_id, $dataUpdateService);
                 } else {
                     // treatment
+
+                    //update specal
+                    $whereChildGroupsSpecal         = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        //'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->booking_free1,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date,
+                        'booking_free1'             => $item->clinic_id,
+                        'booking_start_time'        => $item->booking_start_time,
+                    );
+                    $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                    foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                        $clsBooking->update($itemSpecal->booking_id, $dataUpdate);
+                    }
+                    //end update specal
+
                     $statusUpdate = $clsBooking->update($item->booking_id, $dataUpdate);
                 }
                 if ( $statusUpdate == null || !$statusUpdate ) {
@@ -482,6 +517,7 @@ class BookingController extends BackendController
     {
         $clsBooking                 = new BookingModel();
         $clsTreatment1              = new Treatment1Model();
+        $clsFacility                = new FacilityModel();
         $booking                    = $clsBooking->get_by_id($id);
         $bookingDeleteForUpdate     = array();
 
@@ -656,9 +692,26 @@ class BookingController extends BackendController
                     $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
                     foreach ( $bookingChildGroups as $key => $value ) {
                         $bookingDeleteForUpdate[] = $value;
+
+                        //update specal
+                        //only for treatment1
+                        $whereChildGroupsSpecal         = array(
+                            //'booking_group_id'          => $value->booking_group_id,
+                            'booking_childgroup_id'     => $value->booking_childgroup_id,
+                            'clinic_id'                 => $value->booking_free1,
+                            'facility_id'               => $value->facility_id,
+                            'booking_date'              => $value->booking_date,
+                            'booking_free1'             => $value->clinic_id,
+                            'booking_start_time'        => $value->booking_start_time,
+                        );
+                        $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                        foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                            $clsBooking->update($itemSpecal->booking_id, $dataDelete);
+                        }
+                        //end update specal
+
                         $clsBooking->update($value->booking_id, $dataDelete);
-                        
-                    }    
+                    }
                 }
             }
             //Session::put('bookingDeleteForUpdate', $bookingDeleteForUpdate);
@@ -670,8 +723,25 @@ class BookingController extends BackendController
             $dataUpdate['booking_childgroup_id'] = 'group_' . $booking->booking_start_time;
             if ( $status ) {
                 foreach ( $listBookingWillUpdate as $item ) {
+                    //update specal
+                    $whereChildGroupsSpecal         = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        //'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->booking_free1,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date,
+                        'booking_free1'             => $item->clinic_id,
+                        'booking_start_time'        => $item->booking_start_time,
+                    );
+                    $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                    foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                        $clsBooking->update($itemSpecal->booking_id, $dataUpdate);
+                    }
+                    //end update specal
+
                     $clsBooking->update($item->booking_id, $dataUpdate);
                 }
+
                 $where                          = array();
                 $where['clinic_id']             = $booking->clinic_id;
                 $where['cur']                   = $booking->booking_date;
@@ -688,8 +758,8 @@ class BookingController extends BackendController
 
     public function getRegist($id)
     {
-        $data                       = array();
-        $clsBooking                 = new BookingModel();
+        $data                           = array();
+        $clsBooking                     = new BookingModel();
         if($clsBooking->checkExistID2($id)){
             $data                       = array();
             $clsUser                    = new UserModel();
@@ -888,8 +958,25 @@ class BookingController extends BackendController
                     $bookingChildGroups = $clsBooking->get_where($whereChildGroups);
                     foreach ( $bookingChildGroups as $key => $value ) {
                         $bookingDeleteForUpdate[] = $value;
-                        $clsBooking->update($value->booking_id, $dataDelete);
                         
+                        //update specal
+                        //only for treatment1
+                        $whereChildGroupsSpecal         = array(
+                            //'booking_group_id'          => $value->booking_group_id,
+                            'booking_childgroup_id'     => $value->booking_childgroup_id,
+                            'clinic_id'                 => $value->booking_free1,
+                            'facility_id'               => $value->facility_id,
+                            'booking_date'              => $value->booking_date,
+                            'booking_free1'             => $value->clinic_id,
+                            'booking_start_time'        => $value->booking_start_time,
+                        );
+                        $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                        foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                            $clsBooking->update($itemSpecal->booking_id, $dataDelete);
+                        }
+                        //end update specal
+
+                        $clsBooking->update($value->booking_id, $dataDelete);
                     }    
                 }
             }
@@ -903,6 +990,23 @@ class BookingController extends BackendController
             if ( $status ) {
                 foreach ( $listBookingWillUpdate as $item ) {
                     $clsBooking->update($item->booking_id, $dataUpdate);
+
+                    //update specal
+                    //only for treatment1
+                    $whereChildGroupsSpecal         = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        //'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->booking_free1,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date,
+                        'booking_free1'             => $item->clinic_id,
+                        'booking_start_time'        => $item->booking_start_time,
+                    );
+                    $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                    foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                        $clsBooking->update($itemSpecal->booking_id, $dataUpdate);
+                    }
+                    //end update specal
                 }
                 $where                          = array();
                 $where['clinic_id']             = $booking->clinic_id;
@@ -1156,6 +1260,24 @@ class BookingController extends BackendController
             $dataUpdate['booking_childgroup_id'] = 'group_' . $booking->booking_start_time;
             if ( $status ) {
                 foreach ( $listBookingWillUpdate as $item ) {
+
+                    //update specal
+                    //only for treatment1
+                    $whereChildGroupsSpecal         = array(
+                        //'booking_group_id'          => $item->booking_group_id,
+                        //'booking_childgroup_id'     => $item->booking_childgroup_id,
+                        'clinic_id'                 => $item->booking_free1,
+                        'facility_id'               => $item->facility_id,
+                        'booking_date'              => $item->booking_date,
+                        'booking_free1'             => $item->clinic_id,
+                        'booking_start_time'        => $item->booking_start_time,
+                    );
+                    $bookingChildGroupsSpecal = $clsBooking->get_where($whereChildGroupsSpecal);
+                    foreach ( $bookingChildGroupsSpecal as $itemSpecal ) {
+                        $clsBooking->update($itemSpecal->booking_id, $dataUpdate);
+                    }
+                    //end update specal
+
                     $clsBooking->update($item->booking_id, $dataUpdate);
                 }
                 $where                          = array();

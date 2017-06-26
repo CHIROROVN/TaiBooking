@@ -16,16 +16,22 @@
             @endif
 
             <!-- power 2 -->
-            @if(!empty(Auth::user()->u_power2))
+            @if ( Auth::user()->u_power2 == 1 )
             <h2>予約管理</h2>
+            @endif
             <ul>
+              @if ( Auth::user()->u_power_booking == -1 && Auth::user()->u_power2 == 1 )
               <li><a href="{{ route('ortho.bookings.booking_search',['search'=>'advance']) }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約を取る</a></li>
               <li><a href="{{ route('ortho.bookeds.history') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>来院履歴登録～次回の予約を取る</a></li>
               <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
+              @endif
+              @if ( Auth::user()->u_power_booking != -1 && Auth::user()->u_power2 == 1 )
               <li><a href="{{ route('ortho.bookings.booking.monthly', ['area_id'=> @$area_id, 'clinic_id'=>@$clinic_id]) }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
+              @endif
+              @if ( Auth::user()->u_power_booking == -1 && Auth::user()->u_power2 == 1 )
               <li><a href="{{route('ortho.diagrams.index')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約状況の模式図</a></li>
+              @endif
             </ul>
-            @endif
 
             <!-- power 3 -->
             @if(!empty(Auth::user()->u_power3))

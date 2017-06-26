@@ -3,8 +3,13 @@
 @section('content')
 <?php
 // count facility
+$widthPercent = 1;
 $countFacility = count($facilitys);
-$widthPercent = 88 / ($countFacility);
+if ( $countFacility > 0 ) {
+  $widthPercent = 88 / ($countFacility);
+}
+
+
 ?>
 
 <section id="page">

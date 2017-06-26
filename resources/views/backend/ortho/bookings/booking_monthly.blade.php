@@ -5,6 +5,8 @@
   <div class="container">
     <div class="row content content--list">
         <h1>予約簿</h1>
+
+        @if ( Auth::user()->u_power_booking == -1 && Auth::user()->u_power2 == 1 )
         <div class="fillter">
           <div class="col-md-12 page-left">
           
@@ -37,6 +39,8 @@
 
           </div>
         </div>
+        @endif
+        
         <div id='calendar'></div>
     </div>
   </div>
@@ -201,5 +205,20 @@
       });
     });
 
+
+function getUrlParameter(sParam) {
+  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+      sURLVariables = sPageURL.split('&'),
+      sParameterName,
+      i;
+
+  for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+
+      if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : sParameterName[1];
+      }
+  }
+}
   </script>
 @stop

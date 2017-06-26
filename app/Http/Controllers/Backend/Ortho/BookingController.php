@@ -304,6 +304,12 @@ class BookingController extends BackendController
             }
         }
         $data['arr_bookings'] = $arr_bookings;
+
+        //facilitys zero
+        // if ( count($facilitys) == 0 ) {
+        //     return redirect()->route('ortho.bookings.booking.result.calendar');
+        // }
+
         return view('backend.ortho.bookings.booking_result_calendar', $data);
     }
 

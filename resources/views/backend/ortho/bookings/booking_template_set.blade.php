@@ -18,6 +18,8 @@
                   <?php
                   if ( $key == Auth::user()->u_power_booking || $key == $s_clinic_id ) {
                     $selected = 'selected';
+                  } else {
+                    $selected = '';
                   }
                   ?>
                 <option value="{{ $key }}" {{ $selected }}>{{ $clinic }}</option>

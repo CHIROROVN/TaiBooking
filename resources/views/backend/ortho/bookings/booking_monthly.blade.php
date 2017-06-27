@@ -40,7 +40,7 @@
           </div>
         </div>
         @endif
-        
+
         <div id='calendar'></div>
     </div>
   </div>

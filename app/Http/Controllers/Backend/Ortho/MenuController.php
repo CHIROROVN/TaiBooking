@@ -27,17 +27,30 @@ class MenuController extends BackendController
     public function index()
     {
         $clsClinic     = new ClinicModel();
-        $clinic_id     = Auth::user()->u_power_booking;
         $clsClinicArea = new ClinicAreaModel();
+        $clinic_id     = Auth::user()->u_power_booking;
         $data          = array();
-        $area_clinic   = $clsClinicArea->get_clinic_area($clinic_id);
-        if(!empty($area_clinic)){
-            $data['area_id']    = $area_clinic->area_id;
-            $data['clinic_id']  = $area_clinic->clinic_id;
-        }else{
-            $data['area_id']    = null;
-            $data['clinic_id']  = null;
+
+        if ( $clinic_id != -1 && $clinic_id > 0 ) {
+            $area_clinic = $clsClinicArea->get_clinic_area($clinic_id);
+            if( !empty($area_clinic) ){
+                $data['area_id']    = $area_clinic->area_id;
+                $data['clinic_id']  = $area_clinic->clinic_id;
+            } else {
+                $data['area_id']    = null;
+                $data['clinic_id']  = null;
+            }
+        } elseif ( $clinic_id == -1) {
+            $area_clinic = $clsClinicArea->get_clinic_area(13);
+            if( !empty($area_clinic) ){
+                $data['area_id']    = $area_clinic->area_id;
+                $data['clinic_id']  = $area_clinic->clinic_id;
+            } else {
+                $data['area_id']    = null;
+                $data['clinic_id']  = null;
+            }
         }
+
         return view('backend.ortho.menus.index', $data);
     }
 }

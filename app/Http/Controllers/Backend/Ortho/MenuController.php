@@ -36,18 +36,22 @@ class MenuController extends BackendController
             if( !empty($area_clinic) ){
                 $data['area_id']    = $area_clinic->area_id;
                 $data['clinic_id']  = $area_clinic->clinic_id;
+                $data['u_id']       = Auth::user()->id;
             } else {
                 $data['area_id']    = null;
                 $data['clinic_id']  = null;
+                $data['u_id']       = Auth::user()->id;
             }
         } elseif ( $clinic_id == -1) {
             $area_clinic = $clsClinicArea->get_clinic_area(13);
             if( !empty($area_clinic) ){
                 $data['area_id']    = $area_clinic->area_id;
                 $data['clinic_id']  = $area_clinic->clinic_id;
+                $data['u_id']       = Auth::user()->id;
             } else {
                 $data['area_id']    = null;
                 $data['clinic_id']  = null;
+                $data['u_id']       = Auth::user()->id;
             }
         }
 

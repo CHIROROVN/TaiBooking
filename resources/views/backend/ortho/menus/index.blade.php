@@ -26,7 +26,7 @@
               <li><a href="{{ route('ortho.patients.index') }}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約の変更・キャンセル処理</a></li>
               @endif
               @if ( (Auth::user()->u_power_booking == -1) || (Auth::user()->u_power_booking != -1 && Auth::user()->u_power2 == 1) )
-              <li><a href="{{ route('ortho.bookings.booking.monthly', ['area_id'=> @$area_id, 'clinic_id'=>@$clinic_id]) }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
+              <li><a href="{{ route('ortho.bookings.booking.monthly', ['area_id'=> @$area_id, 'clinic_id'=>@$clinic_id, 'u_id' => @$u_id]) }}"><p><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約簿の表示</a></li>
               @endif
               @if ( Auth::user()->u_power_booking == -1 && Auth::user()->u_power2 == 1 )
               <li><a href="{{route('ortho.diagrams.index')}}"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>予約状況の模式図</a></li>
